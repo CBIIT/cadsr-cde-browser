@@ -77,10 +77,10 @@ function listChanged(urlInfo) {
   document.location.href= "search?listValidValuesForDataElements=9&tabClicked=2&performQuery=no&vvPageNumber="+pgNum+"<%= pageUrl %>"+urlInfo;
 }
 
-function valueMeaningDetails(shortMeaning)
+function valueMeaningDetails(vmId)
 {
   //var urlString="<%=request.getContextPath()%>/search?dataElementDetails=9" + linkParms + "<%= pageUrl %>"+"&queryDE=yes";
-  var urlString="<%=request.getContextPath()%>/valueMeaningAlternates.do?method=showValueMeaningAlternates&id="+escape(shortMeaning);
+  var urlString="<%=request.getContextPath()%>/valueMeaningAlternates.do?method=showValueMeaningAlternates&id="+escape(vmId);
   newWin(urlString,'valueMeaningDetails',800,600)
   
 }
@@ -508,7 +508,7 @@ function valueMeaningDetails(shortMeaning)
        	   }
         %>
         
-          <a href="javascript:valueMeaningDetails('<%=encoded%>')" >
+          <a href="javascript:valueMeaningDetails('<%=validValue.getVmId()%>')" >
             <%=validValue.getShortMeaning()%> 
           </a>                   
         </td>

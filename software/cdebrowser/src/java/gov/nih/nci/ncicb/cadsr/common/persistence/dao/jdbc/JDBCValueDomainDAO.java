@@ -137,7 +137,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
      */
     class ValueMeaningQuery extends MappingSqlQuery {
     
-      ValueMeaningQuery(DataSource ds) {
+    	ValueMeaningQuery(DataSource ds) {
         super();
         this.setDataSource(ds);
       }
@@ -177,6 +177,48 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
               return null;
           }
       }
+    }
+    
+    public ValueMeaning getValueMeaningById(Integer vmId){
+        ValueMeaningByIdQuery vmQuery = new ValueMeaningByIdQuery(getDataSource());
+        vmQuery.setSql();
+        ValueMeaning vm = vmQuery.getValueMeaning(vmId);        
+        vm.setDefinitions(getDefinitions(vm.getIdseq()));
+        vm.setDesignations(getDesignations(vm.getIdseq(), null));  
+        //Added for 4.0 release
+        vm.setContext(getContext(vm.getIdseq()));
+        return vm;
+    }    
+    
+    /**
+     * Inner class to get value meanign
+     * 
+     */
+    class ValueMeaningByIdQuery extends ValueMeaningQuery {
+    
+    	ValueMeaningByIdQuery(DataSource ds) {
+        super(ds);
+      }
+
+      public void setSql() {
+       // String sql = " SELECT * from sbr.value_meanings where short_meaning = ?" ;
+        String sql = " SELECT * from sbr.value_meanings_view where vm_id = ?" ;
+        setSql(sql);
+        declareParameter(new SqlParameter("vm_id", Types.INTEGER));
+        compile();
+      }
+      
+      public ValueMeaning getValueMeaning(Integer vmId){
+          Object[] obj =
+            new Object[] { vmId };
+          List ret =  execute(obj);
+          if (ret!=null){
+              return (ValueMeaning)(ret.get(0));
+          }else{
+              return null;
+          }
+      }
+      
     }
     
   /**

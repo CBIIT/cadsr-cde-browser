@@ -36,4 +36,6 @@ public interface ValueDomainDAO extends AdminComponentDAO {
   public ValueDomain getValueDomainById(String vdId);
   
   public ValueMeaning getValueMeaning(String shortMeaning);
+  
+  public ValueMeaning getValueMeaningById(Integer vmId);
 }

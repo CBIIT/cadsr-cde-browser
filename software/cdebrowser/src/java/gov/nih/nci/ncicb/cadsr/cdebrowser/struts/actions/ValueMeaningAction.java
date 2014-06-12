@@ -42,13 +42,13 @@ public class ValueMeaningAction extends BrowserBaseDispatchAction{
            log.error("shortMeaning is not passed in");
            return mapping.findForward(FAILURE);
        }
-       String shortMeaning = (String)obj;
+       Integer vmId = Integer.valueOf((String)obj);
        
        ServiceLocator locator = 
         ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
        AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
        ValueDomainDAO dao = daoFactory.getValueDomainDAO();
-       ValueMeaning vm = dao.getValueMeaning(shortMeaning);
+       ValueMeaning vm = dao.getValueMeaningById(vmId);
 
        request.setAttribute(CaDSRConstants.VALUE_MEANING_OBJ, vm);
        request.setAttribute("CDEBrowser", "true");
