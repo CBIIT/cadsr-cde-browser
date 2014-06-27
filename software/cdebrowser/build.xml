@@ -253,6 +253,9 @@ L-->
 		<copy tofile="${artifacts.dir}/jboss/cdebrowser-login-config-service.xml" filtering="true">
 			<fileset file="${conf.dir}/template.cdebrowser-login-config-service.xml" />
 		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cadsrutil.properties" filtering="true">
+			<fileset file="${conf.dir}/cadsrutil.properties" />
+		</copy>
 		
 		<copy todir="${root.dir}/css" >
 		    <fileset dir="${basedir}/src/web/css" />
@@ -610,6 +613,16 @@ L-->
     
     <target name="refresh-tier" depends="-assemble-sql,-deploy-db" description="refresh the caDSR database on a specific tier">
     </target>
+	
+	<target name="deploy_local" depends="build-product">
+		<copy todir="${JBOSS.DEPLOY.DIR}">      
+	      <fileset dir="${war.dir}">
+            <patternset>
+               <include name="CDEBrowser.war"/>
+            </patternset>
+	      </fileset>      
+	    </copy>
+	</target>	
 
 </project>
 
