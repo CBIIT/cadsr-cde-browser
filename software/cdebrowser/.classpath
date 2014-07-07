@@ -71,6 +71,6 @@
 	<classpathentry kind="lib" path="src/web/lib/xsu12.jar"/>
 	<classpathentry kind="lib" path="src/web/lib/poi-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
-	<classpathentry kind="lib" path="src/web/lib/cadsrutil.jar"/>
+	<classpathentry kind="lib" path="src/web/lib/cadsrutil.jar" sourcepath="/cadsrutil"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

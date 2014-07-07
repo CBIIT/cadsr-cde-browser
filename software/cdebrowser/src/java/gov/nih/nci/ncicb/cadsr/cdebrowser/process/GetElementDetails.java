@@ -42,6 +42,7 @@ public class GetElementDetails extends BasePersistingProcess {
 	      registerStringResult("cdeId");
 	      registerStringParameter("version");
 	      registerStringResult("version");
+	      registerStringResult("p_de_idseq");
 	    }
 	    catch (ProcessInfoException pie) {
 	      reportException(pie, true);
@@ -70,6 +71,8 @@ public class GetElementDetails extends BasePersistingProcess {
 		setResult("cdeId", publicId);
 		setResult("version", version);
 		setResult("queryDE", "yes");
+		setResult("p_de_idseq", null); // explicitly make it null, since on the next page, it first checks this param and then the cdeId.
+		
 		
 		setCondition(SUCCESS);
 	}
