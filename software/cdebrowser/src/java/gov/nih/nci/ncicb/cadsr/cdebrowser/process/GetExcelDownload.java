@@ -335,9 +335,8 @@ public class GetExcelDownload extends BasePersistingProcess {
 										if ( valueStruct != null ) {
 											Datum[] valueDatum = valueStruct.getOracleAttributes();
 			
-											for (
-													short nestedI = 0; nestedI < currCol.nestedColumns.size();
-													nestedI++) {
+											for (short nestedI = 0; nestedI < currCol.nestedColumns.size(); nestedI++) 
+											{
 												ColumnInfo nestedCol =
 													(ColumnInfo) currCol.nestedColumns.get(nestedI);
 			
@@ -638,6 +637,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
 			//	Added for 4.0	*/
+			validValueInfo.add(new ColumnInfo(8, "VMALTERNATEDEFINITIONS", "Value Meaning Alternate Definitions", "String"));
 		}else {
 			validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
 		}
@@ -722,7 +722,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 		return columnInfo;
 	}
 
-	private class ColumnInfo {
+	public class ColumnInfo {
 		String rsColumnName;
 		int rsIndex;
 		int rsSubIndex = -1;

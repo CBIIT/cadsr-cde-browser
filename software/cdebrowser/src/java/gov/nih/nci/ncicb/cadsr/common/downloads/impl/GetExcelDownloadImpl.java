@@ -14,6 +14,7 @@
 
 package gov.nih.nci.ncicb.cadsr.common.downloads.impl;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetExcelDownload.ColumnInfo;
 import gov.nih.nci.ncicb.cadsr.common.downloads.GetExcelDownload;
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.common.util.ConnectionHelper;
@@ -533,6 +534,7 @@ public class GetExcelDownloadImpl implements GetExcelDownload {
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
 			//	Added for 4.0	*/
+			validValueInfo.add(new ColumnInfo(8, "VMALTERNATEDEFINITIONS", "Value Meaning Alternate Definitions", "String"));
 		}else {
 			validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
 		}
