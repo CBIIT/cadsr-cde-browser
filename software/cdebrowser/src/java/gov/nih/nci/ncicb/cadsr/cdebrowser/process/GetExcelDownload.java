@@ -717,7 +717,15 @@ public class GetExcelDownload extends BasePersistingProcess {
 		columnInfo.add(deDrivation);  
 		
 		columnInfo.add(
-				new ColumnInfo("RAI", "RAI", "String"));
+				new ColumnInfo("RAI", "Data Element RAI", "String"));
+		columnInfo.add(
+				new ColumnInfo("RAI", "Object Class RAI", "String"));
+		columnInfo.add(
+				new ColumnInfo("RAI", "Property RAI", "String"));
+		columnInfo.add(
+				new ColumnInfo("RAI", "Value Domain RAI", "String"));
+		columnInfo.add(
+				new ColumnInfo("RAI", "Representation RAI", "String"));
 
 		return columnInfo;
 	}
