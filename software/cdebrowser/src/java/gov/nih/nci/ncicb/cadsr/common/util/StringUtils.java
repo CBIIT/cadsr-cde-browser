@@ -334,8 +334,11 @@ public class StringUtils {
       fieldValue = fieldValue.replace("&amp;#954;", "\u03BA"); // Kappa Small
       fieldValue = fieldValue.replace("&amp;#8495;", "\u212F"); // Small Exponent
       fieldValue = fieldValue.replace("&amp;#922;", "\u03BA"); // Kappa Big
-      fieldValue = fieldValue.replace("&lt;", "<"); // less than
-      fieldValue = fieldValue.replace("&gt;", ">"); // greater than
+//      fieldValue = fieldValue.replace("&lt;", "<"); // less than
+      fieldValue = fieldValue.replace("&lt;", "&#60;"); // less than
+//      fieldValue = fieldValue.replace("&gt;", ">"); // greater than
+      fieldValue = fieldValue.replace("&gt;", "&#62;"); // greater than
+
       
        return fieldValue;
 }  
