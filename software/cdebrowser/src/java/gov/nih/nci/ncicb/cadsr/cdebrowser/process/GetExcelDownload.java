@@ -243,7 +243,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 					}
 		
 					String sqlStmt =
-						"SELECT DE_EXCEL_GENERATOR_VIEW.*," + RAI + " as \"RAI\" FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
+						"SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*," + RAI + " as \"RAI\" FROM DE_CDE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
 						" ( " + where + " )  ";
 		
 					//+" ORDER BY PREFERRED_NAME ";
@@ -637,7 +637,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
 			//	Added for 4.0	*/
-			validValueInfo.add(new ColumnInfo(8, "VMALTERNATEDEFINITIONS", "Value Meaning Alternate Definitions", "String"));
+			//validValueInfo.add(new ColumnInfo(8, "VMALTERNATEDEFINITIONS", "Value Meaning Alternate Definitions", "String"));
 		}else {
 			validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
 		}

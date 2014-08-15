@@ -180,7 +180,7 @@ public class GetExcelDownloadImpl implements GetExcelDownload {
 			}
 			
 			String sqlStmt =
-				"SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
+				"SELECT * FROM DE_CDE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
 				" ( " + where + " )  ";
 			
 			ConnectionHelper connHelper = new ConnectionHelper(jndiName);
@@ -534,7 +534,7 @@ public class GetExcelDownloadImpl implements GetExcelDownload {
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
 			//	Added for 4.0	*/
-			validValueInfo.add(new ColumnInfo(8, "VMALTERNATEDEFINITIONS", "Value Meaning Alternate Definitions", "String"));
+			//validValueInfo.add(new ColumnInfo(8, "VMALTERNATEDEFINITIONS", "Value Meaning Alternate Definitions", "String"));
 		}else {
 			validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
 		}
