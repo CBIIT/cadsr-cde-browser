@@ -321,7 +321,7 @@ public class StringUtils {
       fieldValue = fieldValue.replace("&amp;#945;", "\u03B1"); // Alpha
       fieldValue = fieldValue.replace("&amp;#946;", "\u03B2"); // Beta
       fieldValue = fieldValue.replace("&amp;#947;", "\u03B3"); // Gamma
-      fieldValue = fieldValue.replace("&amp;#948;", "\u03B4"); // Delta
+      fieldValue = fieldValue.replace("&amp;#948;", "\u0394"); // Delta
       fieldValue = fieldValue.replace("&amp;#178;", "\u00B2"); // Superscript 2
       fieldValue = fieldValue.replace("&amp;#176;", "\u00B0"); // Degree
       fieldValue = fieldValue.replace("&amp;#9702;", "\u00B0"); // Degree
@@ -338,6 +338,11 @@ public class StringUtils {
       fieldValue = fieldValue.replace("&lt;", "&#60;"); // less than
 //      fieldValue = fieldValue.replace("&gt;", ">"); // greater than
       fieldValue = fieldValue.replace("&gt;", "&#62;"); // greater than
+      fieldValue = fieldValue.replace("&amp;#8225;", "\u2021"); // double dagger
+      
+      
+      // decimel value &#8225
+      //double dagger is \U2021
 
       
        return fieldValue;
