@@ -176,7 +176,7 @@ public class GetXMLDownload extends BasePersistingProcess {
         throw new Exception("No result set to download");
       }
 
-      String stmt = " SELECT " + RAI + " as \"Data_Element_RAI\"" +
+      String stmt = " SELECT " + RAI + " as \"RAI\"" +
 //    		            "," + RAI + " as \"Object_Class_RAI\"" +
 //    		            "," + RAI + " as \"Property_RAI\"" +
 //    		            "," + RAI + " as \"Value_Domain_RAI\"" +
