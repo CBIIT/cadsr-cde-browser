@@ -32,11 +32,11 @@ public class StringUtilsTest {
     
     @Test
     public void testConversionOfSpecialCharsToUnicodeCharsForXmlDownload() {
-		String specialChars = "&amp;#8322; &amp;#945; &amp;#946; &amp;#947; &amp;#948; &amp;#178; &amp;#176; &amp;#9702; &amp;#181; &amp;#955; &amp;#411; &amp;#8805; &amp;#8804; &amp;#177; &amp;#954; &amp;#8495; &amp;#922; &lt; &gt;";
+		String specialChars = "&amp;#8322; &amp;#945; &amp;#946; &amp;#947; &amp;#948; &amp;#178; &amp;#176; &amp;#9702; &amp;#181; &amp;#955; &amp;#411; &amp;#8805; &amp;#8804; &amp;#177; &amp;#954; &amp;#8495; &amp;#922; &lt; &gt; &amp;#8225;";
 		
 		String unicodeChars = StringUtils.updateXMLDataForSpecialCharacters(specialChars);
 		
-		String expectedUnicodeChars = "\u2082 \u03B1 \u03B2 \u03B3 \u03B4 \u00B2 \u00B0 \u00B0 \u00B5 \u03BB \u03BB \u2265 \u2264 \u00B1 \u03BA \u212F \u03BA < >";
+		String expectedUnicodeChars = "\u2082 \u03B1 \u03B2 \u03B3 \u03B4 \u00B2 \u00B0 \u00B0 \u00B5 \u03BB \u03BB \u2265 \u2264 \u00B1 \u03BA \u212F \u03BA &#60; &#62; \u2021";
 		
 		assertTrue(unicodeChars.equals(expectedUnicodeChars));
 	}

@@ -177,10 +177,10 @@ public class GetXMLDownload extends BasePersistingProcess {
       }
 
       String stmt = " SELECT " + RAI + " as \"Data_Element_RAI\"" +
-    		            "," + RAI + " as \"Object_Class_RAI\"" +
-    		            "," + RAI + " as \"Property_RAI\"" +
-    		            "," + RAI + " as \"Value_Domain_RAI\"" +
-    		            "," + RAI + " as \"Representation_RAI\"" +
+//    		            "," + RAI + " as \"Object_Class_RAI\"" +
+//    		            "," + RAI + " as \"Property_RAI\"" +
+//    		            "," + RAI + " as \"Value_Domain_RAI\"" +
+//    		            "," + RAI + " as \"Representation_RAI\"" +
       					", PublicId " +  
                         ", LongName "+
                         ",  PreferredName  "+
