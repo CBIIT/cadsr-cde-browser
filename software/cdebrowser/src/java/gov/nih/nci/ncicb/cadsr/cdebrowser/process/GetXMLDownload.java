@@ -197,7 +197,7 @@ public class GetXMLDownload extends BasePersistingProcess {
                         ",  ClassificationsList  " +
                         ",  AlternateNameList  " +                    
                         ",  DataElementDerivation  " +
-                   " FROM sbrext.DE_XML_GENERATOR_VIEW ";
+                   " FROM sbrext.DE_CDE1_XML_GENERATOR_VIEW ";
 
       xmlBean = new XMLGeneratorBean();
       

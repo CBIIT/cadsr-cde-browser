@@ -113,7 +113,7 @@ public class GetXMLDownloadImpl implements GetXMLDownload{
 	          ",  ClassificationsList  " +
 	          ",  AlternateNameList  " +                    
 	          ",  DataElementDerivation  " +
-	          " FROM sbrext.DE_XML_GENERATOR_VIEW ";
+	          " FROM sbrext.DE_CDE1_XML_GENERATOR_VIEW ";
 
 	    stmt +=  "WHERE DE_IDSEQ IN " +	" ( " + where + " )  ";
 		return stmt;
