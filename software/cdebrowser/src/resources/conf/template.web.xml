@@ -218,6 +218,18 @@ L-->
 	</filter>
 		
 	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>
+			gov.nih.nci.ncicb.cadsr.common.xss.XSSFilter
+		</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>XSSFilter</filter-name>
+	    <url-pattern>/search</url-pattern>
+    </filter-mapping>
+	
+	<filter>
 		<filter-name>AjaxAnywhere</filter-name>
 		<filter-class>org.ajaxanywhere.AAFilter</filter-class>
 	</filter>
