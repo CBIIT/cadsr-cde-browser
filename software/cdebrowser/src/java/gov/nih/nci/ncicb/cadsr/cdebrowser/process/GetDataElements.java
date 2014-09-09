@@ -439,6 +439,8 @@ public class GetDataElements extends BasePersistingProcess {
 
 				//update sort by column of queryBuilder
 				String sortField = getStringInfo("sortField");
+				if (!AppScanValidator.validateSearchParameterType(sortField))
+					throw new Exception ("Invalidate parameter type");
 				String sortOrderString = getStringInfo("sortOrder");
 				int sortOrder = SortableColumnHeader.ASCENDING;
 				if (getStringInfo("sortOrder") != null)
