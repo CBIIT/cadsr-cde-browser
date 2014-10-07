@@ -24,6 +24,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.common.util.AppScanValidator;
 
 import java.io.IOException;
 
@@ -78,14 +79,19 @@ public class ScreenTypeAction extends BrowserBaseDispatchAction {
       ActionMapping mapping,
       ActionForm form,
       HttpServletRequest request,
-      HttpServletResponse response) throws IOException, ServletException {
+      HttpServletResponse response) throws IOException, ServletException, Exception {
 
       this.setSessionObject(request, BrowserFormConstants.BROWSER_SEARCH_SCOPE, BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS,true);
       DynaActionForm searchForm = (DynaActionForm) form;
       String baseQuery = (String) searchForm.get("baseQuery");      
       String searchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspNameSearchMode"));
       String searchType = StringEscapeUtils.escapeHtml(request.getParameter("jspBasicSearchType"));
-      String searchStr = StringEscapeUtils.escapeHtml(request.getParameter("jspSimpleKeyword"));      
+      String searchStr = StringEscapeUtils.escapeHtml(request.getParameter("jspSimpleKeyword"));
+      if (searchStr!=null)
+    	  {
+    	  	if (!AppScanValidator.validateSearchParameterType(searchStr))
+    	  		throw new Exception ("Invalidate searchStr");
+    	  } 
       String searchCrumb = "Search Criteria>>"+ searchMode + " (" + searchType + "=" + searchStr + ")";
       this.setSessionObject(request, "searchCrumb", searchCrumb, true);
       this.setSessionObject(request,"baseQuery", baseQuery,true);
