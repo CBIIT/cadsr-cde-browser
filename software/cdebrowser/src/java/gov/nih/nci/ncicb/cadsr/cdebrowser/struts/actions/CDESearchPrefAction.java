@@ -29,6 +29,7 @@ import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.common.util.AppScanValidator;
 
 
 
@@ -71,7 +72,7 @@ public class CDESearchPrefAction
  * @throws ServletException
  */
  public ActionForward gotoCDESearchPref(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                          HttpServletResponse response) throws IOException, ServletException {
+                                          HttpServletResponse response) throws IOException, ServletException, Exception {
     DynaActionForm prefForm = (DynaActionForm)form;
     
     DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
@@ -97,13 +98,50 @@ public class CDESearchPrefAction
   * @throws ServletException
   */
  public ActionForward saveCDESearchPref(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                               HttpServletResponse response) throws IOException, ServletException {
+                                               HttpServletResponse response) throws IOException, ServletException, Exception {
         DynaActionForm prefForm = (DynaActionForm)form;
         
         String[] aslNames = request.getParameterValues("jspStatus");
+		//addition validation rule maybe required
+        for (int i=0; i< aslNames.length; i++)
+	        {
+				if (aslNames[i]!=null)
+					{
+						if (!AppScanValidator.validateSearchParameterType(aslNames[i]))
+							throw new Exception ("Invalidate jspStatus");
+			
+					}
+	        }
+        
         String[] regStatuses = request.getParameterValues("regStatus");
+		//addition validation rule maybe required
+        for (int i=0; i< regStatuses.length; i++)
+	        {
+				if (regStatuses[i]!=null)
+					{
+						if (!AppScanValidator.validateSearchParameterType(regStatuses[i]))
+							throw new Exception ("Invalidate regStatus");
+			
+					}
+	        }
+        
         String excludeTestContext = (String)prefForm.get("excludeTestContext");
+		//addition validation rule maybe required
+		if (excludeTestContext!=null)
+			{
+				if (!AppScanValidator.validateSearchParameterType(excludeTestContext))
+					throw new Exception ("Invalidate excludeTestContext");
+	
+			}
+        
         String excludeTrainingContext = (String)prefForm.get("excludeTrainingContext");
+		//addition validation rule maybe required
+		if (excludeTrainingContext!=null)
+			{
+				if (!AppScanValidator.validateSearchParameterType(excludeTrainingContext))
+					throw new Exception ("Invalidate excludeTrainingContext");
+	
+			}
         
         String[] emptyArr = {""};
         DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
