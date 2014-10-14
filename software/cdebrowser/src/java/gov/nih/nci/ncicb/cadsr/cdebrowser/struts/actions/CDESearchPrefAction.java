@@ -103,15 +103,15 @@ public class CDESearchPrefAction
         
         String[] aslNames = request.getParameterValues("jspStatus");
 		//addition validation rule maybe required
-        for (int i=0; i< aslNames.length; i++)
-	        {
-				if (aslNames[i]!=null)
-					{
-						if (!AppScanValidator.validateSearchParameterType(aslNames[i]))
-							throw new Exception ("Invalidate jspStatus");
-			
-					}
-	        }
+//        for (int i=0; i< aslNames.length; i++)
+//	        {
+//				if (aslNames[i]!=null)
+//					{
+//						if (!AppScanValidator.validateSearchParameterType(aslNames[i]))
+//							throw new Exception ("Invalidate jspStatus");
+//			
+//					}
+//	        }
         
         String[] regStatuses = request.getParameterValues("regStatus");
 		//addition validation rule maybe required
@@ -127,21 +127,21 @@ public class CDESearchPrefAction
         
         String excludeTestContext = (String)prefForm.get("excludeTestContext");
 		//addition validation rule maybe required
-		if (excludeTestContext!=null)
-			{
-				if (!AppScanValidator.validateSearchParameterType(excludeTestContext))
-					throw new Exception ("Invalidate excludeTestContext");
-	
-			}
+//		if (excludeTestContext!=null)
+//			{
+//				if (!AppScanValidator.validateSearchParameterType(excludeTestContext))
+//					throw new Exception ("Invalidate excludeTestContext");
+//	
+//			}
         
         String excludeTrainingContext = (String)prefForm.get("excludeTrainingContext");
 		//addition validation rule maybe required
-		if (excludeTrainingContext!=null)
-			{
-				if (!AppScanValidator.validateSearchParameterType(excludeTrainingContext))
-					throw new Exception ("Invalidate excludeTrainingContext");
-	
-			}
+//		if (excludeTrainingContext!=null)
+//			{
+//				if (!AppScanValidator.validateSearchParameterType(excludeTrainingContext))
+//					throw new Exception ("Invalidate excludeTrainingContext");
+//	
+//			}
         
         String[] emptyArr = {""};
         DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
