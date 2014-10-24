@@ -87,11 +87,7 @@ public class ScreenTypeAction extends BrowserBaseDispatchAction {
       String searchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspNameSearchMode"));
       String searchType = StringEscapeUtils.escapeHtml(request.getParameter("jspBasicSearchType"));
       String searchStr = StringEscapeUtils.escapeHtml(request.getParameter("jspSimpleKeyword"));
-      if (searchStr!=null)
-    	  {
-    	  	if (!AppScanValidator.validateSearchParameterType(searchStr))
-    	  		throw new Exception ("Invalidate searchStr");
-    	  } 
+
       String searchCrumb = "Search Criteria>>"+ searchMode + " (" + searchType + "=" + searchStr + ")";
       this.setSessionObject(request, "searchCrumb", searchCrumb, true);
       this.setSessionObject(request,"baseQuery", baseQuery,true);
