@@ -1,0 +1,628 @@
+<!--L
+  Copyright SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+
+  Portions of this source file not modified since 2008 are covered by:
+
+  Copyright 2000-2008 Oracle, Inc.
+
+  Distributed under the caBIG Software License.  For details see
+  http://ncip.github.com/cadsr-cde-browser/LICENSE-caBIG.txt
+L-->
+
+<!-- Copyright NCI/NCICB, Inc. 2005
+    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.9 2009-04-14 20:26:48 davet Exp $
+    $Name: not supported by cvs2svn $
+-->
+<project name="CDEBrowser Tool" default="init" basedir=".">
+	<description>
+        Build and deploy the caDSR CDEBrowser Tool
+    </description>
+	<!-- Change the values in tier.build.properties as per environment -->
+	<property name="PROP.FILE" location="template.build.properties"/>   
+	<property file="${PROP.FILE}" />
+	<echo>
+        PROP.FILE = ${PROP.FILE}
+        CADSR.DS.HOST = ${CADSR.DS.HOST}
+        CADSR.DS.PORT = ${CADSR.DS.PORT} 
+        CADSR.DS.USER = ${CADSR.DS.USER}
+        CADSR.DS.PSWD = ${CADSR.DS.PSWD}
+        CADSR.DS.TNS.ENTRY=${CADSR.DS.TNS.ENTRY}
+        DEPLOY.LOCATION = ${DEPLOY.LOCATION}
+        JBOSS.HOME.DIR = ${JBOSS.HOME.DIR}
+        JBOSS.SERVER.DIR = ${JBOSS.SERVER.DIR}
+        JBOSS.CONF.DIR = ${JBOSS.CONF.DIR}
+        JBOSS.DEPLOY.DIR = ${JBOSS.DEPLOY.DIR}
+        JBOSS.LOG.DIR = ${JBOSS.LOG.DIR}
+        JDEBUG = ${JDEBUG}
+        SCP.USER = ${SCP.USER}
+        SCP.HOST = ${SCP.HOST}
+        SCP.PATH = ${SCP.PATH}
+        SCP.KEYFILE = ${SCP.KEYFILE}
+        SCP.PASSPHRASE = ${SCP.PASSPHRASE}
+        SCP.PORT = ${SCP.PORT}
+        SQL.EXE = ${SQL.EXE}
+        TEST = ${TEST}
+        TEST.VALID.USER = ${TEST.VALID.USER}
+        TEST.VALID.PSWD = ${TEST.VALID.PSWD}
+        TEST.BAD.USER = ${TEST.BAD.USER}
+        TEST.BAD.PSWD = ${TEST.BAD.PSWD}
+        TIER = ${TIER}
+        TIER.UPPER = ${TIER.UPPER}
+        TIER.NAME = ${TIER.NAME}
+        TOOL.ROOT.DIR = ${TOOL.ROOT.DIR}
+        TOOL.LOG.DIR = ${TOOL.LOG.DIR}
+    </echo>
+	<condition property="check.props">
+		<and>
+			<isset property="JDEBUG" />
+			<isset property="CADSR.DS.HOST" />
+			<isset property="CADSR.DS.PORT" />
+			<isset property="CADSR.DS.USER" />
+			<isset property="CADSR.DS.PSWD" />
+			<isset property="CADSR.DS.TNS.ENTRY" />
+			<isset property="TIER" />
+			<isset property="TIER.UPPER" />
+			<isset property="TIER.NAME" />
+			<isset property="JBOSS.HOME.DIR" />
+			<isset property="JBOSS.SERVER.DIR" />
+			<isset property="JBOSS.CONF.DIR" />
+			<isset property="JBOSS.DEPLOY.DIR" />
+			<isset property="JBOSS.LOG.DIR" />
+			<isset property="TOOL.LOG.DIR" />
+			<isset property="TOOL.ROOT.DIR" />
+			<isset property="TEST" />
+			<isset property="TEST.VALID.USER" />
+			<isset property="TEST.VALID.PSWD" />
+			<isset property="TEST.BAD.USER" />
+			<isset property="TEST.BAD.PSWD" />
+			<isset property="SCP.USER" />
+			<isset property="SCP.HOST" />
+			<isset property="SCP.PATH" />
+			<isset property="SCP.KEYFILE" />
+			<isset property="SCP.PORT" />
+			<isset property="SCP.PASSPHRASE" />
+			<isset property="DEPLOY.LOCATION" />
+			<isset property="SQL.EXE" />
+		</and>
+	</condition>
+
+	<condition property="remote.deploy">
+		<equals arg1="${DEPLOY.LOCATION}" arg2="remote" />
+	</condition>
+	<property name="root.dir" location="${basedir}/Webroot" />
+	<property name="artifacts.dir" location="${basedir}/deployment-artifacts" />
+	<property name="doc.dir" location="${artifacts.dir}/javadoc" />
+	<property name="temp.dir" location="${basedir}/tmp" />
+	<property name="tr.dir" location="${artifacts.dir}/test-results" />
+	<property name="odi.dir" location="${artifacts.dir}/ospack" />
+	<property name="web.dir" location="${root.dir}/WEB-INF" />
+	<property name="classes.dir" location="${web.dir}/classes" />
+	<property name="temp.classes.dir" location="${web.dir}/classes/temp" />
+	<property name="wlib.dir" location="${basedir}/src/web/lib" />
+	<property name="jsp.dir" location="${root.dir}/jsp" />
+	<property name="prop.dir" location="${classes.dir}/gov/nih/nci/ncicb" />
+	<property name="src.dir" location="${basedir}/src/java" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="dtd.dir" location="${basedir}/dtd" />
+	<property name="scpPath.dir" location="${SCP.PATH}/cdebrowser" />
+	<property name="toolBin.dir" location="${TOOL.ROOT.DIR}bin" />
+	<property name="toolDtd.dir" location="${TOOL.ROOT.DIR}htdocs/dtd" />
+	<property name="services.dir" location="${basedir}/src/web/services-config" />
+	<property name="tabProp.dir" location="${basedir}/src/web/tab-properties" />
+	<property name="conf.dir" location="${basedir}/src/resources/conf" />
+	<property name="war.dir" location="${artifacts.dir}/jboss/" />
+	<condition property="check.test">
+		<equals arg1="${TEST}" arg2="true" trim="true" />
+	</condition>
+
+	<filter token="CADSR.DS.HOST" value="${CADSR.DS.HOST}" />
+	<filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}" />
+	<filter token="CADSR.DS.URL" value="${CADSR.DS.HOST}:${CADSR.DS.PORT}:${CADSR.DS.TNS.ENTRY}" />
+	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}" />
+	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}" />
+	<filter token="TEST.VALID.USER" value="${TEST.VALID.USER}" />
+	<filter token="TEST.VALID.PSWD" value="${TEST.VALID.PSWD}" />
+	<filter token="TEST.BAD.USER" value="${TEST.BAD.USER}" />
+	<filter token="TEST.BAD.PSWD" value="${TEST.BAD.PSWD}" />
+	<filter token="TIER" value="${TIER}" />
+	<filter token="TIER.UPPER" value="${TIER.UPPER}" />
+	<filter token="TIER.NAME" value="${TIER.NAME}" />
+	<filter token="TOOL.LOG.DIR" value="${TOOL.LOG.DIR}" />
+	<filter token="JBOSS.LOG.DIR" value="${JBOSS.LOG.DIR}" />
+	<filter token="TOOL.ROOT.DIR" value="${TOOL.ROOT.DIR}" />
+
+	<!-- these values that replaces some tags in the tool, are needed at the build time -->
+	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
+
+	<path id="libpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+			<include name="**/*.zip"/>
+		</fileset>
+		<fileset dir="${wlib.dir}">
+			<include name="**/*.jar"/>
+			<include name="**/*.zip"/>
+		</fileset>
+	</path>
+
+	<target name="clean" depends="-prop-check" description="Deletes all project build artifacts and temporary files.">
+		<echo>Remove old artifacts ...</echo>
+		<delete dir="${classes.dir}"/>
+		<delete dir="${artifacts.dir}"/>
+		<delete file="${web.dir}/web.xml"/>
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${classes.dir}/temp"/>
+		<mkdir dir="${artifacts.dir}"/>
+		<mkdir dir="${artifacts.dir}/bin"/>
+		<mkdir dir="${artifacts.dir}/dtd"/>
+		<mkdir dir="${artifacts.dir}/gforge"/>
+		<mkdir dir="${artifacts.dir}/jboss"/>
+		<mkdir dir="${artifacts.dir}/sql"/>
+		<mkdir dir="${tr.dir}"/>
+	</target>
+
+	<target name="-compile" depends="clean,-prop-check" description="Compiles the project source.">
+		<echo>Compiling project source, debug is ${JDEBUG} ...</echo>
+		<javac  target="1.5" srcdir="${src.dir}" destdir="${temp.classes.dir}" tempdir="${temp.dir}" debug="${JDEBUG}" failonerror="yes">
+			<compilerarg line="-deprecation"/>
+			<compilerarg line="-Xlint:unchecked"/>
+			<classpath refid="libpath"/>
+		</javac>
+		
+		<!--<unzip src="${lib.dir}/cadsrutil.jar" dest="${temp.classes.dir}" overwrite="No"/>-->
+		<copy tofile="${classes.dir}/gov/nih/nci/ncicb/cadsr/common/jndi.properties" filtering="true" overwrite="Yes">
+			<fileset file="${conf.dir}/template.jndi.properties"/>
+		</copy>
+		<copy tofile="${classes.dir}/gov/nih/nci/ncicb/cadsr/common/persistence/dao/jdbc/jndi.properties" filtering="true" overwrite="Yes">
+			<fileset file="${conf.dir}/template.jndi.properties"/>
+		</copy>
+		<copy tofile="${classes.dir}/cle-providers.xml" filtering="true" overwrite="Yes">
+			<fileset file="${conf.dir}/template.cle-providers.xml"/>
+		</copy>
+		<copy tofile="${classes.dir}/deployment.properties" filtering="true" overwrite="Yes">
+			<fileset file="${conf.dir}/template.deployment.properties"/>
+		</copy>
+	    <copy todir="${classes.dir}">      
+	      <fileset dir="${src.dir}">
+            <patternset>
+               <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/struts/common/*.properties"/>
+               <include name="gov/nih/nci/ncicb/cadsr/common/persistence/**/*.xml"/>
+            </patternset>
+	      </fileset>      
+	    </copy>
+		<!-- copy api config files to classess -->
+	    <copy todir="${classes.dir}">
+			<fileset dir="${services.dir}">
+				<patternset>
+					<include name="*.xml"/>
+				</patternset>
+			</fileset>
+		</copy>
+		<!-- copy api config files to classess -->
+		<copy todir="${classes.dir}">
+			<fileset dir="${tabProp.dir}">
+				<patternset>
+					<include name="*.properties"/>
+				</patternset>
+			</fileset>
+		</copy>	
+	</target>
+
+	<target name="-assemble" depends="-compile,-prop-check" description="Assembles the deployment parts into the artifacts folders.">
+		<echo>Assembling artifacts ...</echo>
+		<delete>
+			<fileset file="${web.dir}/web.xml" />
+		</delete>
+		<copy todir="${artifacts.dir}">
+			<fileset file="build.xml" />
+			<fileset file="${PROP.FILE}" />
+		</copy>
+		<copy tofile="${web.dir}/web.xml" filtering="true">
+			<fileset file="${conf.dir}/template.web.xml" />
+		</copy>
+		<copy tofile="${web.dir}/jboss-web.xml" filtering="true">
+			<fileset file="${conf.dir}/template.jboss-web.xml" />
+		</copy>		
+		<copy tofile="${web.dir}/spring/applicationContext-domainDao.xml" filtering="true">
+			<fileset file="${conf.dir}/template.applicationContext-domainDao.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/sql/load_options.sql" filtering="true">
+			<fileset file="${conf.dir}/template.load_options.sql" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cdebrowser-oracle-ds.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cdebrowser-oracle-ds.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cdebrowser-log4j-appender.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cdebrowser-log4j-appender.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cdebrowser-log4j-category.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cdebrowser-log4j-category.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cadsrutil-log4j-appender.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cadsrutil-log4j-appender.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cadsrutil-log4j-category.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cadsrutil-log4j-category.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cdebrowser-login-config.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cdebrowser-login-config.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cdebrowser-login-config-service.xml" filtering="true">
+			<fileset file="${conf.dir}/template.cdebrowser-login-config-service.xml" />
+		</copy>
+		<copy tofile="${artifacts.dir}/jboss/cadsrutil.properties" filtering="true">
+			<fileset file="${conf.dir}/cadsrutil.properties" />
+		</copy>
+		
+		<copy todir="${root.dir}/css" >
+		    <fileset dir="${basedir}/src/web/css" />
+		</copy>
+		<copy todir="${root.dir}/html" >
+		    <fileset dir="${basedir}/src/web/html" />
+		</copy>
+		<copy todir="${root.dir}/images" >
+		   	<fileset dir="${basedir}/src/web/images" />
+		</copy>
+		<copy todir="${root.dir}/i" >
+			<fileset dir="${basedir}/src/web/i" />
+		</copy>
+		<!-- apply token common jsp or html pages -->
+		<copy todir="${root.dir}/jsp" overwrite="true">
+		    <fileset dir="${basedir}/src/web/jsp"/>
+		    <filterset>
+				<filter token="Tool.Version" value="${TOOL.RELEASE.VERSION}"/>
+				<filter token="Tool.Build" value="${TOOL.RELEASE.BUILD}"/>
+				<filter token="Tool.Support" value="${TOOL.SUPPORT.MAIL}"/>
+		      	<filter token="Tool.Release.Note.Url" value="${TOOL.RELEASE.NOTE.URL}"/>
+		    </filterset>
+		</copy>
+		<copy todir="${root.dir}/js" >
+		    <fileset dir="${basedir}/src/web/js" />
+		</copy>
+		<copy todir="${web.dir}/tld" >
+		    <fileset dir="${basedir}/src/web/tld" />
+		</copy>		
+		<copy todir="${web.dir}/lib" >			
+		    <fileset dir="${wlib.dir}" />			
+		</copy>		
+		<copy todir="${web.dir}/admin" >
+			<fileset dir="${basedir}/src/web/struts-config/admin" />
+		</copy>
+		<copy todir="${web.dir}/cdebrowser" >
+		    <fileset dir="${basedir}/src/web/struts-config/cdebrowser" />
+		</copy>
+		<copy todir="${web.dir}/ocbrowser" >
+			<fileset dir="${basedir}/src/web/struts-config/ocbrowser" />
+		</copy>			
+		<copy todir="${web.dir}/spring" >
+			<fileset dir="${basedir}/src/web/spring" />
+		</copy>
+		<copy tofile="${web.dir}/cdebrowser-faces-config.xml" >
+		    <fileset file="${basedir}/src/web/cdebrowser-faces-config.xml" />
+		</copy>
+		<copy tofile="${web.dir}/ehcache.xml" >
+		    <fileset file="${basedir}/src/web/ehcache.xml" />
+		</copy>
+		
+		
+		<fixcrlf srcdir="${artifacts.dir}" eol="lf" includes="**/*.sh, **/*.xml, **/*.properties, **/*.dtd" />
+	</target>
+
+	<target name="-cjsp" depends="-assemble,-prop-check" description="Compiles the project JSP files to verify syntax.">
+		<echo>Compiling JSP files to verify syntax ...</echo>
+		<jspc srcdir="${root.dir}/jsp" destdir="${temp.classes.dir}" compiler="jasper41"  verbose="1" failonerror="no">
+			<classpath refid="libpath"/>
+			<include name="**/*.jsp"/>
+		</jspc>
+		
+		<echo>Compiling JSP-java files to verify syntax ...</echo>
+		<javac  target="1.5" srcdir="${temp.classes.dir}/jsp" destdir="${temp.classes.dir}" encoding="Cp1252" debug="${JDEBUG}" >
+			<classpath refid="libpath"/>
+			<include name="**/*.java"/>
+			<exclude name="**/*_inc*.java"/>
+		</javac>
+		<delete dir="${temp.classes.dir}/jsp"/>
+		<delete dir="${temp.classes.dir}/org"/>
+	</target>    
+
+	<target name="-build-war" depends="-cjsp,-prop-check" description="Builds the project WAR file.">
+		<echo>Building deployable WAR file ...</echo>
+		<delete file="${war.dir}/CDEBrowser.war" />		 
+	    <copy todir="${classes.dir}">
+	      <fileset dir="${temp.classes.dir}">
+	         <patternset>	         
+	         	<include name="gov/nih/nci/ncicb/**"/>
+	         </patternset>
+	      </fileset> 
+	    </copy>
+
+		<cvs command="status -v" output="${jsp.dir}/cvsdeploy.txt"/>
+		<delete dir="${temp.classes.dir}" />
+		<war destfile="${war.dir}/CDEBrowser.war" basedir="${root.dir}" update="true" webxml="${web.dir}/web.xml">
+		</war>
+		<delete file="${jsp.dir}/cvsdeploy.txt" />
+	</target>    
+	
+	<target name="-build-jar" depends="-assemble,-prop-check" description="Build the project JAR files.">
+		<echo>Building distributable JAR files ...</echo>
+        <delete file="${artifacts.dir}/bin/cdebrowser.jar" />
+        <cvs command="status -v" output="${classes.dir}/cvsdeploy.txt" />
+        <jar destfile="${artifacts.dir}/bin/cdebrowser.jar">
+            <fileset dir="${classes.dir}">
+                <include name="cvsdeploy.txt" />
+                <include name="gov/nih/nci/ncicb/**/*.class" />
+                <include name="gov/nih/nci/ncicb/**/*.properties" />
+            </fileset>
+        </jar>
+        <delete file="${classes.dir}/cvsdeploy.txt" />
+	</target>
+
+	<target name="test" if="check.test" depends="-prop-check" description="Execute auto tests on the project logic.">
+		<echo>Performing automated project tests not supported this time...</echo>		
+	</target>
+
+    <target name="build-product" depends="-build-war,-build-jar,test,-prop-check" description="Builds all project binaries.">
+        <echo>Built products for ${TIER.NAME}</echo>
+    </target>
+
+    <target name="package-download" depends="clean,-prop-check" description="Packages the project for public distribution and access.">
+        <echo>Building project Open Source Download package ...</echo>
+        <delete dir="${odi.dir}"/>
+        <mkdir dir="${odi.dir}"/>
+        <copy todir="${odi.dir}">
+            <fileset dir="${basedir}">
+                <include name="build.xml"/>
+                <include name="template.build.properties"/>
+            </fileset>
+        </copy>
+        <mkdir dir="${odi.dir}/conf"/>
+        <copy todir="${odi.dir}/conf">
+            <fileset dir="${conf.dir}"/>
+        </copy>
+        <mkdir dir="${odi.dir}/doc"/>
+    	<move todir="${odi.dir}/doc">
+    	    <fileset dir="${doc.dir}"/>
+    	</move>
+ <!--
+    	<copy todir="${odi.dir}/doc">
+            <fileset dir="${doc.dir}"/>        		
+        </copy>-->
+        <mkdir dir="${odi.dir}/lib"/>
+        <copy todir="${odi.dir}/lib">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+        <mkdir dir="${odi.dir}/src"/>
+        <copy todir="${odi.dir}/src">
+            <fileset dir="${src.dir}"/>
+        </copy>
+        <mkdir dir="${odi.dir}/Webroot"/>
+        <copy todir="${odi.dir}/Webroot">
+            <fileset dir="Webroot">
+                <exclude name="**/classes/**"/>
+                <exclude name="**/web.xml"/>
+            </fileset>
+        </copy>
+
+        <zip destfile="${artifacts.dir}/gforge/cdebrowser_ospack.zip">
+            <zipfileset dir="${odi.dir}"/>
+        </zip>
+        <tar destfile="${artifacts.dir}/gforge/cdebrowser_ospack.tar.gz" basedir="${odi.dir}" compression="gzip"/>
+        <delete dir="${temp.dir}"/>
+    	<delete dir="Webroot"/>
+    	<delete dir="${odi.dir}"/>
+    </target>
+
+    <target name="javadoc" depends="-prop-check" description="Build the project Javadoc.">
+        <echo>Building project Javadoc ...</echo>
+        <mkdir dir="${temp.dir}" />
+        <delete dir="${doc.dir}" />
+        <mkdir dir="${doc.dir}" />
+        <mkdir dir="${artifacts.dir}" />
+        <mkdir dir="${artifacts.dir}/gforge" />
+        <javadoc destdir="${doc.dir}" Private="false" author="true" version="true" use="true" windowtitle="caDSR CDEBrowser Tool">
+            <classpath refid="libpath" />
+            <packageset dir="${src.dir}" defaultexcludes="yes">
+                <include name="gov/nih/nci/ncicb/**" />
+            </packageset>
+            <doctitle>caDSR CDEBrowser Tool</doctitle>
+            <bottom>Copyright &#169; 2008. All Rights Reserved.</bottom>
+            <tag name="todo" scope="all" description="To do:" />
+            <group title="Source Package" packages="gov.nih.nci.ncicb.cadsr;gov.nih.nci.ncicb.oracle;gov.nih.nci.ncicb.webtree" />
+            <link offline="true" href="http://java.sun.com/products/jdk/1.2/docs/api/" packagelistLoc="${temp.dir}" />
+        </javadoc>
+        <zip destfile="${artifacts.dir}/gforge/cdebrowser_doc.zip">
+            <zipfileset dir="${doc.dir}" />
+        </zip>
+        <!--<delete dir="${doc.dir}" /> -->
+    </target>
+
+    <condition property="unix.os">
+        <os family="unix" />
+    </condition>
+
+    <target name="-deploy-auto-local" if="unix.os" unless="remote.deploy" depends="-deploy-binaries-local" description="Sets the file permissions after the binaries are deployed.">
+        <echo>Automated local deployment ...</echo>
+        <chmod file="${toolBin.dir}/autorun.sh" perm="ugo+rx" />
+        <delete file="${toolBin.dir}/autorun.cmd" />
+    </target>
+
+    <target name="-deploy-auto-remote" if="remote.deploy" depends="-deploy-binaries-remote" description="Sets the file permissions after the binaries are deployed.">
+        <echo>Automated remote deployment complete ...</echo>
+    </target>
+
+    <target name="-deploy-binaries" depends="-prop-check,-deploy-binaries-local,-deploy-binaries-remote" description="Deploys the executable product binaries to the local machine.">
+        <echo>Product binaries deployed ...</echo>
+    </target>
+
+    <target name="-deploy-auto" depends="-prop-check,-deploy-auto-local,-deploy-auto-remote" description="Deploys the executable product binaries.">
+        <echo>Automated deployment complete ...</echo>
+    </target>
+
+    <target name="-deploy-binaries-local" depends="-prop-check" unless="remote.deploy" description="Deploys the executable product binaries.">
+        <echo>Deploying binaries to local file system ...</echo>    
+        <copy todir="${JBOSS.DEPLOY.DIR}">
+            <fileset dir="${artifacts.dir}/jboss">
+                <include name="**/*-oracle-ds.xml" />
+            </fileset>
+        </copy>
+        <copy todir="${JBOSS.DEPLOY.DIR}">
+            <fileset dir="${artifacts.dir}/jboss">
+                <include name="**/*-login-config-service.xml" />
+            </fileset>
+        </copy>
+        <copy todir="${JBOSS.CONF.DIR}">
+            <fileset dir="${artifacts.dir}/jboss">
+                <include name="**/*-login-config.xml" />
+            </fileset>
+        </copy>
+        <copy todir="${JBOSS.CONF.DIR}/log4j">
+            <fileset dir="${artifacts.dir}/jboss">
+                <include name="**/cdebrowser-log4j-*.xml" />
+            </fileset>
+        </copy>
+        <copy todir="${JBOSS.CONF.DIR}/log4j">
+            <fileset dir="${artifacts.dir}/jboss">
+                <include name="**/cadsrutil-log4j-*.xml" />
+            </fileset>
+        </copy>
+        <concat destfile="log4j.xml" append="no">
+            <filelist dir="${JBOSS.CONF.DIR}/log4j" files="log4j-header.xml" />
+        </concat>
+        <concat destfile="log4j.xml" append="yes">
+            <fileset dir="${JBOSS.CONF.DIR}/log4j" includes="*-log4j-appender.xml" />
+        </concat>
+        <concat destfile="log4j.xml" append="yes">
+            <fileset dir="${JBOSS.CONF.DIR}/log4j" includes="*-log4j-category.xml" />
+        </concat>
+        <concat destfile="log4j.xml" append="yes">
+            <filelist dir="${JBOSS.CONF.DIR}/log4j" files="log4j-footer.xml" />
+        </concat>
+        <fixcrlf srcdir="." includes="log4j.xml" eol="lf" />
+        <move file="log4j.xml" tofile="${JBOSS.CONF.DIR}/log4j.xml" />
+        <sleep seconds="15" />
+        <copy tofile="${JBOSS.DEPLOY.DIR}/CDEBrowser.waz">
+            <fileset file="${war.dir}" />
+        </copy>
+        <move file="${JBOSS.DEPLOY.DIR}/CDEBrowser.waz" tofile="${JBOSS.DEPLOY.DIR}/CDEBrowser.war" />
+    </target>
+
+    <target name="-deploy-binaries-remote" depends="-prop-check" if="remote.deploy" description="Deploys the executable product binaries to a remote machine.">
+        <echo>mkdir ${scpPath.dir}</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" failonerror="false" command="mkdir -p ${scpPath.dir}" />
+
+        <echo>Deploying binaries to remote file system "${SCP.USER}@${SCP.HOST}:${scpPath.dir}"</echo>
+        <scp todir="${SCP.USER}@${SCP.HOST}:${scpPath.dir}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true">
+            <fileset dir="${artifacts.dir}" includes="**/*" />
+        </scp>    	
+        <echo>cp ${scpPath.dir}/jboss/*-oracle-ds.xml ${JBOSS.DEPLOY.DIR}/.</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cp ${scpPath.dir}/jboss/*-oracle-ds.xml ${JBOSS.DEPLOY.DIR}/." />
+        <echo>cp ${scpPath.dir}/jboss/*-login-config-service.xml ${JBOSS.DEPLOY.DIR}/.</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cp ${scpPath.dir}/jboss/*-login-config-service.xml ${JBOSS.DEPLOY.DIR}/." />
+        <echo>cp ${scpPath.dir}/jboss/*-login-config.xml ${JBOSS.CONF.DIR}/.</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cp ${scpPath.dir}/jboss/*-login-config.xml ${JBOSS.CONF.DIR}/." />
+        <echo>cp ${scpPath.dir}/jboss/cdebrowser-log4j-*.xml ${JBOSS.CONF.DIR}/log4j/.</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cp ${scpPath.dir}/jboss/cdebrowser-log4j-*.xml ${JBOSS.CONF.DIR}/log4j/." />
+        <echo>cp ${scpPath.dir}/jboss/cadsrutil-log4j-*.xml ${JBOSS.CONF.DIR}/log4j/.</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cp ${scpPath.dir}/jboss/cadsrutil-log4j-*.xml ${JBOSS.CONF.DIR}/log4j/." />
+        <echo>cat ${JBOSS.CONF.DIR}/log4j/log4j-header.xml ${JBOSS.CONF.DIR}/log4j/*-log4j-appender.xml ${JBOSS.CONF.DIR}/log4j/*-log4j-category.xml ${JBOSS.CONF.DIR}/log4j/log4j-footer.xml &gt; ${JBOSS.CONF.DIR}/log4j/log4j.xml</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cat ${JBOSS.CONF.DIR}/log4j/log4j-header.xml ${JBOSS.CONF.DIR}/log4j/*-log4j-appender.xml ${JBOSS.CONF.DIR}/log4j/*-log4j-category.xml ${JBOSS.CONF.DIR}/log4j/log4j-footer.xml > ${JBOSS.CONF.DIR}/log4j/log4j.xml" />
+        <echo>mv ${JBOSS.CONF.DIR}/log4j/log4j.xml ${JBOSS.CONF.DIR}/log4j.xml</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="mv ${JBOSS.CONF.DIR}/log4j/log4j.xml ${JBOSS.CONF.DIR}/log4j.xml" />
+
+        <sleep seconds="15" />
+
+        <echo>cp ${scpPath.dir}/jboss/CDEBrowser.war ${JBOSS.DEPLOY.DIR}/cdebrowser.waz</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="cp ${scpPath.dir}/jboss/cdebrowser.ear ${JBOSS.DEPLOY.DIR}/cdebrowser.eaz" />
+        <echo>mv ${JBOSS.DEPLOY.DIR}/CDEBrowser.waz ${JBOSS.DEPLOY.DIR}/cdebrowser.war</echo>
+        <sshexec username="${SCP.USER}" host="${SCP.HOST}" port="${SCP.PORT}" passphrase="${SCP.PASSPHRASE}" keyfile="${SCP.KEYFILE}" trust="true" verbose="true" command="mv ${JBOSS.DEPLOY.DIR}/cdebrowser.eaz ${JBOSS.DEPLOY.DIR}/cdebrowser.ear" />
+
+    </target>
+
+    <target name="-check-sql-files" description="Find the possible SQL scripts and flag for execution.">
+        <available file="${artifacts.dir}/sql/load_options.sql" property="found.load_options.sql" />
+        <available file="${artifacts.dir}/sql/update_options_url.sql" property="found.update_options_url.sql" />
+    </target>
+
+    <target name="-do-load-options" if="found.load_options.sql" depends="-check-sql-files" description="Execute load_options.sql">
+       <echo>Deploying caDSR database changes ${CADSR.DS.USER}/${CADSR.DS.PSWD}@${CADSR.DS.TNS.ENTRY} @ ${artifacts.dir}/sql/load_options.sql</echo>
+  		<exec dir="." executable="${SQL.EXE}" failonerror="true">
+            <arg line="${CADSR.DS.USER}/${CADSR.DS.PSWD}@${CADSR.DS.TNS.ENTRY} @ ${artifacts.dir}/sql/load_options.sql" />
+        </exec>
+    </target>
+
+    <target name="-do-update-options" if="found.update_options_url.sql" depends="-check-sql-files" description="Execute update_options_url.sql">
+        <echo>Deploying caDSR database changes ${CADSR.DS.USER}/${CADSR.DS.PSWD}@${CADSR.DS.TNS.ENTRY} @ ${artifacts.dir}/sql/update_options_url.sql</echo>
+        <exec dir="." executable="${SQL.EXE}" failonerror="true">
+            <arg line="${CADSR.DS.USER}/${CADSR.DS.PSWD}@${CADSR.DS.TNS.ENTRY} @ ${artifacts.dir}/sql/update_options_url.sql" />
+        </exec>
+    </target>
+
+    <target name="-deploy-db" depends="-do-load-options,-do-update-options" description="execute database update scripts">
+    </target>
+
+    <target name="-deploy-gforge-check" description="Check for published files.">
+        <condition property="deploy.gforge">
+            <or>
+                <available file="${basedir}/gforge/cdebrowserapi.jar" />
+                <available file="${artifacts.dir}/gforge/cdebrowserapi.jar" />
+                <available file="gforge/cdebrowserapi.jar" />
+            </or>
+        </condition>
+    </target>
+
+    <target name="-deploy-gforge" if="deploy.gforge" depends="-deploy-gforge-check" description="Disseminates the public project artifacts, e.g. API JAR files, Javadoc, etc.">
+        <echo>        
+			Artifacts exist in the ${artifacts.dir}/gforge directory and should be published.
+			Although this is not required for the software deployment please place these files in a location accessible by the development team.    
+        </echo>
+    </target>
+
+    <target name="deploy" depends="-deploy-auto,-deploy-db,-deploy-gforge,-prop-check" description="Deploys the project artifacts.">
+        <echo>    
+			Deployment is complete. Check the formal request for any special post deployment instructions.    
+        </echo>
+    </target>
+
+    <target name="build-all" depends="build-product,javadoc,package-download,-prop-check" description="Builds all project deliverables.">
+        <echo>Built artifacts for ${TIER.NAME}</echo>
+    </target>
+
+	<target name="-prop-check" unless="check.props" description="Verifies the presence of all required properties.">
+		<fail>Missing one or more properties, see template.build.properties for a complete list.</fail>
+	</target>
+
+	<target name="-init-check" if="check.props" description="Notify the user that all properties are present.">
+		<echo>All properties are present.</echo>
+	</target>
+
+	<target name="init" depends="-prop-check,-init-check" description="The default target which only validates the presence of the script properties.">
+		<fail>This build script must be run with the name of the desired target: build-all, build-product, clean, deploy, javadoc, package-download, test.</fail>
+	</target>
+
+    <target name="-assemble-sql" depends="clean" description="create the tier specific scripts">
+        <copy tofile="${artifacts.dir}/sql/load_options.sql" filtering="true">
+            <fileset file="${conf.dir}/template.load_options.sql" />
+        </copy>
+        <copy tofile="${artifacts.dir}/sql/update_options_url.sql" filtering="true">
+            <fileset file="${conf.dir}/template.update_options_url.sql" />
+        </copy>
+    </target>
+    
+    <target name="refresh-tier" depends="-assemble-sql,-deploy-db" description="refresh the caDSR database on a specific tier">
+    </target>
+	
+	<target name="deploy_local" depends="build-product">
+		<copy todir="${JBOSS.DEPLOY.DIR}">      
+	      <fileset dir="${war.dir}">
+            <patternset>
+               <include name="CDEBrowser.war"/>
+            </patternset>
+	      </fileset>      
+	    </copy>
+	</target>	
+
+</project>
+

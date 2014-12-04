@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="gforge">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/deployment-artifacts/gforge/cdebrowser_doc.zip!/" />
+      <root url="jar://$PROJECT_DIR$/deployment-artifacts/gforge/cdebrowser_ospack.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

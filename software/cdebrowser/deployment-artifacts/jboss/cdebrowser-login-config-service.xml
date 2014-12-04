@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--L
+  Copyright SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+
+  Portions of this source file not modified since 2008 are covered by:
+
+  Copyright 2000-2008 Oracle, Inc.
+
+  Distributed under the caBIG Software License.  For details see
+  http://ncip.github.com/cadsr-cde-browser/LICENSE-caBIG.txt
+L-->
+
+<!-- $Id: template.cdebrowser-login-config-service.xml,v 1.1 2009-01-12 16:43:53 davet Exp $ -->
+
+<!-- ===================================================================== -->
+<!--  JBoss Server Configuration                                           -->
+<!-- ===================================================================== -->
+
+<server>
+   <classpath codebase="${jboss.server.lib.url:lib}" archives="*"/>
+
+   <mbean code="org.jboss.security.auth.login.DynamicLoginConfig" name="jboss:service=CDEBrowserDynamicLoginConfig">
+      <attribute name="AuthConfig">cdebrowser-login-config.xml</attribute>
+      <!-- The service which supports dynamic processing of login-config.xml configurations. -->
+      <depends optional-attribute-name="LoginConfigService">
+         jboss.security:service=XMLLoginConfig
+      </depends>
+      <!-- Optionally specify the security mgr service to use when
+         this service is stopped to flush the auth caches of the domains
+         registered by this service.
+      -->
+      <depends optional-attribute-name="SecurityManagerService">
+         jboss.security:service=JaasSecurityManager
+      </depends>
+   </mbean>
+
+</server>
