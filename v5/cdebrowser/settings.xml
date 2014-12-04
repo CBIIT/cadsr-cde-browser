@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+
+	<profiles>
+		<profile>
+			<id>normal</id>
+			<repositories>
+				<repositories>
+					<releases><enabled>true</enabled></releases>
+					<snapshots><enabled>true</enabled></snapshots>
+     				<url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>
+				</repository>				
+			</repositories>
+		</profile>
+
+</settings>
