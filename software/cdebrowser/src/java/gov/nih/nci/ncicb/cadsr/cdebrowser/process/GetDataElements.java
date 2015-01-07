@@ -50,6 +50,8 @@ import gov.nih.nci.objectCart.client.ObjectCartException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -82,6 +84,13 @@ public class GetDataElements extends BasePersistingProcess {
 		super(aService);
 
 		DEBUG = false;
+	}
+
+	private String getFormattedDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+		return  sdf.format(cal.getTime());
 	}
 
 	/**
@@ -531,11 +540,11 @@ public class GetDataElements extends BasePersistingProcess {
 
 				uem = new UserErrorMessage();
 				uem.setMsgOverview("Unexpected Application Error");
-				uem.setMsgText(
-				"An unexpected application error has occurred. Please re-try your search");
+				uem.setMsgText("An unexpected application error has occurred. Please re-try your search");
+				log.error(ex.toString());
 				uem.setMsgTechnical(
-						"<b>System administrator:</b> Here is the stack " +
-						"trace from the Exception.<BR><BR>" + ex.toString() + "<BR><BR>");
+						"<b>System administrator:</b> The stack " +
+								"trace from the Exception was logged at " + getFormattedDate() + "<BR><BR>");
 				setResult("tibSearchDE", tib);
 				setResult("uem", uem);
 				setCondition(FAILURE);

@@ -106,8 +106,7 @@ public class UserErrorMessage extends Object implements Serializable {
     uem.setMsgHelp("Please press the back button and try again.");
     uem.setMsgLink("If this problem persists, please click <a href=\"index.html\">here</a> to try restarting the application.");
     uem.setMsgTechnical(
-      "<b>System administrator:</b> Here is the stack trace from the SQLException.<BR><BR>" +
-      e.toString() + "<BR><BR>");
+      "<b>System administrator:</b> The stack trace from the SQLException has been logged. <BR><BR>");
     return uem;
   }
 
@@ -118,8 +117,7 @@ public class UserErrorMessage extends Object implements Serializable {
     uem.setMsgHelp("Please press the back button and try again.");
     uem.setMsgLink("If this problem persists, please click <a href=\"index.html\">here</a> to try restarting the application.");
     uem.setMsgTechnical(
-      "<b>System administrator:</b> Here is the stack trace from the Exception.<BR><BR>" +
-      e.toString() + "<BR><BR>");
+      "<b>System administrator:</b> The stack trace from the Exception has been logged.<BR><BR>");
     return uem;
   }
 }

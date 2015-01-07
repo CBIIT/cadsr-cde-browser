@@ -33,11 +33,23 @@ import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import org.apache.log4j.Logger;
+
 
 // java imports
 
 
 public class GetDataElementDetails extends BasePersistingProcess {
+  private Logger logger = Logger.getLogger(GetDataElementDetails.class);
+
+  private String getFormattedDate() {
+    Calendar cal = Calendar.getInstance();
+    cal.getTime();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+    return  sdf.format(cal.getTime());
+  }
 
   public GetDataElementDetails() {
     this(null);
@@ -120,9 +132,14 @@ public class GetDataElementDetails extends BasePersistingProcess {
             uem.setMsgOverview("Input validation Error");
             uem.setMsgText(
               "Input validation error has occurred. Please re-try your request");
-            uem.setMsgTechnical(
-              "<b>System Error:</b> Here is the stack " +
-              "trace from the Exception.<BR><BR>" + validationExp.toString() + "<BR><BR>");
+
+          logger.error( validationExp.toString());
+          uem.setMsgTechnical(
+                  "System Error. <b>System administrator:</b> The stack trace from the Exception was logged " +
+                          "at this time: " + getFormattedDate() + ".<BR><BR>Please contact support for help.<BR><BR>");
+//            uem.setMsgTechnical(
+//              "<b>System Error:</b> Here is the stack " +
+//              "trace from the Exception.<BR><BR>" + validationExp.toString() + "<BR><BR>");
             setResult("tib", tib);
             setResult("uem", uem);
             setCondition(FAILURE);
@@ -199,9 +216,14 @@ public class GetDataElementDetails extends BasePersistingProcess {
         uem.setMsgText(
           "An application error occurred due to incorrect URL parameters. " +
           "Please specify correct URL parameters.");
+
+        logger.error( iex.toString());
         uem.setMsgTechnical(
-          "<b>System administrator:</b> Here is the stack " +
-          "trace from the Exception.<BR><BR>" + iex.toString() + "<BR><BR>");
+                "<b>System administrator:</b> The stack trace from the Exception was logged " +
+                        "at this time: " + getFormattedDate() + ".<BR><BR>Please contact support for help.<BR><BR>");
+//        uem.setMsgTechnical(
+//          "<b>System administrator:</b> Here is the stack " +
+//          "trace from the Exception.<BR><BR>" + iex.toString() + "<BR><BR>");
         setResult("tib", tib);
         setResult("uem", uem);
         setCondition(FAILURE);
@@ -254,10 +276,15 @@ public class GetDataElementDetails extends BasePersistingProcess {
         uem = new UserErrorMessage();
         uem.setMsgOverview("Unexpected Application Error");
         uem.setMsgText(
-          "An unexpected application error has occurred. Please re-try your search");
+                "An unexpected application error has occurred. Please re-try your search");
+        // Log stack trace instead of blindly printing it in the html to avoid hacking
+//        uem.setMsgTechnical(
+//                "<b>System administrator:</b> Here is the stack " +
+//                        "trace from the Exception.<BR><BR>" + ex.toString() + "<BR><BR>");
+        logger.error( ex.toString());
         uem.setMsgTechnical(
-          "<b>System administrator:</b> Here is the stack " +
-          "trace from the Exception.<BR><BR>" + ex.toString() + "<BR><BR>");
+                "<b>System administrator:</b> The stack trace from the Exception was logged " +
+                        "at this time: " + getFormattedDate() + ".<BR><BR>Please contact support for help.<BR><BR>");
         setResult("tib", tib);
         setResult("uem", uem);
         setCondition(FAILURE);
