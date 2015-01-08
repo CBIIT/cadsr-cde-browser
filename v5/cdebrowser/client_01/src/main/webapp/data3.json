@@ -1,0 +1,109 @@
+[
+    {
+        "contextName": "I am the Top node",
+        "hover": "Top node hover text",
+        "childType": 5,
+        "action": "Action for Top node",
+        "type": 3,
+        "isParent": true,
+        "collapsed": false,
+        "children": [
+            {
+                "contextName": "I am  node 1",
+                "hover": "Node 1 hover text",
+                "childType": 2,
+                "action": "Action for node 1",
+                "type": 5,
+                "isParent": true,
+                "collapsed": true,
+                "children": [
+                    {
+                        "contextName": "I am  node 0",
+                        "hover": "Node 0 hover text",
+                        "childType": 0,
+                        "action": "Action for node 0",
+                        "type": 2,
+                        "isParent": false,
+                        "collapsed": false,
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "contextName": "I am the Top node b",
+        "hover": "Top node b hover text",
+        "childType": 3,
+        "action": "Action for Top node b",
+        "type": 3,
+        "isParent": true,
+        "collapsed": false,
+        "children": [
+            {
+                "contextName": "I am  node 2",
+                "hover": "Node 2 hover text",
+                "childType": 5,
+                "action": "Action for node 2",
+                "type": 3,
+                "isParent": true,
+                "collapsed": false,
+                "children": [
+                    {
+                        "contextName": "I am  node 1b",
+                        "hover": "Node 1b hover text",
+                        "childType": 2,
+                        "action": "Action for node 1b",
+                        "type": 5,
+                        "isParent": true,
+                        "collapsed": true,
+                        "children": [
+                            {
+                                "contextName": "I am  node 0b",
+                                "hover": "Node 0b hover text",
+                                "childType": 0,
+                                "action": "Action for node 0b",
+                                "type": 2,
+                                "isParent": false,
+                                "collapsed": false,
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "contextName": "I am the Top node b",
+        "hover": "Top node b hover text",
+        "childType": 4,
+        "action": "Action for Top node b",
+        "type": 3,
+        "isParent": true,
+        "collapsed": false,
+        "children": [
+            {
+                "contextName": "I am  node 1b",
+                "hover": "Node 1b hover text",
+                "childType": 6,
+                "action": "Action for node 1b",
+                "type": 4,
+                "isParent": true,
+                "collapsed": true,
+                "children": [
+                    {
+                        "contextName": "I am  node 0b",
+                        "hover": "Node 0b hover text",
+                        "childType": 0,
+                        "action": "Action for node 0b",
+                        "type": 6,
+                        "isParent": false,
+                        "collapsed": false,
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    }
+]
