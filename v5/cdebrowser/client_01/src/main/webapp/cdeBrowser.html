@@ -149,9 +149,9 @@
 <div cdeBrowserApp id="cdeBrowserApp" ng-app="cdeBrowserApp" ng-controller="cdeBrowserController">
 
     <!--  Left side tree menu  -->
-    <!--
-    <div id="treeMenuWaitMessage">{{waitMessage}}</div>
-    -->
+
+    <div id="treeMenuWaitMessage"><h1>{{waitMessage}}</h1></div>
+
     <div id="treeMenu" class="treeMenu"
          ng-style="resizeHeight()"
          resize
@@ -185,7 +185,12 @@
         <input refreshTree type="button" value="dataLoad2" data-ng-click="dataLoad2()"/>
         <input refreshTree type="button" value="dataLoad3" data-ng-click="dataLoad2b()"/>
     -->
+
+
+    <!--
         <input refreshTree type="button" value="dataLoad Srv" data-ng-click="dataLoad3()"/>
+    -->
+
 
      <!--
         <input reSize type="button" value="getHeights" data-ng-click="getHeights()"/>
