@@ -67,6 +67,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
             //console.log("From context_data Service:");
             //console.log( JSON.stringify( response) );
             $scope.contextList = response;
+            $scope.waitMessage = "";
         });
     };
 
@@ -74,7 +75,9 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
         //console.log("Size: " + $scope.windowHeight);
     };
 
-    $scope.dataLoad2b()
+    $scope.waitMessage = "Please wait, loading menu data.....";
+    $scope.dataLoad3();
+
 });
 
 
