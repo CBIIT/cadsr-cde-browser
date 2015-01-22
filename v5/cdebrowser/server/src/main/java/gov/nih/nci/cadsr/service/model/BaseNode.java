@@ -4,6 +4,7 @@
 
 package gov.nih.nci.cadsr.service.model;
 
+import gov.nih.nci.cadsr.common.CaDSRConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,10 +15,10 @@ public abstract class BaseNode implements Serializable
 {
     private Logger logger = LogManager.getLogger( BaseNode.class.getName() );
 
-    private String contextName;
+    private String text;
     private String hover = "";
     private int childType;
-    private String action;
+    private String href = "Default action";
     private int type;
     private ArrayList<BaseNode> children;
     private String idSeq = "";
@@ -40,15 +41,24 @@ public abstract class BaseNode implements Serializable
         children.add( contextNode );
         this.isParent = true;
         this.childType = contextNode.type;
-        //logger.debug( "A [" + contextNode.getContextName() +"] Adding child: parent is type: " +  this.type + "  child is type: " + this.childType);
+        //logger.debug( "A [" + contextNode.getText() +"] Adding child: parent is type: " +  this.type + "  child is type: " + this.childType);
 
         //If I am a folder with csi child, make me a csi folder
         if( this.type == 3 && this.childType == 2 )
         {
             this.type = 5;
         }
-        //logger.debug( "B [" + contextNode.getContextName() + "] Adding child: parent is type: " +  this.type + "  child is type: " + this.childType);
+        //logger.debug( "B [" + contextNode.getText() + "] Adding child: parent is type: " +  this.type + "  child is type: " + this.childType);
 
+    }
+
+    protected String trimName( int len, String text )
+    {
+        if( !text.isEmpty() && text.length() > len )
+        {
+            text = text.substring( 0, len ) + "...";
+        }
+        return text;
     }
 
     public String getHover()
@@ -101,14 +111,24 @@ public abstract class BaseNode implements Serializable
         this.children = children;
     }
 
-    public String getContextName()
+    public String getTrimText()
     {
-        return contextName;
+        //FIXME - just test text for now
+        this.setHref( "test.html?context=" + this.text );
+        //logger.debug( "this.Trimtext: " + trimName( CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN, text ) );
+        return trimName( CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN, text );
     }
 
-    public void setContextName( String contextName )
+    public String getText()
     {
-        this.contextName = contextName;
+        //FIXME - just test text for now
+        this.setHref( "test.html?context=" + this.text );
+        return this.text;
+    }
+
+    public void setText( String text )
+    {
+        this.text = text;
     }
 
     public int getChildType()
@@ -121,14 +141,14 @@ public abstract class BaseNode implements Serializable
         this.childType = childType;
     }
 
-    public String getAction()
+    public String getHref()
     {
-        return action;
+        return href;
     }
 
-    public void setAction( String action )
+    public void setHref( String href )
     {
-        this.action = action;
+        this.href = href;
     }
 
     public String getIdSeq()
@@ -144,9 +164,12 @@ public abstract class BaseNode implements Serializable
     public String toString()
     {
         StringBuffer sb = new StringBuffer();
-        sb.append( "name=" + this.getContextName() + "\n" );
+
+        //sb.append( "name=" + this.getText() + "\n" );
+        sb.append( "name=" + this.getText() + "\n" );
+
         sb.append( "ConteIdSeq=" + this.getIdSeq() + "\n" );
-        sb.append( "action=" + this.getAction() + "\n" );
+        sb.append( "href=" + this.getHref() + "\n" );
         sb.append( "hover=" + this.getHover() + "\n" );
         sb.append( "type=" + this.getType() + "\n" );
         sb.append( "childType=" + this.getChildType() + "\n" );

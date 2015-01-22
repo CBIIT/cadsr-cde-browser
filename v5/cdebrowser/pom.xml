@@ -9,6 +9,7 @@
 
     <modules>
         <module>client_01</module>
+        <module>client_02</module>
         <module>server</module>
     </modules>
     

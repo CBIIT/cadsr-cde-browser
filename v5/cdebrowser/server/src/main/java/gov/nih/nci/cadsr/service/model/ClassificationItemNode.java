@@ -14,5 +14,6 @@ public class ClassificationItemNode  extends BaseNode
     public ClassificationItemNode()
     {
         super();
+
     }
 }

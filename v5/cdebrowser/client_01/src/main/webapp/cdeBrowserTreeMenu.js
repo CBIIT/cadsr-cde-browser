@@ -8,7 +8,7 @@ var cdeBrowserApp = angular.module('cdeBrowserApp', ['cdebrowserTreeview']);
 cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     $scope.displaySelected = function (text,action, hover) {
-        console.log(text);
+        console.log(text +", " + action + ", " + hover);
         $scope.selectedText = text;
         $scope.selectedAction = action;
         $scope.selectedHover = hover;
@@ -63,11 +63,12 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     $scope.dataLoad3 = function () {
         console.log("dataLoad3 = function ()");
-        $http.get("http://" + window.location.hostname + ":"+ window.location.port + "/cdebrowserServer/context_data").success(function (response) {
+        $http.get("http://" + window.location.hostname + ":"+ window.location.port + "/cdebrowserServer/contextData?uiType=5").success(function (response) {
             //console.log("From context_data Service:");
             //console.log( JSON.stringify( response) );
             $scope.contextList = response;
-            $scope.waitMessage = "";
+            $scope.waitMessage = "caDSR Contexts:";
+            $scope.hideTree=0;
         });
     };
 
@@ -76,6 +77,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
     };
 
     $scope.waitMessage = "Please wait, loading menu data.....";
+    $scope.hideTree=1;
     $scope.dataLoad3();
 
 });
@@ -330,13 +332,13 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                         };
                         //if user clicks on a plan icon - acts the same as user clicking in the text
                         scope[treeId].selectNodeNorm = scope[treeId].selectNodeNorm || function( selectedNode ){
-                            //console.log("Click Norm Icon: " + selectedNode.contextName);
+                            console.log("Click Norm Icon: " + selectedNode.contextName );
                             disp(selectedNode);
                         };
 
                         //if user clicks on the text
                         scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function( selectedNode , selectAction){
-                            //console.log("Click on text, action: " + selectAction);
+                            console.log("Click on text, action: " + selectAction);
                             disp(selectedNode);
                         };
                     }
@@ -354,8 +356,8 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
                     //set highlight to selected node
                     selNode.selected = 'selected';
-
-                    scope.displaySelected(selNode.contextName, selNode.action, selNode.hover);
+                    console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover +"]");
+                    scope.displaySelected(selNode.text, selNode.href, selNode.hover);
 
                     //Update the current node with the one just selected.
                     scope[treeId].currentNode = selNode;

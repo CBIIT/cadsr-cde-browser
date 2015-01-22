@@ -11,8 +11,7 @@ import gov.nih.nci.cadsr.service.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,12 @@ public class ContextDataController
     private boolean includeClassification = true;
     private boolean includeProtocol = true;
     private String message;
-    @Value("${maxHoverTextLen}")  String maxHoverTextLenStr;
+
+    @Value("${maxHoverTextLen}")
+    String maxHoverTextLenStr;
+
+    private int contextSubsetCount;
+    private int uiType;
 
     public ContextDataController()
     {
@@ -77,13 +81,32 @@ public class ContextDataController
         this.message = "Init ";
     }
 
-    @RequestMapping("/context_data")
-    public ContextNode[] getContextData()
-    {
-        logger.debug( "Received rest call \"context_data\"" );
 
-        ContextNode[] contextNodes = new ContextNode[2];
-        contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, false, "caDSR Contexts" );
+    //@RequestMapping()
+    @RequestMapping(value = "/contextData")
+    @ResponseBody
+    public ContextNode[] contextData( @RequestParam("uiType") int clientUiType )
+    {
+
+        logger.debug( "Received rest call \"contextData\" uiType: " + clientUiType );
+        //this.uiType = clientUiType;
+        this.contextSubsetCount = clientUiType;
+        ContextNode[] contextNodes = null;
+
+        if( this.contextSubsetCount < 2 )
+        {
+            contextNodes = new ContextNode[1];
+            contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, false, "caDSR Contexts" );
+        }
+        else
+        {
+            contextNodes = new ContextNode[this.contextSubsetCount];
+            for( int i = 0; i < this.contextSubsetCount; i++ )
+            {
+                //logger.debug( " >>> " + getContextSubsetString( uiType, i ) );
+                contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, getContextSubsetString( this.contextSubsetCount, i ) );
+            }
+        }
 
         /////////////////////////////////////////////////////////////////////////////
         //Get list of all Contexts
@@ -121,13 +144,13 @@ public class ContextDataController
             ParentNode classificationsParentNode = new ParentNode();
             classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
             classificationsParentNode.setType( CaDSRConstants.FOLDER );
-            classificationsParentNode.setContextName( "Classifications" );
+            classificationsParentNode.setText( "Classifications" );
             classificationsParentNode.setCollapsed( true );
             // If/When a child is added IsParent will change to true.
             classificationsParentNode.setIsParent( false );
             //No need for tooltip
-            //classificationsParentNode.setHover( classificationsParentNode.getContextName() );
-            classificationsParentNode.setAction( "Action for " + classificationsParentNode.getContextName() );
+            //classificationsParentNode.setHover( classificationsParentNode.getText() );
+            classificationsParentNode.setHref( classificationsParentNode.getHref() );
             classificationsParentNode.setChildren( new ArrayList<BaseNode>() );
 
             if( includeClassification )
@@ -145,7 +168,7 @@ public class ContextDataController
                         ClassificationNode classificationSchemeNode = new ClassificationNode();
                         classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
                         classificationSchemeNode.setType( CaDSRConstants.FOLDER );
-                        classificationSchemeNode.setContextName( classificationSchemeModel.getLongName() );
+                        classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
                         //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + model.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
                         classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() );
                         classificationSchemeNode.setCollapsed( true );
@@ -165,7 +188,7 @@ public class ContextDataController
                                 //logger.debug( "GetCsi [" + classificationSchemeModel.getLongName() + "] : " + csCsiModel.getCsiName() );
                                 //Set as much as we can without knowing if it has children
                                 ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
-                                classificationSchemeItemNode.setContextName( csCsiModel.getCsiName() );
+                                classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
                                 //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + model.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
                                 classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
                                 classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
@@ -188,14 +211,14 @@ public class ContextDataController
 
             //Protocol forms folder
             ParentNode protocolsParentNode = new ParentNode();
-            protocolsParentNode.setContextName( "ProtocolForms" );
+            protocolsParentNode.setText( "ProtocolForms" );
             protocolsParentNode.setCollapsed( true );
             protocolsParentNode.setIsParent( false );// If and when a child is added IsParent will change to true.
             protocolsParentNode.setType( CaDSRConstants.FOLDER );
             protocolsParentNode.setChildType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
             //Don't need tooltip for this
-            //protocolsParentNode.setHover( protocolsParentNode.getContextName() );
-            protocolsParentNode.setAction( "Action for " + protocolsParentNode.getContextName() );
+            //protocolsParentNode.setHover( protocolsParentNode.getText() );
+            protocolsParentNode.setHref( protocolsParentNode.getHref() );
             protocolsParentNode.setChildren( new ArrayList<BaseNode>() );
 
             if( includeProtocol )
@@ -241,12 +264,15 @@ public class ContextDataController
             //////////////////////////////////////////////////////////////////////////
             //This top node
             //////////////////////////////////////////////////////////////////////////
+            //ContextNode contextNodeParent = new ContextNode( model );
             ContextNode contextNodeParent = new ContextNode( model );
             contextNodeParent.setHover( contextNodeParent.getHover() );
             contextNodeParent.addChild( classificationsParentNode );
             contextNodeParent.addChild( protocolsParentNode );
 
-            contextNodes[0].addChild( contextNodeParent );
+//logger.debug( "index for " + contextNodeParent.getText() + "is "  +  getContextSubsetIndex( contextNodeParent.getText()));
+
+            contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addChild( contextNodeParent );
         }
         logger.debug( "Done rest call\n=========================\n" );
 
@@ -358,7 +384,7 @@ public class ContextDataController
     private void addChildrenToCsi( ClassificationItemNode ClassificationItemNodeParent )
     {
         List<CsCsiModel> csCsiChildModelParentList = getCsCsisByParentCsCsi( ClassificationItemNodeParent.getIdSeq() );
-//logger.debug( "cNodeCsi["+ cNodeCsi.getContextName() + " Child count: " + csCsiChildModelParentList.size() );
+//logger.debug( "cNodeCsi["+ cNodeCsi.getText() + " Child count: " + csCsiChildModelParentList.size() );
 
         if( !csCsiChildModelParentList.isEmpty() )
         {
@@ -371,7 +397,7 @@ public class ContextDataController
                 classificationItemNodeChild.setCollapsed( false );
                 classificationItemNodeChild.setChildType( CaDSRConstants.EMPTY );
                 classificationItemNodeChild.setType( CaDSRConstants.CSI );
-                classificationItemNodeChild.setContextName( csCsiChildModel.getCsiName() );
+                classificationItemNodeChild.setText( csCsiChildModel.getCsiName() );
                 classificationItemNodeChild.setHover( csCsiChildModel.getCsiDescription() );
                 classificationItemNodeChild.setIdSeq( csCsiChildModel.getCsiIdseq() );
 
@@ -399,9 +425,9 @@ public class ContextDataController
 
     private ProtocolFormNode initProtocolFormNode( ProtocolFormModel protocolFormModel )
     {
-        int maxHoverTextLen = Integer.parseInt(maxHoverTextLenStr);
+        int maxHoverTextLen = Integer.parseInt( maxHoverTextLenStr );
         ProtocolFormNode protocolFormNode = new ProtocolFormNode();
-        protocolFormNode.setContextName( protocolFormModel.getLongName() );
+        protocolFormNode.setText( protocolFormModel.getLongName() );
         String hoverText = protocolFormModel.getProtoPreferredDefinition();
         if( !hoverText.isEmpty() && hoverText.length() > maxHoverTextLen )
         {
@@ -418,9 +444,9 @@ public class ContextDataController
 
     private ProtocolNode initProtocolNode( ProtocolModel protocolModel )
     {
-        int maxHoverTextLen = Integer.parseInt(maxHoverTextLenStr);
+        int maxHoverTextLen = Integer.parseInt( maxHoverTextLenStr );
         ProtocolNode protocolNode = new ProtocolNode();
-        protocolNode.setContextName( protocolModel.getLongName() );
+        protocolNode.setText( protocolModel.getLongName() );
         String hoverText = protocolModel.getPreferredDefinition();
         if( !hoverText.isEmpty() && hoverText.length() > maxHoverTextLen )
         {
@@ -433,4 +459,80 @@ public class ContextDataController
         protocolNode.setIsParent( false );
         return protocolNode;
     }
+
+    private int getContextSubsetIndex( String contextName )
+    {
+
+        if( this.contextSubsetCount < 2 )
+        {
+            return 0;
+        }
+        int index;
+        //int interval = 26 / this.contextSubsetCount;
+        //int interval = (int)((26.0 / this.contextSubsetCount) + 0.5);
+        int interval = CaDSRConstants.INTERVAL_SIZE[this.contextSubsetCount];
+
+        Character firstChar = contextName.toUpperCase().charAt( 0 );
+        index = ( firstChar - 65 ) / interval;
+
+/*
+logger.debug( "contextName: " + contextName + "   interval: " + interval + "   firstChar: " + firstChar + "   (firstChar - 65 ): " + (firstChar - 65 ) );
+logger.debug( "index = (firstChar - 65 ) / this.contextSubsetCount: " + (firstChar - 65 ) / interval );
+*/
+        return index;
+    }
+
+    private String getContextSubsetString( int count, int i )
+    {
+        logger.debug( "getContextSubsetString( count: " + count + ",  i: " + i + " )" );
+
+
+//        double dblInterval = ((26.0 / count) + 0.5);
+//        int interval = (int)dblInterval;
+
+        //int interval = (int)((26.0 / count) + 0.5);
+        int interval = CaDSRConstants.INTERVAL_SIZE[count];
+        logger.debug( "\n" );
+
+        logger.debug( "i: " + i );
+        logger.debug( "interval: " + interval );
+
+        // int endLetter =  interval + i ;
+        int startLetter = ( interval * i );
+        int endLetter = ( startLetter + interval );
+        logger.debug( "startLetter: " + startLetter );
+        //logger.debug( "endLetter: " + endLetter + "\n.......................\n" );
+
+        String subsetString = "";
+
+        logger.debug( "emdLetter + 1 = " + ( endLetter + 1 ) );
+        if( endLetter > 26 )
+        {
+ /*
+            logger.debug( "endLetter: " + endLetter + "  > 26" );
+*/
+            logger.debug( "Changed end letter from " + Character.toChars( 64 + endLetter )[0] + " to " + Character.toChars( 64 + 26 )[0] );
+            endLetter = 26;
+
+        }
+/*
+        else
+        {
+            logger.debug( "endLetter: " + endLetter + " NOT > 26" );
+        }
+
+*/
+        logger.debug( "endLetter: " + endLetter + "\n.......................\n" );
+
+        if( endLetter != ( startLetter + 1 ) )
+        {
+            subsetString += Character.toChars( 65 + startLetter )[0] + "-";
+        }
+        subsetString += Character.toChars( 64 + endLetter )[0];
+
+        logger.debug( "Size: " + count + "   i: " + i + "   interval: " + interval + "    " + subsetString );
+        logger.debug( "\n" );
+        return subsetString;
+    }
+
 }

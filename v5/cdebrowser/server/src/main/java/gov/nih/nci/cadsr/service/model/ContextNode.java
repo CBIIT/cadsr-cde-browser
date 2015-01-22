@@ -23,6 +23,7 @@ public class ContextNode extends BaseNode
 
     /**
      * Hover text is set to empty String
+     *
      * @param type
      * @param isCollapsed
      * @param name
@@ -34,24 +35,23 @@ public class ContextNode extends BaseNode
 
 
     /**
-     *
      * @param type
      * @param isCollapsed
      * @param name
      * @param hoverText
      */
-     public ContextNode( int type, boolean isCollapsed, String name, String hoverText )
+    public ContextNode( int type, boolean isCollapsed, String name, String hoverText )
     {
         super();
         this.setChildren( new ArrayList<BaseNode>() );
         this.setIsParent( false );
         this.setType( type );
-        this.setContextName( name );
+        this.setText( name );
         // Contexts don't need tooltips
         //this.setHover( hoverText );
 
         //FIXME - just test text for now
-        this.setAction( "Action - " + name );
+        this.setHref( "test.html?context=" + this.getText() );
         this.setCollapsed( isCollapsed );
     }
 
@@ -63,18 +63,19 @@ public class ContextNode extends BaseNode
     public ContextNode( ContextModel contextModel )
     {
         super();
-        this.setContextName( contextModel.getName() + " (" + contextModel.getDescription() + ") " );
+        this.setText( contextModel.getName() + " (" + contextModel.getDescription() + ") " );
         this.setType( CaDSRConstants.FOLDER );
         this.setCollapsed( true );
         this.setIsParent( false );
         // Contexts don't need tooltips
-        //this.setHover( this.getContextName() );
+        //this.setHover( this.getText() );
 
         //FIXME - just test text for now
-        this.setAction( "Action for " + this.getContextName() );
+        this.setHref( "test.html?context=" + this.getText() );
         this.setChildType( 0 );
         this.setIdSeq( contextModel.getConteIdseq() );
         this.setChildren( new ArrayList<BaseNode>() );
     }
+
 
 }

@@ -49,14 +49,16 @@ div[top-header] {
 
 div[top-cadsr]{
     width: 400px;
+/*
     height: 130px;
+*/
     background-color: #ffffff;
 }
 
 a[top_image] {
     position: relative;
     left: 100px;
-    top: 21px;
+    top: 1px;
     /* ***************************************
         transform: translateX(-150px);
         transform: translateY(-21px);

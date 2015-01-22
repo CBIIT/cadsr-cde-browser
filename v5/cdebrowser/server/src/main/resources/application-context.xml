@@ -23,6 +23,10 @@
 
     <context:property-placeholder location="classpath:cdeBrowser.server.properties"/>
 
+    <bean id="testController" class="gov.nih.nci.cadsr.service.restControllers.TestController" >
+     </bean>
+
+
     <bean id="adminController" class="gov.nih.nci.cadsr.service.restControllers.AdminController" >
         <property name="classificationSchemeDAO" ref="classificationSchemeDAO" />
     </bean>

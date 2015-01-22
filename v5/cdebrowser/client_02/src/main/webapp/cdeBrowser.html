@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Client02</title>
+
+    <script type='text/javascript' src='angular_2.min.js'></script>
+    <script type='text/javascript' src='cdeBrowserDropdownMenu.js'></script>
+    <link rel="stylesheet" type="text/css" href="css/dropdownMenu.css">
+
+
+</head>
+<body>
+
+
+<!-- =============================================================================== -->
+<div class="topButtons" id="top-header-right" class="top-header-right">
+
+    <TABLE valign="top" width=100%; Cellpadding=0 Cellspacing=0 border=0>
+        <tr>
+            <td id="top-cadsrTd">
+                <div top-cadsr id="top-header-left">
+                    <a top_image href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
+                       target="_blank">
+                        <img src="icons/iconSet0/caDSR_logo.png">
+                    </a>
+                </div>
+            </td>
+
+
+            <td align="right">
+                <!-- Logo and four buttons -->
+                <table border=0>
+                    <TR>
+                        <!-- large CDE Browser Logo  -->
+                        <td valign="top" align="left" nowrap>
+                            <img src="icons/iconSet0/cdeBrowserLogo.png" border="0" alt="cdeBrowserLogo">
+                        </td>
+
+
+                        <!--  Four buttons  -->
+                        <td align=right valign=top colspan=3 align="right" nowrap>
+                            <TABLE Cellpadding=0 Cellspacing=0 border=0>
+                                <TR>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
+                                            <img
+                                                    id="shoppingButton"
+                                                    src="icons/buttonIconSet0/white/circle_shopping_cart.png"
+                                                    alt="CDE Cart"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;CDE &nbsp;Cart
+                                    </TD>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                href="/CDEBrowser/" target="_top">
+                                            <img
+                                                    id="homeButton"
+                                                    src="icons/buttonIconSet0/white/circle_home.png"
+                                                    alt="Home"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;Home&nbsp;
+                                    </TD>
+
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
+                                                target="_blank">
+                                            <img id="formButton"
+                                                 src="icons/buttonIconSet0/white/circle_form.png"
+                                                 alt="FormBuilder"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;FormBuilder&nbsp;
+                                    </TD>
+
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                                                target="_blank">
+                                            <img id="helpButton"
+                                                 src="icons/buttonIconSet0/white/circle_help.png"
+                                                 alt="Task Help"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;Help&nbsp;
+                                    </TD>
+                                </TR>
+                            </TABLE>
+                        </td>
+                        <!--  End Four buttons  -->
+
+
+                    </tr>
+                    <tr>
+                        <TD colspan=1>
+                        <td align="right">
+                            Tools:
+
+                            <select id="ddlViewBy">
+                                <option value="1">Admin Tool</option>
+                                <option value="2">Curation Tool</option>
+                                <option value="3">NCI Metathesaurus</option>
+                                <option value="3">NCI Terminology Server</option>
+                                <option value="3">Sentinel Tool</option>
+                                <option value="3">UML Model Browser</option>
+                                <option value="3">Available Downloads</option>
+                            </select>
+                        </td>
+                        </TD>
+                    </tr>
+                </table>
+                <!-- End Logo and four buttons -->
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- =============================================================================== -->
+<!--
+      <input refreshTree type="button" value="dataLoad0" data-ng-click="dataLoad0()"/>
+      <input refreshTree type="button" value="dataLoad1" data-ng-click="dataLoad1()"/>
+      <input refreshTree type="button" value="dataLoad2" data-ng-click="dataLoad2()"/>
+      <input refreshTree type="button" value="dataLoad3" data-ng-click="dataLoad2b()"/>
+  -->
+
+
+<!--
+    <input refreshTree type="button" value="dataLoad Srv" data-ng-click="dataLoad3()"/>
+-->
+<div class="row" ng-app="App">
+
+
+    <div ng-controller="NavCtrl">
+
+        <span class="heading" ng-hide="hideMenu">{{contextHeading}}</span>
+
+
+        <nav class="nav-menu" menu-data="menu" ng-hide="hideMenu"></nav>
+
+        <input type="button" value="Test Data 1" ng-click="dataLoad1()"/>
+        <input type="button" value="Test Data 2" ng-click="dataLoad2()"/>
+        <input type="button" value="From Server" ng-click="dataLoad3()"/>
+        <input class="contextSubsetCount" type="number" ng-model="subsetCount" ng-init="subsetCount=5" width="2" max="10" min="1" />
+
+        <div class="wait_message">{{waitMessage}}</div>
+
+
+    </div>
+</div>
+
+</body>
+
+
+</html>

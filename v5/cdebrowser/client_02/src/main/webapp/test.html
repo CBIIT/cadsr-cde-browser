@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+Test:<br>
+<script>
+
+    function gup (name) {
+        name = RegExp ('[?&]' + name.replace (/([[\]])/, '\\$1') + '=([^&#]*)');
+        var value = (window.location.href.match (name) || ['', ''])[1];
+        return value.replace(/%20/g, " ");
+    }
+
+    document.write( gup("context"));
+</script>
+
+</body>
+</html>
