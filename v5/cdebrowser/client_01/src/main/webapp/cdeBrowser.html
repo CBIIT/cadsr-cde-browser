@@ -24,8 +24,8 @@
 
 <!-- =============================================================================== -->
 
-<div top-header id="top-header" >
-    <a href="http://www.cancer.gov" target="_blank" >
+<div id="top-header">
+    <a href="http://www.cancer.gov" target="_blank">
         <img id="headerLogoLeft" src="icons/iconSet0/NCI_logo_white.png" border=0>
         <img id="headerTextLeft" src="icons/iconSet0/NCI_text_white.png" border=0>
         <img id="headerTextRight" src="icons/iconSet0/www_text_white.png" border=0 align="right">
@@ -35,19 +35,18 @@
 <!-- =============================================================================== -->
 
 <!-- FIXME, rename id  -->
-<div topButtons  id="top-header-right" class="top-header-right">
+<div topButtons id="top-header-right" class="top-header-right">
 
     <TABLE valign="top" width=100%; Cellpadding=0 Cellspacing=0 border=0>
         <tr>
             <td id="top-cadsrTd">
                 <div top-cadsr id="top-header-left">
-                    <a top_image href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
+                    <a id="cadsr_image" href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
                        target="_blank">
                         <img src="icons/iconSet0/caDSR_logo.png">
                     </a>
                 </div>
             </td>
-
 
 
             <td align="right">
@@ -61,10 +60,10 @@
 
 
                         <!--  Four buttons  -->
-                        <td align=right valign=top  colspan=3  align="right" nowrap>
+                        <td align=right valign=top colspan=3 align="right" nowrap>
                             <TABLE Cellpadding=0 Cellspacing=0 border=0>
                                 <TR>
-                                    <TD  class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
                                             <img
@@ -76,7 +75,7 @@
                                         <br>
                                         &nbsp;CDE &nbsp;Cart
                                     </TD>
-                                    <TD class="button_cell" valign="TOP" align="CENTER"  colspan=1>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 href="/CDEBrowser/" target="_top">
                                             <img
@@ -89,20 +88,20 @@
                                         &nbsp;Home&nbsp;
                                     </TD>
 
-                                    <TD class="button_cell" valign="TOP" align="CENTER"  colspan=1>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
                                                 target="_blank">
-                                            <img  id="formButton"
-                                                  src="icons/buttonIconSet0/black/circle_form.png"
-                                                  alt="FormBuilder"
+                                            <img id="formButton"
+                                                 src="icons/buttonIconSet0/black/circle_form.png"
+                                                 alt="FormBuilder"
                                                     />
                                         </a>
                                         <br>
                                         &nbsp;FormBuilder&nbsp;
                                     </TD>
 
-                                    <TD class="button_cell" valign="TOP" align="CENTER"  colspan=1>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
                                                 target="_blank">
@@ -129,7 +128,7 @@
 
                             <select id="ddlViewBy">
                                 <option value="1">Admin Tool</option>
-                                <option value="2" >Curation Tool</option>
+                                <option value="2">Curation Tool</option>
                                 <option value="3">NCI Metathesaurus</option>
                                 <option value="3">NCI Terminology Server</option>
                                 <option value="3">Sentinel Tool</option>
@@ -148,7 +147,7 @@
 </div>
 
 
-<div cdeBrowserApp id="cdeBrowserApp" ng-app="cdeBrowserApp" ng-controller="cdeBrowserController">
+<div id="cdeBrowserApp" ng-app="cdeBrowserApp" ng-controller="cdeBrowserController">
 
 <!--  Left side tree menu  -->
 
@@ -181,17 +180,14 @@
      resize
      notifier="notifyServiceOnChange(params)"
         >
-<!--
-    <input refreshTree type="button" value="dataLoad0" data-ng-click="dataLoad0()"/>
-    <input refreshTree type="button" value="dataLoad1" data-ng-click="dataLoad1()"/>
-    <input refreshTree type="button" value="dataLoad2" data-ng-click="dataLoad2()"/>
-    <input refreshTree type="button" value="dataLoad3" data-ng-click="dataLoad2b()"/>
--->
+
+<input refreshTree type="button" value="dataLoad0" data-ng-click="dataLoad0()"/>
+<input refreshTree type="button" value="dataLoad1" data-ng-click="dataLoad1()"/>
+<input refreshTree type="button" value="dataLoad2" data-ng-click="dataLoad2()"/>
+<input refreshTree type="button" value="dataLoad3" data-ng-click="dataLoad2b()"/>
 
 
-<!--
-    <input refreshTree type="button" value="dataLoad Srv" data-ng-click="dataLoad3()"/>
--->
+<input refreshTree type="button" value="dataLoad Srv" data-ng-click="dataLoad3()"/>
 
 
 <!--
@@ -208,17 +204,18 @@
 </ul>
 <!-- =============================================================================== -->
 
-<br><hr>
+<br>
+<hr>
 Set background color :
-<input id="background-color" type="color"  onchange="backgroundColorChange()" />
+<input id="background-color" type="color" onchange="backgroundColorChange()"/>
 
 Set text color :
-<input id="text-color" type="color"  onchange="textColorChange()" />
+<input id="text-color" type="color" onchange="textColorChange()"/>
 <br>
 
 
 Set top-background-color :
-<input id="top-header-background-color" type="color"  onchange="selectTopHeaderColorChange()" />
+<input id="top-header-background-color" type="color" onchange="selectTopHeaderColorChange()"/>
 <br>
 
 <input id="headerRedWhiteHeaderButton" type="button" value="White Header" onclick="setHeaderColor()"/>
@@ -228,12 +225,12 @@ Set top-background-color :
 <input id="whiteButtonsButton" type="button" value="White buttons" onclick='setButtonColor("white")'/>
 
 
-<input  type="button" value="Icons 0 16" onclick='setIcons(0,16)'/>
+<input type="button" value="Icons 0 16" onclick='setIcons(0,16)'/>
 <!--
         <input  type="button" value="Icons 0 24" onclick='setIcons(0,24)'/>
         <input  type="button" value="Icons 0 32" onclick='setIcons(0,32)'/>
 -->
-<input  type="button" value="Icons 1 16" onclick='setIcons(1,16)'/>
+<input type="button" value="Icons 1 16" onclick='setIcons(1,16)'/>
 <!--
         <input  type="button" value="Icons 1 24" onclick='setIcons(1,24)'/>
         <input  type="button" value="Icons 1 32" onclick='setIcons(1,32)'/>
@@ -241,32 +238,31 @@ Set top-background-color :
 
 <script>
 
-    function setIcons(iconSet, size){
+    function setIcons(iconSet, size) {
         //Set empty folder Icon
-        setIconsByClassName( 'emptyFolder', iconSet, size );
-        setIconsByClassName( 'closedFolder', iconSet, size );
-        setIconsByClassName( 'openFolder', iconSet, size );
+        setIconsByClassName('emptyFolder', iconSet, size);
+        setIconsByClassName('closedFolder', iconSet, size);
+        setIconsByClassName('openFolder', iconSet, size);
     }
 
-    function setIconsByClassName( className, iconSet, size )
-    {
+    function setIconsByClassName(className, iconSet, size) {
         var elems = document.getElementsByClassName(className);
         for (var i = 0; i < elems.length; i++) {
-            elems[i].style.backgroundImage="url('icons/iconSet" + iconSet + "/" + size + "/" + className + "-icon_" + size + ".png')";
+            elems[i].style.backgroundImage = "url('icons/iconSet" + iconSet + "/" + size + "/" + className + "-icon_" + size + ".png')";
         }
     }
 
 
-    var headerLook=0; //Red
+    var headerLook = 0; //Red
     //console.log("getStyle: " + getStyle('#treeMenu'));
     //console.log("getStyleColorValue: " + getStyleColorValue('#treeMenu', "background-color"));
 
     //Set the colors at load time to the current colors  -  can't just get them from the objects yet
-    var color1=getStyleColorValue('#treeMenu', "color");
+    var color1 = getStyleColorValue('#treeMenu', "color");
     // console.log( color1 );
-    var color2=getStyleColorValue('#treeMenu', "background-color");
+    var color2 = getStyleColorValue('#treeMenu', "background-color");
     // console.log( color2 );
-    var color3=getStyleColorValue('#top-header-right', "background-color");
+    var color3 = getStyleColorValue('#top-header-right', "background-color");
     //console.log( color3);
     //alert( color1 + "\n" + color2 + "\n" + color3);
 
@@ -278,46 +274,41 @@ Set top-background-color :
     document.getElementById("top-header-background-color").defaultValue = color3;
 
 
-    function textColorChange()
-    {
+    function textColorChange() {
         document.getElementById("treeMenu").style.color = document.getElementById("text-color").value;
         document.getElementById("treeMenuWaitMessage").style.color = document.getElementById("text-color").value;
     }
 
-    function backgroundColorChange()
-    {
+    function backgroundColorChange() {
         document.getElementById("treeMenu").style.backgroundColor = document.getElementById("background-color").value;
         document.getElementById("treeMenuWaitMessage").style.backgroundColor = document.getElementById("background-color").value;
 
     }
 
-    function selectTopHeaderColorChange()
-    {
+    function selectTopHeaderColorChange() {
         document.getElementById("top-header-right").style.backgroundColor = document.getElementById("top-header-background-color").value;
         document.getElementById("top-header-left").style.backgroundColor = document.getElementById("top-header-background-color").value;
     }
-    function setHeaderColor()
-    {
-        if( headerLook==0)//Red
+    function setHeaderColor() {
+        if (headerLook == 0)//Red
         {
-            headerLook=1; //white'
-            document.getElementById("headerRedWhiteHeaderButton").value="Red Header";
+            headerLook = 1; //white'
+            document.getElementById("headerRedWhiteHeaderButton").value = "Red Header";
             document.getElementById("headerLogoLeft").src = "icons/iconSet0/NCI_logo_red.png";
             document.getElementById("headerTextLeft").src = "icons/iconSet0/NCI_text_red.png";
             document.getElementById("headerTextRight").src = "icons/iconSet0/www_text_red.png";
             document.getElementById("top-header").style.backgroundColor = "#ffffff";
         }
-        else if(  headerLook==1)//White
+        else if (headerLook == 1)//White
         {
-            headerLook=0; //Red'
-            document.getElementById("headerRedWhiteHeaderButton").value="White Header";
+            headerLook = 0; //Red'
+            document.getElementById("headerRedWhiteHeaderButton").value = "White Header";
             document.getElementById("headerLogoLeft").src = "icons/iconSet0/NCI_logo_white.png";
             document.getElementById("headerTextLeft").src = "icons/iconSet0/NCI_text_white.png";
             document.getElementById("headerTextRight").src = "icons/iconSet0/www_text_white.png";
             document.getElementById("top-header").style.backgroundColor = "#aa0202";
         }
     }
-
 
 
     function getStyle(className) {
@@ -327,28 +318,23 @@ Set top-background-color :
                 var cssObject = classes[x].cssText;
                 var res = cssObject.replace(/.*background-color: rgb\(/i, "");
                 res = res.replace(/\).*/, "");
-                var red = res.replace(/,.*/,"");
+                var red = res.replace(/,.*/, "");
                 var green = res.replace(/.*,([^,]*).*/, "$1");
                 var blue = res.replace(/.*,/, "");
-                alert(res + "\n" + "Red: " + red +"\n" +"green: " + green +"\n" +"blue: " + blue +"\n" + rgbToHex(red, green, blue));
+                alert(res + "\n" + "Red: " + red + "\n" + "green: " + green + "\n" + "blue: " + blue + "\n" + rgbToHex(red, green, blue));
             }
         }
     }
 
 
-
-    function getStyleColorValue( className, v )
-    {
+    function getStyleColorValue(className, v) {
         var c;
         var classes;
-        for( var f = 0; f < document.styleSheets.length; f++)
-        {
+        for (var f = 0; f < document.styleSheets.length; f++) {
             classes = document.styleSheets[f].rules || document.styleSheets[f].cssRules;
-            for (var x = 0; x < classes.length; x++)
-            {
+            for (var x = 0; x < classes.length; x++) {
                 //console.log("classes[" + x + "].selectorText: " + classes[x].selectorText);
-                if (classes[x].selectorText == className)
-                {
+                if (classes[x].selectorText == className) {
                     //console.log("GOT classes[" + x + "].selectorText: " + classes[x].selectorText);
                     c = classes[x].cssText;
                 }
@@ -357,7 +343,7 @@ Set top-background-color :
         var reg = new RegExp(".*" + v + ": rgb\\(", "i");
         var res = c.replace(reg, "");
         res = res.replace(/\).*/, "");
-        var red = res.replace(/,.*/,"");
+        var red = res.replace(/,.*/, "");
         var green = res.replace(/.*,([^,]*).*/, "$1");
         var blue = res.replace(/.*,/, "");
         var hex = rgbToHex(red, green, blue);
@@ -370,22 +356,20 @@ Set top-background-color :
     }
 
 
-    function setButtonColor( color )
-    {
+    function setButtonColor(color) {
         document.getElementById("shoppingButton").src = "icons/buttonIconSet0/" + color + "/circle_shopping_cart.png";
         document.getElementById("helpButton").src = "icons/buttonIconSet0/" + color + "/circle_help.png";
         document.getElementById("homeButton").src = "icons/buttonIconSet0/" + color + "/circle_home.png";
         document.getElementById("formButton").src = "icons/buttonIconSet0/" + color + "/circle_form.png";
         setButtonTextColor(color);
     }
-    function setButtonTextColor( color)
-    {
-        console.log("In setButtonTextColor " + color );
+    function setButtonTextColor(color) {
+        console.log("In setButtonTextColor " + color);
         var elems = document.getElementsByClassName('button_cell');
-        console.log("In setButtonTextColor len: " + elems.length );
+        console.log("In setButtonTextColor len: " + elems.length);
         for (var i = 0; i < elems.length; i++) {
             elems[i].style.color = color;
-            console.log("In setButtonTextColor button_cell[" + i + "] color: " + elems[i].color );
+            console.log("In setButtonTextColor button_cell[" + i + "] color: " + elems[i].color);
         }
     }
 
@@ -393,7 +377,6 @@ Set top-background-color :
     function rgbToHex(r, g, b) {
         return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
     }
-
 
 
 </script>

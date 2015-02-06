@@ -10,6 +10,8 @@
     <modules>
         <module>client_01</module>
         <module>client_02</module>
+        <module>client_03</module>
+        <module>client_04</module>
         <module>server</module>
     </modules>
     

@@ -1,0 +1,122 @@
+[
+    {
+        "text": "A-F",
+        "hover": "",
+        "childType": 3,
+        "HREFF": "#testCode",
+        "type": 3,
+        "children": [
+            {
+                "text": "ABTC (Adult Brain Tumor\nConsor...",
+                "hover": "",
+                "childType": 3,
+                "HREFF": "#testCode",
+                "type": 3,
+                "children": [
+                    {
+                        "text": "Classifications",
+                        "hover": "",
+                        "childType": 5,
+                        "HREFF": "#testCode",
+                        "type": 3,
+                        "children": [
+                            {
+                                "text": "CRF CDEs",
+                                "hover": "Collections of CDEs by type of CRF",
+                                "childType": 2,
+                                "HREFF": "#testCode",
+                                "type": 5,
+                                "children": [
+                                    {
+                                        "text": "30-Day Follow-Up",
+                                        "hover": "CDEs used on 30-Day Follow-Up CRFs",
+                                        "childType": 0,
+                                        "HREFF": "#testCode",
+                                        "type": 2,
+                                        "children": [],
+                                        "idSeq": "F7BA528D-C7D7-A8CF-E040-BB89AD4371BC",
+                                        "isParent": false,
+                                        "collapsed": false,
+                                        "fullText": "30-Day Follow-Up"
+                                    },
+                                    {
+                                        "text": "Adverse Event Cover Sheet",
+                                        "hover": "Collection of CDEs used on Adverse Event Cover Sheet CRFs.",
+                                        "childType": 0,
+                                        "HREFF": "#testCode",
+                                        "type": 2,
+                                        "children": [],
+                                        "idSeq": "F7BA5589-4422-0BF5-E040-BB89AD435EB8",
+                                        "isParent": false,
+                                        "collapsed": false,
+                                        "fullText": "Adverse Event Cover Sheet"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "text": "G-Z",
+        "hover": "",
+        "childType": 3,
+        "HREFF": "#testCode",
+        "type": 3,
+        "children": [
+            {
+                "text": "ABTC (Adult Brain Tumor\nConsor...",
+                "hover": "",
+                "childType": 3,
+                "HREFF": "#testCode",
+                "type": 3,
+                "children": [
+                    {
+                        "text": "Classifications",
+                        "hover": "",
+                        "childType": 5,
+                        "HREFF": "#testCode",
+                        "type": 3,
+                        "children": [
+                            {
+                                "text": "CRF CDEs",
+                                "hover": "Collections of CDEs by type of CRF",
+                                "childType": 2,
+                                "HREFF": "#testCode",
+                                "type": 5,
+                                "children": [
+                                    {
+                                        "text": "30-Day Follow-Up",
+                                        "hover": "CDEs used on 30-Day Follow-Up CRFs",
+                                        "childType": 0,
+                                        "HREFF": "#testCode",
+                                        "type": 2,
+                                        "children": [],
+                                        "idSeq": "F7BA528D-C7D7-A8CF-E040-BB89AD4371BC",
+                                        "isParent": false,
+                                        "collapsed": false,
+                                        "fullText": "30-Day Follow-Up"
+                                    },
+                                    {
+                                        "text": "Adverse Event Cover Sheet",
+                                        "hover": "Collection of CDEs used on Adverse Event Cover Sheet CRFs.",
+                                        "childType": 0,
+                                        "HREFF": "#testCode",
+                                        "type": 2,
+                                        "children": [],
+                                        "idSeq": "F7BA5589-4422-0BF5-E040-BB89AD435EB8",
+                                        "isParent": false,
+                                        "collapsed": false,
+                                        "fullText": "Adverse Event Cover Sheet"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -31,7 +31,7 @@ input[refreshTree] {
 }
 */
 
-div[cdeBrowserApp],input[refreshTree]{
+#cdeBrowserApp, input[refreshTree]{
 
     font-family: sans-serif;
     font-size:13px;
@@ -42,18 +42,21 @@ div[cdeBrowserApp],input[refreshTree]{
 }
 /* ************************************************** */
 
-div[top-header] {
+#top-header {
     height: 37px;
     background-color: #ab0303;
 }
 
-div[top-cadsr]{
+
+#top-header-left{
     width: 400px;
+/*
     height: 130px;
+*/
     background-color: #ffffff;
 }
 
-a[top_image] {
+a[top_image], #top_image {
     position: relative;
     left: 100px;
     top: 21px;

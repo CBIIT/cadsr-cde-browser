@@ -1,0 +1,47 @@
+#topStatusMessage {
+    background-color: #3E6a84;
+    color: #ffffff;
+    /*
+        position: fixed;
+        top: 84px;
+        left: 2px;
+    */
+
+}
+
+.bigMessage {
+    font-size: 28px;
+    font-weight: bold;
+
+}
+
+.normMessage {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.topButtons {
+    background-color: #3E6a84;
+    height: 90px;
+}
+
+#resultsDisplay {
+    background-color: #1A4660;
+    color: #ffffff;
+
+    /*  Top of display pane  */
+    margin-top: 39px;
+    overflow-x: scroll ;
+    overflow-y: scroll;
+    resize: horizontal;
+}
+
+#resultsDisplayHeading{
+    /*background-color: #844540;*/
+
+}
+
+#basicSearchQueryTypeRadios{
+    float: left;
+    margin-right: 20px;
+}

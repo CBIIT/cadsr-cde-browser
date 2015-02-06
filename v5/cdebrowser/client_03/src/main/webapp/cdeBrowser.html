@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client 3</title>
+    <script type='text/javascript' src='angular.min.js'></script>
+    <script type='text/javascript' src='cdeBrowserClient.js'></script>
+    <script type='text/javascript' src="cdeBrowserProperties.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
+    <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
+    <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
+
+</head>
+<body>
+
+<!-- =============================================================================== -->
+<div class="topButtons" id="top-header-right" class="top-header-right">
+
+    <TABLE valign="top" width=100%; Cellpadding=0 Cellspacing=0 border=0>
+        <tr>
+            <td id="top-cadsrTd">
+                <div top-cadsr id="top-header-left">
+                    <a top_image id="top_image"
+                       href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
+                       target="_blank">
+                        <img src="icons/iconSet0/caDSR_logo.png">
+                    </a>
+                </div>
+            </td>
+
+
+            <td align="right">
+                <!-- Logo and four buttons -->
+                <table border=0>
+                    <TR>
+                        <!-- large CDE Browser Logo  -->
+                        <td valign="top" align="left" nowrap>
+                            <img src="icons/iconSet0/cdeBrowserLogo.png" border="0" alt="cdeBrowserLogo">
+                        </td>
+
+
+                        <!--  Four buttons  -->
+                        <td align=right valign=top colspan=3 align="right" nowrap>
+                            <TABLE Cellpadding=0 Cellspacing=0 border=0>
+                                <TR>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
+                                            <img
+                                                    id="shoppingButton"
+                                                    src="icons/buttonIconSet0/white/circle_shopping_cart.png"
+                                                    alt="CDE Cart"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;CDE &nbsp;Cart
+                                    </TD>
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                href="/CDEBrowser/" target="_top">
+                                            <img
+                                                    id="homeButton"
+                                                    src="icons/buttonIconSet0/white/circle_home.png"
+                                                    alt="Home"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;Home&nbsp;
+                                    </TD>
+
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
+                                                target="_blank">
+                                            <img id="formButton"
+                                                 src="icons/buttonIconSet0/white/circle_form.png"
+                                                 alt="FormBuilder"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;FormBuilder&nbsp;
+                                    </TD>
+
+                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                        <a
+                                                HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                                                target="_blank">
+                                            <img id="helpButton"
+                                                 src="icons/buttonIconSet0/white/circle_help.png"
+                                                 alt="Task Help"
+                                                    />
+                                        </a>
+                                        <br>
+                                        &nbsp;Help&nbsp;
+                                    </TD>
+                                </TR>
+                            </TABLE>
+                        </td>
+                        <!--  End Four buttons  -->
+
+
+                    </tr>
+                    <tr>
+                        <TD colspan=1>
+                        <td align="right">
+                            Tools:
+
+                            <select id="ddlViewBy">
+                                <option value="1">Admin Tool</option>
+                                <option value="2">Curation Tool</option>
+                                <option value="3">NCI Metathesaurus</option>
+                                <option value="3">NCI Terminology Server</option>
+                                <option value="3">Sentinel Tool</option>
+                                <option value="3">UML Model Browser</option>
+                                <option value="3">Available Downloads</option>
+                            </select>
+                        </td>
+                        </TD>
+                    </tr>
+                </table>
+                <!-- End Logo and four buttons -->
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- =============================================================================== -->
+
+<div ng-app="cdeBrowserApp" ng-controller="cdeBrowserController">
+    <div id="topStatusMessage"
+         ng-class="{
+                        bigMessage: bigMessageClass,
+                        normMessage: (! bigMessageClass)
+                        }"
+            >{{waitMessage}}
+    </div>
+
+    <!-- The tabs across the top -->
+    <div id="topTabPos">
+        <ul>
+            <!-- Just getting the parent -->
+            <div ng-repeat="(nodeNumber, node) in contextListMaster">
+
+                <li id="top_tabs"
+                    ng-mouseenter="hover = true"
+                    ng-mouseleave="hover = false"
+                    ng-class="{
+                        active:   isActiveTab(nodeNumber),
+                        tabHover: (! isActiveTab(nodeNumber)) &&  hover,
+                        normal:   (! isActiveTab(nodeNumber)) &&  (! hover )
+                        }"
+                    ng-click="onClickTab(nodeNumber)">
+                    &nbsp;{{node.text}}&nbsp;
+                </li>
+
+            </div>
+        </ul>
+    </div>
+
+    <!-- tree menu -->
+    <div id="tabWrapper">
+        <div ng-repeat="(nodeNumber, node) in contextListMaster">
+            <div class="treeMenu" ng-show=show[nodeNumber]
+                 ng-style="resizeHeight()"
+                 resize
+                 notifier="notifyServiceOnChange(params)"
+                    >
+                <div
+                        data-cdebrowser-treeview="true"
+                        data-tree-id="tree"
+                        data-tree-model="contextListMaster[nodeNumber].children"
+                        data-node-action="href"
+                        data-node-childType="childType"
+                        data-node-isParent="isParent"
+                        data-node-type="type"
+                        data-node-label="text"
+                        data-node-hover="hover"
+                        data-node-children="children">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================================================== -->
+
+    <div id="resultsDisplay" data-ng-show="initComplete"
+         ng-style="resizeHeight()"
+         resize
+         notifier="notifyServiceOnChange(params)"
+            >
+        <div id="resultsDisplayHeading">
+
+
+            <!--<p>radio item is : {{selectedQueryType}}</p>-->
+            <div id=basicSearchQueryTypeRadios>
+                <input type="radio" ng-model="selectedQueryType" ng-value="1"> Exact phrase <br/>
+                <input type="radio" ng-model="selectedQueryType" ng-value="2"> All of the words <br/>
+                <input type="radio" ng-model="selectedQueryType" ng-value="3"> At least one of the words <br/>
+            </div>
+            <!--
+
+                        <p>selected item is : {{selectedType}}</p>
+                        <select ng-model="selectedType"
+                                ng-options="t.id as t.name for t in queryTypes">
+                        </select>
+
+            -->
+
+
+            <input id="basicSearchQuery" type="text" ng-model="basicSearchQuery"/>
+
+            <select id="basicSearchField"
+                ng-model="queryField"
+                ng-options="t.id as t.name for t in searchFieldsBasic">
+            </select>
+            <br>
+
+            <button id="searchButton" ng-click="onClickBasicSearch(basicSearchQuery, selectedQueryType, queryField)">
+                Search
+            </button>
+
+            <button id="clearSearchQueryButton" ng-click="basicSearchQuery=''">
+                Clear
+            </button>
+
+
+        </div>
+
+        <div id="searchResults">
+            <BR><hr>
+            Results will go here:<br>
+            {{searchResults}}
+        </div>
+    </div>
+    <!-- =============================================================================== -->
+
+</div>
+</body>
+</html>
