@@ -26,6 +26,8 @@
     <bean id="testController" class="gov.nih.nci.cadsr.service.restControllers.TestController" >
      </bean>
 
+    <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController" >
+    </bean>
 
     <bean id="adminController" class="gov.nih.nci.cadsr.service.restControllers.AdminController" >
         <property name="classificationSchemeDAO" ref="classificationSchemeDAO" />
