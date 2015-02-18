@@ -22,6 +22,7 @@ public final class CaDSRConstants
     public static final int PROTOCOL = 6;
     public static final int[] INTERVAL_SIZE = { 26, 26, 13, 9, 8, 6, 5, 4, 4, 2};
     public static final int MAX_TITLE_WITH_DESCRIPTION_LEN = 30;
+    public static final String[] SEARCH_MODE={"Exact phrase", "All of the words", "At least one of the words"};
 
 
     public static final String USER_KEY = "nciUser";

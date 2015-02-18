@@ -84,7 +84,7 @@ public class ContextDataControllerTest extends TestCase
             {
                 assertFalse( "Did not find child Classification folder: \"" + csCsiModel.getCsLongName() + "\"  .", true );
             }
-            //System.out.println( csCsiModel.getCsLongName() );
+            System.out.println( csCsiModel.getCsLongName() );
         }
     }
 
@@ -103,7 +103,7 @@ public class ContextDataControllerTest extends TestCase
             {
                 assertFalse( "Matched child Classification folder: \"" + csCsiModel.getCsLongName() + "\", SHOULD NOT HAVE", true );
             }
-            //System.out.println( csCsiModel.getCsLongName() );
+            System.out.println( csCsiModel.getCsLongName() );
         }
         assertTrue( true );
     }
@@ -123,7 +123,7 @@ public class ContextDataControllerTest extends TestCase
         // List<BaseNode> childrenList = classificationItemNodeParent.getChildren();
 
         //Look at the parent, do we have two children?
-        //System.out.println( classificationItemNodeParent.getChildren().size() + " children" );
+        System.out.println( classificationItemNodeParent.getChildren().size() + " children" );
 
         for( BaseNode child : classificationItemNodeParent.getChildren() )
         {

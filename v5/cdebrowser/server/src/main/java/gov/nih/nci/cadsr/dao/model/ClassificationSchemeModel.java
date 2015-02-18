@@ -27,7 +27,7 @@ public class ClassificationSchemeModel extends BaseModel
     private String preferredName;
     private String registrationStatus;
     private String unresolvedIssue;
-    private float version; //Maybe change to String
+    private String version;
     private String workflowStatusDesc;
 
     public String getAslName()
@@ -210,12 +210,12 @@ public class ClassificationSchemeModel extends BaseModel
         this.unresolvedIssue = unresolvedIssue;
     }
 
-    public float getVersion()
+    public String getVersion()
     {
         return version;
     }
 
-    public void setVersion( float version )
+    public void setVersion( String version )
     {
         this.version = version;
     }

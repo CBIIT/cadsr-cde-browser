@@ -1,0 +1,31 @@
+.searchResultsTable {
+    border-collapse: collapse;
+    /*border: 2px solid #ff0000;*/
+    width: 100%;
+    font-size: 10pt;
+}
+.searchResultsTableTr {
+    border: 2px solid #80a3c0;
+   /*
+   3E6a84
+   */
+
+}
+
+.searchResultsTableHeaderTr {
+    border: 2px solid #80a3c0;
+}
+
+
+
+.searchResultsTableTd {
+    border: 1px solid #80a3c0;
+    padding: 5px;
+
+}
+.searchResultsTableTh {
+    border: 1px solid #80a3c0;
+    padding: 5px;
+}
+
+

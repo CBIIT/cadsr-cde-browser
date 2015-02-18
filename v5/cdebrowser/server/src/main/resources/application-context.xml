@@ -27,6 +27,7 @@
      </bean>
 
     <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController" >
+        <property name="basicSearchDAO" ref="basicSearchDAO" />
     </bean>
 
     <bean id="adminController" class="gov.nih.nci.cadsr.service.restControllers.AdminController" >
@@ -50,6 +51,7 @@
     <bean id="csCsiDAO" class="gov.nih.nci.cadsr.dao.CsCsiDAOImpl"  parent="abstractDao" />
     <bean id="protocolFormDAO" class="gov.nih.nci.cadsr.dao.ProtocolFormDAOImpl"  parent="abstractDao" />
     <bean id="protocolDAO" class="gov.nih.nci.cadsr.dao.ProtocolDAOImpl"  parent="abstractDao" />
+    <bean id="basicSearchDAO" class="gov.nih.nci.cadsr.dao.BasicSearchDAOImpl"  parent="abstractDao" />
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>

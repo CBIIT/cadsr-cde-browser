@@ -1,32 +1,5 @@
 
 
-/* The tree for each tab  (with in treeWindow class)  */
-.treeMenu {
-
-
-    float: left;
-    /* top of tree menu pane  */
-    margin-top: 39px;
-
-    font-size:16px;
-    padding-left: 0;
-    padding-right: 0;
-
-    width: 35%;
-
-    overflow-x: scroll ;
-    overflow-y: scroll;
-    resize: horizontal;
-    /*
-        background-color:  #1A4660;
-    */
-    background-color:  #1A4660;
-    color: #ffffff;
-
-    /* Spacing for each line, not the actual line. */
-    line-height: 24px;
-}
-
 
 div[data-tree-model] ul {
     margin: 0;
