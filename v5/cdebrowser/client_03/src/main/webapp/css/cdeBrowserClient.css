@@ -16,7 +16,7 @@
 }
 
 .normMessage {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: normal;
 }
 
@@ -30,18 +30,51 @@
     color: #ffffff;
 
     /*  Top of display pane  */
-    margin-top: 39px;
+
+    margin-top: 30px;  /*needs to match .treeMenu */
     overflow-x: scroll ;
     overflow-y: scroll;
     resize: horizontal;
 }
 
-#resultsDisplayHeading{
-    /*background-color: #844540;*/
+/* The tree for each tab  (with in treeWindow class)  */
+.treeMenu {
+    float: left;
+    /* top of tree menu pane  */
+    margin-top: 30px;
 
+    font-size:16px;
+    padding-left: 0;
+    padding-right: 0;
+
+    /* The Starting/default width of the Tree menu pane */
+    width: 20%;
+
+    overflow-x: scroll ;
+    overflow-y: scroll;
+    resize: horizontal;
+    /*
+        background-color:  #1A4660;
+    */
+    background-color:  #1A4660;
+    color: #ffffff;
+
+    /* Spacing for each line, not the actual line. */
+    line-height: 24px;
 }
 
-#basicSearchQueryTypeRadios{
+
+/*  **********************************  */
+
+.queryTypeRadioButtons {
     float: left;
-    margin-right: 20px;
+    width: 220px;
+    padding-top: 4px;
+    margin-top: 0;
+}
+
+.searchInput{
+    margin-left: 250px;
+    padding-top : 4px;
+    margin-top: 0;
 }

@@ -1,38 +1,44 @@
-/**
- * Created with IntelliJ IDEA.
- * User: lerner
- * Date: 1/25/15
- * Time: 2:33 PM
- * To change this template use File | Settings | File Templates.
- */
 var cdeBrowserApp = angular.module('cdeBrowserApp', ['cdebrowserTreeview']);
 
-//controller
+// controller
 cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
-    $scope.show = [false, false, false, false, false, false, false, false, false, false, false, false, false];
+    $scope.show = [];
+
+    console.log("$scope.show len: " + $scope.show.length);
+
     $scope.currentTab = '0';
     $scope.initComplete = false;
 
-    $scope.selectedQueryType = '1'; //Starting selection
-    $scope.queryField = 1; //Starting selection
-    $scope.searchFieldsBasic = [
-        {id: 1, name: "Name"},
-        {id: 2, name: "Public ID"}
+    // Search query types - radio buttons
+    $scope.searchQueryTypes = [
+        {id: 0, name: "Exact phrase"},
+        {id: 1, name: "All of the words"},
+        {id: 2, name: "At least one of the words"}
     ];
+    // Default query type
+    $scope.selectedQueryType = '0'; //Starting selection
+
+    // Query field - drop down
+    $scope.searchFieldsBasic = [
+        {id: 0, name: "Name"},
+        {id: 1, name: "Public ID"}
+    ];
+    // Default query field selection
+    $scope.queryField = 0; //Starting selection
 
 
+    //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
         console.log("Clicked " + tab);
-        console.log("Clicked  $scope.show.length: " + $scope.show.length);
         $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
     };
 
+    // Search button
     $scope.onClickBasicSearch = function (query, field, type) {
         $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
-
     };
 
     $scope.basicSearchServerRestCall = function (serverUrl) {
@@ -76,14 +82,13 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
     };
 
     $scope.dataLoad = function (dataSource) {
-        console.log("MHL Start dataLoad: " + dataSource);
-        $scope.waitMessage = "Please wait, loading Context data (" + dataSource + ").....";
+         $scope.waitMessage = "Please wait, loading Context data (" + dataSource + ").....";
         //$scope.waitMessage = "Please wait, loading Context data.....";
         $scope.bigMessageClass = true;
 
         $http.get(dataSource).success(function (response) {
 
-            //console.log("From context_data Service:");
+            console.log("Back from context_data Service:");
             //console.log( JSON.stringify( response) );
             $scope.contextListMaster = response;
             $scope.waitMessage = "caDSR Contexts:";
@@ -105,12 +110,10 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     };
 
-
     $scope.myFilter = function (text) {
         console.log("Filter1: " + text.href);
         return true;
     };
-
 
     $scope.myFilter2 = function (text) {
         console.log("Filter2: " + text.text);
@@ -119,14 +122,13 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
 
     $scope.hideContexts();
-    $scope.dataLoad4();
+    $scope.dataLoad1();
 });
 
 
 (function (angular) {
     'use strict';
     angular.module('cdebrowserTreeview', [])
-
 
         .directive('resize', function ($window) {
             return function (scope, element, attr) {

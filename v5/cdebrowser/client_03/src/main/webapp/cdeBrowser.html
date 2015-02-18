@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Client 3</title>
+    <title>Client 3.01</title>
     <script type='text/javascript' src='angular.min.js'></script>
     <script type='text/javascript' src='cdeBrowserClient.js'></script>
     <script type='text/javascript' src="cdeBrowserProperties.js"></script>
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
     <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
+    <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
+
 
 </head>
 <body>
@@ -125,30 +127,37 @@
 
 <!-- =============================================================================== -->
 
-<div ng-app="cdeBrowserApp" ng-controller="cdeBrowserController">
+<div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController">
+
+    <!--  Status message at top  -->
     <div id="topStatusMessage"
-         ng-class="{
-                        bigMessage: bigMessageClass,
-                        normMessage: (! bigMessageClass)
-                        }"
-            >{{waitMessage}}
+         data-ng-class="{
+             bigMessage: bigMessageClass,
+             normMessage: (! bigMessageClass)
+             }">
+        {{waitMessage}}
     </div>
+
 
     <!-- The tabs across the top -->
     <div id="topTabPos">
         <ul>
-            <!-- Just getting the parent -->
-            <div ng-repeat="(nodeNumber, node) in contextListMaster">
+            <!--
+                Just getting the parent top level nodes for the top tabs
+                nodeNumber is counter
+                node is the actual node, we just need the text for the tabs
+            -->
+            <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
 
                 <li id="top_tabs"
-                    ng-mouseenter="hover = true"
-                    ng-mouseleave="hover = false"
-                    ng-class="{
+                    data-ng-mouseenter="hover = true"
+                    data-ng-mouseleave="hover = false"
+                    data-ng-class="{
                         active:   isActiveTab(nodeNumber),
                         tabHover: (! isActiveTab(nodeNumber)) &&  hover,
                         normal:   (! isActiveTab(nodeNumber)) &&  (! hover )
                         }"
-                    ng-click="onClickTab(nodeNumber)">
+                    data-ng-click="onClickTab(nodeNumber)">
                     &nbsp;{{node.text}}&nbsp;
                 </li>
 
@@ -156,11 +165,15 @@
         </ul>
     </div>
 
-    <!-- tree menu -->
+
+    <!-- tree menu(s) for each tab -->
     <div id="tabWrapper">
-        <div ng-repeat="(nodeNumber, node) in contextListMaster">
-            <div class="treeMenu" ng-show=show[nodeNumber]
-                 ng-style="resizeHeight()"
+
+        <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
+        <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+
+            <div class="treeMenu" data-ng-show=show[nodeNumber]
+                 data-ng-style="resizeHeight()"
                  resize
                  notifier="notifyServiceOnChange(params)"
                     >
@@ -181,58 +194,83 @@
     </div>
 
     <!-- =============================================================================== -->
-
+    <!--  Right side,  search and search results.  -->
     <div id="resultsDisplay" data-ng-show="initComplete"
-         ng-style="resizeHeight()"
+         data-ng-style="resizeHeight()"
          resize
          notifier="notifyServiceOnChange(params)"
             >
-        <div id="resultsDisplayHeading">
+
+        <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
+        <div class="queryTypeRadioButtons">
+            <label data-ng-repeat="qType in searchQueryTypes">
+                <div>
+                    <input
+                            name="selectedQueryType"
+                            type="radio"
+                            value="{{qType.id}}"
+                            data-ng-model="$parent.selectedQueryType"/>
+                    {{qType.name}}
+                </div>
+            </label>
+        </div>
 
 
-            <!--<p>radio item is : {{selectedQueryType}}</p>-->
-            <div id=basicSearchQueryTypeRadios>
-                <input type="radio" ng-model="selectedQueryType" ng-value="1"> Exact phrase <br/>
-                <input type="radio" ng-model="selectedQueryType" ng-value="2"> All of the words <br/>
-                <input type="radio" ng-model="selectedQueryType" ng-value="3"> At least one of the words <br/>
-            </div>
-            <!--
-
-                        <p>selected item is : {{selectedType}}</p>
-                        <select ng-model="selectedType"
-                                ng-options="t.id as t.name for t in queryTypes">
-                        </select>
-
-            -->
-
-
-            <input id="basicSearchQuery" type="text" ng-model="basicSearchQuery"/>
+        <!-- Search field drop down, text input, search & clear button  -->
+        <div class="searchInput">
+            <input id="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
 
             <select id="basicSearchField"
-                ng-model="queryField"
-                ng-options="t.id as t.name for t in searchFieldsBasic">
+                    data-ng-model="queryField"
+                    data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
             </select>
             <br>
 
-            <button id="searchButton" ng-click="onClickBasicSearch(basicSearchQuery, selectedQueryType, queryField)">
+            <button id="searchButton"
+                    data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
                 Search
             </button>
-
-            <button id="clearSearchQueryButton" ng-click="basicSearchQuery=''">
+            <button id="clearSearchQueryButton" data-ng-click="basicSearchQuery=''">
                 Clear
             </button>
-
-
         </div>
+
+
 
         <div id="searchResults">
-            <BR><hr>
-            Results will go here:<br>
-            {{searchResults}}
-        </div>
-    </div>
-    <!-- =============================================================================== -->
+            <BR>
 
+            <table class="searchResultsTable">
+                <tr class="searchResultsTableHeaderTr">
+                    <th class="searchResultsTableTh">Long Name</th>
+                    <th class="searchResultsTableTh">Preferred Question Text</th>
+                    <th class="searchResultsTableTh">Owned By</th>
+                    <th class="searchResultsTableTh">Used By Context</th>
+                    <th class="searchResultsTableTh">Registration Status</th>
+                    <th class="searchResultsTableTh">Workflow Status</th>
+                    <th class="searchResultsTableTh">Public ID</th>
+                    <th class="searchResultsTableTh">Version</th>
+                </tr>
+                <tr data-ng-repeat="searchResults in searchResults"
+                    class="searchResultsTableTr">
+                    <td class="searchResultsTableTd">{{searchResults.longName}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.preferredQuestionText}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.ownedBy}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.usedByContext}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.registrationStatus}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.workflowStatus}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.publicId}}</td>
+                    <td class="searchResultsTableTd">{{searchResults.version}}</td>
+                </tr>
+
+                </tr>
+
+            </table>
+
+
+        </div>
+
+    </div>
 </div>
 </body>
 </html>
