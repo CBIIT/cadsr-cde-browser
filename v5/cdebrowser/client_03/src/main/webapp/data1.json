@@ -3,14 +3,14 @@
         "text": "A-F",
         "hover": "",
         "childType": 3,
-        "HREFF": "#testCode",
+        "href": "test.html?context=A-F",
         "type": 3,
         "children": [
             {
-                "text": "ABTC (Adult Brain Tumor\nConsor...",
+                "text": "Dummy Test data ",
                 "hover": "",
                 "childType": 3,
-                "HREFF": "#testCode",
+                "href": "test.html?context=ABTC (Adult Brain Tumor\nConsortium) ",
                 "type": 3,
                 "children": [
                     {
@@ -21,14 +21,14 @@
                         "type": 3,
                         "children": [
                             {
-                                "text": "CRF CDEs",
+                                "text": "Dummy Test data",
                                 "hover": "Collections of CDEs by type of CRF",
                                 "childType": 2,
                                 "HREFF": "#testCode",
                                 "type": 5,
                                 "children": [
                                     {
-                                        "text": "30-Day Follow-Up",
+                                        "text": "Dummy Test data",
                                         "hover": "CDEs used on 30-Day Follow-Up CRFs",
                                         "childType": 0,
                                         "HREFF": "#testCode",
@@ -40,7 +40,7 @@
                                         "fullText": "30-Day Follow-Up"
                                     },
                                     {
-                                        "text": "Adverse Event Cover Sheet",
+                                        "text": "Dummy Test data",
                                         "hover": "Collection of CDEs used on Adverse Event Cover Sheet CRFs.",
                                         "childType": 0,
                                         "HREFF": "#testCode",

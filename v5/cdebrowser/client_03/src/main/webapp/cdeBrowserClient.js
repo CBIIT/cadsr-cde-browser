@@ -9,6 +9,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     $scope.currentTab = '0';
     $scope.initComplete = false;
+    $scope.haveSearchResults = false;
 
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
@@ -42,9 +43,23 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
     };
 
     $scope.basicSearchServerRestCall = function (serverUrl) {
+        $scope.haveSearchResults = false;
+        $scope.searchResultsMessage = "Searching";
+        $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
             $scope.searchResults = response;
             //console.log("End rest call: " + serverUrl + "\n" + response);
+
+            if ($scope.searchResults.length > 0) {
+                $scope.haveSearchResults = true;
+                $scope.bigSearchResultsMessageClass = false;
+                $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
+            }
+            else {
+                $scope.searchResultsMessage = "No search results";
+                $scope.haveSearchResults = false;
+                $scope.bigSearchResultsMessageClass = true;
+            }
         });
     };
 
@@ -82,7 +97,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
     };
 
     $scope.dataLoad = function (dataSource) {
-         $scope.waitMessage = "Please wait, loading Context data (" + dataSource + ").....";
+        $scope.waitMessage = "Please wait, loading Context data (" + dataSource + ").....";
         //$scope.waitMessage = "Please wait, loading Context data.....";
         $scope.bigMessageClass = true;
 
@@ -97,15 +112,15 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
             $scope.initComplete = true;
             $scope.onClickTab(0);
         });
-       /*
-          $http.get(dataSource).success(function (response) {
-          $scope.waitMessage += "Please wait, loading menu data (" + dataSource + ").....";
-          //console.log("From context_data Service:");
-          console.log( JSON.stringify( response) );
-          $scope.contextList1 = response;
-          $scope.waitMessage += "2caDSR Contexts:";
-          });
-       */
+        /*
+         $http.get(dataSource).success(function (response) {
+         $scope.waitMessage += "Please wait, loading menu data (" + dataSource + ").....";
+         //console.log("From context_data Service:");
+         console.log( JSON.stringify( response) );
+         $scope.contextList1 = response;
+         $scope.waitMessage += "2caDSR Contexts:";
+         });
+         */
         console.log("End dataLoad: " + dataSource);
 
     };

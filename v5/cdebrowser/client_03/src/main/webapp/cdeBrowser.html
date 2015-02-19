@@ -235,10 +235,17 @@
             </button>
         </div>
 
+<hr>
+        <span
+              data-ng-class="{
+             bigSearchResultsMessage: bigSearchResultsMessageClass,
+             normmSearchResultsMessage: (! bigSearchResultsMessageClass)
+             }">
+            {{searchResultsMessage}}
+        </span>
 
 
-        <div id="searchResults">
-            <BR>
+        <div id="searchResults"  data-ng-show="haveSearchResults">
 
             <table class="searchResultsTable">
                 <tr class="searchResultsTableHeaderTr">
@@ -266,8 +273,6 @@
                 </tr>
 
             </table>
-
-
         </div>
 
     </div>

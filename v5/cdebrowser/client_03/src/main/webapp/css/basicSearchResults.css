@@ -1,5 +1,7 @@
+
 .searchResultsTable {
     border-collapse: collapse;
+    margin-top: 3px;
     /*border: 2px solid #ff0000;*/
     width: 100%;
     font-size: 10pt;
@@ -9,11 +11,18 @@
    /*
    3E6a84
    */
+    color: #eeeeff;
+    font-style: normal;
+    font-size: 12pt;
 
 }
 
 .searchResultsTableHeaderTr {
     border: 2px solid #80a3c0;
+    background-color: #18344d;
+    color: #ffffcc;
+    font-style: normal;
+    font-size: 12pt;
 }
 
 
@@ -28,4 +37,31 @@
     padding: 5px;
 }
 
+/*
 
+#searchResultsMessage {
+    background-color: #18344d;
+    color: #ff0099;
+    font-style: normal;
+    font-size: 12pt;
+}
+
+*/
+.bigSearchResultsMessage {
+    margin-left: 5px;
+    background-color: #18344d;
+    color: #ffffff;
+    font-style: oblique;
+    font-size: 24pt;
+
+}
+
+.normmSearchResultsMessage {
+    margin-left: 5px;
+    background-color: #18344d;
+    color: #ffffff;
+    font-style: normal;
+    font-size: 12pt;
+
+
+}
