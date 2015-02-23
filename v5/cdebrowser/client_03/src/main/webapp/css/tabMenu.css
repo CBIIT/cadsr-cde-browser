@@ -1,21 +1,3 @@
-body {
-    background: #3E6a84;
-    color: #222;
-    padding: 0;
-    margin: 0;
-    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    position: relative;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
 
 /* Mouse over and not selected */
 .tabHover {
@@ -25,12 +7,12 @@ ul {
 }
 
 /*  The selected tab  */
-.active {
+.tabActive {
     background: #1A4660;
     color: #FFFFFF;
 }
 
-.normal {
+.tabNormal {
     background-color: #3E6a84;
     color: #ffffff;
 }
@@ -60,7 +42,7 @@ ul {
 /*
 This puts the tabs behind the search buttons.
 
-Need might to do this after we can dynamically width style of the results frame
+Might need to do this after we can dynamically set width style of the results frame
     z-index: -1;
 */
 }

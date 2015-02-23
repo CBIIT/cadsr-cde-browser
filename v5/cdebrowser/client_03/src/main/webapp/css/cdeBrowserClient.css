@@ -1,3 +1,21 @@
+body {
+    background: #3E6a84;
+    color: #222;
+    padding: 0;
+    margin: 0;
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    position: relative;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 #topStatusMessage {
     background-color: #3E6a84;
     color: #ffffff;

@@ -143,8 +143,7 @@
     <div id="topTabPos">
         <ul>
             <!--
-                Just getting the parent top level nodes for the top tabs
-                nodeNumber is counter
+                Just getting the parent top level nodes for the top tabs  nodeNumber is counter,
                 node is the actual node, we just need the text for the tabs
             -->
             <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
@@ -153,9 +152,9 @@
                     data-ng-mouseenter="hover = true"
                     data-ng-mouseleave="hover = false"
                     data-ng-class="{
-                        active:   isActiveTab(nodeNumber),
+                        tabActive:   isActiveTab(nodeNumber),
                         tabHover: (! isActiveTab(nodeNumber)) &&  hover,
-                        normal:   (! isActiveTab(nodeNumber)) &&  (! hover )
+                        tabNormal:   (! isActiveTab(nodeNumber)) &&  (! hover )
                         }"
                     data-ng-click="onClickTab(nodeNumber)">
                     &nbsp;{{node.text}}&nbsp;
@@ -235,9 +234,9 @@
             </button>
         </div>
 
-<hr>
+        <hr>
         <span
-              data-ng-class="{
+                data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
              normmSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
@@ -245,7 +244,7 @@
         </span>
 
 
-        <div id="searchResults"  data-ng-show="haveSearchResults">
+        <div id="searchResults" data-ng-show="haveSearchResults">
 
             <table class="searchResultsTable">
                 <tr class="searchResultsTableHeaderTr">

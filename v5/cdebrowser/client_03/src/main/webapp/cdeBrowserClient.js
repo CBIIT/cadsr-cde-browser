@@ -93,6 +93,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
     };
 
     $scope.dataLoad4 = function () {
+        //$scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextDataTest?uiType=5");
         $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData?uiType=5");
     };
 
@@ -112,26 +113,13 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
             $scope.initComplete = true;
             $scope.onClickTab(0);
         });
-        /*
-         $http.get(dataSource).success(function (response) {
-         $scope.waitMessage += "Please wait, loading menu data (" + dataSource + ").....";
-         //console.log("From context_data Service:");
-         console.log( JSON.stringify( response) );
-         $scope.contextList1 = response;
-         $scope.waitMessage += "2caDSR Contexts:";
-         });
-         */
-        console.log("End dataLoad: " + dataSource);
+
+         console.log("End dataLoad: " + dataSource);
 
     };
 
     $scope.myFilter = function (text) {
         console.log("Filter1: " + text.href);
-        return true;
-    };
-
-    $scope.myFilter2 = function (text) {
-        console.log("Filter2: " + text.text);
         return true;
     };
 
