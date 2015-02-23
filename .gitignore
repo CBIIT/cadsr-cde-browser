@@ -1,5 +1,6 @@
 software/.idea
 software/cdebrowser/.idea
+v5/cdebrowser/.idea
 v5/cdebrowser/client_01/.idea
 v5/cdebrowser/client_01/target
 v5/cdebrowser/client_02/.idea
@@ -8,3 +9,5 @@ v5/cdebrowser/client_03/.idea
 v5/cdebrowser/client_03/target
 v5/cdebrowser/server/.idea
 v5/cdebrowser/server/target
+software/cdebrowser/.idea
+*.iml
