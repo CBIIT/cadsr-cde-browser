@@ -93,8 +93,8 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
     };
 
     $scope.dataLoad4 = function () {
-        //$scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextDataTest?uiType=5");
-        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData?uiType=5");
+        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextDataTest?uiType=5");
+        //$scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData?uiType=5");
     };
 
     $scope.dataLoad = function (dataSource) {
@@ -105,7 +105,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
         $http.get(dataSource).success(function (response) {
 
             console.log("Back from context_data Service:");
-            //console.log( JSON.stringify( response) );
+            console.log( JSON.stringify( response) );
             $scope.contextListMaster = response;
             $scope.waitMessage = "caDSR Contexts:";
             $scope.bigMessageClass = false;
@@ -182,7 +182,11 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                      data-node-label  nodeLabel
                      data-node-hover  nodeHover
                      data-node-children   nodeChildren
+
+                     nodeTypes: "Empty", "Container", "CSI", "Folder", "ProtocolFormsFolder", "CIS Folder", "Protocol";
+
                      */
+
 
                     //tree id
                     var treeId = attrs.treeId;
@@ -232,6 +236,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="emptyFolder" cl' +
                             //'title="B {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             ' data-ng-show="((node.' + nodeChildren + '.length == 0 && ' +
                             ' node.' + nodeType + ' != 2  && ' +
                             ' node.collapsed && node.' + nodeType + ' != 4 ) ' +
@@ -243,6 +248,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="protocolFolderClosed" cl' +
                             //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}  ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 4"' +
                             ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
@@ -251,6 +257,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="csiFolderClosed" cl' +
                             //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 5"' +
                             ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
@@ -259,6 +266,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="openFolder" ' +
                             //'title="D {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' != 4 && node.' + nodeType + ' != 5"' +
                             ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
@@ -266,6 +274,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="csiFolderOpen" ' +
                             //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 5" ' +
                             ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
@@ -273,6 +282,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="protocolFolderOpen" ' +
                             //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 4" ' +
                             ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
@@ -281,12 +291,14 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<i class="csi" ' +
                             //'title="{{node.' + nodeHoverText + '}}  Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             'data-ng-hide="node.' + nodeChildren + '.length || node.' + nodeType + ' != 2   " data-ng-click="' + treeId + '.selectNodeNorm(node, node.' + nodeAction + ' )"></i> ' +
 
                             //End leaf (not a folder) that IS a Protocol form
                             '<i class="protocolForm" ' +
                             //'title="protocolForm {{node.' + nodeHoverText + '}}  Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             'data-ng-hide="node.' + nodeChildren + '.length || node.' + nodeType + ' != 6"' +
                             ' data-ng-click="' + treeId + '.selectNodeNorm(node, node.' + nodeAction + ')"></i> ' +
 
@@ -294,6 +306,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '<span data-ng-class="node.selected" id="selectedNode" ' +
                             //'title="G {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                             'title="{{node.' + nodeHoverText + '}} "' +
+
                             'data-ng-click="' + treeId + '.selectNodeLabel(node, node.' + nodeAction + ')">{{node.' + nodeLabel + '}}</span>' +
 
 
@@ -315,7 +328,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                             '</li>' +
                             '</ul>';
 
-
+                    //When the user Clicks.
                     //check tree id, tree model
                     if (treeId && treeMenuModel) {
                         //console.log("Click 1");
@@ -352,6 +365,8 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
                         //Render template.
                         element.html('').append($compile(template)(scope));
                     }
+
+                    // Used above (for now) when a user Clicks.
                     var disp = function (selNode) {
 
                         //remove highlight from previous node
