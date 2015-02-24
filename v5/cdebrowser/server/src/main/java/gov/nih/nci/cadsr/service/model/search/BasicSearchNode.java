@@ -6,14 +6,15 @@ import org.apache.logging.log4j.Logger;
 public class BasicSearchNode
 {
     private Logger logger = LogManager.getLogger( BasicSearchNode.class.getName() );
-    String longName;
-    String preferredQuestionText;
-    String ownedBy;
-    String publicId;
-    String workflowStatus;
-    String version;
-    String usedByContext;
-    String registrationStatus;
+    private String longName;
+    private String preferredQuestionText;
+    private String ownedBy;
+    private String publicId;
+    private String workflowStatus;
+    private String version;
+    private String usedByContext;
+    private String registrationStatus;
+    private String href = "Default action";
 
     public String getLongName()
     {
@@ -94,5 +95,15 @@ public class BasicSearchNode
     public void setRegistrationStatus( String registrationStatus )
     {
         this.registrationStatus = registrationStatus;
+    }
+
+    public String getHref()
+    {
+        return href;
+    }
+
+    public void setHref( String href )
+    {
+        this.href = href;
     }
 }

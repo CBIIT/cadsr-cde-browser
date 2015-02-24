@@ -16,6 +16,23 @@ ul {
     margin: 0;
 }
 
+a:link {
+    color: #ffcccc;
+}
+
+a:visited {
+    color: #ffcccc;
+}
+a:active {
+    color: #ffffff;
+}
+a:hover {
+    color: #ffffcc;
+
+}
+
+
+
 #topStatusMessage {
     background-color: #3E6a84;
     color: #ffffff;

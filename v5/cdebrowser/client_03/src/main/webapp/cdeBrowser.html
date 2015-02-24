@@ -257,9 +257,8 @@
                     <th class="searchResultsTableTh">Public ID</th>
                     <th class="searchResultsTableTh">Version</th>
                 </tr>
-                <tr data-ng-repeat="searchResults in searchResults"
-                    class="searchResultsTableTr">
-                    <td class="searchResultsTableTd">{{searchResults.longName}}</td>
+                <tr data-ng-repeat="searchResults in searchResults" class="searchResultsTableTr">
+                    <td class="searchResultsTableTd"><a href="{{searchResults.href}}">{{searchResults.longName}}</a> </td>
                     <td class="searchResultsTableTd">{{searchResults.preferredQuestionText}}</td>
                     <td class="searchResultsTableTd">{{searchResults.ownedBy}}</td>
                     <td class="searchResultsTableTd">{{searchResults.usedByContext}}</td>

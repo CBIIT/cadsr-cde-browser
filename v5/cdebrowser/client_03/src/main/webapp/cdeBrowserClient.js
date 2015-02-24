@@ -48,7 +48,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
             $scope.searchResults = response;
-            //console.log("End rest call: " + serverUrl + "\n" + response);
+console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
 
             if ($scope.searchResults.length > 0) {
                 $scope.haveSearchResults = true;
