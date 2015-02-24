@@ -3,6 +3,11 @@ package gov.nih.nci.cadsr.common.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -400,6 +405,37 @@ public class StringUtils
 
         return fieldValue;
     }
+
+
+    public static String stringArrayToString( String[] arr)
+    {
+        if( arr == null )
+        {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        for(String s : arr) {
+            if( first )
+            {
+                first = false;
+            }
+            else
+            {
+                builder.append(", ");
+            }
+            builder.append(s);
+        }
+        return builder.toString();
+    }
+
+    public static String readFile(String path)
+            throws IOException
+    {
+        byte[] encoded = Files.readAllBytes( Paths.get( path ) );
+        return new String(encoded, Charset.defaultCharset());
+    }
+
 
     public static void main( String[] args )
     {

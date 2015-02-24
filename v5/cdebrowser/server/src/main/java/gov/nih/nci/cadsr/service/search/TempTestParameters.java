@@ -12,47 +12,6 @@ public class TempTestParameters
     {
 
 
-        /*
-        STDOUT] MHL treeParamType: null
-2015-02-16 11:02:26,686 INFO  [STDOUT]  strArray:
-2015-02-16 11:02:26,686 INFO  [STDOUT] 1
-2015-02-16 11:02:26,686 INFO  [STDOUT] 1
-2015-02-16 11:02:26,686 INFO  [STDOUT]  txtValueDomain: null
-2015-02-16 11:02:26,686 INFO  [STDOUT]  txtDataElementConcept: null
-2015-02-16 11:02:26,686 INFO  [STDOUT]  txtClassSchemeItem: null
-2015-02-16 11:02:26,686 INFO  [STDOUT]  contextUse: both
-
-
-MHL treeParamType: null
-2015-02-16 11:47:22,977 INFO  [STDOUT]  strArray: "SEARCH"
-2015-02-16 11:47:22,977 INFO  [STDOUT] 1
-2015-02-16 11:47:22,977 INFO  [STDOUT] 1
-2015-02-16 11:47:22,977 INFO  [STDOUT]  txtValueDomain: null
-2015-02-16 11:47:22,977 INFO  [STDOUT]  txtDataElementConcept: null
-2015-02-16 11:47:22,977 INFO  [STDOUT]  txtClassSchemeItem: null
-2015-02-16 11:47:22,977 INFO  [STDOUT]  contextUse: both
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspKeyword: tissue
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspStatus: [ALL]
-2015-02-16 11:47:22,977 INFO  [STDOUT] regStatus: [ALL]
-2015-02-16 11:47:22,977 INFO  [STDOUT] altName: null
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspSearchIn: [ALL]
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspValidValue:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspObjectClass:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspProperty:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspValueDomain:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspCdeId:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspDataElementConcept:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspClassification:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspLatestVersion:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspAltName:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspConceptName:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspConceptCode:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspVDType:
-2015-02-16 11:47:22,977 INFO  [STDOUT] jspCDEType:
-
-         */
-
-
         //searchParameters.put( "jspKeyword", "tissue" );
 
         // upper (pv.value) LIKE upper ('jspValidValue') )
@@ -68,7 +27,7 @@ MHL treeParamType: null
         // Empty searchParameters.put( "jspValueDomain", "jspValueDomain" );
 
         // to_char(de.cde_id) LIKE 'jspCdeId'
-        // Empty searchParameters.put( "jspCdeId", "jspCdeId" );
+        //searchParameters.put( "jspCdeId", "jspCdeId" );
 
         // dec.dec_idseq = 'jspDataElementConcept'
         // Empty searchParameters.put( "jspDataElementConcept", "jspDataElementConcept" );
@@ -153,6 +112,11 @@ MHL treeParamType: null
         return null;
     }
 
+    //FIXME - a hasty hack!
+    public void setJspCdeId( String id)
+    {
+        searchParameters.put( "jspCdeId", id );
+    }
     public static void main( String a[] )
     {
         TempTestParameters fakeHttpServletRequest = new TempTestParameters();

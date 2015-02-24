@@ -39,28 +39,25 @@ public class BasicSearchController
         TempTestParameters request = new TempTestParameters();
         //        String treeParamType = "REGCSI";
         String treeParamType = null;
-        String treeParamIdSeq = null; //"99BA9DC8-2094-4E69-E034-080020C9C0E0,Standard";
-        String treeConteIdSeq = null; //"99BA9DC8-2094-4E69-E034-080020C9C0E0";
+        String treeParamIdSeq = null;
+        String treeConteIdSeq = null;
         DataElementSearchBean searchBean = new DataElementSearchBean();
 
-        //FIXME
+        //FIXME - Martin add documentation for String queryType
 int intMode = Integer.parseInt(queryType);
 String searchMode = CaDSRConstants.SEARCH_MODE[intMode];
-System.out.println("searchMode: " + queryType);
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean,query, searchMode );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean,query, searchMode, field );
         String sql = dESearchQueryBuilder.getQueryStmt();
         sql = sql.replaceAll( "  *", " " );
-        System.out.println("SQL: " + sql +"\n");
+
+        //System.out.println("SQL: " + sql +"\n");
 
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results =  basicSearchDAO.getAllContexts();
 
-        //System.out.println("\n\nBasic search: " + results.toString() + "\n\n");
-
         int rowCount = results.size();
         int i = 0;
-        System.out.println("rowCount: " + rowCount );
         BasicSearchNode[] basicSearchNodes = new BasicSearchNode[rowCount];
         for( BasicSearchModel model: results)
         {
@@ -72,6 +69,10 @@ System.out.println("searchMode: " + queryType);
             basicSearchNodes[i].setWorkflowStatus( model.getAslName() );
             basicSearchNodes[i].setVersion( model.getDeVersion() );
 
+            //TODO here we add the URL for the search results
+            basicSearchNodes[i].setHref( "cdebrowserServer/searchResultsData" );
+
+
             //FIXME - this a bit hacky. This is so in the client side display table there will be spaces to allow good line wrapping.
             if( model.getDeUsedby() != null )
             {
@@ -82,8 +83,6 @@ System.out.println("searchMode: " + queryType);
 
             i++;
         }
-
-        //return "{\"results\":\"" + query + " " + field + " " + queryType +"\"}";
         return basicSearchNodes;
     }
 }

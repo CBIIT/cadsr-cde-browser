@@ -58,17 +58,22 @@ public class DESearchQueryBuilder extends Object
     private String sqlWithoutOrderBy;
     private SortableColumnHeader sortColumnHeader = null;
 
-    //public gov.nih.nci.cadsr.service.search.DESearchQueryBuilder( HttpServletRequest request,
+
     public DESearchQueryBuilder( TempTestParameters request,
                                  String treeParamType,
                                  String treeParamIdSeq,
-                                 String treeConteIdSeq, DataElementSearchBean searchBean, String query, String searchMode )
+                                 String treeConteIdSeq, DataElementSearchBean searchBean, String query, String searchMode, String searchField )
     {
 
+        //FIXME - a quick hack to turn on search by PublicId
+        if( searchField.compareTo( "1" ) == 0 )
+        {
+            request.setJspCdeId( query );
+        }
 
         if( treeParamType != null &&
                 ( treeParamType.equalsIgnoreCase( "REGCSI" ) ||
-                treeParamType.equalsIgnoreCase( "REGCS" ) ) )
+                        treeParamType.equalsIgnoreCase( "REGCS" ) ) )
         {
             String[] subStr = treeParamIdSeq.split( "," );
             this.treeParamIdSeq = subStr[0];
@@ -83,24 +88,18 @@ public class DESearchQueryBuilder extends Object
         this.treeParamType = treeParamType;
         this.treeConteIdSeq = treeConteIdSeq;
         strArray = request.getParameterValues( "SEARCH" );
-        System.out.println( " strArray: " );
-
-        // Loop over string indexes strArray for-loop.
-        for( int i = 0; i < strArray.length; i++ )
-        {
-            System.out.println( strArray[i] );
-        }
+         logger.debug(  " strArray: " + StringUtils.stringArrayToString( strArray ) );
 
         vdPrefName = request.getParameter( "txtValueDomain" );
-        System.out.println( " txtValueDomain: " + vdPrefName );
+         logger.debug( " txtValueDomain: " + vdPrefName );
 
 
         decPrefName = request.getParameter( "txtDataElementConcept" );
-        System.out.println( " txtDataElementConcept: " + decPrefName );
+         logger.debug( " txtDataElementConcept: " + decPrefName );
 
 
         csiName = request.getParameter( "txtClassSchemeItem" );
-        System.out.println( " txtClassSchemeItem: " + csiName );
+         logger.debug( " txtClassSchemeItem: " + csiName );
 
         String selIndex = null;
 
@@ -109,7 +108,7 @@ public class DESearchQueryBuilder extends Object
         {
             contextUse = "";
         }
-        System.out.println( " contextUse: " + contextUse );
+         logger.debug( " contextUse: " + contextUse );
 
 
         String usageWhere = "";
@@ -149,12 +148,12 @@ public class DESearchQueryBuilder extends Object
             //String[] excludeArr = searchBean.getRegStatusExcludeList();
             String[] excludeArr = {"Retired"};
 
-                    System.out.println("excludeArr: [" + Arrays.toString( excludeArr )+"]");
+             logger.debug("excludeArr: [" + Arrays.toString( excludeArr )+"]");
 
             if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
             {
-                System.out.println("registrationExcludeWhere: " + registrationExcludeWhere);
-                System.out.println(" searchBean.getExcludeWhereCluase( \"nvl(acr.registration_status,'-1')\", excludeArr ): " +  searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr ));
+                 logger.debug("registrationExcludeWhere: " + registrationExcludeWhere);
+                 logger.debug(" searchBean.getExcludeWhereCluase( \"nvl(acr.registration_status,'-1')\", excludeArr ): " +  searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr ));
                 registrationExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr );
             }
         }
@@ -166,17 +165,15 @@ public class DESearchQueryBuilder extends Object
         String workflowExcludeWhere = "";
         if( searchBean != null )
         {
-            System.out.println(" searchBean != null ");
 
             //FIXME dev time testing
-String[] temp =  {"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN"};
-searchBean.setAslNameExcludeList( temp );
+            String[] temp =  {"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN"};
+            searchBean.setAslNameExcludeList( temp );
 
             String[] excludeArr = searchBean.getAslNameExcludeList();
-            System.out.println("excludeArr: " + Arrays.toString(excludeArr));
+
             if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
             {
-                System.out.println("  !gov.nih.nci.cadsr.common.util.StringUtils.isArrayWithEmptyStrings( excludeArr ) ");
                 workflowExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "asl.asl_name", excludeArr );
             }
         }
@@ -192,16 +189,7 @@ searchBean.setAslNameExcludeList( temp );
         {
             contextExludeWhere = " and conte.name NOT IN (" + contextExludeToExclude + " )";
         }
-        System.out.println("workflowExcludeWhere: [" + workflowExcludeWhere + "]");
-        System.out.println("contextExludeToExclude: [" + contextExludeToExclude+ "]");
 
-
-        /********************************************************************************************************************************************/
-        /********************************************************************************************************************************************/
-        /********************************************************************************************************************************************/
-        /********************************************************************************************************************************************/
-        /********************************************************************************************************************************************/
-        /********************************************************************************************************************************************/
         if( strArray == null )
         {
             searchStr = "";
@@ -215,31 +203,20 @@ searchBean.setAslNameExcludeList( temp );
         }
         else
         {
-            searchStr0 = StringUtils.replaceNull( query );
-            System.out.println("searchStr0: " + searchStr0);
-            String[] searchStr1 = request.getParameterValues( "jspStatus" );
-            System.out.println("jspStatus: " + Arrays.toString( searchStr1 ));
+            if( searchField.compareTo( "0" ) == 0 )
+            {
+                searchStr0 = StringUtils.replaceNull( query );
+            }
 
-            String[] searchStr7 = request.getParameterValues( "regStatus" );
-            System.out.println("regStatus: " + Arrays.toString(searchStr7));
+String[] searchStr1 = request.getParameterValues( "jspStatus" );
+String[] searchStr7 = request.getParameterValues( "regStatus" );
+String[] searchStr9 = request.getParameterValues( "altName" );
+String[] searchIn = request.getParameterValues( "jspSearchIn" );
 
-            String[] searchStr9 = request.getParameterValues( "altName" );
-            System.out.println("altName: " + Arrays.toString(searchStr9));
+            String validValue = StringUtils.replaceNull( request.getParameter( "jspValidValue" ) );
+            String objectClass = StringUtils.replaceNull( request.getParameter( "jspObjectClass" ) );
+            String property = StringUtils.replaceNull( request.getParameter( "jspProperty" ) );
 
-            String[] searchIn = request.getParameterValues( "jspSearchIn" );
-            System.out.println("jspSearchIn: " + Arrays.toString(searchIn));
-
-            String validValue =
-                    StringUtils.replaceNull( request.getParameter( "jspValidValue" ) );
-            System.out.println("jspValidValue: " + validValue);
-
-            String objectClass =
-                    StringUtils.replaceNull( request.getParameter( "jspObjectClass" ) );
-            System.out.println("jspObjectClass: " + objectClass);
-
-            String property =
-                    StringUtils.replaceNull( request.getParameter( "jspProperty" ) );
-            System.out.println("jspProperty: " + property);
             boolean doStatusSearch = false;
             if( searchStr1 != null )
             {
@@ -258,45 +235,22 @@ searchBean.setAslNameExcludeList( temp );
                     doRegStatusSearch = true;
                 }
             }
-
-            searchStr2 =
-                    StringUtils.replaceNull( request.getParameter( "jspValueDomain" ) );
-            System.out.println("jspValueDomain: " + searchStr2);
-
+            //searchStr2 =  StringUtils.replaceNull( request.getParameter( "jspValueDomain" ) );
             searchStr3 = StringUtils.replaceNull( request.getParameter( "jspCdeId" ) );
-            System.out.println("jspCdeId: " + searchStr3);
+            //searchStr4 =  StringUtils.replaceNull( request.getParameter( "jspDataElementConcept" ) );
+           // searchStr5 =  StringUtils.replaceNull( request.getParameter( "jspClassification" ) );
+           // searchStr6 = StringUtils.replaceNull( request.getParameter( "jspLatestVersion" ) );
+           // searchStr8 =  StringUtils.replaceNull( request.getParameter( "jspAltName" ) );
 
-            searchStr4 =
-                    StringUtils.replaceNull( request.getParameter( "jspDataElementConcept" ) );
-            System.out.println("jspDataElementConcept: " + searchStr4);
-
-            searchStr5 =
-                    StringUtils.replaceNull( request.getParameter( "jspClassification" ) );
-            System.out.println("jspDataElementConcept: " + searchStr5);
-
-            searchStr6 =
-                    StringUtils.replaceNull( request.getParameter( "jspLatestVersion" ) );
-            System.out.println("jspLatestVersion: " + searchStr6);
-
-            searchStr8 =
-                    StringUtils.replaceNull( request.getParameter( "jspAltName" ) );
-            System.out.println("jspAltName: " + searchStr8);
 
             conceptName =
                     StringUtils.replaceNull( request.getParameter( "jspConceptName" ) );
-            System.out.println("jspConceptName: " + conceptName);
-
             conceptCode =
                     StringUtils.replaceNull( request.getParameter( "jspConceptCode" ) );
-            System.out.println("jspConceptCode: " + conceptCode);
-
             vdType =
                     StringUtils.replaceNull( request.getParameter( "jspVDType" ) );
-            System.out.println("jspVDType: " + vdType );
-
             cdeType =
                     StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
-            System.out.println("jspCDEType: " + cdeType );
 
             /********************************************************************************************************************************************/
             /********************************************************************************************************************************************/
@@ -320,6 +274,24 @@ searchBean.setAslNameExcludeList( temp );
 //      }
 
 
+
+
+             logger.debug( "  searchStr1 (jspStatus): " + StringUtils.stringArrayToString(searchStr1));
+             logger.debug( "  searchStr7 (regStatus): " + StringUtils.stringArrayToString(searchStr7));
+             logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString(searchStr9));
+             logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString(searchIn));
+             logger.debug( "  validValue (jspValidValue): " + validValue);
+             logger.debug( "  objectClass (jspObjectClass): " + objectClass);
+             logger.debug( "  property (jspProperty): " + property);
+             logger.debug( "  searchStr3: [" + searchStr3 +"]");
+             logger.debug( "  searchStr4 / jspDataElementConcept: " + searchStr4);
+             logger.debug( "  searchStr5 / jspClassification: " + searchStr5);
+             logger.debug( "  searchStr6 / jspLatestVersion: " + searchStr6);
+             logger.debug( "  searchStr8 / jspAltName: " + searchStr8);
+             logger.debug( "  conceptName / jspConceptName: " + conceptName);
+             logger.debug( "  conceptCode / jspConceptCode: " + conceptCode);
+             logger.debug( "  vdType / jspVDType: " + vdType);
+             logger.debug( "  cdeType / jspCDEType: " + cdeType);
 
 
             //set filter on "version"
@@ -423,6 +395,7 @@ searchBean.setAslNameExcludeList( temp );
             {
                 docWhere = this.buildSearchTextWhere( searchStr0, searchIn, searchMode );
             }
+
             if( !searchStr8.equals( "" ) )
             {
                 altNameWhere = this.buildAltNamesWhere( searchStr8, searchStr9 );
@@ -457,6 +430,18 @@ searchBean.setAslNameExcludeList( temp );
             whereBuffer.append( conceptWhere );
             whereBuffer.append( deConceptWhere );
             whereBuffer.append( deDerivWhere );
+
+/*
+             logger.debug("wkFlowWhere: " + wkFlowWhere);
+             logger.debug("cdeIdWhere: " + cdeIdWhere);
+             logger.debug("vdWhere: " + vdWhere);
+             logger.debug("decWhere: " + decWhere);
+             logger.debug("docWhere: " + docWhere);
+             logger.debug("vvWhere: " + vvWhere);
+             logger.debug("regStatusWhere: " + regStatusWhere);
+             logger.debug("altNameWhere: " + altNameWhere);
+             logger.debug("whereBuffer: " + whereBuffer.toString())
+*/
         }
 
         if( treeConteIdSeq != null )
@@ -494,289 +479,25 @@ searchBean.setAslNameExcludeList( temp );
                     csiWhere + whereClause + registrationWhere + workFlowWhere + deDerivWhere;
 /*
 
-            System.out.println("\nvdFrom: " + vdFrom + "\n\n");
-            System.out.println("\ndecFrom: " + decFrom + "\n\n");
-            System.out.println("\nfromClause: " + fromClause + "\n\n");
-            System.out.println("\nregistrationFrom: " + registrationFrom + "\n\n");
-            System.out.println("\nwkFlowFrom: " + wkFlowFrom + "\n\n");
-            System.out.println("\ndeDerivFrom: " + deDerivFrom + "\n\n");
-            System.out.println("\nregistrationExcludeWhere: " + registrationExcludeWhere + "\n\n");
-            System.out.println("\nworkflowExcludeWhere: " + workflowExcludeWhere + "\n\n");
-            System.out.println("\ncontextExludeWhere: " + contextExludeWhere + "\n\n");
-            System.out.println("\ncsiWhere: " + csiWhere + "\n\n");
-            System.out.println("\nwhereClause: " + whereClause + "\n\n");
-            System.out.println("\nregistrationWhere: " + registrationWhere + "\n\n");
-            System.out.println("\nworkFlowWhere: " + workFlowWhere + "\n\n");
-            System.out.println("\ndeDerivWhere: " + deDerivWhere + "\n\n");
-            System.out.println("\nfromWhere: " + fromWhere + "\n\n");
+             logger.debug("\nvdFrom: " + vdFrom + "\n\n");
+             logger.debug("\ndecFrom: " + decFrom + "\n\n");
+             logger.debug("\nfromClause: " + fromClause + "\n\n");
+             logger.debug("\nregistrationFrom: " + registrationFrom + "\n\n");
+             logger.debug("\nwkFlowFrom: " + wkFlowFrom + "\n\n");
+             logger.debug("\ndeDerivFrom: " + deDerivFrom + "\n\n");
+             logger.debug("\nregistrationExcludeWhere: " + registrationExcludeWhere + "\n\n");
+             logger.debug("\nworkflowExcludeWhere: " + workflowExcludeWhere + "\n\n");
+             logger.debug("\ncontextExludeWhere: " + contextExludeWhere + "\n\n");
+             logger.debug("\ncsiWhere: " + csiWhere + "\n\n");
+             logger.debug("\nwhereClause: " + whereClause + "\n\n");
+             logger.debug("\nregistrationWhere: " + registrationWhere + "\n\n");
+             logger.debug("\nworkFlowWhere: " + workFlowWhere + "\n\n");
+             logger.debug("\ndeDerivWhere: " + deDerivWhere + "\n\n");
+             logger.debug("\nfromWhere: " + fromWhere + "\n\n");
 
 */
         }
-        else if( treeParamType.equals( "CONTEXT" ) )
-        {
-            fromWhere = " from sbr.data_elements_view de , " +
-                    "sbr.reference_documents_view rd , " +
-                    "sbr.contexts_view conte " +
-                    //"sbrext.de_cde_id_view dc " +
-                    //"sbr.value_domains vd, "+
-                    //"sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No' "+  [don't need to use this since we are using view)
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) " +
-                    //" and conte.conte_idseq = '"+treeParamIdSeq+"'" +
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    //usageWhere +
-                    csiWhere + whereClause + registrationWhere + workFlowWhere;
 
-        }
-        else if( treeParamType.equals( "PROTOCOL" ) )
-        {
-            fromWhere = " from  sbr.data_elements_view de , " +
-                    " sbr.reference_documents_view rd , " +
-                    " sbr.contexts_view conte, " +
-                    //" sbrext.de_cde_id_view dc, " +
-                    " sbrext.quest_contents_view_ext frm ," +
-                    " sbrext.protocol_qc_ext ptfrm ," +
-                    " sbrext.protocols_view_ext pt ," +
-                    " sbrext.quest_contents_view_ext qc " +
-                    //"sbr.value_domains vd, "+
-                    //"sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No' "+  [don't need to use this since we are using view)
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) " +
-                    " and pt.proto_idseq = ptfrm.proto_idseq " +
-                    " and frm.qc_idseq = ptfrm.qc_idseq " +
-                    " and frm.latest_version_ind = 'Yes' " +  //GF 19701
-                    " and frm.qtl_name = 'CRF' " +
-                    " and qc.dn_crf_idseq = frm.qc_idseq " +
-                    " and qc.qtl_name = 'QUESTION' " +
-                    " and qc.de_idseq = de.de_idseq " +
-                    " and pt.proto_idseq = '" + treeParamIdSeq + "'" +
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    csiWhere + whereClause + registrationWhere + workFlowWhere;
-        }
-        //Published Change Order
-        else if( treeParamType.equals( "PUBLISHING_PROTOCOL" ) )
-        {
-            fromWhere = " from  sbr.data_elements_view de , " +
-                    " sbr.reference_documents_view rd , " +
-                    " sbr.contexts_view conte, " +
-                    //" sbrext.de_cde_id_view dc, " +
-                    " sbrext.quest_contents_view_ext frm ," +
-                    " sbrext.protocols_view_ext pt ," +
-                    " sbrext.quest_contents_view_ext qc , " +
-                    " sbrext.published_forms_view published " +
-                    //"sbr.value_domains vd, "+
-                    //"sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No' "+  [don't need to use this since we are using view)
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) " +
-                    " and pt.proto_idseq = frm.proto_idseq " +
-                    " and frm.qtl_name = 'CRF' " +
-                    " and qc.dn_crf_idseq = frm.qc_idseq " +
-                    " and qc.qtl_name = 'QUESTION' " +
-                    " and qc.de_idseq = de.de_idseq " +
-                    " and frm.qc_idseq = published.qc_idseq " +
-                    " and pt.proto_idseq = '" + treeParamIdSeq + "'" +
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    csiWhere + whereClause + registrationWhere + workFlowWhere;
-        }
-        else if( treeParamType.equals( "CRF" ) || treeParamType.equals( "TEMPLATE" ) )
-        {
-            fromWhere = " from  sbr.data_elements_view de , " +
-                    " sbr.reference_documents_view rd , " +
-                    " sbr.contexts_view conte, " +
-                    //" sbrext.de_cde_id_view dc, " +
-                    " sbrext.quest_contents_view_ext qc " +
-                    //" sbr.value_domains vd, "+
-                    //" sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No'  "+
-                    //Commented for TT 1511
-                    // registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) " +
-                    " and qc.dn_crf_idseq = '" + treeParamIdSeq + "'" +
-                    " and qc.qtl_name = 'QUESTION' " +
-                    " and qc.de_idseq = de.de_idseq " +
-                    // " and vd.vd_idseq = de.vd_idseq " +
-                    // " and dec.dec_idseq = de.dec_idseq " +
-
-                    csiWhere + whereClause + registrationWhere + workFlowWhere;
-
-        }
-        else if( treeParamType.equals( "CSI" ) || treeParamType.equals( "REGCSI" ) )
-        {
-            if( searchStr5.equals( "" ) )
-            {
-                csiWhere = " and acs.cs_csi_idseq = '" + this.treeParamIdSeq + "'";
-            }
-            else
-            {
-                csiWhere = " and acs.cs_csi_idseq IN ('" + this.treeParamIdSeq + "','" + searchStr5 + "')";
-            }
-            fromWhere = " from  sbr.data_elements_view de , " +
-                    " sbr.reference_documents_view rd , " +
-                    " sbr.contexts_view conte, " +
-                    //" sbrext.de_cde_id_view dc, " +
-                    " sbr.ac_csi_view acs " +
-                    //" sbr.value_domains vd, "+
-                    //" sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No' "+
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) " +
-                    csiWhere +
-                    " and acs.ac_idseq = de.de_idseq " +
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    whereClause + registrationWhere + workFlowWhere;
-
-        }
-        else if( treeParamType.equals( "CLASSIFICATION" )
-                || treeParamType.equals( "REGCS" )
-                || treeParamType.equals( "CSCONTAINER" ) )
-        {
-            if( searchStr5.equals( "" ) )
-            {
-                csiWhere = "";
-            }
-            else
-            {
-                csiWhere = " and acs.cs_csi_idseq = '" + searchStr5 + "'";
-            }
-
-            String csWhere = "";
-            if( treeParamType.equals( "CSCONTAINER" ) )
-            {
-                csWhere = getCSContainerWhere( this.treeParamIdSeq );
-            }
-            else
-            {
-                csWhere = this.getCSWhere( this.treeParamIdSeq );
-            }
-
-
-            fromWhere = " from  sbr.data_elements_view de , " +
-                    " sbr.reference_documents_view rd , " +
-                    " sbr.contexts_view conte " +
-                    //" sbr.ac_csi acs, " +
-                    //" sbr.cs_csi csc " +
-                    vdFrom +
-                    decFrom +
-                    registrationFrom +
-                    wkFlowFrom +
-                    fromClause +
-                    // " where de.deleted_ind = 'No' "+
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and csc.cs_idseq = '"+treeParamIdSeq+"'" +
-                    //" and csc.cs_csi_idseq = acs.cs_csi_idseq " +
-                    //" and acs.ac_idseq = de.de_idseq " +
-                    csiWhere + whereClause + registrationWhere + workFlowWhere + csWhere;
-
-        }
-        else if( treeParamType.equals( "CORE" ) )
-        {
-            fromWhere = " from sbr.data_elements_view de , " +
-                    "sbr.reference_documents_view rd , " +
-                    "sbr.contexts_view conte " +
-                    //"sbrext.de_cde_id_view dc " +
-                    //"sbr.value_domains vd, "+
-                    //"sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No' "+
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    contextExludeWhere + registrationExcludeWhere + workflowExcludeWhere +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) "+
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    " and de.de_idseq in ( select de_idseq " +
-                    " from   sbrext.core_noncore_de_view " +
-                    " where csi_idseq = '" + treeParamIdSeq + "'" +
-                    " and de_group = 'CORE') " +
-                    csiWhere + whereClause + workFlowWhere + registrationWhere;
-        }
-        else if( treeParamType.equals( "NON-CORE" ) )
-        {
-            fromWhere = " from sbr.data_elements_view de , " +
-                    "sbr.reference_documents_view rd , " +
-                    "sbr.contexts_view conte " +
-                    //"sbrext.de_cde_id_view dc " +
-                    //"sbr.value_domains vd, "+
-                    //"sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause +
-                    registrationFrom +
-                    wkFlowFrom +
-                    //" where de.deleted_ind = 'No' "+
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    contextExludeWhere + registrationExcludeWhere + workflowExcludeWhere +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) "+
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    " and de.de_idseq in ( select de_idseq " +
-                    " from   sbrext.core_noncore_de_view " +
-                    " where csi_idseq = '" + treeParamIdSeq + "'" +
-                    " and de_group = 'NON-CORE') " +
-                    csiWhere + whereClause + workFlowWhere + registrationWhere;
-        }
         //String orderBy = " order by de.preferred_name, de.version ";
         StringBuffer finalSqlStmt = new StringBuffer();
 
@@ -803,7 +524,7 @@ searchBean.setAslNameExcludeList( temp );
         finalSqlStmt.append( fromWhere );
         sqlWithoutOrderBy = finalSqlStmt.toString();
 
-//  CHECKME MHL finalSqlStmt.append( orderBy );
+//  CHECKME   finalSqlStmt.append( orderBy );
 
         sqlStmt = finalSqlStmt.toString();
         xmlQueryStmt = "select de.de_idseq " + fromWhere;
@@ -816,7 +537,9 @@ searchBean.setAslNameExcludeList( temp );
         sortColumnHeader.setTertiary( "long_name" );
         sortColumnHeader.setDefaultOrder( true );
         sortColumnHeader.setOrder( SimpleSortableColumnHeader.ASCENDING );
-        System.out.println("MHL sqlStmt: " + sqlStmt );
+
+         logger.debug( "  Query:" );
+         logger.debug( sqlStmt.replaceAll( "  *", " " ) + "\n" );
     }
 
     protected String getCSItemWhereClause( String searchStr5 )
@@ -1011,130 +734,118 @@ searchBean.setAslNameExcludeList( temp );
         return regStatWhere;
     }
 
-    private String buildSearchTextWhere( String text, String[] searchDomain, String searchMode )
-    {
+    private String buildSearchTextWhere(String text, String[] searchDomain, String searchMode) {
+
         String docWhere = null;
         String newSearchStr = "";
         String searchWhere = null;
-        String longNameWhere = null;
-        String shortNameWhere = null;
-        String docTextSearchWhere = null;
-        String docTextTypeWhere = null;
+        String longNameWhere =null;
+        String shortNameWhere =null;
+        String docTextSearchWhere =null;
+        String docTextTypeWhere =null;
         String umlAltNameWhere = null;
 
 
-        newSearchStr = StringReplace.strReplace( text, "*", "%" );
-        newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
+        newSearchStr = StringReplace.strReplace(text,"*","%");
+        newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "Long Name" ) )
-        {
-            longNameWhere = buildSearchString( "upper (de1.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode );
+        if (StringUtils.containsKey(searchDomain,"ALL") ||
+                StringUtils.containsKey(searchDomain,"Long Name") ) {
+            longNameWhere = buildSearchString("upper (de1.long_name) like upper ('SRCSTR') ", newSearchStr, searchMode);
         }
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "Short Name" ) )
-        {
-            shortNameWhere = buildSearchString( "upper (de1.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode );
+        if (StringUtils.containsKey(searchDomain,"ALL") ||
+                StringUtils.containsKey(searchDomain,"Short Name") ) {
+
+            shortNameWhere = buildSearchString("upper (de1.preferred_name) like upper ('SRCSTR') ", newSearchStr, searchMode);
         }
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "Doc Text" ) ||
-                StringUtils.containsKey( searchDomain, "Hist" ) )
-        {
+
+        if (StringUtils.containsKey(searchDomain,"ALL") ||
+                StringUtils.containsKey(searchDomain,"Doc Text") ||
+                StringUtils.containsKey(searchDomain,"Hist")) {
+
             docTextSearchWhere =
-                    buildSearchString( "upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode );
+                    buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
         }
 
         // compose the search for data elements table
         searchWhere = longNameWhere;
 
-        if( searchWhere == null )
-        {
+        if (searchWhere == null) {
             searchWhere = shortNameWhere;
-        }
-        else if( shortNameWhere != null )
-        {
+        } else if (shortNameWhere !=null) {
             searchWhere = searchWhere + " OR " + shortNameWhere;
         }
 
-        if( searchWhere == null && docTextSearchWhere != null )
-        {
+        if (searchWhere == null && docTextSearchWhere != null ) {
             searchWhere = " and " + docTextSearchWhere;
-        }
-        else if( docTextSearchWhere != null )
-        {
+        } else if (docTextSearchWhere != null) {
             searchWhere = searchWhere + " OR " + docTextSearchWhere;
-            searchWhere = " and (" + searchWhere + ") ";
+            searchWhere = " and (" + searchWhere +  ") ";
         }
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                ( StringUtils.containsKey( searchDomain, "Doc Text" ) &&
-                        StringUtils.containsKey( searchDomain, "Hist" ) ) )
-        {
+        if (StringUtils.containsKey(searchDomain,"ALL") ||
+                ( StringUtils.containsKey(searchDomain,"Doc Text")&&
+                        StringUtils.containsKey(searchDomain,"Hist"))) {
             docWhere = "(select de_idseq "
-                    + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
-                    + " where  de1.de_idseq  = rd1.ac_idseq (+) "
-                    + " and    rd1.dctl_name (+) = 'Preferred Question Text' "
+                    +" from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
+                    +" where  de1.de_idseq  = rd1.ac_idseq (+) "
+                    +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                     + searchWhere
-                    + " union "
-                    + " select de_idseq "
-                    + " from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
-                    + " where  de2.de_idseq  = rd2.ac_idseq (+) "
-                    + " and    rd2.dctl_name (+) = 'Alternate Question Text' "
-                    + " and    " + buildSearchString( "upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
-        }
-        else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
-        {
+                    +" union "
+                    +" select de_idseq "
+                    +" from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
+                    +" where  de2.de_idseq  = rd2.ac_idseq (+) "
+                    +" and    rd2.dctl_name (+) = 'Alternate Question Text' "
+                    +" and    "+buildSearchString("upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ",newSearchStr, searchMode)+") ";
+
+
+
+        } else if  ( StringUtils.containsKey(searchDomain,"Doc Text")) {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
-        }
-        else if( StringUtils.containsKey( searchDomain, "Hist" ) )
-        {
+        } else if  ( StringUtils.containsKey(searchDomain,"Hist")) {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
 
-        if( docTextSearchWhere == null && searchWhere != null )
-        {
+
+        if (docTextSearchWhere == null && searchWhere != null) {
             //this is a search not involving reference documents
             docWhere = "(select de_idseq "
-                    + " from sbr.data_elements_view de1 "
-                    + " where  " + searchWhere + " ) ";
+                    +" from sbr.data_elements_view de1 "
+                    +" where  " + searchWhere + " ) ";
 
-        }
-        else if( docWhere == null && docTextTypeWhere != null )
-        {
+        } else if (docWhere == null && docTextTypeWhere != null) {
             docWhere = "(select de_idseq "
-                    + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
-                    + " where  de1.de_idseq  = rd1.ac_idseq (+) "
-                    + " and  " + docTextTypeWhere
+                    +" from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
+                    +" where  de1.de_idseq  = rd1.ac_idseq (+) "
+                    +" and  " + docTextTypeWhere
                     + searchWhere + " ) ";
 
         }
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "UML ALT Name" ) )
-        {
+
+        if (StringUtils.containsKey(searchDomain,"ALL") ||
+                StringUtils.containsKey(searchDomain,"UML ALT Name") ) {
             umlAltNameWhere =
                     " (select de_idseq  from sbr.designations_view dsn, sbr.data_elements_view de1  "
                             + "where  de1.de_idseq  = dsn.ac_idseq (+)  "
                             + "and dsn.detl_name = 'UML Class:UML Attr'  and "
-                            + buildSearchString( "upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode )
-                            + " )";
+                            +  buildSearchString("upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode)
+                            +" )";
 
-            if( docWhere == null )
-            {
-                return " and de.de_idseq IN " + umlAltNameWhere;
-            }
-            else
-            {
+            if (docWhere == null)
+                return  " and de.de_idseq IN " + umlAltNameWhere;
+            else {
                 String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
-                        + " union " + docWhere + ") ";
+                        + " union " + docWhere +") " ;
                 return nameWhere;
             }
         }
+         logger.debug("  buildSearchTextWhere - docWhere: " + docWhere);
+         logger.debug("  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere);
 
         return " and de.de_idseq IN " + docWhere;
     }
-
 
     private String buildSearchString( String whereTemplate, String searchPhrase, String searchMode )
     {
@@ -1459,36 +1170,21 @@ searchBean.setAslNameExcludeList( temp );
     }
 
     public DESearchQueryBuilder()
-    {
-        System.out.println( "In constructor" );
-
-    }
+    { }
 
 
     public static void main( String[] args )
     {
 
-        /*
-
-        gov.nih.nci.cadsr.service.search.DESearchQueryBuilder( HttpServletRequest request,
-                String treeParamType,
-                String treeParamIdSeq,
-                String treeConteIdSeq, gov.nih.nci.cadsr.service.search.DataElementSearchBean searchBean
-
-         */
-        TempTestParameters request = new TempTestParameters();
+       TempTestParameters request = new TempTestParameters();
 //        String treeParamType = "REGCSI";
         String treeParamType = null;
         String treeParamIdSeq = null; //"99BA9DC8-2094-4E69-E034-080020C9C0E0,Standard";
         String treeConteIdSeq =  null; //"99BA9DC8-2094-4E69-E034-080020C9C0E0";
         DataElementSearchBean searchBean = new DataElementSearchBean();
 
-
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,treeParamType,treeParamIdSeq , treeConteIdSeq, searchBean, "tissue", "0");
-        System.out.println( "dESearchQueryBuilder: " + dESearchQueryBuilder.getQueryStmt().replaceAll( "  *", " " ));
-
-
-       // System.out.println( "dESearchQueryBuilder: " + dESearchQueryBuilder.buildSearchString( "a=b", "Phrase", gov.nih.nci.cadsr.service.search.ProcessConstants.DE_SEARCH_MODE_EXACT ) );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,treeParamType,treeParamIdSeq , treeConteIdSeq, searchBean, "tissue", "Exact phrase", "0");
+         logger.debug( "dESearchQueryBuilder: " + dESearchQueryBuilder.getQueryStmt().replaceAll( "  *", " " ));
 
     }
 }

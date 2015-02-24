@@ -1,12 +1,18 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import gov.nih.nci.cadsr.common.util.StringUtils;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.ProtocolFormModel;
 import gov.nih.nci.cadsr.service.model.context.BaseNode;
 import gov.nih.nci.cadsr.service.model.context.ClassificationItemNode;
+import gov.nih.nci.cadsr.service.model.context.ContextNode;
 import gov.nih.nci.cadsr.service.model.context.ProtocolFormNode;
 import junit.framework.TestCase;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +109,6 @@ public class ContextDataControllerTest extends TestCase
             {
                 assertFalse( "Matched child Classification folder: \"" + csCsiModel.getCsLongName() + "\", SHOULD NOT HAVE", true );
             }
-            System.out.println( csCsiModel.getCsLongName() );
         }
         assertTrue( true );
     }
@@ -113,7 +118,7 @@ public class ContextDataControllerTest extends TestCase
     ************************************************************ */
     public void testAddChildrenToCsi0()
     {
-//ClassificationItemNode
+
         initCsCsisNodeList();
 
         ClassificationItemNode classificationItemNodeParent = new ClassificationItemNode();
@@ -123,13 +128,10 @@ public class ContextDataControllerTest extends TestCase
         // List<BaseNode> childrenList = classificationItemNodeParent.getChildren();
 
         //Look at the parent, do we have two children?
-        System.out.println( classificationItemNodeParent.getChildren().size() + " children" );
+        //System.out.println( classificationItemNodeParent.getChildren().size() + " children" );
 
         for( BaseNode child : classificationItemNodeParent.getChildren() )
         {
-
-
-            System.out.println( " child: " + child.toString() );
 
             if( ( child.getText().compareTo( "CRF CDEs" ) != 0 ) &&
                     ( child.getText().compareTo( "MDR" ) != 0 ) )
@@ -152,14 +154,12 @@ public class ContextDataControllerTest extends TestCase
         protocolFormModel = new ProtocolFormModel();
         protocolFormModel.setLongName(testProtocolLongName);
         protocolFormModel.setProtoPreferredDefinition(testProtocolPreferredDefinition);
-
     }
 
     public void testInitProtocolFormNode0()
     {
         initProtocolFormModel();
         ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
-        System.out.println( " protocolFormNode: " + protocolFormNode.toString() );
         assertEquals( "Test Protocol LongName", protocolFormNode.getText() );
     }
 

@@ -5,6 +5,7 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.util.StringUtils;
 import gov.nih.nci.cadsr.dao.*;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.context.*;
@@ -13,6 +14,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,210 +94,245 @@ public class ContextDataController
         this.message = "Init ";
     }
 
+ /*
+    @RequestMapping(value = "/contextDataTest")
+    @ResponseBody
+    public String contextDataTest( @RequestParam("uiType") int clientUiType )
+    {
+
+        String results = null;
+        try
+        {
+            results = StringUtils.readFile( "/opt/devel/projects/cadsr-cde-browser/v5/cdebrowser/server/src/main/webapp/data1.json" );
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+*/
+
+    @RequestMapping(value = "/contextDataTest")
+    @ResponseBody
+    public String contextDataTest( @RequestParam("uiType") int clientUiType )
+    {
+
+        String json = null;
+        try
+        {
+            json = StringUtils.readFile( "data1.json" );
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
 
     @RequestMapping(value = "/contextData")
     @ResponseBody
     public ContextNode[] contextData( @RequestParam("uiType") int clientUiType )
     {
-
         logger.debug( "Received rest call \"contextData\" uiType: " + clientUiType );
-        //this.uiType = clientUiType;
-        this.contextSubsetCount = clientUiType;
-        ContextNode[] contextNodes = null;
+        ContextNode[] contextNodes = getAllTreeData( clientUiType);
+        logger.debug( "Done rest call\n=========================\n" );
+        return contextNodes;
+    }
 
-        if( this.contextSubsetCount < 2 )
+private ContextNode[] getAllTreeData(int clientUiType)
+{
+    this.contextSubsetCount = clientUiType;
+    ContextNode[] contextNodes = null;
+
+    if( this.contextSubsetCount < 2 )
+    {
+        contextNodes = new ContextNode[1];
+        contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, false, "caDSR Contexts" );
+    }
+    else
+    {
+        contextNodes = new ContextNode[this.contextSubsetCount];
+        for( int i = 0; i < this.contextSubsetCount; i++ )
         {
-            contextNodes = new ContextNode[1];
-            contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, false, "caDSR Contexts" );
+            //logger.debug( " >>> " + getContextSubsetString( uiType, i ) );
+            contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, getContextSubsetString( this.contextSubsetCount, i ) );
         }
-        else
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+    //Get list of all Contexts
+    /////////////////////////////////////////////////////////////////////////////
+    List<ContextModel> contextModelList = this.contextDAO.getAllContexts();
+    logger.debug("contextModelList[0]: " + contextModelList.get( 0 ).toString());
+
+    //Protocol List of all
+    // Don't do this, no faster than getting  Protocols by Context
+    //List<ProtocolModel> protocolModelList = this.protocolDAO.getAllProtocols();
+
+    // All Protocol Forms
+    List<ProtocolFormModel> protocolFormModelList = null;
+    if( includeProtocol )
+    {
+        protocolFormModelList = this.protocolFormDAO.getAllProtocolForm();
+    }
+
+    // Just for dev time testing
+    //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "CCR" );
+    //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "ABTC" );
+    //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "Alliance" );
+
+
+    //The contents of a Classification folder
+    List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
+    csCsiNodelList = this.csCsiDAO.getAllCsCsis();
+
+    for( ContextModel model : contextModelList )
+    {
+        /////////////////////////////////////////////////////////////////////////////
+        //Get all Classifications for this context
+        /////////////////////////////////////////////////////////////////////////////
+
+        //CS (Classification Scheme) folder
+        ParentNode classificationsParentNode = new ParentNode();
+        classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
+        classificationsParentNode.setType( CaDSRConstants.FOLDER );
+        classificationsParentNode.setText( "Classifications" );
+        classificationsParentNode.setCollapsed( true );
+        // If/When a child is added IsParent will change to true.
+        classificationsParentNode.setIsParent( false );
+        //No need for tooltip
+        //classificationsParentNode.setHover( classificationsParentNode.getText() );
+        classificationsParentNode.setHref( classificationsParentNode.getHref() );
+        classificationsParentNode.setChildren( new ArrayList<BaseNode>() );
+
+        if( includeClassification )
         {
-            contextNodes = new ContextNode[this.contextSubsetCount];
-            for( int i = 0; i < this.contextSubsetCount; i++ )
+            //////////////////////////////////////////////////
+            //CS (Classification Scheme) List for this Context
+            //////////////////////////////////////////////////
+            //List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemes( model.getConteIdseq() );
+            String contextId = model.getConteIdseq();
+            for( ClassificationSchemeModel classificationSchemeModel : csModelList )
             {
-                //logger.debug( " >>> " + getContextSubsetString( uiType, i ) );
-                contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, getContextSubsetString( this.contextSubsetCount, i ) );
+                if( classificationSchemeModel.getConteIdseq().compareTo( contextId ) == 0 )
+                {
+                    //logger.debug( "**** classificationSchemeModel " + classificationSchemeModel.getLongName() );
+                    ClassificationNode classificationSchemeNode = new ClassificationNode();
+                    classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
+                    classificationSchemeNode.setType( CaDSRConstants.FOLDER );
+                    classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
+                    //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + model.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
+                    classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() );
+                    classificationSchemeNode.setCollapsed( true );
+                    classificationSchemeNode.setIsParent( false );
+                    classificationSchemeNode.setIdSeq( classificationSchemeModel.getCsIdseq() );
+                    //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
+
+                    ////////////////////////////////////////////////
+                    //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
+                    ////////////////////////////////////////////////
+                    //csCsiNodelList = this.csCsiDAO.getCsCsisById( classificationSchemeModel.getCsIdseq() );
+                    String csId = classificationSchemeModel.getCsIdseq();
+                    for( CsCsiModel csCsiModel : csCsiNodelList )
+                    {
+                        if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
+                        {
+                            //logger.debug( "GetCsi [" + classificationSchemeModel.getLongName() + "] : " + csCsiModel.getCsiName() );
+                            //Set as much as we can without knowing if it has children
+                            ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
+                            classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
+                            //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + model.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
+                            classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
+                            classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
+                            classificationSchemeItemNode.setCollapsed( true );
+                            logger.debug( "addChildrenToCsi(" +  classificationSchemeItemNode.getText() +")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription());
+                            addChildrenToCsi( classificationSchemeItemNode );
+
+                            //Add this CSI to the CS
+                            classificationSchemeNode.addChildNode( classificationSchemeItemNode );
+                        }
+                    }
+                    //    logger.debug( "DONE Getting CSIs for " + model.getConteIdseq() );
+                    //Add this CS to the CS Folder
+                    classificationsParentNode.addChildNode( classificationSchemeNode );
+                }
             }
         }
+        //END  (Classification Scheme) folder
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /////////////////////////////////////////////////////////////////////////////
-        //Get list of all Contexts
-        /////////////////////////////////////////////////////////////////////////////
-        List<ContextModel> contextModelList = this.contextDAO.getAllContexts();
-        logger.debug("contextModelList[0]: " + contextModelList.get( 0 ).toString());
+        //Protocol forms folder
+        ParentNode protocolsParentNode = new ParentNode();
+        protocolsParentNode.setText( "ProtocolForms" );
+        protocolsParentNode.setCollapsed( true );
+        protocolsParentNode.setIsParent( false );// If and when a child is added IsParent will change to true.
+        protocolsParentNode.setType( CaDSRConstants.FOLDER );
+        protocolsParentNode.setChildType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
+        //Don't need tooltip for this
+        //protocolsParentNode.setHover( protocolsParentNode.getText() );
+        protocolsParentNode.setHref( protocolsParentNode.getHref() );
+        protocolsParentNode.setChildren( new ArrayList<BaseNode>() );
 
-        //Protocol List of all
-        // Don't do this, no faster than getting  Protocols by Context
-        //List<ProtocolModel> protocolModelList = this.protocolDAO.getAllProtocols();
-
-        // All Protocol Forms
-        List<ProtocolFormModel> protocolFormModelList = null;
         if( includeProtocol )
         {
-            protocolFormModelList = this.protocolFormDAO.getAllProtocolForm();
+
+            //////////////////////////////////////////////////
+            //Protocol List for this Context
+            //////////////////////////////////////////////////
+            List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
+            for( ProtocolModel protocolModel : protocolModelList )
+            {
+                if( protocolModel.getConteIdseq().compareTo( model.getConteIdseq() ) == 0 )
+                {
+                    //logger.debug( "**** protocolModel " + protocolModel.getLongName() );
+                    ProtocolNode protocolNode = initProtocolNode( protocolModel );
+
+                    //////////////////////////////////
+                    // Protocol Forms for this Protocol Folder
+                    //////////////////////////////////
+                    //getProtocolForms
+                    //List<ProtocolFormModel> protocolFormModelList = this.protocolFormDAO.getProtocolFormByProtoId( protocolModel.getProtoIdseq() );
+                    String protoId = protocolModel.getProtoIdseq();
+                    for( ProtocolFormModel protocolFormModel : protocolFormModelList )
+                    {
+                        String protoFormId = protocolFormModel.getProtoIdseq();
+                        if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
+                        {
+                            ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel );
+                            protocolNode.addChildNode( protocolFormNode );
+                        }
+                    }
+                    //logger.debug( "**** AFTER Get Protocol Forms" );
+
+                    //If there are NO protocol forms for this protocol, don't add him.
+                    if( protocolNode.isIsParent() )
+                    {
+                        protocolsParentNode.addChildNode( protocolNode );
+                    }
+                }
+            }
         }
 
-        // Just for dev time testing
-        //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "CCR" );
-        //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "ABTC" );
-        //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "Alliance" );
-
-
-        //The contents of a Classification folder
-        List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
-        csCsiNodelList = this.csCsiDAO.getAllCsCsis();
-
-
-
-
-
-
-        for( ContextModel model : contextModelList )
-        {
-            /////////////////////////////////////////////////////////////////////////////
-            //Get all Classifications for this context
-            /////////////////////////////////////////////////////////////////////////////
-
-            //CS (Classification Scheme) folder
-            ParentNode classificationsParentNode = new ParentNode();
-            classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
-            classificationsParentNode.setType( CaDSRConstants.FOLDER );
-            classificationsParentNode.setText( "Classifications" );
-            classificationsParentNode.setCollapsed( true );
-            // If/When a child is added IsParent will change to true.
-            classificationsParentNode.setIsParent( false );
-            //No need for tooltip
-            //classificationsParentNode.setHover( classificationsParentNode.getText() );
-            classificationsParentNode.setHref( classificationsParentNode.getHref() );
-            classificationsParentNode.setChildren( new ArrayList<BaseNode>() );
-
-            if( includeClassification )
-            {
-                //////////////////////////////////////////////////
-                //CS (Classification Scheme) List for this Context
-                //////////////////////////////////////////////////
-                //List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemes( model.getConteIdseq() );
-                String contextId = model.getConteIdseq();
-                for( ClassificationSchemeModel classificationSchemeModel : csModelList )
-                {
-                    if( classificationSchemeModel.getConteIdseq().compareTo( contextId ) == 0 )
-                    {
-                        //logger.debug( "**** classificationSchemeModel " + classificationSchemeModel.getLongName() );
-                        ClassificationNode classificationSchemeNode = new ClassificationNode();
-                        classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
-                        classificationSchemeNode.setType( CaDSRConstants.FOLDER );
-                        classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
-                        //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + model.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
-                        classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() );
-                        classificationSchemeNode.setCollapsed( true );
-                        classificationSchemeNode.setIsParent( false );
-                        classificationSchemeNode.setIdSeq( classificationSchemeModel.getCsIdseq() );
-                        //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
-
-                        ////////////////////////////////////////////////
-                        //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
-                        ////////////////////////////////////////////////
-                        //csCsiNodelList = this.csCsiDAO.getCsCsisById( classificationSchemeModel.getCsIdseq() );
-                        String csId = classificationSchemeModel.getCsIdseq();
-                        for( CsCsiModel csCsiModel : csCsiNodelList )
-                        {
-                            if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
-                            {
-                                //logger.debug( "GetCsi [" + classificationSchemeModel.getLongName() + "] : " + csCsiModel.getCsiName() );
-                                //Set as much as we can without knowing if it has children
-                                ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
-                                classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
-                                //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + model.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
-                                classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
-                                classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
-                                classificationSchemeItemNode.setCollapsed( true );
-logger.debug( "addChildrenToCsi(" +  classificationSchemeItemNode.getText() +")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription());
-                                addChildrenToCsi( classificationSchemeItemNode );
-
-                                //Add this CSI to the CS
-                                classificationSchemeNode.addChildNode( classificationSchemeItemNode );
-                            }
-                        }
-                        //    logger.debug( "DONE Getting CSIs for " + model.getConteIdseq() );
-                        //Add this CS to the CS Folder
-                        classificationsParentNode.addChildNode( classificationSchemeNode );
-                    }
-                }
-            }
-            //END  (Classification Scheme) folder
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //Protocol forms folder
-            ParentNode protocolsParentNode = new ParentNode();
-            protocolsParentNode.setText( "ProtocolForms" );
-            protocolsParentNode.setCollapsed( true );
-            protocolsParentNode.setIsParent( false );// If and when a child is added IsParent will change to true.
-            protocolsParentNode.setType( CaDSRConstants.FOLDER );
-            protocolsParentNode.setChildType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
-            //Don't need tooltip for this
-            //protocolsParentNode.setHover( protocolsParentNode.getText() );
-            protocolsParentNode.setHref( protocolsParentNode.getHref() );
-            protocolsParentNode.setChildren( new ArrayList<BaseNode>() );
-
-            if( includeProtocol )
-            {
-
-                //////////////////////////////////////////////////
-                //Protocol List for this Context
-                //////////////////////////////////////////////////
-                List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
-                for( ProtocolModel protocolModel : protocolModelList )
-                {
-                    if( protocolModel.getConteIdseq().compareTo( model.getConteIdseq() ) == 0 )
-                    {
-                        //logger.debug( "**** protocolModel " + protocolModel.getLongName() );
-                        ProtocolNode protocolNode = initProtocolNode( protocolModel );
-
-                        //////////////////////////////////
-                        // Protocol Forms for this Protocol Folder
-                        //////////////////////////////////
-                        //getProtocolForms
-                        //List<ProtocolFormModel> protocolFormModelList = this.protocolFormDAO.getProtocolFormByProtoId( protocolModel.getProtoIdseq() );
-                        String protoId = protocolModel.getProtoIdseq();
-                        for( ProtocolFormModel protocolFormModel : protocolFormModelList )
-                        {
-                            String protoFormId = protocolFormModel.getProtoIdseq();
-                            if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
-                            {
-                                ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel );
-                                protocolNode.addChildNode( protocolFormNode );
-                            }
-                        }
-                        //logger.debug( "**** AFTER Get Protocol Forms" );
-
-                        //If there are NO protocol forms for this protocol, don't add him.
-                        if( protocolNode.isIsParent() )
-                        {
-                            protocolsParentNode.addChildNode( protocolNode );
-                        }
-                    }
-                }
-            }
-
-            //////////////////////////////////////////////////////////////////////////
-            //This top node
-            //////////////////////////////////////////////////////////////////////////
-            //ContextNode contextNodeParent = new ContextNode( model );
-            ContextNode contextNodeParent = new ContextNode( model );
-            contextNodeParent.setHover( contextNodeParent.getHover() );
-            contextNodeParent.addChildNode( classificationsParentNode );
-            contextNodeParent.addChildNode( protocolsParentNode );
+        //////////////////////////////////////////////////////////////////////////
+        //This top node
+        //////////////////////////////////////////////////////////////////////////
+        //ContextNode contextNodeParent = new ContextNode( model );
+        ContextNode contextNodeParent = new ContextNode( model );
+        contextNodeParent.setHover( contextNodeParent.getHover() );
+        contextNodeParent.addChildNode( classificationsParentNode );
+        contextNodeParent.addChildNode( protocolsParentNode );
 
 //logger.debug( "index for " + contextNodeParent.getText() + "is "  +  getContextSubsetIndex( contextNodeParent.getText()));
 
-            //contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addChildNode( contextNodeParent );
-            contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addTopNode( contextNodeParent );
-        }
-        logger.debug( "Done rest call\n=========================\n" );
-
-        return contextNodes;
+        //contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addChildNode( contextNodeParent );
+        contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addTopNode( contextNodeParent );
     }
+    return contextNodes;
+}
 
 
     /**
