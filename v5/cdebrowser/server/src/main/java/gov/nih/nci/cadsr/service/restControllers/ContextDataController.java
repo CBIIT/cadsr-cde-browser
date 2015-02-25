@@ -134,17 +134,17 @@ public class ContextDataController
 
     @RequestMapping(value = "/contextData")
     @ResponseBody
-    public ContextNode[] contextData( @RequestParam("uiType") int clientUiType )
+    public ContextNode[] contextData(  )
     {
-        logger.debug( "Received rest call \"contextData\" uiType: " + clientUiType );
-        ContextNode[] contextNodes = getAllTreeData( clientUiType);
+        logger.debug( "Received rest call \"contextData\"" );
+        ContextNode[] contextNodes = getAllTreeData( );
         logger.debug( "Done rest call\n=========================\n" );
         return contextNodes;
     }
 
-private ContextNode[] getAllTreeData(int clientUiType)
+private ContextNode[] getAllTreeData()
 {
-    this.contextSubsetCount = clientUiType;
+    this.contextSubsetCount = 5;
     ContextNode[] contextNodes = null;
 
     if( this.contextSubsetCount < 2 )
@@ -334,89 +334,6 @@ private ContextNode[] getAllTreeData(int clientUiType)
     return contextNodes;
 }
 
-
-    /**
-     * Produce test data
-     *
-     * @return
-     */
-/*
-
-    public BaseNode getContextTestNodes()
-    {
-
-        int nodeCount = 20;
-        BaseNode[] contextNode = new BaseNode[nodeCount];
-        for( int f = 0; f < nodeCount; f++ )
-        {
-            contextNode[f] = new BaseNode();
-        }
-        
-            */
-/*
-                 "container"  = 1;
-	             "csi folder"  = 2;
-                 "folder" = 3;
-                 "protocol forms folder"  = 4;
-                 "leaf"  = 6;
-                *//*
-
-
-
-        int i = 0;
-
-        contextNode[i++] = new BaseNode( 3, false, "caDSR Contexts", "caDSR Contexts - hover text" );
-        contextNode[i++] = new BaseNode( 3, true, "ABTC (Adult Brain Tumor Consortium)", "ABTC (Adult Brain Tumor Consortium)" );
-        contextNode[i++] = new BaseNode( 3, false, "Classifications", "Collections of CDEs by type of CRF" );
-        contextNode[i++] = new BaseNode( 5, true, "CRF CDEs", "ollections of CDEs by type of CRF" );
-        contextNode[i++] = new BaseNode( 2, false, "30-Day Follow-Up", "CDEs used on 30-Day Follow-Up CRFs" );
-        contextNode[i++] = new BaseNode( 2, false, "Adverse Event Cover Sheet", "Collection of CDEs used on Adverse Event Cover Sheet CRFs." );
-        contextNode[i++] = new BaseNode( 5, true, "Dosing", "Collection of CDEs used on Dosing CRFs." );
-        contextNode[i++] = new BaseNode( 2, false, "Lapatinib Dosing", "CDEs for Lapatinib Dosing" );
-        contextNode[i++] = new BaseNode( 2, false, "MK-1775 Dosing", "CCDEs for MK-1775 Dosing" );
-        contextNode[i++] = new BaseNode( 2, false, "ECG", "Collection of CDEs used on ECG CRFs." );
-        contextNode[i++] = new BaseNode( 5, true, "Protocols", "Collection of CDEs by ABTC Protocols" );
-        contextNode[i++] = new BaseNode( 2, false, "ABTC 1202", "ABTC 1202" );
-        contextNode[i++] = new BaseNode( 2, false, "ABTC 0904", "ABTC 0904" );
-        contextNode[i++] = new BaseNode( 3, true, "Protocol Forms", "Protocol Forms" );
-        contextNode[i++] = new BaseNode( 4, true, "ABTC-0904", "ABTC-0904" );
-        contextNode[i++] = new BaseNode( 6, false, "ABTC 30-Day Follow Up", "ABTC 30-Day Follow Up" );
-        contextNode[i++] = new BaseNode( 6, false, "ABTC Adverse Event Cover Sheet", "ABTC Adverse Event Cover Sheet" );
-        contextNode[i++] = new BaseNode( 4, true, "ABTC-1202", "ABTC-1202" );
-        contextNode[i++] = new BaseNode( 6, false, "MK-1775: 30-Day Follow-Up", "MK-1775: 30-Day Follow-Up" );
-        contextNode[i++] = new BaseNode( 6, false, "MK-1775: Adverse Event Cover Sheet", "MK-1775: Adverse Event Cover Sheet" );
-
-
-
-        contextNode[6].addChildNode( contextNode[7] );
-        contextNode[6].addChildNode( contextNode[8] );
-        contextNode[6].addChildNode( contextNode[8] );
-
-        contextNode[3].addChildNode( contextNode[4] );
-        contextNode[3].addChildNode( contextNode[5] );
-        contextNode[3].addChildNode( contextNode[6] );
-        contextNode[3].addChildNode( contextNode[9] );
-
-        contextNode[10].addChildNode( contextNode[11] );
-        contextNode[10].addChildNode( contextNode[12] );
-
-        contextNode[17].addChildNode( contextNode[18] );
-        contextNode[17].addChildNode( contextNode[19] );
-
-        contextNode[14].addChildNode( contextNode[15] );
-        contextNode[13].addChildNode( contextNode[14] );
-        contextNode[13].addChildNode( contextNode[17] );
-
-        contextNode[2].addChildNode( contextNode[3] );
-        contextNode[2].addChildNode( contextNode[10] );
-        contextNode[1].addChildNode( contextNode[2] );
-        contextNode[1].addChildNode( contextNode[13] );
-        contextNode[0].addChildNode( contextNode[1] );
-
-        return contextNode[0];
-    }
-
-*/
 
     /*
     Folders within Classifications can have nested folders.

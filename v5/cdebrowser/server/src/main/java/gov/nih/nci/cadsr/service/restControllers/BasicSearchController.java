@@ -32,7 +32,6 @@ public class BasicSearchController
      @RequestMapping(value = "/basicSearch")
     @ResponseBody
      public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") String field, @RequestParam("queryType") String queryType)
-    //public String basicSearch( @RequestParam("query") String query, @RequestParam("field") String field, @RequestParam("queryType") String queryType)
     {
 
 

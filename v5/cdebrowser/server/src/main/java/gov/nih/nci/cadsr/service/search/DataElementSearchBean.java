@@ -634,7 +634,7 @@ public DataElementSearchBean( HttpServletRequest request ) throws SQLException {
     {
       if(whereClauseStr== null)
       {
-        whereClauseStr = colName+" NOT IN ( '" +excludeArr[i] +"'";
+        whereClauseStr = colName+" NOT IN ('" +excludeArr[i] +"'";
       }
       else
       {
