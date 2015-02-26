@@ -29,14 +29,13 @@ public class BasicSearchController
         this.basicSearchDAO = basicSearchDAO;
     }
 
-     @RequestMapping(value = "/basicSearch")
+    @RequestMapping(value = "/basicSearch")
     @ResponseBody
-     public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") String field, @RequestParam("queryType") String queryType)
+     public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") String queryType)
     {
 
 
         TempTestParameters request = new TempTestParameters();
-        //        String treeParamType = "REGCSI";
         String treeParamType = null;
         String treeParamIdSeq = null;
         String treeConteIdSeq = null;
@@ -46,11 +45,9 @@ public class BasicSearchController
 int intMode = Integer.parseInt(queryType);
 String searchMode = CaDSRConstants.SEARCH_MODE[intMode];
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean,query, searchMode, field );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,   searchBean,query, searchMode, field );
         String sql = dESearchQueryBuilder.getQueryStmt();
         sql = sql.replaceAll( "  *", " " );
-
-        //System.out.println("SQL: " + sql +"\n");
 
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results =  basicSearchDAO.getAllContexts();

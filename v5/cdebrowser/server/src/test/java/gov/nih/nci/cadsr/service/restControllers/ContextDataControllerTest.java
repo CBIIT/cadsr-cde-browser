@@ -31,18 +31,14 @@ public class ContextDataControllerTest extends TestCase
 
     private void initCsCsiNodelList()
     {
-        //Parent Classification folder - FIXME-THis is not typical parent data
+        //Parent Classification folder
         CsCsiModel parentClassificationFolder = new CsCsiModel();
         parentClassificationFolder.setCsiIdseq( "7A12C53B-BD94-0A34-E040-BB89AD4349EF" );
         parentClassificationFolder.setCsCsiIdseq( "4E5E07B8-A7FF-1EB0-E044-0003BA3F9857" );
         parentClassificationFolder.setCsiName( "2000r1: Recipient Baseline Data" );
 
-
         csCsiNodelList.add( parentClassificationFolder );
     }
-    //private List<CsCsiModel> csCsiNodelList = null;
-//private List<CsCsiModel> getCsCsisByParentCsCsi( String csCsiIdseq )
-
 
     private void initCsCsisNodeList()
     {
@@ -72,8 +68,8 @@ public class ContextDataControllerTest extends TestCase
     }
 
     /* ************************************************************
-      Test - ContextDataController.getCsCsisByParentCsCsi
-   */
+         Test - ContextDataController.getCsCsisByParentCsCsi
+    ************************************************************ */
 
     /*
          Create three children, two match the parent ID, one does not, make sure we find two
@@ -90,13 +86,13 @@ public class ContextDataControllerTest extends TestCase
             {
                 assertFalse( "Did not find child Classification folder: \"" + csCsiModel.getCsLongName() + "\"  .", true );
             }
-            System.out.println( csCsiModel.getCsLongName() );
         }
+        assertTrue( true );
     }
 
     /*
-           Create three children, two match the parent ID, one does not, make sure we don't match the non-child
-         */
+        Create three children, two match the parent ID, one does not, make sure we don't match the non-child
+    */
     public void testGetCsCsisByParentCsCsi1()
     {
         String parentIdSeq = "F7BA6033-BAEA-C5EF-E040-BB89AD437201";
@@ -114,25 +110,19 @@ public class ContextDataControllerTest extends TestCase
     }
 
     /* ************************************************************
-        Test - ContextDataController.addChildrenToCsi
+         Test - ContextDataController.addChildrenToCsi
     ************************************************************ */
     public void testAddChildrenToCsi0()
     {
-
         initCsCsisNodeList();
 
         ClassificationItemNode classificationItemNodeParent = new ClassificationItemNode();
         classificationItemNodeParent.setIdSeq( "F7BA6033-BAEA-C5EF-E040-BB89AD437201" );
         contextDataController.addChildrenToCsi( classificationItemNodeParent );
 
-        // List<BaseNode> childrenList = classificationItemNodeParent.getChildren();
-
         //Look at the parent, do we have two children?
-        //System.out.println( classificationItemNodeParent.getChildren().size() + " children" );
-
         for( BaseNode child : classificationItemNodeParent.getChildren() )
         {
-
             if( ( child.getText().compareTo( "CRF CDEs" ) != 0 ) &&
                     ( child.getText().compareTo( "MDR" ) != 0 ) )
             {
@@ -144,9 +134,9 @@ public class ContextDataControllerTest extends TestCase
 
 
 
-/* *************************************************
-    Test - ContextDataController.initProtocolFormNode
- */
+    /* ************************************************************
+         Test - ContextDataController.initProtocolFormNode
+    ************************************************************ */
     private void initProtocolFormModel()
     {
         String testProtocolLongName = "Test Protocol LongName";

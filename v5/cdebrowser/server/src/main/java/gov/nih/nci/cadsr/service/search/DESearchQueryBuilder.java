@@ -12,7 +12,6 @@ package gov.nih.nci.cadsr.service.search;/*L
  * http://ncip.github.com/cadsr-cde-browser/LICENSE-caBIG.txt
  */
 
-import gov.nih.nci.cadsr.common.util.SimpleSortableColumnHeader;
 import gov.nih.nci.cadsr.common.util.SortableColumnHeader;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtils;
@@ -30,85 +29,51 @@ import java.util.regex.Pattern;
  *
  * @author Ram Chilukuri
  */
-public class DESearchQueryBuilder extends Object
+public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( DESearchQueryBuilder.class.getName() );
 
-    private final static String REPLACE_TOKEN = "SRCSTR";
 
-    private String searchStr = "";
+    //private String searchStr = "";
     private String whereClause = "";
     private String[] strArray = null;
-    private StringBuffer workflowList = null;
     private String xmlQueryStmt = "";
     private String vdPrefName = "";
     private String csiName = "";
     private String decPrefName = "";
     private String sqlStmt = "";
-    private String treeParamIdSeq = "";
     private String treeParamRegStatus = null;
-    private String treeParamType = "";
-    private String treeConteIdSeq = "";
-
-    //Does this get used?
-    private Object[] queryParams = new Object[]{ "%", "%", "%", "%", "%" };
 
     private String contextUse = "";
-    private String orderBy = " ORDER BY long_name, de_version ";
-    private String sqlWithoutOrderBy;
-    private SortableColumnHeader sortColumnHeader = null;
 
 
     public DESearchQueryBuilder( TempTestParameters request,
-                                 String treeParamType,
-                                 String treeParamIdSeq,
-                                 String treeConteIdSeq, DataElementSearchBean searchBean, String query, String searchMode, String searchField )
+                                  DataElementSearchBean searchBean, String query, String searchMode, int searchField )
     {
-
-        //FIXME - a quick hack to turn on search by PublicId
-        if( searchField.compareTo( "1" ) == 0 )
+        if( searchField == PUBLIC_ID_FIELD)
         {
             request.setJspCdeId( query );
         }
 
-        if( treeParamType != null &&
-                ( treeParamType.equalsIgnoreCase( "REGCSI" ) ||
-                        treeParamType.equalsIgnoreCase( "REGCS" ) ) )
-        {
-            String[] subStr = treeParamIdSeq.split( "," );
-            this.treeParamIdSeq = subStr[0];
-            this.treeParamRegStatus = subStr[1];
-        }
-        else
-        {
-            this.treeParamIdSeq = treeParamIdSeq;
-        }
-
-
-        this.treeParamType = treeParamType;
-        this.treeConteIdSeq = treeConteIdSeq;
         strArray = request.getParameterValues( "SEARCH" );
-         logger.debug(  " strArray: " + StringUtils.stringArrayToString( strArray ) );
+        logger.debug(  " strArray: " + StringUtils.stringArrayToString( strArray ) );
 
         vdPrefName = request.getParameter( "txtValueDomain" );
-         logger.debug( " txtValueDomain: " + vdPrefName );
+        logger.debug( " txtValueDomain: " + vdPrefName );
 
 
         decPrefName = request.getParameter( "txtDataElementConcept" );
-         logger.debug( " txtDataElementConcept: " + decPrefName );
-
+        logger.debug( " txtDataElementConcept: " + decPrefName );
 
         csiName = request.getParameter( "txtClassSchemeItem" );
-         logger.debug( " txtClassSchemeItem: " + csiName );
-
-        String selIndex = null;
+        logger.debug( " txtClassSchemeItem: " + csiName );
 
         contextUse = request.getParameter( "contextUse" );
         if( contextUse == null )
         {
             contextUse = "";
         }
-         logger.debug( " contextUse: " + contextUse );
+        logger.debug( " contextUse: " + contextUse );
 
 
         String usageWhere = "";
@@ -121,7 +86,6 @@ public class DESearchQueryBuilder extends Object
         String searchStr6 = "";
         String searchStr8 = "";
         String latestWhere = "";
-        String csiWhere = "";
         String fromClause = "";
         String vdFrom = "";
         String decFrom = "";
@@ -148,12 +112,12 @@ public class DESearchQueryBuilder extends Object
             //String[] excludeArr = searchBean.getRegStatusExcludeList();
             String[] excludeArr = {"Retired"};
 
-             logger.debug("excludeArr: [" + Arrays.toString( excludeArr )+"]");
+            logger.debug("excludeArr: [" + Arrays.toString( excludeArr )+"]");
 
             if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
             {
-                 logger.debug("registrationExcludeWhere: " + registrationExcludeWhere);
-                 logger.debug(" searchBean.getExcludeWhereCluase( \"nvl(acr.registration_status,'-1')\", excludeArr ): " +  searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr ));
+                logger.debug("registrationExcludeWhere: " + registrationExcludeWhere);
+                logger.debug(" searchBean.getExcludeWhereCluase( \"nvl(acr.registration_status,'-1')\", excludeArr ): " +  searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr ));
                 registrationExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr );
             }
         }
@@ -161,16 +125,12 @@ public class DESearchQueryBuilder extends Object
 
         String wkFlowFrom = " , sbr.ac_status_lov_view asl ";
         String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
+
         //Added for preferences
         String workflowExcludeWhere = "";
         if( searchBean != null )
         {
-
-            //FIXME dev time testing
-            String[] temp =  {"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN"};
-            searchBean.setAslNameExcludeList( temp );
-
-            String[] excludeArr = searchBean.getAslNameExcludeList();
+            String[] excludeArr = aslNameExcludeList;
 
             if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
             {
@@ -178,23 +138,17 @@ public class DESearchQueryBuilder extends Object
             }
         }
 
+
         String contextExludeWhere = "";
-
-        //String contextExludeToExclude = searchBean.getExcludeContextList();
-        //FIXME dev time testing
-        String contextExludeToExclude = "\'TEST\', \'Training\'";
-
-
-        if( !contextExludeToExclude.equals( "" ) )
+        //CONTEXT_EXCLUDES will eventually be set as a preference, currently set in the abstract class.
+        if( !CONTEXT_EXCLUDES.equals( "" ) )
         {
-            contextExludeWhere = " and conte.name NOT IN (" + contextExludeToExclude + " )";
+            contextExludeWhere = " and conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
         }
 
         if( strArray == null )
         {
-            searchStr = "";
             whereClause = "";
-            selIndex = "";
 
             if( this.treeParamRegStatus != null )
             {
@@ -203,15 +157,26 @@ public class DESearchQueryBuilder extends Object
         }
         else
         {
-            if( searchField.compareTo( "0" ) == 0 )
+            if( searchField == NAME_FIELD)
             {
                 searchStr0 = StringUtils.replaceNull( query );
             }
 
-String[] searchStr1 = request.getParameterValues( "jspStatus" );
-String[] searchStr7 = request.getParameterValues( "regStatus" );
-String[] searchStr9 = request.getParameterValues( "altName" );
-String[] searchIn = request.getParameterValues( "jspSearchIn" );
+            /*
+            jspValidValue  is in advancedSearch_inc.jsp associated with a field labeled “Permissible Value”. There’s a whole table called Permissible_values
+            jspObjectClass is in advancedSearch_inc.jsp associated with a field labeled “Object Class”.  I haven’t seen this in the DB
+            jspProperty is in advancedSearch_inc.jsp associated with a field labeled “Property”.  I haven’t seen this in the DB
+            jspValueDomain is in advancedSearch_inc.jsp associated with a field labeled “Search for Value Domains”.  It’s an odd hidden field associated with a “LOV” and with a text field that is disabled.  There’s a DB table for value_domains.  Value Domain (VD), Value Meaning (VM) and Permissible Values (PV) all contribute to the data about what can be the answers to questions.
+            jspCdeId is in advancedSearch_inc.jsp associated with a field labeled “Public ID”. It appears to be used for storing the public id for a CDE. Now, since “a CDE” is the combination of VD, VM and PV’s AND a few other fields, I am not sure right now how there can be one ID for a CDE.
+            jspDataElementConcept is in advancedSearch_inc.jsp associated with a field labeled “Data Element Concept”. There’s something in the db called “Concept"
+            jspClassification is in advancedSearch_inc.jsp associated with a field labeled "Search for Classification Scheme Items".
+            jspLatestVersion is in advancedSearch_inc.jsp associated with a boolean checkbox field that isn’t labeled but I would assume that this field ties into the data’s version field and would choose the max value of
+            */
+
+            String[] searchStr1 = request.getParameterValues( "jspStatus" );
+            String[] searchStr7 = request.getParameterValues( "regStatus" );
+            String[] searchStr9 = request.getParameterValues( "altName" );
+            String[] searchIn = request.getParameterValues( "jspSearchIn" );
 
             String validValue = StringUtils.replaceNull( request.getParameter( "jspValidValue" ) );
             String objectClass = StringUtils.replaceNull( request.getParameter( "jspObjectClass" ) );
@@ -235,107 +200,36 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                     doRegStatusSearch = true;
                 }
             }
-            //searchStr2 =  StringUtils.replaceNull( request.getParameter( "jspValueDomain" ) );
+
             searchStr3 = StringUtils.replaceNull( request.getParameter( "jspCdeId" ) );
-            //searchStr4 =  StringUtils.replaceNull( request.getParameter( "jspDataElementConcept" ) );
-           // searchStr5 =  StringUtils.replaceNull( request.getParameter( "jspClassification" ) );
-           // searchStr6 = StringUtils.replaceNull( request.getParameter( "jspLatestVersion" ) );
-           // searchStr8 =  StringUtils.replaceNull( request.getParameter( "jspAltName" ) );
 
-
-            conceptName =
-                    StringUtils.replaceNull( request.getParameter( "jspConceptName" ) );
-            conceptCode =
-                    StringUtils.replaceNull( request.getParameter( "jspConceptCode" ) );
-            vdType =
-                    StringUtils.replaceNull( request.getParameter( "jspVDType" ) );
-            cdeType =
-                    StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
-
-            /********************************************************************************************************************************************/
-            /********************************************************************************************************************************************/
-            /********************************************************************************************************************************************/
-            /********************************************************************************************************************************************/
-            /********************************************************************************************************************************************/
-            /********************************************************************************************************************************************/
-
-
-//      if (searchStr6.equals("Yes")) {
-//        latestWhere = " and de.latest_version_ind = 'Yes' ";
-//      }
-//      else {
-//        latestWhere = "";
-//      }
-//
-//      if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
-//      {
-//        if(!searchStr6.equals("Yes")||searchStr6.equals(""))
-//          latestWhere = "";
-//      }
+            conceptName = StringUtils.replaceNull( request.getParameter( "jspConceptName" ) );
+            conceptCode = StringUtils.replaceNull( request.getParameter( "jspConceptCode" ) );
+            vdType = StringUtils.replaceNull( request.getParameter( "jspVDType" ) );
+            cdeType = StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
 
 
 
-
-             logger.debug( "  searchStr1 (jspStatus): " + StringUtils.stringArrayToString(searchStr1));
-             logger.debug( "  searchStr7 (regStatus): " + StringUtils.stringArrayToString(searchStr7));
-             logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString(searchStr9));
-             logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString(searchIn));
-             logger.debug( "  validValue (jspValidValue): " + validValue);
-             logger.debug( "  objectClass (jspObjectClass): " + objectClass);
-             logger.debug( "  property (jspProperty): " + property);
-             logger.debug( "  searchStr3: [" + searchStr3 +"]");
-             logger.debug( "  searchStr4 / jspDataElementConcept: " + searchStr4);
-             logger.debug( "  searchStr5 / jspClassification: " + searchStr5);
-             logger.debug( "  searchStr6 / jspLatestVersion: " + searchStr6);
-             logger.debug( "  searchStr8 / jspAltName: " + searchStr8);
-             logger.debug( "  conceptName / jspConceptName: " + conceptName);
-             logger.debug( "  conceptCode / jspConceptCode: " + conceptCode);
-             logger.debug( "  vdType / jspVDType: " + vdType);
-             logger.debug( "  cdeType / jspCDEType: " + cdeType);
+            logger.debug( "  searchStr1 (jspStatus): " + StringUtils.stringArrayToString(searchStr1));
+            logger.debug( "  searchStr7 (regStatus): " + StringUtils.stringArrayToString(searchStr7));
+            logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString(searchStr9));
+            logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString(searchIn));
+            logger.debug( "  validValue (jspValidValue): " + validValue);
+            logger.debug( "  objectClass (jspObjectClass): " + objectClass);
+            logger.debug( "  property (jspProperty): " + property);
+            logger.debug( "  searchStr3: [" + searchStr3 +"]");
+            logger.debug( "  searchStr4 / jspDataElementConcept: " + searchStr4);
+            logger.debug( "  searchStr5 / jspClassification: " + searchStr5);
+            logger.debug( "  searchStr6 / jspLatestVersion: " + searchStr6);
+            logger.debug( "  searchStr8 / jspAltName: " + searchStr8);
+            logger.debug( "  conceptName / jspConceptName: " + conceptName);
+            logger.debug( "  conceptCode / jspConceptCode: " + conceptCode);
+            logger.debug( "  vdType / jspVDType: " + vdType);
+            logger.debug( "  cdeType / jspCDEType: " + cdeType);
 
 
             //set filter on "version"
-            if( searchStr6.equals( "No" ) ) //*********************************************
-            {
-                latestWhere = ""; // advance search, return all version if user choose so
-            }
-            else if( ( treeParamType != null ) && ( treeParamType.equals( "CRF" ) || treeParamType.equals( "TEMPLATE" )
-                    || treeParamType.equals( "CSI" ) || treeParamType.equals( "CLASSIFICATION" ) ) )
-            {
-                latestWhere = ""; //Tree expanded search, return all version
-            }
-            else
-            {
-                latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
-            }
-
-            //search within results
-            //remove "version" filtering and return all object within previously found data
-//HttpSession session = request.getSession( false );
-/*
-
-            HttpSession session = null;
-            if( session != null )
-            {
-                //FIXME move to consts
-                String searchScope = (String) session.getAttribute("browserSearchScope" );
-                if( searchScope != null && searchScope.equalsIgnoreCase( "browserSearchScopeSearchResults" ) )
-                {
-                    latestWhere = "";
-                }
-            }
-
-*/
-            if( searchStr5.equals( "" ) )
-            {
-                csiWhere = "";
-                fromClause = "";
-            }
-            else
-            {
-                csiWhere = getCSItemWhereClause( searchStr5 );
-                fromClause = " ,sbr.ac_csi_view acs ";
-            }
+            latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
 
             String wkFlowWhere = "";
             String cdeIdWhere = "";
@@ -354,7 +248,7 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
             {
                 regStatusWhere = this.buildRegStatusWhereClause( searchStr7 );
             }
-            //if (!getSearchStr(3).equals("")){
+
             if( !searchStr3.equals( "" ) )
             {
                 String newCdeStr = StringReplace.strReplace( searchStr3, "*", "%" );
@@ -362,15 +256,13 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                         newCdeStr, searchMode );
             }
 
-
-            //if (!getSearchStr(2).equals("")){
             if( !searchStr2.equals( "" ) )
             {
                 //vdWhere = " and vd.vd_idseq = '"+searchStr2+"'";
                 vdWhere = " and vd.vd_idseq = '" + searchStr2 + "'"
                         + " and vd.vd_idseq = de.vd_idseq ";
                 vdFrom = " ,sbr.value_domains_view vd ";
-                //queryParams[1] = searchStr2;
+
             }
             else if( !vdType.equals( "" ) && !vdType.equals( ProcessConstants.VD_TYPE_BOTH ) )
             {
@@ -389,8 +281,7 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                 decWhere = " and dec.dec_idseq = '" + searchStr4 + "'"
                         + " and de.dec_idseq = dec.dec_idseq ";
                 decFrom = " ,sbr.data_element_concepts_view dec ";
-                //queryParams[2] = searchStr4;
-            }
+             }
             if( !searchStr0.equals( "" ) )
             {
                 docWhere = this.buildSearchTextWhere( searchStr0, searchIn, searchMode );
@@ -444,18 +335,9 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
 */
         }
 
-        if( treeConteIdSeq != null )
-        {
-            usageWhere = this.getUsageWhereClause();
-            whereBuffer.append( usageWhere );
-        }
-
 
         whereClause = whereBuffer.toString();
-        String fromWhere = "";
-        if( treeParamType == null || treeParamType.equals( "P_PARAM_TYPE" ) )
-        {
-            fromWhere =  " from sbr.data_elements_view de , "+
+        String fromWhere =  " from sbr.data_elements_view de , "+
                     "sbr.reference_documents_view rd , "+
                     "sbr.contexts_view conte "+
                     //"sbrext.de_cde_id_view dc " +
@@ -464,9 +346,9 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                     vdFrom +
                     decFrom +
                     fromClause+
-                    registrationFrom+
-                    wkFlowFrom+
-                    deDerivFrom+
+                    registrationFrom +
+                    wkFlowFrom +
+                    deDerivFrom +
                     //" where de.deleted_ind = 'No' "+  [don't need to use this since we are using view)
                     " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                     registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
@@ -476,7 +358,7 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                     //" and de.de_idseq = dc.ac_idseq (+) "+
                     //" and vd.vd_idseq = de.vd_idseq " +
                     //" and dec.dec_idseq = de.dec_idseq " +
-                    csiWhere + whereClause + registrationWhere + workFlowWhere + deDerivWhere;
+                    whereClause + registrationWhere + workFlowWhere + deDerivWhere;
 /*
 
              logger.debug("\nvdFrom: " + vdFrom + "\n\n");
@@ -488,7 +370,6 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
              logger.debug("\nregistrationExcludeWhere: " + registrationExcludeWhere + "\n\n");
              logger.debug("\nworkflowExcludeWhere: " + workflowExcludeWhere + "\n\n");
              logger.debug("\ncontextExludeWhere: " + contextExludeWhere + "\n\n");
-             logger.debug("\ncsiWhere: " + csiWhere + "\n\n");
              logger.debug("\nwhereClause: " + whereClause + "\n\n");
              logger.debug("\nregistrationWhere: " + registrationWhere + "\n\n");
              logger.debug("\nworkFlowWhere: " + workFlowWhere + "\n\n");
@@ -496,7 +377,7 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
              logger.debug("\nfromWhere: " + fromWhere + "\n\n");
 
 */
-        }
+
 
         //String orderBy = " order by de.preferred_name, de.version ";
         StringBuffer finalSqlStmt = new StringBuffer();
@@ -522,32 +403,8 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                 + "      ,de.cde_id cdeid";
         finalSqlStmt.append( selectClause );
         finalSqlStmt.append( fromWhere );
-        sqlWithoutOrderBy = finalSqlStmt.toString();
-
-//  CHECKME   finalSqlStmt.append( orderBy );
 
         sqlStmt = finalSqlStmt.toString();
-        xmlQueryStmt = "select de.de_idseq " + fromWhere;
-        //buildWorkflowList(getSearchStr(1),dbUtil);
-
-        //release 3.0, sort search result by column
-        sortColumnHeader = new SimpleSortableColumnHeader();
-        sortColumnHeader.setPrimary( "display_order" );
-        sortColumnHeader.setSecondary( "wkflow_order" );
-        sortColumnHeader.setTertiary( "long_name" );
-        sortColumnHeader.setDefaultOrder( true );
-        sortColumnHeader.setOrder( SimpleSortableColumnHeader.ASCENDING );
-
-         logger.debug( "  Query:" );
-         logger.debug( sqlStmt.replaceAll( "  *", " " ) + "\n" );
-    }
-
-    protected String getCSItemWhereClause( String searchStr5 )
-    {
-        String csiWhere;
-        csiWhere = " and de.de_idseq = acs.ac_idseq " +
-                " and acs.cs_csi_idseq = '" + searchStr5 + "'";
-        return csiWhere;
     }
 
     public String getSearchStr( int arrayIndex )
@@ -560,11 +417,6 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
         {
             return "";
         }
-    }
-
-    public String getXMLQueryStmt()
-    {
-        return xmlQueryStmt;
     }
 
     public String getQueryStmt()
@@ -599,81 +451,9 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
         return csiName;
     }
 
-    public Object[] getQueryParams()
-    {
-        return queryParams;
-    }
-
     public String getContextUse()
     {
         return contextUse;
-    }
-
-    public String getSQLWithoutOrderBy()
-    {
-        return sqlWithoutOrderBy;
-    }
-
-    public String getOrderBy()
-    {
-        StringBuffer sb = new StringBuffer();
-      /*
-    String sortOrder = "";
-    if (sortColumnHeader.getOrder() == gov.nih.nci.cadsr.common.util.SortableColumnHeader.DESCENDING)
-       sortOrder = " DESC";
-    StringBuffer sb = new StringBuffer();
-      if( sortColumnHeader.isColumnNumeric( sortColumnHeader.getPrimary() ) )
-          sb = sb.append( ( sortColumnHeader.getPrimary() ) + sortOrder );
-      else
-          sb = sb.append( "upper(" + sortColumnHeader.getPrimary() + ")" + sortOrder );
-      if( sortColumnHeader.getSecondary() != null && !sortColumnHeader.getSecondary().equalsIgnoreCase( "" ) )
-          if( sortColumnHeader.isColumnNumeric( sortColumnHeader.getSecondary() ) )
-              sb.append( "," + sortColumnHeader.getSecondary() + sortOrder );
-          else
-              sb.append( "," + "upper(" + sortColumnHeader.getSecondary() + ")" + sortOrder );
-
-      if( sortColumnHeader.getTertiary() != null && !sortColumnHeader.getTertiary().equalsIgnoreCase( "" ) )
-          if( sortColumnHeader.isColumnNumeric( sortColumnHeader.getTertiary() ) )
-              sb.append( "," + sortColumnHeader.getTertiary() + sortOrder );
-          else
-              sb.append( "," + "upper(" + sortColumnHeader.getTertiary() + ")" + sortOrder );
-              */
-        return sb.toString();
-    }
-
-    protected String getUsageWhereClause()
-    {
-        String usageWhere = "";
-        if( "used_by".equals( contextUse ) )
-        {
-            usageWhere =
-                    " and de.de_idseq IN (select ac_idseq " +
-                            "                     from   sbr.designations_view des " +
-                            "                     where  des.conte_idseq = '" + treeConteIdSeq + "'" +
-                            "                     and    des.DETL_NAME = 'USED_BY')  ";
-        }
-        //else if ("owned_by".equals(contextUse) || "".equals(contextUse)) {
-        else if( "owned_by".equals( contextUse ) )
-        {
-            usageWhere = " and conte.conte_idseq = '" + treeConteIdSeq + "' ";
-        }
-        else if( "both".equals( contextUse ) || "".equals( contextUse ) )
-        {
-            if( "CONTEXT".equals( treeParamType ) )
-            {
-                usageWhere =
-                        " and de.de_idseq IN (select ac_idseq " +
-                                "                     from   sbr.designations_view des " +
-                                "                     where  des.conte_idseq = '" + treeConteIdSeq + "'" +
-                                "                     and    des.DETL_NAME = 'USED_BY' " +
-                                "                     UNION " +
-                                "                     select de_idseq " +
-                                "                     from   sbr.data_elements_view de1 " +
-                                "                     where  de1.conte_idseq ='" + treeConteIdSeq + "') ";
-            }
-        }
-
-        return usageWhere;
     }
 
     private String buildStatusWhereClause( String[] statusList )
@@ -841,8 +621,8 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                 return nameWhere;
             }
         }
-         logger.debug("  buildSearchTextWhere - docWhere: " + docWhere);
-         logger.debug("  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere);
+        logger.debug("  buildSearchTextWhere - docWhere: " + docWhere);
+        logger.debug("  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere);
 
         return " and de.de_idseq IN " + docWhere;
     }
@@ -1029,7 +809,6 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
                 }
             }
             typeWhere = " and dsn.detl_name IN (" + altTypeStr + ")";
-
         }
 
         searchWhere = " and upper (nvl(dsn.name,'%')) like upper ('" + newSearchStr + "') ";
@@ -1115,12 +894,6 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
         return conceptWhere;
     }
 
-
-    public SortableColumnHeader getSortColumnHeader()
-    {
-        return sortColumnHeader;
-    }
-
     protected String getCSWhere( String csId )
     {
         String csWhere = " and de.de_idseq IN ( " +
@@ -1158,33 +931,17 @@ String[] searchIn = request.getParameterValues( "jspSearchIn" );
 
     }
 
-
-    protected String getTreeParamType()
-    {
-        return treeParamType;
-    }
-
-    protected String getTreeConteIdSeq()
-    {
-        return treeConteIdSeq;
-    }
-
     public DESearchQueryBuilder()
     { }
 
 
     public static void main( String[] args )
     {
-
-       TempTestParameters request = new TempTestParameters();
-//        String treeParamType = "REGCSI";
-        String treeParamType = null;
-        String treeParamIdSeq = null; //"99BA9DC8-2094-4E69-E034-080020C9C0E0,Standard";
-        String treeConteIdSeq =  null; //"99BA9DC8-2094-4E69-E034-080020C9C0E0";
+        TempTestParameters request = new TempTestParameters();
         DataElementSearchBean searchBean = new DataElementSearchBean();
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,treeParamType,treeParamIdSeq , treeConteIdSeq, searchBean, "tissue", "Exact phrase", "0");
-         logger.debug( "dESearchQueryBuilder: " + dESearchQueryBuilder.getQueryStmt().replaceAll( "  *", " " ));
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,  searchBean, "tissue", "Exact phrase", 0);
+        logger.debug( "dESearchQueryBuilder: " + dESearchQueryBuilder.getQueryStmt().replaceAll( "  *", " " ));
 
     }
 }

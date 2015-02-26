@@ -567,15 +567,6 @@ public DataElementSearchBean( HttpServletRequest request ) throws SQLException {
   {
     this.regStatusExcludeList = regStatusExcludeList;
   }
-  public String[] getAslNameExcludeList()
-  {
-      /*
-
-      //FIXME - set for dev time in request
-            //String[] excludeArr = {"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN"};
-       */
-    return aslNameExcludeList;
-  }
 
   public void setAslNameExcludeList(String[] aslNameExcludeList)
   {

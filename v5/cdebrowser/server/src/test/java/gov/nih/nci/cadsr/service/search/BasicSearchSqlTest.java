@@ -8,13 +8,10 @@ public class BasicSearchSqlTest  extends TestCase
 
     public void testNameExactPhraseSql()
     {
-        String treeParamType = null;
-        String treeParamIdSeq = null;
-        String treeConteIdSeq = null;
         DataElementSearchBean searchBean = new DataElementSearchBean();
 
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean, "diastolic", "Exact phrase", "0" );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, searchBean, "diastolic", "Exact phrase", 0 );
         String sql = dESearchQueryBuilder.getQueryStmt();
         sql = sql.replaceAll( "  *", " " );
         sql = sql.replaceAll( "\\(  *", "(" );
@@ -29,13 +26,10 @@ public class BasicSearchSqlTest  extends TestCase
 
     public void testNameAllOfTheWords()
     {
-        String treeParamType = null;
-        String treeParamIdSeq = null;
-        String treeConteIdSeq = null;
-        DataElementSearchBean searchBean = new DataElementSearchBean();
+         DataElementSearchBean searchBean = new DataElementSearchBean();
 
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean, "diastolic", "All of the words", "0" );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, searchBean, "diastolic", "All of the words", 0 );
         String sql = dESearchQueryBuilder.getQueryStmt();
         sql = sql.replaceAll( "  *", " " );
         sql = sql.replaceAll( "\\(  *", "(" );
@@ -51,13 +45,10 @@ public class BasicSearchSqlTest  extends TestCase
 
     public void testNameAtLeastOneOfTheWords()
     {
-        String treeParamType = null;
-        String treeParamIdSeq = null;
-        String treeConteIdSeq = null;
         DataElementSearchBean searchBean = new DataElementSearchBean();
 
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean, "diastolic", " At least one of the words", "0" );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, searchBean, "diastolic", " At least one of the words", 0 );
         String sql = dESearchQueryBuilder.getQueryStmt();
         sql = sql.replaceAll( "  *", " " );
         sql = sql.replaceAll( "\\(  *", "(" );
@@ -74,12 +65,9 @@ public class BasicSearchSqlTest  extends TestCase
 
     public void testPublicIdExactPhraseSql()
     {
-        String treeParamType = null;
-        String treeParamIdSeq = null;
-        String treeConteIdSeq = null;
         DataElementSearchBean searchBean = new DataElementSearchBean();
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, treeParamType, treeParamIdSeq, treeConteIdSeq, searchBean, "2183222", "Exact phrase", "1" );
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request, searchBean, "2183222", "Exact phrase", 1 );
         String sql = dESearchQueryBuilder.getQueryStmt();
         sql = sql.replaceAll( "  *", " " );
         sql = sql.replaceAll( " *, *", "," );
