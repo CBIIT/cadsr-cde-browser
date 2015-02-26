@@ -47,6 +47,11 @@ String searchMode = CaDSRConstants.SEARCH_MODE[intMode];
 
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,   searchBean,query, searchMode, field );
         String sql = dESearchQueryBuilder.getQueryStmt();
+        //If we could not build sql from parameters return a empty search results
+        if( sql == null )
+        {
+            return new BasicSearchNode[0];
+        }
         sql = sql.replaceAll( "  *", " " );
 
         basicSearchDAO.setBasicSearchSql( sql );

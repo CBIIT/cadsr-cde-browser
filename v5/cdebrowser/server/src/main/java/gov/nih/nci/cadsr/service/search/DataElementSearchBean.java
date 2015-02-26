@@ -42,7 +42,6 @@ public class DataElementSearchBean extends Object {
 
   private String vdPrefName = "";
   private String csiName = "";
-  private String decPrefName = "";
   private String contextUse = "";
   private StringBuffer usageList = new StringBuffer("");
   private String searchText;
@@ -322,14 +321,6 @@ public DataElementSearchBean( HttpServletRequest request ) throws SQLException {
               "sbr.DESIGNATION_TYPES_LOV_VIEW", "DETL_NAME", "DETL_NAME", selectedIndex,
               "altName", dbUtil, where, true, 4, false, true, false, true,
               "LongLOVField" );
-  }
-
-  public String getVDPrefName() {
-    return StringUtils.replaceNull( vdPrefName );
-  }
-
-  public String getDECPrefName() {
-    return StringUtils.replaceNull( decPrefName );
   }
 
   public String getCSIName() {

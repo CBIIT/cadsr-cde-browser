@@ -101,11 +101,6 @@ public class TempTestParameters
             String[] jspSearchIn = { "ALL" };
             return jspSearchIn;
         }
-        else if( key.compareTo( "SEARCH" ) == 0 )
-        {
-            String[] SEARCH = { "1", "1" };
-            return SEARCH;
-        }
 
 
         return null;

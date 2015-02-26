@@ -1,90 +1,65 @@
-package gov.nih.nci.cadsr.service.search;/*L
- * Copyright SAIC-F Inc.
- *
- * Distributed under the OSI-approved BSD 3-Clause License.
- * See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
- *
- * Portions of this source file not modified since 2008 are covered by:
- *
- * Copyright 2000-2008 Oracle, Inc.
- *
- * Distributed under the caBIG Software License.  For details see
- * http://ncip.github.com/cadsr-cde-browser/LICENSE-caBIG.txt
+package gov.nih.nci.cadsr.service.search;
+/*
+ * Copyright 2015 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.common.util.SortableColumnHeader;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * This class will be used to build the sql query for CDE Browser's
- * data element search page. The basis for the resulting query is the user request.
- *
- * @author Ram Chilukuri
- */
 public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( DESearchQueryBuilder.class.getName() );
 
-
-    //private String searchStr = "";
     private String whereClause = "";
     private String[] strArray = null;
-    private String xmlQueryStmt = "";
-    private String vdPrefName = "";
-    private String csiName = "";
-    private String decPrefName = "";
     private String sqlStmt = "";
-    private String treeParamRegStatus = null;
 
-    private String contextUse = "";
+    protected String query = "";
+    private int clientSearchField = -1;
+    private String clientSearchMode = "";
+
+    //Will be refactored away soon
+    private TempTestParameters request;
+    //Will be refactored away soon
+    private DataElementSearchBean searchBean;
 
 
-    public DESearchQueryBuilder( TempTestParameters request,
-                                  DataElementSearchBean searchBean, String query, String searchMode, int searchField )
+    public DESearchQueryBuilder(
+            TempTestParameters request,
+            DataElementSearchBean searchBean, String clientQuery, String clientSearchMode, int clientSearchField )
     {
-        if( searchField == PUBLIC_ID_FIELD)
+        this.query = clientQuery;
+        this.clientSearchMode = clientSearchMode;
+        this.clientSearchField = clientSearchField;
+        this.request = request;
+        this.searchBean = searchBean;
+
+        buildSql();
+    }
+
+    protected void buildSql()
+    {
+
+        if( query.isEmpty())
         {
-            request.setJspCdeId( query );
+            logger.warn( "Search builder received no query." );
+            sqlStmt = null;
+            return;
         }
 
-        strArray = request.getParameterValues( "SEARCH" );
-        logger.debug(  " strArray: " + StringUtils.stringArrayToString( strArray ) );
-
-        vdPrefName = request.getParameter( "txtValueDomain" );
-        logger.debug( " txtValueDomain: " + vdPrefName );
-
-
-        decPrefName = request.getParameter( "txtDataElementConcept" );
-        logger.debug( " txtDataElementConcept: " + decPrefName );
-
-        csiName = request.getParameter( "txtClassSchemeItem" );
-        logger.debug( " txtClassSchemeItem: " + csiName );
-
-        contextUse = request.getParameter( "contextUse" );
-        if( contextUse == null )
+        if( ( clientSearchField != NAME_FIELD ) && ( clientSearchField != PUBLIC_ID_FIELD ) ) //Unknown Search Field
         {
-            contextUse = "";
+            logger.warn( "Search builder received Unknown Search Field: [" + clientSearchField + "]" );
+            sqlStmt = null;
+            return;
         }
-        logger.debug( " contextUse: " + contextUse );
 
-
-        String usageWhere = "";
-
-        String searchStr0 = "";
-        String searchStr2 = "";
-        String searchStr3 = "";
-        String searchStr4 = "";
-        String searchStr5 = "";
-        String searchStr6 = "";
-        String searchStr8 = "";
         String latestWhere = "";
         String fromClause = "";
         String vdFrom = "";
@@ -97,70 +72,26 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         String deDerivFrom = "";
         StringBuffer whereBuffer = new StringBuffer();
 
-        // release 3.0 updated to add display order for registration status
-        String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
-
-        //Added for preferences
-        String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) ";
-
         String registrationExcludeWhere = "";
-
-        if( searchBean != null )
+        //excludeArr will eventually be set as a preference or settings from client, currently set in the abstract class.
+        if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
         {
-
-            //FIXME - hard coded for dev time
-            //String[] excludeArr = searchBean.getRegStatusExcludeList();
-            String[] excludeArr = {"Retired"};
-
-            logger.debug("excludeArr: [" + Arrays.toString( excludeArr )+"]");
-
-            if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
-            {
-                logger.debug("registrationExcludeWhere: " + registrationExcludeWhere);
-                logger.debug(" searchBean.getExcludeWhereCluase( \"nvl(acr.registration_status,'-1')\", excludeArr ): " +  searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr ));
-                registrationExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr );
-            }
+            registrationExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr );
         }
 
-
-        String wkFlowFrom = " , sbr.ac_status_lov_view asl ";
-        String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
-
-        //Added for preferences
         String workflowExcludeWhere = "";
-        if( searchBean != null )
+        //aslNameExcludeList will eventually be set as a preference or settings from client, currently set in the abstract class.
+        if( !StringUtils.isArrayWithEmptyStrings( aslNameExcludeList ) )
         {
-            String[] excludeArr = aslNameExcludeList;
-
-            if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
-            {
-                workflowExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "asl.asl_name", excludeArr );
-            }
+            workflowExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "asl.asl_name", aslNameExcludeList );
         }
-
 
         String contextExludeWhere = "";
-        //CONTEXT_EXCLUDES will eventually be set as a preference, currently set in the abstract class.
+        //CONTEXT_EXCLUDES will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !CONTEXT_EXCLUDES.equals( "" ) )
         {
             contextExludeWhere = " and conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
         }
-
-        if( strArray == null )
-        {
-            whereClause = "";
-
-            if( this.treeParamRegStatus != null )
-            {
-                whereBuffer.append( " and acr.registration_status = '" + this.treeParamRegStatus + "'" );
-            }
-        }
-        else
-        {
-            if( searchField == NAME_FIELD)
-            {
-                searchStr0 = StringUtils.replaceNull( query );
-            }
 
             /*
             jspValidValue  is in advancedSearch_inc.jsp associated with a field labeled “Permissible Value”. There’s a whole table called Permissible_values
@@ -173,154 +104,111 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             jspLatestVersion is in advancedSearch_inc.jsp associated with a boolean checkbox field that isn’t labeled but I would assume that this field ties into the data’s version field and would choose the max value of
             */
 
-            String[] searchStr1 = request.getParameterValues( "jspStatus" );
-            String[] searchStr7 = request.getParameterValues( "regStatus" );
-            String[] searchStr9 = request.getParameterValues( "altName" );
-            String[] searchIn = request.getParameterValues( "jspSearchIn" );
+         String[] searchIn = request.getParameterValues( "jspSearchIn" );
+/*
 
-            String validValue = StringUtils.replaceNull( request.getParameter( "jspValidValue" ) );
-            String objectClass = StringUtils.replaceNull( request.getParameter( "jspObjectClass" ) );
-            String property = StringUtils.replaceNull( request.getParameter( "jspProperty" ) );
+        String validValue = StringUtils.replaceNull( request.getParameter( "jspValidValue" ) );
+        String objectClass = StringUtils.replaceNull( request.getParameter( "jspObjectClass" ) );
+        String property = StringUtils.replaceNull( request.getParameter( "jspProperty" ) );
+*/
 
-            boolean doStatusSearch = false;
-            if( searchStr1 != null )
+
+        logger.debug( "  query: [" + query + "]" );
+
+        conceptName = StringUtils.replaceNull( request.getParameter( "jspConceptName" ) );
+        conceptCode = StringUtils.replaceNull( request.getParameter( "jspConceptCode" ) );
+        vdType = StringUtils.replaceNull( request.getParameter( "jspVDType" ) );
+        cdeType = StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
+
+
+        logger.debug( "  statusWhere (jspStatus): " + StringUtils.stringArrayToString( statusWhere ) );
+        logger.debug( "  regStatusesWhere (regStatus): " + StringUtils.stringArrayToString( regStatusesWhere ) );
+        //logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString( searchStr9 ) );
+        logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString( searchIn ) );
+ /*       logger.debug( "  validValue (jspValidValue): " + validValue );
+        logger.debug( "  objectClass (jspObjectClass): " + objectClass );
+        logger.debug( "  property (jspProperty): " + property );
+*/
+        logger.debug( "  altName / jspAltName: " + altName );
+        logger.debug( "  conceptName / jspConceptName: " + conceptName );
+        logger.debug( "  conceptCode / jspConceptCode: " + conceptCode );
+        logger.debug( "  vdType / jspVDType: " + vdType );
+        logger.debug( "  cdeType / jspCDEType: " + cdeType );
+
+
+        //set filter on "version"
+        latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
+
+        String wkFlowWhere = "";
+        String cdeIdWhere = "";
+        String vdWhere = "";
+        String decWhere = "";
+        String docWhere = "";
+        String vvWhere = "";
+        String regStatus = "";
+        String altNameWhere = "";
+
+        wkFlowWhere = this.buildStatusWhereClause( statusWhere );
+
+        //check if registration status is selected
+        regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
+
+        if( clientSearchField == PUBLIC_ID_FIELD )
+        {
+            String newCdeStr = StringReplace.strReplace( query, "*", "%" );
+            cdeIdWhere = " and " + buildSearchString( "to_char(de.cde_id) like 'SRCSTR'",
+                    newCdeStr, clientSearchMode );
+        }
+
+        if( !valueDomain.equals( "" ) )
+        {
+            vdWhere = " and vd.vd_idseq = '" + valueDomain + "'"
+                    + " and vd.vd_idseq = de.vd_idseq ";
+            vdFrom = " ,sbr.value_domains_view vd ";
+
+        } else if( !vdType.equals( "" ) && !vdType.equals( ProcessConstants.VD_TYPE_BOTH ) )
+        {
+            String type = "E";
+            if( vdType.equals( ProcessConstants.VD_TYPE_NON_ENUMERATED ) )
             {
-                if( !StringUtils.containsKey( searchStr1, "ALL" ) )
-                {
-                    doStatusSearch = true;
-                }
+                type = "N";
             }
+            vdWhere = " and vd.VD_TYPE_FLAG = '" + type + "'"
+                    + " and vd.vd_idseq = de.vd_idseq ";
+            vdFrom = " ,sbr.value_domains_view vd ";
+        }
 
-            boolean doRegStatusSearch = false;
-            //check if registration status is selected
-            if( searchStr7 != null )
-            {
-                if( !StringUtils.containsKey( searchStr7, "ALL" ) )
-                {
-                    doRegStatusSearch = true;
-                }
-            }
+        if( clientSearchField == NAME_FIELD )
+        {
+            docWhere = this.buildSearchTextWhere( query, searchIn, clientSearchMode );
+        }
 
-            searchStr3 = StringUtils.replaceNull( request.getParameter( "jspCdeId" ) );
+        /*
+         searchStr9 in the previous version mapped to altName, we are not using this currently,
+         but, should be researched to see if it is a parameter from the client we will want to implement.
+         This was the init in the  previous version:  String[] searchStr9 = request.getParameterValues( "altName" );
 
-            conceptName = StringUtils.replaceNull( request.getParameter( "jspConceptName" ) );
-            conceptCode = StringUtils.replaceNull( request.getParameter( "jspConceptCode" ) );
-            vdType = StringUtils.replaceNull( request.getParameter( "jspVDType" ) );
-            cdeType = StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
+         if( !altName.equals( "" ) )
+         {
+             altNameWhere = this.buildAltNamesWhere( altName, searchStr9 );
+         }
+        */
 
+        if( !cdeType.equals( "" ) )
+        {
+            deDerivWhere = " and comp_de.P_DE_IDSEQ = de.de_idseq";
+            deDerivFrom = ", sbr.COMPLEX_DATA_ELEMENTS_VIEW comp_de ";
+        }
 
-
-            logger.debug( "  searchStr1 (jspStatus): " + StringUtils.stringArrayToString(searchStr1));
-            logger.debug( "  searchStr7 (regStatus): " + StringUtils.stringArrayToString(searchStr7));
-            logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString(searchStr9));
-            logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString(searchIn));
-            logger.debug( "  validValue (jspValidValue): " + validValue);
-            logger.debug( "  objectClass (jspObjectClass): " + objectClass);
-            logger.debug( "  property (jspProperty): " + property);
-            logger.debug( "  searchStr3: [" + searchStr3 +"]");
-            logger.debug( "  searchStr4 / jspDataElementConcept: " + searchStr4);
-            logger.debug( "  searchStr5 / jspClassification: " + searchStr5);
-            logger.debug( "  searchStr6 / jspLatestVersion: " + searchStr6);
-            logger.debug( "  searchStr8 / jspAltName: " + searchStr8);
-            logger.debug( "  conceptName / jspConceptName: " + conceptName);
-            logger.debug( "  conceptCode / jspConceptCode: " + conceptCode);
-            logger.debug( "  vdType / jspVDType: " + vdType);
-            logger.debug( "  cdeType / jspCDEType: " + cdeType);
-
-
-            //set filter on "version"
-            latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
-
-            String wkFlowWhere = "";
-            String cdeIdWhere = "";
-            String vdWhere = "";
-            String decWhere = "";
-            String docWhere = "";
-            String vvWhere = "";
-            String regStatusWhere = "";
-            String altNameWhere = "";
-
-            if( doStatusSearch )
-            {
-                wkFlowWhere = this.buildStatusWhereClause( searchStr1 );
-            }
-            if( doRegStatusSearch )
-            {
-                regStatusWhere = this.buildRegStatusWhereClause( searchStr7 );
-            }
-
-            if( !searchStr3.equals( "" ) )
-            {
-                String newCdeStr = StringReplace.strReplace( searchStr3, "*", "%" );
-                cdeIdWhere = " and " + buildSearchString( "to_char(de.cde_id) like 'SRCSTR'",
-                        newCdeStr, searchMode );
-            }
-
-            if( !searchStr2.equals( "" ) )
-            {
-                //vdWhere = " and vd.vd_idseq = '"+searchStr2+"'";
-                vdWhere = " and vd.vd_idseq = '" + searchStr2 + "'"
-                        + " and vd.vd_idseq = de.vd_idseq ";
-                vdFrom = " ,sbr.value_domains_view vd ";
-
-            }
-            else if( !vdType.equals( "" ) && !vdType.equals( ProcessConstants.VD_TYPE_BOTH ) )
-            {
-                String type = "E";
-                if( vdType.equals( ProcessConstants.VD_TYPE_NON_ENUMERATED ) )
-                {
-                    type = "N";
-                }
-                vdWhere = " and vd.VD_TYPE_FLAG = '" + type + "'"
-                        + " and vd.vd_idseq = de.vd_idseq ";
-                vdFrom = " ,sbr.value_domains_view vd ";
-            }
-            //if (!getSearchStr(4).equals("")){
-            if( !searchStr4.equals( "" ) )
-            {
-                decWhere = " and dec.dec_idseq = '" + searchStr4 + "'"
-                        + " and de.dec_idseq = dec.dec_idseq ";
-                decFrom = " ,sbr.data_element_concepts_view dec ";
-             }
-            if( !searchStr0.equals( "" ) )
-            {
-                docWhere = this.buildSearchTextWhere( searchStr0, searchIn, searchMode );
-            }
-
-            if( !searchStr8.equals( "" ) )
-            {
-                altNameWhere = this.buildAltNamesWhere( searchStr8, searchStr9 );
-            }
-            if( !validValue.equals( "" ) )
-            {
-                vvWhere = this.buildValidValueWhere( validValue, searchBean.getPvSearchMode() );
-            }
-            // Check to see if a WHERE clause for concepts needs to be added
-            String conceptWhere = this.buildConceptWhere( conceptName, conceptCode );
-
-            // release 3.0, TT1235, 1236
-            // check to see if a Where clause for object class and property needs to be added
-            String deConceptWhere = this.buildDEConceptWhere( objectClass, property );
-
-            if( !cdeType.equals( "" ) )
-            {
-                deDerivWhere = " and comp_de.P_DE_IDSEQ = de.de_idseq";
-                deDerivFrom = ", sbr.COMPLEX_DATA_ELEMENTS_VIEW comp_de ";
-            }
-
-            whereBuffer.append( wkFlowWhere );
-            whereBuffer.append( regStatusWhere );
-            whereBuffer.append( cdeIdWhere );
-            whereBuffer.append( decWhere );
-            whereBuffer.append( vdWhere );
-            whereBuffer.append( latestWhere );
-            whereBuffer.append( docWhere );
-            whereBuffer.append( usageWhere );
-            whereBuffer.append( vvWhere );
-            whereBuffer.append( altNameWhere );
-            whereBuffer.append( conceptWhere );
-            whereBuffer.append( deConceptWhere );
-            whereBuffer.append( deDerivWhere );
+        whereBuffer.append( wkFlowWhere );
+        whereBuffer.append( regStatus );
+        whereBuffer.append( cdeIdWhere );
+        whereBuffer.append( decWhere );
+        whereBuffer.append( vdWhere );
+        whereBuffer.append( latestWhere );
+        whereBuffer.append( docWhere );
+        whereBuffer.append( vvWhere );
+        whereBuffer.append( deDerivWhere );
 
 /*
              logger.debug("wkFlowWhere: " + wkFlowWhere);
@@ -329,57 +217,28 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
              logger.debug("decWhere: " + decWhere);
              logger.debug("docWhere: " + docWhere);
              logger.debug("vvWhere: " + vvWhere);
-             logger.debug("regStatusWhere: " + regStatusWhere);
+             logger.debug("regStatus: " + regStatus);
              logger.debug("altNameWhere: " + altNameWhere);
              logger.debug("whereBuffer: " + whereBuffer.toString())
 */
-        }
 
 
         whereClause = whereBuffer.toString();
-        String fromWhere =  " from sbr.data_elements_view de , "+
-                    "sbr.reference_documents_view rd , "+
-                    "sbr.contexts_view conte "+
-                    //"sbrext.de_cde_id_view dc " +
-                    //"sbr.value_domains vd, "+
-                    //"sbr.data_element_concepts dec " +
-                    vdFrom +
-                    decFrom +
-                    fromClause+
-                    registrationFrom +
-                    wkFlowFrom +
-                    deDerivFrom +
-                    //" where de.deleted_ind = 'No' "+  [don't need to use this since we are using view)
-                    " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
-                    registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
-                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
-                    " and de.asl_name != 'RETIRED DELETED' " +
-                    " and conte.conte_idseq = de.conte_idseq " +
-                    //" and de.de_idseq = dc.ac_idseq (+) "+
-                    //" and vd.vd_idseq = de.vd_idseq " +
-                    //" and dec.dec_idseq = de.dec_idseq " +
-                    whereClause + registrationWhere + workFlowWhere + deDerivWhere;
-/*
+        String fromWhere = " from sbr.data_elements_view de , " +
+                "sbr.reference_documents_view rd , " +
+                "sbr.contexts_view conte " +
+                vdFrom +
+                decFrom +
+                fromClause +
+                registrationFrom +
+                wkFlowFrom +
+                deDerivFrom +
+                " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
+                registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
+                " and de.asl_name != 'RETIRED DELETED' " +
+                " and conte.conte_idseq = de.conte_idseq " +
+                whereClause + registrationWhere + workFlowWhere + deDerivWhere;
 
-             logger.debug("\nvdFrom: " + vdFrom + "\n\n");
-             logger.debug("\ndecFrom: " + decFrom + "\n\n");
-             logger.debug("\nfromClause: " + fromClause + "\n\n");
-             logger.debug("\nregistrationFrom: " + registrationFrom + "\n\n");
-             logger.debug("\nwkFlowFrom: " + wkFlowFrom + "\n\n");
-             logger.debug("\ndeDerivFrom: " + deDerivFrom + "\n\n");
-             logger.debug("\nregistrationExcludeWhere: " + registrationExcludeWhere + "\n\n");
-             logger.debug("\nworkflowExcludeWhere: " + workflowExcludeWhere + "\n\n");
-             logger.debug("\ncontextExludeWhere: " + contextExludeWhere + "\n\n");
-             logger.debug("\nwhereClause: " + whereClause + "\n\n");
-             logger.debug("\nregistrationWhere: " + registrationWhere + "\n\n");
-             logger.debug("\nworkFlowWhere: " + workFlowWhere + "\n\n");
-             logger.debug("\ndeDerivWhere: " + deDerivWhere + "\n\n");
-             logger.debug("\nfromWhere: " + fromWhere + "\n\n");
-
-*/
-
-
-        //String orderBy = " order by de.preferred_name, de.version ";
         StringBuffer finalSqlStmt = new StringBuffer();
 
 //release 3.0, added display_order of registration status
@@ -407,73 +266,33 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         sqlStmt = finalSqlStmt.toString();
     }
 
-    public String getSearchStr( int arrayIndex )
-    {
-        if( strArray != null )
-        {
-            return strArray[arrayIndex];
-        }
-        else
-        {
-            return "";
-        }
-    }
-
-    public String getQueryStmt()
+     public String getQueryStmt()
     {
         return sqlStmt;
     }
 
-    public String getVDPrefName()
+
+    protected String buildStatusWhereClause( String[] statusList )
     {
-        if( vdPrefName == null )
+        if( ( statusList == null ) || ( StringUtils.containsKey( statusList, "ALL" ) || ( statusList[0].isEmpty() ) ) )
         {
             return "";
         }
-        return vdPrefName;
-    }
 
-    public String getDECPrefName()
-    {
-        if( decPrefName == null )
-        {
-            return "";
-        }
-        return decPrefName;
-    }
-
-    public String getCSIName()
-    {
-        if( csiName == null )
-        {
-            return "";
-        }
-        return csiName;
-    }
-
-    public String getContextUse()
-    {
-        return contextUse;
-    }
-
-    private String buildStatusWhereClause( String[] statusList )
-    {
         String wkFlowWhere = "";
         String wkFlow = "";
         if( statusList.length == 1 )
         {
             wkFlow = statusList[0];
             wkFlowWhere = " and de.asl_name = '" + wkFlow + "'";
-        }
-        else
+        } else
         {
             for( int i = 0; i < statusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     wkFlow = "'" + statusList[0] + "'";
-                }
-                else
+                } else
                 {
                     wkFlow = wkFlow + "," + "'" + statusList[i] + "'";
                 }
@@ -485,24 +304,28 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         return wkFlowWhere;
     }
 
-    private String buildRegStatusWhereClause( String[] regStatusList )
+    protected String buildRegStatusWhereClause( String[] regStatusList )
     {
+
+        if( ( regStatusList == null ) || ( StringUtils.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
+        {
+            return "";
+        }
+
         String regStatWhere = "";
         String regStatus = "";
         if( regStatusList.length == 1 )
         {
             regStatus = regStatusList[0];
             regStatWhere = " and acr.registration_status = '" + regStatus + "'";
-        }
-        else
+        } else
         {
             for( int i = 0; i < regStatusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     regStatus = "'" + regStatusList[0] + "'";
-                }
-                else
+                } else
                 {
                     regStatus = regStatus + "," + "'" + regStatusList[i] + "'";
                 }
@@ -510,119 +333,133 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             regStatWhere = " and acr.registration_status IN (" + regStatus + ")";
 
         }
-
+        logger.debug( "regStatWhere: " + regStatWhere );
         return regStatWhere;
     }
 
-    private String buildSearchTextWhere(String text, String[] searchDomain, String searchMode) {
+    private String buildSearchTextWhere( String text, String[] searchDomain, String searchMode )
+    {
 
         String docWhere = null;
         String newSearchStr = "";
         String searchWhere = null;
-        String longNameWhere =null;
-        String shortNameWhere =null;
-        String docTextSearchWhere =null;
-        String docTextTypeWhere =null;
+        String longNameWhere = null;
+        String shortNameWhere = null;
+        String docTextSearchWhere = null;
+        String docTextTypeWhere = null;
         String umlAltNameWhere = null;
 
 
-        newSearchStr = StringReplace.strReplace(text,"*","%");
-        newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
+        newSearchStr = StringReplace.strReplace( text, "*", "%" );
+        newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
 
-        if (StringUtils.containsKey(searchDomain,"ALL") ||
-                StringUtils.containsKey(searchDomain,"Long Name") ) {
-            longNameWhere = buildSearchString("upper (de1.long_name) like upper ('SRCSTR') ", newSearchStr, searchMode);
+        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
+                StringUtils.containsKey( searchDomain, "Long Name" ) )
+        {
+            longNameWhere = buildSearchString( "upper (de1.long_name) like upper ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if (StringUtils.containsKey(searchDomain,"ALL") ||
-                StringUtils.containsKey(searchDomain,"Short Name") ) {
+        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
+                StringUtils.containsKey( searchDomain, "Short Name" ) )
+        {
 
-            shortNameWhere = buildSearchString("upper (de1.preferred_name) like upper ('SRCSTR') ", newSearchStr, searchMode);
+            shortNameWhere = buildSearchString( "upper (de1.preferred_name) like upper ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if (StringUtils.containsKey(searchDomain,"ALL") ||
-                StringUtils.containsKey(searchDomain,"Doc Text") ||
-                StringUtils.containsKey(searchDomain,"Hist")) {
+        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
+                StringUtils.containsKey( searchDomain, "Doc Text" ) ||
+                StringUtils.containsKey( searchDomain, "Hist" ) )
+        {
 
             docTextSearchWhere =
-                    buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
+                    buildSearchString( "upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode );
         }
 
         // compose the search for data elements table
         searchWhere = longNameWhere;
 
-        if (searchWhere == null) {
+        if( searchWhere == null )
+        {
             searchWhere = shortNameWhere;
-        } else if (shortNameWhere !=null) {
+        } else if( shortNameWhere != null )
+        {
             searchWhere = searchWhere + " OR " + shortNameWhere;
         }
 
-        if (searchWhere == null && docTextSearchWhere != null ) {
+        if( searchWhere == null && docTextSearchWhere != null )
+        {
             searchWhere = " and " + docTextSearchWhere;
-        } else if (docTextSearchWhere != null) {
+        } else if( docTextSearchWhere != null )
+        {
             searchWhere = searchWhere + " OR " + docTextSearchWhere;
-            searchWhere = " and (" + searchWhere +  ") ";
+            searchWhere = " and (" + searchWhere + ") ";
         }
 
-        if (StringUtils.containsKey(searchDomain,"ALL") ||
-                ( StringUtils.containsKey(searchDomain,"Doc Text")&&
-                        StringUtils.containsKey(searchDomain,"Hist"))) {
+        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
+                ( StringUtils.containsKey( searchDomain, "Doc Text" ) &&
+                        StringUtils.containsKey( searchDomain, "Hist" ) ) )
+        {
             docWhere = "(select de_idseq "
-                    +" from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
-                    +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                    +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
+                    + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
+                    + " where  de1.de_idseq  = rd1.ac_idseq (+) "
+                    + " and    rd1.dctl_name (+) = 'Preferred Question Text' "
                     + searchWhere
-                    +" union "
-                    +" select de_idseq "
-                    +" from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
-                    +" where  de2.de_idseq  = rd2.ac_idseq (+) "
-                    +" and    rd2.dctl_name (+) = 'Alternate Question Text' "
-                    +" and    "+buildSearchString("upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ",newSearchStr, searchMode)+") ";
+                    + " union "
+                    + " select de_idseq "
+                    + " from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
+                    + " where  de2.de_idseq  = rd2.ac_idseq (+) "
+                    + " and    rd2.dctl_name (+) = 'Alternate Question Text' "
+                    + " and    " + buildSearchString( "upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
 
 
-
-        } else if  ( StringUtils.containsKey(searchDomain,"Doc Text")) {
+        } else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
+        {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
-        } else if  ( StringUtils.containsKey(searchDomain,"Hist")) {
+        } else if( StringUtils.containsKey( searchDomain, "Hist" ) )
+        {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
 
 
-        if (docTextSearchWhere == null && searchWhere != null) {
+        if( docTextSearchWhere == null && searchWhere != null )
+        {
             //this is a search not involving reference documents
             docWhere = "(select de_idseq "
-                    +" from sbr.data_elements_view de1 "
-                    +" where  " + searchWhere + " ) ";
+                    + " from sbr.data_elements_view de1 "
+                    + " where  " + searchWhere + " ) ";
 
-        } else if (docWhere == null && docTextTypeWhere != null) {
+        } else if( docWhere == null && docTextTypeWhere != null )
+        {
             docWhere = "(select de_idseq "
-                    +" from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
-                    +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                    +" and  " + docTextTypeWhere
+                    + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
+                    + " where  de1.de_idseq  = rd1.ac_idseq (+) "
+                    + " and  " + docTextTypeWhere
                     + searchWhere + " ) ";
 
         }
 
 
-        if (StringUtils.containsKey(searchDomain,"ALL") ||
-                StringUtils.containsKey(searchDomain,"UML ALT Name") ) {
+        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
+                StringUtils.containsKey( searchDomain, "UML ALT Name" ) )
+        {
             umlAltNameWhere =
                     " (select de_idseq  from sbr.designations_view dsn, sbr.data_elements_view de1  "
                             + "where  de1.de_idseq  = dsn.ac_idseq (+)  "
                             + "and dsn.detl_name = 'UML Class:UML Attr'  and "
-                            +  buildSearchString("upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode)
-                            +" )";
+                            + buildSearchString( "upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode )
+                            + " )";
 
-            if (docWhere == null)
-                return  " and de.de_idseq IN " + umlAltNameWhere;
-            else {
+            if( docWhere == null )
+                return " and de.de_idseq IN " + umlAltNameWhere;
+            else
+            {
                 String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
-                        + " union " + docWhere +") " ;
+                        + " union " + docWhere + ") ";
                 return nameWhere;
             }
         }
-        logger.debug("  buildSearchTextWhere - docWhere: " + docWhere);
-        logger.debug("  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere);
+        logger.debug( "  buildSearchTextWhere - docWhere: " + docWhere );
+        logger.debug( "  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere );
 
         return " and de.de_idseq IN " + docWhere;
     }
@@ -641,8 +478,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_ANY ) )
         {
             oper = " or ";
-        }
-        else
+        } else
         {
             oper = " and ";
         }
@@ -679,269 +515,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 + " or " + matcher.replaceAll( "% " + word ) + ")";
     }
 
-    private String buildValidValueWhere( String value, String searchMode )
-    {
-        String newSearchStr = StringReplace.strReplace( value, "*", "%" );
-        newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
-        String whereClause = "select vd.vd_idseq from sbr.value_domains_view vd"
-                + " , sbr.vd_pvs_view vp, sbr.permissible_values_view pv  "
-                + " where  vd.vd_idseq = vp.vd_idseq  "
-                + "and    pv.pv_idseq = vp.pv_idseq and ";
-
-        Pattern p = Pattern.compile( REPLACE_TOKEN );
-        Matcher matcher = p.matcher( "upper (pv.value) like upper ('SRCSTR') " );
-
-        if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_EXACT ) )
-        {
-            return ( " and de.vd_idseq IN (" + whereClause
-                    + matcher.replaceAll( newSearchStr ) + ")" );
-        }
-
-        String oper = null;
-        if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_ANY ) )
-        {
-            oper = " UNION ";
-        }
-        else
-        {
-            oper = " INTERSECT ";
-        }
-
-        String[] words = newSearchStr.split( " " );
-        String vvWhere = " and de.vd_idseq IN (";
-        for( int i = 0; i < words.length; i++ )
-        {
-            if( i > 0 )
-            {
-                vvWhere += oper;
-            }
-            vvWhere += ( whereClause + buildWordMatch( matcher, words[i] ) );
-
-        }
-
-        vvWhere += ")";
-
-        return vvWhere;
-
-    }
-
-    private String buildDEConceptWhere( String objectClass, String property )
-    {
-
-        if( objectClass.equals( "" ) && property.equals( "" ) )
-        {
-            return "";
-        }
-
-        String objectClassWhere = "";
-        String objectClassFrom = "";
-        String propertyFrom = "";
-        String propertyWhere = "";
-
-        if( !"".equals( objectClass ) )
-        {
-            String newObjClass = StringReplace.strReplace( objectClass, "*", "%" );
-            newObjClass = StringReplace.strReplace( newObjClass, "'", "''" );
-            objectClassFrom = ", sbrext.object_classes_view_ext oc ";
-            objectClassWhere = "oc.oc_idseq = dec.oc_idseq " +
-                    " and upper(oc.LONG_NAME) like upper('" + newObjClass + "')";
-        }
-
-        if( !"".equals( property ) )
-        {
-            String newSearchStr = StringReplace.strReplace( property, "*", "%" );
-            newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
-            propertyFrom = " , sbrext.properties_view_ext pc";
-            propertyWhere = " pc.PROP_IDSEQ = dec.PROP_IDSEQ " +
-                    "and upper(pc.LONG_NAME) like upper('" + newSearchStr + "')";
-
-            if( !"".equals( objectClassWhere ) )
-            {
-                propertyWhere = " and " + propertyWhere;
-            }
-        }
-
-        String deConceptWhere = "and  de.de_idseq IN ("
-                + "select de_idseq "
-                + "from   sbr.data_elements_view "
-                + "where  dec_idseq IN (select dec.dec_idseq "
-                + "from   sbr.data_element_concepts_view dec "
-                + objectClassFrom
-                + propertyFrom
-                + " where  "
-                + objectClassWhere
-                + propertyWhere + "))";
-        return deConceptWhere;
-
-    }
-
-    private String buildAltNamesWhere( String text, String[] altNameTypes )
-    {
-        String altWhere = "";
-        String newSearchStr = "";
-        String typeWhere = "";
-        String altTypeStr = "";
-        String searchWhere = "";
-
-        newSearchStr = StringReplace.strReplace( text, "*", "%" );
-        newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
-        if( altNameTypes == null ||
-                StringUtils.containsKey( altNameTypes, "ALL" ) )
-        {
-            typeWhere = "";
-        }
-        else if( altNameTypes.length == 1 )
-        {
-            altTypeStr = altNameTypes[0];
-            typeWhere = " and dsn.detl_name = '" + altTypeStr + "'";
-        }
-        else
-        {
-            for( int i = 0; i < altNameTypes.length; i++ )
-            {
-                if( i == 0 )
-                {
-                    altTypeStr = "'" + altNameTypes[0] + "'";
-                }
-                else
-                {
-                    altTypeStr = altTypeStr + "," + "'" + altNameTypes[i] + "'";
-                }
-            }
-            typeWhere = " and dsn.detl_name IN (" + altTypeStr + ")";
-        }
-
-        searchWhere = " and upper (nvl(dsn.name,'%')) like upper ('" + newSearchStr + "') ";
-
-        altWhere = " and de.de_idseq IN "
-                + "(select de_idseq "
-                + " from sbr.designations_view dsn, sbr.data_elements_view de1 "
-                + " where  de1.de_idseq  = dsn.ac_idseq (+) "
-                + typeWhere
-                + searchWhere + " ) ";
-        return altWhere;
-    }
-
-    private String buildConceptWhere( String conceptName, String conceptCode )
-    {
-        String conceptWhere = "";
-        String conceptCodeWhere = "";
-        String conceptNameWhere = "";
-        if( !"".equals( conceptName ) )
-        {
-            String newConceptName = StringReplace.strReplace( conceptName, "*", "%" );
-            conceptNameWhere = " where upper(long_name) like upper('" + newConceptName + "')";
-        }
-        if( !"".equals( conceptCode ) )
-        {
-            String newConceptCode = StringReplace.strReplace( conceptCode, "*", "%" );
-            if( !"".equals( conceptName ) )
-            {
-                conceptCodeWhere = " and upper(preferred_name) like upper('" + newConceptCode + "')";
-            }
-            else
-            {
-                conceptCodeWhere = " where upper(preferred_name) like upper('" + newConceptCode + "')";
-            }
-        }
-        if( ( !"".equals( conceptName ) ) || ( !"".equals( conceptCode ) ) )
-        {
-            conceptWhere = "and    de.de_idseq IN ("
-                    + "select de_idseq "
-                    + "from   sbr.data_elements_view "
-                    + "where  dec_idseq IN (select dec.dec_idseq "
-                    + "from   sbr.data_element_concepts_view dec, "
-                    + "       sbrext.object_classes_view_ext oc "
-                    + "where  oc.oc_idseq = dec.oc_idseq "
-                    + "and    oc.condr_idseq in(select cdr.condr_idseq "
-                    + "from   sbrext.con_derivation_rules_view_ext cdr, "
-                    + "       sbrext.component_concepts_view_ext cc "
-                    + "where  cdr.condr_idseq = cc.condr_idseq "
-                    + "and    cc.con_idseq in (select con_idseq "
-                    + "from   sbrext.concepts_view_ext "
-                    + conceptNameWhere + conceptCodeWhere + ")) "
-                    + "UNION "
-                    + "select dec.dec_idseq "
-                    + "from   sbr.data_element_concepts_view dec, sbrext.properties_view_ext pc "
-                    + "where  pc.prop_idseq = dec.prop_idseq "
-                    + "and    pc.condr_idseq in(select cdr.condr_idseq "
-                    + "from   sbrext.con_derivation_rules_view_ext cdr, "
-                    + "       sbrext.component_concepts_view_ext cc "
-                    + "where  cdr.condr_idseq = cc.condr_idseq "
-                    + "and    cc.con_idseq in (select con_idseq "
-                    + "from   sbrext.concepts_view_ext "
-                    + conceptNameWhere + conceptCodeWhere + "))) "
-                    + "UNION "
-                    + "select de_idseq "
-                    + "from   sbr.data_elements_view "
-                    + "where  vd_idseq IN (select vd.vd_idseq "
-                    + "from   sbr.value_domains_view vd, "
-                    + "       sbr.vd_pvs_view vp, "
-                    + "       sbr.permissible_values_view pv, "
-                    + "       sbr.value_meanings_view vm "
-                    + "where  vd.vd_idseq = vp.vd_idseq "
-                    + "and    pv.pv_idseq = vp.pv_idseq "
-                    + "and    vm.vm_idseq = pv.vm_idseq "
-                    + "and     vm.condr_idseq in(select cdr.condr_idseq "
-                    + "from   sbrext.con_derivation_rules_view_ext cdr, "
-                    + "       sbrext.component_concepts_view_ext cc "
-                    + "where  cdr.condr_idseq = cc.condr_idseq "
-                    + "and    cc.con_idseq in (select con_idseq "
-                    + "from   sbrext.concepts_view_ext "
-                    + conceptNameWhere + conceptCodeWhere + ")))) ";
-
-        }
-        return conceptWhere;
-    }
-
-    protected String getCSWhere( String csId )
-    {
-        String csWhere = " and de.de_idseq IN ( " +
-                " select de_idseq " +
-                " from  sbr.data_elements_view de , " +
-                "       sbr.ac_csi_view acs, " +
-                "       sbr.cs_csi_view csc " +
-                " where csc.cs_idseq = '" + csId + "'" +
-                " and   csc.cs_csi_idseq = acs.cs_csi_idseq " +
-                " and   acs.ac_idseq = de_idseq ) ";
-        return csWhere;
-
-    }
-
-    private String getCSContainerWhere( String csId )
-    {
-        String csWhere = " and de.de_idseq IN ( " +
-                " select de_idseq " +
-                " from  sbr.data_elements_view de , " +
-                "       sbr.ac_csi_view acs, " +
-                "       sbr.cs_csi_view csc " +
-                " where csc.cs_idseq IN ( " +
-                "       select unique(cs.cs_idseq)" +
-                "       from   sbr.classification_schemes_view cs" +
-                "       where  cs.asl_name = 'RELEASED'" +
-                "       and    cs.cstl_name != 'Container'" +
-                "       and    cs.cs_idseq in (" +
-                "         select c_cs_idseq " +
-                "         from sbrext.cs_recs_hasa_view " +
-                "         start with p_cs_idseq = '" + csId + "'" +
-                "         connect by Prior c_cs_idseq = p_cs_idseq))" +
-                " and   csc.cs_csi_idseq = acs.cs_csi_idseq " +
-                " and   acs.ac_idseq = de_idseq ) ";
-        return csWhere;
-
-    }
-
-    public DESearchQueryBuilder()
-    { }
 
 
-    public static void main( String[] args )
-    {
-        TempTestParameters request = new TempTestParameters();
-        DataElementSearchBean searchBean = new DataElementSearchBean();
-
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( request,  searchBean, "tissue", "Exact phrase", 0);
-        logger.debug( "dESearchQueryBuilder: " + dESearchQueryBuilder.getQueryStmt().replaceAll( "  *", " " ));
-
-    }
 }
