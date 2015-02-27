@@ -10,6 +10,24 @@ public abstract class AbstractSearchQueryBuilder
     public static String wkFlowFrom = " , sbr.ac_status_lov_view asl ";
     public static String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
 
+    public static String selectClause = "SELECT distinct de.de_idseq "
+            + "      ,de.preferred_name de_preferred_name"
+            + "      ,de.long_name "
+            + "      ,rd.doc_text "
+            + "      ,conte.name "
+            + "      ,de.asl_name "
+            + "      ,to_char(de.cde_id) de_cdeid"
+            + "      ,de.version de_version "
+            + "      ,meta_config_mgmt.get_usedby(de.de_idseq) de_usedby "
+            + "      ,de.vd_idseq "
+            + "      ,de.dec_idseq "
+            + "      ,de.conte_idseq "
+            + "      ,de.preferred_definition "
+            + "      ,acr.registration_status "
+            + "      ,rsl.display_order "
+            + "      ,asl.display_order wkflow_order "
+            + "      ,de.cde_id cdeid";
+
 
     //////////////////////////////////////////////////////////////////
     //Will eventually be set as a preference or settings from client.
@@ -19,6 +37,8 @@ public abstract class AbstractSearchQueryBuilder
     protected String[] excludeArr = { "Retired" };
     protected String altName = "";
     public static String[] aslNameExcludeList =  {"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN"};
+    protected String[] searchIn = {"ALL"};
+
 
     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
     public String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";

@@ -96,11 +96,7 @@ public class TempTestParameters
             String[] regStatus = { "ALL" };
             return regStatus;
         }
-        else if( key.compareTo( "jspSearchIn" ) == 0 )
-        {
-            String[] jspSearchIn = { "ALL" };
-            return jspSearchIn;
-        }
+
 
 
         return null;

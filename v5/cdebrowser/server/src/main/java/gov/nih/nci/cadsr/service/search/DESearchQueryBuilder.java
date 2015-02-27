@@ -16,10 +16,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( DESearchQueryBuilder.class.getName() );
 
-    private String whereClause = "";
-    private String[] strArray = null;
     private String sqlStmt = "";
-
     protected String query = "";
     private int clientSearchField = -1;
     private String clientSearchMode = "";
@@ -39,6 +36,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         this.clientSearchField = clientSearchField;
         this.request = request;
         this.searchBean = searchBean;
+
+logger.debug("clientSearchMode: " + clientSearchMode);
 
         buildSql();
     }
@@ -60,14 +59,11 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             return;
         }
 
+        String vdFrom = "";
+
+        String whereClause = "";
         String latestWhere = "";
         String fromClause = "";
-        String vdFrom = "";
-        String decFrom = "";
-        String conceptName = "";
-        String conceptCode = "";
-        String vdType = "";
-        String cdeType = "";
         String deDerivWhere = "";
         String deDerivFrom = "";
         StringBuffer whereBuffer = new StringBuffer();
@@ -104,36 +100,17 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             jspLatestVersion is in advancedSearch_inc.jsp associated with a boolean checkbox field that isn’t labeled but I would assume that this field ties into the data’s version field and would choose the max value of
             */
 
-         String[] searchIn = request.getParameterValues( "jspSearchIn" );
-/*
-
-        String validValue = StringUtils.replaceNull( request.getParameter( "jspValidValue" ) );
-        String objectClass = StringUtils.replaceNull( request.getParameter( "jspObjectClass" ) );
-        String property = StringUtils.replaceNull( request.getParameter( "jspProperty" ) );
-*/
 
 
-        logger.debug( "  query: [" + query + "]" );
-
-        conceptName = StringUtils.replaceNull( request.getParameter( "jspConceptName" ) );
-        conceptCode = StringUtils.replaceNull( request.getParameter( "jspConceptCode" ) );
-        vdType = StringUtils.replaceNull( request.getParameter( "jspVDType" ) );
+        /*
+        Will not be needed until "Search only Derived DEs" is implemented
         cdeType = StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
-
+        */
 
         logger.debug( "  statusWhere (jspStatus): " + StringUtils.stringArrayToString( statusWhere ) );
         logger.debug( "  regStatusesWhere (regStatus): " + StringUtils.stringArrayToString( regStatusesWhere ) );
         //logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString( searchStr9 ) );
         logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString( searchIn ) );
- /*       logger.debug( "  validValue (jspValidValue): " + validValue );
-        logger.debug( "  objectClass (jspObjectClass): " + objectClass );
-        logger.debug( "  property (jspProperty): " + property );
-*/
-        logger.debug( "  altName / jspAltName: " + altName );
-        logger.debug( "  conceptName / jspConceptName: " + conceptName );
-        logger.debug( "  conceptCode / jspConceptCode: " + conceptCode );
-        logger.debug( "  vdType / jspVDType: " + vdType );
-        logger.debug( "  cdeType / jspCDEType: " + cdeType );
 
 
         //set filter on "version"
@@ -146,7 +123,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         String docWhere = "";
         String vvWhere = "";
         String regStatus = "";
-        String altNameWhere = "";
 
         wkFlowWhere = this.buildStatusWhereClause( statusWhere );
 
@@ -166,16 +142,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     + " and vd.vd_idseq = de.vd_idseq ";
             vdFrom = " ,sbr.value_domains_view vd ";
 
-        } else if( !vdType.equals( "" ) && !vdType.equals( ProcessConstants.VD_TYPE_BOTH ) )
-        {
-            String type = "E";
-            if( vdType.equals( ProcessConstants.VD_TYPE_NON_ENUMERATED ) )
-            {
-                type = "N";
-            }
-            vdWhere = " and vd.VD_TYPE_FLAG = '" + type + "'"
-                    + " and vd.vd_idseq = de.vd_idseq ";
-            vdFrom = " ,sbr.value_domains_view vd ";
         }
 
         if( clientSearchField == NAME_FIELD )
@@ -194,11 +160,15 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
          }
         */
 
+
+        /*
+        Will not be needed until "Search only Derived DEs" is implemented
         if( !cdeType.equals( "" ) )
         {
             deDerivWhere = " and comp_de.P_DE_IDSEQ = de.de_idseq";
             deDerivFrom = ", sbr.COMPLEX_DATA_ELEMENTS_VIEW comp_de ";
         }
+        */
 
         whereBuffer.append( wkFlowWhere );
         whereBuffer.append( regStatus );
@@ -228,7 +198,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
                 vdFrom +
-                decFrom +
                 fromClause +
                 registrationFrom +
                 wkFlowFrom +
@@ -241,25 +210,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 
         StringBuffer finalSqlStmt = new StringBuffer();
 
-//release 3.0, added display_order of registration status
-// Added distinct due to duplicates
-        String selectClause = "SELECT distinct de.de_idseq "
-                + "      ,de.preferred_name de_preferred_name"
-                + "      ,de.long_name "
-                + "      ,rd.doc_text "
-                + "      ,conte.name "
-                + "      ,de.asl_name "
-                + "      ,to_char(de.cde_id) de_cdeid"
-                + "      ,de.version de_version "
-                + "      ,meta_config_mgmt.get_usedby(de.de_idseq) de_usedby "
-                + "      ,de.vd_idseq "
-                + "      ,de.dec_idseq "
-                + "      ,de.conte_idseq "
-                + "      ,de.preferred_definition "
-                + "      ,acr.registration_status "
-                + "      ,rsl.display_order "
-                + "      ,asl.display_order wkflow_order "
-                + "      ,de.cde_id cdeid";
         finalSqlStmt.append( selectClause );
         finalSqlStmt.append( fromWhere );
 
@@ -279,6 +229,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             return "";
         }
 
+        logger.debug("statusList.length: " + statusList.length);
         String wkFlowWhere = "";
         String wkFlow = "";
         if( statusList.length == 1 )
@@ -337,7 +288,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         return regStatWhere;
     }
 
-    private String buildSearchTextWhere( String text, String[] searchDomain, String searchMode )
+    protected String buildSearchTextWhere( String text, String[] searchDomain, String searchMode )
     {
 
         String docWhere = null;
