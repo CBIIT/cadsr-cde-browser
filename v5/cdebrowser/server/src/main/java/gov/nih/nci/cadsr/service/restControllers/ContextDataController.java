@@ -34,8 +34,8 @@ public class ContextDataController
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
 
-    private boolean includeClassification = true;
-    private boolean includeProtocol = true;
+    private boolean includeClassification = false;
+    private boolean includeProtocol = false;
     private String message;
 
     @Value( "${maxHoverTextLen}" )
@@ -300,9 +300,8 @@ public class ContextDataController
             int programAreaIndex = getProgramArea( contextNodeParent.getPalName() );
 
             contextNodes[programAreaIndex].addTopNode( contextNodeParent );
-
-            contextNodeParent.setPalNameDescription( getProgramAreaDiscriptionByIndex( programAreaIndex ) );
-
+            //Set the tabs hover text to the caption for this Program area
+            contextNodes[programAreaIndex].setHover( getProgramAreaDiscriptionByIndex( programAreaIndex ) );
         }
         return contextNodes;
     }

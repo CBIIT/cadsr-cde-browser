@@ -66,7 +66,7 @@ a:hover {
 
     /*  Top of display pane  */
 
-    margin-top: 30px;  /*needs to match .treeMenu */
+    margin-top: 51px;  /*needs to match .treeMenu */
     overflow-x: scroll ;
     overflow-y: scroll;
     resize: horizontal;
@@ -76,7 +76,7 @@ a:hover {
 .treeMenu {
     float: left;
     /* top of tree menu pane  */
-    margin-top: 30px;
+    margin-top: 51px;
 
     font-size:16px;
     padding-left: 0;

@@ -1,4 +1,25 @@
+.tabCaptionWrapper {
+    background: #1A4660;
+    color: #ffffef;
 
+    position: fixed;
+    width: 100%;
+    height: 13px;
+    margin-top: 30px;
+
+    padding-left: 16px;
+    padding-top: 2px;
+    padding-bottom: 6px;
+
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-style: italic;
+
+
+}
+.tabCaption {
+    font-size: 14px;
+}
 /* Mouse over and not selected */
 .tabHover {
     background: #325e78;
@@ -37,7 +58,7 @@
     position: fixed;
     top: 105px;
     left: 2px;
-    width: 100%; /* FIXME make this dynamicly match the size of the tree menu frame */
+    width: 100%; /* FIXME make this dynamically match the size of the tree menu frame */
 
 /*
 This puts the tabs behind the search buttons.

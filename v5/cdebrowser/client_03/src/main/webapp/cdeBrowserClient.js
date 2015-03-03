@@ -78,10 +78,12 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
         //return true;
     };
 
+    //Just top three levels of the tree
     $scope.dataLoad1 = function () {
         $scope.dataLoad("data1.json");
     };
 
+    //Full Tree
     $scope.dataLoad2 = function () {
         $scope.dataLoad("data2.json");
     };
