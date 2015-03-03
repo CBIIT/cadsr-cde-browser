@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class ProtocolDAOImpl   extends AbstractDAOOperations implements ProtocolDAO
+public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDAO
 {
     private Logger logger = LogManager.getLogger( ProtocolDAOImpl.class.getName() );
     private JdbcTemplate jdbcTemplate;
@@ -47,11 +47,7 @@ public class ProtocolDAOImpl   extends AbstractDAOOperations implements Protocol
 
         String sql = " select * from SBREXT.PROTOCOLS_VIEW_EXT "
                 + " order by LONG_NAME";
-        logger.debug( "getAllProtocols" );
-        //logger.debug( ">>>>>>> "+ sql + "\n" );
         result = getAll( sql , ProtocolModel.class );
-        //logger.debug( sql + " <<<<<<<\n" );
-        logger.debug( "Done getAllProtocols" );
 
         return result;
     }

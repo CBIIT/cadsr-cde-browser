@@ -30,7 +30,6 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
-        console.log("Clicked " + tab);
         $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
@@ -47,7 +46,6 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
             $scope.searchResults = response;
-console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
 
             if ($scope.searchResults.length > 0) {
                 $scope.haveSearchResults = true;
@@ -91,9 +89,8 @@ console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
         $scope.dataLoad("data3.json");
     };
 
-    $scope.dataLoad4 = function () {
-        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextDataTest?uiType=5");
-        //$scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData?uiType=5");
+    $scope.dataLoadFromServer = function () {
+        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData");
     };
 
     $scope.dataLoad = function (dataSource) {
@@ -103,8 +100,8 @@ console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
 
         $http.get(dataSource).success(function (response) {
 
-            console.log("Back from context_data Service:");
-            console.log( JSON.stringify( response) );
+            //console.log("Back from context_data Service:");
+            //console.log( JSON.stringify( response) );
             $scope.contextListMaster = response;
             $scope.waitMessage = "caDSR Contexts:";
             $scope.bigMessageClass = false;
@@ -124,6 +121,7 @@ console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
 
 
     $scope.hideContexts();
+    //$scope.dataLoadFromServer();
     $scope.dataLoad1();
 
     // comment this out //

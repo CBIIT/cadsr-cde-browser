@@ -40,6 +40,7 @@
         <property name="csCsiDAO" ref="csCsiDAO" />
         <property name="protocolFormDAO" ref="protocolFormDAO" />
         <property name="protocolDAO" ref="protocolDAO" />
+        <property name="programAreaDAO" ref="programAreaDAO" />
     </bean>
 
     <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
@@ -52,6 +53,7 @@
     <bean id="protocolFormDAO" class="gov.nih.nci.cadsr.dao.ProtocolFormDAOImpl"  parent="abstractDao" />
     <bean id="protocolDAO" class="gov.nih.nci.cadsr.dao.ProtocolDAOImpl"  parent="abstractDao" />
     <bean id="basicSearchDAO" class="gov.nih.nci.cadsr.dao.BasicSearchDAOImpl"  parent="abstractDao" />
+    <bean id="programAreaDAO" class="gov.nih.nci.cadsr.dao.ProgramAreaDAOImpl"  parent="abstractDao" />
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>

@@ -5,7 +5,6 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.common.util.StringUtils;
 import gov.nih.nci.cadsr.dao.*;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.context.*;
@@ -14,10 +13,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -31,8 +29,10 @@ public class ContextDataController
     private CsCsiDAOImpl csCsiDAO;
     private ProtocolFormDAOImpl protocolFormDAO;
     private ProtocolDAOImpl protocolDAO;
+    private ProgramAreaDAOImpl programAreaDAO;
     private List<ClassificationSchemeModel> csModelList = null;
     private List<CsCsiModel> csCsiNodelList = null;
+    private List<ProgramAreaModel> programAreaModelList = null;
 
     private boolean includeClassification = true;
     private boolean includeProtocol = true;
@@ -42,11 +42,13 @@ public class ContextDataController
     String maxHoverTextLenStr;
 
     private int contextSubsetCount;
+    private int contextPalNameCount;
     private int uiType;
+
+    private boolean TEST = true;
 
     public ContextDataController()
     {
-
     }
 
     public void setProtocolDAO( ProtocolDAOImpl protocolDAO )
@@ -57,6 +59,11 @@ public class ContextDataController
     public void setProtocolFormDAO( ProtocolFormDAOImpl protocolFormDAO )
     {
         this.protocolFormDAO = protocolFormDAO;
+    }
+
+    public void setProgramAreaDAO( ProgramAreaDAOImpl programAreaDAO )
+    {
+        this.programAreaDAO = programAreaDAO;
     }
 
     public void setCsCsiDAO( CsCsiDAOImpl csCsiDAO )
@@ -107,29 +114,19 @@ public class ContextDataController
 
     private ContextNode[] getAllTreeData()
     {
-        //This code which uses contextSubsetCount, is a place holder until we
-        // implement the "categories" for the top level which is rendered as the tabs in the client.
-        this.contextSubsetCount = 5;
-        ContextNode[] contextNodes = null;
 
-        if( this.contextSubsetCount < 2 )
+        contextPalNameCount = initProgramAreaList();
+        ContextNode[] contextNodes = new ContextNode[contextPalNameCount];
+        for( int i = 0; i < contextPalNameCount; i++ )
         {
-            contextNodes = new ContextNode[1];
-            contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, false, "caDSR Contexts" );
-        } else
-        {
-            contextNodes = new ContextNode[this.contextSubsetCount];
-            for( int i = 0; i < this.contextSubsetCount; i++ )
-            {
-                contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, getContextSubsetString( this.contextSubsetCount, i ) );
-            }
+            contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get( i ).getPalName() );
+            contextNodes[i].setPalNameDescription( programAreaModelList.get( i ).getDescription() );
         }
 
         /////////////////////////////////////////////////////////////////////////////
         //Get list of all Contexts
         /////////////////////////////////////////////////////////////////////////////
         List<ContextModel> contextModelList = this.contextDAO.getAllContexts();
-        logger.debug( "contextModelList[0]: " + contextModelList.get( 0 ).toString() );
 
         //Protocol List of all
         // Don't do this, no faster than getting  Protocols by Context
@@ -137,10 +134,13 @@ public class ContextDataController
 
         // All Protocol Forms
         List<ProtocolFormModel> protocolFormModelList = null;
+
+
         if( includeProtocol )
         {
             protocolFormModelList = this.protocolFormDAO.getAllProtocolForm();
         }
+
 
         // Just for dev time testing
         //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "CCR" );
@@ -150,10 +150,14 @@ public class ContextDataController
 
         //The contents of a Classification folder
         List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
-        csCsiNodelList = this.csCsiDAO.getAllCsCsis();
+        if( includeClassification )
+        {
+            csCsiNodelList = this.csCsiDAO.getAllCsCsis();
+        }
 
         for( ContextModel model : contextModelList )
         {
+
             /////////////////////////////////////////////////////////////////////////////
             //Get all Classifications for this context
             /////////////////////////////////////////////////////////////////////////////
@@ -197,7 +201,7 @@ public class ContextDataController
                         ////////////////////////////////////////////////
                         //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
                         ////////////////////////////////////////////////
-                        //csCsiNodelList = this.csCsiDAO.getCsCsisById( classificationSchemeModel.getCsIdseq() );
+
                         String csId = classificationSchemeModel.getCsIdseq();
                         for( CsCsiModel csCsiModel : csCsiNodelList )
                         {
@@ -223,6 +227,7 @@ public class ContextDataController
                         classificationsParentNode.addChildNode( classificationSchemeNode );
                     }
                 }
+
             }
             //END  (Classification Scheme) folder
             //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,6 +244,7 @@ public class ContextDataController
             //protocolsParentNode.setHover( protocolsParentNode.getText() );
             protocolsParentNode.setHref( protocolsParentNode.getHref() );
             protocolsParentNode.setChildren( new ArrayList<BaseNode>() );
+
 
             if( includeProtocol )
             {
@@ -280,19 +286,23 @@ public class ContextDataController
                 }
             }
 
+
             //////////////////////////////////////////////////////////////////////////
             //This top node
             //////////////////////////////////////////////////////////////////////////
-            //ContextNode contextNodeParent = new ContextNode( model );
             ContextNode contextNodeParent = new ContextNode( model );
             contextNodeParent.setHover( contextNodeParent.getHover() );
             contextNodeParent.addChildNode( classificationsParentNode );
             contextNodeParent.addChildNode( protocolsParentNode );
 
-//logger.debug( "index for " + contextNodeParent.getText() + "is "  +  getContextSubsetIndex( contextNodeParent.getText()));
 
-            //contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addChildNode( contextNodeParent );
-            contextNodes[getContextSubsetIndex( contextNodeParent.getText() )].addTopNode( contextNodeParent );
+            //Add to the top node which is the Program Area.
+            int programAreaIndex = getProgramArea( contextNodeParent.getPalName() );
+
+            contextNodes[programAreaIndex].addTopNode( contextNodeParent );
+
+            contextNodeParent.setPalNameDescription( getProgramAreaDiscriptionByIndex( programAreaIndex ) );
+
         }
         return contextNodes;
     }
@@ -427,6 +437,24 @@ public class ContextDataController
         return index;
     }
 
+    private int getProgramArea( String contextPalName )
+    {
+        for( int i = 0; i < contextPalNameCount; i++ )
+        {
+            if( programAreaModelList.get( i ).getPalName().compareTo( contextPalName ) == 0 )
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private String getProgramAreaDiscriptionByIndex( int i )
+    {
+        return programAreaModelList.get( i ).getDescription();
+    }
+
+
     private String getContextSubsetString( int count, int i )
     {
         int interval = CaDSRConstants.INTERVAL_SIZE[count];
@@ -441,12 +469,6 @@ public class ContextDataController
             endLetter = 26;
 
         }
-/*
-        else
-        {
-            logger.debug( "endLetter: " + endLetter + " NOT > 26" );
-        }
-*/
 
         if( endLetter != ( startLetter + 1 ) )
         {
@@ -454,5 +476,27 @@ public class ContextDataController
         }
         subsetString += Character.toChars( 64 + endLetter )[0];
         return subsetString;
+    }
+
+
+    /**
+     *
+     * @return programArea count
+     */
+    private int initProgramAreaList()
+    {
+        programAreaModelList = programAreaDAO.getAllProgramAreas();
+        Collections.sort(programAreaModelList, new ProgramAreaComparator() );
+        return programAreaModelList.size();
+    }
+
+    private class ProgramAreaComparator implements Comparator<ProgramAreaModel>
+    {
+        @Override
+        public int compare( ProgramAreaModel a, ProgramAreaModel b )
+        {
+            return a.getPalName().toUpperCase().compareTo( b.getPalName().toUpperCase() );
+
+        }
     }
 }
