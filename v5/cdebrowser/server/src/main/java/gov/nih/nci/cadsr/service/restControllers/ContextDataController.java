@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -112,9 +114,8 @@ public class ContextDataController
 
     private ContextNode[] getAllTreeData()
     {
-        programAreaModelList = programAreaDAO.getAllProgramAreas();
-        contextPalNameCount = programAreaModelList.size();
 
+        contextPalNameCount = initProgramAreaList();
         ContextNode[] contextNodes = new ContextNode[contextPalNameCount];
         for( int i = 0; i < contextPalNameCount; i++ )
         {
@@ -453,6 +454,7 @@ public class ContextDataController
         return programAreaModelList.get( i ).getDescription();
     }
 
+
     private String getContextSubsetString( int count, int i )
     {
         int interval = CaDSRConstants.INTERVAL_SIZE[count];
@@ -474,5 +476,27 @@ public class ContextDataController
         }
         subsetString += Character.toChars( 64 + endLetter )[0];
         return subsetString;
+    }
+
+
+    /**
+     *
+     * @return programArea count
+     */
+    private int initProgramAreaList()
+    {
+        programAreaModelList = programAreaDAO.getAllProgramAreas();
+        Collections.sort(programAreaModelList, new ProgramAreaComparator() );
+        return programAreaModelList.size();
+    }
+
+    private class ProgramAreaComparator implements Comparator<ProgramAreaModel>
+    {
+        @Override
+        public int compare( ProgramAreaModel a, ProgramAreaModel b )
+        {
+            return a.getPalName().toUpperCase().compareTo( b.getPalName().toUpperCase() );
+
+        }
     }
 }
