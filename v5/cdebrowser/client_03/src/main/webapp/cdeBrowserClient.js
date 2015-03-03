@@ -31,7 +31,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
-        //$scope.currentTab = tab;
+        $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
     };
@@ -123,7 +123,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     $scope.hideContexts();
     //$scope.dataLoadFromServer();
-    $scope.dataLoadFromServer();
+    $scope.dataLoad1();
 });
 
 

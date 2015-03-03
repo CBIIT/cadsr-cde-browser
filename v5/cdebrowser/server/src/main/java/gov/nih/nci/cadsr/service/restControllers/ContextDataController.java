@@ -34,8 +34,8 @@ public class ContextDataController
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
 
-    private boolean includeClassification = false;
-    private boolean includeProtocol = false;
+    private boolean includeClassification = true;
+    private boolean includeProtocol = true;
     private String message;
 
     @Value( "${maxHoverTextLen}" )
