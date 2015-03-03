@@ -5,16 +5,14 @@
     width: 100%;
     font-size: 10pt;
 }
+
 .searchResultsTableTr {
     border: 2px solid #80a3c0;
-    /*
-    3E6a84
-    */
+    /*: ;;
+    3E6a84: ;*/
     color: #eeeeff;
     font-style: normal;
-    font-size: 12pt;
-
-
+    font-size: 11pt;
 }
 
 .searchResultsTableHeaderTr {
@@ -25,13 +23,11 @@
     font-size: 12pt;
 }
 
-
-
 .searchResultsTableTd {
     border: 1px solid #80a3c0;
     padding: 5px;
-
 }
+
 .searchResultsTableTh {
     border: 1px solid #80a3c0;
     padding: 5px;
@@ -39,7 +35,7 @@
 
 /*
 
-#searchResultsMessage {
+#searchResultsMessage { 
     background-color: #18344d;
     color: #ff0099;
     font-style: normal;
@@ -47,13 +43,13 @@
 }
 
 */
+
 .bigSearchResultsMessage {
     margin-left: 5px;
     background-color: #1A4660;
     color: #ffffff;
     font-style: oblique;
     font-size: 24pt;
-
 }
 
 .normmSearchResultsMessage {
@@ -62,6 +58,88 @@
     color: #ffffff;
     font-style: normal;
     font-size: 12pt;
-
-
 }
+
+/** override some ng-table styles **/
+
+.ng-table th {
+    /** change th to match existing style **/
+    border: 2px solid #80a3c0;
+    background-color: #18344d;
+    color: #ffffcc;
+    font-style: normal;
+    font-size: 100%;
+    padding: 10px 2px 10px 2px;
+}
+
+.ng-table th.sortable.sort-desc,
+.ng-table th.sortable.sort-asc {
+    /** change background color of headers to be dark blue, remove text shadow **/
+    background-color: #1A4660;
+    text-shadow: none;
+}
+
+    .ng-table th.sortable.sort-desc .sort-indicator:after {
+        /** set opacity to full, color to white for desc indicators **/
+        border-top: 4px solid #fff;
+        filter: alpha(opacity=100);
+        -khtml-opacity: 1;
+        -moz-opacity: 1;
+        opacity: 1;
+    }
+
+    .ng-table th.sortable.sort-asc .sort-indicator:after,
+    .ng-table th.sortable.sort-asc .sort-indicator:hover:after {
+        /** set hover opacity to full, color to white for asc indicators **/
+        filter: alpha(opacity=100);
+        -khtml-opacity: 1;
+        -moz-opacity: 1;
+        opacity: 1;
+    }
+
+.ng-table th.sortable .sort-indicator:after,
+.ng-table th.sortable .sort-indicator:before {
+    /** change color of sort indicators to white, set them to full opacity **/
+    content: "";
+    border-width: 0 4px 4px;
+    border-style: solid;
+    border-color: #fff transparent;
+    visibility: visible;
+    right: 5px;
+    top: 50%;
+    position: absolute;
+    opacity: 1;
+    margin-top: -4px;
+}
+
+.ng-table th.sortable .sort-indicator:before {
+    /** set color of indicator to white **/
+    margin-top: 2px;
+    border-bottom: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #fff;
+}
+
+.pagination.ng-table-pagination {
+    /** add padding to list element to move it down below table, align to right **/
+    margin: 0;
+    padding: 12px 0px 0px 0px;
+    list-style-type: none;
+    text-align: right;
+}
+
+    .pagination.ng-table-pagination li {
+        /** display inline to allow li elements to be horizontal **/
+        display: inline;
+    }
+
+        .pagination.ng-table-pagination li a {
+            /** remove text decoration, change background color and color of text **/
+            text-decoration: none;
+            padding: .2em 1em;
+            color: #fff;
+            background-color: #80A3C0;
+        }
+
+/** end override ng-table styles **/
