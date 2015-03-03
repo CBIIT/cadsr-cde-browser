@@ -5,6 +5,8 @@
     <script type='text/javascript' src='angular.min.js'></script>
     <script type='text/javascript' src='cdeBrowserClient.js'></script>
     <script type='text/javascript' src="cdeBrowserProperties.js"></script>
+    <script src="plugins/ng-table/ng-table.min.js"></script>
+    <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">    
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
     <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
@@ -243,10 +245,9 @@
             {{searchResultsMessage}}
         </span>
 
-
         <div id="searchResults" data-ng-show="haveSearchResults">
-
-            <table class="searchResultsTable">
+            
+<!--             <table class="searchResultsTable">
                 <tr class="searchResultsTableHeaderTr">
                     <th class="searchResultsTableTh">Long Name</th>
                     <th class="searchResultsTableTh">Preferred Question Text</th>
@@ -270,7 +271,21 @@
 
                 </tr>
 
-            </table>
+            </table> -->
+
+        <table ng-table="tableParams" class="searchResultsTable">       
+            <tr class="searchResultsTableTr" ng-repeat="result in $data">
+                    <td class="searchResultsTableTd" width="1%"><input type="checkbox"></td>
+                    <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%"><a href="{{searchResults.href}}">{{result.longName}}</a> </td>                    
+                    <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'" class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}</td>
+                    <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">{{result.ownedBy}}</td>
+                    <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd" width="14%">{{result.usedByContext}}</td>
+                    <td data-title="'Registration Status'" sortable="'registrationStatus'" class="searchResultsTableTd" width="14%">{{result.registrationStatus}}</td>
+                    <td data-title="'Workflow Status'" sortable="'workflowStatus'" class="searchResultsTableTd" width="14%">{{result.workflowStatus}}</td>
+                    <td data-title="'Public ID'" sortable="'publicId'" class="searchResultsTableTd" width="10%">{{result.publicId}}</td>
+                    <td data-title="'Version'" sortable="'version'" class="searchResultsTableTd" width="7%">{{result.version}}</td>
+                </tr>
+        </table>            
         </div>
 
     </div>
