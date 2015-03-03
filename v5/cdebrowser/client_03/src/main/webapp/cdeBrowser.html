@@ -258,7 +258,12 @@
                     <th class="searchResultsTableTh">Version</th>
                 </tr>
                 <tr data-ng-repeat="searchResults in searchResults" class="searchResultsTableTr">
+
+                    <!-- FIXME - place holder alert box  -->
+                    <td class="searchResultsTableTd"><a href="javascript:alert('Not yet implemented')">{{searchResults.longName}}</a> </td>
+<!--
                     <td class="searchResultsTableTd"><a href="{{searchResults.href}}">{{searchResults.longName}}</a> </td>
+-->
                     <td class="searchResultsTableTd">{{searchResults.preferredQuestionText}}</td>
                     <td class="searchResultsTableTd">{{searchResults.ownedBy}}</td>
                     <td class="searchResultsTableTd">{{searchResults.usedByContext}}</td>
