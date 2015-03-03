@@ -31,8 +31,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
-        console.log("Clicked " + tab);
-        $scope.currentTab = tab;
+        //$scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
     };
@@ -102,8 +101,8 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
 
         $http.get(dataSource).success(function (response) {
 
-            console.log("Back from context_data Service:");
-            console.log( JSON.stringify( response) );
+            //console.log("Back from context_data Service:");
+            //console.log( JSON.stringify( response) );
             $scope.contextListMaster = response;
             $scope.waitMessage = "caDSR Contexts:";
             $scope.bigMessageClass = false;
