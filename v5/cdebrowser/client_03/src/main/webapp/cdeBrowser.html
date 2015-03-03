@@ -246,42 +246,16 @@
         </span>
 
         <div id="searchResults" data-ng-show="haveSearchResults">
-            
-<!--             <table class="searchResultsTable">
-                <tr class="searchResultsTableHeaderTr">
-                    <th class="searchResultsTableTh">Long Name</th>
-                    <th class="searchResultsTableTh">Preferred Question Text</th>
-                    <th class="searchResultsTableTh">Owned By</th>
-                    <th class="searchResultsTableTh">Used By Context</th>
-                    <th class="searchResultsTableTh">Registration Status</th>
-                    <th class="searchResultsTableTh">Workflow Status</th>
-                    <th class="searchResultsTableTh">Public ID</th>
-                    <th class="searchResultsTableTh">Version</th>
-                </tr>
-                <tr data-ng-repeat="searchResults in searchResults" class="searchResultsTableTr">
-
-                    <!-- FIXME - place holder alert box  -->
-                    <td class="searchResultsTableTd"><a href="javascript:alert('Not yet implemented')">{{searchResults.longName}}</a> </td>
-<!--
-                    <td class="searchResultsTableTd"><a href="{{searchResults.href}}">{{searchResults.longName}}</a> </td>
--->
-                    <td class="searchResultsTableTd">{{searchResults.preferredQuestionText}}</td>
-                    <td class="searchResultsTableTd">{{searchResults.ownedBy}}</td>
-                    <td class="searchResultsTableTd">{{searchResults.usedByContext}}</td>
-                    <td class="searchResultsTableTd">{{searchResults.registrationStatus}}</td>
-                    <td class="searchResultsTableTd">{{searchResults.workflowStatus}}</td>
-                    <td class="searchResultsTableTd">{{searchResults.publicId}}</td>
-                    <td class="searchResultsTableTd">{{searchResults.version}}</td>
-                </tr>
-
-                </tr>
-
-            </table> -->
 
         <table ng-table="tableParams" class="searchResultsTable">       
             <tr class="searchResultsTableTr" ng-repeat="result in $data">
                     <td class="searchResultsTableTd" width="1%"><input type="checkbox"></td>
-                    <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%"><a href="{{searchResults.href}}">{{result.longName}}</a> </td>                    
+
+                    <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
+                        <!-- FIXME - place holder alert box  -->
+                        <a href="javascript:alert('Not yet implemented')">{{result.longName}}</a>
+                        <!-- FIXME - place holder alert box  -->                        
+                     </td>                    
                     <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'" class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}</td>
                     <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">{{result.ownedBy}}</td>
                     <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd" width="14%">{{result.usedByContext}}</td>
