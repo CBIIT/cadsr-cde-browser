@@ -72,15 +72,8 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public List<ClassificationSchemeModel> getAllClassificationSchemes()
     {
         List<ClassificationSchemeModel> results;
-
         sql = "select * from sbr.classification_Schemes_view WHERE ASL_NAME='RELEASED' order by UPPER(long_name)";
-
-        logger.debug( "getAllClassificationSchemes" );
-        //logger.debug( ">>>>>>> " + sql );
         results = getAll( sql, ClassificationSchemeModel.class );
-        //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done getAllClassificationSchemes\n" );
-
         return results;
     }
 

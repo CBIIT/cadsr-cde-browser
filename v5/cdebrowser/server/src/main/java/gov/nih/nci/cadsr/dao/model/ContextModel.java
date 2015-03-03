@@ -10,6 +10,7 @@ public class ContextModel extends BaseModel
 {
     private String conteIdSeq = null;
     private String name = null;
+    private String palName = "";
     private String description = null;
     private String preferredDefinition = null;
 
@@ -63,11 +64,12 @@ public class ContextModel extends BaseModel
 
     public String getPalName()
     {
-        return null;
+        return palName;
     }
 
-    public void setPalName( String p0 )
+    public void setPalName( String palName )
     {
+        this.palName = palName;
     }
 
     public String getDescription()

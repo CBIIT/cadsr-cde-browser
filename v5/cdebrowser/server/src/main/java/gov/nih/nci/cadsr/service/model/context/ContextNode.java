@@ -15,10 +15,32 @@ public class ContextNode extends BaseNode
 {
 
     private Logger logger = LogManager.getLogger( ContextNode.class.getName() );
+    private String palName ="";
+    private String palNameDescription ="";
 
     public ContextNode()
     {
         super();
+    }
+
+    public String getPalName()
+    {
+        return palName;
+    }
+
+    public void setPalName( String palName )
+    {
+        this.palName = palName;
+    }
+
+    public String getPalNameDescription()
+    {
+        return palNameDescription;
+    }
+
+    public void setPalNameDescription( String palNameDescription )
+    {
+        this.palNameDescription = palNameDescription;
     }
 
     /**
@@ -47,6 +69,7 @@ public class ContextNode extends BaseNode
         this.setIsParent( false );
         this.setType( type );
         this.setText( name );
+        this.setHover( hoverText );
         // Contexts don't need tooltips
         //this.setHover( hoverText );
 
@@ -60,10 +83,12 @@ public class ContextNode extends BaseNode
      *
      * @param contextModel database model returned by SQL query
      */
-    public ContextNode( ContextModel contextModel )
+    public ContextNode( ContextModel contextModel)
     {
         super();
         this.setText( contextModel.getName() + " (" + contextModel.getDescription() + ") " );
+        this.setPalName( contextModel.getPalName() );
+//this.setPalNameDescription( palNameDescription );
         this.setType( CaDSRConstants.FOLDER );
         this.setCollapsed( true );
         this.setIsParent( false );
@@ -78,4 +103,12 @@ public class ContextNode extends BaseNode
     }
 
 
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append( super.toString() );
+        sb.append( "palName=" + this.palName + "\n" );
+        sb.append( "palNameDescription=" + this.palNameDescription + "\n" );
+        return sb.toString();
+    }
 }

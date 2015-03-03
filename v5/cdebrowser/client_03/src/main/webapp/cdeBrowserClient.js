@@ -48,7 +48,6 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http) {
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
             $scope.searchResults = response;
-console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
 
             if ($scope.searchResults.length > 0) {
                 $scope.haveSearchResults = true;
@@ -92,9 +91,8 @@ console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
         $scope.dataLoad("data3.json");
     };
 
-    $scope.dataLoad4 = function () {
-        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextDataTest?uiType=5");
-        //$scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData?uiType=5");
+    $scope.dataLoadFromServer = function () {
+        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData");
     };
 
     $scope.dataLoad = function (dataSource) {
@@ -125,7 +123,8 @@ console.log("End rest call: " + serverUrl + "\n" + $scope.searchResults);
 
 
     $scope.hideContexts();
-    $scope.dataLoad1();
+    //$scope.dataLoadFromServer();
+    $scope.dataLoadFromServer();
 });
 
 

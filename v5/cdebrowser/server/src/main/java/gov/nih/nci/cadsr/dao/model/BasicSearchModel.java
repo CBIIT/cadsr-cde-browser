@@ -196,28 +196,6 @@ public class BasicSearchModel
     public String toString()
     {
 
-        /*
-
-            String deIdseq;
-    String dePreferredName;
-    String longName;
-    String docText;
-    String name;
-    String aslName;
-    String deCdeid;
-    String deVersion;
-    String deUsedby;
-    String vdIdseq;
-    String decIdseq;
-    String conteIdesq;
-    String preferredDefinition;
-    String RegistrationStatus;
-    String displayOrder;
-    String workflowOrder;
-    String cdeid;
-
-
-         */
         StringBuffer sb = new StringBuffer();
         sb.append( CaDSRConstants.OBJ_SEPARATOR_START );
         sb.append( "deIdseq=" + getDeIdseq() );
