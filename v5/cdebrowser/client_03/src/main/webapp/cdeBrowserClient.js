@@ -9,7 +9,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     $scope.currentTab = '0';
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
-
+    $scope.searchResults = [];
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
         {id: 0, name: "Exact phrase"},
@@ -51,6 +51,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
                 $scope.haveSearchResults = true;
                 $scope.bigSearchResultsMessageClass = false;
                 $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
+                $scope.tableParams.reload();
             }
             else {
                 $scope.searchResultsMessage = "No search results";
@@ -130,8 +131,6 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     //end comment this out //   
 
     // start ngTable definition //
-    var data = $scope.searchResults;
-
     $scope.tableParams = new ngTableParams(
         {
             page: 1,            // show first page
@@ -139,13 +138,14 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         },
         {
             counts: [], // hide page counts control
-
-            total: data.length, // length of data
+            // get data and set total for pagination 
             getData: function($defer, params) {
-            // use build-in angular filter
-            var orderedData = params.sorting() ? 
-            $filter('orderBy')(data, params.orderBy()) : data;
-            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                var data = $scope.searchResults;
+                params.total(data.length);
+                // use build-in angular filter
+                var orderedData = params.sorting() ? 
+                $filter('orderBy')(data, params.orderBy()) : data;
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             } 
         }); 
   
@@ -410,4 +410,3 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
             };
         }]);
 })(angular);
-
