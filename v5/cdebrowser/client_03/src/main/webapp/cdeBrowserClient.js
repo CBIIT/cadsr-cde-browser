@@ -1,5 +1,3 @@
-var cdeBrowserApp = angular.module('cdeBrowserApp', ['cdebrowserTreeview','ngTable']);
-
 // controller
 cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filter, ngTableParams) {
 
