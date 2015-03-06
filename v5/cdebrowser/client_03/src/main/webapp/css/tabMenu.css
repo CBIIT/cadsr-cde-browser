@@ -1,11 +1,13 @@
 .tabCaptionWrapper {
     background: #1A4660;
-    color: #ffffef;
+    color: #ffffd0;
 
-    position: fixed;
-    width: 100%;
-    height: 13px;
-    margin-top: 30px;
+    /*
+        position: fixed;
+        width: 100%;
+        height: 13px;
+        margin-top: 30px;
+    */
 
     padding-left: 16px;
     padding-top: 2px;
@@ -56,24 +58,24 @@
 
 #topTabPos {
     position: fixed;
-    top: 105px;
+    top: 132px;
     left: 2px;
     width: 100%; /* FIXME make this dynamically match the size of the tree menu frame */
 
-/*
-This puts the tabs behind the search buttons.
+    /*
+    This puts the tabs behind the search buttons.
 
-Might need to do this after we can dynamically set width style of the results frame
-    z-index: -1;
-*/
+    Might need to do this after we can dynamically set width style of the results frame
+        z-index: -1;
+    */
 }
 
 #top_tabs {
     height: 16px;
     float: left;
- /*
-    position: fixed;
-*/
+    /*
+       position: fixed;
+   */
 
     /* Rounded corners */
     border-top-left-radius : 3px;
@@ -87,9 +89,9 @@ Might need to do this after we can dynamically set width style of the results fr
     margin: 3px 3px 0px 3px;
     padding: 5px 8px 4px 8px;
 
-/*
-    background-color: #3E6a84;
-    color: #ffffff;
-*/
+    /*
+        background-color: #3E6a84;
+        color: #ffffff;
+    */
 
 }

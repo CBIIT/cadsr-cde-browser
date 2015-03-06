@@ -154,6 +154,7 @@
              bigMessage: bigMessageClass,
              normMessage: (! bigMessageClass)
              }">
+        <br><br>
         {{waitMessage}}
     </div>
 
@@ -183,14 +184,6 @@
         </ul>
     </div>
 
-
-    <div class="tabCaptionWrapper">
-        <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
-            <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
-        </div>
-    </div>
-
-
     <!-- tree menu(s) for each tab -->
     <div id="tabWrapper">
 
@@ -202,6 +195,12 @@
                  resize
                  notifier="notifyServiceOnChange(params)"
                     >
+
+                <div class="tabCaptionWrapper">
+                    <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+                        <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
+                    </div>
+                </div>
 
                 <div
                         data-cdebrowser-treeview="true"
