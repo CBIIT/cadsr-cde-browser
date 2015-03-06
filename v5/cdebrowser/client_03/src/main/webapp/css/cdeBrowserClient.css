@@ -31,7 +31,9 @@ a:hover {
 
 }
 
-
+.hdrBG { /* for the cell that contains the required cancer.gov header */
+  background-color: #a90101; /* constant: red */
+}
 
 #topStatusMessage {
     background-color: #3E6a84;
