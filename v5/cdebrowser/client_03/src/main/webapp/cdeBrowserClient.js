@@ -137,6 +137,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
             count: 20           // count per page     
         },
         {
+            $scope: $scope,            
             counts: [], // hide page counts control
             // get data and set total for pagination 
             getData: function($defer, params) {
