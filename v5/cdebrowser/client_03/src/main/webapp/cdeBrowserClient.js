@@ -25,6 +25,12 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     // Default query field selection
     $scope.queryField = 0; //Starting selection
 
+    //Temporary function, when user clicks on a tree element
+    $scope.displaySelected = function(text, href, hover){
+        console.log("displaySelected: [" + text + "]  selNode.action(href): [" + href + "]  selNode.hover: [" + hover + "]");
+        //alert( "Selected: [" + text + "]\n\nNot yet implemented");
+    }
+
 
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {

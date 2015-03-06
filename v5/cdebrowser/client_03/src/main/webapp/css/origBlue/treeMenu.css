@@ -21,7 +21,7 @@ div[data-tree-model] li {
 
 div[data-tree-model] li .openFolder {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/openFolder-icon_16.png") no-repeat;
+    background: url("../icons/iconSet0/16/openFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 
 }
@@ -29,63 +29,63 @@ div[data-tree-model] li .openFolder {
 
 div[data-tree-model] li .normal {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/file.png") no-repeat;
+    background: url("../icons/iconSet0/file.png") no-repeat;
     white-space:nowrap;
 }
 
 div[data-tree-model] li .closedFolder {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/closedFolder-icon_16.png") no-repeat;
+    background: url("../icons/iconSet0/16/closedFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 }
 
 div[data-tree-model] li .emptyFolder {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/emptyFolder-icon_16.png") no-repeat;
+    background: url("../icons/iconSet0/16/emptyFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 
 }
 
 div[data-tree-model] li .csi {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/csi.png") no-repeat;
+    background: url("../icons/iconSet0/csi.png") no-repeat;
     white-space:nowrap;
 }
 
 div[data-tree-model] li .csiFolderOpen {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/openCsiFolder-icon_16.png") no-repeat;
+    background: url("../icons/iconSet0/16/openCsiFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 }
 div[data-tree-model] li .csiFolderClosed {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/closedCsiFolder-icon_16.png") no-repeat;
+    background: url("../icons/iconSet0/16/closedCsiFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 }
 
 
 div[data-tree-model] li .protocolForm {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/protocol.png") no-repeat;
+    background: url("../icons/iconSet0/protocol.png") no-repeat;
     white-space:nowrap;
 }
 
 div[data-tree-model] li .protocolFolderOpen {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/protocolOpenFolder.png") no-repeat;
+    background: url("../icons/iconSet0/protocolOpenFolder.png") no-repeat;
     white-space:nowrap;
 }
 
 
 div[data-tree-model] li .protocolFolderClosed {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/protocolClosedFolder.png") no-repeat;
+    background: url("../icons/iconSet0/protocolClosedFolder.png") no-repeat;
     white-space:nowrap;
 }
 
 div[data-tree-model] li .tester {
     padding: 1px 10px;
-    background: url("../icons/iconSet2/16/file.png") no-repeat;
+    background: url("../icons/iconSet0/file.png") no-repeat;
     white-space:nowrap;
 }
 

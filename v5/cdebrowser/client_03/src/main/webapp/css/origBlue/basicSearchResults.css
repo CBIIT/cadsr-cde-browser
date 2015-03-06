@@ -7,10 +7,10 @@
 }
 
 .searchResultsTableTr {
-    border: 2px solid #fff;
+    border: 2px solid #80a3c0;
     /*: ;;
     3E6a84: ;*/
-    color: #18344d;
+    color: #eeeeff;
     font-style: normal;
     font-size: 11pt;
 }
@@ -46,25 +46,22 @@
 
 .bigSearchResultsMessage {
     margin-left: 5px;
-    background-color: #fff;
-    color: #1A4660;
+    background-color: #1A4660;
+    color: #ffffff;
     font-style: oblique;
     font-size: 24pt;
 }
 
 .normmSearchResultsMessage {
     margin-left: 5px;
-    background-color: #fff;
-    color: #1A4660;
+    background-color: #1A4660;
+    color: #ffffff;
     font-style: normal;
     font-size: 12pt;
 }
 
 /** override some ng-table styles **/
-.ng-table tr {
-    border: 2px solid #18344d;
-    background-color:  #f7f7e6;
-}
+
 .ng-table th {
     /** change th to match existing style **/
     border: 2px solid #80a3c0;
@@ -123,7 +120,6 @@
     border-right: 4px solid transparent;
     border-top: 4px solid #fff;
 }
-
 
 .pagination.ng-table-pagination {
     /** add padding to list element to move it down below table, align to right **/

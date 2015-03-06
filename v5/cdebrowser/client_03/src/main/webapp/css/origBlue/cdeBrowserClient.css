@@ -1,5 +1,5 @@
 body {
-    background: #fff;
+    background: #3E6a84;
     color: #222;
     padding: 0;
     margin: 0;
@@ -17,17 +17,17 @@ ul {
 }
 
 a:link {
-    color: #18344d;
+    color: #ffcccc;
 }
 
 a:visited {
-    color: #18344d;
+    color: #ffcccc;
 }
 a:active {
-    color: #1A4660;
+    color: #ffffff;
 }
 a:hover {
-    color: #1A4660;
+    color: #ffffcc;
 
 }
 
@@ -36,8 +36,8 @@ a:hover {
 }
 
 #topStatusMessage {
-    background-color: #fff;
-    color: #18344d;
+    background-color: #3E6a84;
+    color: #ffffff;
     /*
         position: fixed;
         top: 84px;
@@ -58,20 +58,13 @@ a:hover {
 }
 
 .topButtons {
-    background-color: #fff;
-    color: #000;
+    background-color: #3E6a84;
     height: 90px;
 }
 
-/* The four round buttons - top right */
-.buttonCell {
-    background-color: #fff;
-    color: #000;
-}
-
 #resultsDisplay {
-    background-color: #fff;
-    color: #000;
+    background-color: #1A4660;
+    color: #ffffff;
 
     /*  Top of display pane  */
 
@@ -97,10 +90,11 @@ a:hover {
     overflow-x: scroll ;
     overflow-y: scroll;
     resize: horizontal;
-
-    /* Tree menu colors  */
-    background-color:  #f7f7e6;
-    color: #18344d;
+    /*
+        background-color:  #1A4660;
+    */
+    background-color:  #1A4660;
+    color: #ffffff;
 
     /* Spacing for each line, not the actual line. */
     line-height: 24px;
@@ -110,29 +104,14 @@ a:hover {
 /*  **********************************  */
 
 .queryTypeRadioButtons {
-    color: #18344d;
     float: left;
-/*
-    width: 220px;
-*/
     width: 220px;
     padding-top: 4px;
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 .searchInput{
-    color: #18344d;
     margin-left: 250px;
     padding-top : 4px;
-    margin-top: 20px;
-}
-
-#basicSearchQuery {
-    width: 100%;
-}
-
-#basicSearchField {
-    float: right;
-    margin-right: 10px;
-    width: 70px;
+    margin-top: 0;
 }

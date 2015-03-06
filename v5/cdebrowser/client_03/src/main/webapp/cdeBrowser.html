@@ -20,7 +20,7 @@
 <body>
 
 <!-- =============================================================================== -->
-<div class="topButtons" id="top-header-right" class="top-header-right">
+<div class="topButtons" id="top-header-right" >
                      <table class="hdrBG" border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tbody>
                            <tr>
@@ -61,26 +61,26 @@
 
                         <!--  Four buttons  -->
                         <td align=right valign=top colspan=3 align="right" nowrap>
-                            <TABLE Cellpadding=0 Cellspacing=0 border=0>
+                            <TABLE Cellpadding=3 Cellspacing=0 border=0>
                                 <TR>
-                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
                                             <img
                                                     id="shoppingButton"
-                                                    src="icons/buttonIconSet0/white/circle_shopping_cart.png"
+                                                    src="icons/buttonIconSet0/black/circle_shopping_cart.png"
                                                     alt="CDE Cart"
                                                     />
                                         </a>
                                         <br>
                                         &nbsp;CDE &nbsp;Cart
                                     </TD>
-                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 href="/CDEBrowser/" target="_top">
                                             <img
                                                     id="homeButton"
-                                                    src="icons/buttonIconSet0/white/circle_home.png"
+                                                    src="icons/buttonIconSet0/black/circle_home.png"
                                                     alt="Home"
                                                     />
                                         </a>
@@ -88,12 +88,12 @@
                                         &nbsp;Home&nbsp;
                                     </TD>
 
-                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
                                                 target="_blank">
                                             <img id="formButton"
-                                                 src="icons/buttonIconSet0/white/circle_form.png"
+                                                 src="icons/buttonIconSet0/black/circle_form.png"
                                                  alt="FormBuilder"
                                                     />
                                         </a>
@@ -101,12 +101,12 @@
                                         &nbsp;FormBuilder&nbsp;
                                     </TD>
 
-                                    <TD class="button_cell" valign="TOP" align="CENTER" colspan=1>
+                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
                                         <a
                                                 HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
                                                 target="_blank">
                                             <img id="helpButton"
-                                                 src="icons/buttonIconSet0/white/circle_help.png"
+                                                 src="icons/buttonIconSet0/black/circle_help.png"
                                                  alt="Task Help"
                                                     />
                                         </a>
@@ -121,6 +121,47 @@
 
                     </tr>
                     <tr>
+
+                        <TABLE align ="right"  Cellpadding=6 Cellspacing=1 border=0 >
+                            <tr>
+                                <td  valign="bottom" align="center"  height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+               <a href="http://cadsradmin.nci.nih.gov" target="_blank" >Admin Tool&nbsp;</a> </span></td>
+
+                                <td  align="center" valign="bottom"  height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+                <a href="https://cdecurate.nci.nih.gov" target="_blank">
+                    Curation Tool&nbsp;</a></span>
+                                </td>
+                                <td  align="center" valign="bottom"  height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+                <a href="http://ncim.nci.nih.gov/ncimbrowser" target="_blank" >
+                    NCI Metathesaurus&nbsp;</a></span>
+                                </td>
+                                <td  align="center" valign="bottom"  height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+                <a href="http://ncit.nci.nih.gov/ncitbrowser/start.jsf" target="_blank">
+                    NCI Terminology Server&nbsp;</a></span>
+                                </td>
+                                <td  align="center" valign="bottom"  height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+                <a href="https://cadsrsentinel.nci.nih.gov" target="_blank">
+                    Sentinel Tool&nbsp;</a></span>
+                                </td>
+                                <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+                <a href="http://umlmodelbrowser.nci.nih.gov" target="_blank">
+                    UML Model Browser&nbsp;</a></span>
+                                </td>
+
+                                <td height="10" valign="bottom" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+                &nbsp;&nbsp;<A HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+4.0.4+Release+Notes" target="_blank">
+                                    What's new</a>&nbsp;&nbsp;</span>
+                                </td>
+                                <td height="10" valign="bottom" align="right" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+                <A HREF="https://wiki.nci.nih.gov/x/AbH9AQ" target="_blank">
+                    Available Downloads<sup><font color="red"><b>New!</b></font></sup></a>&nbsp;&nbsp;</span>
+                                </td>
+
+                            </tr>
+                        </table>
+
+
+                        <!--
                         <TD colspan=1>
                         <td align="right">
                             Tools:
@@ -136,6 +177,7 @@
                             </select>
                         </td>
                         </TD>
+-->
                     </tr>
                 </table>
                 <!-- End Logo and four buttons -->
@@ -228,7 +270,7 @@
 
         <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
         <div class="queryTypeRadioButtons">
-            <label data-ng-repeat="qType in searchQueryTypes">
+             <label data-ng-repeat="qType in searchQueryTypes">
                 <div>
                     <input
                             name="selectedQueryType"
