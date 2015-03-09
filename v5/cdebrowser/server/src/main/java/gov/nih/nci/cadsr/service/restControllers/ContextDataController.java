@@ -380,11 +380,8 @@ public class ContextDataController
                     }
 
 */
-                    logger.debug("A csCsiModel.getCsIdseq(): " + csCsiModel.getCsIdseq() +"    csId: " + csId);
                     if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
                     {
-                        logger.debug("B csCsiModel.getCsIdseq(): " + csCsiModel.getCsIdseq() + "    " + csCsiModel.getCsiName());
-
                         //Create the new, and set as much as we can without knowing if it has children
                         ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
                         classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
