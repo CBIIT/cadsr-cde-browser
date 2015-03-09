@@ -30,7 +30,7 @@ public class ContextDataController
     private ProtocolFormDAOImpl protocolFormDAO;
     private ProtocolDAOImpl protocolDAO;
     private ProgramAreaDAOImpl programAreaDAO;
-    private List<ClassificationSchemeModel> csModelList = null;
+    // private List<ClassificationSchemeModel> csModelList = null;
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
 
@@ -38,17 +38,23 @@ public class ContextDataController
     private boolean includeProtocol = false;
     private String message;
 
-    @Value( "${maxHoverTextLen}" )
+    @Value("${maxHoverTextLen}")
     String maxHoverTextLenStr;
 
     private int contextSubsetCount;
     private int contextPalNameCount;
     private int uiType;
 
-    private boolean TEST = true;
-
     public ContextDataController()
     {
+        logger.debug( "IN ContextDataController constructor" );
+        setTestMode( false );
+    }
+
+    public void setTestMode( boolean testMode )
+    {
+        includeProtocol = ( !testMode );
+        includeClassification = ( !testMode );
     }
 
     public void setProtocolDAO( ProtocolDAOImpl protocolDAO )
@@ -102,7 +108,7 @@ public class ContextDataController
         this.message = "Init ";
     }
 
-    @RequestMapping( value = "/contextData" )
+    @RequestMapping(value = "/contextData")
     @ResponseBody
     public ContextNode[] contextData()
     {
@@ -150,9 +156,11 @@ public class ContextDataController
 
         //The contents of a Classification folder
         List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
+        //csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
         if( includeClassification )
         {
-            csCsiNodelList = this.csCsiDAO.getAllCsCsis();
+            //Classification Scheme Item List
+            setCsCsiNodelList( this.csCsiDAO.getAllCsCsis() );
         }
 
         for( ContextModel model : contextModelList )
@@ -164,70 +172,12 @@ public class ContextDataController
 
             //CS (Classification Scheme) folder
             ParentNode classificationsParentNode = new ParentNode();
-            classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
-            classificationsParentNode.setType( CaDSRConstants.FOLDER );
-            classificationsParentNode.setText( "Classifications" );
-            classificationsParentNode.setCollapsed( true );
-            // If/When a child is added IsParent will change to true.
-            classificationsParentNode.setIsParent( false );
-            //No need for tooltip
-            //classificationsParentNode.setHover( classificationsParentNode.getText() );
-            classificationsParentNode.setHref( classificationsParentNode.getHref() );
-            classificationsParentNode.setChildren( new ArrayList<BaseNode>() );
+            initClassificationsParentNode( classificationsParentNode );
 
             if( includeClassification )
             {
-                //////////////////////////////////////////////////
-                //CS (Classification Scheme) List for this Context
-                //////////////////////////////////////////////////
-                //List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemes( model.getConteIdseq() );
-                String contextId = model.getConteIdseq();
-                for( ClassificationSchemeModel classificationSchemeModel : csModelList )
-                {
-                    if( classificationSchemeModel.getConteIdseq().compareTo( contextId ) == 0 )
-                    {
-                        //logger.debug( "**** classificationSchemeModel " + classificationSchemeModel.getLongName() );
-                        ClassificationNode classificationSchemeNode = new ClassificationNode();
-                        classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
-                        classificationSchemeNode.setType( CaDSRConstants.FOLDER );
-                        classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
-                        //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + model.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
-                        classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() );
-                        classificationSchemeNode.setCollapsed( true );
-                        classificationSchemeNode.setIsParent( false );
-                        classificationSchemeNode.setIdSeq( classificationSchemeModel.getCsIdseq() );
-                        //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
-
-                        ////////////////////////////////////////////////
-                        //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
-                        ////////////////////////////////////////////////
-
-                        String csId = classificationSchemeModel.getCsIdseq();
-                        for( CsCsiModel csCsiModel : csCsiNodelList )
-                        {
-                            if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
-                            {
-                                //logger.debug( "GetCsi [" + classificationSchemeModel.getLongName() + "] : " + csCsiModel.getCsiName() );
-                                //Set as much as we can without knowing if it has children
-                                ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
-                                classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
-                                //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + model.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
-                                classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
-                                classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
-                                classificationSchemeItemNode.setCollapsed( true );
-                                logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
-                                addChildrenToCsi( classificationSchemeItemNode );
-
-                                //Add this CSI to the CS
-                                classificationSchemeNode.addChildNode( classificationSchemeItemNode );
-                            }
-                        }
-                        //    logger.debug( "DONE Getting CSIs for " + model.getConteIdseq() );
-                        //Add this CS to the CS Folder
-                        classificationsParentNode.addChildNode( classificationSchemeNode );
-                    }
-                }
-
+                //Add the Classifications to the classificationsParentNode for this Context.
+                insertClassifications( classificationsParentNode, csModelList, model );
             }
             //END  (Classification Scheme) folder
             //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -354,7 +304,7 @@ public class ContextDataController
 
                 //Add this child to the Parent
                 classificationItemNodeParent.addChildNode( classificationItemNodeChild );
-                logger.debug( "IN addChildrenToCsi Child from list of children: " + classificationItemNodeChild.getText() + "  Parent: " + classificationItemNodeParent.getText() );
+                //logger.debug( "IN addChildrenToCsi Child from list of children: " + classificationItemNodeChild.getText() + "  Parent: " + classificationItemNodeParent.getText() );
 
             }
 
@@ -375,6 +325,86 @@ public class ContextDataController
         }
     }
 
+    protected void initClassificationsParentNode( ParentNode classificationsParentNode )
+    {
+        //CS (Classification Scheme) folder
+        classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
+        classificationsParentNode.setType( CaDSRConstants.FOLDER );
+        classificationsParentNode.setText( "Classifications" );
+        classificationsParentNode.setCollapsed( true );
+        // If/When a child is added IsParent will change to true.
+        classificationsParentNode.setIsParent( false );
+        //No need for tooltip
+        //classificationsParentNode.setHover( classificationsParentNode.getText() );
+        classificationsParentNode.setHref( classificationsParentNode.getHref() );
+        classificationsParentNode.setChildren( new ArrayList<BaseNode>() );
+
+    }
+
+    protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel )
+    {
+        //////////////////////////////////////////////////
+        //CS (Classification Scheme) List for this Context
+        //////////////////////////////////////////////////
+        String contextId = contextModel.getConteIdseq();
+
+        //Loop through the Classification Schemes, and find the ones with the same contextID as the ContextModel
+        for( ClassificationSchemeModel classificationSchemeModel : csModelList )
+        {
+            //Is this CS (Classification scheme) for this Context
+            if( classificationSchemeModel.getConteIdseq().compareTo( contextId ) == 0 )
+            {
+                ClassificationNode classificationSchemeNode = new ClassificationNode();
+                classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
+                classificationSchemeNode.setType( CaDSRConstants.FOLDER );
+                classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
+                //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + contextModel.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
+                classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() );
+                classificationSchemeNode.setCollapsed( true );
+                classificationSchemeNode.setIsParent( false );
+                classificationSchemeNode.setIdSeq( classificationSchemeModel.getCsIdseq() );
+                //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
+
+                ////////////////////////////////////////////////
+                //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
+                ////////////////////////////////////////////////
+                String csId = classificationSchemeModel.getCsIdseq();
+                for( CsCsiModel csCsiModel : csCsiNodelList )
+                {
+/*
+                    //FIXME just for dev time debugging
+                    if( csCsiModel.getCsConteIdseq().compareTo( "E5CA1CEF-E2C6-3073-E034-0003BA3F9857" ) == 0 )
+                    {
+                        logger.debug( "\n\n\ncsCsiNodelList - csCsiModel: " + csCsiModel.toString() + "   csCsiModel.getCsIdseq(): " +
+                                csCsiModel.getCsIdseq() + "\n--------------------------------------" );
+                    }
+
+*/
+                    logger.debug("A csCsiModel.getCsIdseq(): " + csCsiModel.getCsIdseq() +"    csId: " + csId);
+                    if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
+                    {
+                        logger.debug("B csCsiModel.getCsIdseq(): " + csCsiModel.getCsIdseq() + "    " + csCsiModel.getCsiName());
+
+                        //Create the new, and set as much as we can without knowing if it has children
+                        ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
+                        classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
+                        //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + contextModel.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
+                        classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
+                        classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
+                        classificationSchemeItemNode.setCollapsed( true );
+                        //logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
+                        addChildrenToCsi( classificationSchemeItemNode );
+
+                        //Add this CSI to the CS
+                        classificationSchemeNode.addChildNode( classificationSchemeItemNode );
+                    }
+                }
+                //    logger.debug( "DONE Getting CSIs for " + contextModel.getConteIdseq() );
+                //Add this CS to the CS Folder
+                classificationsParentNode.addChildNode( classificationSchemeNode );
+            }
+        }
+    }
 
     /*
     Populate a Protocol form model node from a  ProtocolFormModel.
@@ -479,13 +509,12 @@ public class ContextDataController
 
 
     /**
-     *
      * @return programArea count
      */
     private int initProgramAreaList()
     {
         programAreaModelList = programAreaDAO.getAllProgramAreas();
-        Collections.sort(programAreaModelList, new ProgramAreaComparator() );
+        Collections.sort( programAreaModelList, new ProgramAreaComparator() );
         return programAreaModelList.size();
     }
 

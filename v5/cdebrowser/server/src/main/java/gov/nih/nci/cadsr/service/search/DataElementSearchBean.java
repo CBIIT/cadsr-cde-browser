@@ -277,7 +277,7 @@ public DataElementSearchBean( HttpServletRequest request ) throws SQLException {
     String where = " ACTL_NAME = 'DATAELEMENT' AND ASL_NAME != 'RETIRED DELETED' ";
     if(!StringUtils.isArrayWithEmptyStrings( aslNameExcludeList ))
      {
-       String exludeWhere = getExcludeWhereCluase("ASL_NAME",aslNameExcludeList);
+       String exludeWhere = getExcludeWhereClause("ASL_NAME",aslNameExcludeList);
        where = where + " and "+ exludeWhere;
      }
     workflowList =
@@ -297,7 +297,7 @@ public DataElementSearchBean( HttpServletRequest request ) throws SQLException {
     String where = null;
     if(!StringUtils.isArrayWithEmptyStrings( aslNameExcludeList ))
      {
-      where = getExcludeWhereCluase("REGISTRATION_STATUS",regStatusExcludeList);
+      where = getExcludeWhereClause("REGISTRATION_STATUS",regStatusExcludeList);
      }
     regStatusList =
       GenericPopListBean.buildList(
@@ -603,7 +603,7 @@ public DataElementSearchBean( HttpServletRequest request ) throws SQLException {
 
   }
 
-  public String getExcludeWhereCluase(String colName, String[] excludeArr)
+  public String getExcludeWhereClause(String colName, String[] excludeArr)
   {
     String whereClauseStr = null;
     if(excludeArr==null)

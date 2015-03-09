@@ -1,0 +1,137 @@
+[
+    {
+        "csiName": "Sample Data Elements",
+        "csiIdseq": "F39D94C1-A0A6-6601-E034-0003BA3F9857",
+        "csCsiIdseq": "F39D94C1-A0A7-6601-E034-0003BA3F9857",
+        "csiDescription": "Sample Data Elements",
+        "csIdseq": "F39D919E-FD77-6610-E034-0003BA3F9857",
+        "csPreffredDefinition": "for classifying cde's using during cadsr training",
+        "csLongName": "UML-based Training Materials",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "Sample Value Domains",
+        "csiIdseq": "F39D9691-D88C-74F1-E034-0003BA3F9857",
+        "csCsiIdseq": "F39D9D29-BFA1-03D1-E034-0003BA3F9857",
+        "csiDescription": "Sample Value Domains",
+        "csIdseq": "EABAEBEA-4231-287B-E034-0003BA3F9857",
+        "csPreffredDefinition": "Classification Scheme for including materials related to forms-based training exercises and homework.",
+        "csLongName": "Forms-based Training Materials",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "Sample Value Domains",
+        "csiIdseq": "F39D9691-D88C-74F1-E034-0003BA3F9857",
+        "csCsiIdseq": "F39D9691-D88D-74F1-E034-0003BA3F9857",
+        "csiDescription": "Sample Value Domains",
+        "csIdseq": "F39D919E-FD77-6610-E034-0003BA3F9857",
+        "csPreffredDefinition": "for classifying cde's using during cadsr training",
+        "csLongName": "UML-based Training Materials",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "Self-paced Training",
+        "csiIdseq": "1851CC7D-49AC-3119-E044-0003BA3F9857",
+        "csCsiIdseq": "1851CC7D-49AD-3119-E044-0003BA3F9857",
+        "csiDescription": "metadata used during self-paced courses",
+        "csIdseq": "1851CC7D-4998-3119-E044-0003BA3F9857",
+        "csPreffredDefinition": "groups of metadata I'm using in my project",
+        "csLongName": "Jennys Project Metadata",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "Server",
+        "csiIdseq": "FF7FB82E-74C6-1278-E034-0003BA3F9857",
+        "csCsiIdseq": "FF7FB82E-74C7-1278-E034-0003BA3F9857",
+        "csiDescription": "Server",
+        "csIdseq": "FF807FAF-3209-1228-E034-0003BA3F9857",
+        "csPreffredDefinition": "an organization responsible for an area of operation",
+        "csLongName": "Agency",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "Silver Level Review Training",
+        "csiIdseq": "38F07E40-76AB-269C-E044-0003BA3F9857",
+        "csCsiIdseq": "38F07E47-26E7-26A0-E044-0003BA3F9857",
+        "csiDescription": "Silver Level Review Training",
+        "csIdseq": "38F07D56-D7B5-267B-E044-0003BA3F9857",
+        "csPreffredDefinition": "This model is to be used for training caBIG reviewers on the essence of silver level compatibility reviews.",
+        "csLongName": "Training Models",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "Project"
+    },
+    {
+        "csiName": "Training",
+        "csiIdseq": "D01CE7B5-D091-66B0-E040-BB89AD43622E",
+        "csCsiIdseq": "246DFBC6-2523-4627-E044-0003BA3F9857",
+        "csiDescription": "example for training",
+        "csIdseq": "246DE2D7-EAA4-46F1-E044-0003BA3F9857",
+        "csPreffredDefinition": "groups of examples created for training",
+        "csLongName": "Training Class Examples",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "Value Domain Examples",
+        "csiIdseq": "0D52BF1C-2E85-49AA-E044-0003BA3F9857",
+        "csCsiIdseq": "0D52BF1C-2E86-49AA-E044-0003BA3F9857",
+        "csiDescription": "Value Domain Examples",
+        "csIdseq": "0D52AFEF-A558-4930-E044-0003BA3F9857",
+        "csPreffredDefinition": "complex examples reviewed as training exercises",
+        "csLongName": "Advanced Training Examples",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "ValueDomains A",
+        "csiIdseq": "32BC6599-F8A1-567A-E044-0003BA3F9857",
+        "csCsiIdseq": "684C9DD4-3666-A3F1-E040-BB89AD4310EC",
+        "csiDescription": "ValueDomains - Description",
+        "csIdseq": "684C9ACF-9771-2D40-E040-BB89AD430A3D",
+        "csPreffredDefinition": "This model is to be used for training purposes only, for example in training presentations and boot camps for the caBIG community.",
+        "csLongName": "BootCampModel",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "Project"
+    },
+    {
+        "csiName": "Database",
+        "csiIdseq": "FF7FB82E-74C8-1278-E034-0003BA3F9857",
+        "csCsiIdseq": "FF807FAF-320F-1228-E034-0003BA3F9857",
+        "csiDescription": "Database",
+        "parentCsiIdseq": "FF7FB82E-74C7-1278-E034-0003BA3F9857",
+        "csIdseq": "FF807FAF-3209-1228-E034-0003BA3F9857",
+        "csPreffredDefinition": "an organization responsible for an area of operation",
+        "csLongName": "Agency",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "CLASSIFICATIONS"
+    },
+    {
+        "csiName": "edu.duke.cabig.tumorregistry.domain",
+        "csiIdseq": "249AD3C1-DA52-7150-E044-0003BA3F9857",
+        "csCsiIdseq": "38F07E55-3670-26AE-E044-0003BA3F9857",
+        "csiDescription": "edu.duke.cabig.tumorregistry.domain",
+        "parentCsiIdseq": "38F07E47-26E7-26A0-E044-0003BA3F9857",
+        "csIdseq": "38F07D56-D7B5-267B-E044-0003BA3F9857",
+        "csPreffredDefinition": "This model is to be used for training caBIG reviewers on the essence of silver level compatibility reviews.",
+        "csLongName": "Training Models",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "Project"
+    },
+    {
+        "csiName": "gov.nih.nci.training.bootcamp.domain",
+        "csiIdseq": "684C9DC1-BE44-FDEA-E040-BB89AD4310DF",
+        "csCsiIdseq": "684C9DCE-27AD-D4BA-E040-BB89AD4310E5",
+        "csiDescription": "No Value Exists.",
+        "parentCsiIdseq": "684C9DC7-C852-F7D7-E040-BB89AD4310E1",
+        "csIdseq": "684C9ACF-9771-2D40-E040-BB89AD430A3D",
+        "csPreffredDefinition": "This model is to be used for training purposes only, for example in training presentations and boot camps for the caBIG community.",
+        "csLongName": "BootCampModel",
+        "csConteIdseq": "E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+        "cstlName": "Project"
+    }
+]

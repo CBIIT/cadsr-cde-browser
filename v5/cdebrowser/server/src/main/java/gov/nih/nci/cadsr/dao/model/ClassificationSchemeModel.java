@@ -1,6 +1,9 @@
 /*
  * Copyright 2015 Leidos Biomedical Research, Inc.
  */
+/*
+ * Copyright 2015 Leidos Biomedical Research, Inc.
+ */
 
 package gov.nih.nci.cadsr.dao.model;
 
@@ -234,7 +237,9 @@ public class ClassificationSchemeModel extends BaseModel
     {
         StringBuffer sb = new StringBuffer();
         sb.append( CaDSRConstants.OBJ_SEPARATOR_START );
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "conteIdSeq=" + getConteIdseq() );
+        sb.append( "conteIdSeq=" + getConteIdseq() );
+        //csIdseq
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "csIdseq=" + getCsIdseq() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "preferredName=" + getPreferredName() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "preferredDefinition=" + getPreferredDefinition() );
         sb.append( super.toString() );
