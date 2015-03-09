@@ -313,10 +313,14 @@
 
         <div id="searchResults" data-ng-show="haveSearchResults">
     <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
-
-        <table ng-table="tableParams" class="searchResultsTable">
+<script type="text/ng-template" id="ng-table/headers/checkbox.html">
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
+    </script>
+      <table ng-table="tableParams" class="searchResultsTable">
             <tr class="searchResultsTableTr" ng-repeat="result in $data">
-                    <td class="searchResultsTableTd" width="1%"><input type="checkbox"></td>
+                    <td header="'ng-table/headers/checkbox.html'">
+                       <input type="checkbox" ng-model="checkboxes.items[result.publicId]">
+                    </td>
 
                     <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
                         <!-- FIXME - place holder alert box  -->

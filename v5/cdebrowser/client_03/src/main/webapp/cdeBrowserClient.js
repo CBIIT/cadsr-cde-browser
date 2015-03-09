@@ -2,9 +2,6 @@
 cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filter, ngTableParams) {
 
     $scope.show = [];
-
-    console.log("$scope.show len: " + $scope.show.length);
-    $scope.currentTab = '0';
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
     $scope.searchResults = [];
@@ -14,6 +11,37 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         {id: 1, name: "All of the words"},
         {id: 2, name: "At least one of the words"}
     ];
+
+    // start checkboxes for table //
+        $scope.checkboxes = { 'checked': false, items: {} };
+        // watch for check all checkbox
+        $scope.$watch('checkboxes.checked', function(value) {
+            angular.forEach($scope.records, function(item) {
+                if (angular.isDefined(item.publicId)) {
+                    $scope.checkboxes.items[item.publicId] = value;
+                }
+            });
+        });
+
+        // watch for data checkboxes
+        $scope.$watch('checkboxes.items', function(values) {
+            if (!$scope.records) {
+                return;
+            }
+            var checked = 0, unchecked = 0,
+                total = $scope.records.length;
+            angular.forEach($scope.records, function(item) {
+                checked   +=  ($scope.checkboxes.items[item.publicId]) || 0;
+                unchecked += (!$scope.checkboxes.items[item.publicId]) || 0;
+            });
+            if ((unchecked == 0) || (checked == 0)) {
+                $scope.checkboxes.checked = (checked == total);
+            }
+            // grayed checkbox
+            angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
+        }, true);
+    // end checkboxes for table //
+    
     // Default query type
     $scope.selectedQueryType = '0'; //Starting selection
 
@@ -44,6 +72,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
     };
 
+    // Basic search query to get search results //
     $scope.basicSearchServerRestCall = function (serverUrl) {
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
@@ -152,7 +181,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
                 // use build-in angular filter
                 var orderedData = params.sorting() ? 
                 $filter('orderBy')(data, params.orderBy()) : data;
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                $defer.resolve($scope.records = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             } 
         }); 
   
