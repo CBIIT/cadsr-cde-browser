@@ -1,0 +1,93 @@
+[
+
+   {
+      "preferredName":"10 PROMIS GlobalX",
+      "conteIdseq":"D9344734-8CAF-4378-E034-0003BA12F5E7",
+      "preferredDefinition":"Collection of CDEs based on a ten question instrument designed to provide an efficient way of gathering general perceptions of health.",
+      "createdBy":"COOPERM",
+      "dateCreated":"2012-11-14 00:00:00.0",
+      "modifiedBy":"COOPERM",
+      "dateModified":"2012-11-14 11:57:31.0",
+      "csIdseq": "3BC509E8-3F46-4361-E044-0003BA3F9857"
+   },
+   {
+      "conteIdseq":"E5CA1CEF-E2C6-3073-E034-0003BA3F9857",
+      "preferredName":"Advanced Training Examples",
+      "preferredDefinition":"complex examples reviewed as training exercises",
+      "createdBy":"BRUSHJ",
+      "dateCreated":"2006-02-21 00:00:00.0",
+      "modifiedBy":"BRUSHJ",
+      "dateModified":"2006-02-21 00:00:00.0",
+      "csIdseq": "3BC509E8-3F46-4361-E044-0003BA3F9857"
+   },
+   {
+      "conteIdseq":"99BA9DC8-2094-4E69-E034-080020C9C0E0",
+      "preferredName":"Adverse Events",
+      "preferredDefinition":"CDEs to describe AEs and SAEs",
+      "createdBy":"REEVESD",
+      "dateCreated":"2005-03-20 00:00:00.0",
+      "modifiedBy":"REEVESD",
+      "dateModified":"2005-03-20 00:00:00.0",
+      "csIdseq": "FF807FAF-3209-1228-E034-0003BA3F9857"
+   },
+   {
+      "conteIdseq":"D9344734-8CAF-4378-E034-0003BA12F5E7",
+      "preferredName":"AIM 3.0",
+      "preferredDefinition":"Annotations and Imaging Markup (AIM) is an information model used to capture information about how images are perceived by human or machine observers that is directly tied to medical images.",
+      "createdBy":"COOPERM",
+      "dateCreated":"2010-09-01 16:18:49.0",
+      "modifiedBy":"COOPERM",
+      "dateModified":"2012-10-15 16:51:41.0",
+      "csIdseq": "FF807FAF-3209-1228-E034-0003BA3F9857"
+   },
+   {
+      "conteIdseq":"D9344734-8CAF-4378-E034-0003BA12F5E7",
+      "preferredName":"AIM 4.0",
+      "preferredDefinition":"The AIM v4.0 model consists of the AIM Foundation model plus the Radiology and Radiation Oncology specific classes. The model is designed to capture information about the meaning of pixel information, graphical symbols and calculation results associated with images as well as information used to identify and retrieve images. The model is independent of image type.",
+      "createdBy":"COOPERM",
+      "dateCreated":"2012-10-15 16:51:40.0",
+      "modifiedBy":"COOPERM",
+      "dateModified":"2012-10-15 16:52:42.0",
+      "csIdseq": "38F07D56-D7B5-267B-E044-0003BA3F985"
+   },
+   {
+      "conteIdseq":"D9344734-8CAF-4378-E034-0003BA12F5E7",
+      "preferredName":"AIM FM",
+      "preferredDefinition":"The AIM Foundation model is an image modality, format and content independent model. It is used to capture image annotation and markup of a single thing found on image(s).",
+      "createdBy":"UMLLDR",
+      "dateCreated":"2012-09-27 16:49:10.0",
+      "modifiedBy":"COOPERM",
+      "dateModified":"2012-09-28 12:14:19.0",
+      "csIdseq": "38F07D56-D7B5-267B-E044-0003BA3F985"
+   },
+   {
+      "conteIdseq":"D9344734-8CAF-4378-E034-0003BA12F5E7",
+      "preferredName":"All Candidates",
+      "preferredDefinition":"All Candidate CDEs for migration",
+      "createdBy":"REEVESD",
+      "dateCreated":"2011-01-04 00:00:00.0",
+      "modifiedBy":"REEVESD",
+      "dateModified":"2011-01-04 00:00:00.0",
+      "csIdseq": "38F07D56-D7B5-267B-E044-0003BA3F985"
+   },
+   {
+      "conteIdseq":"F6141DD3-5081-EC4B-E040-BB89AD435D8B",
+      "preferredName":"Agency",
+      "preferredDefinition":"an organization responsible for an area of operation",
+      "createdBy":"BRUSHJ",
+      "dateCreated":"2005-08-29 00:00:00.0",
+      "modifiedBy":"BRUSHJ",
+      "dateModified":"2005-08-29 00:00:00.0",
+      "csIdseq": "684C9ACF-9771-2D40-E040-BB89AD430A3D"
+   },
+   {
+      "conteIdseq":"F6141DD3-5081-EC4B-E040-BB89AD435D8B",
+      "preferredName":"AHRQ Common Formats",
+      "preferredDefinition":"CDEs in AHRQ Common Formats",
+      "createdBy":"REEVESD",
+      "dateCreated":"2014-07-08 00:00:00.0",
+      "modifiedBy":"REEVESD",
+      "dateModified":"2014-07-08 00:00:00.0",
+      "csIdseq": "684C9ACF-9771-2D40-E040-BB89AD430A3D"
+   }
+]

@@ -1,17 +1,20 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import gov.nih.nci.cadsr.common.util.DBUtil;
 import gov.nih.nci.cadsr.common.util.StringUtils;
+import gov.nih.nci.cadsr.dao.model.ClassificationSchemeModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.ProtocolFormModel;
-import gov.nih.nci.cadsr.service.model.context.BaseNode;
-import gov.nih.nci.cadsr.service.model.context.ClassificationItemNode;
-import gov.nih.nci.cadsr.service.model.context.ContextNode;
-import gov.nih.nci.cadsr.service.model.context.ProtocolFormNode;
+import gov.nih.nci.cadsr.service.model.context.*;
 import junit.framework.TestCase;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ public class ContextDataControllerTest extends TestCase
     public void setUp()
     {
         contextDataController = new ContextDataController();
-        contextDataController.setMaxHoverTextLenStr("128");
+        contextDataController.setMaxHoverTextLenStr( "128" );
     }
 
     private void initCsCsiNodelList()
@@ -133,7 +136,6 @@ public class ContextDataControllerTest extends TestCase
     }
 
 
-
     /* ************************************************************
          Test - ContextDataController.initProtocolFormNode
     ************************************************************ */
@@ -142,28 +144,28 @@ public class ContextDataControllerTest extends TestCase
         String testProtocolLongName = "Test Protocol LongName";
         String testProtocolPreferredDefinition = "Test Protocol Preferred Definition";
         protocolFormModel = new ProtocolFormModel();
-        protocolFormModel.setLongName(testProtocolLongName);
-        protocolFormModel.setProtoPreferredDefinition(testProtocolPreferredDefinition);
+        protocolFormModel.setLongName( testProtocolLongName );
+        protocolFormModel.setProtoPreferredDefinition( testProtocolPreferredDefinition );
     }
 
     public void testInitProtocolFormNode0()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
         assertEquals( "Test Protocol LongName", protocolFormNode.getText() );
     }
 
     public void testInitProtocolFormNode1()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
         assertEquals( "Test Protocol Preferred Definition", protocolFormNode.getHover() );
     }
 
     public void testInitProtocolFormNode2()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
         assertEquals( 6, protocolFormNode.getType() );
     }
 
@@ -171,22 +173,222 @@ public class ContextDataControllerTest extends TestCase
     public void testInitProtocolFormNode3()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
         assertEquals( "Default action", protocolFormNode.getHref() );
     }
 
     public void testInitProtocolFormNode4()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
         assertFalse( protocolFormNode.isIsChild() );
     }
 
     public void testInitProtocolFormNode5()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode(protocolFormModel);
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
         assertFalse( protocolFormNode.isIsParent() );
+    }
+
+    /**
+     * Test - Do we get the correct number of children
+     */
+    public void testInsertClassifications0()
+    {
+
+        contextDataController.setCsCsiNodelList( csCsiModelListInit() );
+        ContextModel contextModel = new ContextModel();
+
+        //For the context model, we only need the ConteIdseq
+        contextModel.setConteIdseq( "D9344734-8CAF-4378-E034-0003BA12F5E7" );
+
+        //List of Classification Schemes
+        List<ClassificationSchemeModel> csModelList = csModelListInit();
+
+        //CS (Classification Scheme) folder
+        ParentNode classificationsParentNode = new ParentNode();
+        contextDataController.initClassificationsParentNode( classificationsParentNode );
+
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel );
+
+        //Should be five children fo this context
+        assertEquals( 5, classificationsParentNode.getChildren().size() );
+    }
+
+    public void testInsertClassifications1()
+    {
+
+        contextDataController.setCsCsiNodelList( csCsiModelListInit() );
+        ContextModel contextModel = new ContextModel();
+
+        //For the context model, we only need the ConteIdseq
+        contextModel.setConteIdseq( "F6141DD3-5081-EC4B-E040-BB89AD435D8B" );
+        //contextModel.setConteIdseq( "D9344734-8CAF-4378-E034-0003BA12F5E7" );
+
+        //List of Classification Schemes
+        List<ClassificationSchemeModel> csModelList = csModelListInit();
+
+        //CS (Classification Scheme) folder - A single parent node
+        ParentNode classificationsParentNode = new ParentNode();
+        contextDataController.initClassificationsParentNode( classificationsParentNode );
+
+        //Look at the Classification Schemes
+/*
+        for( ClassificationSchemeModel classificationSchemeModel : csModelList )
+        {
+            System.out.println( "------------------\nclassificationSchemeModel:\n" + classificationSchemeModel );
+        }
+*/
+
+
+        System.out.println( "A IN testInsertClassifications: " + classificationsParentNode.toString() );
+        System.out.println( "A IN contextModel.getConteIdseq: " + contextModel.getConteIdseq() );
+
+        System.out.println( "A1");
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel );
+        System.out.println( "A2");
+               //System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nB IN testInsertClassifications: " + classificationsParentNode.toString() );
+
+        int parentCount = 0;
+        //Get the children( the Classifications for this one context) for this Context
+        ArrayList<BaseNode> children = classificationsParentNode.getChildren();
+        System.out.println( "\nChildren[" + children.size() +"]\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" );
+        for( BaseNode childNode : children )
+        {
+            System.out.println("Parent[" + parentCount +"] : " + childNode.toString() + "\n");
+            ArrayList<BaseNode> cs = childNode.getChildren();
+            System.out.println( "Grandchildren count: " + cs.size() );
+            for( BaseNode classificationScheme : cs )
+            {
+                System.out.println( ">>=================================\nParent[" + parentCount + "] Grandchild (classificationScheme): " + classificationScheme );
+                // ArrayList<BaseNode> cs = childNode.getChildren();
+            }
+            parentCount++;
+            System.out.println( "\n=================================<<" );
+
+
+        }
+        System.out.println( "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" );
+        //Should be two children fo this context
+        assertEquals( 2, classificationsParentNode.getChildren().size() );
+    }
+
+    /*
+    This one still needs some work...
+     */
+    public void testInsertClassifications2()
+    {
+
+        contextDataController.setCsCsiNodelList( csCsiModelListInit() );
+        ContextModel contextModel = new ContextModel();
+
+        //For the context model, we only need the ConteIdseq
+        contextModel.setConteIdseq( "D9344734-8CAF-4378-E034-0003BA12F5E7" );
+
+        //List of Classification Schemes
+        List<ClassificationSchemeModel> csModelList = csModelListInit();
+
+        //CS (Classification Scheme) folder - A single parent node
+        ParentNode classificationsParentNode = new ParentNode();
+        contextDataController.initClassificationsParentNode( classificationsParentNode );
+
+        System.out.println( "A IN testInsertClassifications: " + classificationsParentNode.toString() );
+        System.out.println( "A IN contextModel.getConteIdseq: " + contextModel.getConteIdseq() );
+
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel );
+        //System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nB IN testInsertClassifications: " + classificationsParentNode.toString() );
+
+        int parentCount = 0;
+        //Get the children( the Classifications for this one context) for this Context
+        ArrayList<BaseNode> children = classificationsParentNode.getChildren();
+        System.out.println( "\nChildren[" + children.size() +"]\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" );
+        for( BaseNode childNode : children )
+        {
+            System.out.println("Parent[" + parentCount +"] : " + childNode.toString() + "\n");
+            ArrayList<BaseNode> cs = childNode.getChildren();
+            System.out.println( "Grandchildren count: " + cs.size() );
+            for( BaseNode classificationScheme : cs )
+            {
+                System.out.println( ">>=================================\nParent[" + parentCount + "] *********** Grandchild (classificationScheme): " + classificationScheme );
+                // ArrayList<BaseNode> cs = childNode.getChildren();
+            }
+            parentCount++;
+            System.out.println( "\n=================================<<" );
+
+
+        }
+        System.out.println( "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" );
+        //Should be two children fo this context
+        assertEquals( 5, classificationsParentNode.getChildren().size() );
+    }
+
+    //A local test, dev time only
+    public void testCsModelListInit()
+    {
+        csModelListInit();
+        csCsiModelListInit();
+        assertTrue( true );
+    }
+
+    private List<CsCsiModel> csCsiModelListInit()
+    {
+        System.out.println( "csCsiModelListInit");
+
+        Gson gson = new GsonBuilder().create();
+        String json = null;
+        try
+        {
+            json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/csCsiModelTest.data" );
+        }
+        catch( IOException e )
+        {
+            assertTrue( e.getMessage(), false );
+
+        }
+
+        List<CsCsiModel> csCsiNodelList = gson.fromJson( json, new TypeToken<List<CsCsiModel>>()
+        {
+        }.getType() );
+/*
+
+        for( CsCsiModel csCsiModel : csCsiNodelList )
+        {
+            System.out.println( "------------------\ncsCsiModel:\n" + csCsiModel );
+        }
+*/
+        return csCsiNodelList;
+    }
+
+    // Creates and initilizes a list of ClassificationSchemeModels for insertClassifications tests
+    private List<ClassificationSchemeModel> csModelListInit()
+    {
+System.out.println( "csModelListInit");
+        Gson gson = new GsonBuilder().create();
+        String json = null;
+        try
+        {
+            json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/classificationSchemeModelTest.data" );
+        }
+        catch( IOException e )
+        {
+            assertTrue( e.getMessage(), false );
+
+        }
+
+        List<ClassificationSchemeModel> csModelList = gson.fromJson( json, new TypeToken<List<ClassificationSchemeModel>>()
+        {
+        }.getType() );
+/*
+
+        for( ClassificationSchemeModel classificationSchemeModel : csModelList )
+        {
+            System.out.println( "------------------\nclassificationSchemeModel:\n" + classificationSchemeModel );
+            System.out.println( "------------------\nclassificationSchemeModel.getCsIdseq():\n" + classificationSchemeModel.getCsIdseq() );
+        }
+
+*/
+        return csModelList;
     }
 
 }

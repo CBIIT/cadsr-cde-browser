@@ -37,7 +37,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         this.request = request;
         this.searchBean = searchBean;
 
-logger.debug("clientSearchMode: " + clientSearchMode);
+        logger.debug( "clientSearchMode: " + clientSearchMode );
 
         buildSql();
     }
@@ -45,7 +45,7 @@ logger.debug("clientSearchMode: " + clientSearchMode);
     protected void buildSql()
     {
 
-        if( query.isEmpty())
+        if( query.isEmpty() )
         {
             logger.warn( "Search builder received no query." );
             sqlStmt = null;
@@ -60,26 +60,28 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         }
 
         String vdFrom = "";
-
-        String whereClause = "";
         String latestWhere = "";
         String fromClause = "";
         String deDerivWhere = "";
         String deDerivFrom = "";
-        StringBuffer whereBuffer = new StringBuffer();
+        String whereClause = "";
+        StringBuilder whereBuffer = new StringBuilder();
+
 
         String registrationExcludeWhere = "";
         //excludeArr will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
         {
-            registrationExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "nvl(acr.registration_status,'-1')", excludeArr );
+            //registrationExcludeWhere = " and " + searchBean.getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
+            registrationExcludeWhere = " and " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
         }
 
         String workflowExcludeWhere = "";
         //aslNameExcludeList will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !StringUtils.isArrayWithEmptyStrings( aslNameExcludeList ) )
         {
-            workflowExcludeWhere = " and " + searchBean.getExcludeWhereCluase( "asl.asl_name", aslNameExcludeList );
+            //workflowExcludeWhere = " and " + searchBean.getExcludeWhereClause( "asl.asl_name", aslNameExcludeList );
+            workflowExcludeWhere = " and " + getExcludeWhereClause( "asl.asl_name", aslNameExcludeList );
         }
 
         String contextExludeWhere = "";
@@ -88,19 +90,6 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         {
             contextExludeWhere = " and conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
         }
-
-            /*
-            jspValidValue  is in advancedSearch_inc.jsp associated with a field labeled “Permissible Value”. There’s a whole table called Permissible_values
-            jspObjectClass is in advancedSearch_inc.jsp associated with a field labeled “Object Class”.  I haven’t seen this in the DB
-            jspProperty is in advancedSearch_inc.jsp associated with a field labeled “Property”.  I haven’t seen this in the DB
-            jspValueDomain is in advancedSearch_inc.jsp associated with a field labeled “Search for Value Domains”.  It’s an odd hidden field associated with a “LOV” and with a text field that is disabled.  There’s a DB table for value_domains.  Value Domain (VD), Value Meaning (VM) and Permissible Values (PV) all contribute to the data about what can be the answers to questions.
-            jspCdeId is in advancedSearch_inc.jsp associated with a field labeled “Public ID”. It appears to be used for storing the public id for a CDE. Now, since “a CDE” is the combination of VD, VM and PV’s AND a few other fields, I am not sure right now how there can be one ID for a CDE.
-            jspDataElementConcept is in advancedSearch_inc.jsp associated with a field labeled “Data Element Concept”. There’s something in the db called “Concept"
-            jspClassification is in advancedSearch_inc.jsp associated with a field labeled "Search for Classification Scheme Items".
-            jspLatestVersion is in advancedSearch_inc.jsp associated with a boolean checkbox field that isn’t labeled but I would assume that this field ties into the data’s version field and would choose the max value of
-            */
-
-
 
         /*
         Will not be needed until "Search only Derived DEs" is implemented
@@ -216,7 +205,7 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         sqlStmt = finalSqlStmt.toString();
     }
 
-     public String getQueryStmt()
+    public String getQueryStmt()
     {
         return sqlStmt;
     }
@@ -229,21 +218,23 @@ logger.debug("clientSearchMode: " + clientSearchMode);
             return "";
         }
 
-        logger.debug("statusList.length: " + statusList.length);
+        logger.debug( "statusList.length: " + statusList.length );
         String wkFlowWhere = "";
         String wkFlow = "";
         if( statusList.length == 1 )
         {
             wkFlow = statusList[0];
             wkFlowWhere = " and de.asl_name = '" + wkFlow + "'";
-        } else
+        }
+        else
         {
             for( int i = 0; i < statusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     wkFlow = "'" + statusList[0] + "'";
-                } else
+                }
+                else
                 {
                     wkFlow = wkFlow + "," + "'" + statusList[i] + "'";
                 }
@@ -269,14 +260,16 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         {
             regStatus = regStatusList[0];
             regStatWhere = " and acr.registration_status = '" + regStatus + "'";
-        } else
+        }
+        else
         {
             for( int i = 0; i < regStatusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     regStatus = "'" + regStatusList[0] + "'";
-                } else
+                }
+                else
                 {
                     regStatus = regStatus + "," + "'" + regStatusList[i] + "'";
                 }
@@ -332,7 +325,8 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         if( searchWhere == null )
         {
             searchWhere = shortNameWhere;
-        } else if( shortNameWhere != null )
+        }
+        else if( shortNameWhere != null )
         {
             searchWhere = searchWhere + " OR " + shortNameWhere;
         }
@@ -340,7 +334,8 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         if( searchWhere == null && docTextSearchWhere != null )
         {
             searchWhere = " and " + docTextSearchWhere;
-        } else if( docTextSearchWhere != null )
+        }
+        else if( docTextSearchWhere != null )
         {
             searchWhere = searchWhere + " OR " + docTextSearchWhere;
             searchWhere = " and (" + searchWhere + ") ";
@@ -363,10 +358,12 @@ logger.debug("clientSearchMode: " + clientSearchMode);
                     + " and    " + buildSearchString( "upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
 
 
-        } else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
+        }
+        else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
-        } else if( StringUtils.containsKey( searchDomain, "Hist" ) )
+        }
+        else if( StringUtils.containsKey( searchDomain, "Hist" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
@@ -379,7 +376,8 @@ logger.debug("clientSearchMode: " + clientSearchMode);
                     + " from sbr.data_elements_view de1 "
                     + " where  " + searchWhere + " ) ";
 
-        } else if( docWhere == null && docTextTypeWhere != null )
+        }
+        else if( docWhere == null && docTextTypeWhere != null )
         {
             docWhere = "(select de_idseq "
                     + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
@@ -401,7 +399,9 @@ logger.debug("clientSearchMode: " + clientSearchMode);
                             + " )";
 
             if( docWhere == null )
+            {
                 return " and de.de_idseq IN " + umlAltNameWhere;
+            }
             else
             {
                 String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
@@ -429,7 +429,8 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_ANY ) )
         {
             oper = " or ";
-        } else
+        }
+        else
         {
             oper = " and ";
         }
@@ -451,6 +452,30 @@ logger.debug("clientSearchMode: " + clientSearchMode);
         return whereClause;
     }
 
+
+    public String getExcludeWhereClause( String colName, String[] excludeArr )
+    {
+        String whereClauseStr = null;
+        if( ( excludeArr == null ) || ( excludeArr.length < 1 ) )
+        {
+            return null;
+        }
+
+        for( int i = 0; i < excludeArr.length; i++ )
+        {
+            if( whereClauseStr == null )
+            {
+                whereClauseStr = " " + colName + " NOT IN ('" + excludeArr[i] + "'";
+            }
+            else
+            {
+                whereClauseStr = whereClauseStr + " , '" + excludeArr[i] + "'";
+            }
+        }
+        whereClauseStr = whereClauseStr + " ) ";
+        return whereClauseStr;
+    }
+
     /**
      * This method returns the query for whole word matching the input param word
      *
@@ -465,7 +490,6 @@ logger.debug("clientSearchMode: " + clientSearchMode);
                 + " or " + matcher.replaceAll( word )
                 + " or " + matcher.replaceAll( "% " + word ) + ")";
     }
-
 
 
 }
