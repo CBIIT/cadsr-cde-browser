@@ -70,7 +70,25 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     // Search button
     $scope.onClickBasicSearch = function (query, field, type) {
         $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
+        $scope.setSortOrder();
+        $scope.tableParams.reload();        
     };
+
+    // sets sort order for columns that should not be alphabetical //
+    $scope.setSortOrder = function() {
+        angular.forEach($scope.searchResults, function(item) {
+            switch(item.registrationStatus) {
+                case 'Qualified':
+                    item['registrationSort']=1
+                    break;
+                case 'Standard':
+                    item['registrationSort']=2
+                    break;
+                default:
+                    item['registrationSort']=3
+            }
+        });
+    };    
 
     // Basic search query to get search results //
     $scope.basicSearchServerRestCall = function (serverUrl) {
