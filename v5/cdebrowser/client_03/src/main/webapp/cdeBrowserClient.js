@@ -74,18 +74,13 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
     // sets sort order for columns that should not be alphabetical //
     $scope.setSortOrder = function() {
+        var registrationSort = ["Standard","Candidate","Proposed","Qualified","Superseded","Standardized Elsewhere","Retired","Application","Suspended"];
+        var workflowSort = ["RELEASED","Approved for Trial Use ","Draft New ","Committee Approved ","Committee Submitted ","Committee Submitted Used ","Draft Mod ","Retired Archived ","Retired Phased Out ","Retired Withdrawn ","Retired Deleted ","Released-non-compliant"];
         angular.forEach($scope.searchResults, function(item) {
-            console.log(item);
-            switch(item.registrationStatus) {
-                case 'Qualified':
-                    item['registrationSort']=1
-                    break;
-                case 'Standard':
-                    item['registrationSort']=2
-                    break;
-                default:
-                    item['registrationSort']=3
-            }
+            var rS = registrationSort.indexOf(item.registrationStatus);
+            var wS = workflowSort.indexOf(item.workflowStatus);
+            if (rS>-1) { item['registrationSort']=rS } else { item['registrationSort']=1000 }
+            if (wS>-1) { item['workflowSort']=wS } else { item['workflowSort']=1000 }        
         });
     };    
 
