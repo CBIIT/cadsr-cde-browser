@@ -313,9 +313,11 @@
 
         <div id="searchResults" data-ng-show="haveSearchResults">
     <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
-<script type="text/ng-template" id="ng-table/headers/checkbox.html">
+
+    <script type="text/ng-template" id="ng-table/headers/checkbox.html">
         <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
     </script>
+
       <table ng-table="tableParams" class="searchResultsTable">
             <tr class="searchResultsTableTr" ng-repeat="result in $data">
                     <td header="'ng-table/headers/checkbox.html'">
@@ -324,7 +326,7 @@
 
                     <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
                         <!-- FIXME - place holder alert box  -->
-                        <a href="javascript:alert('Not yet implemented')">{{result.longName}}</a>
+                        <a class="searchResultsLink" href="javascript:alert('Not yet implemented')">{{result.longName}}</a>
                         <!-- FIXME - place holder alert box  -->
                      </td>
                     <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'" class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}</td>

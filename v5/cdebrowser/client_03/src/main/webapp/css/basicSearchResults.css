@@ -16,9 +16,9 @@
 }
 
 .searchResultsTableHeaderTr {
-    border: 2px solid #80a3c0;
-    background-color: #18344d;
-    color: #ffffcc;
+    border: 2px solid #000;
+    background-color: #cccc99;
+    color: #000;
     font-style: normal;
     font-size: 12pt;
 }
@@ -61,24 +61,30 @@
 }
 
 /** override some ng-table styles **/
+.searchResultsLink:link, .searchResultsLink:active, .searchResultsLink:visited {
+    color: #663300;
+}
+
 .ng-table tr {
-    border: 2px solid #18344d;
+    border: 1px solid #000;
     background-color:  #f7f7e6;
+}
+.ng-table td {
+    border: 1px solid #000;
 }
 .ng-table th {
     /** change th to match existing style **/
-    border: 2px solid #80a3c0;
-    background-color: #18344d;
-    color: #ffffcc;
+    border: 1px solid #000;
+    background-color: #cccc99;
+    color: #663300;
     font-style: normal;
     font-size: 100%;
     padding: 10px 2px 10px 2px;
 }
-
 .ng-table th.sortable.sort-desc,
 .ng-table th.sortable.sort-asc {
     /** change background color of headers to be dark blue, remove text shadow **/
-    background-color: #1A4660;
+    background-color: #cccc99;
     text-shadow: none;
 }
 

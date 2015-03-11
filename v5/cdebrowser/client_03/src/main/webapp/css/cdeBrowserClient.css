@@ -85,13 +85,14 @@ a:hover {
     resize: horizontal;
 }
 
+
 /* The tree for each tab  (with in treeWindow class)  */
 .treeMenu {
     float: left;
     /* top of tree menu pane  */
     margin-top: 29px;
 
-    font-size:16px;
+    font-size:13px;
     padding-left: 0;
     padding-right: 0;
 
@@ -114,6 +115,7 @@ a:hover {
 /*  **********************************  */
 
 .queryTypeRadioButtons {
+    font-size: 11pt;
     color: #18344d;
     float: left;
 /*
@@ -138,5 +140,5 @@ a:hover {
 #basicSearchField {
     float: right;
     margin-right: 10px;
-    width: 70px;
+    width: 80px;
 }
