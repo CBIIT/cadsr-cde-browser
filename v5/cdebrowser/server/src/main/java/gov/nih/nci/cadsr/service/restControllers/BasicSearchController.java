@@ -71,10 +71,10 @@ String searchMode = CaDSRConstants.SEARCH_MODE[intMode];
             basicSearchNodes[i].setVersion( model.getDeVersion() );
 
             //TODO here we add the URL for the search results
-            basicSearchNodes[i].setHref( "cdebrowserServer/searchResultsData" );
+            basicSearchNodes[i].setHref( "cdebrowserServer/CDEData" );
 
 
-            //FIXME - this a bit hacky. This is so in the client side display table there will be spaces to allow good line wrapping.
+            //This is so in the client side display table there will be spaces to allow good line wrapping.
             if( model.getDeUsedby() != null )
             {
                 basicSearchNodes[i].setUsedByContext( model.getDeUsedby().replace( ",", ", " ));

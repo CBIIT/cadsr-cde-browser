@@ -48,7 +48,7 @@ public class ContextDataController
     public ContextDataController()
     {
         logger.debug( "IN ContextDataController constructor" );
-        setTestMode( false );
+        setTestMode( true );
     }
 
     public void setTestMode( boolean testMode )
@@ -122,12 +122,15 @@ public class ContextDataController
     {
 
         contextPalNameCount = initProgramAreaList();
-        ContextNode[] contextNodes = new ContextNode[contextPalNameCount];
+        ContextNode[] contextNodes = new ContextNode[contextPalNameCount + 1]; //The + 1 is for "All"
         for( int i = 0; i < contextPalNameCount; i++ )
         {
             contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get( i ).getPalName() );
             contextNodes[i].setPalNameDescription( programAreaModelList.get( i ).getDescription() );
         }
+
+        //Add all contexts tab at the end
+        contextNodes[contextPalNameCount] = new ContextNode( CaDSRConstants.FOLDER, true, "All" );
 
         /////////////////////////////////////////////////////////////////////////////
         //Get list of all Contexts
@@ -249,9 +252,16 @@ public class ContextDataController
             //Add to the top node which is the Program Area.
             int programAreaIndex = getProgramArea( contextNodeParent.getPalName() );
 
+
             contextNodes[programAreaIndex].addTopNode( contextNodeParent );
             //Set the tabs hover text to the caption for this Program area
             contextNodes[programAreaIndex].setHover( getProgramAreaDiscriptionByIndex( programAreaIndex ) );
+
+            //Also add to "All" which is the last program area.
+            contextNodes[contextPalNameCount].addTopNode( contextNodeParent );
+            contextNodes[contextPalNameCount].setHover( "All Contexts" );
+
+
         }
         return contextNodes;
     }
