@@ -9,7 +9,7 @@
     <script type='text/javascript' src="directives/treeModel.js"></script>
     <script type='text/javascript' src="directives/resize.js"></script>
     <script src="plugins/ng-table/ng-table.min.js"></script>
-    <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">    
+    <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
     <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
@@ -325,10 +325,8 @@
                     </td>
 
                     <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
-                        <!-- FIXME - place holder alert box  -->
-                        <a class="searchResultsLink" href="javascript:alert('Not yet implemented')">{{result.longName}}</a>
-                        <!-- FIXME - place holder alert box  -->
-                     </td>
+                        <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
+                    </td>
                     <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'" class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}</td>
                     <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">{{result.ownedBy}}</td>
                     <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd" width="14%">{{result.usedByContext}}</td>
@@ -337,9 +335,8 @@
                     <td data-title="'Public ID'" sortable="'publicId'" class="searchResultsTableTd" width="10%">{{result.publicId}}</td>
                     <td data-title="'Version'" sortable="'version'" class="searchResultsTableTd" width="7%">{{result.version}}</td>
                 </tr>
-        </table>            
+        </table>
         </div>
-
     </div>
 </div>
 </body>

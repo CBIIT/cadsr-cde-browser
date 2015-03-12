@@ -15,6 +15,7 @@ public class BasicSearchNode
     private String usedByContext;
     private String registrationStatus;
     private String href = "Default action";
+    private String deIdseq;
 
     public String getLongName()
     {
@@ -105,5 +106,15 @@ public class BasicSearchNode
     public void setHref( String href )
     {
         this.href = href;
+    }
+
+    public String getDeIdseq()
+    {
+        return deIdseq;
+    }
+
+    public void setDeIdseq( String deIdseq )
+    {
+        this.deIdseq = deIdseq;
     }
 }

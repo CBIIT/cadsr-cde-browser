@@ -69,6 +69,8 @@ String searchMode = CaDSRConstants.SEARCH_MODE[intMode];
             basicSearchNodes[i].setPublicId( model.getDeCdeid() );
             basicSearchNodes[i].setWorkflowStatus( model.getAslName() );
             basicSearchNodes[i].setVersion( model.getDeVersion() );
+            basicSearchNodes[i].setDeIdseq( model.getDeIdseq() );
+
 
             //TODO here we add the URL for the search results
             basicSearchNodes[i].setHref( "cdebrowserServer/CDEData" );
