@@ -149,7 +149,10 @@
             text-decoration: none;
             padding: .2em 1em;
             color: #fff;
-            background-color: #80A3C0;
+            background-color: #3E6A84;
         }
 
+        .pagination.ng-table-pagination li.active a {
+            background-color: #1A4660;
+        }
 /** end override ng-table styles **/
