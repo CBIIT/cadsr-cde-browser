@@ -309,7 +309,11 @@
              normmSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
             {{searchResultsMessage}}
-        </span><div>{{breadCrumbs}}</div>
+        </span>
+        <div class="breadCrumbs">
+            <br ng-show="searchResultsMessage" />
+            caDSR Contexts<span ng-show="breadCrumbs"> >> {{breadCrumbs}}
+        </div>
         <div id="searchResults" data-ng-show="haveSearchResults">
     <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div><br />
 
