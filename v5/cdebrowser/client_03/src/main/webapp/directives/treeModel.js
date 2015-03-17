@@ -208,7 +208,7 @@
                         //set highlight to selected node
                         selNode.selected = 'selected';
                         console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
-                        scope.displaySelected(selNode.text, selNode.href, selNode.hover);
+                        scope.displaySelected(selNode.treePath,selNode.text, selNode.href, selNode.hover);
 
                         //Update the current node with the one just selected.
                         scope[treeId].currentNode = selNode;
