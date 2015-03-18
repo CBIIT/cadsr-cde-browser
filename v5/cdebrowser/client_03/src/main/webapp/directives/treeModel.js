@@ -172,7 +172,12 @@
 
                             //if user clicks on a folder icon
                             scope[treeId].selectNodeHead = scope[treeId].selectNodeHead || function (selectedNode, childType) {
-                                //console.log("Click folder Icon ->[" + selectedNode.isParent +"]  Child type ->[" + childType +"]");
+
+                                //If this a "Classifications" or "ProtocolForms" folder for a Context that has not been pulled yet, this click will trigger that rest call
+                                //selectedNode.href is the id of the context on the server, use this to call rest service to get this context tree.
+                                // The rest call will be something like - cdebrowserServer/oneContextData?contextId=selectedNode.href
+                                console.log("Click folder Icon: " + selectedNode.contextName + "   " + selectedNode.href );
+
                                 //Collapse or Expand
                                 if (selectedNode.isParent == 1) {
                                     //console.log("Folder is parent");
@@ -180,9 +185,8 @@
                                 }
 
                             };
-                            //if user clicks on a plan icon - acts the same as user clicking in the text
+                            //if user clicks on a plan icon
                             scope[treeId].selectNodeNorm = scope[treeId].selectNodeNorm || function (selectedNode) {
-                                console.log("Click Norm Icon: " + selectedNode.contextName);
                                 disp(selectedNode);
                             };
 
