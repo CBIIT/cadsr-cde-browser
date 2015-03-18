@@ -10,6 +10,7 @@
         "isChild":false,
         "collapsed":true,
         "treePath":[
+            "Cancer Centers",
             "DCI (Duke Cancer Institute) "
         ],
         "children":[
@@ -24,6 +25,7 @@
                 "isChild":true,
                 "collapsed":true,
                 "treePath":[
+                    "Cancer Centers",
                     "DCI (Duke Cancer Institute) ",
                     "Classifications"
                 ],
@@ -39,6 +41,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "Classifications",
                             "For Review"
@@ -55,6 +58,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "For Review",
@@ -76,6 +80,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "For Review",
@@ -100,6 +105,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "Classifications",
                             "Pharmacovigilance-Gabapentin/Pregabalin"
@@ -116,6 +122,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "Pharmacovigilance-Gabapentin/Pregabalin",
@@ -137,6 +144,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "Pharmacovigilance-Gabapentin/Pregabalin",
@@ -158,6 +166,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "Pharmacovigilance-Gabapentin/Pregabalin",
@@ -179,6 +188,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "Pharmacovigilance-Gabapentin/Pregabalin",
@@ -200,6 +210,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "Classifications",
                                     "Pharmacovigilance-Gabapentin/Pregabalin",
@@ -227,6 +238,7 @@
                 "isChild":true,
                 "collapsed":true,
                 "treePath":[
+                    "Cancer Centers",
                     "DCI (Duke Cancer Institute) ",
                     "ProtocolForms"
                 ],
@@ -242,6 +254,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "BRN_CTO2CCNU_47969"
@@ -258,6 +271,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -279,6 +293,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -300,6 +315,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -321,6 +337,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -342,6 +359,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -363,6 +381,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -384,6 +403,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -405,6 +425,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -426,6 +447,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -447,6 +469,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -468,6 +491,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -489,6 +513,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -510,6 +535,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -531,6 +557,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -552,6 +579,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -573,6 +601,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -594,6 +623,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -615,6 +645,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -636,6 +667,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -657,6 +689,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -678,6 +711,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -699,6 +733,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -720,6 +755,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -741,6 +777,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -762,6 +799,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -783,6 +821,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTO2CCNU_47969",
@@ -807,6 +846,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "BRN_CTOA1_44274"
@@ -823,6 +863,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTOA1_44274",
@@ -844,6 +885,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTOA1_44274",
@@ -865,6 +907,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "BRN_CTOA1_44274",
@@ -889,6 +932,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "Enzalutamide + Exercise in Prostate Cancer"
@@ -905,6 +949,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -926,6 +971,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -947,6 +993,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -968,6 +1015,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -989,6 +1037,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1010,6 +1059,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1031,6 +1081,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1052,6 +1103,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1073,6 +1125,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1094,6 +1147,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1115,6 +1169,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1136,6 +1191,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1157,6 +1213,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1178,6 +1235,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1199,6 +1257,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1220,6 +1279,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1241,6 +1301,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1262,6 +1323,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1283,6 +1345,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1304,6 +1367,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1325,6 +1389,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1346,6 +1411,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1367,6 +1433,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1388,6 +1455,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "Enzalutamide + Exercise in Prostate Cancer",
@@ -1412,6 +1480,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "GI_AVX701_45976"
@@ -1428,6 +1497,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1449,6 +1519,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1470,6 +1541,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1491,6 +1563,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1512,6 +1585,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1533,6 +1607,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1554,6 +1629,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1575,6 +1651,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1596,6 +1673,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1617,6 +1695,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1638,6 +1717,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1659,6 +1739,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1680,6 +1761,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1701,6 +1783,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1722,6 +1805,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1743,6 +1827,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1764,6 +1849,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1785,6 +1871,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1806,6 +1893,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1827,6 +1915,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1848,6 +1937,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1869,6 +1959,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1890,6 +1981,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1911,6 +2003,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_AVX701_45976",
@@ -1935,6 +2028,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "GI_Cabo_49983"
@@ -1951,6 +2045,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -1972,6 +2067,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -1993,6 +2089,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2014,6 +2111,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2035,6 +2133,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2056,6 +2155,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2077,6 +2177,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2098,6 +2199,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2119,6 +2221,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2140,6 +2243,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2161,6 +2265,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2182,6 +2287,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2203,6 +2309,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2224,6 +2331,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2245,6 +2353,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2266,6 +2375,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2287,6 +2397,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2308,6 +2419,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2329,6 +2441,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2350,6 +2463,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2371,6 +2485,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2392,6 +2507,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2413,6 +2529,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2434,6 +2551,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2455,6 +2573,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2476,6 +2595,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2497,6 +2617,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2518,6 +2639,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2539,6 +2661,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2560,6 +2683,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2581,6 +2705,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2602,6 +2727,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2623,6 +2749,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2644,6 +2771,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2665,6 +2793,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2686,6 +2815,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2707,6 +2837,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_Cabo_49983",
@@ -2731,6 +2862,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "GI_PIMS_45975"
@@ -2747,6 +2879,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2768,6 +2901,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2789,6 +2923,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2810,6 +2945,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2831,6 +2967,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2852,6 +2989,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2873,6 +3011,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2894,6 +3033,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2915,6 +3055,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2936,6 +3077,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2957,6 +3099,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2978,6 +3121,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -2999,6 +3143,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -3020,6 +3165,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -3041,6 +3187,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_PIMS_45975",
@@ -3065,6 +3212,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "GI_REGAL_51541"
@@ -3081,6 +3229,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3102,6 +3251,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3123,6 +3273,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3144,6 +3295,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3165,6 +3317,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3186,6 +3339,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3207,6 +3361,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3228,6 +3383,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3249,6 +3405,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3270,6 +3427,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3291,6 +3449,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3312,6 +3471,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3333,6 +3493,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3354,6 +3515,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3375,6 +3537,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3396,6 +3559,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3417,6 +3581,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3438,6 +3603,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3459,6 +3625,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3480,6 +3647,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3501,6 +3669,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3522,6 +3691,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3543,6 +3713,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GI_REGAL_51541",
@@ -3567,6 +3738,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "GU_Stream_49865"
@@ -3583,6 +3755,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3604,6 +3777,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3625,6 +3799,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3646,6 +3821,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3667,6 +3843,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3688,6 +3865,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3709,6 +3887,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3730,6 +3909,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3751,6 +3931,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3772,6 +3953,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3793,6 +3975,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3814,6 +3997,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3835,6 +4019,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3856,6 +4041,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3877,6 +4063,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3898,6 +4085,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3919,6 +4107,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3940,6 +4129,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3961,6 +4151,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -3982,6 +4173,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4003,6 +4195,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4024,6 +4217,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4045,6 +4239,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4066,6 +4261,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4087,6 +4283,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4108,6 +4305,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4129,6 +4327,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4150,6 +4349,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4171,6 +4371,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4192,6 +4393,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4213,6 +4415,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "GU_Stream_49865",
@@ -4237,6 +4440,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "MEL_IPIRT_45042"
@@ -4253,6 +4457,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4274,6 +4479,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4295,6 +4501,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4316,6 +4523,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4337,6 +4545,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4358,6 +4567,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4379,6 +4589,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4400,6 +4611,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4421,6 +4633,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4442,6 +4655,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4463,6 +4677,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4484,6 +4699,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4505,6 +4721,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4526,6 +4743,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4547,6 +4765,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4568,6 +4787,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4589,6 +4809,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4610,6 +4831,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4631,6 +4853,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4652,6 +4875,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4673,6 +4897,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4694,6 +4919,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4715,6 +4941,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4736,6 +4963,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4757,6 +4985,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4778,6 +5007,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4799,6 +5029,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4820,6 +5051,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4841,6 +5073,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4862,6 +5095,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4883,6 +5117,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4904,6 +5139,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4925,6 +5161,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4946,6 +5183,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4967,6 +5205,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -4988,6 +5227,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -5009,6 +5249,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -5030,6 +5271,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -5051,6 +5293,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_IPIRT_45042",
@@ -5075,6 +5318,7 @@
                         "isChild":true,
                         "collapsed":true,
                         "treePath":[
+                            "Cancer Centers",
                             "DCI (Duke Cancer Institute) ",
                             "ProtocolForms",
                             "MEL_lpilLl_456479"
@@ -5091,6 +5335,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5112,6 +5357,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5133,6 +5379,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5154,6 +5401,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5175,6 +5423,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5196,6 +5445,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5217,6 +5467,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5238,6 +5489,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5259,6 +5511,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5280,6 +5533,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5301,6 +5555,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5322,6 +5577,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5343,6 +5599,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5364,6 +5621,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5385,6 +5643,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5406,6 +5665,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5427,6 +5687,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5448,6 +5709,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5469,6 +5731,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5490,6 +5753,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5511,6 +5775,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5532,6 +5797,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5553,6 +5819,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5574,6 +5841,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5595,6 +5863,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5616,6 +5885,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5637,6 +5907,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5658,6 +5929,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5679,6 +5951,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5700,6 +5973,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5721,6 +5995,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5742,6 +6017,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5763,6 +6039,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5784,6 +6061,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5805,6 +6083,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5826,6 +6105,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5847,6 +6127,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5868,6 +6149,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5889,6 +6171,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5910,6 +6193,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5931,6 +6215,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5952,6 +6237,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5973,6 +6259,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -5994,6 +6281,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -6015,6 +6303,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
@@ -6036,6 +6325,7 @@
                                 "isChild":true,
                                 "collapsed":false,
                                 "treePath":[
+                                    "Cancer Centers",
                                     "DCI (Duke Cancer Institute) ",
                                     "ProtocolForms",
                                     "MEL_lpilLl_456479",
