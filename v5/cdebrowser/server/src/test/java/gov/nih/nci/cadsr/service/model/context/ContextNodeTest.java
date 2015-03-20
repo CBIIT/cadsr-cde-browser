@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 public class ContextNodeTest extends TestCase
 {
     private ContextModel contextModel1;
+    private int programArea = 1;
 
     public void setUp ()
     {
@@ -20,58 +21,59 @@ public class ContextNodeTest extends TestCase
         contextModel1.setConteIdseq("F6117C06-C689-F9FD-E040-BB89AD432E40");
         contextModel1.setCreatedBy( "SBR" );
         contextModel1.setDateCreated( Timestamp.valueOf("2007-09-23 10:10:10.0"));
+
     }
 
     public void testTopLevelContextNode0()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
         assertEquals( "ABTC (Adult Brain Tumor Consortium) ", contextNode.getText() );
     }
 
     public void testTopLevelContextNode1()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
         assertEquals( "F6117C06-C689-F9FD-E040-BB89AD432E40", contextNode.getIdSeq() );
     }
 
     public void testTopLevelContextNode2()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
         assertEquals( "ABTC (Adult Brain Tumor Consor...", contextNode.getTrimText());
     }
 
     public void testTopLevelContextNode3()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
         assertFalse( contextNode.isIsParent());
     }
 
     public void testTopLevelContextNod4()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
         assertFalse( contextNode.isIsChild());
     }
 
     public void testTopLevelContextNode5()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
-        contextNode.addChildNode( new ContextNode( contextModel1 ) );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
+        contextNode.addChildNode( new ContextNode( contextModel1, programArea ) );
         assertTrue( contextNode.isIsParent());
     }
 
     public void testTopLevelContextNode6()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
-        contextNode.addChildNode( new ContextNode( contextModel1 ) );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
+        contextNode.addChildNode( new ContextNode( contextModel1, programArea ) );
         assertTrue( contextNode.getChildren().get(0).isIsChild());
     }
 
     public void testTopLevelContextNode7()
     {
-        ContextNode contextNode = new ContextNode( contextModel1 );
-        ContextNode childContextNode = new ContextNode( contextModel1 );
+        ContextNode contextNode = new ContextNode( contextModel1, programArea );
+        ContextNode childContextNode = new ContextNode( contextModel1, programArea );
         childContextNode.setType( 3 );
-        contextNode.addChildNode( new ContextNode( contextModel1 ) );
+        contextNode.addChildNode( new ContextNode( contextModel1, programArea ) );
 
         assertEquals( 3, contextNode.getChildType() );
     }

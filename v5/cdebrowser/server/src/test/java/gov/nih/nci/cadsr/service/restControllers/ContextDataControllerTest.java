@@ -25,6 +25,7 @@ public class ContextDataControllerTest extends TestCase
 
     private List<CsCsiModel> csCsiNodelList = null;
     private ProtocolFormModel protocolFormModel = null;
+    private int programArea = 1;
 
     public void setUp()
     {
@@ -151,21 +152,21 @@ public class ContextDataControllerTest extends TestCase
     public void testInitProtocolFormNode0()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
         assertEquals( "Test Protocol LongName", protocolFormNode.getText() );
     }
 
     public void testInitProtocolFormNode1()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
         assertEquals( "Test Protocol Preferred Definition", protocolFormNode.getHover() );
     }
 
     public void testInitProtocolFormNode2()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
         assertEquals( 6, protocolFormNode.getType() );
     }
 
@@ -173,21 +174,21 @@ public class ContextDataControllerTest extends TestCase
     public void testInitProtocolFormNode3()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
-        assertEquals( "Default action", protocolFormNode.getHref() );
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
+        assertEquals( "", protocolFormNode.getHref() );
     }
 
     public void testInitProtocolFormNode4()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
         assertFalse( protocolFormNode.isIsChild() );
     }
 
     public void testInitProtocolFormNode5()
     {
         initProtocolFormModel();
-        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel );
+        ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
         assertFalse( protocolFormNode.isIsParent() );
     }
 
@@ -208,9 +209,9 @@ public class ContextDataControllerTest extends TestCase
 
         //CS (Classification Scheme) folder
         ParentNode classificationsParentNode = new ParentNode();
-        contextDataController.initClassificationsParentNode( classificationsParentNode );
+        contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
 
-        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel );
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea );
 
         //Should be five children fo this context
         assertEquals( 5, classificationsParentNode.getChildren().size() );
@@ -231,7 +232,7 @@ public class ContextDataControllerTest extends TestCase
 
         //CS (Classification Scheme) folder - A single parent node
         ParentNode classificationsParentNode = new ParentNode();
-        contextDataController.initClassificationsParentNode( classificationsParentNode );
+        contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
 
         //Look at the Classification Schemes
 /*
@@ -241,35 +242,8 @@ public class ContextDataControllerTest extends TestCase
         }
 */
 
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea );
 
-        System.out.println( "A IN testInsertClassifications: " + classificationsParentNode.toString() );
-        System.out.println( "A IN contextModel.getConteIdseq: " + contextModel.getConteIdseq() );
-
-        System.out.println( "A1");
-        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel );
-        System.out.println( "A2");
-               //System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nB IN testInsertClassifications: " + classificationsParentNode.toString() );
-
-        int parentCount = 0;
-        //Get the children( the Classifications for this one context) for this Context
-        ArrayList<BaseNode> children = classificationsParentNode.getChildren();
-        System.out.println( "\nChildren[" + children.size() +"]\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" );
-        for( BaseNode childNode : children )
-        {
-            System.out.println("Parent[" + parentCount +"] : " + childNode.toString() + "\n");
-            ArrayList<BaseNode> cs = childNode.getChildren();
-            System.out.println( "Grandchildren count: " + cs.size() );
-            for( BaseNode classificationScheme : cs )
-            {
-                System.out.println( ">>=================================\nParent[" + parentCount + "] Grandchild (classificationScheme): " + classificationScheme );
-                // ArrayList<BaseNode> cs = childNode.getChildren();
-            }
-            parentCount++;
-            System.out.println( "\n=================================<<" );
-
-
-        }
-        System.out.println( "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" );
         //Should be two children fo this context
         assertEquals( 2, classificationsParentNode.getChildren().size() );
     }
@@ -291,14 +265,11 @@ public class ContextDataControllerTest extends TestCase
 
         //CS (Classification Scheme) folder - A single parent node
         ParentNode classificationsParentNode = new ParentNode();
-        contextDataController.initClassificationsParentNode( classificationsParentNode );
+        contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea );
 
-        System.out.println( "A IN testInsertClassifications: " + classificationsParentNode.toString() );
-        System.out.println( "A IN contextModel.getConteIdseq: " + contextModel.getConteIdseq() );
-
-        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel );
-        //System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nB IN testInsertClassifications: " + classificationsParentNode.toString() );
-
+/*
+        System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nB IN testInsertClassifications: " + classificationsParentNode.toString() );
         int parentCount = 0;
         //Get the children( the Classifications for this one context) for this Context
         ArrayList<BaseNode> children = classificationsParentNode.getChildren();
@@ -307,11 +278,10 @@ public class ContextDataControllerTest extends TestCase
         {
             System.out.println("Parent[" + parentCount +"] : " + childNode.toString() + "\n");
             ArrayList<BaseNode> cs = childNode.getChildren();
-            System.out.println( "Grandchildren count: " + cs.size() );
+
             for( BaseNode classificationScheme : cs )
             {
                 System.out.println( ">>=================================\nParent[" + parentCount + "] *********** Grandchild (classificationScheme): " + classificationScheme );
-                // ArrayList<BaseNode> cs = childNode.getChildren();
             }
             parentCount++;
             System.out.println( "\n=================================<<" );
@@ -319,6 +289,7 @@ public class ContextDataControllerTest extends TestCase
 
         }
         System.out.println( "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" );
+*/
         //Should be two children fo this context
         assertEquals( 5, classificationsParentNode.getChildren().size() );
     }
@@ -333,15 +304,12 @@ public class ContextDataControllerTest extends TestCase
 
     private List<CsCsiModel> csCsiModelListInit()
     {
-        System.out.println( "csCsiModelListInit");
-
         Gson gson = new GsonBuilder().create();
         String json = null;
         try
         {
             json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/csCsiModelTest.data" );
-        }
-        catch( IOException e )
+        } catch( IOException e )
         {
             assertTrue( e.getMessage(), false );
 
@@ -363,14 +331,12 @@ public class ContextDataControllerTest extends TestCase
     // Creates and initilizes a list of ClassificationSchemeModels for insertClassifications tests
     private List<ClassificationSchemeModel> csModelListInit()
     {
-System.out.println( "csModelListInit");
         Gson gson = new GsonBuilder().create();
         String json = null;
         try
         {
             json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/classificationSchemeModelTest.data" );
-        }
-        catch( IOException e )
+        } catch( IOException e )
         {
             assertTrue( e.getMessage(), false );
 

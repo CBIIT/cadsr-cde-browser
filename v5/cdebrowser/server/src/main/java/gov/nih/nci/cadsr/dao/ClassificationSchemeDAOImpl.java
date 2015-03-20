@@ -34,7 +34,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     }
 
     /**
-     *
      * @param csId
      * @return
      */
@@ -65,7 +64,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
 
     /**
-     *
      * @return
      */
     @Override
@@ -78,7 +76,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     }
 
     /**
-     *
      * @param conteId
      * @return
      */
@@ -86,68 +83,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public List<ClassificationSchemeModel> getClassificationSchemes( String conteId )
     {
         List<ClassificationSchemeModel> results;
-/*
-
-
-        sql= "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
-                "preferred_definition, cstl_name,asl_name,conte_idseq " +
-                " FROM SBREXT.CABIO_CLASS_SCHEMES_VIEW" +
-                " WHERE CONTE_IDSEQ = ? " +
-                " and ASL_NAME = 'RELEASED' " +
-                " and CSTL_NAME != 'Publishing' " +
-                "  order by UPPER(long_name)  ";
-
-        logger.info( "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
-                "preferred_definition, cstl_name,asl_name,conte_idseq " +
-                " FROM sbr.classification_Schemes_view" +
-                " WHERE CONTE_IDSEQ = '" + conteId +
-                "' and ASL_NAME = 'RELEASED' " +
-                " and CSTL_NAME != 'Publishing' " +
-                "  order by UPPER(long_name)  " );
-
-*/
-
-
-/*
-
-
-        sql = "select cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
-                + "CS_PREFFRED_DEFINITION, "
-                + "csi_idseq, csi_name, csitl_name, csi_description, "
-                + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
-                + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-                + " where CS_ASL_NAME = 'RELEASED' "
-                + " and CSTL_NAME != 'Publishing' "
-                + " and PARENT_CSI_IDSEQ IS NULL "
-                + " and cs_idseq = ?"
-                + " order by CSI_LEVEL, upper(csi_name)";
-
-        logger.debug( "select cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
-                + "CS_PREFFRED_DEFINITION, "
-                + "csi_idseq, csi_name, csitl_name, csi_description, "
-                + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
-                + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-                + " where CS_ASL_NAME = 'RELEASED' "
-                + " and CSTL_NAME != 'Publishing' "
-                + " and PARENT_CSI_IDSEQ IS NULL "
-                + " and cs_idseq = '" + conteId +"' "
-                + " order by CSI_LEVEL, upper(csi_name)" );
-*/
-
-
-/*
-
-        sql= "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
-                "preferred_definition, cstl_name,asl_name,conte_idseq " +
-                " FROM sbr.classification_Schemes_view" +
-                " WHERE CONTE_IDSEQ = ? " +
-                " and ASL_NAME = 'RELEASED' " +
-                " and CSTL_NAME != 'Publishing' " +
-                "  order by UPPER(long_name)  ";
-
-*/
-        //sql = "select * from SBREXT.CABIO_CLASS_SCHEMES_VIEW WHERE CONTE_IDSEQ=? AND ASL_NAME='RELEASED' order by UPPER(long_name)";
-        //logger.debug( ">>>>>>> select * from SBREXT.CABIO_CLASS_SCHEMES_VIEW WHERE CONTE_IDSEQ='" + conteId + "'order by UPPER(long_name)\n" );
 
         sql = "select * from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by UPPER(LONG_NAME)";
 
@@ -161,8 +96,21 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     }
 
 
+    public boolean haveClassificationSchemes( String conteId )
+    {
+        List<ClassificationSchemeModel> results;
+
+        sql = "select CS_IDSEQ from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED'";
+
+        logger.debug( "haveClassificationSchemes" );
+        results = getAll( sql, conteId, ClassificationSchemeModel.class );
+        logger.debug( "Done haveClassificationSchemes\n" );
+
+        return ( !results.isEmpty() );
+    }
+
+
     /**
-     *
      * @param contextId
      * @return
      */

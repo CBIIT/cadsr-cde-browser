@@ -10,28 +10,31 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseNode implements Serializable
 {
     private Logger logger = LogManager.getLogger( BaseNode.class.getName() );
-
     private String text;
     private String hover = "";
     private int childType;
-    private String href = "Default action";
+    private String href = "";
     private int type;
-    private ArrayList<BaseNode> children;
+    private int programArea;
     private String idSeq = "";
 
     // At this time these are only used as UI hints.
     private boolean isParent;
     private boolean isChild;
     private boolean collapsed;
+    private List<String> treePath;
+    private ArrayList<BaseNode> children;
 
 
     public BaseNode()
     {
         this.children = new ArrayList<BaseNode>();
+        this.treePath = new ArrayList<String>();
         this.isParent = false;
         this.isChild = false;
         this.childType = 0;
@@ -47,9 +50,6 @@ public abstract class BaseNode implements Serializable
 
     public void addTopNode( BaseNode contextNode )
     {
-        //this.text =  this.text.substring(0, this.text.length()-1) + "x";
-
-
         contextNode.setIsChild( false );
         addNode( contextNode );
     }
@@ -151,8 +151,6 @@ public abstract class BaseNode implements Serializable
 
     public String getText()
     {
-        //FIXME - just test text for now
-        //this.setHref( "test.html?context=" + this.text );
         return this.text;
     }
 
@@ -191,6 +189,26 @@ public abstract class BaseNode implements Serializable
         this.idSeq = idSeq;
     }
 
+    public int getProgramArea()
+    {
+        return programArea;
+    }
+
+    public void setProgramArea( int programArea )
+    {
+        this.programArea = programArea;
+    }
+
+    public List<String> getTreePath()
+    {
+        return treePath;
+    }
+
+    public void setTreePath( List<String> treePath )
+    {
+        this.treePath = treePath;
+    }
+
     public String toString()
     {
         StringBuffer sb = new StringBuffer();
@@ -205,6 +223,8 @@ public abstract class BaseNode implements Serializable
         sb.append( "childType=" + this.getChildType() + "\n" );
         sb.append( "isParent=" + this.isIsParent() + "\n" );
         sb.append( "isChild=" + this.isIsChild() + "\n" );
+        sb.append( "programArea=" + this.getProgramArea() + "\n" );
+        sb.append( "treePath=" + this.getTreePath() + "\n" );
         return sb.toString();
     }
 

@@ -28,6 +28,7 @@
 
     <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController" >
         <property name="basicSearchDAO" ref="basicSearchDAO" />
+        <property name="restControllerCommon" ref="resControllerCommon" />
     </bean>
 
     <bean id="adminController" class="gov.nih.nci.cadsr.service.restControllers.AdminController" >
@@ -41,10 +42,15 @@
         <property name="protocolFormDAO" ref="protocolFormDAO" />
         <property name="protocolDAO" ref="protocolDAO" />
         <property name="programAreaDAO" ref="programAreaDAO" />
+        <property name="restControllerCommon" ref="resControllerCommon" />
     </bean>
 
     <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
         <constructor-arg name="dataSource" index="0" ref ="dataSource"/>
+    </bean>
+
+    <bean id="resControllerCommon" class="gov.nih.nci.cadsr.service.restControllers.RestControllerCommon" >
+        <property name="programAreaDAO" ref="programAreaDAO" />
     </bean>
 
     <bean id="classificationSchemeDAO" class="gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl"  parent="abstractDao" />
