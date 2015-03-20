@@ -2,13 +2,10 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
-import gov.nih.nci.cadsr.dao.ProgramAreaDAOImpl;
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
-import gov.nih.nci.cadsr.service.search.DataElementSearchBean;
-import gov.nih.nci.cadsr.service.search.TempTestParameters;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,26 +38,28 @@ public class BasicSearchController
         this.restControllerCommon = restControllerCommon;
     }
 
-    @RequestMapping( value = "/basicSearch" )
+    @RequestMapping(value = "/basicSearch")
     @ResponseBody
-    public BasicSearchNode[] basicSearch( @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType )
+    public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType )
     {
         logger.debug( "basicSearch( " + query + ", " + field + ", " + queryType + " )" );
-        return basicSearchAll( query, field, queryType );
+        return basicSearch( query, field, queryType, "" );
     }
 
-    @RequestMapping( value = "/basicSearchWithProgramArea" )
+    @RequestMapping(value = "/basicSearchWithProgramArea")
     @ResponseBody
-    public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType, @RequestParam( "programArea" ) int programArea )
+    public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType, @RequestParam("programArea") int programArea )
     {
         programAreaModelList = restControllerCommon.getProgramAreaList();
         logger.debug( "basicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "]" );
 
+/*
         for( ProgramAreaModel model : programAreaModelList )
         {
             logger.debug( ">>>>>>>>>>>>>\n" + model.toString() + "<<<<<<<<<<<<<" );
         }
-        return null;//basicSearchAll( query, field, queryType );
+*/
+        return basicSearch( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
     }
 
     /**
@@ -73,19 +72,32 @@ public class BasicSearchController
     {
         if( ( index < 1 ) || ( index > programAreaModelList.size() ) )
         {
-            return "All";
+            return ""; //All
         }
         return programAreaModelList.get( index - 1 ).getPalName();// -1 because the client uses 0 for all.
     }
 
-    private BasicSearchNode[] basicSearchAll( String query, int field, int queryType )
+    private BasicSearchNode[] basicSearch( String query, int field, int queryType, String programArea )
     {
 
         //FIXME - Martin add documentation for String queryType
         String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field );
+        DESearchQueryBuilder dESearchQueryBuilder;
+
+        if( programArea.isEmpty() )
+        {
+            dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field );
+        }
+        else
+        {
+            dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
+        }
+
+
         String sql = dESearchQueryBuilder.getQueryStmt();
+
+        logger.debug("SQL:\n" + sql +"\n");
 
         //If we could not build sql from parameters return a empty search results
         if( sql == null )

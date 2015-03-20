@@ -88,7 +88,14 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type) {
-        $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);      
+        //$scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
+        $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port +
+            "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+
+        console.log("onClickBasicSearch:   http://" + window.location.hostname + ":" + window.location.port +
+            "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+
+        console.log("currentTab: " + $scope.currentTab);
     };
 
     // sets sort order for columns that should not be alphabetical //
