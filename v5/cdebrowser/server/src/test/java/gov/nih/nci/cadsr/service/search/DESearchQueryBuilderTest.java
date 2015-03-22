@@ -2,7 +2,7 @@ package gov.nih.nci.cadsr.service.search;
 
 import junit.framework.TestCase;
 
-public class BasicSearchSqlTest extends TestCase
+public class DESearchQueryBuilderTest extends TestCase
 {
     public void testNameExactPhraseSql()
     {
@@ -36,6 +36,7 @@ public class BasicSearchSqlTest extends TestCase
         String goodSql = cleanSql( "SELECT distinct de.de_idseq ,de.preferred_name de_preferred_name ,de.long_name ,rd.doc_text ,conte.name ,de.asl_name ,to_char(de.cde_id) de_cdeid ,de.version de_version ,meta_config_mgmt.get_usedby(de.de_idseq) de_usedby ,de.vd_idseq ,de.dec_idseq ,de.conte_idseq ,de.preferred_definition ,acr.registration_status ,rsl.display_order ,asl.display_order wkflow_order ,de.cde_id cdeid from sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl , sbr.ac_status_lov_view asl where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text' and nvl(acr.registration_status,'-1') NOT IN ('Retired' ) and asl.asl_name NOT IN ('CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' ) and conte.name NOT IN ( 'TEST', 'Training' ) and de.asl_name != 'RETIRED DELETED' and conte.conte_idseq = de.conte_idseq and to_char(de.cde_id) like '2183222' and de.latest_version_ind = 'Yes' and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) and de.asl_name = asl.asl_name (+)" );
         assertEquals( goodSql, sql );
     }
+
 
     public void testBuildStatusWhereClause0()
     {
@@ -159,6 +160,34 @@ public class BasicSearchSqlTest extends TestCase
         assertTrue( "dESearchQueryBuilder.buildRegStatusWhereClause should have returned an empty String, got [" + workFlow + "]", workFlow.isEmpty() );
     }
 
+    public void testProgramArea0()
+    {
+        String goodSql = cleanSql( "SELECT distinct de.de_idseq ,de.preferred_name de_preferred_name ,de.long_name ,rd.doc_text ,conte.name ,de.asl_name ,to_char(de.cde_id)de_cdeid ,de.version de_version ,meta_config_mgmt.get_usedby(de.de_idseq)de_usedby ,de.vd_idseq ,de.dec_idseq ,de.conte_idseq ,de.preferred_definition ,acr.registration_status ,rsl.display_order ,asl.display_order wkflow_order ,de.cde_id cdeid from sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl , sbr.ac_status_lov_view asl where de.de_idseq = rd.ac_idseq (+)and rd.dctl_name (+)= 'Preferred Question Text' and nvl(acr.registration_status,'-1')NOT IN ('Retired' )and asl.asl_name NOT IN ('CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' )and conte.name NOT IN ('TEST', 'Training' )and de.asl_name != 'RETIRED DELETED' and conte.conte_idseq = de.conte_idseq and de.latest_version_ind = 'Yes' and de.de_idseq IN ((select de_idseq from sbr.designations_view dsn, sbr.data_elements_view de1 where de1.de_idseq = dsn.ac_idseq (+)and dsn.detl_name = 'UML Class:UML Attr' and upper (nvl(dsn.name,'%'))like upper ('diastolic'))union (select de_idseq from sbr.reference_documents_view rd1, sbr.data_elements_view de1 where de1.de_idseq = rd1.ac_idseq (+)and rd1.dctl_name (+)= 'Preferred Question Text' and (upper (de1.long_name)like upper ('diastolic')OR upper (de1.preferred_name)like upper ('diastolic')OR upper (nvl(rd1.doc_text,'%'))like upper ('diastolic'))union select de_idseq from sbr.reference_documents_view rd2,sbr.data_elements_view de2 where de2.de_idseq = rd2.ac_idseq (+)and rd2.dctl_name (+)= 'Alternate Question Text' and upper (nvl(rd2.doc_text,'%'))like upper ('diastolic')))and de.de_idseq = acr.ac_idseq (+)and acr.registration_status = rsl.registration_status (+)and de.asl_name = asl.asl_name (+)" );
+        String goodSqlWithProgramArea = cleanSql( "SELECT distinct de.de_idseq ,de.preferred_name de_preferred_name ,de.long_name ,rd.doc_text ,conte.name ,de.asl_name ,to_char(de.cde_id)de_cdeid ,de.version de_version ,meta_config_mgmt.get_usedby(de.de_idseq)de_usedby ,de.vd_idseq ,de.dec_idseq ,de.conte_idseq ,de.preferred_definition ,acr.registration_status ,rsl.display_order ,asl.display_order wkflow_order ,de.cde_id cdeid from sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl , sbr.ac_status_lov_view asl where conte.pal_name = '3' and de.de_idseq = rd.ac_idseq (+)and rd.dctl_name (+)= 'Preferred Question Text' and nvl(acr.registration_status,'-1')NOT IN ('Retired' )and asl.asl_name NOT IN ('CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' )and conte.name NOT IN ('TEST', 'Training' )and de.asl_name != 'RETIRED DELETED' and conte.conte_idseq = de.conte_idseq and de.latest_version_ind = 'Yes' and de.de_idseq IN ((select de_idseq from sbr.designations_view dsn, sbr.data_elements_view de1 where de1.de_idseq = dsn.ac_idseq (+)and dsn.detl_name = 'UML Class:UML Attr' and upper (nvl(dsn.name,'%'))like upper ('diastolic'))union (select de_idseq from sbr.reference_documents_view rd1, sbr.data_elements_view de1 where de1.de_idseq = rd1.ac_idseq (+)and rd1.dctl_name (+)= 'Preferred Question Text' and (upper (de1.long_name)like upper ('diastolic')OR upper (de1.preferred_name)like upper ('diastolic')OR upper (nvl(rd1.doc_text,'%'))like upper ('diastolic'))union select de_idseq from sbr.reference_documents_view rd2,sbr.data_elements_view de2 where de2.de_idseq = rd2.ac_idseq (+)and rd2.dctl_name (+)= 'Alternate Question Text' and upper (nvl(rd2.doc_text,'%'))like upper ('diastolic')))and de.de_idseq = acr.ac_idseq (+)and acr.registration_status = rsl.registration_status (+)and de.asl_name = asl.asl_name (+)");
+
+        // Adding 3 as the Program Area in the constructor
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( "diastolic", "Exact phrase", 0, "3" );
+        dESearchQueryBuilder.buildSql();
+        String sql = cleanSql( dESearchQueryBuilder.getQueryStmt() );
+
+        // Did adding Program area change the sql String at all
+        assertTrue( "Setting ProgramArea in constructor had no effect.", goodSql.compareTo( sql ) != 0 );
+        // Did adding Program area change the sql String correctly
+        assertEquals( goodSqlWithProgramArea, sql );
+
+        // Adding 3 as the Program Area with setter
+        dESearchQueryBuilder  = new DESearchQueryBuilder( "diastolic", "Exact phrase", 0 );
+        dESearchQueryBuilder.setProgramArea( "3" );
+        dESearchQueryBuilder.buildSql();
+        sql = cleanSql( dESearchQueryBuilder.getQueryStmt() );
+
+        // Did adding Program area change the sql String at all
+        assertTrue( "Setting ProgramArea with setter had no effect.", goodSql.compareTo( sql ) != 0 );
+        // Did adding Program area change the sql String correctly
+        assertEquals( goodSqlWithProgramArea, sql );
+
+
+    }
 
     public void testValueDomain0()
     {

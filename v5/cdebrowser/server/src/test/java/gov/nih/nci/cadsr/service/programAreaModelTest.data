@@ -1,0 +1,58 @@
+[
+    {
+        "palName": "CancerCenters",
+        "description": "CancerCenters/CancerInstitutes",
+        "createdBy": "DWARZEL",
+        "dateCreated": "2015-02-1200: 00: 00.0",
+        "modifiedBy": "DWARZEL",
+        "dateModified": "2015-02-1200: 00: 00.0"
+    },
+    {
+        "palName": "NCI",
+        "description": "NCIDivisions/Centers/Programs",
+        "createdBy": "DWARZEL",
+        "dateCreated": "2015-02-1200: 00: 00.0",
+        "modifiedBy": "DWARZEL",
+        "dateModified": "2015-02-1200: 00: 00.0"
+    },
+    {
+        "palName": "NCIConsortium",
+        "description": "NCIConsortrium",
+        "createdBy": "DWARZEL",
+        "dateCreated": "2015-02-1200: 00: 00.0",
+        "modifiedBy": "DWARZEL",
+        "dateModified": "2015-02-1200: 00: 00.0"
+    },
+    {
+        "palName": "NCTN/eNCTN",
+        "description": "NCIClinicalTrialsNetwork",
+        "createdBy": "DWARZEL",
+        "dateCreated": "2015-02-1200: 00: 00.0",
+        "modifiedBy": "DWARZEL",
+        "dateModified": "2015-02-1200: 00: 00.0"
+    },
+    {
+        "palName": "NIHInstitutes",
+        "description": "NIHInstitutes",
+        "createdBy": "DWARZEL",
+        "dateCreated": "2015-02-1200: 00: 00.0",
+        "modifiedBy": "DWARZEL",
+        "dateModified": "2015-02-1200: 00: 00.0"
+    },
+    {
+        "palName": "SDOs",
+        "description": "StandardsDevelopmentOrganizations",
+        "createdBy": "DWARZEL",
+        "dateCreated": "2015-02-1200: 00: 00.0",
+        "modifiedBy": "DWARZEL",
+        "dateModified": "2015-02-1200: 00: 00.0"
+    },
+    {
+        "palName": "UNASSIGNED",
+        "description": "null",
+        "createdBy": "DER13_OWNER",
+        "dateCreated": "2002-01-1614: 26: 50.0",
+        "modifiedBy": "null",
+        "dateModified": "null"
+    }
+]

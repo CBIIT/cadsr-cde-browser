@@ -98,15 +98,12 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
     public boolean haveClassificationSchemes( String conteId )
     {
-        List<ClassificationSchemeModel> results;
+        Integer results;
 
-        sql = "select CS_IDSEQ from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED'";
-
-        logger.debug( "haveClassificationSchemes" );
-        results = getAll( sql, conteId, ClassificationSchemeModel.class );
-        logger.debug( "Done haveClassificationSchemes\n" );
-
-        return ( !results.isEmpty() );
+        sql = "select count(CS_IDSEQ) from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED'";
+        results = getOneInt( sql, conteId );
+        //logger.debug( "Done haveClassificationSchemes [" + results +"]" );
+        return (  results > 0 );
     }
 
 

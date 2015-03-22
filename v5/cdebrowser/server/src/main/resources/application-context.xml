@@ -41,7 +41,6 @@
         <property name="csCsiDAO" ref="csCsiDAO" />
         <property name="protocolFormDAO" ref="protocolFormDAO" />
         <property name="protocolDAO" ref="protocolDAO" />
-        <property name="programAreaDAO" ref="programAreaDAO" />
         <property name="restControllerCommon" ref="resControllerCommon" />
     </bean>
 

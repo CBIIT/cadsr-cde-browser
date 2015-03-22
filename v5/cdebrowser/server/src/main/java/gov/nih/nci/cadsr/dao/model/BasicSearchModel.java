@@ -17,7 +17,7 @@ public class BasicSearchModel
     String decIdseq;
     String conteIdesq;
     String preferredDefinition;
-    String RegistrationStatus;
+    String registrationStatus;
     String displayOrder;
     String workflowOrder;
     String cdeid;
@@ -155,12 +155,12 @@ public class BasicSearchModel
 
     public String getRegistrationStatus()
     {
-        return RegistrationStatus;
+        return registrationStatus;
     }
 
     public void setRegistrationStatus( String registrationStatus )
     {
-        RegistrationStatus = registrationStatus;
+        this.registrationStatus = registrationStatus;
     }
 
     public String getDisplayOrder()
@@ -211,7 +211,7 @@ public class BasicSearchModel
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "decIdseq=" +  getDecIdseq());
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "conteIdesq=" + getConteIdesq() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "preferredDefinition=" + getPreferredDefinition() );
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "RegistrationStatus=" +  getRegistrationStatus());
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "registrationStatus=" +  getRegistrationStatus());
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "displayOrder=" +  getDisplayOrder());
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "workflowOrder=" + getDisplayOrder() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "cdeid=" + getCdeid() );

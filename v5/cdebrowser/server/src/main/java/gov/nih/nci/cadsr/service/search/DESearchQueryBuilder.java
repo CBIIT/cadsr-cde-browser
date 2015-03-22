@@ -31,15 +31,18 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         this.clientSearchMode = clientSearchMode;
         this.clientSearchField = clientSearchField;
         this.programArea = programArea;
-        buildSql();
 
-        //Test with program area constraint
-        //buildSql("NCI");
+        buildSql();
     }
 
     public DESearchQueryBuilder( String clientQuery, String clientSearchMode, int clientSearchField )
     {
         this(clientQuery, clientSearchMode,clientSearchField, "");
+    }
+
+    public void setProgramArea( String programArea )
+    {
+        this.programArea = programArea;
     }
 
     protected void buildSql()

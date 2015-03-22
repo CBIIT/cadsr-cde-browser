@@ -62,6 +62,13 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
         return allColumns;
     }
 
+    public Integer getOneInt(String sql, String where )
+    {
+        Integer n = (Integer)getJdbcTemplate().queryForObject(
+                sql, new Object[] { where }, Integer.class);
+        return n;
+    }
+
     /**
      *
      * @param sql

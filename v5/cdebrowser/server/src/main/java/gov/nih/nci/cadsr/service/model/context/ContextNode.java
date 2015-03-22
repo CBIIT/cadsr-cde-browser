@@ -11,9 +11,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * A Context node, which can contain an arbitrary number/depth of children, is used to deliver to a client
+ * a hierarchy of Contexts, classifications and Protocol Forms.
+ */
 public class ContextNode extends BaseNode
 {
-
     private Logger logger = LogManager.getLogger( ContextNode.class.getName() );
     private String palName ="";
     private String palNameDescription ="";
@@ -44,12 +47,13 @@ public class ContextNode extends BaseNode
     }
 
     /**
+     * Initialize (as much as possible) this new Context node.
      * Hover text is set to empty String
      *
-     * @param type
-     * @param isCollapsed
-     * @param name
-     * @param programArea
+     * @param type Folder/node type. 0="Empty" 1="Container" 2="Csi" 3="Folder" 4="ProtocolFormsFolder" 4="CIS Folder" 5="Protocol"
+     * @param isCollapsed This only used as a UI display hint for clients.
+     * @param name Display text.
+     * @param programArea The Program Area, which is used by the client to display top level Tabs/Categories, and to constrain searches when Program Area is selected.
      */
     public ContextNode( int type, boolean isCollapsed, String name, int programArea )
     {
@@ -58,12 +62,13 @@ public class ContextNode extends BaseNode
 
 
     /**
+     * Initialize (as much as possible) this new Context node.
      *
-     * @param type
-     * @param isCollapsed
-     * @param name
-     * @param programArea
-     * @param hoverText
+     * @param type Folder/node type. 0="Empty" 1="Container" 2="Csi" 3="Folder" 4="ProtocolFormsFolder" 4="CIS Folder" 5="Protocol"
+     * @param isCollapsed This only used as a UI display hint for clients.
+     * @param name Display text.
+     * @param programArea The Program Area, which is used by the client to display top level Tabs/Categories, and to constrain searches when Program Area is selected.
+     * @param hoverText Hover text/tooltip
      */
     public ContextNode( int type, boolean isCollapsed, String name, int programArea, String hoverText )
     {
@@ -74,13 +79,16 @@ public class ContextNode extends BaseNode
         this.setProgramArea( programArea );
         this.setText( name );
         this.setHover( hoverText );
-        // Contexts don't need tooltips
-        //this.setHover( hoverText );
+        // Hover text/tooltip
+        this.setHover( hoverText );
         this.setCollapsed( isCollapsed );
     }
 
+
     /**
      * Copy constructor
+     * Create a new ContextNode, with the contents of an existing ContextNode, will deep copy all children.
+     * @param aContextNode The node to be duplicated.
      */
     public ContextNode( ContextNode aContextNode)
     {
@@ -105,8 +113,8 @@ public class ContextNode extends BaseNode
 
     /**
      * Recursively copy a nodes children
-     * @param sourceChildren
-     * @return
+     * @param sourceChildren The children to be duplicated.
+     * @return Duplicate of sourceChildren
      */
     public ArrayList<BaseNode> copyChildren( ArrayList<BaseNode> sourceChildren)
     {
@@ -134,6 +142,7 @@ public class ContextNode extends BaseNode
         }
         return newChildren;
     }
+
     /**
      * Create a new Context Node with the values of a Context Model from the database
      *

@@ -38,6 +38,16 @@ public class BasicSearchController
         this.restControllerCommon = restControllerCommon;
     }
 
+    public List<ProgramAreaModel> getProgramAreaModelList()
+    {
+        return programAreaModelList;
+    }
+
+    public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
+    {
+        this.programAreaModelList = programAreaModelList;
+    }
+
     @RequestMapping(value = "/basicSearch")
     @ResponseBody
     public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType )
@@ -52,15 +62,68 @@ public class BasicSearchController
     {
         programAreaModelList = restControllerCommon.getProgramAreaList();
         logger.debug( "basicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "]" );
-
-/*
-        for( ProgramAreaModel model : programAreaModelList )
-        {
-            logger.debug( ">>>>>>>>>>>>>\n" + model.toString() + "<<<<<<<<<<<<<" );
-        }
-*/
         return basicSearch( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
     }
+
+ /*
+     - - This service is only used for testing. It returns raw search results. - -
+
+    @RequestMapping(value = "/basicSearchWithProgramAreaTest")
+    @ResponseBody
+    public List<BasicSearchModel> basicSearchWithProgramAreaTest( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType, @RequestParam("programArea") int programArea )
+    {
+        programAreaModelList = restControllerCommon.getProgramAreaList();
+        logger.debug( "basicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "]" );
+        return basicSearchRawResults( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
+    }
+*/
+
+    /**
+     *
+     * @param query The text of the users search input.
+     * @param field  0=Name 1=PublicId
+     * @param queryType 0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE
+     * @param programArea Constrain a search to the specified Program Area, if programArea is empty, search all.
+     * @return an array of BasicSearchNodes.
+     */
+    private BasicSearchNode[] basicSearch( String query, int field, int queryType, String programArea )
+    {
+        //FIXME - Martin add notes for String queryType
+        String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
+
+        //If programArea an empty string, all program areas will be searched
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
+
+        String sql = dESearchQueryBuilder.getQueryStmt();
+        //If we could not build sql from the parameters return a empty search results
+        if( sql == null )
+        {
+            return new BasicSearchNode[0];
+        }
+        List<BasicSearchModel> results = runQuery( sql );
+        return buildSearchResultsNodes( results );
+    }
+
+/*
+    - - This method is only used for testing. It returns raw search results. - -
+
+    protected List<BasicSearchModel> basicSearchRawResults( String query, int field, int queryType, String programArea )
+    {
+        String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
+
+        //If programArea an empty string, all program areas will be searched
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
+
+        String sql = dESearchQueryBuilder.getQueryStmt();
+        //If we could not build sql from the parameters return a empty search results
+        if( sql == null )
+        {
+            return null;
+        }
+        return runQuery( sql );
+    }
+
+*/
 
     /**
      * If index is 0, or too high, return "All"
@@ -68,47 +131,33 @@ public class BasicSearchController
      * @param index
      * @return
      */
-    private String getProgramAreaPalNameByIndex( int index )
+    protected String getProgramAreaPalNameByIndex( int index )
     {
-        if( ( index < 1 ) || ( index > programAreaModelList.size() ) )
+        // Zero is "All
+        if( index < 1 )
         {
+            return ""; //All
+        }
+
+        // If the index is too high, the client has sent us an incorrect program area, log a warning, and return "All"
+        if(  index > programAreaModelList.size() )
+        {
+            logger.warn( "Client has requested in invalid Program area index [" + index + "] using All." );
             return ""; //All
         }
         return programAreaModelList.get( index - 1 ).getPalName();// -1 because the client uses 0 for all.
     }
 
-    private BasicSearchNode[] basicSearch( String query, int field, int queryType, String programArea )
+
+
+    /**
+     * Take search results from database, and build array of search results nodes to send to the client.
+     *
+     * @param results
+     * @return
+     */
+    protected BasicSearchNode[] buildSearchResultsNodes( List<BasicSearchModel> results )
     {
-
-        //FIXME - Martin add documentation for String queryType
-        String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-
-        DESearchQueryBuilder dESearchQueryBuilder;
-
-        if( programArea.isEmpty() )
-        {
-            dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field );
-        }
-        else
-        {
-            dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
-        }
-
-
-        String sql = dESearchQueryBuilder.getQueryStmt();
-
-        logger.debug("SQL:\n" + sql +"\n");
-
-        //If we could not build sql from parameters return a empty search results
-        if( sql == null )
-        {
-            return new BasicSearchNode[0];
-        }
-        sql = sql.replaceAll( "  *", " " );
-
-        basicSearchDAO.setBasicSearchSql( sql );
-        List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
-
         int rowCount = results.size();
         int i = 0;
         BasicSearchNode[] basicSearchNodes = new BasicSearchNode[rowCount];
@@ -123,10 +172,10 @@ public class BasicSearchController
             basicSearchNodes[i].setVersion( model.getDeVersion() );
             basicSearchNodes[i].setDeIdseq( model.getDeIdseq() );
 
-            //TODO here we add the URL for the search results
+            //TODO here we add the URL for the search results - put this in the properties file
             basicSearchNodes[i].setHref( "cdebrowserServer/CDEData" );
 
-            //This is so in the client side display table there will be spaces to allow good line wrapping.
+            //This is so in the client side display table, there will be spaces to allow good line wrapping.
             if( model.getDeUsedby() != null )
             {
                 basicSearchNodes[i].setUsedByContext( model.getDeUsedby().replace( ",", ", " ) );
@@ -136,5 +185,11 @@ public class BasicSearchController
             i++;
         }
         return basicSearchNodes;
+    }
+
+    protected List<BasicSearchModel> runQuery( String sql )
+    {
+        basicSearchDAO.setBasicSearchSql( sql );
+        return basicSearchDAO.getAllContexts();
     }
 }
