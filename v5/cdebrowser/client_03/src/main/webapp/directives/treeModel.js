@@ -1,4 +1,4 @@
-        cdeBrowserApp.directive('treeModel', ['$compile', function ($compile) {
+        cdeBrowserApp.directive('treeModel', ['$compile','$http', function ($compile,$http) {
             return {
                 restrict: 'A',
                 link: function (scope, element, attrs) {
@@ -177,7 +177,40 @@
                                 //selectedNode.href is the id of the context on the server, use this to call rest service to get this context tree.
                                 // The rest call will be something like - cdebrowserServer/oneContextData?contextId=selectedNode.href
                                 console.log("Click folder Icon: " + selectedNode.contextName + "   " + selectedNode.href );
+                                if (selectedNode.text=='Classifications'||selectedNode.text=='ProtocolForms') {
+                                    console.log(selectedNode['dataLoaded']);
+                                    if (!selectedNode['dataLoaded']) {
+                                        $http.get("data4.json").success(function (response) {
+                                            selectedNode['dataLoaded'] = true;
+                                            selectedNode.children.push(                            {
+                                "text":"New Tree Node",
+                                "hover":"Place Holder",
+                                "childType":0,
+                                "href":"",
+                                "type":0,
+                                "programArea":0,
+                                "idSeq":"",
+                                "isParent":false,
+                                "isChild":true,
+                                "collapsed":true,
+                                "treePath":[
+                                    "All",
+                                    "ABTC (Adult Brain Tumor\nConsortium) ",
+                                    "Classifications",
+                                    "Place Holder"
+                                ],
+                                "children":[
 
+                                ],
+                                "palName":"",
+                                "palNameDescription":"",
+                                "trimText":"Place Holder"
+                            }
+);
+                                            console.log("called");
+                                        });
+                                    }
+                                }
                                 //Collapse or Expand
                                 if (selectedNode.isParent == 1) {
                                     //console.log("Folder is parent");
@@ -212,7 +245,7 @@
                         //set highlight to selected node
                         selNode.selected = 'selected';
                         console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
-                        scope.displaySelected(selNode.treePath,selNode.text, selNode.href, selNode.hover);
+                        scope.displaySelected(selNode,selNode.treePath,selNode.text, selNode.href, selNode.hover);
 
                         //Update the current node with the one just selected.
                         scope[treeId].currentNode = selNode;

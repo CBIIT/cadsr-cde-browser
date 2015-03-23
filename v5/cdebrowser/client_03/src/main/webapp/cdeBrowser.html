@@ -312,7 +312,10 @@
         </span>
         <div class="breadCrumbs">
             <br ng-show="searchResultsMessage" />
-            caDSR Contexts<span ng-show="breadCrumbs"> >> {{breadCrumbs}}
+            caDSR Contexts<span ng-show="breadCrumbs"> >>
+            <span ng-repeat="b in breadCrumbs">
+                {{b}}<span ng-show="!$last"> >></span>
+            </span>
         </div>
         <div id="searchResults" data-ng-show="haveSearchResults">
     <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div><br />

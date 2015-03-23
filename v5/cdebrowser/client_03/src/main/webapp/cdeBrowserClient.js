@@ -54,7 +54,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     $scope.queryField = 0; //Starting selection
 
     //When user clicks on a tree element
-    $scope.displaySelected = function(treePath,text, href, hover){
+    $scope.displaySelected = function(node,treePath,text, href, hover){
         console.log("displaySelected: [" + text + "]  selNode.action(href): [" + href + "]  selNode.hover: [" + hover + "] [" + treePath +"]");
         $scope.breadCrumbs = treePath;
         //alert( "Selected: [" + text + "]\n\nNot yet implemented");
