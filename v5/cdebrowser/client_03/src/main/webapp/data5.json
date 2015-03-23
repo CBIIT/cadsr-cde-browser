@@ -1,1941 +1,1596 @@
 [
     {
-        "text":"AECC (Albert Einstein Cancer Center) ",
-        "hover":"",
-        "childType":3,
-        "href":"",
-        "type":3,
-        "programArea":1,
-        "idSeq":"D8D849BC-68CF-10AA-E040-BB89AD430348",
-        "isParent":true,
-        "isChild":false,
-        "collapsed":true,
-        "treePath":[
-            "Cancer Centers",
-            "AECC (Albert Einstein Cancer Center) "
+        "text": "Classifications",
+        "hover": "",
+        "childType": 5,
+        "href": "",
+        "type": 3,
+        "programArea": 0,
+        "idSeq": "",
+        "isParent": true,
+        "isChild": true,
+        "collapsed": false,
+        "treePath": [
+            "All",
+            "AECC (Albert Einstein Cancer Center) ",
+            "Classifications"
         ],
-        "children":[
+        "children": [
             {
-                "text":"Classifications",
-                "hover":"",
-                "childType":5,
-                "href":"",
-                "type":3,
-                "programArea":1,
-                "idSeq":"",
-                "isParent":true,
-                "isChild":true,
-                "collapsed":true,
-                "treePath":[
-                    "Cancer Centers",
+                "text": "NCI Standard Template CDEs",
+                "hover": "The CDEs associated with the NCI Standard Modules.",
+                "childType": 2,
+                "href": "",
+                "type": 5,
+                "programArea": 0,
+                "idSeq": "D8EC8CDC-6298-6CD0-E040-BB89AD432C99",
+                "isParent": true,
+                "isChild": true,
+                "collapsed": true,
+                "treePath": [
+                    "All",
                     "AECC (Albert Einstein Cancer Center) ",
-                    "Classifications"
+                    "Classifications",
+                    "NCI Standard Template CDEs"
                 ],
-                "children":[
+                "children": [
                     {
-                        "text":"NCI Standard Template CDEs",
-                        "hover":"The CDEs associated with the NCI Standard Modules.",
-                        "childType":2,
-                        "href":"",
-                        "type":5,
-                        "programArea":1,
-                        "idSeq":"D8EC8CDC-6298-6CD0-E040-BB89AD432C99",
-                        "isParent":true,
-                        "isChild":true,
-                        "collapsed":true,
-                        "treePath":[
-                            "Cancer Centers",
+                        "text": "Standard CDEs",
+                        "hover": "CDEs found in the NCI templates",
+                        "childType": 0,
+                        "href": "",
+                        "type": 2,
+                        "programArea": 0,
+                        "idSeq": "D8EE5C5D-21C0-97B8-E040-BB89AD431216",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
                             "AECC (Albert Einstein Cancer Center) ",
                             "Classifications",
-                            "NCI Standard Template CDEs"
+                            "NCI Standard Template CDEs",
+                            "Standard CDEs"
                         ],
-                        "children":[
-                            {
-                                "text":"Standard CDEs",
-                                "hover":"CDEs found in the NCI templates",
-                                "childType":0,
-                                "href":"",
-                                "type":2,
-                                "programArea":1,
-                                "idSeq":"D8EE5C5D-21C0-97B8-E040-BB89AD431216",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "Classifications",
-                                    "NCI Standard Template CDEs",
-                                    "Standard CDEs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Standard CDEs"
-                            }
-                        ],
-                        "trimText":"NCI Standard Template CDEs"
+                        "children": [],
+                        "trimText": "Standard CDEs"
                     }
                 ],
-                "trimText":"Classifications"
-            },
-            {
-                "text":"ProtocolForms",
-                "hover":"",
-                "childType":4,
-                "href":"",
-                "type":3,
-                "programArea":1,
-                "idSeq":"",
-                "isParent":true,
-                "isChild":true,
-                "collapsed":false,
-                "treePath":[
-                    "Cancer Centers",
-                    "AECC (Albert Einstein Cancer Center) ",
-                    "ProtocolForms"
-                ],
-                "children":[
-                    {
-                        "text":"8853",
-                        "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                        "childType":6,
-                        "href":"",
-                        "type":4,
-                        "programArea":1,
-                        "idSeq":"",
-                        "isParent":true,
-                        "isChild":true,
-                        "collapsed":true,
-                        "treePath":[
-                            "Cancer Centers",
-                            "AECC (Albert Einstein Cancer Center) ",
-                            "ProtocolForms",
-                            "8853"
-                        ],
-                        "children":[
-                            {
-                                "text":"Adverse Events",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Adverse Events"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Adverse Events"
-                            },
-                            {
-                                "text":"Baseline RECIST - Non-Target Lesions",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Baseline RECIST - Non-Target Lesions"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Baseline RECIST - Non-Target L..."
-                            },
-                            {
-                                "text":"Baseline RECIST - Target Lesions",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Baseline RECIST - Target Lesions"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Baseline RECIST - Target Lesio..."
-                            },
-                            {
-                                "text":"Baseline RECIST Master Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Baseline RECIST Master Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Baseline RECIST Master Form"
-                            },
-                            {
-                                "text":"Chemistry Labs",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Chemistry Labs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Chemistry Labs"
-                            },
-                            {
-                                "text":"Concomitant Medication",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Concomitant Medication"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Concomitant Medication"
-                            },
-                            {
-                                "text":"DCC Sequencing and Randomization",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "DCC Sequencing and Randomization"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"DCC Sequencing and Randomizati..."
-                            },
-                            {
-                                "text":"Hematology Labs",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Hematology Labs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Hematology Labs"
-                            },
-                            {
-                                "text":"Hormone Receptor Assays",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Hormone Receptor Assays"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Hormone Receptor Assays"
-                            },
-                            {
-                                "text":"Hormone Receptors",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Hormone Receptors"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Hormone Receptors"
-                            },
-                            {
-                                "text":"Intra-Treatment RECIST - New Lesion",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Intra-Treatment RECIST - New Lesion"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Intra-Treatment RECIST - New L..."
-                            },
-                            {
-                                "text":"Intra-Treatment RECIST - Non-Target Lesions",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Intra-Treatment RECIST - Non-Target Lesions"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Intra-Treatment RECIST - Non-T..."
-                            },
-                            {
-                                "text":"Intra-Treatment RECIST - Target Lesions",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Intra-Treatment RECIST - Target Lesions"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Intra-Treatment RECIST - Targe..."
-                            },
-                            {
-                                "text":"Intra-Treatment RECIST Master Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Intra-Treatment RECIST Master Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Intra-Treatment RECIST Master ..."
-                            },
-                            {
-                                "text":"Medical History",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Medical History"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Medical History"
-                            },
-                            {
-                                "text":"Off Study Reason",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Off Study Reason"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Off Study Reason"
-                            },
-                            {
-                                "text":"Off Treatment Reason",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Off Treatment Reason"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Off Treatment Reason"
-                            },
-                            {
-                                "text":"On Study",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "On Study"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"On Study"
-                            },
-                            {
-                                "text":"Physical Exam",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Physical Exam"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Physical Exam"
-                            },
-                            {
-                                "text":"Post-Treatment Follow Up",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Post-Treatment Follow Up"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Post-Treatment Follow Up"
-                            },
-                            {
-                                "text":"Pre-Registration Hematology Results",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Pre-Registration Hematology Results"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Pre-Registration Hematology Re..."
-                            },
-                            {
-                                "text":"Pre-Registration Serum Chemistry Results",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Pre-Registration Serum Chemistry Results"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Pre-Registration Serum Chemist..."
-                            },
-                            {
-                                "text":"Prior Treatments - Adjuvant Endocrine Therapy Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Adjuvant Endocrine Therapy Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Adjuvant En..."
-                            },
-                            {
-                                "text":"Prior Treatments - Adjuvant Multi-Agent Chemotherapy Detail Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Adjuvant Multi-Agent Chemotherapy Detail Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Adjuvant Mu..."
-                            },
-                            {
-                                "text":"Prior Treatments - Adjuvant Single-Agent Chemotherapy Detail Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Adjuvant Single-Agent Chemotherapy Detail Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Adjuvant Si..."
-                            },
-                            {
-                                "text":"Prior Treatments - Axillary Surgery Detail Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Axillary Surgery Detail Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Axillary Su..."
-                            },
-                            {
-                                "text":"Prior Treatments - Breast Surgery Detail Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Breast Surgery Detail Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Breast Surg..."
-                            },
-                            {
-                                "text":"Prior Treatments - Metastatic Disease Multi-Agent Chemotherapy Details Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Metastatic Disease Multi-Agent Chemotherapy Details Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Metastatic ..."
-                            },
-                            {
-                                "text":"Prior Treatments - Metastatic Disease Single-Agent Chemotherapy Details Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Metastatic Disease Single-Agent Chemotherapy Details Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Metastatic ..."
-                            },
-                            {
-                                "text":"Prior Treatments - Metastatic Endocrine Therapy Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Metastatic Endocrine Therapy Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Metastatic ..."
-                            },
-                            {
-                                "text":"Prior Treatments - Neoadjuvant Multi-Agent Chemotherapy Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Neoadjuvant Multi-Agent Chemotherapy Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Neoadjuvant..."
-                            },
-                            {
-                                "text":"Prior Treatments - Neoadjuvant Single-Agent Chemotherapy Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Neoadjuvant Single-Agent Chemotherapy Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Neoadjuvant..."
-                            },
-                            {
-                                "text":"Prior Treatments - Other Surgery for Metastatic Disease Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Other Surgery for Metastatic Disease Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Other Surge..."
-                            },
-                            {
-                                "text":"Prior Treatments - Radiation Therapy Details Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments - Radiation Therapy Details Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Radiation T..."
-                            },
-                            {
-                                "text":"Prior Treatments Main Form",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Prior Treatments Main Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments Main Form"
-                            },
-                            {
-                                "text":"Registration Worksheet/Eligibility Checklist - Phase I",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Registration Worksheet/Eligibility Checklist - Phase I"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Registration Worksheet/Eligibi..."
-                            },
-                            {
-                                "text":"Specimen Collection",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Specimen Collection"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Specimen Collection"
-                            },
-                            {
-                                "text":"Treatment",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Treatment"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Treatment"
-                            },
-                            {
-                                "text":"Treatment1",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Treatment1"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Treatment1"
-                            },
-                            {
-                                "text":"Vital Signs",
-                                "hover":"Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "8853",
-                                    "Vital Signs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Vital Signs"
-                            }
-                        ],
-                        "trimText":"8853"
-                    },
-                    {
-                        "text":"AECC Standard Draft",
-                        "hover":"AECC Standard Draft...",
-                        "childType":6,
-                        "href":"",
-                        "type":4,
-                        "programArea":1,
-                        "idSeq":"",
-                        "isParent":true,
-                        "isChild":true,
-                        "collapsed":true,
-                        "treePath":[
-                            "Cancer Centers",
-                            "AECC (Albert Einstein Cancer Center) ",
-                            "ProtocolForms",
-                            "AECC Standard Draft"
-                        ],
-                        "children":[
-                            {
-                                "text":"Baseline Form",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Baseline Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Baseline Form"
-                            },
-                            {
-                                "text":"Baseline Form",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Baseline Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Baseline Form"
-                            },
-                            {
-                                "text":"DEVIATION LOG",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "DEVIATION LOG"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"DEVIATION LOG"
-                            },
-                            {
-                                "text":"Dose Reduction",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Dose Reduction"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Dose Reduction"
-                            },
-                            {
-                                "text":"FOLLOW UP DISEASE EVALUATION FORM",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "FOLLOW UP DISEASE EVALUATION FORM"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"FOLLOW UP DISEASE EVALUATION F..."
-                            },
-                            {
-                                "text":"LUNG CANCER HISTORY FORM",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "LUNG CANCER HISTORY FORM"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"LUNG CANCER HISTORY FORM"
-                            },
-                            {
-                                "text":"Off Study Reason",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Off Study Reason"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Off Study Reason"
-                            },
-                            {
-                                "text":"Off Treatment Reason",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Off Treatment Reason"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Off Treatment Reason"
-                            },
-                            {
-                                "text":"On Study",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "On Study"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"On Study"
-                            },
-                            {
-                                "text":"REPRODUCTIVE RISK",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "REPRODUCTIVE RISK"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"REPRODUCTIVE RISK"
-                            },
-                            {
-                                "text":"Radiation therapy",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Radiation therapy"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Radiation therapy"
-                            },
-                            {
-                                "text":"Registration Worksheet/Eligibility Checklist - Phase I",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Registration Worksheet/Eligibility Checklist - Phase I"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Registration Worksheet/Eligibi..."
-                            },
-                            {
-                                "text":"Registration Worksheet/Eligibility Checklist - Phase I",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "Registration Worksheet/Eligibility Checklist - Phase I"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Registration Worksheet/Eligibi..."
-                            },
-                            {
-                                "text":"SAE LOG",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "SAE LOG"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"SAE LOG"
-                            },
-                            {
-                                "text":"SURGERY FORM",
-                                "hover":"AECC Standard Draft",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC Standard Draft",
-                                    "SURGERY FORM"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"SURGERY FORM"
-                            }
-                        ],
-                        "trimText":"AECC Standard Draft"
-                    },
-                    {
-                        "text":"AECC/Montefiore Standard CRFs",
-                        "hover":"AECC/Montefiore Standard CRFs...",
-                        "childType":6,
-                        "href":"",
-                        "type":4,
-                        "programArea":1,
-                        "idSeq":"",
-                        "isParent":true,
-                        "isChild":true,
-                        "collapsed":true,
-                        "treePath":[
-                            "Cancer Centers",
-                            "AECC (Albert Einstein Cancer Center) ",
-                            "ProtocolForms",
-                            "AECC/Montefiore Standard CRFs"
-                        ],
-                        "children":[
-                            {
-                                "text":"Adverse Events",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Adverse Events"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Adverse Events"
-                            },
-                            {
-                                "text":"Chemistry Labs",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Chemistry Labs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Chemistry Labs"
-                            },
-                            {
-                                "text":"Concomitant Medication",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Concomitant Medication"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Concomitant Medication"
-                            },
-                            {
-                                "text":"DCC Sequencing and Randomization",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "DCC Sequencing and Randomization"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"DCC Sequencing and Randomizati..."
-                            },
-                            {
-                                "text":"Diagnosis NCI Standard Template",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Diagnosis NCI Standard Template"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Diagnosis NCI Standard Templat..."
-                            },
-                            {
-                                "text":"Hematology Labs",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Hematology Labs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Hematology Labs"
-                            },
-                            {
-                                "text":"Hormone Receptor Assays",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Hormone Receptor Assays"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Hormone Receptor Assays"
-                            },
-                            {
-                                "text":"Hormone Receptors",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Hormone Receptors"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Hormone Receptors"
-                            },
-                            {
-                                "text":"Medical History",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Medical History"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Medical History"
-                            },
-                            {
-                                "text":"NEW ANTI-CANCER TREATMENT",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "NEW ANTI-CANCER TREATMENT"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"NEW ANTI-CANCER TREATMENT"
-                            },
-                            {
-                                "text":"PET-ADJUSTED IMRT FOR NSCLC TRIAL",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "PET-ADJUSTED IMRT FOR NSCLC TRIAL"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"PET-ADJUSTED IMRT FOR NSCLC TR..."
-                            },
-                            {
-                                "text":"Physical Exam",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Physical Exam"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Physical Exam"
-                            },
-                            {
-                                "text":"Post-Treatment Follow Up",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Post-Treatment Follow Up"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Post-Treatment Follow Up"
-                            },
-                            {
-                                "text":"Pre-Registration Hematology Results",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Pre-Registration Hematology Results"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Pre-Registration Hematology Re..."
-                            },
-                            {
-                                "text":"Pre-Registration Serum Chemistry Results",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Pre-Registration Serum Chemistry Results"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Pre-Registration Serum Chemist..."
-                            },
-                            {
-                                "text":"Prior Treatments - Adjuvant Endocrine Therapy Form",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Prior Treatments - Adjuvant Endocrine Therapy Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Adjuvant En..."
-                            },
-                            {
-                                "text":"Prior Treatments - Radiation Therapy Details Form",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Prior Treatments - Radiation Therapy Details Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments - Radiation T..."
-                            },
-                            {
-                                "text":"Prior Treatments Main Form",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Prior Treatments Main Form"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior Treatments Main Form"
-                            },
-                            {
-                                "text":"Prior/Post (Other) Therapies NCI Standard Template ",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Prior/Post (Other) Therapies NCI Standard Template "
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Prior/Post (Other) Therapies N..."
-                            },
-                            {
-                                "text":"Specimen Collection",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Specimen Collection"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Specimen Collection"
-                            },
-                            {
-                                "text":"Treatment",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Treatment"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Treatment"
-                            },
-                            {
-                                "text":"Vital Signs",
-                                "hover":"AECC/Montefiore Standard CRFs",
-                                "childType":0,
-                                "href":"",
-                                "type":6,
-                                "programArea":1,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":false,
-                                "treePath":[
-                                    "Cancer Centers",
-                                    "AECC (Albert Einstein Cancer Center) ",
-                                    "ProtocolForms",
-                                    "AECC/Montefiore Standard CRFs",
-                                    "Vital Signs"
-                                ],
-                                "children":[
-
-                                ],
-                                "trimText":"Vital Signs"
-                            }
-                        ],
-                        "trimText":"AECC/Montefiore Standard CRFs"
-                    }
-                ],
-                "trimText":"ProtocolForms"
+                "trimText": "NCI Standard Template CDEs"
             }
         ],
-        "palName":"Cancer Centers",
-        "palNameDescription":"",
-        "trimText":"AECC (Albert Einstein Cancer C..."
+        "trimText": "Classifications"
+    },
+    {
+        "text": "ProtocolForms",
+        "hover": "",
+        "childType": 4,
+        "href": "",
+        "type": 3,
+        "programArea": 0,
+        "idSeq": "",
+        "isParent": true,
+        "isChild": true,
+        "collapsed": true,
+        "treePath": [
+            "All",
+            "AECC (Albert Einstein Cancer Center) ",
+            "ProtocolForms"
+        ],
+        "children": [
+            {
+                "text": "8853",
+                "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                "childType": 6,
+                "href": "",
+                "type": 4,
+                "programArea": 0,
+                "idSeq": "",
+                "isParent": true,
+                "isChild": true,
+                "collapsed": true,
+                "treePath": [
+                    "All",
+                    "AECC (Albert Einstein Cancer Center) ",
+                    "ProtocolForms",
+                    "8853"
+                ],
+                "children": [
+                    {
+                        "text": "Adverse Events",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Adverse Events"
+                        ],
+                        "children": [],
+                        "trimText": "Adverse Events"
+                    },
+                    {
+                        "text": "Baseline RECIST - Non-Target Lesions",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Baseline RECIST - Non-Target Lesions"
+                        ],
+                        "children": [],
+                        "trimText": "Baseline RECIST - Non-Target L..."
+                    },
+                    {
+                        "text": "Baseline RECIST - Target Lesions",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Baseline RECIST - Target Lesions"
+                        ],
+                        "children": [],
+                        "trimText": "Baseline RECIST - Target Lesio..."
+                    },
+                    {
+                        "text": "Baseline RECIST Master Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Baseline RECIST Master Form"
+                        ],
+                        "children": [],
+                        "trimText": "Baseline RECIST Master Form"
+                    },
+                    {
+                        "text": "Chemistry Labs",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Chemistry Labs"
+                        ],
+                        "children": [],
+                        "trimText": "Chemistry Labs"
+                    },
+                    {
+                        "text": "Concomitant Medication",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Concomitant Medication"
+                        ],
+                        "children": [],
+                        "trimText": "Concomitant Medication"
+                    },
+                    {
+                        "text": "DCC Sequencing and Randomization",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "DCC Sequencing and Randomization"
+                        ],
+                        "children": [],
+                        "trimText": "DCC Sequencing and Randomizati..."
+                    },
+                    {
+                        "text": "Hematology Labs",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Hematology Labs"
+                        ],
+                        "children": [],
+                        "trimText": "Hematology Labs"
+                    },
+                    {
+                        "text": "Hormone Receptor Assays",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Hormone Receptor Assays"
+                        ],
+                        "children": [],
+                        "trimText": "Hormone Receptor Assays"
+                    },
+                    {
+                        "text": "Hormone Receptors",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Hormone Receptors"
+                        ],
+                        "children": [],
+                        "trimText": "Hormone Receptors"
+                    },
+                    {
+                        "text": "Intra-Treatment RECIST - New Lesion",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Intra-Treatment RECIST - New Lesion"
+                        ],
+                        "children": [],
+                        "trimText": "Intra-Treatment RECIST - New L..."
+                    },
+                    {
+                        "text": "Intra-Treatment RECIST - Non-Target Lesions",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Intra-Treatment RECIST - Non-Target Lesions"
+                        ],
+                        "children": [],
+                        "trimText": "Intra-Treatment RECIST - Non-T..."
+                    },
+                    {
+                        "text": "Intra-Treatment RECIST - Target Lesions",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Intra-Treatment RECIST - Target Lesions"
+                        ],
+                        "children": [],
+                        "trimText": "Intra-Treatment RECIST - Targe..."
+                    },
+                    {
+                        "text": "Intra-Treatment RECIST Master Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Intra-Treatment RECIST Master Form"
+                        ],
+                        "children": [],
+                        "trimText": "Intra-Treatment RECIST Master ..."
+                    },
+                    {
+                        "text": "Medical History",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Medical History"
+                        ],
+                        "children": [],
+                        "trimText": "Medical History"
+                    },
+                    {
+                        "text": "Off Study Reason",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Off Study Reason"
+                        ],
+                        "children": [],
+                        "trimText": "Off Study Reason"
+                    },
+                    {
+                        "text": "Off Treatment Reason",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Off Treatment Reason"
+                        ],
+                        "children": [],
+                        "trimText": "Off Treatment Reason"
+                    },
+                    {
+                        "text": "On Study",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "On Study"
+                        ],
+                        "children": [],
+                        "trimText": "On Study"
+                    },
+                    {
+                        "text": "Physical Exam",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Physical Exam"
+                        ],
+                        "children": [],
+                        "trimText": "Physical Exam"
+                    },
+                    {
+                        "text": "Post-Treatment Follow Up",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Post-Treatment Follow Up"
+                        ],
+                        "children": [],
+                        "trimText": "Post-Treatment Follow Up"
+                    },
+                    {
+                        "text": "Pre-Registration Hematology Results",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Pre-Registration Hematology Results"
+                        ],
+                        "children": [],
+                        "trimText": "Pre-Registration Hematology Re..."
+                    },
+                    {
+                        "text": "Pre-Registration Serum Chemistry Results",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Pre-Registration Serum Chemistry Results"
+                        ],
+                        "children": [],
+                        "trimText": "Pre-Registration Serum Chemist..."
+                    },
+                    {
+                        "text": "Prior Treatments - Adjuvant Endocrine Therapy Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Adjuvant Endocrine Therapy Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Adjuvant En..."
+                    },
+                    {
+                        "text": "Prior Treatments - Adjuvant Multi-Agent Chemotherapy Detail Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Adjuvant Multi-Agent Chemotherapy Detail Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Adjuvant Mu..."
+                    },
+                    {
+                        "text": "Prior Treatments - Adjuvant Single-Agent Chemotherapy Detail Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Adjuvant Single-Agent Chemotherapy Detail Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Adjuvant Si..."
+                    },
+                    {
+                        "text": "Prior Treatments - Axillary Surgery Detail Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Axillary Surgery Detail Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Axillary Su..."
+                    },
+                    {
+                        "text": "Prior Treatments - Breast Surgery Detail Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Breast Surgery Detail Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Breast Surg..."
+                    },
+                    {
+                        "text": "Prior Treatments - Metastatic Disease Multi-Agent Chemotherapy Details Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Metastatic Disease Multi-Agent Chemotherapy Details Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Metastatic ..."
+                    },
+                    {
+                        "text": "Prior Treatments - Metastatic Disease Single-Agent Chemotherapy Details Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Metastatic Disease Single-Agent Chemotherapy Details Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Metastatic ..."
+                    },
+                    {
+                        "text": "Prior Treatments - Metastatic Endocrine Therapy Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Metastatic Endocrine Therapy Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Metastatic ..."
+                    },
+                    {
+                        "text": "Prior Treatments - Neoadjuvant Multi-Agent Chemotherapy Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Neoadjuvant Multi-Agent Chemotherapy Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Neoadjuvant..."
+                    },
+                    {
+                        "text": "Prior Treatments - Neoadjuvant Single-Agent Chemotherapy Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Neoadjuvant Single-Agent Chemotherapy Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Neoadjuvant..."
+                    },
+                    {
+                        "text": "Prior Treatments - Other Surgery for Metastatic Disease Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Other Surgery for Metastatic Disease Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Other Surge..."
+                    },
+                    {
+                        "text": "Prior Treatments - Radiation Therapy Details Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments - Radiation Therapy Details Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Radiation T..."
+                    },
+                    {
+                        "text": "Prior Treatments Main Form",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Prior Treatments Main Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments Main Form"
+                    },
+                    {
+                        "text": "Registration Worksheet/Eligibility Checklist - Phase I",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Registration Worksheet/Eligibility Checklist - Phase I"
+                        ],
+                        "children": [],
+                        "trimText": "Registration Worksheet/Eligibi..."
+                    },
+                    {
+                        "text": "Specimen Collection",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Specimen Collection"
+                        ],
+                        "children": [],
+                        "trimText": "Specimen Collection"
+                    },
+                    {
+                        "text": "Treatment",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Treatment"
+                        ],
+                        "children": [],
+                        "trimText": "Treatment"
+                    },
+                    {
+                        "text": "Treatment1",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Treatment1"
+                        ],
+                        "children": [],
+                        "trimText": "Treatment1"
+                    },
+                    {
+                        "text": "Vital Signs",
+                        "hover": "Randomized phase I & II, double blind, placebo-controlled trial of cyclophosphamide alone or in combination with veliparib (ABT-...",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "8853",
+                            "Vital Signs"
+                        ],
+                        "children": [],
+                        "trimText": "Vital Signs"
+                    }
+                ],
+                "trimText": "8853"
+            },
+            {
+                "text": "AECC Standard Draft",
+                "hover": "AECC Standard Draft",
+                "childType": 6,
+                "href": "",
+                "type": 4,
+                "programArea": 0,
+                "idSeq": "",
+                "isParent": true,
+                "isChild": true,
+                "collapsed": true,
+                "treePath": [
+                    "All",
+                    "AECC (Albert Einstein Cancer Center) ",
+                    "ProtocolForms",
+                    "AECC Standard Draft"
+                ],
+                "children": [
+                    {
+                        "text": "Adverse Events",
+                        "hover": "AECC Standard Draft",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC Standard Draft",
+                            "Adverse Events"
+                        ],
+                        "children": [],
+                        "trimText": "Adverse Events"
+                    },
+                    {
+                        "text": "Concomitant Medication",
+                        "hover": "AECC Standard Draft",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC Standard Draft",
+                            "Concomitant Medication"
+                        ],
+                        "children": [],
+                        "trimText": "Concomitant Medication"
+                    },
+                    {
+                        "text": "Example",
+                        "hover": "AECC Standard Draft",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC Standard Draft",
+                            "Example"
+                        ],
+                        "children": [],
+                        "trimText": "Example"
+                    }
+                ],
+                "trimText": "AECC Standard Draft"
+            },
+            {
+                "text": "AECC/Montefiore Standard CRFs",
+                "hover": "AECC/Montefiore Standard CRFs",
+                "childType": 6,
+                "href": "",
+                "type": 4,
+                "programArea": 0,
+                "idSeq": "",
+                "isParent": true,
+                "isChild": true,
+                "collapsed": true,
+                "treePath": [
+                    "All",
+                    "AECC (Albert Einstein Cancer Center) ",
+                    "ProtocolForms",
+                    "AECC/Montefiore Standard CRFs"
+                ],
+                "children": [
+                    {
+                        "text": "Adverse Events",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Adverse Events"
+                        ],
+                        "children": [],
+                        "trimText": "Adverse Events"
+                    },
+                    {
+                        "text": "Chemistry Labs",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Chemistry Labs"
+                        ],
+                        "children": [],
+                        "trimText": "Chemistry Labs"
+                    },
+                    {
+                        "text": "Concomitant Medication",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Concomitant Medication"
+                        ],
+                        "children": [],
+                        "trimText": "Concomitant Medication"
+                    },
+                    {
+                        "text": "DCC Sequencing and Randomization",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "DCC Sequencing and Randomization"
+                        ],
+                        "children": [],
+                        "trimText": "DCC Sequencing and Randomizati..."
+                    },
+                    {
+                        "text": "DEVIATION LOG",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "DEVIATION LOG"
+                        ],
+                        "children": [],
+                        "trimText": "DEVIATION LOG"
+                    },
+                    {
+                        "text": "Erlotinib Dose Modifications",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Erlotinib Dose Modifications"
+                        ],
+                        "children": [],
+                        "trimText": "Erlotinib Dose Modifications"
+                    },
+                    {
+                        "text": "Hematology Labs",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Hematology Labs"
+                        ],
+                        "children": [],
+                        "trimText": "Hematology Labs"
+                    },
+                    {
+                        "text": "Hormone Receptor Assays",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Hormone Receptor Assays"
+                        ],
+                        "children": [],
+                        "trimText": "Hormone Receptor Assays"
+                    },
+                    {
+                        "text": "Hormone Receptors",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Hormone Receptors"
+                        ],
+                        "children": [],
+                        "trimText": "Hormone Receptors"
+                    },
+                    {
+                        "text": "Medical History",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Medical History"
+                        ],
+                        "children": [],
+                        "trimText": "Medical History"
+                    },
+                    {
+                        "text": "Off Treatment Reason",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Off Treatment Reason"
+                        ],
+                        "children": [],
+                        "trimText": "Off Treatment Reason"
+                    },
+                    {
+                        "text": "On Study",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "On Study"
+                        ],
+                        "children": [],
+                        "trimText": "On Study"
+                    },
+                    {
+                        "text": "Physical Exam",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Physical Exam"
+                        ],
+                        "children": [],
+                        "trimText": "Physical Exam"
+                    },
+                    {
+                        "text": "Post-Treatment Follow Up",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Post-Treatment Follow Up"
+                        ],
+                        "children": [],
+                        "trimText": "Post-Treatment Follow Up"
+                    },
+                    {
+                        "text": "Pre-Registration Hematology Results",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Pre-Registration Hematology Results"
+                        ],
+                        "children": [],
+                        "trimText": "Pre-Registration Hematology Re..."
+                    },
+                    {
+                        "text": "Pre-Registration Serum Chemistry Results",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Pre-Registration Serum Chemistry Results"
+                        ],
+                        "children": [],
+                        "trimText": "Pre-Registration Serum Chemist..."
+                    },
+                    {
+                        "text": "Prior Treatments - Adjuvant Endocrine Therapy Form",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Prior Treatments - Adjuvant Endocrine Therapy Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Adjuvant En..."
+                    },
+                    {
+                        "text": "Prior Treatments - Radiation Therapy Details Form",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Prior Treatments - Radiation Therapy Details Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments - Radiation T..."
+                    },
+                    {
+                        "text": "Prior Treatments Main Form",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Prior Treatments Main Form"
+                        ],
+                        "children": [],
+                        "trimText": "Prior Treatments Main Form"
+                    },
+                    {
+                        "text": "REPRODUCTIVE RISK",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "REPRODUCTIVE RISK"
+                        ],
+                        "children": [],
+                        "trimText": "REPRODUCTIVE RISK"
+                    },
+                    {
+                        "text": "Radiation therapy",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Radiation therapy"
+                        ],
+                        "children": [],
+                        "trimText": "Radiation therapy"
+                    },
+                    {
+                        "text": "Registration Worksheet/Eligibility Checklist - Phase I",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Registration Worksheet/Eligibility Checklist - Phase I"
+                        ],
+                        "children": [],
+                        "trimText": "Registration Worksheet/Eligibi..."
+                    },
+                    {
+                        "text": "SAE LOG",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "SAE LOG"
+                        ],
+                        "children": [],
+                        "trimText": "SAE LOG"
+                    },
+                    {
+                        "text": "Specimen Collection",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Specimen Collection"
+                        ],
+                        "children": [],
+                        "trimText": "Specimen Collection"
+                    },
+                    {
+                        "text": "Treatment",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Treatment"
+                        ],
+                        "children": [],
+                        "trimText": "Treatment"
+                    },
+                    {
+                        "text": "Vital Signs",
+                        "hover": "AECC/Montefiore Standard CRFs",
+                        "childType": 0,
+                        "href": "",
+                        "type": 6,
+                        "programArea": 0,
+                        "idSeq": "",
+                        "isParent": false,
+                        "isChild": true,
+                        "collapsed": false,
+                        "treePath": [
+                            "All",
+                            "AECC (Albert Einstein Cancer Center) ",
+                            "ProtocolForms",
+                            "AECC/Montefiore Standard CRFs",
+                            "Vital Signs"
+                        ],
+                        "children": [],
+                        "trimText": "Vital Signs"
+                    }
+                ],
+                "trimText": "AECC/Montefiore Standard CRFs"
+            }
+        ],
+        "trimText": "ProtocolForms"
     }
 ]
