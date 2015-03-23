@@ -13,10 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class ContextDataController
@@ -29,32 +26,24 @@ public class ContextDataController
     private CsCsiDAOImpl csCsiDAO;
     private ProtocolFormDAOImpl protocolFormDAO;
     private ProtocolDAOImpl protocolDAO;
-    private ProgramAreaDAOImpl programAreaDAO;
-    // private List<ClassificationSchemeModel> csModelList = null;
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
+    private RestControllerCommon restControllerCommon;
 
-    private boolean includeClassification = false;
-    private boolean includeProtocol = false;
-    private String message;
-
-    @Value("${maxHoverTextLen}")
+    @Value( "${maxHoverTextLen}" )
     String maxHoverTextLenStr;
 
-    private int contextSubsetCount;
+    @Value( "${oneContextRestService}" )
+    String oneContextRestServiceName;
+
     private int contextPalNameCount;
-    private int uiType;
 
     public ContextDataController()
-    {
-        logger.debug( "IN ContextDataController constructor" );
-        setTestMode( true );
-    }
+    {   }
 
-    public void setTestMode( boolean testMode )
+    public void setRestControllerCommon( RestControllerCommon restControllersCommon )
     {
-        includeProtocol = ( !testMode );
-        includeClassification = ( !testMode );
+        this.restControllerCommon = restControllersCommon;
     }
 
     public void setProtocolDAO( ProtocolDAOImpl protocolDAO )
@@ -65,11 +54,6 @@ public class ContextDataController
     public void setProtocolFormDAO( ProtocolFormDAOImpl protocolFormDAO )
     {
         this.protocolFormDAO = protocolFormDAO;
-    }
-
-    public void setProgramAreaDAO( ProgramAreaDAOImpl programAreaDAO )
-    {
-        this.programAreaDAO = programAreaDAO;
     }
 
     public void setCsCsiDAO( CsCsiDAOImpl csCsiDAO )
@@ -87,6 +71,16 @@ public class ContextDataController
         this.classificationSchemeDAO = classificationSchemeDAO;
     }
 
+    public List<ProgramAreaModel> getProgramAreaModelList()
+    {
+        return programAreaModelList;
+    }
+
+    public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
+    {
+        this.programAreaModelList = programAreaModelList;
+    }
+
     public void setCsCsiNodelList( List<CsCsiModel> csCsiNodelList )
     {
         this.csCsiNodelList = csCsiNodelList;
@@ -97,179 +91,321 @@ public class ContextDataController
         this.maxHoverTextLenStr = maxHoverTextLen;
     }
 
-    public void setMessage( String message )
+    public String getMaxHoverTextLenStr()
     {
-        this.message = message;
+        return maxHoverTextLenStr;
     }
 
-
-    public void init()
+    public int getContextPalNameCount()
     {
-        this.message = "Init ";
+        return contextPalNameCount;
     }
 
-    @RequestMapping(value = "/contextData")
+    public void setContextPalNameCount( int contextPalNameCount )
+    {
+        this.contextPalNameCount = contextPalNameCount;
+    }
+
+    @RequestMapping( value = "/contextData" )
     @ResponseBody
     public ContextNode[] contextData()
     {
         logger.debug( "Received rest call \"contextData\"" );
-        ContextNode[] contextNodes = getAllTreeData();
+        programAreaModelList = restControllerCommon.getProgramAreaList();
+        ContextNode[] contextNodes = getAllTopLevelTreeData();
+
         logger.debug( "Done rest call\n=========================\n" );
         return contextNodes;
     }
 
-    private ContextNode[] getAllTreeData()
+    /**
+     *
+     * @param contextId
+     * @param programArea  We already have the original Program area, but this will tell us if it is being called from "All"
+     * @param folderType
+     * @return
+     */
+    @RequestMapping( value = "/oneContextData" )
+    @ResponseBody
+    public List<BaseNode> oneContextData( @RequestParam( "contextId" ) String contextId, @RequestParam( "programArea" ) int programArea , @RequestParam("folderType") int folderType)
     {
+        logger.debug( "Received rest call \"oneContextData\" [" +  contextId +"]   Program Area[" + programArea + "]   FolderType[" + folderType + "]");
+        programAreaModelList = restControllerCommon.getProgramAreaList();
+        List<BaseNode> contextNodes = getOneTreeByContextId( contextId, programArea, folderType );
+        logger.debug( "Done rest call\n=========================\n" );
+        return contextNodes;
+    }
 
-        contextPalNameCount = initProgramAreaList();
-        ContextNode[] contextNodes = new ContextNode[contextPalNameCount + 1]; //The + 1 is for "All"
-        for( int i = 0; i < contextPalNameCount; i++ )
-        {
-            contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get( i ).getPalName() );
-            contextNodes[i].setPalNameDescription( programAreaModelList.get( i ).getDescription() );
-        }
+    private ContextNode[] getAllTopLevelTreeData()
+    {
+        // The top level - Program areas
+        ContextNode[] contextNodes = initTopLevelContextNodes();
 
-        //Add all contexts tab at the end
-        contextNodes[contextPalNameCount] = new ContextNode( CaDSRConstants.FOLDER, true, "All" );
-
-        /////////////////////////////////////////////////////////////////////////////
-        //Get list of all Contexts
-        /////////////////////////////////////////////////////////////////////////////
+        // Get list of all Contexts
         List<ContextModel> contextModelList = this.contextDAO.getAllContexts();
 
-        //Protocol List of all
-        // Don't do this, no faster than getting  Protocols by Context
-        //List<ProtocolModel> protocolModelList = this.protocolDAO.getAllProtocols();
-
-        // All Protocol Forms
-        List<ProtocolFormModel> protocolFormModelList = null;
-
-
-        if( includeProtocol )
-        {
-            protocolFormModelList = this.protocolFormDAO.getAllProtocolForm();
-        }
-
-
-        // Just for dev time testing
-        //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "CCR" );
-        //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "ABTC" );
-        //List<ContextModel> contextModelList = this.contextDAO.getContextsByName( "Alliance" );
-
-
-        //The contents of a Classification folder
-        List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
-        //csModelList = this.classificationSchemeDAO.getAllClassificationSchemes();
-        if( includeClassification )
-        {
-            //Classification Scheme Item List
-            setCsCsiNodelList( this.csCsiDAO.getAllCsCsis() );
-        }
-
+        // Process each Context
         for( ContextModel model : contextModelList )
         {
+            // Get Program area for this Context
+            int programAreaIndex = getProgramAreaByName( model.getPalName() );
 
-            /////////////////////////////////////////////////////////////////////////////
-            //Get all Classifications for this context
-            /////////////////////////////////////////////////////////////////////////////
 
-            //CS (Classification Scheme) folder
+           ////////////////////////////////////////
+           // This Contexts Classification folder
             ParentNode classificationsParentNode = new ParentNode();
-            initClassificationsParentNode( classificationsParentNode );
+            initClassificationsParentNode( classificationsParentNode, programAreaIndex, true ); //true = collapsed folder
 
-            if( includeClassification )
+            // Add the data for the rest call back to get the complete data tree for this context
+            classificationsParentNode.setHref( oneContextRestServiceName + "?contextId=" + model.getConteIdseq() +
+                    "&programArea=" + getProgramAreaByName( model.getPalName() ) +
+                    "&folderType=0" );// folderType: 0 = classifications folder, 1 = protocol forms folder
+
+            logger.debug( "Checking for Classification Schemes" );
+            // Is there at least one classification?
+            if( this.classificationSchemeDAO.haveClassificationSchemes( model.getConteIdseq() ) )
             {
-                //Add the Classifications to the classificationsParentNode for this Context.
-                insertClassifications( classificationsParentNode, csModelList, model );
+                insertPlaceHolderNode( classificationsParentNode );
             }
-            //END  (Classification Scheme) folder
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //Protocol forms folder
+
+            ////////////////////////////////////////
+            // This Contexts Protocol forms folder
             ParentNode protocolsParentNode = new ParentNode();
-            protocolsParentNode.setText( "ProtocolForms" );
-            protocolsParentNode.setCollapsed( true );
-            protocolsParentNode.setIsParent( false );// If and when a child is added IsParent will change to true.
-            protocolsParentNode.setType( CaDSRConstants.FOLDER );
-            protocolsParentNode.setChildType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
-            //Don't need tooltip for this
-            //protocolsParentNode.setHover( protocolsParentNode.getText() );
-            protocolsParentNode.setHref( protocolsParentNode.getHref() );
-            protocolsParentNode.setChildren( new ArrayList<BaseNode>() );
+            initProtocolsFormsParentNode(protocolsParentNode, programAreaIndex, true ); //true = collapsed folder
 
+            // Add the data for the rest call back to get the complete data tree for this context - same as the "Classifications"
+            protocolsParentNode.setHref( classificationsParentNode.getHref());
 
-            if( includeProtocol )
+            // If protocolModelList > 0 then we have at least one ProtocolForms, add a dummy to make sure we show the Protocol Icon as enabled
+            if( this.protocolDAO.haveProtocolsByContext( model.getConteIdseq() ) )
             {
-
-                //////////////////////////////////////////////////
-                //Protocol List for this Context
-                //////////////////////////////////////////////////
-                List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
-                for( ProtocolModel protocolModel : protocolModelList )
-                {
-                    if( protocolModel.getConteIdseq().compareTo( model.getConteIdseq() ) == 0 )
-                    {
-                        //logger.debug( "**** protocolModel " + protocolModel.getLongName() );
-                        ProtocolNode protocolNode = initProtocolNode( protocolModel );
-
-                        //////////////////////////////////
-                        // Protocol Forms for this Protocol Folder
-                        //////////////////////////////////
-                        //getProtocolForms
-                        //List<ProtocolFormModel> protocolFormModelList = this.protocolFormDAO.getProtocolFormByProtoId( protocolModel.getProtoIdseq() );
-                        String protoId = protocolModel.getProtoIdseq();
-                        for( ProtocolFormModel protocolFormModel : protocolFormModelList )
-                        {
-                            String protoFormId = protocolFormModel.getProtoIdseq();
-                            if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
-                            {
-                                ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel );
-                                protocolNode.addChildNode( protocolFormNode );
-                            }
-                        }
-                        //logger.debug( "**** AFTER Get Protocol Forms" );
-
-                        //If there are NO protocol forms for this protocol, don't add him.
-                        if( protocolNode.isIsParent() )
-                        {
-                            protocolsParentNode.addChildNode( protocolNode );
-                        }
-                    }
-                }
+                insertPlaceHolderNode( protocolsParentNode );
             }
 
 
-            //////////////////////////////////////////////////////////////////////////
-            //This top node
-            //////////////////////////////////////////////////////////////////////////
-            ContextNode contextNodeParent = new ContextNode( model );
-            contextNodeParent.setHover( contextNodeParent.getHover() );
+            // This parent Context node
+            ContextNode contextNodeParent = new ContextNode( model, programAreaIndex );
+
+            // Add Classifications and ProtocolForms to this Context node
             contextNodeParent.addChildNode( classificationsParentNode );
             contextNodeParent.addChildNode( protocolsParentNode );
 
-
-            //Add to the top node which is the Program Area.
-            int programAreaIndex = getProgramArea( contextNodeParent.getPalName() );
-
-
+            // Add this parent Context node to the top node which is the Program Area.
             contextNodes[programAreaIndex].addTopNode( contextNodeParent );
-            //Set the tabs hover text to the caption for this Program area
-            contextNodes[programAreaIndex].setHover( getProgramAreaDiscriptionByIndex( programAreaIndex ) );
 
-            //Also add to "All" which is the last program area.
-            contextNodes[contextPalNameCount].addTopNode( contextNodeParent );
-            contextNodes[contextPalNameCount].setHover( "All Contexts" );
+            // Set the tabs hover text to the caption for this Program area, which will be shown below the selected tab in the client.
+            contextNodes[programAreaIndex].setHover( getProgramAreaDescriptionByIndex( programAreaIndex ) );
 
-
+            //Also add to "All" which is the first (0) program area.
+            ContextNode contextNodeForAll = new ContextNode( contextNodeParent );
+            contextNodeForAll.setProgramArea( 0 );
+            setHrefProgramArea( contextNodeForAll, 0 );
+            contextNodes[0].addTopNode( contextNodeForAll );
+            contextNodes[0].setHover( "All Contexts" );
         }
+
+        // Set bread crumb data
+        for( int f = 0; f < contextPalNameCount; f++ )
+        {
+            addBreadCrumbs( contextNodes[f], null );
+        }
+
+        // Set bread crumb data for Contexts in "All" Program Area
+        addBreadCrumbsAll( contextNodes[0], "All" );
+
         return contextNodes;
     }
 
 
-    /*
-    Folders within Classifications can have nested folders.
-    Returns a list of children of this parent, if any.
+    /**
+     *
+     * @param contextId
+     * @param programArea  We already have the original Program area, but this will tell us if it is being called from "All"
+     * @param folderType  0 = classifications folder, 1 = protocol forms folder
+     * @return
+     */
+    private List<BaseNode> getOneTreeByContextId( String contextId, int programArea, int folderType )
+    {
+        // The top level - Program areas
+        ContextNode[] contextNodes = initTopLevelContextNodes();
+
+        // Get this Context from the database
+        ContextModel model = this.contextDAO.getContextById( contextId );
+
+        // All ProtocolForms for this Context
+        List<ProtocolFormModel> protocolFormModelList = this.protocolFormDAO.getProtocolFormByContextId( contextId );
+
+        // The contents for the Classifications folder - the Classification Scheme, which is the list of individual Classifications.
+        List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemes( contextId );
+
+        // Classification Scheme Item List - This is a list of all individual items that are in the Classifications of this Context
+        // they will be place in their correct Classification later in insertClassifications.
+        setCsCsiNodelList( this.csCsiDAO.getCsCsisByConteId( contextId ) );
+
+        ////////////////////////////////////////
+        // This Contexts Classification folder
+        ParentNode classificationsParentNode = new ParentNode();
+
+        // Last parameter is "Collapsed" should be false if folderType is Classifications  0 = Classifications folder, 1 = Protocol forms folder
+        initClassificationsParentNode( classificationsParentNode, programArea, (folderType == 1));
+
+        //Add the Classifications to the classificationsParentNode for this Context.
+        insertClassifications( classificationsParentNode, csModelList, model, programArea );
+
+        ////////////////////////////////////////
+        // This Contexts Protocol forms folder
+        ParentNode protocolsParentNode = new ParentNode();
+
+        // Last parameter is "Collapsed" should be false if folderType is Classifications  0 = Classifications folder, 1 = Protocol forms folder
+        initProtocolsFormsParentNode(protocolsParentNode, programArea, (folderType == 0) );
+
+        //////////////////////////////////////////////////
+        //Protocol List for this Context, a Protocol will be a node which contains ProtocolForms
+        List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
+
+        // Populate each Protocol with their ProtocolForms
+        for( ProtocolModel protocolModel : protocolModelList )
+        {
+                // The node for this individual Protocol
+                ProtocolNode protocolNode = initProtocolNode( protocolModel, programArea );
+
+                // Add the ProtocolForms to this Protocol node
+                String protoId = protocolModel.getProtoIdseq();
+                for( ProtocolFormModel protocolFormModel : protocolFormModelList )
+                {
+                    String protoFormId = protocolFormModel.getProtoIdseq();
+                    if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
+                    {
+                        ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel, programArea );
+                        protocolNode.addChildNode( protocolFormNode );
+                    }
+                }
+
+                // Some Protocols have nor ProtocolForms, if there are NO protocol forms for this protocol, don't add him.
+                if( protocolNode.isIsParent() )
+                {
+                    protocolsParentNode.addChildNode( protocolNode );
+                }
+        }
+
+        // This parent Context node
+        ContextNode contextNodeParent = new ContextNode( model, programArea );
+
+        // Add Classifications and ProtocolForms to this Context node
+        contextNodeParent.addChildNode( classificationsParentNode );
+        contextNodeParent.addChildNode( protocolsParentNode );
+
+        // Add this parent Context node to the top node which is the Program Area.
+        contextNodes[programArea].addTopNode( contextNodeParent );
+
+        // Set the tabs hover text to the caption for this Program area, which will be shown below the selected tab in the client.
+        contextNodes[programArea].setHover( getProgramAreaDescriptionByIndex( programArea ) );
+
+        addBreadCrumbs( contextNodes[programArea], null );
+
+        return contextNodes[programArea].getChildren();
+    }
+
+
+    /**
+     * Set up the top level Context nodes, which are the program areas.
+     * @return
+     */
+    protected ContextNode[] initTopLevelContextNodes()
+    {
+        contextPalNameCount = programAreaModelList.size() + 1;//The + 1 is for "All"
+
+        ContextNode[] contextNodes = new ContextNode[contextPalNameCount];
+        for( int i = 1; i < contextPalNameCount; i++ )
+        {
+            contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get( i - 1 ).getPalName(), i );
+            contextNodes[i].setPalNameDescription( programAreaModelList.get( i - 1).getDescription() );
+        }
+
+        //Add all contexts tab at the end
+        contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, true, "All", 0 );
+
+        return contextNodes;
+    }
+
+    protected void addBreadCrumbs( BaseNode contextNode, List treePath )
+    {
+        if( ( treePath == null ) || ( treePath.isEmpty() ) )
+        {
+            contextNode.getTreePath().add( contextNode.getText() );
+        }
+        for( BaseNode node : contextNode.getChildren() )
+        {
+            node.setTreePath( new ArrayList<String>( contextNode.getTreePath() ) );
+            node.getTreePath().add( node.getText() );
+            if( node.isIsParent() )
+            {
+                addBreadCrumbs( node, node.getTreePath() );
+            }
+        }
+
+    }
+
+    /**
+     * Also sets the top/First treePath value to programAreaStr, so far, this is only
+     * used when setting a context tree the "All" program area.
+     * @param contextNode
+     * @param programAreaStr
+     */
+    protected void addBreadCrumbsAll( BaseNode contextNode, String programAreaStr )
+    {
+        List treePath = contextNode.getTreePath();
+
+        if( ( treePath == null ) || ( treePath.isEmpty() ) )
+        {
+            contextNode.getTreePath().add( contextNode.getText() );
+        }
+        treePath.set( 0, programAreaStr );
+        for( BaseNode node : contextNode.getChildren() )
+        {
+            {
+                node.setTreePath( new ArrayList<String>( treePath ) );
+            }
+            node.getTreePath().add( node.getText() );
+            if( node.isIsParent() )
+            {
+                addBreadCrumbsAll( node, programAreaStr );
+            }
+        }
+
+    }
+
+    /**
+     * Resets the program area to "All" in the rest call provided to the client (href field) and its programArea field when the contexts Program Area needs to be changed.
+     * It should only need to be changed when it is add to to the "All" program area.
+     *
+     * This rest call is used to bring back the whole tree when only the top level of the Context is loaded, so this is only set for the
+     * top nodes "Classifications" and "Protocol Forms"
+     *
+     * Only used to set the program area in the href, when adding a context to "All"
+     * also sets programArea.
+     *
+     * @param contextNode
+     * @param programArea
+     */
+    protected void setHrefProgramArea( BaseNode contextNode, int programArea )
+    {
+        for( BaseNode node : contextNode.getChildren() )
+        {
+            String regex = "&programArea=[0-9]+";
+            node.setHref( node.getHref().replaceAll( regex, "&programArea=" + programArea ) );
+            node.setProgramArea( programArea );
+        }
+    }
+
+
+    /**
+     * Folders within Classifications can have nested folders.
+     * Returns a list of children of this parent, if any.
+     *
+     * @param csCsiIdseq
+     * @return
      */
     protected List<CsCsiModel> getCsCsisByParentCsCsi( String csCsiIdseq )
     {
@@ -301,9 +437,7 @@ public class ContextDataController
         {
             for( CsCsiModel csCsiChildModel : csCsiChildNodelList )
             {
-
                 ClassificationItemNode classificationItemNodeChild = new ClassificationItemNode();
-
                 classificationItemNodeChild.setIsParent( false );
                 classificationItemNodeChild.setCollapsed( false );
                 classificationItemNodeChild.setChildType( CaDSRConstants.EMPTY );
@@ -311,11 +445,10 @@ public class ContextDataController
                 classificationItemNodeChild.setText( csCsiChildModel.getCsiName() );
                 classificationItemNodeChild.setHover( csCsiChildModel.getCsiDescription() );
                 classificationItemNodeChild.setIdSeq( csCsiChildModel.getCsiIdseq() );
-
+                classificationItemNodeChild.setProgramArea( classificationItemNodeParent.getProgramArea() );
                 //Add this child to the Parent
                 classificationItemNodeParent.addChildNode( classificationItemNodeChild );
                 //logger.debug( "IN addChildrenToCsi Child from list of children: " + classificationItemNodeChild.getText() + "  Parent: " + classificationItemNodeParent.getText() );
-
             }
 
             //Parent
@@ -324,8 +457,7 @@ public class ContextDataController
             classificationItemNodeParent.setChildType( CaDSRConstants.CSI );
             classificationItemNodeParent.setType( CaDSRConstants.CIS_FOLDER );
         }
-        // No children
-        else
+        else // No children
         {
             //Parent
             classificationItemNodeParent.setIsParent( false );
@@ -335,23 +467,48 @@ public class ContextDataController
         }
     }
 
-    protected void initClassificationsParentNode( ParentNode classificationsParentNode )
+    protected void initProtocolsFormsParentNode(ParentNode protocolsParentNode, int programArea, boolean collapsed)
+    {
+        protocolsParentNode.setText( "ProtocolForms" );
+        protocolsParentNode.setChildType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
+        initParentNode(protocolsParentNode, programArea, collapsed);
+    }
+
+    /**
+     *
+     * @param classificationsParentNode
+     * @param collapsed
+     */
+    protected void initClassificationsParentNode( ParentNode classificationsParentNode, int programArea, boolean collapsed )
     {
         //CS (Classification Scheme) folder
-        classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
-        classificationsParentNode.setType( CaDSRConstants.FOLDER );
         classificationsParentNode.setText( "Classifications" );
-        classificationsParentNode.setCollapsed( true );
-        // If/When a child is added IsParent will change to true.
-        classificationsParentNode.setIsParent( false );
-        //No need for tooltip
-        //classificationsParentNode.setHover( classificationsParentNode.getText() );
-        classificationsParentNode.setHref( classificationsParentNode.getHref() );
+        classificationsParentNode.setChildType( CaDSRConstants.FOLDER );
+        initParentNode(classificationsParentNode, programArea, collapsed);
+    }
+
+    protected void initParentNode( ParentNode classificationsParentNode, int programArea, boolean collapsed )
+    {
+        classificationsParentNode.setType( CaDSRConstants.FOLDER );
+        classificationsParentNode.setCollapsed( collapsed );
+        classificationsParentNode.setIsParent( false );        // If/When a child is added IsParent will change to true.
+        classificationsParentNode.setProgramArea( programArea );
         classificationsParentNode.setChildren( new ArrayList<BaseNode>() );
 
     }
 
-    protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel )
+
+    protected void insertPlaceHolderNode( ParentNode classificationsParentNode )
+    {
+        ParentNode placeHolderNode = new ParentNode();
+        placeHolderNode.setText( "Place Holder" );
+        placeHolderNode.setHover( "Place Holder" );
+        placeHolderNode.setCollapsed( true );
+        placeHolderNode.setIsParent( false );
+        classificationsParentNode.addChildNode( placeHolderNode );
+    }
+
+    protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel, int programArea )
     {
         //////////////////////////////////////////////////
         //CS (Classification Scheme) List for this Context
@@ -367,12 +524,14 @@ public class ContextDataController
                 ClassificationNode classificationSchemeNode = new ClassificationNode();
                 classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
                 classificationSchemeNode.setType( CaDSRConstants.FOLDER );
+
                 classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
                 //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + contextModel.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
                 classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() );
                 classificationSchemeNode.setCollapsed( true );
                 classificationSchemeNode.setIsParent( false );
                 classificationSchemeNode.setIdSeq( classificationSchemeModel.getCsIdseq() );
+                classificationSchemeNode.setProgramArea( programArea );
                 //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
 
                 ////////////////////////////////////////////////
@@ -381,24 +540,16 @@ public class ContextDataController
                 String csId = classificationSchemeModel.getCsIdseq();
                 for( CsCsiModel csCsiModel : csCsiNodelList )
                 {
-/*
-                    //FIXME just for dev time debugging
-                    if( csCsiModel.getCsConteIdseq().compareTo( "E5CA1CEF-E2C6-3073-E034-0003BA3F9857" ) == 0 )
-                    {
-                        logger.debug( "\n\n\ncsCsiNodelList - csCsiModel: " + csCsiModel.toString() + "   csCsiModel.getCsIdseq(): " +
-                                csCsiModel.getCsIdseq() + "\n--------------------------------------" );
-                    }
-
-*/
                     if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
                     {
-                        //Create the new, and set as much as we can without knowing if it has children
+                        //Create the new node, and set as much as we can without knowing if it has children
                         ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
                         classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
                         //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + contextModel.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
                         classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
                         classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
                         classificationSchemeItemNode.setCollapsed( true );
+                        classificationSchemeItemNode.setProgramArea( programArea );
                         //logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
                         addChildrenToCsi( classificationSchemeItemNode );
 
@@ -418,10 +569,15 @@ public class ContextDataController
     The ProtocolFormModel represents the data straight from the Database.
     The ProtocolFormNode is data sent to the client.
      */
-    protected ProtocolFormNode initProtocolFormNode( ProtocolFormModel protocolFormModel )
+    protected ProtocolFormNode initProtocolFormNode( ProtocolFormModel protocolFormModel, int programArea )
     {
         int maxHoverTextLen = Integer.parseInt( maxHoverTextLenStr );
         ProtocolFormNode protocolFormNode = new ProtocolFormNode();
+        protocolFormNode.setChildType( CaDSRConstants.EMPTY );
+        protocolFormNode.setType( CaDSRConstants.PROTOCOL );
+        protocolFormNode.setCollapsed( false );
+        protocolFormNode.setIsParent( false );
+
         protocolFormNode.setText( protocolFormModel.getLongName() );
         String hoverText = protocolFormModel.getProtoPreferredDefinition();
         if( !hoverText.isEmpty() && hoverText.length() > maxHoverTextLen )
@@ -429,109 +585,53 @@ public class ContextDataController
             hoverText = hoverText.substring( 0, maxHoverTextLen ) + "...";
         }
         protocolFormNode.setHover( hoverText );
-        protocolFormNode.setChildType( CaDSRConstants.EMPTY );
-        protocolFormNode.setType( CaDSRConstants.PROTOCOL );
-        protocolFormNode.setCollapsed( false );
-        protocolFormNode.setIsParent( false );
-
+        protocolFormNode.setProgramArea( programArea );
         return protocolFormNode;
     }
 
-    private ProtocolNode initProtocolNode( ProtocolModel protocolModel )
+    /**
+     * Create a protocolNode (for the client side) from a ProtocolModel (from the database)
+     * @param protocolModel
+     * @param programArea
+     * @return
+     */
+    protected ProtocolNode initProtocolNode( ProtocolModel protocolModel, int programArea )
     {
         int maxHoverTextLen = Integer.parseInt( maxHoverTextLenStr );
         ProtocolNode protocolNode = new ProtocolNode();
-        protocolNode.setText( protocolModel.getLongName() );
-        String hoverText = protocolModel.getPreferredDefinition();
-        if( !hoverText.isEmpty() && hoverText.length() > maxHoverTextLen )
-        {
-            hoverText = hoverText.substring( 0, maxHoverTextLen );
-        }
-        protocolNode.setHover( hoverText + "..." );
         protocolNode.setType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
         protocolNode.setChildType( CaDSRConstants.PROTOCOL );
         protocolNode.setCollapsed( true );
         protocolNode.setIsParent( false );
+
+        protocolNode.setText( protocolModel.getLongName() );
+        String hoverText = protocolModel.getPreferredDefinition();
+        //Trim the hover text length if needed, Max length for hover text is set in the properties file.
+        if( !hoverText.isEmpty() && hoverText.length() > maxHoverTextLen )
+        {
+            hoverText = hoverText.substring( 0, maxHoverTextLen )  + "..." ;
+        }
+        protocolNode.setHover( hoverText );
+        protocolNode.setProgramArea( programArea );
+
         return protocolNode;
     }
 
-    /*
-       for now we are breaking out the top level of the Context Tree menu by by alphabetical groups,
-       This method determines which group a context will be added to.
-     */
-    protected int getContextSubsetIndex( String contextName )
-    {
-
-        if( this.contextSubsetCount < 2 )
-        {
-            return 0;
-        }
-        int index;
-        int interval = CaDSRConstants.INTERVAL_SIZE[this.contextSubsetCount];
-        Character firstChar = contextName.toUpperCase().charAt( 0 );
-        index = ( firstChar - 65 ) / interval;
-        return index;
-    }
-
-    private int getProgramArea( String contextPalName )
+    protected int getProgramAreaByName( String contextPalName )
     {
         for( int i = 0; i < contextPalNameCount; i++ )
         {
             if( programAreaModelList.get( i ).getPalName().compareTo( contextPalName ) == 0 )
             {
-                return i;
+                return i + 1; //The +1 is for "All" to be 0
             }
         }
         return 0;
     }
 
-    private String getProgramAreaDiscriptionByIndex( int i )
+    protected String getProgramAreaDescriptionByIndex( int i )
     {
-        return programAreaModelList.get( i ).getDescription();
+        return programAreaModelList.get( i - 1 ).getDescription();
     }
 
-
-    private String getContextSubsetString( int count, int i )
-    {
-        int interval = CaDSRConstants.INTERVAL_SIZE[count];
-
-        int startLetter = ( interval * i );
-        int endLetter = ( startLetter + interval );
-
-        String subsetString = "";
-
-        if( endLetter > 26 )
-        {
-            endLetter = 26;
-
-        }
-
-        if( endLetter != ( startLetter + 1 ) )
-        {
-            subsetString += Character.toChars( 65 + startLetter )[0] + "-";
-        }
-        subsetString += Character.toChars( 64 + endLetter )[0];
-        return subsetString;
-    }
-
-
-    /**
-     * @return programArea count
-     */
-    private int initProgramAreaList()
-    {
-        programAreaModelList = programAreaDAO.getAllProgramAreas();
-        Collections.sort( programAreaModelList, new ProgramAreaComparator() );
-        return programAreaModelList.size();
-    }
-
-    private class ProgramAreaComparator implements Comparator<ProgramAreaModel>
-    {
-        @Override
-        public int compare( ProgramAreaModel a, ProgramAreaModel b )
-        {
-            return a.getPalName().toUpperCase().compareTo( b.getPalName().toUpperCase() );
-
-        }
-    }
 }

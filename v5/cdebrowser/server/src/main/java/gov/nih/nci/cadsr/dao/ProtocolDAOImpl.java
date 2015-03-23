@@ -24,8 +24,9 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
     }
 
     @Autowired
-    ProtocolDAOImpl(DataSource dataSource) {
-        setDataSource(dataSource);
+    ProtocolDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
@@ -36,8 +37,18 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
 
         String sql = " select * from SBREXT.PROTOCOLS_VIEW_EXT "
                 + " where  CONTE_IDSEQ = ? order by LONG_NAME";
-        result = getAll( sql, conteId , ProtocolModel.class );
+        result = getAll( sql, conteId, ProtocolModel.class );
         return result;
+    }
+
+    public boolean haveProtocolsByContext( String conteId )
+    {
+        List<ProtocolModel> result;
+
+        String sql = " select PROTO_IDSEQ from SBREXT.PROTOCOLS_VIEW_EXT "
+                + " where  CONTE_IDSEQ = ?";
+        result = getAll( sql, conteId, ProtocolModel.class );
+        return ( !result.isEmpty() );
     }
 
     @Override
@@ -47,7 +58,7 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
 
         String sql = " select * from SBREXT.PROTOCOLS_VIEW_EXT "
                 + " order by LONG_NAME";
-        result = getAll( sql , ProtocolModel.class );
+        result = getAll( sql, ProtocolModel.class );
 
         return result;
     }

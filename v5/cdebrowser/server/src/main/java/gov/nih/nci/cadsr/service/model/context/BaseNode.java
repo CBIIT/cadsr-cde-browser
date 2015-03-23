@@ -10,33 +10,41 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This class is extended by service.model.context nodes. They are the models for data going to the client side.
+ * The subclass of this class currently do not add much if anything to the object, but are individually subclassed to allow for
+ * ease of anticipated future evolution of these subclasses.
+ */
 public abstract class BaseNode implements Serializable
 {
     private Logger logger = LogManager.getLogger( BaseNode.class.getName() );
-
     private String text;
     private String hover = "";
     private int childType;
-    private String href = "Default action";
+    private String href = "";
     private int type;
-    private ArrayList<BaseNode> children;
+    // program area is used as the parent grouping in client UIs
+    private int programArea;
     private String idSeq = "";
-
-    // At this time these are only used as UI hints.
     private boolean isParent;
     private boolean isChild;
     private boolean collapsed;
+    // treePath is used to display "Bread Crumbs"  in client UIs
+    private List<String> treePath;
+    // children can be nested to an arbitrary depth, in the client UI this is typically nested folders fo "Classifications"
+    private ArrayList<BaseNode> children;
 
 
     public BaseNode()
     {
-        this.children = new ArrayList<BaseNode>();
+        this.children = new ArrayList<>();
+        this.treePath = new ArrayList<>();
         this.isParent = false;
         this.isChild = false;
         this.childType = 0;
     }
-
 
     public void addChildNode( BaseNode contextNode )
     {
@@ -47,39 +55,29 @@ public abstract class BaseNode implements Serializable
 
     public void addTopNode( BaseNode contextNode )
     {
-        //this.text =  this.text.substring(0, this.text.length()-1) + "x";
-
-
         contextNode.setIsChild( false );
         addNode( contextNode );
     }
 
+    /**
+     * Add a Child node.
+     *
+     * @param contextNode A node to be added as a child to this node.
+     */
     public void addNode( BaseNode contextNode )
     {
         children.add( contextNode );
         this.isParent = true;
         this.childType = contextNode.type;
-        //logger.debug( "A [" + contextNode.getText() +"] Adding child: parent is type: " +  this.type + "  child is type: " + this.childType);
 
-        //If I am a folder with csi child, make me a csi folder
+        // If I am a folder with csi child, make me a csi folder
+        // Type 2="Csi", type 3="Folder" type 5="CIS Folder"
         if( this.type == 3 && this.childType == 2 )
         {
             this.type = 5;
         }
-        //logger.debug( "B [" + contextNode.getText() + "] Adding child: parent is type: " +  this.type + "  child is type: " + this.childType);
-
     }
 
-
-
-    protected String trimName( int len, String text )
-    {
-        if( !text.isEmpty() && text.length() > len )
-        {
-            text = text.substring( 0, len ) + "...";
-        }
-        return text;
-    }
 
     public String getHover()
     {
@@ -141,18 +139,24 @@ public abstract class BaseNode implements Serializable
         this.children = children;
     }
 
+
+    /**
+     * Returns a truncated version of the nodes text.
+     *
+     * @return truncated node text.
+     */
     public String getTrimText()
     {
-        //FIXME - just test text for now
-        //this.setHref( "test.html?context=" + this.text );
-        //logger.debug( "this.Trimtext: " + trimName( CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN, text ) );
-        return trimName( CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN, text );
+        String str = text;
+        if( ( !str.isEmpty() )&& (str.length() > CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN) )
+        {
+            str = str.substring( 0, CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN ) + "...";
+        }
+        return str;
     }
 
     public String getText()
     {
-        //FIXME - just test text for now
-        //this.setHref( "test.html?context=" + this.text );
         return this.text;
     }
 
@@ -191,20 +195,39 @@ public abstract class BaseNode implements Serializable
         this.idSeq = idSeq;
     }
 
+    public int getProgramArea()
+    {
+        return programArea;
+    }
+
+    public void setProgramArea( int programArea )
+    {
+        this.programArea = programArea;
+    }
+
+    public List<String> getTreePath()
+    {
+        return treePath;
+    }
+
+    public void setTreePath( List<String> treePath )
+    {
+        this.treePath = treePath;
+    }
+
     public String toString()
     {
-        StringBuffer sb = new StringBuffer();
-
-        //sb.append( "name=" + this.getText() + "\n" );
+        StringBuilder sb = new StringBuilder();
         sb.append( "name=" + this.getText() + "\n" );
-
         sb.append( "ConteIdSeq=" + this.getIdSeq() + "\n" );
         sb.append( "href=" + this.getHref() + "\n" );
         sb.append( "hover=" + this.getHover() + "\n" );
-        sb.append( "type=" + this.getType() + "\n" );
-        sb.append( "childType=" + this.getChildType() + "\n" );
+        sb.append( "type[" +  this.getType()  + "]=" + CaDSRConstants.nodeType[this.getType()] + "\n" );
+        sb.append( "childType[" +  this.getChildType()  + "]=" + CaDSRConstants.nodeType[this.getChildType()] + "\n" );
         sb.append( "isParent=" + this.isIsParent() + "\n" );
         sb.append( "isChild=" + this.isIsChild() + "\n" );
+        sb.append( "programArea=" + this.getProgramArea() + "\n" );
+        sb.append( "treePath=" + this.getTreePath() + "\n" );
         return sb.toString();
     }
 

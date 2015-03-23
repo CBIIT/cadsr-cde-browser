@@ -20,26 +20,29 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
     protected String query = "";
     private int clientSearchField = -1;
     private String clientSearchMode = "";
-
-    //Will be refactored away soon
-    private TempTestParameters request;
-    //Will be refactored away soon
-    private DataElementSearchBean searchBean;
+    private String programArea = "";
 
 
-    public DESearchQueryBuilder(
-            TempTestParameters request,
-            DataElementSearchBean searchBean, String clientQuery, String clientSearchMode, int clientSearchField )
+    public DESearchQueryBuilder( String clientQuery, String clientSearchMode, int clientSearchField, String programArea )
     {
+        logger.debug( "DESearchQueryBuilder:  clientQuery[" + clientQuery + "]   clientSearchMode[" + clientSearchMode + "]" +
+                "  clientSearchField["  + clientSearchField + "]   programArea[" + programArea +"]");
         this.query = clientQuery;
         this.clientSearchMode = clientSearchMode;
         this.clientSearchField = clientSearchField;
-        this.request = request;
-        this.searchBean = searchBean;
-
-        logger.debug( "clientSearchMode: " + clientSearchMode );
+        this.programArea = programArea;
 
         buildSql();
+    }
+
+    public DESearchQueryBuilder( String clientQuery, String clientSearchMode, int clientSearchField )
+    {
+        this(clientQuery, clientSearchMode,clientSearchField, "");
+    }
+
+    public void setProgramArea( String programArea )
+    {
+        this.programArea = programArea;
     }
 
     protected void buildSql()
@@ -72,7 +75,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         //excludeArr will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
         {
-            //registrationExcludeWhere = " and " + searchBean.getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
             registrationExcludeWhere = " and " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
         }
 
@@ -96,15 +98,10 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         cdeType = StringUtils.replaceNull( request.getParameter( "jspCDEType" ) );
         */
 
-        logger.debug( "  statusWhere (jspStatus): " + StringUtils.stringArrayToString( statusWhere ) );
-        logger.debug( "  regStatusesWhere (regStatus): " + StringUtils.stringArrayToString( regStatusesWhere ) );
-        //logger.debug( "  searchStr9 (altName): " + StringUtils.stringArrayToString( searchStr9 ) );
-        logger.debug( "  searchIn (jspSearchIn): " + StringUtils.stringArrayToString( searchIn ) );
-
-
         //set filter on "version"
         latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
 
+        String programAreaWhere = "";
         String wkFlowWhere = "";
         String cdeIdWhere = "";
         String vdWhere = "";
@@ -112,6 +109,11 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         String docWhere = "";
         String vvWhere = "";
         String regStatus = "";
+
+        if( ! programArea.isEmpty())
+        {
+            programAreaWhere = " conte.pal_name = '" + programArea + "' and ";
+        }
 
         wkFlowWhere = this.buildStatusWhereClause( statusWhere );
 
@@ -149,7 +151,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
          }
         */
 
-
         /*
         Will not be needed until "Search only Derived DEs" is implemented
         if( !cdeType.equals( "" ) )
@@ -169,18 +170,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( vvWhere );
         whereBuffer.append( deDerivWhere );
 
-/*
-             logger.debug("wkFlowWhere: " + wkFlowWhere);
-             logger.debug("cdeIdWhere: " + cdeIdWhere);
-             logger.debug("vdWhere: " + vdWhere);
-             logger.debug("decWhere: " + decWhere);
-             logger.debug("docWhere: " + docWhere);
-             logger.debug("vvWhere: " + vvWhere);
-             logger.debug("regStatus: " + regStatus);
-             logger.debug("altNameWhere: " + altNameWhere);
-             logger.debug("whereBuffer: " + whereBuffer.toString())
-*/
-
 
         whereClause = whereBuffer.toString();
         String fromWhere = " from sbr.data_elements_view de , " +
@@ -191,7 +180,9 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 registrationFrom +
                 wkFlowFrom +
                 deDerivFrom +
-                " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
+                " where " +
+                programAreaWhere +
+                " de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                 registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
                 " and de.asl_name != 'RETIRED DELETED' " +
                 " and conte.conte_idseq = de.conte_idseq " +
@@ -204,6 +195,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 
         sqlStmt = finalSqlStmt.toString();
     }
+
 
     public String getQueryStmt()
     {
@@ -218,29 +210,25 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             return "";
         }
 
-        logger.debug( "statusList.length: " + statusList.length );
         String wkFlowWhere = "";
         String wkFlow = "";
         if( statusList.length == 1 )
         {
             wkFlow = statusList[0];
             wkFlowWhere = " and de.asl_name = '" + wkFlow + "'";
-        }
-        else
+        } else
         {
             for( int i = 0; i < statusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     wkFlow = "'" + statusList[0] + "'";
-                }
-                else
+                } else
                 {
                     wkFlow = wkFlow + "," + "'" + statusList[i] + "'";
                 }
             }
             wkFlowWhere = " and de.asl_name IN (" + wkFlow + ")";
-
         }
 
         return wkFlowWhere;
@@ -260,16 +248,14 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             regStatus = regStatusList[0];
             regStatWhere = " and acr.registration_status = '" + regStatus + "'";
-        }
-        else
+        } else
         {
             for( int i = 0; i < regStatusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     regStatus = "'" + regStatusList[0] + "'";
-                }
-                else
+                } else
                 {
                     regStatus = regStatus + "," + "'" + regStatusList[i] + "'";
                 }
@@ -325,8 +311,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchWhere == null )
         {
             searchWhere = shortNameWhere;
-        }
-        else if( shortNameWhere != null )
+        } else if( shortNameWhere != null )
         {
             searchWhere = searchWhere + " OR " + shortNameWhere;
         }
@@ -334,8 +319,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchWhere == null && docTextSearchWhere != null )
         {
             searchWhere = " and " + docTextSearchWhere;
-        }
-        else if( docTextSearchWhere != null )
+        } else if( docTextSearchWhere != null )
         {
             searchWhere = searchWhere + " OR " + docTextSearchWhere;
             searchWhere = " and (" + searchWhere + ") ";
@@ -358,12 +342,10 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     + " and    " + buildSearchString( "upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
 
 
-        }
-        else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
+        } else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
-        }
-        else if( StringUtils.containsKey( searchDomain, "Hist" ) )
+        } else if( StringUtils.containsKey( searchDomain, "Hist" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
@@ -376,8 +358,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     + " from sbr.data_elements_view de1 "
                     + " where  " + searchWhere + " ) ";
 
-        }
-        else if( docWhere == null && docTextTypeWhere != null )
+        } else if( docWhere == null && docTextTypeWhere != null )
         {
             docWhere = "(select de_idseq "
                     + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
@@ -401,8 +382,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             if( docWhere == null )
             {
                 return " and de.de_idseq IN " + umlAltNameWhere;
-            }
-            else
+            } else
             {
                 String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
                         + " union " + docWhere + ") ";
@@ -429,8 +409,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_ANY ) )
         {
             oper = " or ";
-        }
-        else
+        } else
         {
             oper = " and ";
         }
@@ -466,8 +445,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             if( whereClauseStr == null )
             {
                 whereClauseStr = " " + colName + " NOT IN ('" + excludeArr[i] + "'";
-            }
-            else
+            } else
             {
                 whereClauseStr = whereClauseStr + " , '" + excludeArr[i] + "'";
             }

@@ -14,7 +14,7 @@ public class BasicSearchNode
     private String version;
     private String usedByContext;
     private String registrationStatus;
-    private String href = "Default action";
+    private String href = "";
     private String deIdseq;
 
     public String getLongName()
