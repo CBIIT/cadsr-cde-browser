@@ -1,0 +1,6 @@
+#caDSR CDE Browser v5 Wildfly setup scripts
+
+connect localhost:9990
+
+#1 add the jdbc module it doesn't matter if it's already there
+module add --name=com.oracle.jdbc7 --resources=/local/content/cdebrowser/modules/ojdbc7.jar --dependencies=javax.api,javax.transaction.api
