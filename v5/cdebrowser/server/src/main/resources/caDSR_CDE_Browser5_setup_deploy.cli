@@ -45,7 +45,7 @@ deploy --force /local/content/cdebrowser/artifacts/cdebrowserServer.war
 # References: (http://www.mastertheboss.com/jboss-server/jboss-script/installing-a-jboss-as-7-module-using-the-cli)
 
 #module add --name=[module package. ex: org.mysql] --resources=[source path to jar] --dependencies=[comma separated list of dependencies]
-#module add --name=com.oracle --resources=/local/content/cdebrowser/artifacts/ojdbc7.jar --dependencies=javax.api,javax.transaction.api
+#module add --name=com.oracle --resources=/local/content/cdebrowser/modules/ojdbc7-12.1.0.2.0.jar --dependencies=javax.api,javax.transaction.api
 
  
 #/subsystem=datasources/jdbc-driver=mysql:add(driver-module-name=org.mysql,driver-name=mysql,driver-class-name=com.mysql.jdbc.Driver)
