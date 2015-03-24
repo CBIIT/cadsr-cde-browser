@@ -2,6 +2,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
+import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
@@ -21,6 +22,7 @@ public class BasicSearchController
 
     private Logger logger = LogManager.getLogger( BasicSearchController.class.getName() );
     private BasicSearchDAOImpl basicSearchDAO;
+    private DataElementDAO dataElementDAO;
     private RestControllerCommon restControllerCommon;
     private List<ProgramAreaModel> programAreaModelList = null;
 
@@ -41,6 +43,11 @@ public class BasicSearchController
     public List<ProgramAreaModel> getProgramAreaModelList()
     {
         return programAreaModelList;
+    }
+
+    public void setDataElementDAO( DataElementDAO dataElementDAO )
+    {
+        this.dataElementDAO = dataElementDAO;
     }
 
     public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
@@ -78,6 +85,33 @@ public class BasicSearchController
     }
 */
 
+
+
+
+    @RequestMapping(value = "/cdesByContext")
+    @ResponseBody
+    public BasicSearchNode[] getCDEsByContext( @RequestParam("contextId") String contexId )
+    {
+        String sql;
+        // Get All publicIds
+
+        // Owned by
+
+        // SQL to get owned by
+        sql = "select DISTINCT * from sbr.DATA_ELEMENTS_VIEW de where de.CONTE_IDSEQ = '" + contexId + "'";
+        logger.debug( "sql: " + sql );
+        List<BasicSearchModel> results = runQuery( sql );
+        return buildSearchResultsNodes( results );
+
+
+        // Used by
+
+
+    }
+
+
+
+
     /**
      *
      * @param query The text of the users search input.
@@ -88,7 +122,6 @@ public class BasicSearchController
      */
     private BasicSearchNode[] basicSearch( String query, int field, int queryType, String programArea )
     {
-        //FIXME - Martin add notes for String queryType
         String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
 
         //If programArea an empty string, all program areas will be searched

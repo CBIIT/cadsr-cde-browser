@@ -120,20 +120,20 @@ public class ContextDataController
 
     /**
      *
-     * @param contextId
+     * @param contextId The one Context who's tree we need to return to the client.
      * @param programArea  We already have the original Program area, but this will tell us if it is being called from "All"
-     * @param folderType
-     * @return
+     * @param folderType Is it a "Classifications" or "Protocol Forms" folder? We us this to determine which should be collapsed, and which oopen
+     * @return The complete Context tree from "Classifications" and "Protocol Forms" down.
      */
     @RequestMapping( value = "/oneContextData" )
     @ResponseBody
-    public List<BaseNode> oneContextData( @RequestParam( "contextId" ) String contextId, @RequestParam( "programArea" ) int programArea , @RequestParam("folderType") int folderType)
+    public List<ParentNode> oneContextData( @RequestParam( "contextId" ) String contextId, @RequestParam( "programArea" ) int programArea , @RequestParam("folderType") int folderType)
     {
         logger.debug( "Received rest call \"oneContextData\" [" +  contextId +"]   Program Area[" + programArea + "]   FolderType[" + folderType + "]");
         programAreaModelList = restControllerCommon.getProgramAreaList();
-        List<BaseNode> contextNodes = getOneTreeByContextId( contextId, programArea, folderType );
+        List<ParentNode> contextTree = getOneTreeByContextId( contextId, programArea, folderType );
         logger.debug( "Done rest call\n=========================\n" );
-        return contextNodes;
+        return contextTree;
     }
 
     private ContextNode[] getAllTopLevelTreeData()
@@ -220,13 +220,14 @@ public class ContextDataController
 
     /**
      *
-     * @param contextId
+     * @param contextId Which Context tree to return.
      * @param programArea  We already have the original Program area, but this will tell us if it is being called from "All"
      * @param folderType  0 = classifications folder, 1 = protocol forms folder
-     * @return
+     * @return The complete Context tree from "Classifications" and "Protocol Forms" down.
      */
-    private List<BaseNode> getOneTreeByContextId( String contextId, int programArea, int folderType )
+    private List<ParentNode> getOneTreeByContextId( String contextId, int programArea, int folderType )
     {
+
         // The top level - Program areas
         ContextNode[] contextNodes = initTopLevelContextNodes();
 
@@ -289,6 +290,8 @@ public class ContextDataController
                 }
         }
 
+
+
         // This parent Context node
         ContextNode contextNodeParent = new ContextNode( model, programArea );
 
@@ -304,13 +307,18 @@ public class ContextDataController
 
         addBreadCrumbs( contextNodes[programArea], null );
 
-        return contextNodes[programArea].getChildren();
+        //Now that we have complete Bread Crumbs, we only need to send the classificationsParentNode and protocolsParentNode.
+        ArrayList<ParentNode> classificationsAndProtocolForms = new ArrayList<>();
+        classificationsAndProtocolForms.add( classificationsParentNode );
+        classificationsAndProtocolForms.add( protocolsParentNode );
+
+        return classificationsAndProtocolForms;
     }
 
 
     /**
      * Set up the top level Context nodes, which are the program areas.
-     * @return
+     * @return Array of top level nodes, which are the Program Areas.
      */
     protected ContextNode[] initTopLevelContextNodes()
     {
@@ -337,7 +345,7 @@ public class ContextDataController
         }
         for( BaseNode node : contextNode.getChildren() )
         {
-            node.setTreePath( new ArrayList<String>( contextNode.getTreePath() ) );
+            node.setTreePath( new ArrayList<>( contextNode.getTreePath() ) );
             node.getTreePath().add( node.getText() );
             if( node.isIsParent() )
             {
@@ -350,8 +358,8 @@ public class ContextDataController
     /**
      * Also sets the top/First treePath value to programAreaStr, so far, this is only
      * used when setting a context tree the "All" program area.
-     * @param contextNode
-     * @param programAreaStr
+     * @param contextNode The Context node for "All" Program Area.
+     * @param programAreaStr TheProgram Area ( should be "All).
      */
     protected void addBreadCrumbsAll( BaseNode contextNode, String programAreaStr )
     {
@@ -361,7 +369,9 @@ public class ContextDataController
         {
             contextNode.getTreePath().add( contextNode.getText() );
         }
+
         treePath.set( 0, programAreaStr );
+
         for( BaseNode node : contextNode.getChildren() )
         {
             {
@@ -386,8 +396,8 @@ public class ContextDataController
      * Only used to set the program area in the href, when adding a context to "All"
      * also sets programArea.
      *
-     * @param contextNode
-     * @param programArea
+     * @param contextNode The node which needs its href and Program Area (re)set.  This should only be needed when copying a Context to the "ALL" Program Area.
+     * @param programArea The Program Area to set this node to. This function is (currently) only used/needed to set a Program Area to "All".
      */
     protected void setHrefProgramArea( BaseNode contextNode, int programArea )
     {
@@ -404,12 +414,12 @@ public class ContextDataController
      * Folders within Classifications can have nested folders.
      * Returns a list of children of this parent, if any.
      *
-     * @param csCsiIdseq
-     * @return
+     * @param csCsiIdseq parent Classification Scheme Item.
+     * @return list of children of this parent Classification Scheme Item.
      */
     protected List<CsCsiModel> getCsCsisByParentCsCsi( String csCsiIdseq )
     {
-        List<CsCsiModel> childrenList = new ArrayList<CsCsiModel>();
+        List<CsCsiModel> childrenList = new ArrayList<>();
 
         for( CsCsiModel csCsiModel : csCsiNodelList )
         {
@@ -423,10 +433,9 @@ public class ContextDataController
     }
 
     /**
-     * Adds a new child classification node with initial fields set from data in parent
-     * Find the children, and add them.
+     * Adds any children of this Classification node to this Classification node with initial fields set from data in parent.
      *
-     * @param classificationItemNodeParent
+     * @param classificationItemNodeParent The parent Classification node, to which any children will be added.
      */
     protected void addChildrenToCsi( ClassificationItemNode classificationItemNodeParent )
     {
@@ -477,6 +486,7 @@ public class ContextDataController
     /**
      *
      * @param classificationsParentNode
+     * @param programArea
      * @param collapsed
      */
     protected void initClassificationsParentNode( ParentNode classificationsParentNode, int programArea, boolean collapsed )
@@ -591,9 +601,9 @@ public class ContextDataController
 
     /**
      * Create a protocolNode (for the client side) from a ProtocolModel (from the database)
-     * @param protocolModel
-     * @param programArea
-     * @return
+     * @param protocolModel The date model to populate a Protocol node from
+     * @param programArea Top level Program Area for the new ProtocolNode.
+     * @return The new ProtocolNode which is to be part of the object passed on to the client.
      */
     protected ProtocolNode initProtocolNode( ProtocolModel protocolModel, int programArea )
     {
@@ -617,6 +627,11 @@ public class ContextDataController
         return protocolNode;
     }
 
+    /**
+     * Get a Program Areas number/index by its name.
+     * @param contextPalName Program Area name.
+     * @return Program Area index.
+     */
     protected int getProgramAreaByName( String contextPalName )
     {
         for( int i = 0; i < contextPalNameCount; i++ )
@@ -631,6 +646,12 @@ public class ContextDataController
 
     protected String getProgramAreaDescriptionByIndex( int i )
     {
+        logger.debug( "getProgramAreaDescriptionByIndex index: " + i );
+        //If it's "All"(0)
+        if( i < 1)
+        {
+            return "";
+        }
         return programAreaModelList.get( i - 1 ).getDescription();
     }
 
