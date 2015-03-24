@@ -7,7 +7,7 @@ package gov.nih.nci.cadsr.dao.model;
  * Time: 4:27 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DataElement  extends BaseModel
+public class DataElementModel extends BaseModel
 {
     private String DE_IDSEQ;
     private String VERSION;

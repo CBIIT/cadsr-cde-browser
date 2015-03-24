@@ -161,7 +161,7 @@ public class ContextDataController
                     "&programArea=" + getProgramAreaByName( model.getPalName() ) +
                     "&folderType=0" );// folderType: 0 = classifications folder, 1 = protocol forms folder
 
-            logger.debug( "Checking for Classification Schemes" );
+            logger.debug( "Checking for Classification Schemes - " + model.getName() );
             // Is there at least one classification?
             if( this.classificationSchemeDAO.haveClassificationSchemes( model.getConteIdseq() ) )
             {
@@ -182,7 +182,6 @@ public class ContextDataController
             {
                 insertPlaceHolderNode( protocolsParentNode );
             }
-
 
             // This parent Context node
             ContextNode contextNodeParent = new ContextNode( model, programAreaIndex );
@@ -266,31 +265,7 @@ public class ContextDataController
         List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
 
         // Populate each Protocol with their ProtocolForms
-        for( ProtocolModel protocolModel : protocolModelList )
-        {
-                // The node for this individual Protocol
-                ProtocolNode protocolNode = initProtocolNode( protocolModel, programArea );
-
-                // Add the ProtocolForms to this Protocol node
-                String protoId = protocolModel.getProtoIdseq();
-                for( ProtocolFormModel protocolFormModel : protocolFormModelList )
-                {
-                    String protoFormId = protocolFormModel.getProtoIdseq();
-                    if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
-                    {
-                        ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel, programArea );
-                        protocolNode.addChildNode( protocolFormNode );
-                    }
-                }
-
-                // Some Protocols have nor ProtocolForms, if there are NO protocol forms for this protocol, don't add him.
-                if( protocolNode.isIsParent() )
-                {
-                    protocolsParentNode.addChildNode( protocolNode );
-                }
-        }
-
-
+        initProtocolModels( protocolModelList,  protocolFormModelList, protocolsParentNode, programArea);
 
         // This parent Context node
         ContextNode contextNodeParent = new ContextNode( model, programArea );
@@ -315,6 +290,46 @@ public class ContextDataController
         return classificationsAndProtocolForms;
     }
 
+    /**
+     * Populate each Protocol with it's Protocol Forms and add to the Parent Protocol node (the "Protocol Forms" folder)
+     * @param protocolModelList The list of Protocols (for one Context)
+     * @param protocolFormModelList List of all the Protocol Forms (for this one Context)
+     * @param protocolsParentNode The parent "Protocol Forms" node/folder
+     * @param programArea Program Area for this Context/Protocol
+     */
+    protected void initProtocolModels(List<ProtocolModel> protocolModelList, List<ProtocolFormModel> protocolFormModelList, ParentNode protocolsParentNode, int programArea)
+    {
+
+        // Populate each Protocol with their ProtocolForms
+        for( ProtocolModel protocolModel : protocolModelList )
+        {
+            // The node for this individual Protocol
+            ProtocolNode protocolNode = initProtocolNode( protocolModel, programArea );
+
+            // Add the ProtocolForms to this Protocol node
+            String protoId = protocolModel.getProtoIdseq();
+            for( ProtocolFormModel protocolFormModel : protocolFormModelList )
+            {
+                String protoFormId = protocolFormModel.getProtoIdseq();
+                if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
+                {
+                    ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel, programArea );
+                    protocolNode.addChildNode( protocolFormNode );
+                }
+            }
+
+            // Some Protocols have no ProtocolForms, if there are NO protocol forms for this protocol, don't add him.
+            if( protocolNode.isIsParent() )
+            {
+                logger.debug("Adding protocolNode to parent");
+                protocolsParentNode.addChildNode( protocolNode );
+            }
+            else
+            {
+                logger.debug("! protocolNode.isIsParent()");
+            }
+        }
+    }
 
     /**
      * Set up the top level Context nodes, which are the program areas.
@@ -646,7 +661,7 @@ public class ContextDataController
 
     protected String getProgramAreaDescriptionByIndex( int i )
     {
-        logger.debug( "getProgramAreaDescriptionByIndex index: " + i );
+        //logger.debug( "getProgramAreaDescriptionByIndex index: " + i );
         //If it's "All"(0)
         if( i < 1)
         {

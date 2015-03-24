@@ -102,7 +102,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
         sql = "select count(CS_IDSEQ) from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED'";
         results = getOneInt( sql, conteId );
-        //logger.debug( "Done haveClassificationSchemes [" + results +"]" );
         return (  results > 0 );
     }
 
