@@ -160,8 +160,6 @@ public class ContextNode extends BaseNode
         // Contexts don't need tooltips
         //this.setHover( this.getText() );
 
-        //FIXME - just test text for now
-        //this.setHref( "test.html?context=" + this.getText() );
         this.setChildType( 0 );
         this.setIdSeq( contextModel.getConteIdseq() );
         this.setChildren( new ArrayList<BaseNode>() );

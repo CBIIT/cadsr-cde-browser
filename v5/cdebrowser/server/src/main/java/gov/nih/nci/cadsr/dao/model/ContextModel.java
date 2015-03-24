@@ -118,19 +118,6 @@ public class ContextModel extends BaseModel
         }
     }
 
-    /**
-     * Clones the Context Object
-     * FIXME - this doesn't work yet
-     *
-     * @return
-     * @throws CloneNotSupportedException
-     */
-    public Object clone() throws CloneNotSupportedException
-    {
-        ContextModel copy = null;
-        copy = ( ContextModel ) super.clone();
-        return copy;
-    }
 
     public String toString()
     {
