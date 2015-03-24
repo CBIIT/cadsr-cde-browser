@@ -4,6 +4,7 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
@@ -72,6 +73,7 @@ public class BasicSearchController
         return basicSearch( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
     }
 
+
  /*
      - - This service is only used for testing. It returns raw search results. - -
 
@@ -86,30 +88,38 @@ public class BasicSearchController
 */
 
 
-
-
     @RequestMapping(value = "/cdesByContext")
     @ResponseBody
     public BasicSearchNode[] getCDEsByContext( @RequestParam("contextId") String contexId )
     {
+        return getCDEsOwnedOrUsedByContext(contexId);
+    }
+
+    private BasicSearchNode[] getCDEsOwnedOrUsedByContext( String contexId)
+    {
+        StringBuilder publicIdList = new StringBuilder();
         String sql;
         // Get All publicIds
 
         // Owned by
 
         // SQL to get owned by
+
+        //sql ="select DISTINCT de.cde_id from DATA_ELEMENTS_VIEW de where de.CONTE_IDSEQ = '" + contexId + "'";
         sql = "select DISTINCT * from sbr.DATA_ELEMENTS_VIEW de where de.CONTE_IDSEQ = '" + contexId + "'";
         logger.debug( "sql: " + sql );
-        List<BasicSearchModel> results = runQuery( sql );
-        return buildSearchResultsNodes( results );
-
+        List<DataElementModel> results = runCdeQuery( sql );
+        for( DataElementModel model: results)
+        {
+            logger.debug( "CDE PubId: " + model.getCDE_ID() );
+            publicIdList.append( model.getCDE_ID() + " " );
+        }
+        return basicSearch( publicIdList.toString(), 1, 2, "" );
 
         // Used by
 
 
     }
-
-
 
 
     /**
@@ -224,5 +234,10 @@ public class BasicSearchController
     {
         basicSearchDAO.setBasicSearchSql( sql );
         return basicSearchDAO.getAllContexts();
+    }
+    protected List<DataElementModel> runCdeQuery( String sql )
+    {
+        dataElementDAO.setDataElementSql( sql );
+        return dataElementDAO.getCdeByContextId(  );
     }
 }

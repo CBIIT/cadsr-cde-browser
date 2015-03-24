@@ -208,7 +208,12 @@
 
                             //if user clicks on the text
                             scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function (selectedNode, selectAction) {
-                                console.log("Click on text, action: " + selectAction);
+                                console.log("* * * Click on text, action: " + selectAction);
+                                // Have they clicked on a Context, if so, I need to bring back CDEs to display as search results
+                                if( selectAction.indexOf("cdesByContext") > -1)
+                                {
+                                    scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/" + selectAction);
+                                }
                                 disp(selectedNode);
                             };
                         }

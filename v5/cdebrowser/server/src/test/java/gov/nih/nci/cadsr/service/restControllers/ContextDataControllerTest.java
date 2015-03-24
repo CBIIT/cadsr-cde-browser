@@ -11,8 +11,11 @@ import gov.nih.nci.cadsr.service.model.context.*;
 import junit.framework.TestCase;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 public class ContextDataControllerTest extends TestCase
 {
@@ -20,9 +23,10 @@ public class ContextDataControllerTest extends TestCase
 
     private List<CsCsiModel> csCsiNodelList = null;
     private ProtocolFormModel protocolFormModel = null;
-    private ProtocolModel protocolModel  = null;
+    private ProtocolModel protocolModel = null;
     private UnitTestCommon unitTestCommon = null;
     private int programArea = 1;
+    private String protoIdseq = "X3";
     private String testPreferredDefinition;
     private String testLongName;
     private String testHoverText;
@@ -35,7 +39,7 @@ public class ContextDataControllerTest extends TestCase
         contextDataController.setMaxHoverTextLenStr( "50" );
         testMaxHoverTextLen = Integer.parseInt( contextDataController.getMaxHoverTextLenStr() );
         contextDataController.setProgramAreaModelList( unitTestCommon.initSampleProgramAreas() );
-        contextDataController.setContextPalNameCount(contextDataController.getProgramAreaModelList().size());
+        contextDataController.setContextPalNameCount( contextDataController.getProgramAreaModelList().size() );
         initTestPreferredDefinition();
     }
 
@@ -127,7 +131,7 @@ public class ContextDataControllerTest extends TestCase
         boolean collapsed = true;
         String text = "ProtocolForms";
         ParentNode protocolsParentNode = new ParentNode();
-        contextDataController.initProtocolsFormsParentNode( protocolsParentNode, programArea, collapsed );//ParentNode, programArea, isCollapsed
+        contextDataController.initProtocolsFormsParentNode( protocolsParentNode, programArea, collapsed );
 
         assertEquals( text, protocolsParentNode.getText() );
         assertEquals( programArea, protocolsParentNode.getProgramArea() );
@@ -158,10 +162,51 @@ public class ContextDataControllerTest extends TestCase
         contextDataController.insertPlaceHolderNode( parentNode );
 
         //Get the place holder node, it will be the first and only child.
-        ParentNode placeHolderNode = (ParentNode)parentNode.getChildren().get( 0 );
-        assertEquals( "Place Holder", placeHolderNode.getText());
+        ParentNode placeHolderNode = ( ParentNode ) parentNode.getChildren().get( 0 );
+        assertEquals( "Place Holder", placeHolderNode.getText() );
         assertTrue( "Place holder node should be collapsed.", placeHolderNode.isCollapsed() );
         assertFalse( "Place holder node should not be set as a Parent.", placeHolderNode.isIsParent() );
+    }
+
+    /*
+      Test initProtocolModels
+      Populates each Protocol with it's Protocol Forms and add to the Parent Protocol node (the "Protocol Forms" folder)
+     */
+    public void testInitProtocolModels()
+    {
+
+        // List of Protocols for one Context.
+        List<ProtocolModel> protocolModelList = new ArrayList<>();
+        // Create/init a Protocol Model.
+        initProtocolModel();
+        // Add this Protocol Model to the list.
+        protocolModelList.add( protocolModel );
+
+        // List of all the Protocol Forms for this one Context.
+        List<ProtocolFormModel> protocolFormModelList = new ArrayList<>(  );
+        // Create/init a Protocol Form Model.
+        initProtocolFormModel();
+        // Add this Protocol Form to the list.
+        protocolFormModelList.add( protocolFormModel );
+
+        // Create a Parent node to add the Protocol Model list to.
+        ParentNode protocolsParentNode = new ParentNode();
+        protocolsParentNode.setIsParent( true );
+        contextDataController.initProtocolModels(protocolModelList, protocolFormModelList, protocolsParentNode,  programArea);
+
+        //Does the parent have the Protocol node
+        BaseNode testProtocolModel = protocolsParentNode.getChildren().get( 0 );
+        assertNotNull( testProtocolModel );
+
+        //Does the Protocol node have the Protocol Form
+        BaseNode testProtocolFormModel = testProtocolModel.getChildren().get(0);
+        assertNotNull( testProtocolFormModel );
+
+        //Does the Protocol Form have the init test values
+        assertEquals(  testHoverText, testProtocolFormModel.getHover() );
+        assertEquals(  testLongName, testProtocolFormModel.getText() );
+
+
     }
 
     // The top level nodes should have only the Program areas
@@ -257,8 +302,8 @@ public class ContextDataControllerTest extends TestCase
     {
         testLongName = "Test long name";
         // This will test the truncating of very long Descriptions when they are used for hover text
-        testPreferredDefinition =  "Test preferred preferred definition" + new String( new char[testMaxHoverTextLen]).replace('\0', 'X');
-        testHoverText = testPreferredDefinition.substring( 0, testMaxHoverTextLen) + "...";
+        testPreferredDefinition = "Test preferred preferred definition" + new String( new char[testMaxHoverTextLen] ).replace( '\0', 'X' );
+        testHoverText = testPreferredDefinition.substring( 0, testMaxHoverTextLen ) + "...";
 
     }
 
@@ -268,58 +313,58 @@ public class ContextDataControllerTest extends TestCase
         protocolModel = new ProtocolModel();
         protocolModel.setLongName( testLongName );
         protocolModel.setPreferredDefinition( testPreferredDefinition );
-
+        protocolModel.setProtoIdseq( protoIdseq );
     }
+
     //FIXME - add a good description
     public void testInitProtocolNode0()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
-        assertEquals( testLongName, protocolNode.getText()  );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
+        assertEquals( testLongName, protocolNode.getText() );
     }
 
     public void testInitProtocolNode1()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
         assertEquals( testHoverText, protocolNode.getHover() );
     }
 
     public void testInitProtocolNode2()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
         assertEquals( programArea, protocolNode.getProgramArea() );
     }
 
     public void testInitProtocolNode3()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
         assertEquals( CaDSRConstants.PROTOCOL_FORMS_FOLDER, protocolNode.getType() );
     }
 
     public void testInitProtocolNode4()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
         assertEquals( CaDSRConstants.PROTOCOL, protocolNode.getChildType() );
     }
 
     public void testInitProtocolNode5()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
         assertTrue( "This ProtocolNode should be collapsed.", protocolNode.isCollapsed() );
     }
 
     public void testInitProtocolNode6()
     {
         initProtocolModel();
-        ProtocolNode protocolNode = contextDataController.initProtocolNode(  protocolModel,  programArea );
+        ProtocolNode protocolNode = contextDataController.initProtocolNode( protocolModel, programArea );
         assertFalse( "This ProtocolNode should not be set as a Parent.", protocolNode.isIsParent() );
     }
-
 
 
     /* ************************************************************
@@ -330,6 +375,7 @@ public class ContextDataControllerTest extends TestCase
         protocolFormModel = new ProtocolFormModel();
         protocolFormModel.setLongName( testLongName );
         protocolFormModel.setProtoPreferredDefinition( testPreferredDefinition );
+        protocolFormModel.setProtoIdseq( protoIdseq  );
     }
 
     public void testInitProtocolFormNode0()
@@ -357,7 +403,7 @@ public class ContextDataControllerTest extends TestCase
     {
         initProtocolFormModel();
         ProtocolFormNode protocolFormNode = contextDataController.initProtocolFormNode( protocolFormModel, programArea );
-        assertEquals(  CaDSRConstants.EMPTY, protocolFormNode.getChildType() );
+        assertEquals( CaDSRConstants.EMPTY, protocolFormNode.getChildType() );
     }
 
 
@@ -477,8 +523,7 @@ public class ContextDataControllerTest extends TestCase
         try
         {
             json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/csCsiModelTest.data" );
-        }
-        catch( IOException e )
+        } catch( IOException e )
         {
             assertTrue( e.getMessage(), false );
         }
@@ -491,7 +536,7 @@ public class ContextDataControllerTest extends TestCase
     public void testGetProgramAreaByName0()
     {
         //SDOs is index 6 in the test data.
-        assertEquals(6, contextDataController.getProgramAreaByName( "SDOs" ));
+        assertEquals( 6, contextDataController.getProgramAreaByName( "SDOs" ) );
     }
 
     public void testGetProgramAreaByName1()
@@ -500,12 +545,18 @@ public class ContextDataControllerTest extends TestCase
         assertEquals( 0, contextDataController.getProgramAreaByName( "XXXXXXXXXX" ) );
     }
 
-    public void testGetProgramAreaDescriptionByIndex()
+    public void testGetProgramAreaDescriptionByIndex0()
     {
-       assertEquals( "StandardsDevelopmentOrganizations", contextDataController.getProgramAreaDescriptionByIndex( 6 ) );
+        assertEquals( "StandardsDevelopmentOrganizations", contextDataController.getProgramAreaDescriptionByIndex( 6 ) );
     }
 
-    // Creates and initilizes a list of ClassificationSchemeModels for insertClassifications tests
+    public void testGetProgramAreaDescriptionByIndex1()
+    {
+        // 0 is "all", which is the default if the Program Area is returned as an empty String.
+        assertEquals( "", contextDataController.getProgramAreaDescriptionByIndex( 0 ) );
+    }
+
+    // Creates and initializes a list of ClassificationSchemeModels for insertClassifications tests
     private List<ClassificationSchemeModel> csModelListInit()
     {
         Gson gson = new GsonBuilder().create();
@@ -513,8 +564,7 @@ public class ContextDataControllerTest extends TestCase
         try
         {
             json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/classificationSchemeModelTest.data" );
-        }
-        catch( IOException e )
+        } catch( IOException e )
         {
             assertTrue( e.getMessage(), false );
         }
