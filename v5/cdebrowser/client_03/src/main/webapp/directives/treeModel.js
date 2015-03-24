@@ -1,4 +1,4 @@
-        cdeBrowserApp.directive('treeModel', ['$compile','$http', function ($compile,$http) {
+        cdeBrowserApp.directive('treeModel', ['$compile','$http','$timeout', function ($compile,$http,$timeout) {
             return {
                 restrict: 'A',
                 link: function (scope, element, attrs) {
@@ -178,43 +178,26 @@
                                 // The rest call will be something like - cdebrowserServer/oneContextData?contextId=selectedNode.href
                                 console.log("Click folder Icon: " + selectedNode.contextName + "   " + selectedNode.href );
                                 if (selectedNode.text=='Classifications'||selectedNode.text=='ProtocolForms') {
-                                    console.log(selectedNode['dataLoaded']);
-                                    if (!selectedNode['dataLoaded']) {
-                                        $http.get("data4.json").success(function (response) {
+                                    if (!selectedNode['dataLoaded'] && selectedNode['children'].length) {
+                                        $http.get("data6.json").success(function (response) {
+                                            selectedNode['children'] = [];
+                                            if (selectedNode.text=='Classifications') {
+                                                selectedNode['children'] = response[0]['children'];
+                                            }
+                                            else {
+                                                selectedNode['children'] = response[1]['children'];
+                                            }
                                             selectedNode['dataLoaded'] = true;
-                                            selectedNode.children.push(                            {
-                                "text":"New Tree Node",
-                                "hover":"Place Holder",
-                                "childType":0,
-                                "href":"",
-                                "type":0,
-                                "programArea":0,
-                                "idSeq":"",
-                                "isParent":false,
-                                "isChild":true,
-                                "collapsed":true,
-                                "treePath":[
-                                    "All",
-                                    "ABTC (Adult Brain Tumor\nConsortium) ",
-                                    "Classifications",
-                                    "Place Holder"
-                                ],
-                                "children":[
-
-                                ],
-                                "palName":"",
-                                "palNameDescription":"",
-                                "trimText":"Place Holder"
-                            }
-);
-                                            console.log("called");
                                         });
                                     }
                                 }
                                 //Collapse or Expand
+
                                 if (selectedNode.isParent == 1) {
                                     //console.log("Folder is parent");
-                                    selectedNode.collapsed = !selectedNode.collapsed;
+                                    $timeout(function() {
+                                        selectedNode.collapsed = !selectedNode.collapsed;
+                                    }); 
                                 }
 
                             };
