@@ -24,6 +24,9 @@ public final class CaDSRConstants
     public static final int MAX_TITLE_WITH_DESCRIPTION_LEN = 30;
     public static final String[] SEARCH_MODE={"Exact phrase", "All of the words", "At least one of the words"};
 
+    public static  final int CLASSIFICATIONS_TYPE_FOLDER = 0;
+    public static  final int PROTOCOLFORMS_TYPE_FOLDER = 1;
+
 
     public static final String USER_KEY = "nciUser";
     public static final String CDE_MANAGER = "CDE MANAGER";

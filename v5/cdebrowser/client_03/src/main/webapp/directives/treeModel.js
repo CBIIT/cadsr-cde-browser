@@ -181,16 +181,9 @@
                                     if (!selectedNode['dataLoaded'] && selectedNode['children'].length) {
                                             // $http.get("data6.json").success(function (response) {
                                             $http.get("http://" + window.location.hostname + ":" + window.location.port + "/" + selectedNode.href).success(function (response) {
-                                            selectedNode['children'] = [];
-                                            if (selectedNode.text=='Classifications') {
-                                                selectedNode['children'] = response[0]['children'];
-                                            }
-                                            else {
-                                                selectedNode['children'] = response[1]['children'];
-                                            }
-                                            selectedNode['dataLoaded'] = true;                                        
+                                            selectedNode['children'] = response[0]['children'];
+                                            selectedNode['dataLoaded'] = true;
                                         });
-                                           
                                     }
                                 }
                                 //Collapse or Expand
