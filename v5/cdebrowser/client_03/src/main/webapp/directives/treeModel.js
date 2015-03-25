@@ -179,7 +179,8 @@
                                 console.log("Click folder Icon: " + selectedNode.contextName + "   " + selectedNode.href );
                                 if (selectedNode.text=='Classifications'||selectedNode.text=='ProtocolForms') {
                                     if (!selectedNode['dataLoaded'] && selectedNode['children'].length) {
-                                        $http.get("data6.json").success(function (response) {
+                                            // $http.get("data6.json").success(function (response) {
+                                            $http.get("http://" + window.location.hostname + ":" + window.location.port + "/" + selectedNode.href).success(function (response) {
                                             selectedNode['children'] = [];
                                             if (selectedNode.text=='Classifications') {
                                                 selectedNode['children'] = response[0]['children'];
