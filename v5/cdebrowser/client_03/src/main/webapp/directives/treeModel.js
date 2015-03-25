@@ -188,29 +188,19 @@
                                             else {
                                                 selectedNode['children'] = response[1]['children'];
                                             }
-                                            selectedNode['dataLoaded'] = true;
-                                                //Collapse or Expand if making rest call
-
-                                                if (selectedNode.isParent == 1) {
-                                                    //console.log("Folder is parent");
-                                                    $timeout(function() {
-                                                        selectedNode.collapsed = !selectedNode.collapsed;
-                                                    }); 
-                                                }                                             
+                                            selectedNode['dataLoaded'] = true;                                        
                                         });
                                            
                                     }
                                 }
-                                else {
-                                    //Collapse or Expand
+                                //Collapse or Expand
 
-                                    if (selectedNode.isParent == 1) {
-                                        //console.log("Folder is parent");
-                                        $timeout(function() {
-                                            selectedNode.collapsed = !selectedNode.collapsed;
-                                        }); 
-                                    }                                    
-                                }
+                                if (selectedNode.isParent == 1) {
+                                    //console.log("Folder is parent");
+                                    $timeout(function() {
+                                        selectedNode.collapsed = !selectedNode.collapsed;
+                                    }); 
+                                }                                    
 
 
                             };
