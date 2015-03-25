@@ -189,17 +189,29 @@
                                                 selectedNode['children'] = response[1]['children'];
                                             }
                                             selectedNode['dataLoaded'] = true;
+                                                //Collapse or Expand if making rest call
+
+                                                if (selectedNode.isParent == 1) {
+                                                    //console.log("Folder is parent");
+                                                    $timeout(function() {
+                                                        selectedNode.collapsed = !selectedNode.collapsed;
+                                                    }); 
+                                                }                                             
                                         });
+                                           
                                     }
                                 }
-                                //Collapse or Expand
+                                else {
+                                    //Collapse or Expand
 
-                                if (selectedNode.isParent == 1) {
-                                    //console.log("Folder is parent");
-                                    $timeout(function() {
-                                        selectedNode.collapsed = !selectedNode.collapsed;
-                                    }); 
+                                    if (selectedNode.isParent == 1) {
+                                        //console.log("Folder is parent");
+                                        $timeout(function() {
+                                            selectedNode.collapsed = !selectedNode.collapsed;
+                                        }); 
+                                    }                                    
                                 }
+
 
                             };
                             //if user clicks on a plan icon
