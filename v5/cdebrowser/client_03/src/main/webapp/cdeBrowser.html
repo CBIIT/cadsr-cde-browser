@@ -309,17 +309,18 @@
              normmSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
             {{searchResultsMessage}}
-        </span>
+        </span><div class="breadCrumbs" ng-show="haveSearchResults">Results: {{tableParams.count()}}</div>
         <div class="breadCrumbs">
-            <br ng-show="searchResultsMessage" />
+            <br >
             <span ng-show="breadCrumbs">
-            <span ng-repeat="b in breadCrumbs">
-                {{b}}<span ng-show="!$last"> >></span>
-            </span>
+                <span ng-repeat="b in breadCrumbs">
+                    {{b}}<span ng-show="!$last"> >></span>
+                </span><br /><br />
+            </span> 
         </div>
-        <div id="searchResults" data-ng-show="haveSearchResults">
+        <div id="searchResults" data-ng-show="haveSearchResults">  
+        <div class="breadCrumbs" ng-repeat="(key,val) in tableParams.sorting()">Sort Order: {{sortNames[key]}} [{{val}}]</div> 
     <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div><br />
-
     <script type="text/ng-template" id="ng-table/headers/checkbox.html">
         <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
     </script>
