@@ -32,10 +32,6 @@
         <property name="restControllerCommon" ref="resControllerCommon" />
     </bean>
 
-    <bean id="adminController" class="gov.nih.nci.cadsr.service.restControllers.AdminController" >
-        <property name="classificationSchemeDAO" ref="classificationSchemeDAO" />
-    </bean>
-
     <bean id="contextDataController" class="gov.nih.nci.cadsr.service.restControllers.ContextDataController"  >
         <property name="classificationSchemeDAO" ref="classificationSchemeDAO" />
         <property name="contextDAO" ref="contextDAO" />

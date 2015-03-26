@@ -78,7 +78,6 @@ public class ContextNode extends BaseNode
         this.setType( type );
         this.setProgramArea( programArea );
         this.setText( name );
-        this.setHover( hoverText );
         // Hover text/tooltip
         this.setHover( hoverText );
         this.setCollapsed( isCollapsed );
