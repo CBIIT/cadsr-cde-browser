@@ -5,6 +5,11 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
     $scope.searchResults = [];
+
+    $scope.NORMAL=0;
+    $scope.BIG=1;
+    $scope.ERROR=2;
+
     window.scope = $scope;
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
@@ -186,30 +191,43 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     };
 
     $scope.dataLoad = function (dataSource) {
-        $scope.waitMessage = "Please wait, loading Context data (" + dataSource + ").....";
-        //$scope.waitMessage = "Please wait, loading Context data.....";
-        $scope.bigMessageClass = true;
+        $scope.waitMessage = "Please wait, loading Context data\n (" + dataSource + ").....".replace(/(?:\r\n|\r|\n)/g,"\n<br>");
+        $scope.messageClass = $scope.BIG;
 
         $http.get(dataSource).success(function (response) {
 
             //console.log("Back from context_data Service:");
             //console.log( JSON.stringify( response) );
-            $scope.contextListMaster = response;
-            $scope.waitMessage = "caDSR Contexts:";
-            $scope.bigMessageClass = false;
-            //FIXME move this
-            $scope.initComplete = true;
-            $scope.onClickTab(0);
+            console.log( "STATUS [" + response[0].status +"]" );
+
+            if( response[0].status == $scope.ERROR )
+            {
+                console.log( "ERROR: " + response[0].text );
+                $scope.waitMessage = response[0].text.replace(/(?:\r\n|\r|\n)/g,"\n<br>");
+                $scope.messageClass = $scope.ERROR;
+            }
+            else
+            {
+                $scope.contextListMaster = response;
+                $scope.waitMessage = "caDSR Contexts:";
+                $scope.messageClass = $scope.NORMAL;
+
+                //FIXME move this
+                $scope.initComplete = true;
+                $scope.onClickTab(0);
+            }
         });
 
          console.log("End dataLoad: " + dataSource);
 
     };
 
+/*
     $scope.myFilter = function (text) {
         console.log("Filter1: " + text.href);
         return true;
     };
+*/
 
 
     $scope.hideContexts();

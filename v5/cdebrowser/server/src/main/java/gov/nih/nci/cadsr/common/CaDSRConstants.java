@@ -27,6 +27,12 @@ public final class CaDSRConstants
     public static  final int CLASSIFICATIONS_TYPE_FOLDER = 0;
     public static  final int PROTOCOLFORMS_TYPE_FOLDER = 1;
 
+    public static final int OK = 0;
+    public static final int WARN = 1;
+    public static final int ERROR = 2;
+    public static final int TEST = 3;
+
+
 
     public static final String USER_KEY = "nciUser";
     public static final String CDE_MANAGER = "CDE MANAGER";

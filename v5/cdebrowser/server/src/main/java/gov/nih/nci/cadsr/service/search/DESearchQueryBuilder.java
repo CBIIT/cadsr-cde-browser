@@ -22,11 +22,14 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
     private String clientSearchMode = "";
     private String programArea = "";
 
+    public DESearchQueryBuilder()
+    {
+    }
 
     public DESearchQueryBuilder( String clientQuery, String clientSearchMode, int clientSearchField, String programArea )
     {
         logger.debug( "DESearchQueryBuilder:  clientQuery[" + clientQuery + "]   clientSearchMode[" + clientSearchMode + "]" +
-                "  clientSearchField["  + clientSearchField + "]   programArea[" + programArea +"]");
+                "  clientSearchField[" + clientSearchField + "]   programArea[" + programArea + "]" );
         this.query = clientQuery;
         this.clientSearchMode = clientSearchMode;
         this.clientSearchField = clientSearchField;
@@ -37,7 +40,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 
     public DESearchQueryBuilder( String clientQuery, String clientSearchMode, int clientSearchField )
     {
-        this(clientQuery, clientSearchMode,clientSearchField, "");
+        this( clientQuery, clientSearchMode, clientSearchField, "" );
     }
 
     public void setProgramArea( String programArea )
@@ -110,7 +113,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         String vvWhere = "";
         String regStatus = "";
 
-        if( ! programArea.isEmpty())
+        if( !programArea.isEmpty() )
         {
             programAreaWhere = " conte.pal_name = '" + programArea + "' and ";
         }
@@ -216,14 +219,16 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             wkFlow = statusList[0];
             wkFlowWhere = " and de.asl_name = '" + wkFlow + "'";
-        } else
+        }
+        else
         {
             for( int i = 0; i < statusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     wkFlow = "'" + statusList[0] + "'";
-                } else
+                }
+                else
                 {
                     wkFlow = wkFlow + "," + "'" + statusList[i] + "'";
                 }
@@ -248,14 +253,16 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             regStatus = regStatusList[0];
             regStatWhere = " and acr.registration_status = '" + regStatus + "'";
-        } else
+        }
+        else
         {
             for( int i = 0; i < regStatusList.length; i++ )
             {
                 if( i == 0 )
                 {
                     regStatus = "'" + regStatusList[0] + "'";
-                } else
+                }
+                else
                 {
                     regStatus = regStatus + "," + "'" + regStatusList[i] + "'";
                 }
@@ -311,7 +318,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchWhere == null )
         {
             searchWhere = shortNameWhere;
-        } else if( shortNameWhere != null )
+        }
+        else if( shortNameWhere != null )
         {
             searchWhere = searchWhere + " OR " + shortNameWhere;
         }
@@ -319,7 +327,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchWhere == null && docTextSearchWhere != null )
         {
             searchWhere = " and " + docTextSearchWhere;
-        } else if( docTextSearchWhere != null )
+        }
+        else if( docTextSearchWhere != null )
         {
             searchWhere = searchWhere + " OR " + docTextSearchWhere;
             searchWhere = " and (" + searchWhere + ") ";
@@ -342,10 +351,12 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     + " and    " + buildSearchString( "upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
 
 
-        } else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
+        }
+        else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
-        } else if( StringUtils.containsKey( searchDomain, "Hist" ) )
+        }
+        else if( StringUtils.containsKey( searchDomain, "Hist" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
@@ -358,7 +369,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     + " from sbr.data_elements_view de1 "
                     + " where  " + searchWhere + " ) ";
 
-        } else if( docWhere == null && docTextTypeWhere != null )
+        }
+        else if( docWhere == null && docTextTypeWhere != null )
         {
             docWhere = "(select de_idseq "
                     + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
@@ -382,7 +394,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             if( docWhere == null )
             {
                 return " and de.de_idseq IN " + umlAltNameWhere;
-            } else
+            }
+            else
             {
                 String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
                         + " union " + docWhere + ") ";
@@ -409,7 +422,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_ANY ) )
         {
             oper = " or ";
-        } else
+        }
+        else
         {
             oper = " and ";
         }
@@ -445,7 +459,8 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             if( whereClauseStr == null )
             {
                 whereClauseStr = " " + colName + " NOT IN ('" + excludeArr[i] + "'";
-            } else
+            }
+            else
             {
                 whereClauseStr = whereClauseStr + " , '" + excludeArr[i] + "'";
             }
@@ -467,6 +482,248 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 + " or " + matcher.replaceAll( word + " %" )
                 + " or " + matcher.replaceAll( word )
                 + " or " + matcher.replaceAll( "% " + word ) + ")";
+    }
+
+
+    public String getQueryCdeByProtocolForm( String id )
+    {
+        return "SELECT DISTINCT de.de_idseq ,\n" +
+                "                de.preferred_name de_preferred_name ,\n" +
+                "                de.long_name ,\n" +
+                "                rd.doc_text ,\n" +
+                "                conte.NAME ,\n" +
+                "                de.asl_name ,\n" +
+                "                To_char(de.cde_id)                       de_cdeid ,\n" +
+                "                de.version                               de_version ,\n" +
+                "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,\n" +
+                "                de.vd_idseq ,\n" +
+                "                de.dec_idseq ,\n" +
+                "                de.conte_idseq ,\n" +
+                "                de.preferred_definition ,\n" +
+                "                acr.registration_status ,\n" +
+                "                rsl.display_order ,\n" +
+                "                asl.display_order wkflow_order ,\n" +
+                "                de.cde_id         cdeid\n" +
+                "FROM            sbr.data_elements_view de ,\n" +
+                "                sbr.reference_documents_view rd ,\n" +
+                "                sbr.contexts_view conte,\n" +
+                "                sbrext.quest_contents_view_ext qc ,\n" +
+                "                sbr.ac_registrations_view acr ,\n" +
+                "                sbr.reg_status_lov_view rsl ,\n" +
+                "                sbr.ac_status_lov_view asl\n" +
+                "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
+                "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
+                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                "AND             conte.conte_idseq = de.conte_idseq\n" +
+                "AND             qc.dn_crf_idseq = '" + id + "'\n" +
+                "AND             qc.qtl_name = 'QUESTION'\n" +
+                "AND             qc.de_idseq = de.de_idseq\n" +
+                "AND             de.de_idseq = acr.ac_idseq (+)\n" +
+                "AND             acr.registration_status = rsl.registration_status (+)\n" +
+                "AND             de.asl_name = asl.asl_name (+)";
+    }
+
+    public String getQueryCdeByProtocol( String protocolId )
+    {
+        return "SELECT DISTINCT de.de_idseq ,\n" +
+                "                de.preferred_name de_preferred_name ,\n" +
+                "                de.long_name ,\n" +
+                "                rd.doc_text ,\n" +
+                "                conte.NAME ,\n" +
+                "                de.asl_name ,\n" +
+                "                To_char(de.cde_id)                       de_cdeid ,\n" +
+                "                de.version                               de_version ,\n" +
+                "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,\n" +
+                "                de.vd_idseq ,\n" +
+                "                de.dec_idseq ,\n" +
+                "                de.conte_idseq ,\n" +
+                "                de.preferred_definition ,\n" +
+                "                acr.registration_status ,\n" +
+                "                rsl.display_order ,\n" +
+                "                asl.display_order wkflow_order ,\n" +
+                "                de.cde_id         cdeid\n" +
+                "FROM            sbr.data_elements_view de ,\n" +
+                "                sbr.reference_documents_view rd ,\n" +
+                "                sbr.contexts_view conte,\n" +
+                "                sbrext.quest_contents_view_ext frm ,\n" +
+                "                sbrext.protocol_qc_ext ptfrm ,\n" +
+                "                sbrext.protocols_view_ext pt ,\n" +
+                "                sbrext.quest_contents_view_ext qc ,\n" +
+                "                sbr.ac_registrations_view acr ,\n" +
+                "                sbr.reg_status_lov_view rsl ,\n" +
+                "                sbr.ac_status_lov_view asl\n" +
+                "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
+                "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
+                "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' )\n" +
+                "AND             asl.asl_name NOT                      IN ( 'CMTE APPROVED' ,\n" +
+                "                                                          'CMTE SUBMTD' ,\n" +
+                "                                                          'CMTE SUBMTD USED' ,\n" +
+                "                                                          'RETIRED ARCHIVED' ,\n" +
+                "                                                          'RETIRED PHASED OUT' ,\n" +
+                "                                                          'RETIRED WITHDRAWN' )\n" +
+                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+                "                                   'Training' )\n" +
+                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                "AND             conte.conte_idseq = de.conte_idseq\n" +
+                "AND             pt.proto_idseq = ptfrm.proto_idseq\n" +
+                "AND             frm.qc_idseq = ptfrm.qc_idseq\n" +
+                "AND             frm.latest_version_ind = 'Yes'\n" +
+                "AND             frm.qtl_name = 'CRF'\n" +
+                "AND             qc.dn_crf_idseq = frm.qc_idseq\n" +
+                "AND             qc.qtl_name = 'QUESTION'\n" +
+                "AND             qc.de_idseq = de.de_idseq\n" +
+                "AND             pt.proto_idseq = '" + protocolId + "'\n" +
+                "AND             de.de_idseq = acr.ac_idseq (+)\n" +
+                "AND             acr.registration_status = rsl.registration_status (+)\n" +
+                "AND             de.asl_name = asl.asl_name (+)";
+    }
+
+    public String getQueryCdeByContextClassificationSchemeItem( String classificationSchemeItemId )
+    {
+        return " SELECT DISTINCT de.de_idseq ,\n" +
+                "                de.preferred_name de_preferred_name ,\n" +
+                "                de.long_name ,\n" +
+                "                rd.doc_text ,\n" +
+                "                conte.NAME ,\n" +
+                "                de.asl_name ,\n" +
+                "                To_char(de.cde_id)                       de_cdeid ,\n" +
+                "                de.version                               de_version ,\n" +
+                "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,\n" +
+                "                de.vd_idseq ,\n" +
+                "                de.dec_idseq ,\n" +
+                "                de.conte_idseq ,\n" +
+                "                de.preferred_definition ,\n" +
+                "                acr.registration_status ,\n" +
+                "                rsl.display_order ,\n" +
+                "                asl.display_order wkflow_order ,\n" +
+                "                de.cde_id         cdeid\n" +
+                "FROM            sbr.data_elements_view de ,\n" +
+                "                sbr.reference_documents_view rd ,\n" +
+                "                sbr.contexts_view conte,\n" +
+                "                sbr.ac_csi_view acs ,\n" +
+                "                sbr.ac_registrations_view acr ,\n" +
+                "                sbr.reg_status_lov_view rsl ,\n" +
+                "                sbr.ac_status_lov_view asl\n" +
+                "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
+                "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
+                "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' )\n" +
+                "AND             asl.asl_name NOT                      IN ( 'CMTE APPROVED' ,\n" +
+                "                                                          'CMTE SUBMTD' ,\n" +
+                "                                                          'CMTE SUBMTD USED' ,\n" +
+                "                                                          'RETIRED ARCHIVED' ,\n" +
+                "                                                          'RETIRED PHASED OUT' ,\n" +
+                "                                                          'RETIRED WITHDRAWN' )\n" +
+                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+                "                                   'Training' )\n" +
+                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                "AND             conte.conte_idseq = de.conte_idseq\n" +
+                "AND             acs.cs_csi_idseq = '" + classificationSchemeItemId + "'\n" +
+                "AND             acs.ac_idseq = de.de_idseq\n" +
+                "AND             de.de_idseq = acr.ac_idseq (+)\n" +
+                "AND             acr.registration_status = rsl.registration_status (+)\n" +
+                "AND             de.asl_name = asl.asl_name (+)";
+    }
+
+    public String getQueryCdeByContextClassificationScheme( String classificationSchemeId )
+    {
+        return " SELECT DISTINCT de.de_idseq ,\n" +
+                "                de.preferred_name de_preferred_name ,\n" +
+                "                de.long_name ,\n" +
+                "                rd.doc_text ,\n" +
+                "                conte.NAME ,\n" +
+                "                de.asl_name ,\n" +
+                "                To_char(de.cde_id)                       de_cdeid ,\n" +
+                "                de.version                               de_version ,\n" +
+                "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,\n" +
+                "                de.vd_idseq ,\n" +
+                "                de.dec_idseq ,\n" +
+                "                de.conte_idseq ,\n" +
+                "                de.preferred_definition ,\n" +
+                "                acr.registration_status ,\n" +
+                "                rsl.display_order ,\n" +
+                "                asl.display_order wkflow_order ,\n" +
+                "                de.cde_id         cdeid\n" +
+                "FROM            sbr.data_elements_view de ,\n" +
+                "                sbr.reference_documents_view rd ,\n" +
+                "                sbr.contexts_view conte ,\n" +
+                "                sbr.ac_registrations_view acr ,\n" +
+                "                sbr.reg_status_lov_view rsl ,\n" +
+                "                sbr.ac_status_lov_view asl\n" +
+                "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
+                "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
+                "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' )\n" +
+                "AND             asl.asl_name NOT                      IN ( 'CMTE APPROVED' ,\n" +
+                "                                                          'CMTE SUBMTD' ,\n" +
+                "                                                          'CMTE SUBMTD USED' ,\n" +
+                "                                                          'RETIRED ARCHIVED' ,\n" +
+                "                                                          'RETIRED PHASED OUT' ,\n" +
+                "                                                          'RETIRED WITHDRAWN' )\n" +
+                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+                "                                   'Training' )\n" +
+                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                "AND             conte.conte_idseq = de.conte_idseq\n" +
+                "AND             de.de_idseq = acr.ac_idseq (+)\n" +
+                "AND             acr.registration_status = rsl.registration_status (+)\n" +
+                "AND             de.asl_name = asl.asl_name (+)\n" +
+                "AND             de.de_idseq IN\n" +
+                "                (\n" +
+                "                       SELECT de_idseq\n" +
+                "                       FROM   sbr.data_elements_view de ,\n" +
+                "                              sbr.ac_csi_view acs,\n" +
+                "                              sbr.cs_csi_view csc\n" +
+                "                       WHERE  csc.cs_idseq = '" + classificationSchemeId + "'\n" +
+                "                       AND    csc.cs_csi_idseq = acs.cs_csi_idseq\n" +
+                "                       AND    acs.ac_idseq = de_idseq )";
+    }
+
+    public String getQueryCDEsOwndAndUsedByContext( String conteId )
+    {
+        return " SELECT DISTINCT de.de_idseq,\n" +
+                "                de.preferred_name                        de_preferred_name,\n" +
+                "                de.long_name,\n" +
+                "                rd.doc_text,\n" +
+                "                conte.name,\n" +
+                "                de.asl_name,\n" +
+                "                To_char(de.cde_id)                       de_cdeid,\n" +
+                "                de.version                               de_version,\n" +
+                "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby,\n" +
+                "                de.vd_idseq,\n" +
+                "                de.dec_idseq,\n" +
+                "                de.conte_idseq,\n" +
+                "                de.preferred_definition,\n" +
+                "                acr.registration_status,\n" +
+                "                rsl.display_order,\n" +
+                "                asl.display_order                        wkflow_order,\n" +
+                "                de.cde_id                                cdeid\n" +
+                "FROM   sbr.data_elements_view de,\n" +
+                "       sbr.reference_documents_view rd,\n" +
+                "       sbr.contexts_view conte,\n" +
+                "       sbr.ac_registrations_view acr,\n" +
+                "       sbr.reg_status_lov_view rsl,\n" +
+                "       sbr.ac_status_lov_view asl\n" +
+                "WHERE  de.de_idseq = rd.ac_idseq (+)\n" +
+                "       AND rd.dctl_name (+) = 'Preferred Question Text'\n" +
+                "       AND Nvl(acr.registration_status, '-1') NOT IN ( 'Retired' )\n" +
+                "       AND asl.asl_name NOT IN ( 'CMTE APPROVED', 'CMTE SUBMTD',\n" +
+                "                                 'CMTE SUBMTD USED',\n" +
+                "                                 'RETIRED ARCHIVED',\n" +
+                "                                 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN' )\n" +
+                "       AND conte.name NOT IN ( 'TEST', 'Training' )\n" +
+                "       AND de.asl_name != 'RETIRED DELETED'\n" +
+                "       AND conte.conte_idseq = de.conte_idseq\n" +
+                "       AND de.de_idseq IN (SELECT ac_idseq\n" +
+                "                           FROM   sbr.designations_view des\n" +
+                "                           WHERE\n" +
+                "           des.conte_idseq = '" + conteId + "'\n" +
+                "           AND des.detl_name = 'USED_BY'\n" +
+                "                           UNION\n" +
+                "                           SELECT de_idseq\n" +
+                "                           FROM   sbr.data_elements_view de1\n" +
+                "                           WHERE\n" +
+                "           de1.conte_idseq = '" + conteId + "')\n" +
+                "       AND de.de_idseq = acr.ac_idseq (+)\n" +
+                "       AND acr.registration_status = rsl.registration_status (+)\n" +
+                "       AND de.asl_name = asl.asl_name (+)  ";
     }
 
 

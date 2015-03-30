@@ -35,26 +35,27 @@ a:hover {
   background-color: #a90101; /* constant: red */
 }
 
-#topStatusMessage {
-    background-color: #fff;
-    color: #18344d;
-    /*
-        position: fixed;
-        top: 84px;
-        left: 2px;
-    */
-
-}
 
 .bigMessage {
     font-size: 28px;
     font-weight: bold;
+    background-color: #fff;
+    color: #18344d;
 
 }
 
 .normMessage {
     font-size: 14px;
     font-weight: normal;
+    background-color: #fff;
+    color: #18344d;
+}
+
+.errorMessage {
+    font-size: 22px;
+    font-weight: normal;
+    color: #800;
+    background-color: #fff;
 }
 
 .topButtons {

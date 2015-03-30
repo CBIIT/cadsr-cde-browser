@@ -35,7 +35,8 @@ public abstract class BaseNode implements Serializable
     private List<String> treePath;
     // children can be nested to an arbitrary depth, in the client UI this is typically nested folders fo "Classifications"
     private ArrayList<BaseNode> children;
-
+    // Status will tell the client if there was an error, if so message will be in text field.
+    private int status;
 
     public BaseNode()
     {
@@ -44,6 +45,7 @@ public abstract class BaseNode implements Serializable
         this.isParent = false;
         this.isChild = false;
         this.childType = 0;
+        this.status = CaDSRConstants.OK;
     }
 
     public void addChildNode( BaseNode contextNode )
@@ -213,6 +215,16 @@ public abstract class BaseNode implements Serializable
     public void setTreePath( List<String> treePath )
     {
         this.treePath = treePath;
+    }
+
+    public int getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus( int status )
+    {
+        this.status = status;
     }
 
     public String toString()

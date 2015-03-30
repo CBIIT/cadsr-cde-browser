@@ -4,9 +4,9 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
-import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
+import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,34 +92,37 @@ public class BasicSearchController
     @ResponseBody
     public BasicSearchNode[] getCDEsByContext( @RequestParam("contextId") String contexId )
     {
-        return getCDEsOwnedOrUsedByContext(contexId);
+        return runCdeByContextQuery( contexId );
     }
 
-    private BasicSearchNode[] getCDEsOwnedOrUsedByContext( String contexId)
+    @RequestMapping(value = "/cdesByClassificationScheme")
+    @ResponseBody
+    public BasicSearchNode[] getCDEsByClassificationScheme( @RequestParam("classificationSchemeId") String classificationSchemeId )
     {
-        StringBuilder publicIdList = new StringBuilder();
-        String sql;
-        // Get All publicIds
-
-        // Owned by
-
-        // SQL to get owned by
-
-        //sql ="select DISTINCT de.cde_id from DATA_ELEMENTS_VIEW de where de.CONTE_IDSEQ = '" + contexId + "'";
-        sql = "select DISTINCT * from sbr.DATA_ELEMENTS_VIEW de where de.CONTE_IDSEQ = '" + contexId + "'";
-        logger.debug( "sql: " + sql );
-        List<DataElementModel> results = runCdeQuery( sql );
-        for( DataElementModel model: results)
-        {
-            logger.debug( "CDE PubId: " + model.getCDE_ID() );
-            publicIdList.append( model.getCDE_ID() + " " );
-        }
-        return basicSearch( publicIdList.toString(), 1, 2, "" );
-
-        // Used by
-
-
+        return runCdeByContextClassificationSchemeQuery( classificationSchemeId );
     }
+
+    @RequestMapping(value = "/cdesByClassificationSchemeItem")
+    @ResponseBody
+    public BasicSearchNode[] getCDEsByClassificationSchemeItem( @RequestParam("classificationSchemeItemId") String classificationSchemeItemId )
+    {
+        return runCdeByContextClassificationSchemeItemQuery( classificationSchemeItemId );
+    }
+
+    @RequestMapping(value = "/cdesByProtocol")
+    @ResponseBody
+    public BasicSearchNode[] getCDEsByProtocol( @RequestParam("protocolId") String protocolId )
+    {
+        return runCdeByProtocolQuery( protocolId );
+    }
+
+    @RequestMapping(value = "/cdesByProtocolForm")
+    @ResponseBody
+    public BasicSearchNode[] getCDEsByProtocolForm( @RequestParam("id") String id )
+    {
+        return runCdeByProtocolFormQuery( id );
+    }
+
 
 
     /**
@@ -235,9 +238,66 @@ public class BasicSearchController
         basicSearchDAO.setBasicSearchSql( sql );
         return basicSearchDAO.getAllContexts();
     }
-    protected List<DataElementModel> runCdeQuery( String sql )
+    protected BasicSearchNode[] runCdeByContextQuery( String contexId )
     {
-        dataElementDAO.setDataElementSql( sql );
-        return dataElementDAO.getCdeByContextId(  );
+
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
+
+        String  sql = dESearchQueryBuilder.getQueryCDEsOwndAndUsedByContext(contexId);
+        //logger.debug("runCdeByContextQuery: " + sql);
+        basicSearchDAO.setBasicSearchSql( sql );
+        List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
+
+        return buildSearchResultsNodes( results );
     }
+    protected BasicSearchNode[] runCdeByContextClassificationSchemeQuery( String classificationSchemeId )
+    {
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
+
+        String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationScheme(classificationSchemeId);
+        //logger.debug( "SQL: " + sql );
+        basicSearchDAO.setBasicSearchSql( sql );
+        List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
+
+        return buildSearchResultsNodes( results );
+    }
+
+    protected BasicSearchNode[] runCdeByContextClassificationSchemeItemQuery( String classificationSchemeItemId )
+    {
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
+
+        String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationSchemeItem(classificationSchemeItemId);
+        //logger.debug( "SQL: " + sql );
+        basicSearchDAO.setBasicSearchSql( sql );
+        List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
+
+        return buildSearchResultsNodes( results );
+
+    }
+
+    protected BasicSearchNode[] runCdeByProtocolQuery( String protocolId )
+    {
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
+
+        String sql = dESearchQueryBuilder.getQueryCdeByProtocol(protocolId);
+        //logger.debug( "SQL: " + sql );
+        basicSearchDAO.setBasicSearchSql( sql );
+        List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
+
+        return buildSearchResultsNodes( results );
+
+    }
+    protected BasicSearchNode[] runCdeByProtocolFormQuery( String id )
+    {
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
+
+        String sql = dESearchQueryBuilder.getQueryCdeByProtocolForm(id);
+        //logger.debug( "SQL: " + sql );
+        basicSearchDAO.setBasicSearchSql( sql );
+        List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
+
+        return buildSearchResultsNodes( results );
+
+    }
+
 }
