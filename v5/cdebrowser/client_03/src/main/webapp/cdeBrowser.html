@@ -325,6 +325,10 @@
             {{searchResultsMessage}}
         </span>
 
+        <div ng-bind-html-unsafe="statusMessage">
+            {{statusMessage}}
+        </div>
+
         <div class="breadCrumbs">
             <br>
             <span ng-show="breadCrumbs">

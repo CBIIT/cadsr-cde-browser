@@ -5,6 +5,8 @@ import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
+import gov.nih.nci.cadsr.service.model.context.BaseNode;
+import gov.nih.nci.cadsr.service.model.context.ContextNode;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
@@ -31,46 +33,42 @@ public class BasicSearchController
     {
     }
 
-    public void setBasicSearchDAO( BasicSearchDAOImpl basicSearchDAO )
-    {
-        this.basicSearchDAO = basicSearchDAO;
-    }
-
-    public void setRestControllerCommon( RestControllerCommon restControllerCommon )
-    {
-        this.restControllerCommon = restControllerCommon;
-    }
-
-    public List<ProgramAreaModel> getProgramAreaModelList()
-    {
-        return programAreaModelList;
-    }
-
-    public void setDataElementDAO( DataElementDAO dataElementDAO )
-    {
-        this.dataElementDAO = dataElementDAO;
-    }
-
-    public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
-    {
-        this.programAreaModelList = programAreaModelList;
-    }
-
     @RequestMapping(value = "/basicSearch")
     @ResponseBody
     public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType )
     {
-        logger.debug( "basicSearch( " + query + ", " + field + ", " + queryType + " )" );
-        return basicSearch( query, field, queryType, "" );
+        BasicSearchNode[] results = null;
+        try
+        {
+            results = basicSearch( query, field, queryType, "" );
+        }
+        catch( Exception e )
+        {
+            return  createErrorNode( "Server Error:\nbasicSearch( " + query + ", " + field + ", " + queryType + " ) failed ", e );
+        }
+        return results;
     }
 
     @RequestMapping(value = "/basicSearchWithProgramArea")
     @ResponseBody
     public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType, @RequestParam("programArea") int programArea )
     {
-        programAreaModelList = restControllerCommon.getProgramAreaList();
-        logger.debug( "basicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "]" );
-        return basicSearch( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
+        BasicSearchNode[] results = null;
+        try
+        {
+            programAreaModelList = restControllerCommon.getProgramAreaList();
+            results = basicSearch( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
+        }
+        catch( Exception e )
+        {
+
+            return  createErrorNode( "Server Error:\nbasicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
+        }
+        return results;
+
+
+
+
     }
 
 
@@ -92,35 +90,86 @@ public class BasicSearchController
     @ResponseBody
     public BasicSearchNode[] getCDEsByContext( @RequestParam("contextId") String contexId )
     {
-        return runCdeByContextQuery( contexId );
+        BasicSearchNode[] results = null;
+        try
+        {
+            results = runCdeByContextQuery( contexId );
+            Exception e = new Exception(  );
+        }
+        catch( Exception e )
+        {
+
+            return  createErrorNode( "Server Error:\ngetCDEsByContext failed ", e );
+        }
+        return results;
     }
 
     @RequestMapping(value = "/cdesByClassificationScheme")
     @ResponseBody
     public BasicSearchNode[] getCDEsByClassificationScheme( @RequestParam("classificationSchemeId") String classificationSchemeId )
     {
-        return runCdeByContextClassificationSchemeQuery( classificationSchemeId );
+        BasicSearchNode[] results = null;
+        try
+        {
+            results = runCdeByContextClassificationSchemeQuery( classificationSchemeId );
+        }
+        catch( Exception e )
+        {
+
+            return  createErrorNode( "Server Error:\ngetCDEsByClassificationScheme failed ", e );
+        }
+        return results;
     }
 
     @RequestMapping(value = "/cdesByClassificationSchemeItem")
     @ResponseBody
     public BasicSearchNode[] getCDEsByClassificationSchemeItem( @RequestParam("classificationSchemeItemId") String classificationSchemeItemId )
     {
-        return runCdeByContextClassificationSchemeItemQuery( classificationSchemeItemId );
+        BasicSearchNode[] results = null;
+        try
+        {
+            results = runCdeByContextClassificationSchemeItemQuery( classificationSchemeItemId );
+        }
+        catch( Exception e )
+        {
+
+            return  createErrorNode( "Server Error:\ngetCDEsByClassificationSchemeItem failed ", e );
+        }
+        return results;
     }
 
     @RequestMapping(value = "/cdesByProtocol")
     @ResponseBody
     public BasicSearchNode[] getCDEsByProtocol( @RequestParam("protocolId") String protocolId )
     {
-        return runCdeByProtocolQuery( protocolId );
+        BasicSearchNode[] results = null;
+        try
+        {
+            results = runCdeByProtocolQuery( protocolId );
+        }
+        catch( Exception e )
+        {
+
+            return  createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
+        }
+        return results;
     }
 
     @RequestMapping(value = "/cdesByProtocolForm")
     @ResponseBody
     public BasicSearchNode[] getCDEsByProtocolForm( @RequestParam("id") String id )
     {
-        return runCdeByProtocolFormQuery( id );
+        BasicSearchNode[] results = null;
+        try
+        {
+            results = runCdeByProtocolFormQuery( id );
+        }
+        catch( Exception e )
+        {
+
+            return  createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
+        }
+        return results;
     }
 
 
@@ -254,7 +303,7 @@ public class BasicSearchController
     {
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
-        String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationScheme(classificationSchemeId);
+        String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationScheme( classificationSchemeId );
         //logger.debug( "SQL: " + sql );
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
@@ -266,7 +315,7 @@ public class BasicSearchController
     {
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
-        String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationSchemeItem(classificationSchemeItemId);
+        String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationSchemeItem( classificationSchemeItemId );
         //logger.debug( "SQL: " + sql );
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
@@ -279,7 +328,7 @@ public class BasicSearchController
     {
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
-        String sql = dESearchQueryBuilder.getQueryCdeByProtocol(protocolId);
+        String sql = dESearchQueryBuilder.getQueryCdeByProtocol( protocolId );
         //logger.debug( "SQL: " + sql );
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
@@ -291,7 +340,7 @@ public class BasicSearchController
     {
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
-        String sql = dESearchQueryBuilder.getQueryCdeByProtocolForm(id);
+        String sql = dESearchQueryBuilder.getQueryCdeByProtocolForm( id );
         //logger.debug( "SQL: " + sql );
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
@@ -299,5 +348,43 @@ public class BasicSearchController
         return buildSearchResultsNodes( results );
 
     }
+
+    public BasicSearchNode[] createErrorNode( String text, Exception e )
+    {
+        logger.error( "createErrorNode: " + text + e.getMessage() );
+        BasicSearchNode[] errorNode = new BasicSearchNode[1];
+        errorNode[0] = new BasicSearchNode();
+        errorNode[0].setStatus( CaDSRConstants.ERROR );
+        //errorNode[0].setLongName( "MHL " + text + e.getMessage() );
+        errorNode[0].setLongName( "MHL " + text  );
+        return errorNode;
+    }
+
+    public void setBasicSearchDAO( BasicSearchDAOImpl basicSearchDAO )
+    {
+        this.basicSearchDAO = basicSearchDAO;
+    }
+
+    public void setRestControllerCommon( RestControllerCommon restControllerCommon )
+    {
+        this.restControllerCommon = restControllerCommon;
+    }
+
+    public List<ProgramAreaModel> getProgramAreaModelList()
+    {
+        return programAreaModelList;
+    }
+
+    public void setDataElementDAO( DataElementDAO dataElementDAO )
+    {
+        this.dataElementDAO = dataElementDAO;
+    }
+
+    public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
+    {
+        this.programAreaModelList = programAreaModelList;
+    }
+
+
 
 }

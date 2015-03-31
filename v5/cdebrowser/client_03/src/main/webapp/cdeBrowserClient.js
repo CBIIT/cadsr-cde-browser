@@ -128,11 +128,25 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
             $scope.searchResults = response;
 
             if ($scope.searchResults.length > 0) {
-                $scope.setSortOrder();
-                $scope.haveSearchResults = true;
-                $scope.bigSearchResultsMessageClass = false;
-                $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
-                $scope.tableParams.reload();
+                // TODO Quick hack, make status message better when time permits.
+                // check for error here .status & .longName
+                if(response[0].status != 0  )
+                {
+                    for( f = 0; f < $scope.breadCrumbs.length; f++)
+                    {
+                        $scope.breadCrumbs[f] = "";
+                    }
+                    $scope.searchResultsMessage="";
+                    $scope.statusMessage = "<span  style='color: #8b0000; font-weight: bold; font-size: 18pt;'>" + response[0].longName + "</span><br>";
+                }
+                else {
+
+                    $scope.setSortOrder();
+                    $scope.haveSearchResults = true;
+                    $scope.bigSearchResultsMessageClass = false;
+                    $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
+                    $scope.tableParams.reload();
+                }
             }
             else {
                 $scope.searchResultsMessage = "No search results";

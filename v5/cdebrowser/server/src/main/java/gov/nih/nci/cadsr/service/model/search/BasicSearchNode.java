@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.service.model.search;
 
+import gov.nih.nci.cadsr.service.model.context.BaseNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,8 @@ public class BasicSearchNode
     private String registrationStatus;
     private String href = "";
     private String deIdseq;
+    // Status will tell the client if there was an error, if so message will be in text field.
+    private int status;
 
     public String getLongName()
     {
@@ -116,5 +119,15 @@ public class BasicSearchNode
     public void setDeIdseq( String deIdseq )
     {
         this.deIdseq = deIdseq;
+    }
+
+    public int getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus( int status )
+    {
+        this.status = status;
     }
 }
