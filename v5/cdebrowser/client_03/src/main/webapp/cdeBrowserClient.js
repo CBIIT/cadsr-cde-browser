@@ -240,6 +240,10 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     //end comment this out //   
 
     // start ngTable definition //
+    $scope.resetSortOrder = function () {
+        $scope.tableParams.sorting({'registrationSort':'asc'});
+    }
+
     $scope.sortNames = {'registrationSort':'Registration Status','longName':'Long Name','preferredQuestionText':'Preferred Question Text','ownedBy':'Owned By','usedByContext':'Used By Context','workflowSort':'Workflow Status','publicId':'Public ID','version':'Version'};
     $scope.tableParams = new ngTableParams(
         {
