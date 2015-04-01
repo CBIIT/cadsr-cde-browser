@@ -42,11 +42,9 @@ public class ContextDAOImpl  extends AbstractDAOOperations implements ContextDAO
         List<ContextModel>  results;
 
         String sql = "select * from SBR.CONTEXTS_VIEW order by NAME";
-        logger.debug( "getAllContexts");
         //logger.debug( ">>>>>>> "+ sql );
         results = getAll( sql, ContextModel.class );
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done getAllContexts\n");
 
         return results;
     }
@@ -58,11 +56,9 @@ public class ContextDAOImpl  extends AbstractDAOOperations implements ContextDAO
         List<ContextModel>  results;
 
         String sql = "select * from SBR.CONTEXTS_VIEW where NAME=?";
-        logger.debug( "getContextsByName");
         //logger.debug( ">>>>>>> "+ sql.replace( "?", name ) );
         results = getAll( sql, name , ContextModel.class );
         //logger.debug( sql.replace( "?", name ) + " <<<<<<<" );
-        logger.debug( "Done getContextsByName");
         return results;
     }
 

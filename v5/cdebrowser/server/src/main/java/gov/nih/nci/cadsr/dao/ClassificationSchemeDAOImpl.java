@@ -86,11 +86,11 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
         sql = "select * from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by UPPER(LONG_NAME)";
 
-        logger.debug( "getClassificationSchemes" );
+        //logger.debug( "getClassificationSchemes" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", conteId ) );
         results = getAll( sql, conteId, ClassificationSchemeModel.class );
         //logger.debug( sql.replace( "?", conteId ) + " <<<<<<<" );
-        logger.debug( "Done getClassificationSchemes\n" );
+        //logger.debug( "Done getClassificationSchemes\n" );
 
         return results;
     }

@@ -35,7 +35,7 @@ public class DataElementDAOImpl  extends AbstractDAOOperations implements DataEl
         //logger.debug( ">>>>>>> "+ sql );
         results = getAll( DataElementSql, DataElementModel.class );
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done basicSearch\n");
+        logger.debug( "Done basicSearch");
 
         return results;
     }

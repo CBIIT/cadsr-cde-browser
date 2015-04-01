@@ -355,8 +355,7 @@ public class BasicSearchController
         BasicSearchNode[] errorNode = new BasicSearchNode[1];
         errorNode[0] = new BasicSearchNode();
         errorNode[0].setStatus( CaDSRConstants.ERROR );
-        //errorNode[0].setLongName( "MHL " + text + e.getMessage() );
-        errorNode[0].setLongName( "MHL " + text  );
+        errorNode[0].setLongName( text  );
         return errorNode;
     }
 

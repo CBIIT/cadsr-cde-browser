@@ -29,7 +29,7 @@ public class ProgramAreaDAOImpl extends AbstractDAOOperations implements Program
         List<ProgramAreaModel> result;
         String sql = " select * from PROGRAM_AREAS_LOV_VIEW";
         result = getAll( sql , ProgramAreaModel.class );
-        logger.debug( "Done getAllProgramAreas" );
+        //logger.debug( "Done getAllProgramAreas" );
         return result;
     }
 }
