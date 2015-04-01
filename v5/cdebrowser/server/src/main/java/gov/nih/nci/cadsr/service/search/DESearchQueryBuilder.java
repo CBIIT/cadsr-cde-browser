@@ -676,7 +676,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 "                       AND    acs.ac_idseq = de_idseq )";
     }
 
-    public String getQueryCDEsOwndAndUsedByContext( String conteId )
+    public String getQueryCDEsOwnedAndUsedByContext( String conteId )
     {
         return " SELECT DISTINCT de.de_idseq,\n" +
                 "                de.preferred_name                        de_preferred_name,\n" +

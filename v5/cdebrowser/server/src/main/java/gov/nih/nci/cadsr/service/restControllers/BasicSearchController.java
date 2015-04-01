@@ -5,10 +5,7 @@ import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
-import gov.nih.nci.cadsr.service.model.context.BaseNode;
-import gov.nih.nci.cadsr.service.model.context.ContextNode;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
-import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -292,7 +289,7 @@ public class BasicSearchController
 
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
-        String  sql = dESearchQueryBuilder.getQueryCDEsOwndAndUsedByContext(contexId);
+        String  sql = dESearchQueryBuilder.getQueryCDEsOwnedAndUsedByContext( contexId );
         //logger.debug("runCdeByContextQuery: " + sql);
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
