@@ -10,7 +10,7 @@
     border: 2px solid #fff;
     /*: ;;
     3E6a84: ;*/
-    color: #18344d;
+    color: #000;
     font-style: normal;
     font-size: 11pt;
 }
@@ -160,6 +160,7 @@
 /** breadcrumb style **/
 .breadCrumbs {
     padding-left:5px;font-weight:500;
+    color:#999966;    
 }
 
 /** position rest and sort order text on page **/
@@ -173,3 +174,8 @@ width:100%;
     .sortOrder.right {
     position: absolute; right: 0; top: 0; width: 20%;
     }
+
+#searchResults {
+    padding-left:4px;
+    color:#999966;
+}
