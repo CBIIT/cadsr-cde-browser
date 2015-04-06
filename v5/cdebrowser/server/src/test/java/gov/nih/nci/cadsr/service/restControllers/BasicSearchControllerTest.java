@@ -96,15 +96,6 @@ public class BasicSearchControllerTest extends TestCase
         }
     }
 
-    public void testBuildSearchResultsNodes4()
-    {
-        String href[] = { "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData", "cdebrowserServer/CDEData" };
-        for( int f = 0; f < searchNodes.length; f++ )
-        {
-            assertEquals( href[f], searchNodes[f].getHref() );
-        }
-    }
-
     public void testBuildSearchResultsNodes5()
     {
         String ownedBy[] = { "CTEP", "CTEP", "NCIP", "CCR", "DCP", "NCIP", "DCP", "CTEP", "CTEP", "CTEP", "CTEP", "CTEP", "NCIP", "NCIP" };

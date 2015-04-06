@@ -9,10 +9,8 @@ import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
 import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +23,9 @@ public class BasicSearchController
     private DataElementDAO dataElementDAO;
     private RestControllerCommon restControllerCommon;
     private List<ProgramAreaModel> programAreaModelList = null;
+
+    @Value( "${cdeDataRestService}" )
+    String cdeDataRestServiceName;
 
     public BasicSearchController()
     {
@@ -264,8 +265,7 @@ public class BasicSearchController
             basicSearchNodes[i].setVersion( model.getDeVersion() );
             basicSearchNodes[i].setDeIdseq( model.getDeIdseq() );
 
-            //TODO here we add the URL for the search results - put this in the properties file
-            basicSearchNodes[i].setHref( "cdebrowserServer/CDEData" );
+            basicSearchNodes[i].setHref( cdeDataRestServiceName );
 
             //This is so in the client side display table, there will be spaces to allow good line wrapping.
             if( model.getDeUsedby() != null )
@@ -356,6 +356,9 @@ public class BasicSearchController
         return errorNode;
     }
 
+
+    ///////////////////////////////////
+    // Setters & Getters
     public void setBasicSearchDAO( BasicSearchDAOImpl basicSearchDAO )
     {
         this.basicSearchDAO = basicSearchDAO;
