@@ -66,8 +66,8 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
   protected List validValues;
   protected Representation representation;
   protected ConceptDerivationRule conceptDerivationRule;
-  
-  
+
+
 
 	public BC4JValueDomainTransferObject() {
     idseq = vdIdseq;
@@ -102,14 +102,14 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		cdContextName = vdViewRowImpl.getCDContextName();
 		cdVersion = new Float(vdViewRowImpl.getCDVersion().floatValue());
         cdPublicId = vdViewRowImpl.getCDPublicId().intValue();
-    
+
             String cdrIdseq = vdViewRowImpl.getCondrIdseq();
              if(cdrIdseq!=null)
               {
                    conceptDerivationRule  = new ConceptDerivationRuleTransferObject();
                   conceptDerivationRule.setIdseq(cdrIdseq);
                  }
-    
+
             if (vdViewRowImpl.getVdId() != null)
                   publicId = vdViewRowImpl.getVdId().intValue();
             origin = checkForNull(vdViewRowImpl.getOrigin());
@@ -121,14 +121,14 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
                rep.setPreferredName(repImpl.getPreferredName());
                rep.setIdseq(repImpl.getRepIdseq().trim());
                rep.setPublicId(repImpl.getRepId().intValue());
-      
+
                ContextsViewRowImpl conImpl = (ContextsViewRowImpl) repImpl.getContextsRow();
                Context repContext = new ContextTransferObject();
                repContext.setName(conImpl.getName());
                rep.setContext(repContext);
-               ServiceLocator locator = 
+               ServiceLocator locator =
                ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
-        
+
                AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
                ConceptDAO conDAO = daoFactory.getConceptDAO();
                {
@@ -136,12 +136,12 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
                 repRule = conDAO.getRepresentationDerivationRuleForVD(vdViewRowImpl.getVdIdseq());
                 rep.setConceptDerivationRule(repRule);
                 }
-      
+
                Number repVersion = repImpl.getVersion();
                rep.setVersion(repVersion.floatValue());
                setRepresentation(rep);
     }
-    
+
 
 	}
 
@@ -233,16 +233,16 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		else
 			return vdType;
 	}
-  
+
 	public void setVDType(String type) {
 		vdType = type;
 	}
-  
+
    public List getValidValues()
    {
      return validValues;
    }
-   
+
    public void setValidValues(List validValues)
    {
      this.validValues = validValues;
@@ -255,7 +255,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
    {
      representation=newRepresentation;
    }
- 
+
    public ConceptDerivationRule getConceptDerivationRule()
    {
      return conceptDerivationRule;
@@ -276,7 +276,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
   {
     return cdPublicId;
   }
-  
+
     public String getRepresentationPrefName() {
             return repPrefName;
     }

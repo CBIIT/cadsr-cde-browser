@@ -511,7 +511,7 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
 
       ValueDomain vd =
         (ValueDomain) new BC4JValueDomainTransferObject(
-          (ValueDomainsViewRowImpl) row);
+      (ValueDomainsViewRowImpl) row);
 
       return vd;
     } // end try
@@ -525,14 +525,14 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
   public Context getContext() {
     try {
       oracle.jbo.ViewObject vdView =
-        getViewObject().getApplicationModule().findViewObject("ContextsView");
+              getViewObject().getApplicationModule().findViewObject("ContextsView");
 
       vdView.setWhereClause("CONTE_IDSEQ='" + getConteIdseq() + "'");
 
       Row row = vdView.first();
 
       Context conte =
-        (Context) new BC4JContextTransferObject((ContextsViewRowImpl) row);
+              (Context) new BC4JContextTransferObject((ContextsViewRowImpl) row);
 
       return conte;
     } // end try
