@@ -179,3 +179,25 @@ width:100%;
     padding-left:4px;
     color:#663300;
 }
+
+#footer {
+    background-color:#336699;
+    font-size:80%;
+    margin-top:10px;
+    margin-right:10px;
+    color:#fff;
+}
+    #footer td {
+        width:21%;
+    }
+
+        #footer td.last {
+            width:37%;
+        }
+    #footer .userName {
+        color:#F7F7E6;
+    }
+
+    #footer a {
+        color:#F7F7E6
+    }    
