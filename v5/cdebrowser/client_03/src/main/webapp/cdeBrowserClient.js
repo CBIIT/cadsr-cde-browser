@@ -70,9 +70,11 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
+
         $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
+        $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
     };
 
     //CDE details
