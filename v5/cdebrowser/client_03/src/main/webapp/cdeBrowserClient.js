@@ -74,7 +74,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
-        $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
+
     };
 
     //CDE details
@@ -129,6 +129,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
+            $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
             $scope.searchResults = response;
 
             if ($scope.searchResults.length > 0) {
