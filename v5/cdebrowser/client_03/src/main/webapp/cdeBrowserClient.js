@@ -193,6 +193,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     };
 
     $scope.dataLoad4 = function () {
+        console.log("nothing should be calling dataLoad4()" );
         $scope.dataLoad("data4.json");
     };
 
