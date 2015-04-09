@@ -35,10 +35,10 @@ public class BasicSearchDAOImpl extends AbstractDAOOperations implements BasicSe
         List<BasicSearchModel>  results;
 
         logger.debug( "basicSearch");
-        //logger.debug( ">>>>>>> "+ sql );
+        //logger.debug( ">>>>>>> "+ basicSearchSql );
         results = getAll( basicSearchSql, BasicSearchModel.class );
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done basicSearch\n");
+        logger.debug( "Done basicSearch");
 
         return results;
     }

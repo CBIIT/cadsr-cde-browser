@@ -67,11 +67,11 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 + " and CSTL_NAME != 'Publishing' "
                 + " and CS_IDSEQ = ?"
                 + " order by CSI_LEVEL, upper(CSI_NAME)";
-        logger.debug( "getCsCsisById" );
+        //logger.debug( "getCsCsisById" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", csId ) );
         result = getAll( sql, csId, CsCsiModel.class );
         //logger.debug( sql.replace( "?", csId ) + " <<<<<<<" );
-        logger.debug( "Done getCsCsisById\n" );
+        //logger.debug( "Done getCsCsisById\n" );
 
         return result;
     }
@@ -91,11 +91,11 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 + " and CSTL_NAME != 'Publishing' "
                 + " and CS_CONTE_IDSEQ = ?"
                 + " order by CSI_LEVEL, upper(CSI_NAME)";
-        logger.debug( "getCsCsisById" );
+        //logger.debug( "getCsCsisById" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", csId ) );
         result = getAll( sql, conteId, CsCsiModel.class );
         //logger.debug( sql.replace( "?", csId ) + " <<<<<<<" );
-        logger.debug( "Done getCsCsisById\n" );
+        //logger.debug( "Done getCsCsisById\n" );
 
         return result;
     }

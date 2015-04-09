@@ -1,27 +1,28 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
+import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.ProgramAreaDAOImpl;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
+import gov.nih.nci.cadsr.service.model.context.BaseNode;
+import gov.nih.nci.cadsr.service.model.context.ContextNode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: lernermh
- * Date: 3/19/15
- * Time: 4:54 PM
- * To change this template use File | Settings | File Templates.
- */
 public class RestControllerCommon
 {
+    private Logger logger = LogManager.getLogger( RestControllerCommon.class.getName() );
+
     private ProgramAreaDAOImpl programAreaDAO;
 
     public RestControllerCommon()
     {
 
     }
+
     public ProgramAreaDAOImpl getProgramAreaDAO()
     {
         return programAreaDAO;
@@ -31,6 +32,8 @@ public class RestControllerCommon
     {
         this.programAreaDAO = programAreaDAO;
     }
+
+
 
     protected List<ProgramAreaModel> getProgramAreaList()
     {

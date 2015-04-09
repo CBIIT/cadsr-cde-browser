@@ -70,7 +70,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public List<ClassificationSchemeModel> getAllClassificationSchemes()
     {
         List<ClassificationSchemeModel> results;
-        sql = "select * from sbr.classification_Schemes_view WHERE ASL_NAME='RELEASED' order by UPPER(long_name)";
+        sql = "select * from sbr.classification_Schemes_view WHERE ASL_NAME='RELEASED' order by lower(long_name)";
         results = getAll( sql, ClassificationSchemeModel.class );
         return results;
     }
@@ -84,13 +84,13 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     {
         List<ClassificationSchemeModel> results;
 
-        sql = "select * from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by UPPER(LONG_NAME)";
+        sql = "select * from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by lower(LONG_NAME)";
 
-        logger.debug( "getClassificationSchemes" );
-        //logger.debug( ">>>>>>> " + sql.replace( "?", conteId ) );
+        //logger.debug( "getClassificationSchemes" );
+        logger.debug( ">>>>>>> " + sql.replace( "?", conteId ) );
         results = getAll( sql, conteId, ClassificationSchemeModel.class );
         //logger.debug( sql.replace( "?", conteId ) + " <<<<<<<" );
-        logger.debug( "Done getClassificationSchemes\n" );
+        //logger.debug( "Done getClassificationSchemes\n" );
 
         return results;
     }

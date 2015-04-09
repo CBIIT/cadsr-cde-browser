@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public class ContextDAOImpl  extends AbstractDAOOperations implements ContextDAO
+public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
 {
     private Logger logger = LogManager.getLogger( ContextDAOImpl.class.getName() );
 
@@ -28,10 +28,10 @@ public class ContextDAOImpl  extends AbstractDAOOperations implements ContextDAO
     }
 
 
-
     @Autowired
-    ContextDAOImpl(DataSource dataSource) {
-        setDataSource(dataSource);
+    ContextDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
@@ -39,30 +39,24 @@ public class ContextDAOImpl  extends AbstractDAOOperations implements ContextDAO
     @Override
     public List<ContextModel> getAllContexts()
     {
-        List<ContextModel>  results;
-
-        String sql = "select * from SBR.CONTEXTS_VIEW order by NAME";
-        logger.debug( "getAllContexts");
-        //logger.debug( ">>>>>>> "+ sql );
+        List<ContextModel> results;
+        // FIXME  excludes need to come from a setting
+        String sql = "select * from SBR.CONTEXTS_VIEW  where name !=  'TEST' order by lower(name)";
         results = getAll( sql, ContextModel.class );
-        //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done getAllContexts\n");
 
         return results;
     }
 
 
- @Override
+    @Override
     public List<ContextModel> getContextsByName( String name )
     {
-        List<ContextModel>  results;
+        List<ContextModel> results;
 
         String sql = "select * from SBR.CONTEXTS_VIEW where NAME=?";
-        logger.debug( "getContextsByName");
         //logger.debug( ">>>>>>> "+ sql.replace( "?", name ) );
-        results = getAll( sql, name , ContextModel.class );
+        results = getAll( sql, name, ContextModel.class );
         //logger.debug( sql.replace( "?", name ) + " <<<<<<<" );
-        logger.debug( "Done getContextsByName");
         return results;
     }
 
@@ -80,14 +74,14 @@ public class ContextDAOImpl  extends AbstractDAOOperations implements ContextDAO
     @Override
     public Collection getContexts( String username, String businessRole )
     {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        throw new UnsupportedOperationException( "Not yet implemented." );
         //return null;
     }
 
     @Override
     public List getAllContexts( String excludeList )
     {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        throw new UnsupportedOperationException( "Not yet implemented." );
         //return null;
     }
 }

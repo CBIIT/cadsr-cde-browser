@@ -1,4 +1,6 @@
 v5/cdebrowser/server/debug.log
 *.iml
 .idea/
+.idea
+.idea/*
 target/
