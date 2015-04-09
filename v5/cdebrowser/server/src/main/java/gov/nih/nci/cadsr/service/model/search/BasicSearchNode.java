@@ -9,7 +9,7 @@ public class BasicSearchNode
     private String longName;
     private String preferredQuestionText;
     private String ownedBy;
-    private String publicId;
+    private Integer publicId;
     private String workflowStatus;
     private String version;
     private String usedByContext;
@@ -47,14 +47,19 @@ public class BasicSearchNode
         this.ownedBy = ownedBy;
     }
 
-    public String getPublicId()
+    public Integer getPublicId()
     {
         return publicId;
     }
 
-    public void setPublicId( String publicId )
+    public void setPublicId( Integer publicId )
     {
         this.publicId = publicId;
+    }
+
+    public void setPublicId( String publicId )
+    {
+        this.publicId = Integer.valueOf(publicId);
     }
 
     public String getWorkflowStatus()
