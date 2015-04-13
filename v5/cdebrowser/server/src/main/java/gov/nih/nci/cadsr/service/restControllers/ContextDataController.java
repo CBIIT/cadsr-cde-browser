@@ -141,14 +141,12 @@ public class ContextDataController
                     "," + getProgramAreaByName( model.getPalName() ) +
                     "," + CaDSRConstants.CLASSIFICATIONS_TYPE_FOLDER );
 
-
             logger.debug( "Checking for Classification Schemes - " + model.getName() );
             // Is there at least one classification?
             if( this.classificationSchemeDAO.haveClassificationSchemes( model.getConteIdseq() ) )
             {
                 insertPlaceHolderNode( classificationsParentNode );
             }
-
 
             ////////////////////////////////////////
             // This Contexts Protocol forms folder

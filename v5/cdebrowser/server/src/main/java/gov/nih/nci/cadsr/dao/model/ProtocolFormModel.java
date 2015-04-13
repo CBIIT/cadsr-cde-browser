@@ -21,7 +21,7 @@ public class ProtocolFormModel extends BaseModel
     private String protocolLongName;
     private String contextName;
     private String protoPreferredDefinition;
-    private String publicId;
+    private int publicId;
     private String changeNote;
     private String latestVersionInd;
     // csc/acs private String csCsiIdseq;
@@ -164,12 +164,12 @@ public class ProtocolFormModel extends BaseModel
         this.protoPreferredDefinition = protoPreferredDefinition;
     }
 
-    public String getPublicId()
+    public int getPublicId()
     {
         return publicId;
     }
 
-    public void setPublicId( String publicId )
+    public void setPublicId( int publicId )
     {
         this.publicId = publicId;
     }
