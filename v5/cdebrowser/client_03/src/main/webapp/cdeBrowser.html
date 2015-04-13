@@ -2,13 +2,9 @@
 <html>
 <head>
     <title>Client 3.01</title>
-    <script type='text/javascript' src='angular.min.js'></script>
-    <script type='text/javascript' src="app.js"></script>
-    <script type='text/javascript' src='cdeBrowserClient.js'></script>
-    <script type='text/javascript' src="cdeBrowserProperties.js"></script>
-    <script type='text/javascript' src="directives/treeModel.js"></script>
-    <script type='text/javascript' src="directives/resize.js"></script>
-    <script src="plugins/ng-table/ng-table.min.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
     <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
@@ -252,13 +248,13 @@
                  notifier="notifyServiceOnChange(params)"
                     >
 
-                <div class="tabCaptionWrapper">
+                <div class="tabCaptionWrapper cssFade"  data-ng-show=show[nodeNumber]>
                     <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
                         <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
                     </div>
                 </div>
 
-                <div
+                <div class="cssFade" data-ng-show=show[nodeNumber]
                         data-cdebrowser-treeview="true"
                         data-tree-id="tree"
                         data-tree-model="contextListMaster[nodeNumber].children"
@@ -389,5 +385,15 @@
         </div>
     </div>
 </div>
+
+<script type='text/javascript' src='angular.min.js'></script>
+<script type='text/javascript' src='angular-animate.min.js'></script>
+<script type='text/javascript' src="app.js"></script>
+<script type='text/javascript' src='cdeBrowserClient.js'></script>
+<script type='text/javascript' src="cdeBrowserProperties.js"></script>
+<script type='text/javascript' src="directives/treeModel.js"></script>
+<script type='text/javascript' src="directives/resize.js"></script>
+<script type='text/javascript' src="plugins/ng-table/ng-table.min.js"></script>
+
 </body>
 </html>

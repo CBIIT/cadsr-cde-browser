@@ -32,6 +32,7 @@ import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
+import org.jruby.ext.posix.HeapStruct;
 
 
 // java imports
@@ -147,7 +148,7 @@ public class GetDataElementDetails extends BasePersistingProcess {
           de = (DataElement) dh.findObject(deIdseq, sessionId);
         }
         else if ((cdeId != null) && (version != null)) {
-          int icdeId = Integer.parseInt(getStringInfo("cdeId"));
+          int icdeId = HeapStruct.Integer.parseInt( getStringInfo( "cdeId" ) );
           float fversion = Float.parseFloat(getStringInfo("version"));
           de = dh.findDataElementsByPublicId(icdeId, fversion, sessionId);
         }

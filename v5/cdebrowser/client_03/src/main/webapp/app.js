@@ -1,2 +1,2 @@
-var cdeBrowserApp = angular.module("cdeBrowserApp", ['cdebrowserTreeview','ngTable']);
-var cdebrowserTreeview = angular.module('cdebrowserTreeview', []);
+var cdeBrowserApp = angular.module("cdeBrowserApp", ['cdebrowserTreeview','ngTable','ngAnimate']);
+var cdebrowserTreeview = angular.module('cdebrowserTreeview', ['ngAnimate']);
