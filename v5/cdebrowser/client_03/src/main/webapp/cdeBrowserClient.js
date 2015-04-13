@@ -70,9 +70,11 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
+
         $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
+
     };
 
     //CDE details
@@ -95,6 +97,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type) {
+        $scope.resetSortOrder();
         //$scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
         $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port +
             "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
@@ -126,6 +129,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
+            $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
             $scope.searchResults = response;
 
             if ($scope.searchResults.length > 0) {
@@ -189,6 +193,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
     };
 
     $scope.dataLoad4 = function () {
+        console.log("nothing should be calling dataLoad4()" );
         $scope.dataLoad("data4.json");
     };
 
