@@ -15,7 +15,7 @@ public interface ContextDAO
 
     public List<ContextModel> getAllContexts();
     public List<ContextModel> getContextsByName( String name );
-    public ContextModel getContextById( String id );
+    public ContextModel getContextByIdseq(String contextIdseq);
     public Collection getContexts( String username, String businessRole );
 
     /**

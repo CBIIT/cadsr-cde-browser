@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface DataElementDAO
 {
-    public List<DataElementModel> getCdeByContextId();
-    public void setDataElementSql( String dataElementSql );
+    List<DataElementModel> getCdeBySearchString(String DataElementSql);
+//    DataElementModel getCdeByCdeIdseq(String CdeIdseq);
+
+
+    //public void setDataElementSql( String dataElementSql );
 
 }

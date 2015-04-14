@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.dao.model;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: lerner
@@ -9,191 +11,303 @@ package gov.nih.nci.cadsr.dao.model;
  */
 public class DataElementModel extends BaseModel
 {
-    private String DE_IDSEQ;
-    private String VERSION;
-    private String CONTE_IDSEQ;
-    private String PREFERRED_NAME;
-    private String VD_IDSEQ;
-    private String DEC_IDSEQ;
-    private String PREFERRED_DEFINITION;
-    private String ASL_NAME;
-    private String LONG_NAME;
-    private String LATEST_VERSION_IND;
-    private String DELETED_IND;
-    private String BEGIN_DATE;
-    private String END_DATE;
-    private String MODIFIED_BY;
-    private String ORIGIN;
-    private String CDE_ID;
-    private String QUESTION;
 
-    public String getDE_IDSEQ()
-    {
-        return DE_IDSEQ;
+    private String longCDEName;
+    private String contextName;
+    private String usingContexts;
+    private List<ReferenceDocModel> refDocs;
+    private List<DesignationModel> designationModels;
+    private Integer publicId;
+    private String idseq;
+    private String registrationStatus;
+    private ValueDomainModel valueDomainModel;
+    private DataElementConceptModel dec;
+    private ContextModel context;
+    private String deIdseq;
+    private String version; // needs to be a Float!
+    private String conteIdseq;
+    private String preferredName;
+    private String vdIdseq;
+    private String decIdseq;
+    private String preferredDefinition;
+    private String aslName;
+    private String longName;
+    private String latestVerInd;
+    private String deletedInd;
+    private String beginDate;
+    private String endDate;
+    private String origin;
+    private String cdeId;
+    private String question;
+    private String vdName;
+
+    public DataElementModel() {
     }
 
-    public void setDE_IDSEQ( String DE_IDSEQ )
-    {
-        this.DE_IDSEQ = DE_IDSEQ;
+    public String getLongCDEName() {
+        return longCDEName;
     }
 
-    public String getVERSION()
-    {
-        return VERSION;
+    public void setLongCDEName(String longCDEName) {
+        this.longCDEName = longCDEName;
     }
 
-    public void setVERSION( String VERSION )
-    {
-        this.VERSION = VERSION;
+    public String getVdName() {
+        return vdName;
     }
 
-    public String getCONTE_IDSEQ()
-    {
-        return CONTE_IDSEQ;
+    public void setVdName(String vdName) {
+        this.vdName = vdName;
     }
 
-    public void setCONTE_IDSEQ( String CONTE_IDSEQ )
-    {
-        this.CONTE_IDSEQ = CONTE_IDSEQ;
+    public String getContextName() {
+        return contextName;
     }
 
-    public String getPREFERRED_NAME()
-    {
-        return PREFERRED_NAME;
+    public void setContextName(String contextName) {
+        this.contextName = contextName;
     }
 
-    public void setPREFERRED_NAME( String PREFERRED_NAME )
-    {
-        this.PREFERRED_NAME = PREFERRED_NAME;
+    public String getUsingContexts() {
+        return usingContexts;
     }
 
-    public String getVD_IDSEQ()
-    {
-        return VD_IDSEQ;
+    public void setUsingContexts(String usingContexts) {
+        this.usingContexts = usingContexts;
     }
 
-    public void setVD_IDSEQ( String VD_IDSEQ )
-    {
-        this.VD_IDSEQ = VD_IDSEQ;
+    public List<ReferenceDocModel> getRefDocs() {
+        return refDocs;
     }
 
-    public String getDEC_IDSEQ()
-    {
-        return DEC_IDSEQ;
+    public void setRefDocs(List<ReferenceDocModel> refDocs) {
+        this.refDocs = refDocs;
     }
 
-    public void setDEC_IDSEQ( String DEC_IDSEQ )
-    {
-        this.DEC_IDSEQ = DEC_IDSEQ;
+    public List<DesignationModel> getDesignationModels() {
+        return designationModels;
     }
 
-    public String getPREFERRED_DEFINITION()
-    {
-        return PREFERRED_DEFINITION;
+    public void setDesignationModels(List<DesignationModel> designationModels) {
+        this.designationModels = designationModels;
     }
 
-    public void setPREFERRED_DEFINITION( String PREFERRED_DEFINITION )
-    {
-        this.PREFERRED_DEFINITION = PREFERRED_DEFINITION;
+    public Integer getPublicId() {
+        return publicId;
     }
 
-    public String getASL_NAME()
-    {
-        return ASL_NAME;
+    public void setPublicId(Integer publicId) {
+        this.publicId = publicId;
     }
 
-    public void setASL_NAME( String ASL_NAME )
-    {
-        this.ASL_NAME = ASL_NAME;
+    public String getIdseq() {
+        return idseq;
     }
 
-    public String getLONG_NAME()
-    {
-        return LONG_NAME;
+    public void setIdseq(String idseq) {
+        this.idseq = idseq;
     }
 
-    public void setLONG_NAME( String LONG_NAME )
-    {
-        this.LONG_NAME = LONG_NAME;
+    public String getRegistrationStatus() {
+        return registrationStatus;
     }
 
-    public String getLATEST_VERSION_IND()
-    {
-        return LATEST_VERSION_IND;
+    public void setRegistrationStatus(String registrationStatus) {
+        this.registrationStatus = registrationStatus;
     }
 
-    public void setLATEST_VERSION_IND( String LATEST_VERSION_IND )
-    {
-        this.LATEST_VERSION_IND = LATEST_VERSION_IND;
+    public ValueDomainModel getValueDomainModel() {
+        return valueDomainModel;
     }
 
-    public String getDELETED_IND()
-    {
-        return DELETED_IND;
+    public void setValueDomainModel(ValueDomainModel valueDomainModel) {
+        this.valueDomainModel = valueDomainModel;
     }
 
-    public void setDELETED_IND( String DELETED_IND )
-    {
-        this.DELETED_IND = DELETED_IND;
+    public DataElementConceptModel getDec() {
+        return dec;
     }
 
-    public String getBEGIN_DATE()
-    {
-        return BEGIN_DATE;
+    public void setDec(DataElementConceptModel dec) {
+        this.dec = dec;
     }
 
-    public void setBEGIN_DATE( String BEGIN_DATE )
-    {
-        this.BEGIN_DATE = BEGIN_DATE;
+    public ContextModel getContext() {
+        return context;
     }
 
-    public String getEND_DATE()
-    {
-        return END_DATE;
+    public void setContext(ContextModel context) {
+        this.context = context;
     }
 
-    public void setEND_DATE( String END_DATE )
+    public String getDeIdseq()
     {
-        this.END_DATE = END_DATE;
+        return deIdseq;
     }
 
-    public String getMODIFIED_BY()
+    public void setDeIdseq(String deIdseq)
     {
-        return MODIFIED_BY;
+        this.deIdseq = deIdseq;
     }
 
-    public void setMODIFIED_BY( String MODIFIED_BY )
+    public String getVersion()
     {
-        this.MODIFIED_BY = MODIFIED_BY;
+        return version;
     }
 
-    public String getORIGIN()
+    public void setVersion(String version)
     {
-        return ORIGIN;
+        this.version = version;
     }
 
-    public void setORIGIN( String ORIGIN )
+    public String getConteIdseq()
     {
-        this.ORIGIN = ORIGIN;
+        return conteIdseq;
     }
 
-    public String getCDE_ID()
+    public void setConteIdseq(String conteIdseq)
     {
-        return CDE_ID;
+        this.conteIdseq = conteIdseq;
     }
 
-    public void setCDE_ID( String CDE_ID )
+    public String getPreferredName()
     {
-        this.CDE_ID = CDE_ID;
+        return preferredName;
     }
 
-    public String getQUESTION()
+    public void setPreferredName(String preferredName)
     {
-        return QUESTION;
+        this.preferredName = preferredName;
     }
 
-    public void setQUESTION( String QUESTION )
+    public String getVdIdseq()
     {
-        this.QUESTION = QUESTION;
+        return vdIdseq;
+    }
+
+    public void setVdIdseq(String vdIdseq)
+    {
+        this.vdIdseq = vdIdseq;
+    }
+
+    public String getDecIdseq()
+    {
+        return decIdseq;
+    }
+
+    public void setDecIdseq(String decIdseq)
+    {
+        this.decIdseq = decIdseq;
+    }
+
+    public String getPreferredDefinition()
+    {
+        return preferredDefinition;
+    }
+
+    public void setPreferredDefinition(String preferredDefinition)
+    {
+        this.preferredDefinition = preferredDefinition;
+    }
+
+    public String getAslName()
+    {
+        return aslName;
+    }
+
+    public void setAslName(String aslName)
+    {
+        this.aslName = aslName;
+    }
+
+    public String getLongName()
+    {
+        return longName;
+    }
+
+    public void setLongName(String longName)
+    {
+        this.longName = longName;
+    }
+
+    public String getLatestVerInd()
+    {
+        return latestVerInd;
+    }
+
+    public void setLatestVerInd(String latestVerInd)
+    {
+        this.latestVerInd = latestVerInd;
+    }
+
+    public String getDeletedInd()
+    {
+        return deletedInd;
+    }
+
+    public void setDeletedInd(String deletedInd)
+    {
+        this.deletedInd = deletedInd;
+    }
+
+    public String getBeginDate()
+    {
+        return beginDate;
+    }
+
+    public void setBeginDate(String beginDate)
+    {
+        this.beginDate = beginDate;
+    }
+
+    public String getEndDate()
+    {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate)
+    {
+        this.endDate = endDate;
+    }
+
+    //  commented out because it's in the superclass
+//    public String getMODIFIED_BY()
+//    {
+//        return MODIFIED_BY;
+//    }
+//
+//    public void setMODIFIED_BY( String MODIFIED_BY )
+//    {
+//        this.MODIFIED_BY = MODIFIED_BY;
+//    }
+
+    public String getOrigin()
+    {
+        return origin;
+    }
+
+    public void setOrigin(String origin)
+    {
+        this.origin = origin;
+    }
+
+    public String getCdeId()
+    {
+        return cdeId;
+    }
+
+    public void setCdeId(String cdeId)
+    {
+        this.cdeId = cdeId;
+    }
+
+    public String getQuestion()
+    {
+        return question;
+    }
+
+    public void setQuestion(String question)
+    {
+        this.question = question;
     }
 }

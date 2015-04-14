@@ -213,7 +213,7 @@ public class ContextDataController
         ContextNode[] contextNodes = initTopLevelContextNodes();
 
         // Get this Context from the database
-        ContextModel model = this.contextDAO.getContextById( contextId );
+        ContextModel model = this.contextDAO.getContextByIdseq( contextId );
 
         // This parent Context node
         ContextNode contextNodeParent = new ContextNode( model, programArea );

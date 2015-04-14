@@ -11,8 +11,11 @@ public class ContextModel extends BaseModel
     private String conteIdSeq = null;
     private String name = null;
     private String palName = "";
+    private String llName;
     private String description = null;
     private String preferredDefinition = null;
+    private String lang;
+    private Float version;
 
     public ContextModel()
     {

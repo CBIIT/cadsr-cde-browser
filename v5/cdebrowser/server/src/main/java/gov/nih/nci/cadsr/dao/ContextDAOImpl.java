@@ -62,10 +62,10 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
 
 
     @Override
-    public ContextModel getContextById( String contextId )
+    public ContextModel getContextByIdseq(String contextIdseq)
     {
         String sql = "select * from SBR.CONTEXTS_VIEW where CONTE_IDSEQ=?";
-        ContextModel results = query( sql, contextId, ContextModel.class );
+        ContextModel results = query( sql, contextIdseq, ContextModel.class );
 
         return results;
     }
