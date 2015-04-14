@@ -107,10 +107,10 @@ public class BasicSearchControllerTest extends TestCase
 
     public void testBuildSearchResultsNodes6()
     {
-        String publicId[] = { "2005470", "2442229", "2752828", "2004291", "2183222", "3639077", "2182885", "2002242", "2001887", "3010824", "3151348", "3010819", "3638868", "3534951" };
+        int publicId[] = { 2005470, 2442229, 2752828, 2004291, 2183222, 3639077, 2182885, 2002242, 2001887, 3010824, 3151348, 3010819, 3638868, 3534951 };
         for( int f = 0; f < searchNodes.length; f++ )
         {
-            assertEquals( publicId[f], searchNodes[f].getPublicId() );
+            assertTrue( publicId[f] == searchNodes[f].getPublicId() );
         }
     }
 
