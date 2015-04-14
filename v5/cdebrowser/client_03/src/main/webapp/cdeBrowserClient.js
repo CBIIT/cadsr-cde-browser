@@ -101,6 +101,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
 
         console.log("onClickBasicSearch:   http://" + window.location.hostname + ":" + window.location.port +
             "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+            $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
 
         console.log("currentTab: " + $scope.currentTab);
     };
