@@ -224,7 +224,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
             else
             {
                 $scope.contextListMaster = response;
-                $scope.waitMessage = "caDSR Contexts:";
+                $scope.waitMessage = "";
                 $scope.messageClass = $scope.NORMAL;
 
                 //FIXME move this
