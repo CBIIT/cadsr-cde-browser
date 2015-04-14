@@ -504,7 +504,7 @@ public class ContextDataControllerTest extends TestCase
         String json = null;
         try
         {
-            json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/csCsiModelTest.data" );
+            json = DBUtil.readFile( unitTestCommon.getTestDataDir() + "/src/test/java/gov/nih/nci/cadsr/service/restControllers/csCsiModelTest.data" );
         }
         catch( IOException e )
         {
@@ -556,7 +556,7 @@ public class ContextDataControllerTest extends TestCase
         String json = null;
         try
         {
-            json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/classificationSchemeModelTest.data" );
+            json = DBUtil.readFile(  unitTestCommon.getTestDataDir() + "/src/test/java/gov/nih/nci/cadsr/service/restControllers/classificationSchemeModelTest.data" );
         }
         catch( IOException e )
         {

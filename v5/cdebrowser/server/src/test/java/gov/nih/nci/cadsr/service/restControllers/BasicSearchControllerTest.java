@@ -11,13 +11,15 @@ import gov.nih.nci.cadsr.service.UnitTestCommon;
 import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
 import junit.framework.TestCase;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Tests for the BasicSearchController.
- *
+ * <p/>
  * The BasicSearchController contains the rest service/entry point
  */
 
@@ -26,15 +28,15 @@ public class BasicSearchControllerTest extends TestCase
     BasicSearchController basicSearchController;
     private BasicSearchNode[] searchNodes;
     private List<ProgramAreaModel> programAreaModelList;
+    private UnitTestCommon unitTestCommon;
 
     public void setUp()
     {
-        UnitTestCommon unitTestCommon;
         unitTestCommon = new UnitTestCommon();
         basicSearchController = new BasicSearchController();
         List<BasicSearchModel> sampleRawQueryResults = initSampleSearchResults();
         searchNodes = basicSearchController.buildSearchResultsNodes( sampleRawQueryResults );
-        programAreaModelList = unitTestCommon.initSampleProgramAreas();
+        programAreaModelList = unitTestCommon.initSampleProgramAreas(  );
         basicSearchController.setProgramAreaModelList( programAreaModelList );
     }
 
@@ -42,21 +44,21 @@ public class BasicSearchControllerTest extends TestCase
     public void testProgramAreaPalNameLookUp0()
     {
         // Zero is Program Area "All" which should return an empty (not null) String
-        assertEquals( "",  basicSearchController.getProgramAreaPalNameByIndex( 0 ) );
+        assertEquals( "", basicSearchController.getProgramAreaPalNameByIndex( 0 ) );
     }
 
     public void testProgramAreaPalNameLookUp1()
     {
         // One should return the first ProgramArea name, they start at one rather than zero because the client will us zero to indicate all.
-        assertEquals( "CancerCenters",  basicSearchController.getProgramAreaPalNameByIndex( 1 ) );
+        assertEquals( "CancerCenters", basicSearchController.getProgramAreaPalNameByIndex( 1 ) );
         //Last one
-        assertEquals( "UNASSIGNED",  basicSearchController.getProgramAreaPalNameByIndex( programAreaModelList.size() ) );
+        assertEquals( "UNASSIGNED", basicSearchController.getProgramAreaPalNameByIndex( programAreaModelList.size() ) );
     }
 
     public void testProgramAreaPalNameLookUp2()
     {
         // If index is too high, should warn, and return empty String (All)
-        assertEquals( "",  basicSearchController.getProgramAreaPalNameByIndex( programAreaModelList.size() + 1 ) );
+        assertEquals( "", basicSearchController.getProgramAreaPalNameByIndex( programAreaModelList.size() + 1 ) );
     }
 
 
@@ -152,7 +154,7 @@ public class BasicSearchControllerTest extends TestCase
 
     /**
      * Initialize sample search results.
-     *
+     * <p/>
      * Raw query data generated with:
      * cdebrowserServer/basicSearchWithProgramAreaTest?query=diastolic&field=0&queryType=1&programArea=2
      */
@@ -160,11 +162,14 @@ public class BasicSearchControllerTest extends TestCase
     {
         Gson gson = new GsonBuilder().create();
         String json = null;
+
+        System.out.println( "restDataFile: " + unitTestCommon.getTestDataDir() );
         try
         {
-            json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/restControllers/basicSearchModelTest1.data" );
-        }
-        catch( IOException e )
+            String s = null;
+
+            json = DBUtil.readFile( unitTestCommon.getTestDataDir() + "/src/test/java/gov/nih/nci/cadsr/service/restControllers/basicSearchModelTest1.data" );
+        } catch( IOException e )
         {
             assertTrue( e.getMessage(), false );
         }

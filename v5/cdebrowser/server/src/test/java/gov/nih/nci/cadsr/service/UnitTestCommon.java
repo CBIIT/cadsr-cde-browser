@@ -20,10 +20,25 @@ import java.util.ArrayList;
 public class UnitTestCommon
 {
 
+    private String testDataDir;
+
+    public UnitTestCommon()
+    {
+        init();
+    }
+
+    private void init()
+    {
+        testDataDir = System.getProperty( "user.dir" );
+        if( !testDataDir.endsWith( "/server" ) )
+        {
+            testDataDir += "/server";
+        }
+    }
     /**
      * Sample "Program Area" data
      */
-    public ArrayList<ProgramAreaModel> initSampleProgramAreas()
+    public ArrayList<ProgramAreaModel> initSampleProgramAreas( )
     {
         Gson gson = new GsonBuilder().create();
 
@@ -31,7 +46,7 @@ public class UnitTestCommon
 
         try
         {
-            json = DBUtil.readFile( "src/test/java/gov/nih/nci/cadsr/service/programAreaModelTest.data" );
+            json = DBUtil.readFile( testDataDir + "/src/test/java/gov/nih/nci/cadsr/service/programAreaModelTest.data" );
         }
         catch( IOException e )
         {
@@ -60,4 +75,8 @@ public class UnitTestCommon
         return nodes[0];
     }
 
+    public String getTestDataDir()
+    {
+        return testDataDir;
+    }
 }
