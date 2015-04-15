@@ -22,7 +22,7 @@ public class DataElementModel extends BaseModel
     private String registrationStatus;
     private ValueDomainModel valueDomainModel;
     private DataElementConceptModel dec;
-    private ContextModel context;
+    private ContextModel context; // Jeff is working on this one
     private String deIdseq;
     private String version; // needs to be a Float!
     private String conteIdseq;

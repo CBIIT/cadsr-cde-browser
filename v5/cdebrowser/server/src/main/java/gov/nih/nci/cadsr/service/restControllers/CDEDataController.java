@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.service.model.context.ContextNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,12 +17,13 @@ public class CDEDataController
 
     @RequestMapping(value = "/CDEData")
     @ResponseBody
-    public String CDEDataController(@RequestParam("deIdseq") String deIdseq)
+    public DataElementModel CDEDataController(@RequestParam("deIdseq") String deIdseq)
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
 
+        DataElementModel dataElementModel = new DataElementModel();
 
-        return "CDEDataController: deIdseq";
+        return dataElementModel;
     }
 
 }

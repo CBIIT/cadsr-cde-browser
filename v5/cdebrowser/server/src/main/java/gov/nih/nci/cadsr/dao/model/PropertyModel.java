@@ -11,4 +11,74 @@ public class PropertyModel extends BaseModel {
     private int publicId;
     private String name;
     private String qualifier;
+
+    public String getPreferredName()
+    {
+        return preferredName;
+    }
+
+    public void setPreferredName( String preferredName )
+    {
+        this.preferredName = preferredName;
+    }
+
+    public String getLongName()
+    {
+        return longName;
+    }
+
+    public void setLongName( String longName )
+    {
+        this.longName = longName;
+    }
+
+    public Float getVersion()
+    {
+        return version;
+    }
+
+    public void setVersion( Float version )
+    {
+        this.version = version;
+    }
+
+    public ContextModel getContext()
+    {
+        return context;
+    }
+
+    public void setContext( ContextModel context )
+    {
+        this.context = context;
+    }
+
+    public int getPublicId()
+    {
+        return publicId;
+    }
+
+    public void setPublicId( int publicId )
+    {
+        this.publicId = publicId;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+    public String getQualifier()
+    {
+        return qualifier;
+    }
+
+    public void setQualifier( String qualifier )
+    {
+        this.qualifier = qualifier;
+    }
 }
