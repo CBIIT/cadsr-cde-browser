@@ -94,6 +94,16 @@ public class ContextModel extends BaseModel
     {
     }
 
+    public Float getVersion()
+    {
+        return version;
+    }
+
+    public void setVersion( Float version )
+    {
+        this.version = version;
+    }
+
     /**
      * This equals method only compares the Idseq to define equals
      *
