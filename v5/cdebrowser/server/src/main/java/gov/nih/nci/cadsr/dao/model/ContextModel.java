@@ -58,11 +58,12 @@ public class ContextModel extends BaseModel
 
     public String getLlName()
     {
-        return null;
+        return llName;
     }
 
     public void setLlName( String p0 )
     {
+        llName = p0;
     }
 
     public String getPalName()
@@ -87,11 +88,12 @@ public class ContextModel extends BaseModel
 
     public String getLanguage()
     {
-        return null;
+        return lang;
     }
 
     public void setLanguage( String p0 )
     {
+        lang = p0;
     }
 
     public Float getVersion()

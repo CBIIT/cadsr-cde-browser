@@ -74,8 +74,8 @@
 
 #topTabPos {
     position: fixed;
-    top: 168px;
-    left: 5px;
+    top: 148px;
+    left: 3px;
     width: 100%; /* FIXME make this dynamically match the size of the tree menu frame */
 
     /*
