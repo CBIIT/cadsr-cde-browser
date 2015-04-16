@@ -17,6 +17,9 @@ public class RepresentationModel extends BaseModel {
         return preferredName;
     }
 
+    public RepresentationModel() {
+    }
+
     public void setPreferredName( String preferredName )
     {
         this.preferredName = preferredName;

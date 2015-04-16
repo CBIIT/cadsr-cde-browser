@@ -21,6 +21,9 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
 
     private JdbcTemplate jdbcTemplate;
 
+    private PropertyDAO propertyDAO;
+    private ObjectClassDAO objectClassDAO;
+
 
     @Autowired
     DataElementConceptDAOImpl( DataSource dataSource ) {
@@ -36,16 +39,28 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
     }
 
 
+    public PropertyDAO getPropertyDAO() {
+        return propertyDAO;
+    }
 
+    public void setPropertyDAO(PropertyDAO propertyDAO) {
+        this.propertyDAO = propertyDAO;
+    }
+
+    public ObjectClassDAO getObjectClassDAO() {
+        return objectClassDAO;
+    }
+
+    public void setObjectClassDAO(ObjectClassDAO objectClassDAO) {
+        this.objectClassDAO = objectClassDAO;
+    }
 
     public final class DataElementConceptMapper extends BeanPropertyRowMapper<DataElementConceptModel> {
 
         public DataElementConceptModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             DataElementConceptModel dataElementConceptModel = new DataElementConceptModel();
-            /* TODO: need to map these members:
-            private PropertyModel property;
-            private ObjectClassModel objectClassModel;
-            */
+            dataElementConceptModel.setProperty(getPropertyDAO().getPropertyByIdseq("PROP_IDSEQ"));
+            dataElementConceptModel.setObjectClassModel(getObjectClassDAO().getObjectClassByIdseq("OC_IDSEQ"));
             return dataElementConceptModel;
         }
     }
