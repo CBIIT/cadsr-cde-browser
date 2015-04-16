@@ -14,6 +14,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
+/**
+ * DAO for the SBREXT.BR_CS_CSI_HIER_VIEW_EXT which is actually a real view and not just a copy of a table
+ */
 public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
 {
     private Logger logger = LogManager.getLogger( CsCsiDAOImpl.class.getName() );

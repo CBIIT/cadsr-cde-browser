@@ -7,24 +7,24 @@ package gov.nih.nci.cadsr.dao.model;
 public class CsCsiModel extends BaseModel
 {
 
-    private String csiName = null;
-    private String csiType = null;
-    private String csiIdseq = null;
-    private String csCsiIdseq = null;
-    private String csiDescription = null;
-    private String parentCsiIdseq = null;
-    private String csIdseq = null;
-    private String csPreffredDefinition = null; //Spelled wrong to match database
-    private String csLongName = null;
-    private String csPrefName = null;
-    private String csConteIdseq = null;
-    private String acCsiIdseq = null;
-    private String cstlName = null;
+    private String csiName;
+    private String csiType; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csiIdseq; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csCsiIdseq; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csiDescription;
+    private String parentCsiIdseq;
+    private String csIdseq;
+    private String csPreffredDefinition; //Spelled wrong to match database
+    private String csLongName;
+    private String csPrefName; // Fixme this field is not in the view. CS_PREFFERED_NAME is.
+    private String csConteIdseq;
+    private String acCsiIdseq; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String cstlName;
 
-    private String csID = null; //Unused
-    private Float csVersion = null;
-    private Integer csiId = null;
-    private Float csiVersion = null;
+    private String csID; //Unused  Fixme this field is not in the view.  since it's marked unused, should be removed from class.
+    private Float csVersion; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private Integer csiId; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private Float csiVersion; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
 
 
     public String getCsiName()

@@ -40,6 +40,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     @Override
     public List<ClassificationSchemeModel> getChildrenClassificationSchemesByCsId( String csId )
     {
+        //  todo: I can't see there's any reason to use the view instead of SBR.CLASSIFICATION_SCHEMES do you?
         sql = "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
                 "preferred_definition, cstl_name,asl_name,conte_idseq " +
                 " FROM sbr.classification_Schemes_view, sbr.cs_recs_view c  " +
@@ -48,13 +49,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
                 " AND p_cs_idseq = ?" +
                 " order by long_name  ";
 
-        logger.debug( "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
-                "preferred_definition, cstl_name,asl_name,conte_idseq " +
-                " FROM sbr.classification_Schemes_view, sbr.cs_recs_view c  " +
-                " WHERE  cs_idseq = c_cs_idseq " +
-                " AND rl_name = 'HAS_A' " +
-                " AND p_cs_idseq = '" + csId +
-                "' order by long_name  " );
+        logger.debug("getChildrenClassificationSchemesByCsId( String csId ) executing query " + sql + " (p_cs_idseq is " + csId + ")");
 
 
         //sql = "select * from SBREXT.CABIO_CLASS_SCHEMES_VIEW WHERE CONTE_IDSEQ=? order by PREFERRED_DEFINITION";
@@ -70,7 +65,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public List<ClassificationSchemeModel> getAllClassificationSchemes()
     {
         List<ClassificationSchemeModel> results;
-        sql = "select * from sbr.classification_Schemes_view WHERE ASL_NAME='RELEASED' order by lower(long_name)";
+        sql = "select * from SBR.CLASSIFICATION_SCHEMES WHERE ASL_NAME='RELEASED' order by lower(long_name)";
         results = getAll( sql, ClassificationSchemeModel.class );
         return results;
     }
@@ -84,7 +79,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     {
         List<ClassificationSchemeModel> results;
 
-        sql = "select * from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by lower(LONG_NAME)";
+        sql = "select * from SBR.CLASSIFICATION_SCHEMES where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by lower(LONG_NAME)";
 
         //logger.debug( "getClassificationSchemes" );
         logger.debug( ">>>>>>> " + sql.replace( "?", conteId ) );

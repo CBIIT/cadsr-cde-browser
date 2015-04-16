@@ -16,22 +16,25 @@ public class ClassificationSchemeModel extends BaseModel
     private Timestamp beginDate;
     private String changeNote;
     private String cmslName;
-    private String conteIdseq;
+    private String conteIdseq; //todo map this foreign key to a ContextModel
     private String cstlName;
     private String csId;
     private String csIdseq;
-    private String deletedInd;
+    private String deletedInd; // will always be "Yes" or "No"  why isn't this a bool???
     private Timestamp endDate;
-    private String labelTypeFlag;
-    private String latestVersionInd;
+    private String labelTypeFlag;  // one byte char ??!
+    private String latestVersionInd; // will always be "Yes" or "No"  why isn't this a bool???
     private String longName;
     private String origin;
     private String preferredDefinition;
     private String preferredName;
-    private String registrationStatus;
-    private String unresolvedIssue;
+    private String registrationStatus; // !@#$%$#@!  not in table!  Fixme!
+    private String unresolvedIssue; // !@#$%$#@!  not in table!  Fixme!
     private String version;
-    private String workflowStatusDesc;
+    private String workflowStatusDesc; // !@#$%$#@!  not in table!  Fixme!
+    // todo do we need to map the condr_idseq to a ConceptDerivationRuleModel?
+    // todo do we need to map the par_cs_idesq to the parent ClassificationSchemeModel??
+
 
     public String getAslName()
     {

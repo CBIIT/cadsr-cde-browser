@@ -1,7 +1,6 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.dao.model.*;
-import gov.nih.nci.cadsr.service.model.context.ContextNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -313,7 +312,7 @@ public class CDEDataController
         contextModel.setLlName( "ContextModel Llname" );
         contextModel.setDescription( "ContextModel Description" );
         contextModel.setPreferredDefinition( "ContextModel PreferredDefinition" );
-        contextModel.setLang( "ContextModel Lang" );
+        contextModel.setLanguage("ContextModel Lang");
         contextModel.setVersion( (float) 123 );
 
         return contextModel;

@@ -33,7 +33,7 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
 
     @Override
     public ConceptDerivationRuleModel getCDRByIdseq(String condrIdseq) {
-        String sql = "SELECT * FROM CON_DERIVATION_RULES_EXT WHERE CONDR_IDSEQ = ?";
+        String sql = "SELECT * FROM SBREXT.CON_DERIVATION_RULES_EXT WHERE CONDR_IDSEQ = ?";
         ConceptDerivationRuleModel conceptDerivationRuleModel = jdbcTemplate.queryForObject(sql, new Object[] { condrIdseq }, new ConceptDerivationRuleMapper());
         return conceptDerivationRuleModel;
     }

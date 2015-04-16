@@ -14,7 +14,7 @@ public class ContextModel extends BaseModel
     private String llName;
     private String description;
     private String preferredDefinition;
-    private String lang;
+    private String language;
     private Float version;
 
     public ContextModel()
@@ -84,12 +84,12 @@ public class ContextModel extends BaseModel
         this.llName = llName;
     }
 
-    public String getLang() {
-        return lang;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setLang(String lang) {
-        this.lang = lang;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public Float getVersion() {
