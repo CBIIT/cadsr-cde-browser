@@ -7,9 +7,12 @@ import java.util.List;
 public interface DataElementDAO
 {
     List<DataElementModel> getCdeBySearchString(String DataElementSql);
-//    DataElementModel getCdeByCdeIdseq(String CdeIdseq);
+    DataElementModel getCdeByDeIdseq(String deIdseq);
+    List<DataElementModel> getAllCdeByCdeId(Integer cdeId);
+    DataElementModel geCdeByCdeIdAndVersion(Integer cdeId, Integer version);
 
 
-    //public void setDataElementSql( String dataElementSql );
+
+        //public void setDataElementSql( String dataElementSql );
 
 }

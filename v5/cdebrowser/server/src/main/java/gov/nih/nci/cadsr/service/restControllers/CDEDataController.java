@@ -313,7 +313,7 @@ public class CDEDataController
         contextModel.setLlName( "ContextModel Llname" );
         contextModel.setDescription( "ContextModel Description" );
         contextModel.setPreferredDefinition( "ContextModel PreferredDefinition" );
-        contextModel.setLanguage( "ContextModel Lang" );
+        contextModel.setLang( "ContextModel Lang" );
         contextModel.setVersion( (float) 123 );
 
         return contextModel;

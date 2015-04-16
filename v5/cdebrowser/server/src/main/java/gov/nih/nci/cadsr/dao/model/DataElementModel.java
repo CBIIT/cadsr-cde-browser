@@ -13,15 +13,15 @@ public class DataElementModel extends BaseModel
 {
 
     private String longCDEName;
-    private String contextName;
+    private String contextName;// from conte_idseq
     private String usingContexts;
-    private List<ReferenceDocModel> refDocs;
-    private List<DesignationModel> designationModels;
+    private List<ReferenceDocModel> refDocs;// from ReferenceDocumentsView.ac_idseq = data_elements.de_idseq
+    private List<DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
     private Integer publicId;
     private String idseq;
     private String registrationStatus;
-    private ValueDomainModel valueDomainModel;
-    private DataElementConceptModel dec;
+    private ValueDomainModel valueDomainModel; // from vd_idseq
+    private DataElementConceptModel dec; // from dec_idseq
     private ContextModel context; // Jeff is working on this one
     private String deIdseq;
     private String version; // needs to be a Float!

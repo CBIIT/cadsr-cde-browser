@@ -8,12 +8,12 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 
 public class ContextModel extends BaseModel
 {
-    private String conteIdSeq = null;
-    private String name = null;
-    private String palName = "";
+    private String conteIdseq;
+    private String name;
+    private String palName;
     private String llName;
-    private String description = null;
-    private String preferredDefinition = null;
+    private String description;
+    private String preferredDefinition;
     private String lang;
     private Float version;
 
@@ -48,22 +48,12 @@ public class ContextModel extends BaseModel
 
     public String getConteIdseq()
     {
-        return conteIdSeq;
+        return conteIdseq;
     }
 
     public void setConteIdseq( String newConteIdseq )
     {
-        conteIdSeq = newConteIdseq;
-    }
-
-    public String getLlName()
-    {
-        return llName;
-    }
-
-    public void setLlName( String p0 )
-    {
-        llName = p0;
+        conteIdseq = newConteIdseq;
     }
 
     public String getPalName()
@@ -86,23 +76,27 @@ public class ContextModel extends BaseModel
         description = desc;
     }
 
-    public String getLanguage()
-    {
+    public String getLlName() {
+        return llName;
+    }
+
+    public void setLlName(String llName) {
+        this.llName = llName;
+    }
+
+    public String getLang() {
         return lang;
     }
 
-    public void setLanguage( String p0 )
-    {
-        lang = p0;
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
-    public Float getVersion()
-    {
+    public Float getVersion() {
         return version;
     }
 
-    public void setVersion( Float version )
-    {
+    public void setVersion(Float version) {
         this.version = version;
     }
 
