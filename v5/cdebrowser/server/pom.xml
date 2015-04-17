@@ -23,6 +23,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
@@ -71,11 +76,11 @@
         </dependency>
         -->
         <dependency>
-  <groupId>com.oracle</groupId>
-  <artifactId>ojdbc7</artifactId>
-  <version>12.1.0.2.0</version>
-        <scope>provided</scope>
-</dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0.2.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -92,7 +97,7 @@
             <artifactId>gson</artifactId>
             <version>2.3.1</version>
         </dependency>
-     </dependencies>
+    </dependencies>
     <build>
         <finalName>cdebrowserServer</finalName>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -104,7 +109,7 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>  
+            </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.5.3</version>
@@ -114,18 +119,18 @@
                     </descriptors>
                 </configuration>
                 <executions>
-                  <execution>
-                    <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                    <phase>package</phase> <!-- bind to the packaging phase -->
-                    <goals>
-                      <goal>single</goal>
-                    </goals>
-                  </execution>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-    
+
     <!-- If we are running in Jenkins use cobertura. -->
     <profiles>
         <profile>

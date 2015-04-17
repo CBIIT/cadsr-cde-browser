@@ -134,10 +134,14 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             DataElementConceptModel dec;
             ContextModel context; */
             dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(rs.getString("DE_IDSEQ")));
+            dataElementModel.fillPreferredQuestionText();
             dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq("DE_IDSEQ"));
+            dataElementModel.fillUsingContexts();
             dataElementModel.setValueDomainModel(getValueDomainDAO().getValueDomainByIdseq(rs.getString("VD_IDSEQ")));
             dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(rs.getString("DEC_IDSEQ")));
             dataElementModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
+            dataElementModel.setContextName(dataElementModel.getContext().getName());
+            dataElementModel.setPublicId(dataElementModel.getCdeId());
             return dataElementModel;
         }
     }

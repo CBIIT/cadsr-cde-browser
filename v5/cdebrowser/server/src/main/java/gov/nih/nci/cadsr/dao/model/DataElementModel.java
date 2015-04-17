@@ -1,5 +1,8 @@
 package gov.nih.nci.cadsr.dao.model;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,12 +15,12 @@ import java.util.List;
 public class DataElementModel extends BaseModel
 {
 
-    private String longCDEName;
-    private String contextName;// from conte_idseq
-    private String usingContexts;
+    private String preferredQuestionText;
+    private String contextName; // do we really need this to be a separate field instead of context.getName()?
+    private String usingContexts; // not in table. Filled from designationModels.contexts.name where designationModels.detlName = 'USED_BY'
     private List<ReferenceDocModel> refDocs;// from ReferenceDocumentsView.ac_idseq = data_elements.de_idseq
     private List<DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
-    private Integer publicId;
+    private Integer publicId; // fixme this is a duplicate of cdeId. do we really need this?
     private String idseq;
     private String registrationStatus;
     private ValueDomainModel valueDomainModel; // from vd_idseq
@@ -37,19 +40,50 @@ public class DataElementModel extends BaseModel
     private String beginDate;
     private String endDate;
     private String origin;
-    private String cdeId;
+    private Integer cdeId;
     private String question;
     private String vdName;
 
     public DataElementModel() {
     }
 
-    public String getLongCDEName() {
-        return longCDEName;
+    public String getPreferredQuestionText() {
+        return preferredQuestionText;
     }
 
-    public void setLongCDEName(String longCDEName) {
-        this.longCDEName = longCDEName;
+    public void setPreferredQuestionText(String preferredQuestionText) {
+        this.preferredQuestionText = preferredQuestionText;
+    }
+
+    /**
+     * populate the preferred question text (longCDEName) field out of the
+     * reference doc where DCTL_NAME is "Preferred Question Text"
+     */
+    public void fillPreferredQuestionText() {
+        if (getRefDocs() != null) {
+            for (ReferenceDocModel referenceDocModel : getRefDocs()) {
+                if (referenceDocModel.getDctlName().equals("Preferred Question Text")) {
+                    setPreferredQuestionText(referenceDocModel.getDocText());
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * populate the usingContexts field by concatinating the designationModels' contexts' names
+     * where
+     */
+    public void fillUsingContexts() {
+        ArrayList<String> usingContexts = new ArrayList<>();
+        if (getDesignationModels() != null) {
+            for (DesignationModel designationModel : getDesignationModels()) {
+                if (designationModel.getDetlName().equals("USED_BY")) {
+                    usingContexts.add(designationModel.getContex().getName());
+                }
+            }
+        }
+        setUsingContexts(StringUtils.join(usingContexts, ", "));
     }
 
     public String getVdName() {
@@ -270,17 +304,6 @@ public class DataElementModel extends BaseModel
         this.endDate = endDate;
     }
 
-    //  commented out because it's in the superclass
-//    public String getMODIFIED_BY()
-//    {
-//        return MODIFIED_BY;
-//    }
-//
-//    public void setMODIFIED_BY( String MODIFIED_BY )
-//    {
-//        this.MODIFIED_BY = MODIFIED_BY;
-//    }
-
     public String getOrigin()
     {
         return origin;
@@ -291,12 +314,12 @@ public class DataElementModel extends BaseModel
         this.origin = origin;
     }
 
-    public String getCdeId()
+    public Integer getCdeId()
     {
         return cdeId;
     }
 
-    public void setCdeId(String cdeId)
+    public void setCdeId(Integer cdeId)
     {
         this.cdeId = cdeId;
     }
@@ -309,5 +332,126 @@ public class DataElementModel extends BaseModel
     public void setQuestion(String question)
     {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DataElementModel)) return false;
+
+        DataElementModel that = (DataElementModel) o;
+
+        if (getPreferredQuestionText() != null ? !getPreferredQuestionText().equals(that.getPreferredQuestionText()) : that.getPreferredQuestionText() != null)
+            return false;
+        if (getContextName() != null ? !getContextName().equals(that.getContextName()) : that.getContextName() != null)
+            return false;
+        if (getUsingContexts() != null ? !getUsingContexts().equals(that.getUsingContexts()) : that.getUsingContexts() != null)
+            return false;
+        if (getRefDocs() != null ? !getRefDocs().equals(that.getRefDocs()) : that.getRefDocs() != null) return false;
+        if (getDesignationModels() != null ? !getDesignationModels().equals(that.getDesignationModels()) : that.getDesignationModels() != null)
+            return false;
+        if (getPublicId() != null ? !getPublicId().equals(that.getPublicId()) : that.getPublicId() != null)
+            return false;
+        if (getIdseq() != null ? !getIdseq().equals(that.getIdseq()) : that.getIdseq() != null) return false;
+        if (getRegistrationStatus() != null ? !getRegistrationStatus().equals(that.getRegistrationStatus()) : that.getRegistrationStatus() != null)
+            return false;
+        if (getValueDomainModel() != null ? !getValueDomainModel().equals(that.getValueDomainModel()) : that.getValueDomainModel() != null)
+            return false;
+        if (getDec() != null ? !getDec().equals(that.getDec()) : that.getDec() != null) return false;
+        if (getContext() != null ? !getContext().equals(that.getContext()) : that.getContext() != null) return false;
+        if (getDeIdseq() != null ? !getDeIdseq().equals(that.getDeIdseq()) : that.getDeIdseq() != null) return false;
+        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
+        if (getConteIdseq() != null ? !getConteIdseq().equals(that.getConteIdseq()) : that.getConteIdseq() != null)
+            return false;
+        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+            return false;
+        if (getVdIdseq() != null ? !getVdIdseq().equals(that.getVdIdseq()) : that.getVdIdseq() != null) return false;
+        if (getDecIdseq() != null ? !getDecIdseq().equals(that.getDecIdseq()) : that.getDecIdseq() != null)
+            return false;
+        if (getPreferredDefinition() != null ? !getPreferredDefinition().equals(that.getPreferredDefinition()) : that.getPreferredDefinition() != null)
+            return false;
+        if (getAslName() != null ? !getAslName().equals(that.getAslName()) : that.getAslName() != null) return false;
+        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+            return false;
+        if (getLatestVerInd() != null ? !getLatestVerInd().equals(that.getLatestVerInd()) : that.getLatestVerInd() != null)
+            return false;
+        if (getDeletedInd() != null ? !getDeletedInd().equals(that.getDeletedInd()) : that.getDeletedInd() != null)
+            return false;
+        if (getBeginDate() != null ? !getBeginDate().equals(that.getBeginDate()) : that.getBeginDate() != null)
+            return false;
+        if (getEndDate() != null ? !getEndDate().equals(that.getEndDate()) : that.getEndDate() != null) return false;
+        if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
+        if (getCdeId() != null ? !getCdeId().equals(that.getCdeId()) : that.getCdeId() != null) return false;
+        if (getQuestion() != null ? !getQuestion().equals(that.getQuestion()) : that.getQuestion() != null)
+            return false;
+        return !(getVdName() != null ? !getVdName().equals(that.getVdName()) : that.getVdName() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPreferredQuestionText() != null ? getPreferredQuestionText().hashCode() : 0;
+        result = 31 * result + (getContextName() != null ? getContextName().hashCode() : 0);
+        result = 31 * result + (getUsingContexts() != null ? getUsingContexts().hashCode() : 0);
+        result = 31 * result + (getRefDocs() != null ? getRefDocs().hashCode() : 0);
+        result = 31 * result + (getDesignationModels() != null ? getDesignationModels().hashCode() : 0);
+        result = 31 * result + (getPublicId() != null ? getPublicId().hashCode() : 0);
+        result = 31 * result + (getIdseq() != null ? getIdseq().hashCode() : 0);
+        result = 31 * result + (getRegistrationStatus() != null ? getRegistrationStatus().hashCode() : 0);
+        result = 31 * result + (getValueDomainModel() != null ? getValueDomainModel().hashCode() : 0);
+        result = 31 * result + (getDec() != null ? getDec().hashCode() : 0);
+        result = 31 * result + (getContext() != null ? getContext().hashCode() : 0);
+        result = 31 * result + (getDeIdseq() != null ? getDeIdseq().hashCode() : 0);
+        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
+        result = 31 * result + (getConteIdseq() != null ? getConteIdseq().hashCode() : 0);
+        result = 31 * result + (getPreferredName() != null ? getPreferredName().hashCode() : 0);
+        result = 31 * result + (getVdIdseq() != null ? getVdIdseq().hashCode() : 0);
+        result = 31 * result + (getDecIdseq() != null ? getDecIdseq().hashCode() : 0);
+        result = 31 * result + (getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0);
+        result = 31 * result + (getAslName() != null ? getAslName().hashCode() : 0);
+        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
+        result = 31 * result + (getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0);
+        result = 31 * result + (getDeletedInd() != null ? getDeletedInd().hashCode() : 0);
+        result = 31 * result + (getBeginDate() != null ? getBeginDate().hashCode() : 0);
+        result = 31 * result + (getEndDate() != null ? getEndDate().hashCode() : 0);
+        result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
+        result = 31 * result + (getCdeId() != null ? getCdeId().hashCode() : 0);
+        result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
+        result = 31 * result + (getVdName() != null ? getVdName().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DataElementModel{" +
+                "preferredQuestionText='" + preferredQuestionText + '\'' +
+                ", contextName='" + contextName + '\'' +
+                ", usingContexts='" + usingContexts + '\'' +
+                ", refDocs=" + refDocs +
+                ", designationModels=" + designationModels +
+                ", publicId=" + publicId +
+                ", idseq='" + idseq + '\'' +
+                ", registrationStatus='" + registrationStatus + '\'' +
+                ", valueDomainModel=" + valueDomainModel +
+                ", dec=" + dec +
+                ", context=" + context +
+                ", deIdseq='" + deIdseq + '\'' +
+                ", version='" + version + '\'' +
+                ", conteIdseq='" + conteIdseq + '\'' +
+                ", preferredName='" + preferredName + '\'' +
+                ", vdIdseq='" + vdIdseq + '\'' +
+                ", decIdseq='" + decIdseq + '\'' +
+                ", preferredDefinition='" + preferredDefinition + '\'' +
+                ", aslName='" + aslName + '\'' +
+                ", longName='" + longName + '\'' +
+                ", latestVerInd='" + latestVerInd + '\'' +
+                ", deletedInd='" + deletedInd + '\'' +
+                ", beginDate='" + beginDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", origin='" + origin + '\'' +
+                ", cdeId='" + cdeId + '\'' +
+                ", question='" + question + '\'' +
+                ", vdName='" + vdName + '\'' +
+                '}';
     }
 }

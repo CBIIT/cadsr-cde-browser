@@ -36,6 +36,14 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
         return dataElementModel;
     }
 
+    @Override
+    public List<DesignationModel> getUsedByDesignationModels(String acIdseq) {
+
+        String sql = "SELECT * FROM DESIGNATIONS WHERE AC_IDSEQ = ? and DETL_NAME = 'USED_BY'";
+        List<DesignationModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper());
+        return dataElementModel;
+    }
+
     public ContextDAO getContextDAO() {
         return contextDAO;
     }

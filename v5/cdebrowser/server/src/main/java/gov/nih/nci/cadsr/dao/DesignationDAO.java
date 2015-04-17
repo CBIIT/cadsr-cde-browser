@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface DesignationDAO {
     List<DesignationModel> getDesignationModelsByAcIdseq(String acIdseq);
+    List<DesignationModel> getUsedByDesignationModels(String acIdseq);
 }

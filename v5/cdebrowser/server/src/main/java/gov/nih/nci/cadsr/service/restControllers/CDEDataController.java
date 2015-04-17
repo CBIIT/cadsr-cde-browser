@@ -38,7 +38,7 @@ public class CDEDataController
         dataElementModel.setModifiedBy( "buildTestRecord1 DateModified" );
         dataElementModel.setDateModified( getDate() );
 
-        dataElementModel.setLongCDEName( "LongCDEName" );
+        dataElementModel.setPreferredQuestionText("LongCDEName");
         dataElementModel.setContextName( "ContextName" );
         dataElementModel.setUsingContexts( "UsingContexts" );
 
@@ -48,7 +48,7 @@ public class CDEDataController
         //List<DesignationModel>
         dataElementModel.setDesignationModels( buildDesignationModelList() );
 
-        dataElementModel.setPublicId( 123 );
+        dataElementModel.setPublicId( 12345 );
         dataElementModel.setIdseq( "Idseq" );
         dataElementModel.setRegistrationStatus( "RegistrationStatus" );
 
@@ -71,7 +71,7 @@ public class CDEDataController
         dataElementModel.setBeginDate( "BeginDate" );
         dataElementModel.setEndDate( "EndDate" );
         dataElementModel.setOrigin( "Origin" );
-        dataElementModel.setCdeId( "CdeId" );
+        dataElementModel.setCdeId( 12345 );
         dataElementModel.setQuestion( "Question" );
         dataElementModel.setVdName( "VdName" );
 
