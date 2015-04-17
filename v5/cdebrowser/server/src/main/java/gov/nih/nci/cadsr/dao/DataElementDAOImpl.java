@@ -26,6 +26,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private ValueDomainDAO valueDomainDAO;
     private DesignationDAO designationDAO;
     private ReferenceDocDAO referenceDocDAO;
+    private AcRegistrationsDAO acRegistrationsDAO;
 
 //private String DataElementSql; //Spring DAOs are singletons.  Doing this whole passing sql around as member variables is totally not safe...
 
@@ -123,6 +124,14 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         this.referenceDocDAO = referenceDocDAO;
     }
 
+    public AcRegistrationsDAO getAcRegistrationsDAO() {
+        return acRegistrationsDAO;
+    }
+
+    public void setAcRegistrationsDAO(AcRegistrationsDAO acRegistrationsDAO) {
+        this.acRegistrationsDAO = acRegistrationsDAO;
+    }
+
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
 
         public DataElementModel mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -142,6 +151,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             dataElementModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             dataElementModel.setContextName(dataElementModel.getContext().getName());
             dataElementModel.setPublicId(dataElementModel.getCdeId());
+            AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(rs.getString("DE_IDSEQ"));
+            dataElementModel.setRegistrationStatus(acRegistrationsModel.getRegistrationStatus());
             return dataElementModel;
         }
     }

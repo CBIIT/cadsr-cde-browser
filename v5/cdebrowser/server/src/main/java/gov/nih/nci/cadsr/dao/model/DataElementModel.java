@@ -22,12 +22,12 @@ public class DataElementModel extends BaseModel
     private List<DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
     private Integer publicId; // fixme this is a duplicate of cdeId. do we really need this?
     private String idseq;
-    private String registrationStatus;
+    private String registrationStatus; // not in table. Filled from SBR.AC_RESISTRATIONS.REGISTRATION_STATUS see DAO row mapper
     private ValueDomainModel valueDomainModel; // from vd_idseq
     private DataElementConceptModel dec; // from dec_idseq
-    private ContextModel context; // Jeff is working on this one
-    private String deIdseq;
-    private String version; // needs to be a Float!
+    private ContextModel context;
+    private String deIdseq; // primary key
+    private Float version; // needs to be a Float!
     private String conteIdseq;
     private String preferredName;
     private String vdIdseq;
@@ -184,12 +184,12 @@ public class DataElementModel extends BaseModel
         this.deIdseq = deIdseq;
     }
 
-    public String getVersion()
+    public Float getVersion()
     {
         return version;
     }
 
-    public void setVersion(String version)
+    public void setVersion(Float version)
     {
         this.version = version;
     }

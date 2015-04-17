@@ -57,7 +57,7 @@ public class CDEDataController
         dataElementModel.setDec( buildTestDataElementConceptModel() );
         dataElementModel.setContext( buildTestContextModel() );
         dataElementModel.setDeIdseq( "DeIdse" );
-        dataElementModel.setVersion( "Version" ); // needs to be a Float!
+        dataElementModel.setVersion( 4.1F ); // needs to be a Float!
         dataElementModel.setConteIdseq( "ConteIdseq" );
         dataElementModel.setPreferredName( "PreferredName" );
         dataElementModel.setVdIdseq( "VdIdseq" );
