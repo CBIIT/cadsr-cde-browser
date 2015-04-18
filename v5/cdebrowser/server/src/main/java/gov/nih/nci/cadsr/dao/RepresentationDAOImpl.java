@@ -48,4 +48,24 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
             return representationModel;
         }
     }
+
+    public ObjectClassDAO getObjectClassDAO()
+    {
+        return objectClassDAO;
+    }
+
+    public void setObjectClassDAO( ObjectClassDAO objectClassDAO )
+    {
+        this.objectClassDAO = objectClassDAO;
+    }
+
+    public PropertyDAO getPropertyDAO()
+    {
+        return propertyDAO;
+    }
+
+    public void setPropertyDAO( PropertyDAO propertyDAO )
+    {
+        this.propertyDAO = propertyDAO;
+    }
 }
