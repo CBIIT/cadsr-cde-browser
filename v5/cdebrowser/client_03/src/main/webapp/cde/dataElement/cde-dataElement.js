@@ -13,51 +13,55 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", functi
             [
                 {
                     description: "Public ID",
-                    value: JSON.parse($scope.cdeData).publicId
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.publicId
                 },
                 {
                     description: "Version",
-                    value: JSON.parse($scope.cdeData).version
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.version
                 },
                 {
                     description: "Long Name",
-                    value: JSON.parse($scope.cdeData).longName
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.longName
                 },
                 {
                     description: "Short Name",
-                    value: JSON.parse($scope.cdeData).preferredName
+                   // value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredName
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.shortName
                 },
                 {
                     description: "Preferred Question Text",
-                    value: JSON.parse($scope.cdeData).longCDEName
+                    //value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.longCDEName
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredQuestionText
                 },
                 {
                     description: "Definition",
-                    value: JSON.parse($scope.cdeData).preferredDefinition
+                    //value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredDefinition
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.definition
                 },
                 {
                     description: "Value Domain",
-                    value: "STILL NEED TO FIND THIS"
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.valueDomain
                 },
                 {
                     description: "Data Element Concept",
-                    value: "STILL NEED TO FIND THIS"
+                    value:  JSON.parse($scope.cdeData).dataElement.dataElementDetails.dataElementConcept
                 },
                 {
                     description: "Context",
-                    value: JSON.parse($scope.cdeData).contextName
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.context
                 },
                 {
                     description: "Workflow Status",
-                    value:  "STILL NEED TO FIND THIS"
+
+                    value:  JSON.parse($scope.cdeData).dataElement.dataElementDetails.workflowStatus
                 },
                 {
                     description: "Origin",
-                    value: JSON.parse($scope.cdeData).origin
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.origin
                 },
                 {
                     description: "Registration Status",
-                    value: JSON.parse($scope.cdeData).registrationStatus
+                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.registrationStatus
                 }
 
             ]

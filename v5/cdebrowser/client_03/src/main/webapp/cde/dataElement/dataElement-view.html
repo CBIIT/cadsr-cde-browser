@@ -4,10 +4,11 @@
     <input class="testButton" type="button" value="Get CDE data" ng-click="getCdeData()"/>
 
 -->
-    <div class="dataElementView">
-        <h1>Data Element</h1>
-        <table class="dataElementViewTable"  align="center" cellpadding="1" cellspacing="1"  >
+    <br/>
 
+    <div class="dataElementView">
+        <table class="dataElementViewTable"  align="center" cellpadding="1" cellspacing="1"  >
+            <tr class="cdeDetailsSubHeading"><td >Data Element Details</td><td></td></tr>
             <tr class="dataElementViewTableTr" ng-repeat = "elementItem in dataElementDataElementDetails">
                 <td  class="dataElementDescription">{{elementItem.description}}:</td>
                 <td class="dataElementValue">{{elementItem.value}}</td>
