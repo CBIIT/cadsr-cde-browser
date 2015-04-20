@@ -122,7 +122,29 @@ angular.module('cde').controller('cdeCtrl', ['$scope', '$http', '$location', fun
     "            \"registrationStatus\": \"The Registration Status\",\n" +
     "            \"directLink\": \"The Direct Link\"\n" +
     "        },\n" +
-    "        \"referenceDocuments\": null,\n" +
+    "        \"referenceDocuments\": [\n" +
+    "            {\n" +
+    "                \"documentName\": \"The Document Name 1\",\n" +
+    "                \"documentType\": \"The Document Type 1\",\n" +
+    "                \"documentText\": \"The Document Text 1\",\n" +
+    "                \"context\": \"The Context 1\",\n" +
+    "                \"url\": \"The URL 1\"\n" +
+    "            },\n" +
+    "            {\n" +
+    "                \"documentName\": \"The Document Name 2\",\n" +
+    "                \"documentType\": \"The Document Type 2\",\n" +
+    "                \"documentText\": \"The Document Text 2\",\n" +
+    "                \"context\": \"The Context 2\",\n" +
+    "                \"url\": \"The URL 2\"\n" +
+    "            },\n" +
+    "            {\n" +
+    "                \"documentName\": \"The Document Name 3\",\n" +
+    "                \"documentType\": \"The Document Type 3\",\n" +
+    "                \"documentText\": \"The Document Text 3\",\n" +
+    "                \"context\": \"The Context 3\",\n" +
+    "                \"url\": \"The URL 3\"\n" +
+    "            }\n" +
+    "        ],\n" +
     "        \"alternateNamesAndDefinitionses\": null,\n" +
     "        \"otherVersions\": null\n" +
     "    }\n" +

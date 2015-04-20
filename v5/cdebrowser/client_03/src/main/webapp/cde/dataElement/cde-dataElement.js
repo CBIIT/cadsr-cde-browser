@@ -5,6 +5,7 @@ angular.module("cdeDataElement", []);
 
 angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", function ($scope) {
 
+/*
 
     $scope.getCdeData = function () {
 
@@ -25,7 +26,7 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", functi
                 },
                 {
                     description: "Short Name",
-                   // value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredName
+                    // value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredName
                     value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.shortName
                 },
                 {
@@ -65,8 +66,30 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", functi
                 }
 
             ]
-    }
+
+    $scope.dataElementReferenceDocuments=
+        [
+            {
+                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.documentName
+            },
+            {
+                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.documentType
+            },
+            {
+                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.documentText
+            },
+            {
+                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.context
+            }
+            ,
+            {
+                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.url
+            }
+
+        ]
+};
 
 $scope.getCdeData();
+*/
 
 }]);

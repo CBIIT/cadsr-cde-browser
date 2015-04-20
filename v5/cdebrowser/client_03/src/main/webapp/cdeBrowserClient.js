@@ -88,7 +88,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
         console.log("IN getCdeDetailRestCall: " + serverUrl);
         $http.get(serverUrl).success(function (response) {
             $scope.cdeDetails =  response;
-            console.log("IN getCdeDetailRestCall  results: " + $scope.cdeDetails);
+            console.log("IN getCdeDetailRestCall  results: " + JSON.stringify( response) );
         });
     };
 

@@ -117,6 +117,16 @@
     text-align: right;
 }
 
+.dataElementHeading {
+    width: 25%;
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 10pt;
+    COLOR: #336699;
+    FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif;
+    background-color: #cccc99;
+    text-align: left;
+}
+
 .dataElementValue {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 10pt;

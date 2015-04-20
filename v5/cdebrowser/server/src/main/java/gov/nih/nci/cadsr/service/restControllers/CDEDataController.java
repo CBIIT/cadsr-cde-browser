@@ -1,6 +1,10 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.dao.model.*;
+import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +23,69 @@ public class CDEDataController
 
     private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
 
-    @RequestMapping( value = "/CDEData" )
+    @RequestMapping(value = "/CDEData")
     @ResponseBody
-    public DataElementModel CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
+    public CdeDetails CDEDataController( @RequestParam("deIdseq") String deIdseq )
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
 
-        DataElementModel dataElementModel = buildTestRecord1();
+        CdeDetails cdeDetails = buildTestRecord();
 
-        return dataElementModel;
+        return cdeDetails;
+    }
+
+    private CdeDetails buildTestRecord()
+    {
+        CdeDetails cdeDetails = new CdeDetails();
+        DataElement dataElement = new DataElement();
+        cdeDetails.setDataElement( dataElement );
+
+        DataElementDetails dataElementDetails = new DataElementDetails();
+        dataElement.setDataElementDetails( dataElementDetails );
+
+        dataElementDetails.setPublicId( 912345 );
+        dataElementDetails.setVersion( 4.1F );
+        dataElementDetails.setLongName( "The Long Name" );
+        dataElementDetails.setShortName( "The Short Name" );
+        dataElementDetails.setPreferredQuestionText( "The preferred Question Text" );
+        dataElementDetails.setDefinition( "The Definition" );
+        dataElementDetails.setValueDomain( "The Value Domain" );
+        dataElementDetails.setDataElementConcept( "The Data Element Concept" );
+        dataElementDetails.setContext( "The Context" );
+        dataElementDetails.setWorkflowStatus( "The Workflow Status" );
+        dataElementDetails.setOrigin( "The Origin" );
+        dataElementDetails.setRegistrationStatus( "The Registration Status" );
+        dataElementDetails.setDirectLink( "The Direct Link" );
+
+
+        List<ReferenceDocument> referenceDocuments = new ArrayList<>();
+        dataElement.setReferenceDocuments( referenceDocuments );
+        // Add two sample referenceDocuments
+        ReferenceDocument referenceDocument1 = new ReferenceDocument();
+        referenceDocument1.setDocumentName( "The Document Name 1" );
+        referenceDocument1.setDocumentType( "The Document Type 1" );
+        referenceDocument1.setDocumentText( "The Document Text 1" );
+        referenceDocument1.setContext( "The Context 1" );
+        referenceDocument1.setUrl( "The URL 1" );
+        referenceDocuments.add( referenceDocument1 );
+
+        ReferenceDocument referenceDocument2 = new ReferenceDocument();
+        referenceDocument2.setDocumentName( "The Document Name 2" );
+        referenceDocument2.setDocumentType( "The Document Type 2" );
+        referenceDocument2.setDocumentText( "The Document Text 2" );
+        referenceDocument2.setContext( "The Context 2" );
+        referenceDocument2.setUrl( "The URL 2" );
+        referenceDocuments.add( referenceDocument2 );
+
+        ReferenceDocument referenceDocument3 = new ReferenceDocument();
+        referenceDocument3.setDocumentName( "The Document Name 3" );
+        referenceDocument3.setDocumentType( "The Document Type 3" );
+        referenceDocument3.setDocumentText( "The Document Text 3" );
+        referenceDocument3.setContext( "The Context 3" );
+        referenceDocument3.setUrl( "The URL 3" );
+        referenceDocuments.add( referenceDocument3 );
+
+        return cdeDetails;
     }
 
     private DataElementModel buildTestRecord1()
@@ -38,7 +96,7 @@ public class CDEDataController
         dataElementModel.setModifiedBy( "buildTestRecord1 DateModified" );
         dataElementModel.setDateModified( getDate() );
 
-        dataElementModel.setPreferredQuestionText("LongCDEName");
+        dataElementModel.setPreferredQuestionText( "LongCDEName" );
         dataElementModel.setContextName( "ContextName" );
         dataElementModel.setUsingContexts( "UsingContexts" );
 
@@ -161,7 +219,7 @@ public class CDEDataController
 
         representationModel.setPreferredName( "RepresentationModel PreferredName" );
         representationModel.setLongName( "RepresentationModel LongName" );
-        representationModel.setVersion( ( float ) 23.45 );
+        representationModel.setVersion( (float) 23.45 );
         representationModel.setContext( buildTestContextModel() );
         representationModel.setPublicId( 4321 );
         representationModel.setIdseq( "RepresentationModel Idseq" );
@@ -184,7 +242,7 @@ public class CDEDataController
         dataElementConceptModel.setPreferredDefinition( "DataElementConceptModel PreferredDefinition" );
         dataElementConceptModel.setLongName( "DataElementConceptModel LongName" );
         dataElementConceptModel.setAslName( "DataElementConceptModel AslName" );
-        dataElementConceptModel.setVersion( ( float ) 123 );
+        dataElementConceptModel.setVersion( (float) 123 );
 
         dataElementConceptModel.setDeletedInd( "DataElementConceptModel DeletedInd" );
         dataElementConceptModel.setLatestVerInd( "DataElementConceptModel LatestVerInd" );
@@ -204,14 +262,14 @@ public class CDEDataController
         dataElementConceptModel.setPropertyPrefName( "DataElementConceptModel PropertyPrefName" );
         dataElementConceptModel.setPropertyContextName( "DataElementConceptModel PropertyContextName" );
 
-        dataElementConceptModel.setPropertyVersion( ( float ) 987 );
+        dataElementConceptModel.setPropertyVersion( (float) 987 );
 
-        dataElementConceptModel.setObjClassVersion( ( float ) 654 );
+        dataElementConceptModel.setObjClassVersion( (float) 654 );
 
         dataElementConceptModel.setConteName( "DataElementConceptModel ConteName" );
         dataElementConceptModel.setCdPrefName( "DataElementConceptModel CdPrefName" );
         dataElementConceptModel.setCdContextName( "DataElementConceptModel CdContextName" );
-        dataElementConceptModel.setCdVersion( ( float ) 12.34 );
+        dataElementConceptModel.setCdVersion( (float) 12.34 );
         dataElementConceptModel.setCdPublicId( 123 );
         dataElementConceptModel.setObjClassPublicId( "DataElementConceptModel ObjClassPublicId" );
         dataElementConceptModel.setProperty( buildTestPropertyModel() );
@@ -231,7 +289,7 @@ public class CDEDataController
 
         objectClassModel.setPreferredName( "ObjectClassModel PreferredName" );
         objectClassModel.setLongName( "ObjectClassModel LongName" );
-        objectClassModel.setVersion( ( float ) 2.3 );
+        objectClassModel.setVersion( (float) 2.3 );
         objectClassModel.setContext( buildTestContextModel() );
         objectClassModel.setPublicId( 234 );
 
@@ -257,7 +315,7 @@ public class CDEDataController
 
         propertyModel.setPreferredName( "PropertyModel PreferredName" );
         propertyModel.setLongName( "PropertyModel LongName" );
-        propertyModel.setVersion( ( float ) 1.23 );
+        propertyModel.setVersion( (float) 1.23 );
         propertyModel.setContext( buildTestContextModel() );
         propertyModel.setPublicId( 123 );
         propertyModel.setName( "PropertyModel Name" );
@@ -312,7 +370,7 @@ public class CDEDataController
         contextModel.setLlName( "ContextModel Llname" );
         contextModel.setDescription( "ContextModel Description" );
         contextModel.setPreferredDefinition( "ContextModel PreferredDefinition" );
-        contextModel.setLanguage("ContextModel Lang");
+        contextModel.setLanguage( "ContextModel Lang" );
         contextModel.setVersion( (float) 123 );
 
         return contextModel;
@@ -324,6 +382,6 @@ public class CDEDataController
     {
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
-        return new java.sql.Timestamp(now.getTime());
+        return new java.sql.Timestamp( now.getTime() );
     }
 }
