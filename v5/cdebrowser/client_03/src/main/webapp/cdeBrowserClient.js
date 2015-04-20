@@ -1,5 +1,5 @@
 // controller
-cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filter, ngTableParams) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($scope, $http, $filter, ngTableParams) {
 
     $scope.show = [];
     $scope.initComplete = false;
@@ -130,6 +130,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
             $scope.searchResults = response;
 
             if ($scope.searchResults.length > 0) {
+
                 // TODO Quick hack, make status message better when time permits.
                 // check for error here .status & .longName
                 if(response[0].status != 0  )
@@ -149,6 +150,9 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
                     $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
                     $scope.tableParams.reload();
                 }
+                $scope.haveSearchResults = true;
+
+
             }
             else {
                 $scope.searchResultsMessage = "No search results";
@@ -231,6 +235,7 @@ cdeBrowserApp.controller('cdeBrowserController', function ($scope, $http, $filte
                 //FIXME move this
                 $scope.initComplete = true;
                 $scope.onClickTab(0);
+
             }
         });
 

@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
     <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
 
+    <link rel="stylesheet" href="cde/cde.css">
 
 </head>
 <body>
@@ -235,7 +236,7 @@
             </div>
         </ul>
     </div>
-<Br />
+    <Br/>
     <!-- tree menu(s) for each tab -->
     <div id="tabWrapper">
 
@@ -248,35 +249,36 @@
                  notifier="notifyServiceOnChange(params)"
                     >
 
-                <div class="tabCaptionWrapper cssFade"  data-ng-show=show[nodeNumber]>
+                <div class="tabCaptionWrapper cssFade" data-ng-show=show[nodeNumber]>
                     <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
                         <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
                     </div>
                 </div>
 
                 <div class="cssFade" data-ng-show=show[nodeNumber]
-                        data-cdebrowser-treeview="true"
-                        data-tree-id="tree"
-                        data-tree-model="contextListMaster[nodeNumber].children"
-                        data-node-action="href"
-                        data-node-childType="childType"
-                        data-node-isParent="isParent"
-                        data-node-type="type"
-                        data-node-label="text"
-                        data-node-hover="hover"
-                        data-node-children="children">
+                     data-cdebrowser-treeview="true"
+                     data-tree-id="tree"
+                     data-tree-model="contextListMaster[nodeNumber].children"
+                     data-node-action="href"
+                     data-node-childType="childType"
+                     data-node-isParent="isParent"
+                     data-node-type="type"
+                     data-node-label="text"
+                     data-node-hover="hover"
+                     data-node-children="children">
                 </div>
             </div>
         </div>
     </div>
 
     <!-- =============================================================================== -->
+    <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
-    <div id="resultsDisplay" data-ng-show="initComplete"
+    <div id="resultsDisplay" ng-controller="cdeCtrl" ng-cloak class="ng-cloak" data-ng-show="initComplete"
          data-ng-style="resizeHeight()"
          resize
-         notifier="notifyServiceOnChange(params)"
-            >
+         notifier="notifyServiceOnChange(params)">
+
 
         <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
         <div class="queryTypeRadioButtons">
@@ -316,7 +318,7 @@
         <span
                 data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
-             normmSearchResultsMessage: (! bigSearchResultsMessageClass)
+             normSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
             {{searchResultsMessage}}
         </span>
@@ -326,84 +328,74 @@
         </div>
 
         <div class="breadCrumbs">
-            <br>
             <span ng-show="breadCrumbs">
                 <span ng-repeat="b in breadCrumbs">
                     {{b}}<span ng-show="!$last"> >></span>
-                </span><br/><br/>
+                </span><br/>
             </span>
         </div>
-        <div id="searchResults" data-ng-show="haveSearchResults">
-            <div class="sortOrder">
-                <div class="sortOrder left" ng-repeat="(key,val) in tableParams.sorting()">Sort Order: {{sortNames[key]}}
-                    [{{val}}]
-                </div>
 
-                <div class="sortOrder right">
-                    <a href="#" ng-click="resetSortOrder()">Reset Sort Order</a>
-                </div>    
-            </div><br />        
+        <!-- the search results tabs and content below -->
+            <div class="cdeTabs">
+                <ul class="cdeTabsUl">
+                    <li class="cdeTabsLi" ng-repeat="(tabNumber,tab) in tabs"
+                        data-ng-mouseenter="hover = true"
+                        data-ng-mouseleave="hover = false"
+                        data-ng-class="{
+                        tabActive:   isActiveCdeTab(tabNumber),
+                        tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
+                        tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
+                        }"
+                        ng-click="changeView(tabNumber,tab)">{{tab.title}}
+                    </li>
+                </ul>
+            </div>
 
-            <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
-            <br/>
-            <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-                <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
-            </script>
 
-            <table ng-table="tableParams" class="searchResultsTable">
-                <tr class="searchResultsTableTr" ng-repeat="result in $data">
-                    <td header="'ng-table/headers/checkbox.html'">
-                        <input type="checkbox" ng-model="checkboxes.items[result.publicId]">
-                    </td>
+            <!-- The search tab views ========================================================== -->
+            <div class="cdeSearchTabsView"  ng-view></div>
 
-                    <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
-                        <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
-                    </td>
-                    <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'"
-                        class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}
-                    </td>
-                    <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">
-                        {{result.ownedBy}}
-                    </td>
-                    <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd"
-                        width="14%">{{result.usedByContext}}
-                    </td>
-                    <td data-title="'Registration Status'" sortable="'registrationSort'" class="searchResultsTableTd"
-                        width="14%">{{result.registrationStatus}}
-                    </td>
-                    <td data-title="'Workflow Status'" sortable="'workflowSort'" class="searchResultsTableTd"
-                        width="14%">{{result.workflowStatus}}
-                    </td>
-                    <td data-title="'Public ID'" sortable="'publicId'" class="searchResultsTableTd" width="10%">
-                        {{result.publicId}}
-                    </td>
-                    <td data-title="'Version'" sortable="'version'" class="searchResultsTableTd" width="7%">
-                        {{result.version}}
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <!-- =============================================================================== -->
+
         <div id="footer">
             <table>
                 <tr>
-                    <td>User: <span class="userName">Public User</a></td>
-                    <td><a href="https://wiki.nci.nih.gov/display/caDSR/caDSR+Privacy+Policy+Statement;jsessionid=701CBEBAA93126F2C34FBD368135F532" target="_blank">Privacy Notice</a></td>
-                    <td>Version 4.0.5 Build 09</td>
-                    <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a></td>
+                    <td>User: <span class="userName">Public User</span></td>
+                    <td>
+                        <a href="https://wiki.nci.nih.gov/display/caDSR/caDSR+Privacy+Policy+Statement;jsessionid=701CBEBAA93126F2C34FBD368135F532"
+                           target="_blank">Privacy Notice</a></td>
+                    <td>Version 5</td>
+                    <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
+                    </td>
                 </tr>
             </table>
-        </div>          
+        </div>
+
     </div>
+    <!-- =============================================================================== -->
+
 </div>
+
 
 <script type='text/javascript' src='angular.min.js'></script>
 <script type='text/javascript' src='angular-animate.min.js'></script>
+<script type='text/javascript' src='angular-route.min.js'></script>
 <script type='text/javascript' src="app.js"></script>
 <script type='text/javascript' src='cdeBrowserClient.js'></script>
 <script type='text/javascript' src="cdeBrowserProperties.js"></script>
 <script type='text/javascript' src="directives/treeModel.js"></script>
 <script type='text/javascript' src="directives/resize.js"></script>
 <script type='text/javascript' src="plugins/ng-table/ng-table.min.js"></script>
+
+<script src="cde/cde.js"></script>
+<script src="cde/adminInfo/cde-adminInfo.js"></script>
+<script src="cde/classifications/cde-classifications.js"></script>
+<script src="cde/dataElement/cde-dataElement.js"></script>
+<script src="cde/dataElementConcept/cde-dataElementConcept.js"></script>
+<script src="cde/dataElementDerivation/cde-dataElementDerivation.js"></script>
+<script src="cde/usage/cde-usage.js"></script>
+<script src="cde/valueDomain/cde-valueDomain.js"></script>
+<script src="cde/search/cde-search.js"></script>
 
 </body>
 </html>

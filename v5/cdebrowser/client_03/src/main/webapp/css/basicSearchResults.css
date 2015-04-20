@@ -52,7 +52,7 @@
     font-size: 24pt;
 }
 
-.normmSearchResultsMessage {
+.normSearchResultsMessage {
     margin-left: 5px;
     background-color: #fff;
     color: #1A4660;
@@ -177,6 +177,7 @@ width:100%;
 
 #searchResults {
     padding-left:4px;
+    /*margin-top:5px;*/  /* Push down label - Sort Order: etc.*/
     color:#663300;
 }
 
@@ -185,6 +186,7 @@ width:100%;
     font-size:80%;
     margin-top:10px;
     margin-right:10px;
+    margin-left:10px;
     color:#fff;
 }
     #footer td {

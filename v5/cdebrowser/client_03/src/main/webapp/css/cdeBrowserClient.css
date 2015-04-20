@@ -87,6 +87,9 @@ a:hover {
     /*  Top of display pane  */
 
     margin-top: 29px;  /* needs to match .treeMenu */
+    /*
+    margin-bottom: 29px;
+    */
     overflow-x: scroll ;
     overflow-y: scroll;
     resize: horizontal;
@@ -149,6 +152,10 @@ a:hover {
     float: right;
     margin-right: 10px;
     width: 80px;
+}
+
+.cdeTabs{
+    background-color: #336699;
 }
 
 #rightHeader {
