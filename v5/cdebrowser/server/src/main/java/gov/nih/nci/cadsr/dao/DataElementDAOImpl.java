@@ -5,6 +5,7 @@ import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
@@ -52,7 +53,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     }
 
     @Override
-    public DataElementModel getCdeByDeIdseq(String deIdseq) {
+    public DataElementModel getCdeByDeIdseq(String deIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM DATA_ELEMENTS WHERE de_idseq = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[] { deIdseq }, new DataElementMapper());
         return dataElementModel;
