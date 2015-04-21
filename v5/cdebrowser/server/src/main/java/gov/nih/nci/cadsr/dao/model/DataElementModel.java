@@ -25,9 +25,9 @@ public class DataElementModel extends BaseModel
     private ContextModel context;
     private String deIdseq; // primary key
     private Float version; // needs to be a Float!
-    private String conteIdseq;
+    private String conteIdseq; // fixme this field can't possibly be needed since we have a whole context model object
     private String preferredName;
-    private String vdIdseq;
+    private String vdIdseq; // fixme this field can't possibly be needed since we have a whole value domain model object
     private String decIdseq;
     private String preferredDefinition;
     private String aslName;
@@ -59,7 +59,8 @@ public class DataElementModel extends BaseModel
     public void fillPreferredQuestionText() {
         if (getRefDocs() != null) {
             for (ReferenceDocModel referenceDocModel : getRefDocs()) {
-                if (referenceDocModel.getDctlName().equals("Preferred Question Text")) {
+                if (referenceDocModel.getDctlName().equals("Preferred Question Text")
+                        && referenceDocModel.getDocText() != null) {
                     setPreferredQuestionText(referenceDocModel.getDocText());
                     return;
                 }
@@ -68,14 +69,15 @@ public class DataElementModel extends BaseModel
     }
 
     /**
-     * populate the usingContexts field by concatinating the designationModels' contexts' names
+     * populate the usingContexts field by concatenating the designationModels' contexts' names
      * where
      */
     public void fillUsingContexts() {
         ArrayList<String> usingContexts = new ArrayList<>();
         if (getDesignationModels() != null) {
             for (DesignationModel designationModel : getDesignationModels()) {
-                if (designationModel.getDetlName().equals("USED_BY")) {
+                if (designationModel.getDetlName().equals("USED_BY")
+                        && designationModel.getContex().getName() != null) {
                     usingContexts.add(designationModel.getContex().getName());
                 }
             }
