@@ -26,6 +26,10 @@
     <bean id="testController" class="gov.nih.nci.cadsr.service.restControllers.TestController">
     </bean>
 
+    <bean id="CDEDataController" class="gov.nih.nci.cadsr.service.restControllers.CDEDataController">
+        <property name="dataElementDAO" ref="dataElementDAO"/>
+    </bean>
+
     <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController">
         <property name="basicSearchDAO" ref="basicSearchDAO"/>
         <property name="dataElementDAO" ref="dataElementDAO"/>
