@@ -9,6 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.1.2.RELEASE</spring.version>
+        <connection-url>jdbc:oracle:thin:@${env.CADSR_DS_HOST}:${env.CADSR_DS_PORT}:DSRDEV</connection-url>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -101,6 +102,12 @@
     <build>
         <finalName>cdebrowserServer</finalName>
         <testSourceDirectory>src/test/java</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

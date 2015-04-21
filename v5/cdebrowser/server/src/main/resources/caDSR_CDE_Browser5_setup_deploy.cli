@@ -1,6 +1,6 @@
 #caDSR CDE Browser v5 Wildfly setup scripts
 
-connect localhost:9990
+connect localhost:19990
 
 # configure datasource
 # is the driver in standalone.xml?
@@ -19,10 +19,10 @@ if (outcome != success) of /subsystem=datasources/data-source=CDEBrowserDS:read-
 data-source add \
     --name=CDEBrowserDS \
     --driver-name=oracle \
-    --connection-url=jdbc:oracle:thin:@ncidb-d110-d.nci.nih.gov:1551:DSRDEV \
+    --connection-url=${connection-url} \
     --jndi-name=java:jboss/datasources/CDEBrowserDS \
-    --user-name=rembdev \
-    --password=dsr#browser0225 \
+    --user-name=${env.CADSR_DS_USER} \
+    --password=${env.CADSR_DS_PSWD} \
     --use-ccm=true \
     --max-pool-size=100 \
     --blocking-timeout-wait-millis=5000 
