@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
+import gov.nih.nci.cadsr.dao.DataElementDAOImpl;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
@@ -7,6 +8,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,19 +22,110 @@ import java.util.List;
 @RestController
 public class CDEDataController
 {
-
     private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
+    private DataElementDAOImpl dataElementDAO;
 
     @RequestMapping(value = "/CDEData")
     @ResponseBody
     public CdeDetails CDEDataController( @RequestParam("deIdseq") String deIdseq )
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
+        logger.debug( "Received rest call \"CDEData\":  dataElementDAO.getCdeByDeIdseq( " + deIdseq  +")" );
 
-        CdeDetails cdeDetails = buildTestRecord();
+        DataElementModel dataElementModel = null;
+
+        try
+        {
+            dataElementModel = dataElementDAO.getCdeByDeIdseq( deIdseq );
+        } catch( EmptyResultDataAccessException e )
+        {
+            e.printStackTrace();
+        }
+
+        CdeDetails cdeDetails = buildCdeDetails( dataElementModel);
+        //CdeDetails cdeDetails = buildTestRecord();
 
         return cdeDetails;
     }
+
+    // Build a CdeDetails to send to the client
+    private CdeDetails buildCdeDetails( DataElementModel dataElementModel)
+    {
+        CdeDetails cdeDetails = new CdeDetails();
+
+        /////////////////////////////////////////////////////////////////
+        // For the "Data Element" Tab
+        /////////////////////////////////////////////////////////////////
+        DataElement dataElement = new DataElement();
+        cdeDetails.setDataElement( dataElement );
+
+        /////////////////////////////////////////////////////
+        // "Data Element Details" of the "Data Element" Tab
+        DataElementDetails dataElementDetails = new DataElementDetails();
+        dataElement.setDataElementDetails( dataElementDetails );
+
+        if( dataElementModel.getPublicId() == null)
+        {
+            dataElementDetails.setPublicId( -1);
+            logger.error( " dataElementModel.getPublicId() == null" );
+        }
+        else
+        {
+            dataElementDetails.setPublicId( dataElementModel.getPublicId() );
+        }
+
+        if( dataElementModel.getVersion() == null)
+        {
+            dataElementDetails.setVersion( -1);
+            logger.error( " dataElementModel.getVersion() == null" );
+        }
+        else
+        {
+            dataElementDetails.setVersion( dataElementModel.getVersion() );
+        }
+
+        dataElementDetails.setLongName( dataElementModel.getLongName() );
+        dataElementDetails.setShortName( dataElementModel.getPreferredName() );
+        dataElementDetails.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
+        dataElementDetails.setDefinition( dataElementModel.getPreferredDefinition() );
+        dataElementDetails.setValueDomain( "STILL NEED TO TRACK DOWN Value Domain" );
+        dataElementDetails.setDataElementConcept( "STILL NEED TO TRACK DOWN Data Element Concept" );
+        dataElementDetails.setContext( dataElementModel.getContextName() );
+        dataElementDetails.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+        dataElementDetails.setOrigin( dataElementModel.getOrigin() );
+        dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
+        dataElementDetails.setDirectLink( "STILL NEED TO TRACK DOWN Direct Link" );
+
+        /////////////////////////////////////////////////////
+        // "Reference Documents" of the "Data Element" Tab
+        List<ReferenceDocument> referenceDocuments = new ArrayList<>();
+        dataElement.setReferenceDocuments( referenceDocuments );
+
+        List<ReferenceDocModel> dataElementModelReferenceDocumentList =  dataElementModel.getRefDocs();
+        if( dataElementModelReferenceDocumentList.size() <1)
+        {
+            logger.debug( "No ReferenceDocuments where returned" );
+        }
+        for( ReferenceDocModel referenceDocModel: dataElementModelReferenceDocumentList)
+        {
+            logger.debug(referenceDocModel.getDocName());
+            logger.debug(referenceDocModel.getDocType());
+            logger.debug(referenceDocModel.getDocText());
+            logger.debug(referenceDocModel.getContext().getName());
+            logger.debug(referenceDocModel.getUrl());
+        }
+
+        return cdeDetails;
+    }
+
+    public void setDataElementDAO( DataElementDAOImpl dataElementDAO )
+    {
+        this.dataElementDAO = dataElementDAO;
+    }
+
+
+    // Test stuff
+
 
     private CdeDetails buildTestRecord()
     {
