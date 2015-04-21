@@ -58,4 +58,26 @@ public class ProgramAreaModel extends BaseModel
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProgramAreaModel)) return false;
+
+        ProgramAreaModel that = (ProgramAreaModel) o;
+
+        if (getComments() != null ? !getComments().equals(that.getComments()) : that.getComments() != null)
+            return false;
+        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+            return false;
+        return !(getPalName() != null ? !getPalName().equals(that.getPalName()) : that.getPalName() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getComments() != null ? getComments().hashCode() : 0;
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getPalName() != null ? getPalName().hashCode() : 0);
+        return result;
+    }
 }
