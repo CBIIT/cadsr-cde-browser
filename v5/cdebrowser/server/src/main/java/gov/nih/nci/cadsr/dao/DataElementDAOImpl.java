@@ -135,7 +135,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
         public DataElementModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            DataElementModel dataElementModel = new DataElementModel();
+            DataElementModel dataElementModel = super.mapRow(rs, rowNum);
             /* need to map these members:
             List<ReferenceDocModel> refDocs;
             List<DesignationModel> designationModels;
