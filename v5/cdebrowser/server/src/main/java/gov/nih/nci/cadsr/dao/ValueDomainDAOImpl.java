@@ -61,13 +61,13 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
         public ValueDomainModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             ValueDomainModel valueDomainModel = new ValueDomainModel();
             try {
-                ConceptDerivationRuleModel conceptDerivationRuleModel = getConceptDerivationRuleDAO().getCDRByIdseq("CONDR_IDSEQ");
+                ConceptDerivationRuleModel conceptDerivationRuleModel = getConceptDerivationRuleDAO().getCDRByIdseq(rs.getString("CONDR_IDSEQ"));
                 valueDomainModel.setConceptDerivationRuleModel(conceptDerivationRuleModel);
             } catch (EmptyResultDataAccessException ex) {
                 // this isn't a problem, just means there's no associated ConceptDerivationRule
                 // valueDomainModel.setConceptDerivationRuleModel(new ConceptDerivationRuleModel());
             }
-            valueDomainModel.setRepresentationModel(getRepresentationDAO().getRepresentationByIdseq("REP_IDSEQ"));
+            valueDomainModel.setRepresentationModel(getRepresentationDAO().getRepresentationByIdseq(rs.getString("REP_IDSEQ")));
             return valueDomainModel;
         }
     }
