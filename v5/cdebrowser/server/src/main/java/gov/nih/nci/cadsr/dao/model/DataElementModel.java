@@ -59,7 +59,7 @@ public class DataElementModel extends BaseModel
     public void fillPreferredQuestionText() {
         if (getRefDocs() != null) {
             for (ReferenceDocModel referenceDocModel : getRefDocs()) {
-                if (referenceDocModel.getDctlName().equals("Preferred Question Text")
+                if (referenceDocModel.getDctlName() != null && referenceDocModel.getDctlName().equals("Preferred Question Text")
                         && referenceDocModel.getDocText() != null) {
                     setPreferredQuestionText(referenceDocModel.getDocText());
                     return;
