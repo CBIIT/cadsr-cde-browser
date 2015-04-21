@@ -6,6 +6,7 @@ import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -58,7 +59,13 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
 
         public ValueDomainModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             ValueDomainModel valueDomainModel = new ValueDomainModel();
-            valueDomainModel.setConceptDerivationRuleModel(getConceptDerivationRuleDAO().getCDRByIdseq("CONDR_IDSEQ"));
+            try {
+                ConceptDerivationRuleModel conceptDerivationRuleModel = getConceptDerivationRuleDAO().getCDRByIdseq("CONDR_IDSEQ");
+                valueDomainModel.setConceptDerivationRuleModel(conceptDerivationRuleModel);
+            } catch (EmptyResultDataAccessException ex) {
+                // this isn't a problem, just means there's no associated ConceptDerivationRule
+                // valueDomainModel.setConceptDerivationRuleModel(new ConceptDerivationRuleModel());
+            }
             valueDomainModel.setRepresentationModel(getRepresentationDAO().getRepresentationByIdseq("REP_IDSEQ"));
             return valueDomainModel;
         }

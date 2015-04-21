@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
     }
 
     @Override
-    public ConceptDerivationRuleModel getCDRByIdseq(String condrIdseq) {
+    public ConceptDerivationRuleModel getCDRByIdseq(String condrIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM SBREXT.CON_DERIVATION_RULES_EXT WHERE CONDR_IDSEQ = ?";
         ConceptDerivationRuleModel conceptDerivationRuleModel = jdbcTemplate.queryForObject(sql, new Object[] { condrIdseq }, new ConceptDerivationRuleMapper());
         return conceptDerivationRuleModel;
