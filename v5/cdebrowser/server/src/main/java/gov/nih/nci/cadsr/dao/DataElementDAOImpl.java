@@ -16,9 +16,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public class DataElementDAOImpl extends AbstractDAOOperations implements DataElementDAO
-{
-    private Logger logger = LogManager.getLogger( DataElementDAOImpl.class.getName() );
+public class DataElementDAOImpl extends AbstractDAOOperations implements DataElementDAO {
+    private Logger logger = LogManager.getLogger(DataElementDAOImpl.class.getName());
 
     private JdbcTemplate jdbcTemplate;
 
@@ -33,21 +32,20 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
 
 
     @Autowired
-    DataElementDAOImpl( DataSource dataSource ) {
+    DataElementDAOImpl(DataSource dataSource) {
         setDataSource(dataSource);
         jdbcTemplate = getJdbcTemplate();
     }
 
     @Override
-    public List<DataElementModel> getCdeBySearchString(String dataElementSql)
-    {
-        List<DataElementModel>  results;
+    public List<DataElementModel> getCdeBySearchString(String dataElementSql) {
+        List<DataElementModel> results;
 
-        logger.debug( "basicSearch");
+        logger.debug("basicSearch");
         //logger.debug( ">>>>>>> "+ sql );
-        results = getAll( dataElementSql, DataElementModel.class );
+        results = getAll(dataElementSql, DataElementModel.class);
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done basicSearch");
+        logger.debug("Done basicSearch");
 
         return results;
     }
@@ -55,7 +53,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     @Override
     public DataElementModel getCdeByDeIdseq(String deIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM DATA_ELEMENTS WHERE de_idseq = ?";
-        DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[] { deIdseq }, new DataElementMapper());
+        DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{deIdseq}, new DataElementMapper());
         return dataElementModel;
     }
 
@@ -134,6 +132,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     }
 
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
+        private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
         public DataElementModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             DataElementModel dataElementModel = new DataElementModel();
@@ -143,16 +142,21 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             ValueDomainModel valueDomainModel;
             DataElementConceptModel dec;
             ContextModel context; */
-            dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(rs.getString("DE_IDSEQ")));
+            String deIdseq = rs.getString("DE_IDSEQ");
+            dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
             dataElementModel.fillPreferredQuestionText();
-            dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq("DE_IDSEQ"));
+            dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
             dataElementModel.fillUsingContexts();
-            dataElementModel.setValueDomainModel(getValueDomainDAO().getValueDomainByIdseq(rs.getString("VD_IDSEQ")));
-            dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(rs.getString("DEC_IDSEQ")));
+            try {
+                dataElementModel.setValueDomainModel(getValueDomainDAO().getValueDomainByIdseq(rs.getString("VD_IDSEQ")));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No Value Domain found for Data Element with idseq: " + deIdseq + "  the vdIdseq is " + rs.getString("VD_IDSEQ"));
+            }
+            dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(deIdseq));
             dataElementModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             dataElementModel.setContextName(dataElementModel.getContext().getName());
             dataElementModel.setPublicId(dataElementModel.getCdeId());
-            AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(rs.getString("DE_IDSEQ"));
+            AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(deIdseq);
             dataElementModel.setRegistrationStatus(acRegistrationsModel.getRegistrationStatus());
             return dataElementModel;
         }
