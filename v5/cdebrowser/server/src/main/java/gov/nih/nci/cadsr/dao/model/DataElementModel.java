@@ -2,6 +2,7 @@ package gov.nih.nci.cadsr.dao.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +35,11 @@ public class DataElementModel extends BaseModel
     private String longName;
     private String latestVerInd;
     private String deletedInd;
-    private String beginDate;
-    private String endDate;
+    private Timestamp beginDate;
+    private Timestamp endDate;
     private String origin;
     private Integer cdeId;
     private String question;
-    private String vdName;
 
     public DataElementModel() {
     }
@@ -84,14 +84,6 @@ public class DataElementModel extends BaseModel
             }
         }
         setUsingContexts(StringUtils.join(usingContexts, ", "));
-    }
-
-    public String getVdName() {
-        return vdName;
-    }
-
-    public void setVdName(String vdName) {
-        this.vdName = vdName;
     }
 
     public String getContextName() {
@@ -284,22 +276,22 @@ public class DataElementModel extends BaseModel
         this.deletedInd = deletedInd;
     }
 
-    public String getBeginDate()
+    public Timestamp getBeginDate()
     {
         return beginDate;
     }
 
-    public void setBeginDate(String beginDate)
+    public void setBeginDate(Timestamp beginDate)
     {
         this.beginDate = beginDate;
     }
 
-    public String getEndDate()
+    public Timestamp getEndDate()
     {
         return endDate;
     }
 
-    public void setEndDate(String endDate)
+    public void setEndDate(Timestamp endDate)
     {
         this.endDate = endDate;
     }
@@ -382,9 +374,7 @@ public class DataElementModel extends BaseModel
         if (getEndDate() != null ? !getEndDate().equals(that.getEndDate()) : that.getEndDate() != null) return false;
         if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
         if (getCdeId() != null ? !getCdeId().equals(that.getCdeId()) : that.getCdeId() != null) return false;
-        if (getQuestion() != null ? !getQuestion().equals(that.getQuestion()) : that.getQuestion() != null)
-            return false;
-        return !(getVdName() != null ? !getVdName().equals(that.getVdName()) : that.getVdName() != null);
+        return !(getQuestion() != null ? !getQuestion().equals(that.getQuestion()) : that.getQuestion() != null);
 
     }
 
@@ -417,7 +407,6 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
         result = 31 * result + (getCdeId() != null ? getCdeId().hashCode() : 0);
         result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
-        result = 31 * result + (getVdName() != null ? getVdName().hashCode() : 0);
         return result;
     }
 
@@ -451,7 +440,6 @@ public class DataElementModel extends BaseModel
                 ", origin='" + origin + '\'' +
                 ", cdeId='" + cdeId + '\'' +
                 ", question='" + question + '\'' +
-                ", vdName='" + vdName + '\'' +
                 '}';
     }
 }

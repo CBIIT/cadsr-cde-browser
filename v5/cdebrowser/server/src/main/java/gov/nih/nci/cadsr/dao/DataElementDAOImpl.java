@@ -135,14 +135,35 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
         public DataElementModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            DataElementModel dataElementModel = super.mapRow(rs, rowNum);
+            DataElementModel dataElementModel = new DataElementModel();
+
+            String deIdseq = rs.getString("DE_IDSEQ");
+            dataElementModel.setVersion(rs.getFloat("VERSION"));
+            dataElementModel.setIdseq(deIdseq);
+            dataElementModel.setDeIdseq(deIdseq);
+            dataElementModel.setPreferredName(rs.getString("PREFERRED_NAME"));
+            dataElementModel.setVdIdseq(rs.getString("VD_IDSEQ"));
+            dataElementModel.setDecIdseq(rs.getString("DEC_IDSEQ"));
+            dataElementModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
+            dataElementModel.setAslName(rs.getString("ASL_NAME"));
+            dataElementModel.setLongName(rs.getString("LONG_NAME"));
+            dataElementModel.setLatestVerInd(rs.getString("LATEST_VERSION_IND"));
+            dataElementModel.setDeletedInd(rs.getString("DELETED_IND"));
+            dataElementModel.setBeginDate(rs.getTimestamp("BEGIN_DATE"));
+            dataElementModel.setEndDate(rs.getTimestamp("END_DATE"));
+            dataElementModel.setOrigin(rs.getString("ORIGIN"));
+            dataElementModel.setCdeId(rs.getInt("CDE_ID"));
+            dataElementModel.setQuestion(rs.getString("QUESTION"));
+            dataElementModel.setModifiedBy(rs.getString("MODIFIED_BY"));
+            dataElementModel.setCreatedBy(rs.getString("CREATED_BY"));
+            dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
+            dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
             /* need to map these members:
             List<ReferenceDocModel> refDocs;
             List<DesignationModel> designationModels;
             ValueDomainModel valueDomainModel;
             DataElementConceptModel dec;
             ContextModel context; */
-            String deIdseq = rs.getString("DE_IDSEQ");
             dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
             dataElementModel.fillPreferredQuestionText();
             dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
@@ -152,13 +173,19 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No Value Domain found for Data Element with idseq: " + deIdseq + "  the vdIdseq is " + rs.getString("VD_IDSEQ"));
             }
+
             try {
                 dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(deIdseq));
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No DataElementConcept found for Data Element with idseq: " + deIdseq);
             }
             dataElementModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
-            dataElementModel.setContextName(dataElementModel.getContext().getName());
+            if (dataElementModel.getContext() != null && dataElementModel.getContext().getName()!= null) {
+                dataElementModel.setContextName(dataElementModel.getContext().getName());
+            }
+            if (dataElementModel.getContext() != null && dataElementModel.getContext().getConteIdseq()!= null) {
+                dataElementModel.setConteIdseq(dataElementModel.getContext().getConteIdseq()); // rudely redundant
+            }
             dataElementModel.setPublicId(dataElementModel.getCdeId());
             AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(deIdseq);
             if (acRegistrationsModel != null && acRegistrationsModel.getRegistrationStatus() != null) {

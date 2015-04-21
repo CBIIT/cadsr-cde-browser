@@ -184,47 +184,46 @@ public class CDEDataController
     private DataElementModel buildTestRecord1()
     {
         DataElementModel dataElementModel = new DataElementModel();
-        dataElementModel.setCreatedBy( "buildTestRecord1 DateCreated" );
-        dataElementModel.setDateCreated( getDate() );
-        dataElementModel.setModifiedBy( "buildTestRecord1 DateModified" );
-        dataElementModel.setDateModified( getDate() );
+        dataElementModel.setCreatedBy("buildTestRecord1 DateCreated");
+        dataElementModel.setDateCreated(getDate());
+        dataElementModel.setModifiedBy("buildTestRecord1 DateModified");
+        dataElementModel.setDateModified(getDate());
 
-        dataElementModel.setPreferredQuestionText( "LongCDEName" );
-        dataElementModel.setContextName( "ContextName" );
-        dataElementModel.setUsingContexts( "UsingContexts" );
+        dataElementModel.setPreferredQuestionText("LongCDEName");
+        dataElementModel.setContextName("ContextName");
+        dataElementModel.setUsingContexts("UsingContexts");
 
         //List<ReferenceDocModel>
-        dataElementModel.setRefDocs( buildTestReferenceDocModelList() );
+        dataElementModel.setRefDocs(buildTestReferenceDocModelList());
 
         //List<DesignationModel>
-        dataElementModel.setDesignationModels( buildDesignationModelList() );
+        dataElementModel.setDesignationModels(buildDesignationModelList());
 
-        dataElementModel.setPublicId( 12345 );
-        dataElementModel.setIdseq( "Idseq" );
-        dataElementModel.setRegistrationStatus( "RegistrationStatus" );
+        dataElementModel.setPublicId(12345);
+        dataElementModel.setIdseq("Idseq");
+        dataElementModel.setRegistrationStatus("RegistrationStatus");
 
-        dataElementModel.setValueDomainModel( buildTestValueDomainModel() );
+        dataElementModel.setValueDomainModel(buildTestValueDomainModel());
 
-        dataElementModel.setDec( buildTestDataElementConceptModel() );
-        dataElementModel.setContext( buildTestContextModel() );
-        dataElementModel.setDeIdseq( "DeIdse" );
-        dataElementModel.setVersion( 4.1F ); // needs to be a Float!
-        dataElementModel.setConteIdseq( "ConteIdseq" );
-        dataElementModel.setPreferredName( "PreferredName" );
-        dataElementModel.setVdIdseq( "VdIdseq" );
-        dataElementModel.setDecIdseq( "DecIdseq" );
-        dataElementModel.setPreferredDefinition( "PreferredDefinition" );
-        dataElementModel.setAslName( "AslName" );
+        dataElementModel.setDec(buildTestDataElementConceptModel());
+        dataElementModel.setContext(buildTestContextModel());
+        dataElementModel.setDeIdseq("DeIdse");
+        dataElementModel.setVersion(4.1F); // needs to be a Float!
+        dataElementModel.setConteIdseq("ConteIdseq");
+        dataElementModel.setPreferredName("PreferredName");
+        dataElementModel.setVdIdseq("VdIdseq");
+        dataElementModel.setDecIdseq("DecIdseq");
+        dataElementModel.setPreferredDefinition("PreferredDefinition");
+        dataElementModel.setAslName("AslName");
 
-        dataElementModel.setLongName( "LongName" );
-        dataElementModel.setLatestVerInd( "LatestVerInd" );
-        dataElementModel.setDeletedInd( "DeletedInd" );
-        dataElementModel.setBeginDate( "BeginDate" );
-        dataElementModel.setEndDate( "EndDate" );
-        dataElementModel.setOrigin( "Origin" );
-        dataElementModel.setCdeId( 12345 );
-        dataElementModel.setQuestion( "Question" );
-        dataElementModel.setVdName( "VdName" );
+        dataElementModel.setLongName("LongName");
+        dataElementModel.setLatestVerInd("LatestVerInd");
+        dataElementModel.setDeletedInd("DeletedInd");
+        dataElementModel.setBeginDate(getDate());
+        dataElementModel.setEndDate(getDate());
+        dataElementModel.setOrigin("Origin");
+        dataElementModel.setCdeId(12345);
+        dataElementModel.setQuestion("Question");
 
         return dataElementModel;
     }
