@@ -76,7 +76,8 @@ public class DataElementModel extends BaseModel
         ArrayList<String> usingContexts = new ArrayList<>();
         if (getDesignationModels() != null) {
             for (DesignationModel designationModel : getDesignationModels()) {
-                if (designationModel.getDetlName().equals("USED_BY")
+                if (designationModel.getDetlName() != null
+                        && designationModel.getDetlName().equals("USED_BY")
                         && designationModel.getContex().getName() != null) {
                     usingContexts.add(designationModel.getContex().getName());
                 }
