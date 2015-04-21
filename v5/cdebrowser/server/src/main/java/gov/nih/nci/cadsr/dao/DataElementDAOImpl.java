@@ -161,7 +161,9 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             dataElementModel.setContextName(dataElementModel.getContext().getName());
             dataElementModel.setPublicId(dataElementModel.getCdeId());
             AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(deIdseq);
-            dataElementModel.setRegistrationStatus(acRegistrationsModel.getRegistrationStatus());
+            if (acRegistrationsModel != null && acRegistrationsModel.getRegistrationStatus() != null) {
+                dataElementModel.setRegistrationStatus(acRegistrationsModel.getRegistrationStatus());
+            }
             return dataElementModel;
         }
     }

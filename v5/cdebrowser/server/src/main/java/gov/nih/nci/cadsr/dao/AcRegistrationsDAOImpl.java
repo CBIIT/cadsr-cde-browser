@@ -33,6 +33,7 @@ public class AcRegistrationsDAOImpl extends AbstractDAOOperations implements AcR
     @Override
     public AcRegistrationsModel getAcRegistrationByAcIdseq(String acIdseq) {
         String sql = "SELECT * FROM SBR.AC_REGISTRATIONS WHERE ac_idseq = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{acIdseq}, new BeanPropertyRowMapper<>(AcRegistrationsModel.class));
+        AcRegistrationsModel acRegistrationsModel = jdbcTemplate.queryForObject(sql, new Object[]{acIdseq}, new BeanPropertyRowMapper<>(AcRegistrationsModel.class));
+        return acRegistrationsModel;
     }
 }
