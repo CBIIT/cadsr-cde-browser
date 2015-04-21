@@ -84,4 +84,48 @@ public class RepresentationModel extends BaseModel {
     {
         this.conceptDerivationRuleModel = conceptDerivationRuleModel;
     }
+
+    @Override
+    public String toString() {
+        return "RepresentationModel{" +
+                "preferredName='" + preferredName + '\'' +
+                ", longName='" + longName + '\'' +
+                ", version=" + version +
+                ", context=" + context +
+                ", publicId=" + publicId +
+                ", idseq='" + idseq + '\'' +
+                ", conceptDerivationRuleModel=" + conceptDerivationRuleModel +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RepresentationModel)) return false;
+
+        RepresentationModel that = (RepresentationModel) o;
+
+        if (getPublicId() != that.getPublicId()) return false;
+        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+            return false;
+        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+            return false;
+        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
+        if (getContext() != null ? !getContext().equals(that.getContext()) : that.getContext() != null) return false;
+        if (getIdseq() != null ? !getIdseq().equals(that.getIdseq()) : that.getIdseq() != null) return false;
+        return !(getConceptDerivationRuleModel() != null ? !getConceptDerivationRuleModel().equals(that.getConceptDerivationRuleModel()) : that.getConceptDerivationRuleModel() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
+        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
+        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
+        result = 31 * result + (getContext() != null ? getContext().hashCode() : 0);
+        result = 31 * result + getPublicId();
+        result = 31 * result + (getIdseq() != null ? getIdseq().hashCode() : 0);
+        result = 31 * result + (getConceptDerivationRuleModel() != null ? getConceptDerivationRuleModel().hashCode() : 0);
+        return result;
+    }
 }

@@ -33,6 +33,9 @@ public class ProtocolModel extends BaseModel
     private String origin;
     private String protoId;
 
+    public ProtocolModel() {
+    }
+
     public String getProtoIdseq()
     {
         return protoIdseq;
@@ -305,4 +308,82 @@ public class ProtocolModel extends BaseModel
         return stringBuffer.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProtocolModel)) return false;
+
+        ProtocolModel that = (ProtocolModel) o;
+
+        if (getProtoIdseq() != null ? !getProtoIdseq().equals(that.getProtoIdseq()) : that.getProtoIdseq() != null)
+            return false;
+        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
+        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+            return false;
+        if (getConteIdseq() != null ? !getConteIdseq().equals(that.getConteIdseq()) : that.getConteIdseq() != null)
+            return false;
+        if (getPreferredDefinition() != null ? !getPreferredDefinition().equals(that.getPreferredDefinition()) : that.getPreferredDefinition() != null)
+            return false;
+        if (getAslName() != null ? !getAslName().equals(that.getAslName()) : that.getAslName() != null) return false;
+        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+            return false;
+        if (getLatestVersionInd() != null ? !getLatestVersionInd().equals(that.getLatestVersionInd()) : that.getLatestVersionInd() != null)
+            return false;
+        if (getDeletedInd() != null ? !getDeletedInd().equals(that.getDeletedInd()) : that.getDeletedInd() != null)
+            return false;
+        if (getBeginDate() != null ? !getBeginDate().equals(that.getBeginDate()) : that.getBeginDate() != null)
+            return false;
+        if (getEndDate() != null ? !getEndDate().equals(that.getEndDate()) : that.getEndDate() != null) return false;
+        if (getProtocolId() != null ? !getProtocolId().equals(that.getProtocolId()) : that.getProtocolId() != null)
+            return false;
+        if (getType() != null ? !getType().equals(that.getType()) : that.getType() != null) return false;
+        if (getPhase() != null ? !getPhase().equals(that.getPhase()) : that.getPhase() != null) return false;
+        if (getLeadOrg() != null ? !getLeadOrg().equals(that.getLeadOrg()) : that.getLeadOrg() != null) return false;
+        if (getChangeType() != null ? !getChangeType().equals(that.getChangeType()) : that.getChangeType() != null)
+            return false;
+        if (getChangeNumber() != null ? !getChangeNumber().equals(that.getChangeNumber()) : that.getChangeNumber() != null)
+            return false;
+        if (getReviewedDate() != null ? !getReviewedDate().equals(that.getReviewedDate()) : that.getReviewedDate() != null)
+            return false;
+        if (getReviewedBy() != null ? !getReviewedBy().equals(that.getReviewedBy()) : that.getReviewedBy() != null)
+            return false;
+        if (getApprovedDate() != null ? !getApprovedDate().equals(that.getApprovedDate()) : that.getApprovedDate() != null)
+            return false;
+        if (getApprovedBy() != null ? !getApprovedBy().equals(that.getApprovedBy()) : that.getApprovedBy() != null)
+            return false;
+        if (getChangeNote() != null ? !getChangeNote().equals(that.getChangeNote()) : that.getChangeNote() != null)
+            return false;
+        if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
+        return !(getProtoId() != null ? !getProtoId().equals(that.getProtoId()) : that.getProtoId() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getProtoIdseq() != null ? getProtoIdseq().hashCode() : 0;
+        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
+        result = 31 * result + (getPreferredName() != null ? getPreferredName().hashCode() : 0);
+        result = 31 * result + (getConteIdseq() != null ? getConteIdseq().hashCode() : 0);
+        result = 31 * result + (getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0);
+        result = 31 * result + (getAslName() != null ? getAslName().hashCode() : 0);
+        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
+        result = 31 * result + (getLatestVersionInd() != null ? getLatestVersionInd().hashCode() : 0);
+        result = 31 * result + (getDeletedInd() != null ? getDeletedInd().hashCode() : 0);
+        result = 31 * result + (getBeginDate() != null ? getBeginDate().hashCode() : 0);
+        result = 31 * result + (getEndDate() != null ? getEndDate().hashCode() : 0);
+        result = 31 * result + (getProtocolId() != null ? getProtocolId().hashCode() : 0);
+        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
+        result = 31 * result + (getPhase() != null ? getPhase().hashCode() : 0);
+        result = 31 * result + (getLeadOrg() != null ? getLeadOrg().hashCode() : 0);
+        result = 31 * result + (getChangeType() != null ? getChangeType().hashCode() : 0);
+        result = 31 * result + (getChangeNumber() != null ? getChangeNumber().hashCode() : 0);
+        result = 31 * result + (getReviewedDate() != null ? getReviewedDate().hashCode() : 0);
+        result = 31 * result + (getReviewedBy() != null ? getReviewedBy().hashCode() : 0);
+        result = 31 * result + (getApprovedDate() != null ? getApprovedDate().hashCode() : 0);
+        result = 31 * result + (getApprovedBy() != null ? getApprovedBy().hashCode() : 0);
+        result = 31 * result + (getChangeNote() != null ? getChangeNote().hashCode() : 0);
+        result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
+        result = 31 * result + (getProtoId() != null ? getProtoId().hashCode() : 0);
+        return result;
+    }
 }

@@ -33,6 +33,9 @@ public class ValueDomainModel extends BaseModel {
     private RepresentationModel representationModel;
     private ConceptDerivationRuleModel conceptDerivationRuleModel;
 
+    public ValueDomainModel() {
+    }
+
     public String getPreferredName()
     {
         return preferredName;
@@ -301,5 +304,121 @@ public class ValueDomainModel extends BaseModel {
     public void setConceptDerivationRuleModel( ConceptDerivationRuleModel conceptDerivationRuleModel )
     {
         this.conceptDerivationRuleModel = conceptDerivationRuleModel;
+    }
+
+    @Override
+    public String toString() {
+        return "ValueDomainModel{" +
+                "preferredName='" + preferredName + '\'' +
+                ", preferredDefinition='" + preferredDefinition + '\'' +
+                ", longName='" + longName + '\'' +
+                ", aslName='" + aslName + '\'' +
+                ", version=" + version +
+                ", deletedInd='" + deletedInd + '\'' +
+                ", latestVerInd='" + latestVerInd + '\'' +
+                ", publicId=" + publicId +
+                ", origin='" + origin + '\'' +
+                ", idseq='" + idseq + '\'' +
+                ", vdIdseq='" + vdIdseq + '\'' +
+                ", datatype='" + datatype + '\'' +
+                ", uom='" + uom + '\'' +
+                ", dispFormat='" + dispFormat + '\'' +
+                ", maxLength='" + maxLength + '\'' +
+                ", minLength='" + minLength + '\'' +
+                ", highVal='" + highVal + '\'' +
+                ", lowVal='" + lowVal + '\'' +
+                ", charSet='" + charSet + '\'' +
+                ", decimalPlace='" + decimalPlace + '\'' +
+                ", cdPrefName='" + cdPrefName + '\'' +
+                ", cdContextName='" + cdContextName + '\'' +
+                ", cdVersion=" + cdVersion +
+                ", cdPublicId=" + cdPublicId +
+                ", vdType='" + vdType + '\'' +
+                ", representationModel=" + representationModel +
+                ", conceptDerivationRuleModel=" + conceptDerivationRuleModel +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ValueDomainModel)) return false;
+
+        ValueDomainModel that = (ValueDomainModel) o;
+
+        if (getPublicId() != that.getPublicId()) return false;
+        if (getCdPublicId() != that.getCdPublicId()) return false;
+        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+            return false;
+        if (getPreferredDefinition() != null ? !getPreferredDefinition().equals(that.getPreferredDefinition()) : that.getPreferredDefinition() != null)
+            return false;
+        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+            return false;
+        if (getAslName() != null ? !getAslName().equals(that.getAslName()) : that.getAslName() != null) return false;
+        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
+        if (getDeletedInd() != null ? !getDeletedInd().equals(that.getDeletedInd()) : that.getDeletedInd() != null)
+            return false;
+        if (getLatestVerInd() != null ? !getLatestVerInd().equals(that.getLatestVerInd()) : that.getLatestVerInd() != null)
+            return false;
+        if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
+        if (getIdseq() != null ? !getIdseq().equals(that.getIdseq()) : that.getIdseq() != null) return false;
+        if (getVdIdseq() != null ? !getVdIdseq().equals(that.getVdIdseq()) : that.getVdIdseq() != null) return false;
+        if (getDatatype() != null ? !getDatatype().equals(that.getDatatype()) : that.getDatatype() != null)
+            return false;
+        if (getUom() != null ? !getUom().equals(that.getUom()) : that.getUom() != null) return false;
+        if (getDispFormat() != null ? !getDispFormat().equals(that.getDispFormat()) : that.getDispFormat() != null)
+            return false;
+        if (getMaxLength() != null ? !getMaxLength().equals(that.getMaxLength()) : that.getMaxLength() != null)
+            return false;
+        if (getMinLength() != null ? !getMinLength().equals(that.getMinLength()) : that.getMinLength() != null)
+            return false;
+        if (getHighVal() != null ? !getHighVal().equals(that.getHighVal()) : that.getHighVal() != null) return false;
+        if (getLowVal() != null ? !getLowVal().equals(that.getLowVal()) : that.getLowVal() != null) return false;
+        if (getCharSet() != null ? !getCharSet().equals(that.getCharSet()) : that.getCharSet() != null) return false;
+        if (getDecimalPlace() != null ? !getDecimalPlace().equals(that.getDecimalPlace()) : that.getDecimalPlace() != null)
+            return false;
+        if (getCdPrefName() != null ? !getCdPrefName().equals(that.getCdPrefName()) : that.getCdPrefName() != null)
+            return false;
+        if (getCdContextName() != null ? !getCdContextName().equals(that.getCdContextName()) : that.getCdContextName() != null)
+            return false;
+        if (getCdVersion() != null ? !getCdVersion().equals(that.getCdVersion()) : that.getCdVersion() != null)
+            return false;
+        if (getVdType() != null ? !getVdType().equals(that.getVdType()) : that.getVdType() != null) return false;
+        if (getRepresentationModel() != null ? !getRepresentationModel().equals(that.getRepresentationModel()) : that.getRepresentationModel() != null)
+            return false;
+        return !(getConceptDerivationRuleModel() != null ? !getConceptDerivationRuleModel().equals(that.getConceptDerivationRuleModel()) : that.getConceptDerivationRuleModel() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
+        result = 31 * result + (getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0);
+        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
+        result = 31 * result + (getAslName() != null ? getAslName().hashCode() : 0);
+        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
+        result = 31 * result + (getDeletedInd() != null ? getDeletedInd().hashCode() : 0);
+        result = 31 * result + (getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0);
+        result = 31 * result + getPublicId();
+        result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
+        result = 31 * result + (getIdseq() != null ? getIdseq().hashCode() : 0);
+        result = 31 * result + (getVdIdseq() != null ? getVdIdseq().hashCode() : 0);
+        result = 31 * result + (getDatatype() != null ? getDatatype().hashCode() : 0);
+        result = 31 * result + (getUom() != null ? getUom().hashCode() : 0);
+        result = 31 * result + (getDispFormat() != null ? getDispFormat().hashCode() : 0);
+        result = 31 * result + (getMaxLength() != null ? getMaxLength().hashCode() : 0);
+        result = 31 * result + (getMinLength() != null ? getMinLength().hashCode() : 0);
+        result = 31 * result + (getHighVal() != null ? getHighVal().hashCode() : 0);
+        result = 31 * result + (getLowVal() != null ? getLowVal().hashCode() : 0);
+        result = 31 * result + (getCharSet() != null ? getCharSet().hashCode() : 0);
+        result = 31 * result + (getDecimalPlace() != null ? getDecimalPlace().hashCode() : 0);
+        result = 31 * result + (getCdPrefName() != null ? getCdPrefName().hashCode() : 0);
+        result = 31 * result + (getCdContextName() != null ? getCdContextName().hashCode() : 0);
+        result = 31 * result + (getCdVersion() != null ? getCdVersion().hashCode() : 0);
+        result = 31 * result + getCdPublicId();
+        result = 31 * result + (getVdType() != null ? getVdType().hashCode() : 0);
+        result = 31 * result + (getRepresentationModel() != null ? getRepresentationModel().hashCode() : 0);
+        result = 31 * result + (getConceptDerivationRuleModel() != null ? getConceptDerivationRuleModel().hashCode() : 0);
+        return result;
     }
 }

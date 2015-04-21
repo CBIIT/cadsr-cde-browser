@@ -15,6 +15,9 @@ public class ProgramAreaModel extends BaseModel
     private String description;
     private String palName;
 
+    public ProgramAreaModel() {
+    }
+
     public String getComments()
     {
         return comments;

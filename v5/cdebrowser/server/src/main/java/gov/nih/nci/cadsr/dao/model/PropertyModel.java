@@ -12,6 +12,10 @@ public class PropertyModel extends BaseModel {
     private String name;
     private String qualifier;
 
+    public PropertyModel() {
+    }
+
+
     public String getPreferredName()
     {
         return preferredName;
@@ -80,5 +84,49 @@ public class PropertyModel extends BaseModel {
     public void setQualifier( String qualifier )
     {
         this.qualifier = qualifier;
+    }
+
+    @Override
+    public String toString() {
+        return "PropertyModel{" +
+                "preferredName='" + preferredName + '\'' +
+                ", longName='" + longName + '\'' +
+                ", version=" + version +
+                ", context=" + context +
+                ", publicId=" + publicId +
+                ", name='" + name + '\'' +
+                ", qualifier='" + qualifier + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PropertyModel)) return false;
+
+        PropertyModel that = (PropertyModel) o;
+
+        if (getPublicId() != that.getPublicId()) return false;
+        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+            return false;
+        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+            return false;
+        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
+        if (getContext() != null ? !getContext().equals(that.getContext()) : that.getContext() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        return !(getQualifier() != null ? !getQualifier().equals(that.getQualifier()) : that.getQualifier() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
+        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
+        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
+        result = 31 * result + (getContext() != null ? getContext().hashCode() : 0);
+        result = 31 * result + getPublicId();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getQualifier() != null ? getQualifier().hashCode() : 0);
+        return result;
     }
 }
