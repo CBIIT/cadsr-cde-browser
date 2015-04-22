@@ -1,15 +1,18 @@
 package gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept;
 
+import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+
 import java.util.List;
 
 public class DataElementConcept
 {
     private SelectedDataElement selectedDataElement = null;
-    private DataElementConceptDetails dataElementConceptDetails = null;
+     private DataElementConceptDetails dataElementConceptDetails = null;
     private ObjectClass objectClass = null;
     private List<ObjectClassConcept> objectClassConcepts = null;
     private Property property = null;
     private List<PropertyConcept> propertyConcepts = null;
+
 
     public SelectedDataElement getSelectedDataElement()
     {

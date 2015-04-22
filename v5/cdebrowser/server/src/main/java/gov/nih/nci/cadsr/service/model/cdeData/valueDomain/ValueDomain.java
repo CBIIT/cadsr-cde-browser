@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
 
+import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+
 import java.util.List;
 
 public class ValueDomain

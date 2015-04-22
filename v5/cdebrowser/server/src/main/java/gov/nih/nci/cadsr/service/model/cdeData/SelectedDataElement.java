@@ -1,4 +1,4 @@
-package gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept;
+package gov.nih.nci.cadsr.service.model.cdeData;
 
 public class SelectedDataElement
 {

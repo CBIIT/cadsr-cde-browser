@@ -1,7 +1,6 @@
 package gov.nih.nci.cadsr.service.model.cdeData;
 
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConcept;
-import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.ObjectClass;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomain;
 

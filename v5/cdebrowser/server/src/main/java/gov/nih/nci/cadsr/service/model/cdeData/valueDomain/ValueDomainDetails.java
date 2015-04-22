@@ -222,7 +222,7 @@ public class ValueDomainDetails
         return getConceptualDomainVersion;
     }
 
-    public void setGetConceptualDomainVersion( String getConceptualDomainVersion )
+    public void setConceptualDomainVersion( String getConceptualDomainVersion )
     {
         this.getConceptualDomainVersion = getConceptualDomainVersion;
     }

@@ -4,10 +4,12 @@ import gov.nih.nci.cadsr.dao.DataElementDAOImpl;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
+import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -45,8 +47,8 @@ public class CDEDataController
             e.printStackTrace();
         }
 
-        //CdeDetails cdeDetails = buildCdeDetails( dataElementModel );
-        CdeDetails cdeDetails = buildTestRecord();
+        CdeDetails cdeDetails = buildCdeDetails( dataElementModel );
+        //CdeDetails cdeDetails = buildTestRecord();
 
         return cdeDetails;
     }
@@ -56,52 +58,91 @@ public class CDEDataController
     {
         CdeDetails cdeDetails = new CdeDetails();
 
-        /////////////////////////////////////////////////////////////////
         // For the "Data Element" Tab
-        /////////////////////////////////////////////////////////////////
         DataElement dataElement = setDataElementTabData( dataElementModel );
-        DataElementConcept dataElementConcept = setDataElementConceptTabData( dataElementModel );
-
         cdeDetails.setDataElement( dataElement );
+
+        // For the "Data Element Concept" Tab
+        DataElementConcept dataElementConcept = setDataElementConceptTabData( dataElementModel );
         cdeDetails.setDataElementConcept( dataElementConcept );
+
+        // For the "Value Domain" Tab
+        ValueDomain valueDomain = setValueDomainTabData( dataElementModel );
+        cdeDetails.setValueDomain( valueDomain );
 
         //DataElementCon
         return cdeDetails;
     }
 
+    private ValueDomain setValueDomainTabData( DataElementModel dataElementModel )
+    {
+        ValueDomain valueDomain = new ValueDomain();
+
+        // "Selected Data Element" of the "Value Domain" Tab
+        valueDomain.setSelectedDataElement( getSelectedDataElement( dataElementModel) );
+
+        /////////////////////////////////////////////////////
+        // "value Domain Details" of the "value Domain" Tab
+        ValueDomainDetails valueDomainDetails = new ValueDomainDetails();
+        valueDomain.setValueDomainDetails( valueDomainDetails );
+
+        valueDomainDetails.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
+        valueDomainDetails.setVersion( dataElementModel.getValueDomainModel().getVersion() );
+        valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
+        valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
+        valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
+        valueDomainDetails.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+        valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
+        valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
+        valueDomainDetails.setMaximumLength( dataElementModel.getValueDomainModel().getMaxLength() );
+        valueDomainDetails.setMinimumLength( dataElementModel.getValueDomainModel().getMinLength() );
+        valueDomainDetails.setDecimalPlace( dataElementModel.getValueDomainModel().getDecimalPlace() );
+        valueDomainDetails.setHighValue( dataElementModel.getValueDomainModel().getHighVal() );
+        valueDomainDetails.setLowValue( dataElementModel.getValueDomainModel().getLowVal() );
+        valueDomainDetails.setValueDomainType( dataElementModel.getValueDomainModel().getVdType() );
+        valueDomainDetails.setConceptualDomainPublicId( "STILL NEED TO TRACK DOWN ConceptualDomainPublicId" );
+        valueDomainDetails.setConceptualDomainShortName( "STILL NEED TO TRACK DOWN ConceptualDomainShortName" );
+        valueDomainDetails.setConceptualDomainContextName( "STILL NEED TO TRACK DOWN ConceptualDomainContextName" );
+        valueDomainDetails.setConceptualDomainVersion( "STILL NEED TO TRACK DOWN ConceptualDomainVersion" );
+
+        /////////////////////////////////////////////////////
+        // "value Domain Concepts" of the "value Domain" Tab
+        //Just a string
+        valueDomain.setValueDomainConcepts( "STILL NEED TO TRACK DOWN ValueDomainConcepts" );
+
+
+        /////////////////////////////////////////////////////
+        // "Representation" of the "value Domain" Tab
+        Representation representation = new Representation();
+        valueDomain.setRepresentation( representation );
+
+        // FIXME - Need to find out where to get Representation from dataElementModel
+        //representation.setPublicId( dataElementModel. );
+
+
+        /////////////////////////////////////////////////////
+        // "Representation Concepts" of the "value Domain" Tab
+        List<RepresentationConcept> representationConcepts = new ArrayList<>(  );
+        valueDomain.setRepresentationConcepts( representationConcepts );
+        // FIXME - Need to find out where to get Representation Concepts from dataElementModel
+
+        /////////////////////////////////////////////////////
+        // "Permissible Values" of the "value Domain" Tab
+        List<PermissibleValue> permissibleValues = new ArrayList<>(  );
+        valueDomain.setPermissibleValues( permissibleValues );
+        // FIXME - Need to find out where to get Permissible Value List from dataElementModel
+
+
+        return valueDomain;
+    }
+
+
     private DataElementConcept setDataElementConceptTabData( DataElementModel dataElementModel )
     {
         DataElementConcept dataElementConcept = new DataElementConcept();
 
-        /////////////////////////////////////////////////////
         // "Selected Data Element" of the "Data Element Concept" Tab
-        SelectedDataElement selectedDataElement = new SelectedDataElement();
-        dataElementConcept.setSelectedDataElement( selectedDataElement );
-
-        if( dataElementModel.getPublicId() == null )
-        {
-            selectedDataElement.setPublicId( -1 );
-            logger.error( " dataElementModel.getPublicId() == null" );
-        } else
-        {
-            selectedDataElement.setPublicId( dataElementModel.getPublicId() );
-        }
-
-        if( dataElementModel.getVersion() == null )
-        {
-            selectedDataElement.setVersion( -1 );
-            logger.error( " dataElementModel.getVersion() == null" );
-        } else
-        {
-            selectedDataElement.setVersion( dataElementModel.getVersion() );
-        }
-
-        selectedDataElement.setLongName( dataElementModel.getLongName() );
-        selectedDataElement.setShortName( dataElementModel.getPreferredName() );
-        selectedDataElement.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
-        selectedDataElement.setDefinition( dataElementModel.getPreferredDefinition() );
-        selectedDataElement.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
-
+        dataElementConcept.setSelectedDataElement( getSelectedDataElement( dataElementModel) );
 
         /////////////////////////////////////////////////////
         // "Data Element Concept Details" of the "Data Element Concept" Tab
@@ -125,7 +166,7 @@ public class CDEDataController
         // "Object Class Concepts" of the "Data Element Concept" Tab
         // This is a list of ObjectClassConcept
 
-        List<ObjectClassConcept> objectClassConcepts = new ArrayList<ObjectClassConcept>();
+        List<ObjectClassConcept> objectClassConcepts = new ArrayList<>();
         dataElementConcept.setObjectClassConcepts( objectClassConcepts );
 
         // FIXME - Need to find out where to get Object Class Concepts from dataElementModel
@@ -145,7 +186,7 @@ public class CDEDataController
         // "Property Concepts" of the "Data Element Concept" Tab
         // This is a list of PropertyConcept
 
-        List<PropertyConcept> propertyConcepts = new ArrayList<PropertyConcept>();
+        List<PropertyConcept> propertyConcepts = new ArrayList<>();
         dataElementConcept.setPropertyConcepts( propertyConcepts );
 
         // FIXME - Need to find out where to get Property Concept from dataElementModel
@@ -252,6 +293,39 @@ public class CDEDataController
         return dataElement;
     }
 
+public SelectedDataElement getSelectedDataElement( DataElementModel dataElementModel )
+{
+    /////////////////////////////////////////////////////
+    // "Selected Data Element" of the "Data Element Concept" Tab
+    SelectedDataElement selectedDataElement = new SelectedDataElement();
+
+    if( dataElementModel.getPublicId() == null )
+    {
+        selectedDataElement.setPublicId( -1 );
+        logger.error( " dataElementModel.getPublicId() == null" );
+    } else
+    {
+        selectedDataElement.setPublicId( dataElementModel.getPublicId() );
+    }
+
+    if( dataElementModel.getVersion() == null )
+    {
+        selectedDataElement.setVersion( -1 );
+        logger.error( " dataElementModel.getVersion() == null" );
+    } else
+    {
+        selectedDataElement.setVersion( dataElementModel.getVersion() );
+    }
+
+    selectedDataElement.setLongName( dataElementModel.getLongName() );
+    selectedDataElement.setShortName( dataElementModel.getPreferredName() );
+    selectedDataElement.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
+    selectedDataElement.setDefinition( dataElementModel.getPreferredDefinition() );
+    selectedDataElement.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+
+    return selectedDataElement;
+}
+
 
     public void setDataElementDAO( DataElementDAOImpl dataElementDAO )
     {
@@ -259,6 +333,7 @@ public class CDEDataController
     }
 
 
+    /////////////////////////////////////////////////////
     // Test stuff
 
 
