@@ -21,8 +21,8 @@ data-source add \
     --driver-name=oracle \
     --connection-url=${connection-url} \
     --jndi-name=java:jboss/datasources/CDEBrowserDS \
-    --user-name=${env.CADSR_DS_USER} \
-    --password=${env.CADSR_DS_PSWD} \
+    --user-name=${CADSR_DS_USER} \
+    --password=${CADSR_DS_PSWD} \
     --use-ccm=true \
     --max-pool-size=100 \
     --blocking-timeout-wait-millis=5000 
