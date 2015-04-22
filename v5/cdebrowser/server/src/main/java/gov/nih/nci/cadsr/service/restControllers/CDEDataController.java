@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.service.restControllers;
 import gov.nih.nci.cadsr.dao.DataElementDAOImpl;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
@@ -25,15 +27,16 @@ public class CDEDataController
     private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
     private DataElementDAOImpl dataElementDAO;
 
-    @RequestMapping(value = "/CDEData")
+    @RequestMapping( value = "/CDEData" )
     @ResponseBody
-    public CdeDetails CDEDataController( @RequestParam("deIdseq") String deIdseq )
+    public CdeDetails CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
-        logger.debug( "Received rest call \"CDEData\":  dataElementDAO.getCdeByDeIdseq( " + deIdseq  +")" );
+        logger.debug( "Received rest call \"CDEData\":  dataElementDAO.getCdeByDeIdseq( " + deIdseq + ")" );
 
         DataElementModel dataElementModel = null;
 
+        // Get the data model from the database
         try
         {
             dataElementModel = dataElementDAO.getCdeByDeIdseq( deIdseq );
@@ -42,44 +45,144 @@ public class CDEDataController
             e.printStackTrace();
         }
 
-        CdeDetails cdeDetails = buildCdeDetails( dataElementModel);
+        CdeDetails cdeDetails = buildCdeDetails( dataElementModel );
         //CdeDetails cdeDetails = buildTestRecord();
 
         return cdeDetails;
     }
 
     // Build a CdeDetails to send to the client
-    private CdeDetails buildCdeDetails( DataElementModel dataElementModel)
+    private CdeDetails buildCdeDetails( DataElementModel dataElementModel )
     {
         CdeDetails cdeDetails = new CdeDetails();
 
         /////////////////////////////////////////////////////////////////
         // For the "Data Element" Tab
         /////////////////////////////////////////////////////////////////
-        DataElement dataElement = new DataElement();
+        DataElement dataElement = setDataElementTabData( dataElementModel );
+        DataElementConcept dataElementConcept = setDataElementConceptTabData( dataElementModel );
+
         cdeDetails.setDataElement( dataElement );
+        cdeDetails.setDataElementConcept( dataElementConcept );
+
+        //DataElementCon
+        return cdeDetails;
+    }
+
+    private DataElementConcept setDataElementConceptTabData( DataElementModel dataElementModel )
+    {
+        DataElementConcept dataElementConcept = new DataElementConcept();
+
+        /////////////////////////////////////////////////////
+        // "Selected Data Element" of the "Data Element Concept" Tab
+        SelectedDataElement selectedDataElement = new SelectedDataElement();
+        dataElementConcept.setSelectedDataElement( selectedDataElement );
+
+        if( dataElementModel.getPublicId() == null )
+        {
+            selectedDataElement.setPublicId( -1 );
+            logger.error( " dataElementModel.getPublicId() == null" );
+        } else
+        {
+            selectedDataElement.setPublicId( dataElementModel.getPublicId() );
+        }
+
+        if( dataElementModel.getVersion() == null )
+        {
+            selectedDataElement.setVersion( -1 );
+            logger.error( " dataElementModel.getVersion() == null" );
+        } else
+        {
+            selectedDataElement.setVersion( dataElementModel.getVersion() );
+        }
+
+        selectedDataElement.setLongName( dataElementModel.getLongName() );
+        selectedDataElement.setShortName( dataElementModel.getPreferredName() );
+        selectedDataElement.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
+        selectedDataElement.setDefinition( dataElementModel.getPreferredDefinition() );
+        selectedDataElement.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+
+
+        /////////////////////////////////////////////////////
+        // "Data Element Concept Details" of the "Data Element Concept" Tab
+        DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
+        dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
+
+        // FIXME - Need to find out where to get Data Element Concept Details from dataElementModel
+        // dataElementConceptDetails.setPublicId( dataElementModel. );
+
+
+        /////////////////////////////////////////////////////
+        // "Object Class" of the "Data Element Concept" Tab
+        ObjectClass objectClass = new ObjectClass();
+        dataElementConcept.setObjectClass( objectClass );
+
+        // FIXME - Need to find out where to get Object Class from dataElementModel
+        // objectClass.setPublicId( dataElementModel. );
+
+
+        /////////////////////////////////////////////////////
+        // "Object Class Concepts" of the "Data Element Concept" Tab
+        // This is a list of ObjectClassConcept
+
+        List<ObjectClassConcept> objectClassConcepts = new ArrayList<ObjectClassConcept>();
+        dataElementConcept.setObjectClassConcepts( objectClassConcepts );
+
+        // FIXME - Need to find out where to get Object Class Concepts from dataElementModel
+
+
+
+        /////////////////////////////////////////////////////
+        // "Property" of the "Data Element Concept" Tab
+        Property property = new Property();
+        dataElementConcept.setProperty( property );
+
+        // FIXME - Need to find out where to get property from dataElementModel
+        //property.setPublicId( dataElementModel. );
+
+
+        /////////////////////////////////////////////////////
+        // "Property Concepts" of the "Data Element Concept" Tab
+        // This is a list of PropertyConcept
+
+        List<PropertyConcept> propertyConcepts = new ArrayList<PropertyConcept>();
+        dataElementConcept.setPropertyConcepts( propertyConcepts );
+
+        // FIXME - Need to find out where to get Property Concept from dataElementModel
+
+
+        return dataElementConcept;
+    }
+
+        /**
+         * For the "Data Element" Tab
+         *
+         * @param dataElementModel  The data model from the DataBase
+         * @return The "Data Element" Tab the way the client needs it.
+         */
+    private DataElement setDataElementTabData( DataElementModel dataElementModel )
+    {
+        DataElement dataElement = new DataElement();
 
         /////////////////////////////////////////////////////
         // "Data Element Details" of the "Data Element" Tab
         DataElementDetails dataElementDetails = new DataElementDetails();
         dataElement.setDataElementDetails( dataElementDetails );
 
-        if( dataElementModel.getPublicId() == null)
+        if( dataElementModel.getPublicId() == null )
         {
-            dataElementDetails.setPublicId( -1);
+            dataElementDetails.setPublicId( -1 );
             logger.error( " dataElementModel.getPublicId() == null" );
-        }
-        else
+        } else
         {
             dataElementDetails.setPublicId( dataElementModel.getPublicId() );
         }
 
-        if( dataElementModel.getVersion() == null)
+        if( dataElementModel.getVersion() == null )
         {
-            dataElementDetails.setVersion( -1);
+            dataElementDetails.setVersion( -1 );
             logger.error( " dataElementModel.getVersion() == null" );
-        }
-        else
+        } else
         {
             dataElementDetails.setVersion( dataElementModel.getVersion() );
         }
@@ -88,7 +191,7 @@ public class CDEDataController
         dataElementDetails.setShortName( dataElementModel.getPreferredName() );
         dataElementDetails.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
         dataElementDetails.setDefinition( dataElementModel.getPreferredDefinition() );
-        dataElementDetails.setValueDomain( "STILL NEED TO TRACK DOWN Value Domain" );
+        dataElementDetails.setValueDomain( dataElementModel.getValueDomainModel().getLongName() );
         dataElementDetails.setDataElementConcept( "STILL NEED TO TRACK DOWN Data Element Concept" );
         dataElementDetails.setContext( dataElementModel.getContextName() );
         dataElementDetails.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
@@ -98,25 +201,57 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "Data Element" Tab
+
+        // List to populate for client side
         List<ReferenceDocument> referenceDocuments = new ArrayList<>();
         dataElement.setReferenceDocuments( referenceDocuments );
 
-        List<ReferenceDocModel> dataElementModelReferenceDocumentList =  dataElementModel.getRefDocs();
-        if( dataElementModelReferenceDocumentList.size() <1)
+        //List from database
+        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
+        if( dataElementModelReferenceDocumentList.size() < 1 )
         {
             logger.debug( "No ReferenceDocuments where returned" );
         }
-        for( ReferenceDocModel referenceDocModel: dataElementModelReferenceDocumentList)
+        for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
         {
-            logger.debug(referenceDocModel.getDocName());
-            logger.debug(referenceDocModel.getDocType());
-            logger.debug(referenceDocModel.getDocText());
-            logger.debug(referenceDocModel.getContext().getName());
-            logger.debug(referenceDocModel.getUrl());
+            ReferenceDocument referenceDoc = new ReferenceDocument();
+            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
+            logger.debug( referenceDocModel.getDocName() );
+
+            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
+            logger.debug( referenceDocModel.getDocType() );
+
+            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
+            logger.debug( referenceDocModel.getDocText() );
+
+            referenceDoc.setContext( referenceDocModel.getContext().getName() );
+            logger.debug( referenceDocModel.getContext().getName() );
+
+            referenceDoc.setUrl( referenceDocModel.getUrl() );
+            logger.debug( referenceDocModel.getUrl() );
+
+            referenceDocuments.add( referenceDoc );
         }
 
-        return cdeDetails;
+        /////////////////////////////////////////////////////
+        // "Alternate Names" of the "Data Element" Tab
+
+        // List to populate for client side
+        List<AlternateName> alternateNames = new ArrayList<>();
+        dataElement.setAlternateNames( alternateNames );
+
+        //List from database
+
+        /////////////////////////////////////////////////////
+        // "Alternate Definitions" of the "Data Element" Tab
+
+        /////////////////////////////////////////////////////
+        // "Other Versions" of the "Data Element" Tab
+
+
+        return dataElement;
     }
+
 
     public void setDataElementDAO( DataElementDAOImpl dataElementDAO )
     {
@@ -184,46 +319,46 @@ public class CDEDataController
     private DataElementModel buildTestRecord1()
     {
         DataElementModel dataElementModel = new DataElementModel();
-        dataElementModel.setCreatedBy("buildTestRecord1 DateCreated");
-        dataElementModel.setDateCreated(getDate());
-        dataElementModel.setModifiedBy("buildTestRecord1 DateModified");
-        dataElementModel.setDateModified(getDate());
+        dataElementModel.setCreatedBy( "buildTestRecord1 DateCreated" );
+        dataElementModel.setDateCreated( getDate() );
+        dataElementModel.setModifiedBy( "buildTestRecord1 DateModified" );
+        dataElementModel.setDateModified( getDate() );
 
-        dataElementModel.setPreferredQuestionText("LongCDEName");
-        dataElementModel.setContextName("ContextName");
-        dataElementModel.setUsingContexts("UsingContexts");
+        dataElementModel.setPreferredQuestionText( "LongCDEName" );
+        dataElementModel.setContextName( "ContextName" );
+        dataElementModel.setUsingContexts( "UsingContexts" );
 
         //List<ReferenceDocModel>
-        dataElementModel.setRefDocs(buildTestReferenceDocModelList());
+        dataElementModel.setRefDocs( buildTestReferenceDocModelList() );
 
         //List<DesignationModel>
-        dataElementModel.setDesignationModels(buildDesignationModelList());
+        dataElementModel.setDesignationModels( buildDesignationModelList() );
 
-        dataElementModel.setPublicId(12345);
-        dataElementModel.setIdseq("Idseq");
-        dataElementModel.setRegistrationStatus("RegistrationStatus");
+        dataElementModel.setPublicId( 12345 );
+        dataElementModel.setIdseq( "Idseq" );
+        dataElementModel.setRegistrationStatus( "RegistrationStatus" );
 
-        dataElementModel.setValueDomainModel(buildTestValueDomainModel());
+        dataElementModel.setValueDomainModel( buildTestValueDomainModel() );
 
-        dataElementModel.setDec(buildTestDataElementConceptModel());
-        dataElementModel.setContext(buildTestContextModel());
-        dataElementModel.setDeIdseq("DeIdse");
-        dataElementModel.setVersion(4.1F); // needs to be a Float!
-        dataElementModel.setConteIdseq("ConteIdseq");
-        dataElementModel.setPreferredName("PreferredName");
-        dataElementModel.setVdIdseq("VdIdseq");
-        dataElementModel.setDecIdseq("DecIdseq");
-        dataElementModel.setPreferredDefinition("PreferredDefinition");
-        dataElementModel.setAslName("AslName");
+        dataElementModel.setDec( buildTestDataElementConceptModel() );
+        dataElementModel.setContext( buildTestContextModel() );
+        dataElementModel.setDeIdseq( "DeIdse" );
+        dataElementModel.setVersion( 4.1F ); // needs to be a Float!
+        dataElementModel.setConteIdseq( "ConteIdseq" );
+        dataElementModel.setPreferredName( "PreferredName" );
+        dataElementModel.setVdIdseq( "VdIdseq" );
+        dataElementModel.setDecIdseq( "DecIdseq" );
+        dataElementModel.setPreferredDefinition( "PreferredDefinition" );
+        dataElementModel.setAslName( "AslName" );
 
-        dataElementModel.setLongName("LongName");
-        dataElementModel.setLatestVerInd("LatestVerInd");
-        dataElementModel.setDeletedInd("DeletedInd");
-        dataElementModel.setBeginDate(getDate());
-        dataElementModel.setEndDate(getDate());
-        dataElementModel.setOrigin("Origin");
-        dataElementModel.setCdeId(12345);
-        dataElementModel.setQuestion("Question");
+        dataElementModel.setLongName( "LongName" );
+        dataElementModel.setLatestVerInd( "LatestVerInd" );
+        dataElementModel.setDeletedInd( "DeletedInd" );
+        dataElementModel.setBeginDate( getDate() );
+        dataElementModel.setEndDate( getDate() );
+        dataElementModel.setOrigin( "Origin" );
+        dataElementModel.setCdeId( 12345 );
+        dataElementModel.setQuestion( "Question" );
 
         return dataElementModel;
     }
@@ -311,7 +446,7 @@ public class CDEDataController
 
         representationModel.setPreferredName( "RepresentationModel PreferredName" );
         representationModel.setLongName( "RepresentationModel LongName" );
-        representationModel.setVersion( (float) 23.45 );
+        representationModel.setVersion( ( float ) 23.45 );
         representationModel.setContext( buildTestContextModel() );
         representationModel.setPublicId( 4321 );
         representationModel.setIdseq( "RepresentationModel Idseq" );
@@ -334,7 +469,7 @@ public class CDEDataController
         dataElementConceptModel.setPreferredDefinition( "DataElementConceptModel PreferredDefinition" );
         dataElementConceptModel.setLongName( "DataElementConceptModel LongName" );
         dataElementConceptModel.setAslName( "DataElementConceptModel AslName" );
-        dataElementConceptModel.setVersion( (float) 123 );
+        dataElementConceptModel.setVersion( ( float ) 123 );
 
         dataElementConceptModel.setDeletedInd( "DataElementConceptModel DeletedInd" );
         dataElementConceptModel.setLatestVerInd( "DataElementConceptModel LatestVerInd" );
@@ -354,14 +489,14 @@ public class CDEDataController
         dataElementConceptModel.setPropertyPrefName( "DataElementConceptModel PropertyPrefName" );
         dataElementConceptModel.setPropertyContextName( "DataElementConceptModel PropertyContextName" );
 
-        dataElementConceptModel.setPropertyVersion( (float) 987 );
+        dataElementConceptModel.setPropertyVersion( ( float ) 987 );
 
-        dataElementConceptModel.setObjClassVersion( (float) 654 );
+        dataElementConceptModel.setObjClassVersion( ( float ) 654 );
 
         dataElementConceptModel.setConteName( "DataElementConceptModel ConteName" );
         dataElementConceptModel.setCdPrefName( "DataElementConceptModel CdPrefName" );
         dataElementConceptModel.setCdContextName( "DataElementConceptModel CdContextName" );
-        dataElementConceptModel.setCdVersion( (float) 12.34 );
+        dataElementConceptModel.setCdVersion( ( float ) 12.34 );
         dataElementConceptModel.setCdPublicId( 123 );
         dataElementConceptModel.setObjClassPublicId( "DataElementConceptModel ObjClassPublicId" );
         dataElementConceptModel.setProperty( buildTestPropertyModel() );
@@ -381,7 +516,7 @@ public class CDEDataController
 
         objectClassModel.setPreferredName( "ObjectClassModel PreferredName" );
         objectClassModel.setLongName( "ObjectClassModel LongName" );
-        objectClassModel.setVersion( (float) 2.3 );
+        objectClassModel.setVersion( ( float ) 2.3 );
         objectClassModel.setContext( buildTestContextModel() );
         objectClassModel.setPublicId( 234 );
 
@@ -407,7 +542,7 @@ public class CDEDataController
 
         propertyModel.setPreferredName( "PropertyModel PreferredName" );
         propertyModel.setLongName( "PropertyModel LongName" );
-        propertyModel.setVersion( (float) 1.23 );
+        propertyModel.setVersion( ( float ) 1.23 );
         propertyModel.setContext( buildTestContextModel() );
         propertyModel.setPublicId( 123 );
         propertyModel.setName( "PropertyModel Name" );
@@ -463,7 +598,7 @@ public class CDEDataController
         contextModel.setDescription( "ContextModel Description" );
         contextModel.setPreferredDefinition( "ContextModel PreferredDefinition" );
         contextModel.setLanguage( "ContextModel Lang" );
-        contextModel.setVersion( (float) 123 );
+        contextModel.setVersion( ( float ) 123 );
 
         return contextModel;
     }

@@ -34,6 +34,24 @@
         <td class="dataElementValue">{{refDoc.context}}</td>
         <td class="dataElementValue">{{refDoc.url}}</td>
     </tr>
+    <br/>
+
+    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="cdeDetailsSubHeading">
+            <td colspan="4">Alternate Names</td>
+        </tr>
+        <tr>
+            <td class="dataElementHeading">Name</td>
+            <td class="dataElementHeading">Type</td>
+            <td class="dataElementHeading">Context</td>
+            <td class="dataElementHeading">Language</td>
+        </tr>
+        <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.referenceDocuments">
+            <td class="dataElementValue">{{refDoc.documentName}}</td>
+            <td class="dataElementValue">{{refDoc.documentType}}</td>
+            <td class="dataElementValue">{{refDoc.documentText}}</td>
+            <td class="dataElementValue">{{refDoc.context}}</td>
+        </tr>
 </table>
 
 

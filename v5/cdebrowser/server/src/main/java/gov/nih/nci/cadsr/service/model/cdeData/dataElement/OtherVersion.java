@@ -1,8 +1,5 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
 
-/**
- * Created by lerner on 4/20/15.
- */
 public class OtherVersion
 {
     private float version;
