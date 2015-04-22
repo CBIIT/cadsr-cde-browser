@@ -45,8 +45,8 @@ public class CDEDataController
             e.printStackTrace();
         }
 
-        CdeDetails cdeDetails = buildCdeDetails( dataElementModel );
-        //CdeDetails cdeDetails = buildTestRecord();
+        //CdeDetails cdeDetails = buildCdeDetails( dataElementModel );
+        CdeDetails cdeDetails = buildTestRecord();
 
         return cdeDetails;
     }
