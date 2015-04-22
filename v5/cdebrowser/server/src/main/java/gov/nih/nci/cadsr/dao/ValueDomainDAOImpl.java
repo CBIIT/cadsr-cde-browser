@@ -105,30 +105,23 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             } catch (EmptyResultDataAccessException ex) {
                 // this isn't a problem, just means there's no associated RepresentationModel
             }
-
-            /*
-            * populate these fields from that table
-            *
-            private String cdPrefName;
-            private String cdContextName;
-            private Float cdVersion;
-            private int cdPublicId;
-            */
-
-            ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq(rs.getString("CD_IDSEQ"));
-            if (conceptualDomainModel != null) {
-                valueDomainModel.setCdPublicId(conceptualDomainModel.getCdId());
-                if (conceptualDomainModel.getPreferredName() != null) {
-                    valueDomainModel.setCdPrefName(conceptualDomainModel.getPreferredName());
+            try {
+                ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq(rs.getString("CD_IDSEQ"));
+                if (conceptualDomainModel != null) {
+                    valueDomainModel.setCdPublicId(conceptualDomainModel.getCdId());
+                    if (conceptualDomainModel.getPreferredName() != null) {
+                        valueDomainModel.setCdPrefName(conceptualDomainModel.getPreferredName());
+                    }
+                    if (conceptualDomainModel.getVersion() != null) {
+                        valueDomainModel.setCdVersion(conceptualDomainModel.getVersion());
+                    }
+                    if (conceptualDomainModel.getContextModel() != null && conceptualDomainModel.getContextModel().getName() != null) {
+                        valueDomainModel.setCdContextName(conceptualDomainModel.getContextModel().getName());
+                    }
                 }
-                if (conceptualDomainModel.getVersion() != null) {
-                    valueDomainModel.setCdVersion(conceptualDomainModel.getVersion());
-                }
-                if (conceptualDomainModel.getContextModel() != null && conceptualDomainModel.getContextModel().getName() != null) {
-                    valueDomainModel.setCdContextName(conceptualDomainModel.getContextModel().getName());
-                }
+            } catch (EmptyResultDataAccessException ex) {
+                // this isn't a problem, just means there's no associated ConceptualDomainModel
             }
-
 
             return valueDomainModel;
         }
