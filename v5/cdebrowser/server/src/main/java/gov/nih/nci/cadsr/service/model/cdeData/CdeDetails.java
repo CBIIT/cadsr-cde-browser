@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData;
 
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConcept;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomain;
 
@@ -10,6 +11,7 @@ public class CdeDetails
     private DataElement dataElement = null;
     private DataElementConcept dataElementConcept = null;
     private ValueDomain valueDomain = null;
+    private Classifications classifications = null;
 
     public DataElement getDataElement()
     {
@@ -39,5 +41,15 @@ public class CdeDetails
     public void setValueDomain( ValueDomain valueDomain )
     {
         this.valueDomain = valueDomain;
+    }
+
+    public Classifications getClassifications()
+    {
+        return classifications;
+    }
+
+    public void setClassifications( Classifications classifications )
+    {
+        this.classifications = classifications;
     }
 }

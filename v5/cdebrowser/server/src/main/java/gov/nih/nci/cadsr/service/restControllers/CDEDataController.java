@@ -5,6 +5,10 @@ import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classification;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsScheneRefernceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
@@ -70,13 +74,51 @@ public class CDEDataController
         ValueDomain valueDomain = setValueDomainTabData( dataElementModel );
         cdeDetails.setValueDomain( valueDomain );
 
+        // For the "Classifications" Tab
+        Classifications classifications = setClassificationsTabData( dataElementModel );
+        cdeDetails.setClassifications( classifications );
+
         return cdeDetails;
     }
 
-
-
+    /***************************************************************/
     /**
-     * Initilize the Value Domain tab
+     * Initialize the Classifications tab
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
+     */
+     private Classifications setClassificationsTabData( DataElementModel dataElementModel )
+     {
+         Classifications classifications = new Classifications();
+
+         // "Selected Data Element" of the "Value Domain" Tab
+         classifications.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
+
+         /////////////////////////////////////////////////////
+         // "Classifications" section of the "Classifications" tab
+         List<Classification> classificationList = new ArrayList<>(  );
+         classifications.setClassificationList( classificationList );
+         // FIXME - Need to find out where to get classifications List from dataElementModel
+
+         /////////////////////////////////////////////////////
+         // "Classifications" section of the "Classifications" tab
+         List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = new ArrayList<>(  );
+         classifications.setClassificationsScheneRefernceDocuments( classificationsScheneRefernceDocuments );
+         // FIXME - Need to find out where to get classificationsScheneRefernceDocuments List from dataElementModel
+
+         /////////////////////////////////////////////////////
+         // "Classification Scheme Item Reference Document
+         ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument = new ClassificationsSchemeItemReferenceDocument();
+         classifications.setClassificationsSchemeItemReferenceDocument(  classificationsSchemeItemReferenceDocument);
+         // FIXME - Need to find out where to get classificationsSchemeItemReferenceDocument List from dataElementModel
+
+
+         return classifications;
+     }
+    /***************************************************************/
+    /**
+     * Initialize the Value Domain tab
      *
      * @param dataElementModel data model from the database
      * @return Data model for the UI client.
@@ -86,7 +128,7 @@ public class CDEDataController
         ValueDomain valueDomain = new ValueDomain();
 
         // "Selected Data Element" of the "Value Domain" Tab
-        valueDomain.setSelectedDataElement( getSelectedDataElement( dataElementModel) );
+        valueDomain.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
 
         /////////////////////////////////////////////////////
         // "value Domain Details" of the "value Domain" Tab
@@ -101,7 +143,7 @@ public class CDEDataController
         valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
         valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
         valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
-        valueDomainDetails.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+        valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
         valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
         valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
         valueDomainDetails.setMaximumLength( dataElementModel.getValueDomainModel().getMaxLength() );
@@ -132,13 +174,13 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Representation Concepts" of the "value Domain" Tab
-        List<RepresentationConcept> representationConcepts = new ArrayList<>(  );
+        List<RepresentationConcept> representationConcepts = new ArrayList<>();
         valueDomain.setRepresentationConcepts( representationConcepts );
         // FIXME - Need to find out where to get Representation Concepts from dataElementModel
 
         /////////////////////////////////////////////////////
         // "Permissible Values" of the "value Domain" Tab
-        List<PermissibleValue> permissibleValues = new ArrayList<>(  );
+        List<PermissibleValue> permissibleValues = new ArrayList<>();
         valueDomain.setPermissibleValues( permissibleValues );
         // FIXME - Need to find out where to get Permissible Value List from dataElementModel
 
@@ -147,9 +189,9 @@ public class CDEDataController
     }
 
 
-
+    /***************************************************************/
     /**
-     * Initilize the Data Element Concept tab
+     * Initialize the Data Element Concept tab
      *
      * @param dataElementModel data model from the database
      * @return Data model for the UI client.
@@ -159,7 +201,7 @@ public class CDEDataController
         DataElementConcept dataElementConcept = new DataElementConcept();
 
         // "Selected Data Element" of the "Data Element Concept" Tab
-        dataElementConcept.setSelectedDataElement( getSelectedDataElement( dataElementModel) );
+        dataElementConcept.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
 
         /////////////////////////////////////////////////////
         // "Data Element Concept Details" of the "Data Element Concept" Tab
@@ -189,7 +231,6 @@ public class CDEDataController
         // FIXME - Need to find out where to get Object Class Concepts from dataElementModel
 
 
-
         /////////////////////////////////////////////////////
         // "Property" of the "Data Element Concept" Tab
         Property property = new Property();
@@ -213,12 +254,13 @@ public class CDEDataController
     }
 
 
-        /**
-         * For the "Data Element" Tab
-         *
-         * @param dataElementModel  The data model from the DataBase
-         * @return The "Data Element" Tab the way the client needs it.
-         */
+    /***************************************************************/
+    /**
+     * For the "Data Element" Tab
+     *
+     * @param dataElementModel The data model from the DataBase
+     * @return The "Data Element" Tab the way the client needs it.
+     */
     private DataElement setDataElementTabData( DataElementModel dataElementModel )
     {
         DataElement dataElement = new DataElement();
@@ -312,44 +354,45 @@ public class CDEDataController
     }
 
 
+    /***************************************************************/
     /**
      * Most of the tabs start with the same "Selected Data Element" section
      *
-     * @param dataElementModel  The data model from the DataBase
+     * @param dataElementModel The data model from the DataBase
      * @return The "Selected Data Element" section, used by most of the tabs (at the top)
      */
-public SelectedDataElement getSelectedDataElement( DataElementModel dataElementModel )
-{
-    /////////////////////////////////////////////////////
-    // "Selected Data Element" of the "Data Element Concept" Tab
-    SelectedDataElement selectedDataElement = new SelectedDataElement();
+    public SelectedDataElement getSelectedDataElement( DataElementModel dataElementModel )
+    {
+        /////////////////////////////////////////////////////
+        // "Selected Data Element" of the "Data Element Concept" Tab
+        SelectedDataElement selectedDataElement = new SelectedDataElement();
 
-    if( dataElementModel.getPublicId() == null )
-    {
-        selectedDataElement.setPublicId( -1 );
-        logger.error( " dataElementModel.getPublicId() == null" );
-    } else
-    {
-        selectedDataElement.setPublicId( dataElementModel.getPublicId() );
+        if( dataElementModel.getPublicId() == null )
+        {
+            selectedDataElement.setPublicId( -1 );
+            logger.error( " dataElementModel.getPublicId() == null" );
+        } else
+        {
+            selectedDataElement.setPublicId( dataElementModel.getPublicId() );
+        }
+
+        if( dataElementModel.getVersion() == null )
+        {
+            selectedDataElement.setVersion( -1 );
+            logger.error( " dataElementModel.getVersion() == null" );
+        } else
+        {
+            selectedDataElement.setVersion( dataElementModel.getVersion() );
+        }
+
+        selectedDataElement.setLongName( dataElementModel.getLongName() );
+        selectedDataElement.setShortName( dataElementModel.getPreferredName() );
+        selectedDataElement.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
+        selectedDataElement.setDefinition( dataElementModel.getPreferredDefinition() );
+        selectedDataElement.setWorkflowStatus( dataElementModel.getAslName() );
+
+        return selectedDataElement;
     }
-
-    if( dataElementModel.getVersion() == null )
-    {
-        selectedDataElement.setVersion( -1 );
-        logger.error( " dataElementModel.getVersion() == null" );
-    } else
-    {
-        selectedDataElement.setVersion( dataElementModel.getVersion() );
-    }
-
-    selectedDataElement.setLongName( dataElementModel.getLongName() );
-    selectedDataElement.setShortName( dataElementModel.getPreferredName() );
-    selectedDataElement.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
-    selectedDataElement.setDefinition( dataElementModel.getPreferredDefinition() );
-    selectedDataElement.setWorkflowStatus( dataElementModel.getAslName());
-
-    return selectedDataElement;
-}
 
 
     public void setDataElementDAO( DataElementDAOImpl dataElementDAO )
@@ -516,7 +559,7 @@ public SelectedDataElement getSelectedDataElement( DataElementModel dataElementM
         valueDomainModel.setDatatype( "valueDomainModel Datatype" );
         valueDomainModel.setUom( "valueDomainModel Uom" );
         valueDomainModel.setDispFormat( "valueDomainModel DispFormat" );
-        valueDomainModel.setMaxLength( 40);
+        valueDomainModel.setMaxLength( 40 );
         valueDomainModel.setMinLength( 2 );
         valueDomainModel.setHighVal( "valueDomainModel ighVal" );
         valueDomainModel.setLowVal( "valueDomainModel LowVal" );
