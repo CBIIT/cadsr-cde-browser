@@ -8,23 +8,23 @@ public class CsCsiModel extends BaseModel
 {
 
     private String csiName;
-    private String csiType; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
-    private String csiIdseq; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
-    private String csCsiIdseq; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csiType; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csiIdseq; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csCsiIdseq; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
     private String csiDescription;
     private String parentCsiIdseq;
     private String csIdseq;
     private String csPreffredDefinition; //Spelled wrong to match database
     private String csLongName;
-    private String csPrefName; // Fixme this field is not in the view. CS_PREFFERED_NAME is.
+    private String csPrefName; // this field is not in the view. CS_PREFFERED_NAME is.
     private String csConteIdseq;
-    private String acCsiIdseq; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String acCsiIdseq; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
     private String cstlName;
 
-    private String csID; //Unused  Fixme this field is not in the view.  since it's marked unused, should be removed from class.
-    private Float csVersion; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
-    private Integer csiId; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
-    private Float csiVersion; // Fixme this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csID; //Unused  this field is not in the view.  since it's marked unused, should be removed from class.
+    private Float csVersion; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private Integer csiId; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private Float csiVersion; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
 
 
     public String getCsiName()

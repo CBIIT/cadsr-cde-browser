@@ -16,7 +16,7 @@ public class ClassificationSchemeModel extends BaseModel
     private Timestamp beginDate;
     private String changeNote;
     private String cmslName;
-    private String conteIdseq; //todo map this foreign key to a ContextModel
+    private String conteIdseq; // map this foreign key to a ContextModel?
     private String cstlName;
     private String csId;
     private String csIdseq;
@@ -28,12 +28,12 @@ public class ClassificationSchemeModel extends BaseModel
     private String origin;
     private String preferredDefinition;
     private String preferredName;
-    private String registrationStatus; // !@#$%$#@!  not in table!  Fixme!
-    private String unresolvedIssue; // !@#$%$#@!  not in table!  Fixme!
+    private String registrationStatus; // !@#$%$#@!  not in table!  not used?
+    private String unresolvedIssue; // !@#$%$#@!  not in table! not used?
     private String version;
-    private String workflowStatusDesc; // !@#$%$#@!  not in table!  Fixme!
-    // todo do we need to map the condr_idseq to a ConceptDerivationRuleModel?
-    // todo do we need to map the par_cs_idesq to the parent ClassificationSchemeModel??
+    private String workflowStatusDesc; // !@#$%$#@!  not in table!  not used?
+    // do we need to map the condr_idseq to a ConceptDerivationRuleModel?
+    // do we need to map the par_cs_idesq to the parent ClassificationSchemeModel??
 
 
     public String getAslName()

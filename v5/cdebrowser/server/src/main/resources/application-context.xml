@@ -95,8 +95,8 @@
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
     <bean id="representationDAO" class="gov.nih.nci.cadsr.dao.RepresentationDAOImpl" parent="abstractDao">
-        <property name="propertyDAO" ref="propertyDAO"/>
-        <property name="objectClassDAO" ref="objectClassDAO"/>
+        <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
     </bean>
     <bean id="valueDomainDAO" class="gov.nih.nci.cadsr.dao.ValueDomainDAOImpl" parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>

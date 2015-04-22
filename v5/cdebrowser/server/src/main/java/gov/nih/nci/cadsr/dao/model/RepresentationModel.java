@@ -4,12 +4,12 @@ package gov.nih.nci.cadsr.dao.model;
  * Created by lavezzojl on 4/6/15.
  */
 public class RepresentationModel extends BaseModel {
-    protected String preferredName;
-    protected String longName;
-    protected Float version;
-    protected ContextModel context;
-    protected int publicId;
-    protected String idseq;
+    private String preferredName;
+    private String longName;
+    private Float version;
+    private ContextModel context;
+    private int publicId;
+    private String idseq;
     private ConceptDerivationRuleModel conceptDerivationRuleModel;
 
     public String getPreferredName()

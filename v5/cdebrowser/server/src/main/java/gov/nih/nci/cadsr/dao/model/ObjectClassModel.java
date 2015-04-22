@@ -10,8 +10,8 @@ public class ObjectClassModel extends BaseModel {
     private ContextModel context;
     private int publicId;
     private String idseq;
-    private String name;
-    private String qualifier;
+    private String name; // not in this table. actually part of DataElementConcept
+    private String qualifier; // not in this table. actually part of DataElementConcept
 
     public String getPreferredName()
     {

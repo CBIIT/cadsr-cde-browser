@@ -18,7 +18,7 @@ public class DataElementModel extends BaseModel
     private String usingContexts; // not in table. Filled from designationModels.contexts.name where designationModels.detlName = 'USED_BY'
     private List<ReferenceDocModel> refDocs;// from ReferenceDocumentsView.ac_idseq = data_elements.de_idseq
     private List<DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
-    private Integer publicId; // fixme this is a duplicate of cdeId. do we really need this?
+    private Integer publicId; // this is a duplicate of cdeId. do we really need this?
     private String idseq;
     private String registrationStatus; // not in table. Filled from SBR.AC_RESISTRATIONS.REGISTRATION_STATUS see DAO row mapper
     private ValueDomainModel valueDomainModel; // from vd_idseq
@@ -26,9 +26,9 @@ public class DataElementModel extends BaseModel
     private ContextModel context;
     private String deIdseq; // primary key
     private Float version; // needs to be a Float!
-    private String conteIdseq; // fixme this field can't possibly be needed since we have a whole context model object
+    private String conteIdseq; // this field can't possibly be needed since we have a whole context model object
     private String preferredName;
-    private String vdIdseq; // fixme this field can't possibly be needed since we have a whole value domain model object
+    private String vdIdseq; // this field can't possibly be needed since we have a whole value domain model object
     private String decIdseq;
     private String preferredDefinition;
     private String aslName;

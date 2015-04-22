@@ -106,7 +106,6 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
                 // this isn't a problem, just means there's no associated RepresentationModel
             }
 
-            // todo build model and DAO for Conceptual domains table.
             /*
             * populate these fields from that table
             *

@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.dao;
 
+import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +33,7 @@ public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectC
 
     @Override
     public ObjectClassModel getObjectClassByIdseq(String ocIdseq) {
-        String sql = "SELECT * FROM OBJECT_CLASSES_EXT WHERE OC_IDSEQ = ?";
+        String sql = "SELECT * FROM SBREXT.OBJECT_CLASSES_EXT WHERE OC_IDSEQ = ?";
         ObjectClassModel objectClassModel = jdbcTemplate.queryForObject(sql, new Object[] { ocIdseq }, new ObjectClassMapper());
         return objectClassModel;
     }
@@ -51,6 +52,15 @@ public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectC
 
         public ObjectClassModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             ObjectClassModel objectClassModel = new ObjectClassModel();
+
+            objectClassModel.setPreferredName(rs.getString("PREFERRED_NAME"));
+            objectClassModel.setLongName(rs.getString("LONG_NAME"));
+            objectClassModel.setVersion(rs.getFloat("VERSION"));
+            objectClassModel.setPublicId(rs.getInt("OC_ID"));
+            objectClassModel.setIdseq(rs.getString("OC_IDSEQ"));
+//            objectClassModel.setName(rs.getString(""));  these are actually part of DataElementConcept
+//            objectClassModel.setQualifier(rs.getString(""));
+
             objectClassModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             return objectClassModel;
         }

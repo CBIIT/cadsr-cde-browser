@@ -9,8 +9,8 @@ public class PropertyModel extends BaseModel {
     private Float version;
     private ContextModel context;
     private int publicId;
-    private String name;
-    private String qualifier;
+    private String name;// I don't think this needs to be here. probably confused for the property model's context's name
+    private String qualifier;// this also doesn't need to be here.  data element concepts has a field called property qualifier
 
     public PropertyModel() {
     }

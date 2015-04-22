@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.dao;
 
+import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.RepresentationModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
@@ -21,8 +23,8 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
 
     private JdbcTemplate jdbcTemplate;
 
-    private PropertyDAO propertyDAO;
-    private ObjectClassDAO objectClassDAO;
+    private ConceptDerivationRuleDAO conceptDerivationRuleDAO;
+    private ContextDAO contextDAO;
 
 
     @Autowired
@@ -33,7 +35,7 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
 
     @Override
     public RepresentationModel getRepresentationByIdseq(String representationIdseq) {
-        String sql = "SELECT * FROM REPRESENTATIONS_EXT WHERE REP_IDSEQ = ?";
+        String sql = "SELECT * FROM SBREXT.REPRESENTATIONS_EXT WHERE REP_IDSEQ = ?";
         RepresentationModel representationModel = jdbcTemplate.queryForObject(sql, new Object[] { representationIdseq }, new RepresentationMapper());
         return representationModel;
     }
@@ -45,27 +47,42 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
 
         public RepresentationModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             RepresentationModel representationModel = new RepresentationModel();
+
+//            protected String preferredName;
+//            protected String longName;
+//            protected Float version;
+//            protected ContextModel context;
+//            protected int publicId;
+//            protected String idseq;
+//            private ConceptDerivationRuleModel conceptDerivationRuleModel;
+
+            representationModel.setPreferredName(rs.getString("PREFERRED_NAME"));
+            representationModel.setLongName(rs.getString("LONG_NAME"));
+            representationModel.setVersion(rs.getFloat("VERSION"));
+            representationModel.setPublicId(rs.getInt("REP_ID"));
+            representationModel.setIdseq(rs.getString("REP_IDSEQ"));
+
+            representationModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
+            representationModel.setConceptDerivationRuleModel(getConceptDerivationRuleDAO().getCDRByIdseq(rs.getString("CONDR_IDSEQ")));
+
+
             return representationModel;
         }
     }
 
-    public ObjectClassDAO getObjectClassDAO()
-    {
-        return objectClassDAO;
+    public ConceptDerivationRuleDAO getConceptDerivationRuleDAO() {
+        return conceptDerivationRuleDAO;
     }
 
-    public void setObjectClassDAO( ObjectClassDAO objectClassDAO )
-    {
-        this.objectClassDAO = objectClassDAO;
+    public void setConceptDerivationRuleDAO(ConceptDerivationRuleDAO conceptDerivationRuleDAO) {
+        this.conceptDerivationRuleDAO = conceptDerivationRuleDAO;
     }
 
-    public PropertyDAO getPropertyDAO()
-    {
-        return propertyDAO;
+    public ContextDAO getContextDAO() {
+        return contextDAO;
     }
 
-    public void setPropertyDAO( PropertyDAO propertyDAO )
-    {
-        this.propertyDAO = propertyDAO;
+    public void setContextDAO(ContextDAO contextDAO) {
+        this.contextDAO = contextDAO;
     }
 }
