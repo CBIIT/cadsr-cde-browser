@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.1.2.RELEASE</spring.version>
-        <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:DSRDEV</connection-url>
+        <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
