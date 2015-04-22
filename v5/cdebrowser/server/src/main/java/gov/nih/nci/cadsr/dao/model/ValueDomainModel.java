@@ -19,12 +19,12 @@ public class ValueDomainModel extends BaseModel {
     private String datatype;
     private String uom;
     private String dispFormat;
-    private String maxLength;
-    private String minLength;
+    private int maxLength;
+    private int minLength;
     private String highVal;
     private String lowVal;
     private String charSet;
-    private String decimalPlace;
+    private int decimalPlace;
     private String cdPrefName;
     private String cdContextName;
     private Float cdVersion;
@@ -176,22 +176,22 @@ public class ValueDomainModel extends BaseModel {
         this.dispFormat = dispFormat;
     }
 
-    public String getMaxLength()
+    public int getMaxLength()
     {
         return maxLength;
     }
 
-    public void setMaxLength( String maxLength )
+    public void setMaxLength( int maxLength )
     {
         this.maxLength = maxLength;
     }
 
-    public String getMinLength()
+    public int getMinLength()
     {
         return minLength;
     }
 
-    public void setMinLength( String minLength )
+    public void setMinLength( int minLength )
     {
         this.minLength = minLength;
     }
@@ -226,12 +226,12 @@ public class ValueDomainModel extends BaseModel {
         this.charSet = charSet;
     }
 
-    public String getDecimalPlace()
+    public int getDecimalPlace()
     {
         return decimalPlace;
     }
 
-    public void setDecimalPlace( String decimalPlace )
+    public void setDecimalPlace( int decimalPlace )
     {
         this.decimalPlace = decimalPlace;
     }
@@ -347,6 +347,9 @@ public class ValueDomainModel extends BaseModel {
         ValueDomainModel that = (ValueDomainModel) o;
 
         if (getPublicId() != that.getPublicId()) return false;
+        if (getMaxLength() != that.getMaxLength()) return false;
+        if (getMinLength() != that.getMinLength()) return false;
+        if (getDecimalPlace() != that.getDecimalPlace()) return false;
         if (getCdPublicId() != that.getCdPublicId()) return false;
         if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
             return false;
@@ -368,15 +371,9 @@ public class ValueDomainModel extends BaseModel {
         if (getUom() != null ? !getUom().equals(that.getUom()) : that.getUom() != null) return false;
         if (getDispFormat() != null ? !getDispFormat().equals(that.getDispFormat()) : that.getDispFormat() != null)
             return false;
-        if (getMaxLength() != null ? !getMaxLength().equals(that.getMaxLength()) : that.getMaxLength() != null)
-            return false;
-        if (getMinLength() != null ? !getMinLength().equals(that.getMinLength()) : that.getMinLength() != null)
-            return false;
         if (getHighVal() != null ? !getHighVal().equals(that.getHighVal()) : that.getHighVal() != null) return false;
         if (getLowVal() != null ? !getLowVal().equals(that.getLowVal()) : that.getLowVal() != null) return false;
         if (getCharSet() != null ? !getCharSet().equals(that.getCharSet()) : that.getCharSet() != null) return false;
-        if (getDecimalPlace() != null ? !getDecimalPlace().equals(that.getDecimalPlace()) : that.getDecimalPlace() != null)
-            return false;
         if (getCdPrefName() != null ? !getCdPrefName().equals(that.getCdPrefName()) : that.getCdPrefName() != null)
             return false;
         if (getCdContextName() != null ? !getCdContextName().equals(that.getCdContextName()) : that.getCdContextName() != null)
@@ -406,12 +403,12 @@ public class ValueDomainModel extends BaseModel {
         result = 31 * result + (getDatatype() != null ? getDatatype().hashCode() : 0);
         result = 31 * result + (getUom() != null ? getUom().hashCode() : 0);
         result = 31 * result + (getDispFormat() != null ? getDispFormat().hashCode() : 0);
-        result = 31 * result + (getMaxLength() != null ? getMaxLength().hashCode() : 0);
-        result = 31 * result + (getMinLength() != null ? getMinLength().hashCode() : 0);
+        result = 31 * result + getMaxLength();
+        result = 31 * result + getMinLength();
         result = 31 * result + (getHighVal() != null ? getHighVal().hashCode() : 0);
         result = 31 * result + (getLowVal() != null ? getLowVal().hashCode() : 0);
         result = 31 * result + (getCharSet() != null ? getCharSet().hashCode() : 0);
-        result = 31 * result + (getDecimalPlace() != null ? getDecimalPlace().hashCode() : 0);
+        result = 31 * result + getDecimalPlace();
         result = 31 * result + (getCdPrefName() != null ? getCdPrefName().hashCode() : 0);
         result = 31 * result + (getCdContextName() != null ? getCdContextName().hashCode() : 0);
         result = 31 * result + (getCdVersion() != null ? getCdVersion().hashCode() : 0);

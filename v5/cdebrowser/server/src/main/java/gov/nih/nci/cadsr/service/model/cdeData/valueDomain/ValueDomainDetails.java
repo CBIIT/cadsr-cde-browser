@@ -15,9 +15,9 @@ public class ValueDomainDetails
     private String dataType;
     private String unitOfMeasure;
     private String displayFormat;
-    private String maximumLength;
-    private String minimumLength;
-    private String decimalPlace;
+    private int maximumLength;
+    private int minimumLength;
+    private int decimalPlace;
     private String highValue;
     private String lowValue;
     private String valueDomainType;
@@ -127,32 +127,32 @@ public class ValueDomainDetails
         this.displayFormat = displayFormat;
     }
 
-    public String getMaximumLength()
+    public int getMaximumLength()
     {
         return maximumLength;
     }
 
-    public void setMaximumLength( String maximumLength )
+    public void setMaximumLength( int maximumLength )
     {
         this.maximumLength = maximumLength;
     }
 
-    public String getMinimumLength()
+    public int getMinimumLength()
     {
         return minimumLength;
     }
 
-    public void setMinimumLength( String minimumLength )
+    public void setMinimumLength( int minimumLength )
     {
         this.minimumLength = minimumLength;
     }
 
-    public String getDecimalPlace()
+    public int getDecimalPlace()
     {
         return decimalPlace;
     }
 
-    public void setDecimalPlace( String decimalPlace )
+    public void setDecimalPlace( int decimalPlace )
     {
         this.decimalPlace = decimalPlace;
     }

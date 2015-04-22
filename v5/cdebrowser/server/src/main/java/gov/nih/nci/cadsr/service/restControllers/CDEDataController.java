@@ -516,12 +516,12 @@ public SelectedDataElement getSelectedDataElement( DataElementModel dataElementM
         valueDomainModel.setDatatype( "valueDomainModel Datatype" );
         valueDomainModel.setUom( "valueDomainModel Uom" );
         valueDomainModel.setDispFormat( "valueDomainModel DispFormat" );
-        valueDomainModel.setMaxLength( "valueDomainModel MaxLength" );
-        valueDomainModel.setMinLength( "valueDomainModel MinLength" );
+        valueDomainModel.setMaxLength( 40);
+        valueDomainModel.setMinLength( 2 );
         valueDomainModel.setHighVal( "valueDomainModel ighVal" );
         valueDomainModel.setLowVal( "valueDomainModel LowVal" );
         valueDomainModel.setCharSet( "valueDomainModel CharSet" );
-        valueDomainModel.setDecimalPlace( "valueDomainModel DecimalPlace" );
+        valueDomainModel.setDecimalPlace( 2 );
         valueDomainModel.setCdPrefName( "valueDomainModel CdPrefName" );
         valueDomainModel.setCdContextName( "valueDomainModel CdContextName" );
         valueDomainModel.setCdVersion( new Float( 123 ) );

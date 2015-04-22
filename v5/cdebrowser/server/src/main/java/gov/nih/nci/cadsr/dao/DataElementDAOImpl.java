@@ -175,7 +175,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             }
 
             try {
-                dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(deIdseq));
+                dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(deIdseq)); //todo make this actually work
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No DataElementConcept found for Data Element with idseq: " + deIdseq);
             }
