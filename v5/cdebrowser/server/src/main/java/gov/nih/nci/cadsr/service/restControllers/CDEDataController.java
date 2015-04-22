@@ -70,10 +70,17 @@ public class CDEDataController
         ValueDomain valueDomain = setValueDomainTabData( dataElementModel );
         cdeDetails.setValueDomain( valueDomain );
 
-        //DataElementCon
         return cdeDetails;
     }
 
+
+
+    /**
+     * Initilize the Value Domain tab
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
+     */
     private ValueDomain setValueDomainTabData( DataElementModel dataElementModel )
     {
         ValueDomain valueDomain = new ValueDomain();
@@ -87,7 +94,10 @@ public class CDEDataController
         valueDomain.setValueDomainDetails( valueDomainDetails );
 
         valueDomainDetails.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
-        valueDomainDetails.setVersion( dataElementModel.getValueDomainModel().getVersion() );
+        if( dataElementModel.getValueDomainModel().getVersion() != null )
+        {
+            valueDomainDetails.setVersion( dataElementModel.getValueDomainModel().getVersion() );
+        }
         valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
         valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
         valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
@@ -137,6 +147,13 @@ public class CDEDataController
     }
 
 
+
+    /**
+     * Initilize the Data Element Concept tab
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
+     */
     private DataElementConcept setDataElementConceptTabData( DataElementModel dataElementModel )
     {
         DataElementConcept dataElementConcept = new DataElementConcept();
@@ -195,6 +212,7 @@ public class CDEDataController
         return dataElementConcept;
     }
 
+
         /**
          * For the "Data Element" Tab
          *
@@ -235,7 +253,7 @@ public class CDEDataController
         dataElementDetails.setValueDomain( dataElementModel.getValueDomainModel().getLongName() );
         dataElementDetails.setDataElementConcept( "STILL NEED TO TRACK DOWN Data Element Concept" );
         dataElementDetails.setContext( dataElementModel.getContextName() );
-        dataElementDetails.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+        dataElementDetails.setWorkflowStatus( dataElementModel.getAslName() );
         dataElementDetails.setOrigin( dataElementModel.getOrigin() );
         dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
         dataElementDetails.setDirectLink( "STILL NEED TO TRACK DOWN Direct Link" );
@@ -293,6 +311,13 @@ public class CDEDataController
         return dataElement;
     }
 
+
+    /**
+     * Most of the tabs start with the same "Selected Data Element" section
+     *
+     * @param dataElementModel  The data model from the DataBase
+     * @return The "Selected Data Element" section, used by most of the tabs (at the top)
+     */
 public SelectedDataElement getSelectedDataElement( DataElementModel dataElementModel )
 {
     /////////////////////////////////////////////////////
@@ -321,7 +346,7 @@ public SelectedDataElement getSelectedDataElement( DataElementModel dataElementM
     selectedDataElement.setShortName( dataElementModel.getPreferredName() );
     selectedDataElement.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
     selectedDataElement.setDefinition( dataElementModel.getPreferredDefinition() );
-    selectedDataElement.setWorkflowStatus( "STILL NEED TO TRACK DOWN Workflow Status" );
+    selectedDataElement.setWorkflowStatus( dataElementModel.getAslName());
 
     return selectedDataElement;
 }
