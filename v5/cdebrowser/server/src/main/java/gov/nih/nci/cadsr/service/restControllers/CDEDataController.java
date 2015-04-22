@@ -9,10 +9,11 @@ import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classification;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsScheneRefernceDocument;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.*;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation.DataElementDerivation;
+import gov.nih.nci.cadsr.service.model.cdeData.usage.FormUsage;
+import gov.nih.nci.cadsr.service.model.cdeData.usage.Usage;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,23 +64,79 @@ public class CDEDataController
         CdeDetails cdeDetails = new CdeDetails();
 
         // For the "Data Element" Tab
-        DataElement dataElement = setDataElementTabData( dataElementModel );
+        DataElement dataElement = initDataElementTabData( dataElementModel );
         cdeDetails.setDataElement( dataElement );
 
         // For the "Data Element Concept" Tab
-        DataElementConcept dataElementConcept = setDataElementConceptTabData( dataElementModel );
+        DataElementConcept dataElementConcept = initDataElementConceptTabData( dataElementModel );
         cdeDetails.setDataElementConcept( dataElementConcept );
 
         // For the "Value Domain" Tab
-        ValueDomain valueDomain = setValueDomainTabData( dataElementModel );
+        ValueDomain valueDomain = initValueDomainTabData( dataElementModel );
         cdeDetails.setValueDomain( valueDomain );
 
         // For the "Classifications" Tab
-        Classifications classifications = setClassificationsTabData( dataElementModel );
+        Classifications classifications = initClassificationsTabData( dataElementModel );
         cdeDetails.setClassifications( classifications );
+
+        // For the "Usage" tab
+        Usage usage = initUsageTabData( dataElementModel );
+        cdeDetails.setUsage( usage );
+
+        // For the "Data Elements Derivation" tab
+        DataElementDerivation dataElementDerivation = initDataElementDerivationTabData( dataElementModel );
+        cdeDetails.setDataElementDerivation( dataElementDerivation );
+
 
         return cdeDetails;
     }
+
+    /***************************************************************/
+    /**
+     * Initialize the Data Elements Derivation
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
+     */
+    private DataElementDerivation initDataElementDerivationTabData( DataElementModel dataElementModel )
+    {
+        DataElementDerivation dataElementDerivation = new DataElementDerivation();
+
+        // "Selected Data Element" of the "Data Elements Derivation" Tab
+        dataElementDerivation.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
+
+
+        /////////////////////////////////////////////////////
+        // FIXME - Need to find out where to get dataElementDerivationDetails from dataElementModel
+
+        return dataElementDerivation;
+    }
+
+
+    /***************************************************************/
+    /**
+     * Initialize the Usage tab
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
+     */
+    private Usage initUsageTabData( DataElementModel dataElementModel )
+    {
+        Usage usage = new Usage();
+
+        // "Selected Data Element" of the "Value Domain" Tab
+        usage.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
+
+        /////////////////////////////////////////////////////
+        // "Classifications" section of the "Classifications" tab
+        List<FormUsage> formUsages = new ArrayList<>();
+        usage.setFormUsages( formUsages );
+        // FIXME - Need to find out where to get FormUsage List from dataElementModel
+
+
+        return usage;
+    }
+
 
     /***************************************************************/
     /**
@@ -88,34 +145,34 @@ public class CDEDataController
      * @param dataElementModel data model from the database
      * @return Data model for the UI client.
      */
-     private Classifications setClassificationsTabData( DataElementModel dataElementModel )
-     {
-         Classifications classifications = new Classifications();
+    private Classifications initClassificationsTabData( DataElementModel dataElementModel )
+    {
+        Classifications classifications = new Classifications();
 
-         // "Selected Data Element" of the "Value Domain" Tab
-         classifications.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
+        // "Selected Data Element" of the "Value Domain" Tab
+        classifications.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
 
-         /////////////////////////////////////////////////////
-         // "Classifications" section of the "Classifications" tab
-         List<Classification> classificationList = new ArrayList<>(  );
-         classifications.setClassificationList( classificationList );
-         // FIXME - Need to find out where to get classifications List from dataElementModel
+        /////////////////////////////////////////////////////
+        // "Classifications" section of the "Classifications" tab
+        List<Classification> classificationList = new ArrayList<>();
+        classifications.setClassificationList( classificationList );
+        // FIXME - Need to find out where to get classifications List from dataElementModel
 
-         /////////////////////////////////////////////////////
-         // "Classifications" section of the "Classifications" tab
-         List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = new ArrayList<>(  );
-         classifications.setClassificationsScheneRefernceDocuments( classificationsScheneRefernceDocuments );
-         // FIXME - Need to find out where to get classificationsScheneRefernceDocuments List from dataElementModel
+        /////////////////////////////////////////////////////
+        // "Classifications" section of the "Classifications" tab
+        List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = new ArrayList<>();
+        classifications.setClassificationsScheneRefernceDocuments( classificationsScheneRefernceDocuments );
+        // FIXME - Need to find out where to get classificationsScheneRefernceDocuments List from dataElementModel
 
-         /////////////////////////////////////////////////////
-         // "Classification Scheme Item Reference Document
-         ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument = new ClassificationsSchemeItemReferenceDocument();
-         classifications.setClassificationsSchemeItemReferenceDocument(  classificationsSchemeItemReferenceDocument);
-         // FIXME - Need to find out where to get classificationsSchemeItemReferenceDocument List from dataElementModel
+        /////////////////////////////////////////////////////
+        // "Classification Scheme Item Reference Document
+        ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument = new ClassificationsSchemeItemReferenceDocument();
+        classifications.setClassificationsSchemeItemReferenceDocument( classificationsSchemeItemReferenceDocument );
+        // FIXME - Need to find out where to get classificationsSchemeItemReferenceDocument List from dataElementModel
 
 
-         return classifications;
-     }
+        return classifications;
+    }
     /***************************************************************/
     /**
      * Initialize the Value Domain tab
@@ -123,7 +180,7 @@ public class CDEDataController
      * @param dataElementModel data model from the database
      * @return Data model for the UI client.
      */
-    private ValueDomain setValueDomainTabData( DataElementModel dataElementModel )
+    private ValueDomain initValueDomainTabData( DataElementModel dataElementModel )
     {
         ValueDomain valueDomain = new ValueDomain();
 
@@ -152,10 +209,10 @@ public class CDEDataController
         valueDomainDetails.setHighValue( dataElementModel.getValueDomainModel().getHighVal() );
         valueDomainDetails.setLowValue( dataElementModel.getValueDomainModel().getLowVal() );
         valueDomainDetails.setValueDomainType( dataElementModel.getValueDomainModel().getVdType() );
-        valueDomainDetails.setConceptualDomainPublicId( "STILL NEED TO TRACK DOWN ConceptualDomainPublicId" );
-        valueDomainDetails.setConceptualDomainShortName( "STILL NEED TO TRACK DOWN ConceptualDomainShortName" );
-        valueDomainDetails.setConceptualDomainContextName( "STILL NEED TO TRACK DOWN ConceptualDomainContextName" );
-        valueDomainDetails.setConceptualDomainVersion( "STILL NEED TO TRACK DOWN ConceptualDomainVersion" );
+        valueDomainDetails.setConceptualDomainPublicId( dataElementModel.getValueDomainModel().getCdPublicId() );
+        valueDomainDetails.setConceptualDomainShortName( dataElementModel.getValueDomainModel().getCdPrefName() );
+        valueDomainDetails.setConceptualDomainContextName(  dataElementModel.getValueDomainModel().getCdContextName());
+        valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
 
         /////////////////////////////////////////////////////
         // "value Domain Concepts" of the "value Domain" Tab
@@ -196,7 +253,7 @@ public class CDEDataController
      * @param dataElementModel data model from the database
      * @return Data model for the UI client.
      */
-    private DataElementConcept setDataElementConceptTabData( DataElementModel dataElementModel )
+    private DataElementConcept initDataElementConceptTabData( DataElementModel dataElementModel )
     {
         DataElementConcept dataElementConcept = new DataElementConcept();
 
@@ -261,7 +318,7 @@ public class CDEDataController
      * @param dataElementModel The data model from the DataBase
      * @return The "Data Element" Tab the way the client needs it.
      */
-    private DataElement setDataElementTabData( DataElementModel dataElementModel )
+    private DataElement initDataElementTabData( DataElementModel dataElementModel )
     {
         DataElement dataElement = new DataElement();
 
@@ -341,13 +398,20 @@ public class CDEDataController
         List<AlternateName> alternateNames = new ArrayList<>();
         dataElement.setAlternateNames( alternateNames );
 
-        //List from database
 
         /////////////////////////////////////////////////////
         // "Alternate Definitions" of the "Data Element" Tab
+        List<AlternateDefinition> alternateDefinitions = new ArrayList<>();
+        dataElement.setAlternateDefinitions( alternateDefinitions );
+
 
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
+        List<OtherVersion> otherVersions = new ArrayList<>(  );
+        dataElement.setOtherVersions( otherVersions );
+
+        // FIXME - Need to find out where to get Data otherVersions from dataElementModel
+
 
 
         return dataElement;
@@ -401,6 +465,8 @@ public class CDEDataController
     }
 
 
+    /////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
     /////////////////////////////////////////////////////
     // Test stuff
 

@@ -21,10 +21,10 @@ public class ValueDomainDetails
     private String highValue;
     private String lowValue;
     private String valueDomainType;
-    private String conceptualDomainPublicId;
+    private int conceptualDomainPublicId;
     private String conceptualDomainShortName;
     private String conceptualDomainContextName;
-    private String getConceptualDomainVersion;
+    private Float getConceptualDomainVersion;
     private String origin;
 
     public int getPublicId()
@@ -187,12 +187,12 @@ public class ValueDomainDetails
         this.valueDomainType = valueDomainType;
     }
 
-    public String getConceptualDomainPublicId()
+    public int getConceptualDomainPublicId()
     {
         return conceptualDomainPublicId;
     }
 
-    public void setConceptualDomainPublicId( String conceptualDomainPublicId )
+    public void setConceptualDomainPublicId( int conceptualDomainPublicId )
     {
         this.conceptualDomainPublicId = conceptualDomainPublicId;
     }
@@ -217,12 +217,12 @@ public class ValueDomainDetails
         this.conceptualDomainContextName = conceptualDomainContextName;
     }
 
-    public String getGetConceptualDomainVersion()
+    public Float getGetConceptualDomainVersion()
     {
         return getConceptualDomainVersion;
     }
 
-    public void setConceptualDomainVersion( String getConceptualDomainVersion )
+    public void setConceptualDomainVersion( Float getConceptualDomainVersion )
     {
         this.getConceptualDomainVersion = getConceptualDomainVersion;
     }
