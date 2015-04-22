@@ -1,9 +1,6 @@
 package gov.nih.nci.cadsr.dao;
 
-import gov.nih.nci.cadsr.dao.model.ContextModel;
-import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
-import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
-import gov.nih.nci.cadsr.dao.model.PropertyModel;
+import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +25,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
     private PropertyDAO propertyDAO;
     private ObjectClassDAO objectClassDAO;
     private ContextDAO contextDAO;
+    public ConceptualDomainDAO conceptualDomainDAO;
 
 
     @Autowired
@@ -66,6 +64,14 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
 
     public void setContextDAO(ContextDAO contextDAO) {
         this.contextDAO = contextDAO;
+    }
+
+    public ConceptualDomainDAO getConceptualDomainDAO() {
+        return conceptualDomainDAO;
+    }
+
+    public void setConceptualDomainDAO(ConceptualDomainDAO conceptualDomainDAO) {
+        this.conceptualDomainDAO = conceptualDomainDAO;
     }
 
     public final class DataElementConceptMapper extends BeanPropertyRowMapper<DataElementConceptModel> {
@@ -121,7 +127,20 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
             if (contextModel != null && contextModel.getName() != null) {
                 dataElementConceptModel.setConteName(contextModel.getName());
             }
-            // todo implement Concept Domain and add it to this class to populate the cd* fields
+            ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq(rs.getString("CD_IDSEQ"));
+            if (conceptualDomainModel != null) {
+                dataElementConceptModel.setCdIdseq(rs.getString("CD_IDSEQ"));
+                dataElementConceptModel.setCdPublicId(conceptualDomainModel.getCdId());
+                if (conceptualDomainModel.getPreferredName() != null) {
+                    dataElementConceptModel.setCdPrefName(conceptualDomainModel.getPreferredName());
+                }
+                if (conceptualDomainModel.getVersion() != null) {
+                    dataElementConceptModel.setCdVersion(conceptualDomainModel.getVersion());
+                }
+                if (conceptualDomainModel.getContextModel() != null && conceptualDomainModel.getContextModel().getName() != null) {
+                    dataElementConceptModel.setCdContextName(conceptualDomainModel.getContextModel().getName());
+                }
+            }
             return dataElementConceptModel;
         }
     }

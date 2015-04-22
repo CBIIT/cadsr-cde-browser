@@ -60,12 +60,16 @@
         <property name="propertyDAO" ref="propertyDAO"/>
         <property name="objectClassDAO" ref="objectClassDAO"/>
     </bean>
+    <bean id="conceptualDomainDAO" class="gov.nih.nci.cadsr.dao.ConceptualDomainDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
     <bean id="contextDAO" class="gov.nih.nci.cadsr.dao.ContextDAOImpl" parent="abstractDao"/>
     <bean id="csCsiDAO" class="gov.nih.nci.cadsr.dao.CsCsiDAOImpl" parent="abstractDao"/>
     <bean id="dataElementConceptDAO" class="gov.nih.nci.cadsr.dao.DataElementConceptDAOImpl" parent="abstractDao">
         <property name="propertyDAO" ref="propertyDAO"/>
         <property name="objectClassDAO" ref="objectClassDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
+        <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
     </bean>
     <bean id="dataElementDAO" class="gov.nih.nci.cadsr.dao.DataElementDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>
@@ -97,6 +101,7 @@
     <bean id="valueDomainDAO" class="gov.nih.nci.cadsr.dao.ValueDomainDAOImpl" parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+        <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
     </bean>
 
 

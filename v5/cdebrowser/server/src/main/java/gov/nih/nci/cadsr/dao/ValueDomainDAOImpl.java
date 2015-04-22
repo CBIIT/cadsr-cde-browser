@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.dao;
 
 import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
+import gov.nih.nci.cadsr.dao.model.ConceptualDomainModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +26,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
 
     private RepresentationDAO representationDAO;
     private ConceptDerivationRuleDAO conceptDerivationRuleDAO;
+    private ConceptualDomainDAO conceptualDomainDAO;
 
     @Autowired
     ValueDomainDAOImpl(DataSource dataSource) {
@@ -54,6 +56,14 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
 
     public void setConceptDerivationRuleDAO(ConceptDerivationRuleDAO conceptDerivationRuleDAO) {
         this.conceptDerivationRuleDAO = conceptDerivationRuleDAO;
+    }
+
+    public ConceptualDomainDAO getConceptualDomainDAO() {
+        return conceptualDomainDAO;
+    }
+
+    public void setConceptualDomainDAO(ConceptualDomainDAO conceptualDomainDAO) {
+        this.conceptualDomainDAO = conceptualDomainDAO;
     }
 
     public final class ValueDomainMapper extends BeanPropertyRowMapper<ValueDomainModel> {
@@ -105,6 +115,20 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             private Float cdVersion;
             private int cdPublicId;
             */
+
+            ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq(rs.getString("CD_IDSEQ"));
+            if (conceptualDomainModel != null) {
+                valueDomainModel.setCdPublicId(conceptualDomainModel.getCdId());
+                if (conceptualDomainModel.getPreferredName() != null) {
+                    valueDomainModel.setCdPrefName(conceptualDomainModel.getPreferredName());
+                }
+                if (conceptualDomainModel.getVersion() != null) {
+                    valueDomainModel.setCdVersion(conceptualDomainModel.getVersion());
+                }
+                if (conceptualDomainModel.getContextModel() != null && conceptualDomainModel.getContextModel().getName() != null) {
+                    valueDomainModel.setCdContextName(conceptualDomainModel.getContextModel().getName());
+                }
+            }
 
 
             return valueDomainModel;
