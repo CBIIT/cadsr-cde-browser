@@ -65,6 +65,7 @@
     <bean id="dataElementConceptDAO" class="gov.nih.nci.cadsr.dao.DataElementConceptDAOImpl" parent="abstractDao">
         <property name="propertyDAO" ref="propertyDAO"/>
         <property name="objectClassDAO" ref="objectClassDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
     </bean>
     <bean id="dataElementDAO" class="gov.nih.nci.cadsr.dao.DataElementDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>
