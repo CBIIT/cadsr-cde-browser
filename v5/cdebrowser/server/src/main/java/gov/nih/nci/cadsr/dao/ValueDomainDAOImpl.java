@@ -63,7 +63,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             valueDomainModel.setPreferredName(rs.getString("PREFERRED_NAME"));
             valueDomainModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
             valueDomainModel.setLongName(rs.getString("LONG_NAME"));
-            valueDomainModel.setAslName(rs.getString("ALS_NAME"));
+            valueDomainModel.setAslName(rs.getString("ASL_NAME"));
             valueDomainModel.setVersion(rs.getFloat("VERSION"));
             valueDomainModel.setDeletedInd(rs.getString("DELETED_IND"));
             valueDomainModel.setLatestVerInd(rs.getString("LATEST_VERSION_IND"));
