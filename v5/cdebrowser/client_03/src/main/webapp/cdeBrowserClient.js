@@ -1,15 +1,14 @@
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($scope, $http, $filter, ngTableParams) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($scope, $http, $filter,$location, ngTableParams) {
 
     $scope.show = [];
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
     $scope.searchResults = [];
-
+    $scope.tabsDisabled = true;
     $scope.NORMAL=0;
     $scope.BIG=1;
     $scope.ERROR=2;
-
     window.scope = $scope;
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
@@ -64,6 +63,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
         console.log("displaySelected: [" + text + "]  selNode.action(href): [" + href + "]  selNode.hover: [" + hover + "] [" + treePath +"]");
         $scope.breadCrumbs = treePath;
         $scope.resetSortOrder();
+        $location.path("/search").replace();        
+        
         //alert( "Selected: [" + text + "]\n\nNot yet implemented");
     }
 
@@ -78,6 +79,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     //CDE details
     $scope.onClickCdeDetails = function ( deIdseq )
     {
+
         console.log("onClickCdeDetails: " + deIdseq);
         $scope.getCdeDetailRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq );
 
@@ -85,6 +87,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
 
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function(serverUrl) {
+        $scope.tabsDisabled = false;
         console.log("IN getCdeDetailRestCall: " + serverUrl);
         $http.get(serverUrl).success(function (response) {
             $scope.cdeDetails =  response;
@@ -95,6 +98,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type) {
+        $scope.currentCdeTab = 0;
+        $location.path("/search").replace();        
         //$scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
         $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port +
             "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
@@ -122,6 +127,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
 
     // Basic search query to get search results //
     $scope.basicSearchServerRestCall = function (serverUrl) {
+        $scope.tabsDisabled = true;
+
         console.log("basicSearchServerRestCall: " + serverUrl );
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
@@ -151,7 +158,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
                     $scope.tableParams.reload();
                 }
                 $scope.haveSearchResults = true;
-
 
             }
             else {

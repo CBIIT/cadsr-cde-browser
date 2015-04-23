@@ -170,7 +170,6 @@
                             </tr>
                         </table>
 
-
                         <!--
                         <TD colspan=1>
                         <td align="right">
@@ -338,7 +337,18 @@
         <!-- the search results tabs and content below -->
             <div class="cdeTabs">
                 <ul class="cdeTabsUl">
-                    <li class="cdeTabsLi" ng-repeat="(tabNumber,tab) in tabs"
+<!--                     <li class="cdeTabsLi" ng-disabled="tabsEnabled" ng-repeat="(tabNumber,tab) in tabs"
+                        data-ng-mouseenter="hover = true"
+                        data-ng-mouseleave="hover = false"
+                        data-ng-class="{
+                        tabActive:   isActiveCdeTab(tabNumber),
+                        tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
+                        tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
+                        }"
+                        ng-click="tabsEnabled || changeView(tabNumber,tab)">{{tab.title}}{{tabsEnabled}}
+                    </li> -->
+                    <!-- <li class="cdeTabsLi"> -->
+                    <button class="cdeTabsLi" ng-disabled="tabsDisabled" ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-mouseenter="hover = true"
                         data-ng-mouseleave="hover = false"
                         data-ng-class="{
@@ -347,7 +357,8 @@
                         tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
                         }"
                         ng-click="changeView(tabNumber,tab)">{{tab.title}}
-                    </li>
+                    </button>   
+                    <!-- </li>                  -->
                 </ul>
             </div>
 
