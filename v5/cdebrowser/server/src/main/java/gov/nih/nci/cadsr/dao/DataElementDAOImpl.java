@@ -158,10 +158,12 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             dataElementModel.setCreatedBy(rs.getString("CREATED_BY"));
             dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
             dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
-            dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
             dataElementModel.fillPreferredQuestionText();
             dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
             dataElementModel.fillUsingContexts();
+
+            dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
+
             try {
                 dataElementModel.setValueDomainModel(getValueDomainDAO().getValueDomainByIdseq(rs.getString("VD_IDSEQ")));
             } catch (EmptyResultDataAccessException ex) {
