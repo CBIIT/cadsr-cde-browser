@@ -348,7 +348,7 @@
                         ng-click="tabsEnabled || changeView(tabNumber,tab)">{{tab.title}}{{tabsEnabled}}
                     </li> -->
                     <!-- <li class="cdeTabsLi"> -->
-                    <button class="cdeTabsLi" ng-disabled="tabsDisabled" ng-repeat="(tabNumber,tab) in tabs"
+                    <button class="cdeTabsLi" ng-disabled="tabsDisabled && tabNumber" ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-mouseenter="hover = true"
                         data-ng-mouseleave="hover = false"
                         data-ng-class="{

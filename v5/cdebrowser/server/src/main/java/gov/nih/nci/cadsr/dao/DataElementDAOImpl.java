@@ -158,12 +158,6 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             dataElementModel.setCreatedBy(rs.getString("CREATED_BY"));
             dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
             dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
-            /* need to map these members:
-            List<ReferenceDocModel> refDocs;
-            List<DesignationModel> designationModels;
-            ValueDomainModel valueDomainModel;
-            DataElementConceptModel dec;
-            ContextModel context; */
             dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
             dataElementModel.fillPreferredQuestionText();
             dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
