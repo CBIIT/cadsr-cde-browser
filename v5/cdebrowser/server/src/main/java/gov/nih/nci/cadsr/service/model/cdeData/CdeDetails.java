@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData;
 
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConcept;
+import gov.nih.nci.cadsr.service.model.cdeData.adminInfo.AdminInfo;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation.DataElementDerivation;
@@ -16,6 +17,7 @@ public class CdeDetails
     private Classifications classifications = null;
     private Usage usage = null;
     private DataElementDerivation dataElementDerivation = null;
+    private AdminInfo adminInfo = null;
 
     public DataElement getDataElement()
     {
@@ -75,5 +77,15 @@ public class CdeDetails
     public void setDataElementDerivation( DataElementDerivation dataElementDerivation )
     {
         this.dataElementDerivation = dataElementDerivation;
+    }
+
+    public AdminInfo getAdminInfo()
+    {
+        return adminInfo;
+    }
+
+    public void setAdminInfo( AdminInfo adminInfo )
+    {
+        this.adminInfo = adminInfo;
     }
 }
