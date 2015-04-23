@@ -5,6 +5,7 @@ import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.adminInfo.AdminInfo;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classification;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
@@ -87,6 +88,9 @@ public class CDEDataController
         DataElementDerivation dataElementDerivation = initDataElementDerivationTabData( dataElementModel );
         cdeDetails.setDataElementDerivation( dataElementDerivation );
 
+        // For the "Admin Info" tab
+        AdminInfo adminInfo = initAdminInfoTabData( dataElementModel );
+        cdeDetails.setAdminInfo( adminInfo );
 
         return cdeDetails;
     }
@@ -237,9 +241,21 @@ public class CDEDataController
         ObjectClass objectClass = new ObjectClass();
         dataElementConcept.setObjectClass( objectClass );
 
-        // FIXME - Need to find out where to get Object Class from dataElementModel
-        //objectClass.setPublicId( dataElementModel.);
+        if( dataElementModel.getDec() == null)
+        {
+            logger.error( "dataElementModel.getDec() == null" );
+        }
 
+        objectClass.setPublicId( dataElementModel.getDec().getPublicId() );
+
+        if(  dataElementModel.getDec().getVersion() != null)
+        {
+            objectClass.setVersion( dataElementModel.getDec().getVersion() );
+        }
+        objectClass.setLongName( dataElementModel.getDec().getLongName() );
+        objectClass.setShortName( dataElementModel.getDec().getPreferredName() );
+        objectClass.setContext( dataElementModel.getDec().getCdContextName() );
+        objectClass.setQualifier( dataElementModel.getDec().getObjClassQualifier() );
 
         /////////////////////////////////////////////////////
         // "Object Class Concepts" of the "Data Element Concept" Tab
@@ -255,9 +271,15 @@ public class CDEDataController
         // "Property" of the "Data Element Concept" Tab
         Property property = new Property();
         dataElementConcept.setProperty( property );
+/*
 
-        // FIXME - Need to find out where to get property from dataElementModel
-        //property.setPublicId( dataElementModel. );
+        property.setPublicId( dataElementModel.getDec().getProperty().getPublicId() );
+        property.setVersion( dataElementModel.getDec().getProperty().getVersion() );
+        property.setLongName( dataElementModel.getDec().getProperty().getLongName() );
+        property.setShortName( dataElementModel.getDec().getProperty().getPreferredName() );
+        property.setContext( dataElementModel.getDec().getProperty().getContext().getName() );
+        property.setQualifier( dataElementModel.getDec().getProperty().getQualifier() );
+*/
 
 
         /////////////////////////////////////////////////////
@@ -448,6 +470,34 @@ public class CDEDataController
         return dataElementDerivation;
     }
 
+    /**********************************************************************/
+    /**********************************************************************/
+    /**
+     * Initialize the Admin Info tab
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
+     */
+     private AdminInfo initAdminInfoTabData( DataElementModel dataElementModel)
+     {
+         //Just place holder test data for now
+
+         AdminInfo adminInfo = new AdminInfo();
+         // Default place holder
+         String placeHolder = "No Contact Information";
+         adminInfo.setDataElementContacts( placeHolder );
+         adminInfo.setDataElementConceptContacts( placeHolder );
+         adminInfo.setObjectClassContacts( placeHolder );
+         adminInfo.setPropertyContacts( placeHolder );
+         adminInfo.setValueDomainContacts( placeHolder );
+         adminInfo.setRepresentationTermContacts( placeHolder );
+         adminInfo.setValueMeaningContacts( placeHolder );
+         adminInfo.setConceptContacts( placeHolder );
+         adminInfo.setClassificationSchemeContacts( placeHolder );
+         adminInfo.setContextContacts( placeHolder );
+
+         return adminInfo;
+     }
 
     /***************************************************************/
     /**
