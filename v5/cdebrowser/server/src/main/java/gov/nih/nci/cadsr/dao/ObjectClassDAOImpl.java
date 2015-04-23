@@ -34,7 +34,7 @@ public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectC
     @Override
     public ObjectClassModel getObjectClassByIdseq(String ocIdseq) {
         String sql = "SELECT * FROM SBREXT.OBJECT_CLASSES_EXT WHERE OC_IDSEQ = ?";
-        ObjectClassModel objectClassModel = jdbcTemplate.queryForObject(sql, new Object[] { ocIdseq }, new ObjectClassMapper());
+        ObjectClassModel objectClassModel = jdbcTemplate.queryForObject(sql, new Object[] { ocIdseq }, new ObjectClassMapper(ObjectClassModel.class));
         return objectClassModel;
     }
 
@@ -49,17 +49,18 @@ public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectC
 
 
     public final class ObjectClassMapper extends BeanPropertyRowMapper<ObjectClassModel> {
+        public ObjectClassMapper(Class<ObjectClassModel> mappedClass) {
+            super(mappedClass);
+        }
 
         public ObjectClassModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            ObjectClassModel objectClassModel = new ObjectClassModel();
+            ObjectClassModel objectClassModel = super.mapRow(rs, rowNum);
 
-            objectClassModel.setPreferredName(rs.getString("PREFERRED_NAME"));
-            objectClassModel.setLongName(rs.getString("LONG_NAME"));
-            objectClassModel.setVersion(rs.getFloat("VERSION"));
+//            objectClassModel.setPreferredName(rs.getString("PREFERRED_NAME"));
+//            objectClassModel.setLongName(rs.getString("LONG_NAME"));
+//            objectClassModel.setVersion(rs.getFloat("VERSION"));
             objectClassModel.setPublicId(rs.getInt("OC_ID"));
             objectClassModel.setIdseq(rs.getString("OC_IDSEQ"));
-//            objectClassModel.setName(rs.getString(""));  these are actually part of DataElementConcept
-//            objectClassModel.setQualifier(rs.getString(""));
 
             objectClassModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             return objectClassModel;

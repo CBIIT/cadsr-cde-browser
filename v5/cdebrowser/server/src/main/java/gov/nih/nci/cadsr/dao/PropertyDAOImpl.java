@@ -33,7 +33,7 @@ public class PropertyDAOImpl extends AbstractDAOOperations implements PropertyDA
 
     public PropertyModel getPropertyByIdseq(String propIdseq) {
         String sql = "SELECT * FROM SBREXT.PROPERTIES_EXT WHERE PROP_IDSEQ = ?";
-        PropertyModel propertyModel = jdbcTemplate.queryForObject(sql, new Object[] { propIdseq }, new PropertyMapper());
+        PropertyModel propertyModel = jdbcTemplate.queryForObject(sql, new Object[] { propIdseq }, new PropertyMapper(PropertyModel.class));
         return propertyModel;
     }
 
@@ -48,12 +48,16 @@ public class PropertyDAOImpl extends AbstractDAOOperations implements PropertyDA
 
 
     public final class PropertyMapper extends BeanPropertyRowMapper<PropertyModel> {
-        public PropertyModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            PropertyModel propertyModel = new PropertyModel();
+        public PropertyMapper(Class<PropertyModel> mappedClass) {
+            super(mappedClass);
+        }
 
-            propertyModel.setPreferredName(rs.getString("PREFERRED_NAME"));
-            propertyModel.setLongName(rs.getString("LONG_NAME"));
-            propertyModel.setVersion(rs.getFloat("VERSION"));
+        public PropertyModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+            PropertyModel propertyModel = super.mapRow(rs, rowNum);
+
+//            propertyModel.setPreferredName(rs.getString("PREFERRED_NAME"));
+//            propertyModel.setLongName(rs.getString("LONG_NAME"));
+//            propertyModel.setVersion(rs.getFloat("VERSION"));
             propertyModel.setPublicId(rs.getInt("PROP_ID"));
 //            propertyModel.setName(rs.getString(""));
 //            propertyModel.setQualifier(rs.getString(""));

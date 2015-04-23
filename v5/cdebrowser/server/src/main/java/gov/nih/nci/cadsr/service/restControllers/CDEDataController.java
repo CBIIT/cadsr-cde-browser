@@ -73,20 +73,20 @@ public class CDEDataController
         cdeDetails.setDataElementConcept( dataElementConcept );
 
         // For the "Value Domain" Tab
-        ValueDomain valueDomain = initValueDomainTabData( dataElementModel );
-        cdeDetails.setValueDomain( valueDomain );
+        ValueDomain valueDomain = initValueDomainTabData(dataElementModel);
+        cdeDetails.setValueDomain(valueDomain);
 
         // For the "Classifications" Tab
-        Classifications classifications = initClassificationsTabData( dataElementModel );
-        cdeDetails.setClassifications( classifications );
+        Classifications classifications = initClassificationsTabData(dataElementModel);
+        cdeDetails.setClassifications(classifications);
 
         // For the "Usage" tab
-        Usage usage = initUsageTabData( dataElementModel );
-        cdeDetails.setUsage( usage );
+        Usage usage = initUsageTabData(dataElementModel);
+        cdeDetails.setUsage(usage);
 
         // For the "Data Elements Derivation" tab
-        DataElementDerivation dataElementDerivation = initDataElementDerivationTabData( dataElementModel );
-        cdeDetails.setDataElementDerivation( dataElementDerivation );
+        DataElementDerivation dataElementDerivation = initDataElementDerivationTabData(dataElementModel);
+        cdeDetails.setDataElementDerivation(dataElementDerivation);
 
         // For the "Admin Info" tab
         AdminInfo adminInfo = initAdminInfoTabData( dataElementModel );
@@ -788,7 +788,7 @@ public class CDEDataController
         dataElementConceptModel.setCdContextName( "DataElementConceptModel CdContextName" );
         dataElementConceptModel.setCdVersion( ( float ) 12.34 );
         dataElementConceptModel.setCdPublicId( 123 );
-        dataElementConceptModel.setObjClassPublicId( "DataElementConceptModel ObjClassPublicId" );
+        dataElementConceptModel.setObjClassPublicId( 123 );
         dataElementConceptModel.setProperty( buildTestPropertyModel() );
         dataElementConceptModel.setObjectClassModel( buildTestObjectClassModel() );
 

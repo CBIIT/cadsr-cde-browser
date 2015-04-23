@@ -96,7 +96,7 @@ public class PropertyModel extends BaseModel {
                 ", publicId=" + publicId +
                 ", name='" + name + '\'' +
                 ", qualifier='" + qualifier + '\'' +
-                '}';
+                "}PropertyModel";
     }
 
     @Override
