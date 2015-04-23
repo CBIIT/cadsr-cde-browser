@@ -3,7 +3,7 @@ package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
 /**
  * Created by lernermh on 4/22/15.
  */
-public class ReferenceDocument
+public class ValueDomainReferenceDocument
 {
     private String documentName;
     private String documentType;

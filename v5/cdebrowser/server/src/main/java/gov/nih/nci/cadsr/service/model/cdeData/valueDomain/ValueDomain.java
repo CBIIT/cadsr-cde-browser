@@ -12,7 +12,7 @@ public class ValueDomain
     private Representation representation = null;
     private List<RepresentationConcept> representationConcepts = null;
     private List<PermissibleValue> permissibleValues = null;
-    private List<ReferenceDocument> referenceDocuments = null;
+    private List<ValueDomainReferenceDocument> referenceDocuments = null;
 
     public SelectedDataElement getSelectedDataElement()
     {
@@ -74,12 +74,12 @@ public class ValueDomain
         this.permissibleValues = permissibleValues;
     }
 
-    public List<ReferenceDocument> getReferenceDocuments()
+    public List<ValueDomainReferenceDocument> getValueDomainReferenceDocuments()
     {
         return referenceDocuments;
     }
 
-    public void setReferenceDocuments( List<ReferenceDocument> referenceDocuments )
+    public void setValueDomainReferenceDocuments( List<ValueDomainReferenceDocument> referenceDocuments )
     {
         this.referenceDocuments = referenceDocuments;
     }

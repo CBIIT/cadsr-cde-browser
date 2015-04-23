@@ -82,7 +82,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
             dataElementConceptModel.setPreferredName(rs.getString("PREFERRED_NAME"));
             dataElementConceptModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
             dataElementConceptModel.setLongName(rs.getString("LONG_NAME"));
-            dataElementConceptModel.setAslName(rs.getString("ALS_NAME"));
+            dataElementConceptModel.setAslName(rs.getString("ASL_NAME"));
             dataElementConceptModel.setVersion(rs.getFloat("VERSION"));
             dataElementConceptModel.setDeletedInd(rs.getString("DELETED_IND"));
             dataElementConceptModel.setLatestVerInd(rs.getString("LATEST_VERSION_IND"));
