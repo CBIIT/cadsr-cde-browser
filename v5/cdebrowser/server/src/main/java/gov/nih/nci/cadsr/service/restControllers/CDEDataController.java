@@ -271,7 +271,6 @@ public class CDEDataController
         // "Property" of the "Data Element Concept" Tab
         Property property = new Property();
         dataElementConcept.setProperty( property );
-/*
 
         property.setPublicId( dataElementModel.getDec().getProperty().getPublicId() );
         property.setVersion( dataElementModel.getDec().getProperty().getVersion() );
@@ -279,7 +278,6 @@ public class CDEDataController
         property.setShortName( dataElementModel.getDec().getProperty().getPreferredName() );
         property.setContext( dataElementModel.getDec().getProperty().getContext().getName() );
         property.setQualifier( dataElementModel.getDec().getProperty().getQualifier() );
-*/
 
 
         /////////////////////////////////////////////////////
