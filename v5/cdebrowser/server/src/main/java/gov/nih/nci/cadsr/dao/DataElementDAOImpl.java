@@ -170,11 +170,11 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 logger.warn("No Value Domain found for Data Element with idseq: " + deIdseq + "  the vdIdseq is " + rs.getString("VD_IDSEQ"));
             }
 
-            try {
+//            try {
                 dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(rs.getString("DEC_IDSEQ")));
-            } catch (EmptyResultDataAccessException ex) {
-                logger.warn("No DataElementConcept found for Data Element with idseq: " + deIdseq);
-            }
+//            } catch (EmptyResultDataAccessException ex) {
+//                logger.warn("No DataElementConcept found for Data Element with idseq: " + deIdseq + "  the DEC_IDSEQ is " + rs.getString("DEC_IDSEQ"));
+//            }
             dataElementModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             if (dataElementModel.getContext() != null && dataElementModel.getContext().getName()!= null) {
                 dataElementModel.setContextName(dataElementModel.getContext().getName());

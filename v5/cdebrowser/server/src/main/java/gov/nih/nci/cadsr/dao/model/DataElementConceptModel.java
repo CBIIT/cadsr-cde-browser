@@ -10,31 +10,31 @@ public class DataElementConceptModel extends BaseModel {
     private String aslName;
     private Float version;
     private String deletedInd;
-    private String latestVerInd;
+    private String latestVerInd;//LATEST_VERSION_IND
     private int publicId;
-    private String origin;
+    private String origin;//ORIGIN
     private String idseq;
     private String decIdseq;
     private String cdIdseq;
-    private String proplName;
-    private String oclName;
-    private String objClassQualifier;
-    private String propertyQualifier;
-    private String changeNote;
-    private String objClassPrefName;
-    private String objClassContextName;
+    private String proplName; //PROPL_NAME
+    private String oclName; // Object Class
+    private String objClassQualifier; // Object Class
+    private String propertyQualifier; //PROPERTY_QUALIFIER
+    private String changeNote; //CHANGE_NOTE
+    private String objClassPrefName; // Object Class
+    private String objClassContextName; // Object Class
     private String propertyPrefName;
     private String propertyContextName;
     private Float propertyVersion;
-    private Float objClassVersion;
+    private Float objClassVersion; // Object Class
     private String conteName;
     private String cdPrefName;
     private String cdContextName;
     private Float cdVersion;
     private int cdPublicId;
-    private String objClassPublicId;
+    private int objClassPublicId; // Object Class
     private PropertyModel property;
-    private ObjectClassModel objectClassModel;
+    private ObjectClassModel objectClassModel; // Object Class
 
     public DataElementConceptModel() {
     }
@@ -319,12 +319,12 @@ public class DataElementConceptModel extends BaseModel {
         this.cdPublicId = cdPublicId;
     }
 
-    public String getObjClassPublicId()
+    public int getObjClassPublicId()
     {
         return objClassPublicId;
     }
 
-    public void setObjClassPublicId( String objClassPublicId )
+    public void setObjClassPublicId( int objClassPublicId )
     {
         this.objClassPublicId = objClassPublicId;
     }
@@ -358,6 +358,7 @@ public class DataElementConceptModel extends BaseModel {
 
         if (getPublicId() != that.getPublicId()) return false;
         if (getCdPublicId() != that.getCdPublicId()) return false;
+        if (getObjClassPublicId() != that.getObjClassPublicId()) return false;
         if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
             return false;
         if (getPreferredDefinition() != null ? !getPreferredDefinition().equals(that.getPreferredDefinition()) : that.getPreferredDefinition() != null)
@@ -404,8 +405,6 @@ public class DataElementConceptModel extends BaseModel {
             return false;
         if (getCdVersion() != null ? !getCdVersion().equals(that.getCdVersion()) : that.getCdVersion() != null)
             return false;
-        if (getObjClassPublicId() != null ? !getObjClassPublicId().equals(that.getObjClassPublicId()) : that.getObjClassPublicId() != null)
-            return false;
         if (getProperty() != null ? !getProperty().equals(that.getProperty()) : that.getProperty() != null)
             return false;
         return !(getObjectClassModel() != null ? !getObjectClassModel().equals(that.getObjectClassModel()) : that.getObjectClassModel() != null);
@@ -442,7 +441,7 @@ public class DataElementConceptModel extends BaseModel {
         result = 31 * result + (getCdContextName() != null ? getCdContextName().hashCode() : 0);
         result = 31 * result + (getCdVersion() != null ? getCdVersion().hashCode() : 0);
         result = 31 * result + getCdPublicId();
-        result = 31 * result + (getObjClassPublicId() != null ? getObjClassPublicId().hashCode() : 0);
+        result = 31 * result + getObjClassPublicId();
         result = 31 * result + (getProperty() != null ? getProperty().hashCode() : 0);
         result = 31 * result + (getObjectClassModel() != null ? getObjectClassModel().hashCode() : 0);
         return result;
@@ -479,7 +478,7 @@ public class DataElementConceptModel extends BaseModel {
                 ", cdContextName='" + cdContextName + '\'' +
                 ", cdVersion=" + cdVersion +
                 ", cdPublicId=" + cdPublicId +
-                ", objClassPublicId='" + objClassPublicId + '\'' +
+                ", objClassPublicId=" + objClassPublicId +
                 ", property=" + property +
                 ", objectClassModel=" + objectClassModel +
                 '}';
