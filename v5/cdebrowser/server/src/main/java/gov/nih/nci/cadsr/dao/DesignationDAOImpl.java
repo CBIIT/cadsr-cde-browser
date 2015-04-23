@@ -31,7 +31,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
     @Override
     public List<DesignationModel> getDesignationModelsByAcIdseq(String acIdseq) {
 
-        String sql = "SELECT * FROM DESIGNATIONS WHERE AC_IDSEQ = ?";
+        String sql = "SELECT * FROM SBR.DESIGNATIONS WHERE AC_IDSEQ = ?";
         List<DesignationModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper());
         return dataElementModel;
     }
@@ -39,7 +39,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
     @Override
     public List<DesignationModel> getUsedByDesignationModels(String acIdseq) {
 
-        String sql = "SELECT * FROM DESIGNATIONS WHERE AC_IDSEQ = ? and DETL_NAME = 'USED_BY'";
+        String sql = "SELECT * FROM SBR.DESIGNATIONS WHERE AC_IDSEQ = ? and DETL_NAME = 'USED_BY'";
         List<DesignationModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper());
         return dataElementModel;
     }
@@ -56,6 +56,13 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
 
         public DesignationModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             DesignationModel designationModel = new DesignationModel();
+
+            designationModel.setName(rs.getString("NAME"));
+            designationModel.setType(rs.getString("DETL_NAME")); // duplicate
+            designationModel.setDesigIDSeq(rs.getString("DESIG_IDSEQ"));
+            designationModel.setLang(rs.getString("LAE_NAME"));
+            designationModel.setDetlName("DETL_NAME");
+
             designationModel.setContex(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             return designationModel;
         }
