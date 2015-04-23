@@ -136,7 +136,7 @@ public class CDEDataController
         dataElementDetails.setWorkflowStatus( dataElementModel.getAslName() );
         dataElementDetails.setOrigin( dataElementModel.getOrigin() );
         dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
-        dataElementDetails.setDirectLink( "STILL NEED TO TRACK DOWN Direct Link" );
+        //dataElementDetails.setDirectLink( "STILL NEED TO TRACK DOWN Direct Link" );
 
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "Data Element" Tab
@@ -178,8 +178,8 @@ public class CDEDataController
         // List to populate for client side
         List<AlternateName> alternateNames = new ArrayList<>();
         dataElement.setAlternateNames( alternateNames );
-        List<DesignationModel> designationModels =   dataElementModel.getDesignationModels();
-        for( DesignationModel designationModel: designationModels)
+        List<DesignationModel> designationModels = dataElementModel.getDesignationModels();
+        for( DesignationModel designationModel : designationModels )
         {
             AlternateName alternateName = new AlternateName();
             alternateName.setName( designationModel.getName() );
@@ -198,16 +198,14 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
-        List<OtherVersion> otherVersions = new ArrayList<>(  );
+        List<OtherVersion> otherVersions = new ArrayList<>();
         dataElement.setOtherVersions( otherVersions );
 
         // FIXME - Need to find out where to get Data otherVersions from dataElementModel
 
 
-
         return dataElement;
     }
-
 
 
     /**********************************************************************/
@@ -315,7 +313,7 @@ public class CDEDataController
         valueDomainDetails.setValueDomainType( dataElementModel.getValueDomainModel().getVdType() );
         valueDomainDetails.setConceptualDomainPublicId( dataElementModel.getValueDomainModel().getCdPublicId() );
         valueDomainDetails.setConceptualDomainShortName( dataElementModel.getValueDomainModel().getCdPrefName() );
-        valueDomainDetails.setConceptualDomainContextName(  dataElementModel.getValueDomainModel().getCdContextName());
+        valueDomainDetails.setConceptualDomainContextName( dataElementModel.getValueDomainModel().getCdContextName() );
         valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
 
         /////////////////////////////////////////////////////
@@ -330,7 +328,7 @@ public class CDEDataController
         valueDomain.setRepresentation( representation );
 
         representation.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
-        if( dataElementModel.getValueDomainModel().getVersion() != null)
+        if( dataElementModel.getValueDomainModel().getVersion() != null )
         {
             representation.setVersion( dataElementModel.getValueDomainModel().getVersion() );
         }
@@ -352,11 +350,16 @@ public class CDEDataController
         valueDomain.setPermissibleValues( permissibleValues );
         // FIXME - Need to find out where to get Permissible Value List from dataElementModel
 
+        /////////////////////////////////////////////////////
+        // "Reference Documents" of the "value Domain" Tab
+        List<ValueDomainReferenceDocument> valueDomainReferenceDocuments = new ArrayList<>();
+        valueDomain.setValueDomainReferenceDocuments( valueDomainReferenceDocuments );
+
+        // FIXME - Need to find out where to get Reference Documents List from dataElementModel
+        //dataElementModel.getValueDomainModel().
 
         return valueDomain;
     }
-
-
 
 
     /**********************************************************************/
