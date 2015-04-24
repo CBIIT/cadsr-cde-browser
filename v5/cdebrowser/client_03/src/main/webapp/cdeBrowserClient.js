@@ -16,7 +16,32 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
         {id: 1, name: "All of the words"},
         {id: 2, name: "At least one of the words"}
     ];
-
+    $scope.tabs = [
+        {
+            title: 'Search Results',
+            view: 'search'
+        }, {
+            title: 'Data Element',
+            view: 'dataElement'
+        }, {
+            title: 'Data Element Concept',
+            view: 'dataElementConcept'
+        }, {
+            title: 'Value Domain',
+            view: 'valueDomain'
+        }, {
+            title: 'Classifications',
+            view: 'classifications'
+        }, {
+            title: 'Usage',
+            view: 'usage'
+        }, {
+            title: 'Data Element Derivation',
+            view: 'dataElementDerivation'
+        }, {
+            title: 'Admin Info',
+            view: 'adminInfo'
+        }];
     // start checkboxes for table //
         $scope.checkboxes = { 'checked': false, items: {} };
         // watch for check all checkbox
@@ -86,14 +111,36 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
 
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function(serverUrl) {
-        $scope.tabsDisabled = false;
         console.log("IN getCdeDetailRestCall: " + serverUrl);
         $http.get(serverUrl).success(function (response) {
+            $scope.tabsDisabled = false;
+            $scope.changeView(1,$scope.tabs[1]);
+            window.scope = $scope;
             $scope.cdeDetails =  response;
             console.log("IN getCdeDetailRestCall  results: " + JSON.stringify( response) );
         });
     };
 
+    $scope.isActiveCdeTab = function (cdeTabNumber) {
+        /*
+         console.log("isActiveTab  $scope.currentTab: " + $scope.currentTab);
+         console.log("isActiveTab  tabUrl: " + tabUrl);
+         console.log("tab_" + tabUrl + " == " + $scope.currentTab );
+         */
+        return cdeTabNumber == $scope.currentCdeTab;
+        //return true;
+    };
+
+    $scope.changeView = function (tabnumber,tab) {
+        $location.path(tab.view);
+        $scope.currentCdeTab = tabnumber;
+        console.log("View: " + tab.view);
+    }
+
+
+    //Set to first tab - CDE Search tab
+    $location.path("search");
+    $scope.currentCdeTab =0;
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type) {

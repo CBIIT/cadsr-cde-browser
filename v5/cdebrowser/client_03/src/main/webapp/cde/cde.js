@@ -53,54 +53,10 @@ angular.module("cde", [
 }]);
 
 angular.module('cde').controller('cdeCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    $scope.tabs = [
-        {
-            title: 'Search Results',
-            view: 'search'
-        }, {
-            title: 'Data Element',
-            view: 'dataElement'
-        }, {
-            title: 'Data Element Concept',
-            view: 'dataElementConcept'
-        }, {
-            title: 'Value Domain',
-            view: 'valueDomain'
-        }, {
-            title: 'Classifications',
-            view: 'classifications'
-        }, {
-            title: 'Usage',
-            view: 'usage'
-        }, {
-            title: 'Data Element Derivation',
-            view: 'dataElementDerivation'
-        }, {
-            title: 'Admin Info',
-            view: 'adminInfo'
-        }];
 
 
-    $scope.isActiveCdeTab = function (cdeTabNumber) {
-        /*
-         console.log("isActiveTab  $scope.currentTab: " + $scope.currentTab);
-         console.log("isActiveTab  tabUrl: " + tabUrl);
-         console.log("tab_" + tabUrl + " == " + $scope.currentTab );
-         */
-        return cdeTabNumber == $scope.currentCdeTab;
-        //return true;
-    };
-
-    $scope.changeView = function (tabnumber,tab) {
-        $location.path(tab.view);
-        $scope.currentCdeTab = tabnumber;
-        console.log("View: " + tab.view);
-    }
 
 
-    //Set to first tab - CDE Search tab
-    $location.path("search");
-    $scope.currentCdeTab =0;
 
 
 
