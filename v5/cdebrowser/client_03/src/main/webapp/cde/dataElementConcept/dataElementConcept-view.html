@@ -1,45 +1,24 @@
-
 <br/>
-
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="2">Data Element Concept</td>
+        <td colspan="2">Selected Element Details</td>
     </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Public ID:</td>
-        <td class="dataElementValue">2003586</td>
+    <tr class="dataElementViewTableTr"
+        ng-repeat="(description,value) in cdeDetails.dataElementConcept.selectedDataElement">
+        <td class="dataElementDescription">{{description}}:</td>
+        <td class="dataElementValue">{{value}}</td>
     </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">6.0 </td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Long Name:</td>
-        <td class="dataElementValue">Access Route of Administration Text Code</td>
-    </tr>  
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue">ACCESS_RTE_TXT_CD</td>
-    </tr>  
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue">Route</td>
-    </tr>  
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Definition:</td>
-        <td class="dataElementValue">A text code or name to represent an access route for the administration of agents or substances.</td>
-    </tr>  
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Workflow Status:</td>
-        <td class="dataElementValue">RELEASED</td>
-    </tr>                        
 </table>
 <br/>
+
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <td colspan="2">Data Element Concept Details</td>
     </tr>
+    <!--
+
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">2012668</td>
@@ -87,8 +66,44 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Origin:</td>
         <td class="dataElementValue"></td>
-    </tr>    
-</table><br />
+    </tr>
+    -->
+
+<br/>
+
+    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="cdeDetailsSubHeading">
+            <td colspan="2">Object Class</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Public ID:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementConcept.objectClass.publicId}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Version:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementConcept.objectClass.version}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Long Name:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementConcept.objectClass.longName}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Short Name:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementConcept.objectClass.shortName}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Context:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementConcept.objectClass.context}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Qualifier:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementConcept.objectClass.qualifier}}</td>
+        </tr>
+    </table>
+    <Br/>
+
+
+</table><br/>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <td>Object Class</td>
@@ -97,28 +112,30 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">2635254</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
         <td class="dataElementValue">1.0</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
         <td class="dataElementValue">Access</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
         <td class="dataElementValue">C25396</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Context:</td>
         <td class="dataElementValue">caBIG</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Qualifier:</td>
         <td class="dataElementValue"></td>
-    </tr>       
-</table><br />
+    </tr>
+</table><br/>
+
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <td colspan="6">Object Class Concepts</td>
@@ -130,16 +147,16 @@
         <td class="dataElementDescription">Definition Source</td>
         <td class="dataElementDescription">EVS Source</td>
         <td class="dataElementDescription">Primary</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementValue">Access</td>
         <td class="dataElementValue"><a href="">C25396</a></td>
         <td class="dataElementValue">2203568</td>
         <td class="dataElementValue">NCI</td>
-        <td class="dataElementValue">NCI_CONCEPT_CODE </td>
+        <td class="dataElementValue">NCI_CONCEPT_CODE</td>
         <td class="dataElementValue">Yes</td>
-    </tr>          
-</table><br />
+    </tr>
+</table><br/>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <td colspan="2">Property</td>
@@ -147,29 +164,29 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">2452898</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
         <td class="dataElementValue">1.0</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
         <td class="dataElementValue">Route</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
         <td class="dataElementValue">C25169</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Context:</td>
         <td class="dataElementValue">caBIG</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Qualifier:</td>
         <td class="dataElementValue"></td>
-    </tr>       
-         
-</table><br />
+    </tr>
+
+</table><br/>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <td colspan="6">Property Concepts</td>
@@ -181,15 +198,14 @@
         <td class="dataElementDescription">Definition Source</td>
         <td class="dataElementDescription">EVS Source</td>
         <td class="dataElementDescription">Primary</td>
-    </tr>       
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementValue">Route</td>
         <td class="dataElementValue"><a href="">C25169</a></td>
         <td class="dataElementValue">2203782</td>
         <td class="dataElementValue">NCI</td>
-        <td class="dataElementValue">NCI_CONCEPT_CODE </td>
+        <td class="dataElementValue">NCI_CONCEPT_CODE</td>
         <td class="dataElementValue">Yes</td>
-    </tr>          
-</table><br />
+    </tr>
+</table><br/>
 
-    
