@@ -112,12 +112,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function(serverUrl) {
         console.log("IN getCdeDetailRestCall: " + serverUrl);
+        $scope.searchResultsMessage = "Searching";
+        $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
             $scope.tabsDisabled = false;
             $scope.changeView(1,$scope.tabs[1]);
             window.scope = $scope;
             $scope.cdeDetails =  response;
-            console.log("IN getCdeDetailRestCall  results: " + JSON.stringify( response) );
+            
+        $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
+        $scope.bigSearchResultsMessageClass = false;
+        console.log("IN getCdeDetailRestCall  results: " + JSON.stringify( response) );
         });
     };
 
