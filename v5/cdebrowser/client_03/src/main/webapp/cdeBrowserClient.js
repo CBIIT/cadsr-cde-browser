@@ -64,7 +64,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
         $scope.breadCrumbs = treePath;
         $scope.resetSortOrder();
         $location.path("/search").replace();        
-        
+
         //alert( "Selected: [" + text + "]\n\nNot yet implemented");
     }
 
@@ -79,7 +79,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     //CDE details
     $scope.onClickCdeDetails = function ( deIdseq )
     {
-
         console.log("onClickCdeDetails: " + deIdseq);
         $scope.getCdeDetailRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq );
 
