@@ -8,31 +8,31 @@
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
-        <td class="dataElementValue">2003586</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">6.0 </td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.version}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
-        <td class="dataElementValue">Access Route of Administration Text Code</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.longName}}</td>
     </tr>  
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue">ACCESS_RTE_TXT_CD</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.shortName}}</td>
     </tr>  
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue">Route</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.preferredQuestionText</td>
     </tr>  
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Definition:</td>
-        <td class="dataElementValue">A text code or name to represent an access route for the administration of agents or substances.</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.definition}}</td>
     </tr>  
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Workflow Status:</td>
-        <td class="dataElementValue">Released</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.workflowStatus}}</td>
     </tr>                             
 </table>
 <br/>
@@ -41,16 +41,16 @@
         <td colspan="7">Form Usage</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Protocol Number</td>
-        <td class="dataElementDescription">Lead Org</td>
-        <td class="dataElementDescription">Form Name</td>
-        <td class="dataElementDescription">Question Name</td>
-        <td class="dataElementDescription">Form Usage Type</td>
-        <td class="dataElementDescription">Public Id</td>
-        <td class="dataElementDescription">Version</td>
+        <td class="dataElementHeading">Protocol Number</td>
+        <td class="dataElementHeading">Lead Org</td>
+        <td class="dataElementHeading">Form Name</td>
+        <td class="dataElementHeading">Question Name</td>
+        <td class="dataElementHeading">Form Usage Type</td>
+        <td class="dataElementHeading">Public Id</td>
+        <td class="dataElementHeading">Version</td>
 
     </tr>
-    <tr class="dataElementViewTableTr">
+    <tr class="dataElementViewTableTr" ng-repeat="form in cdeDetails.usage.formUsages">
         <td class="dataElementValue">10262</td>
         <td class="dataElementValue">N/A</td>
         <td class="dataElementValue">Concomitant Medications</td>
