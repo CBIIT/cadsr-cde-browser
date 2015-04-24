@@ -45,18 +45,26 @@
             <td class="dataElementHeading">Context</td>
             <td class="dataElementHeading">Language</td>
         </tr>
-        <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.referenceDocuments">
-            <td class="dataElementValue">{{refDoc.documentName}}</td>
-            <td class="dataElementValue">{{refDoc.documentType}}</td>
-            <td class="dataElementValue">{{refDoc.documentText}}</td>
-            <td class="dataElementValue">{{refDoc.context}}</td>
+        <tr class="dataElementViewTableTr" data-ng-repeat="altName in cdeDetails.dataElement.alternateNames">
+            <td class="dataElementValue">{{altName.name}}</td>
+            <td class="dataElementValue">{{altName.type}}</td>
+            <td class="dataElementValue">{{altName.context}}</td>
+            <td class="dataElementValue">{{altName.language}}</td>
         </tr>
     </table><Br />
+
+<!--
+
     <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
         <tr class="cdeDetailsSubHeading">
             <td>Other Versions</td>
         </tr>
     </table><br />
+
+-->
+
+<!--
+
     <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
         <tr>
             <td class="dataElementHeading">Version</td>
@@ -91,4 +99,5 @@
         </tr>        
     </table>    
 
+-->
 
