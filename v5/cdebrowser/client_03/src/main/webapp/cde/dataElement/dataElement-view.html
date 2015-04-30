@@ -1,25 +1,67 @@
-<!--
+<br>
 
-    <input class="testButton" type="button" value="Get CDE data" ng-click="getCdeData()"/>
-
--->
-<br/>
-
-
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="5">Data Element Details</td>
-    </tr>
-    <tr class="dataElementViewTableTr" ng-repeat="(description,value) in cdeDetails.dataElement.dataElementDetails">
-        <td class="dataElementDescription">{{description}}:</td>
-        <td class="dataElementValue">{{value}}</td>
+        <th colspan="2" align="left">Data Element Details</th>
     </tr>
 </table>
-<br/>
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="5">Reference Documents</td>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Public ID:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.publicId}}</td>
     </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Version:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.version}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Long Name:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.longName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Short Name:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.shortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Preferred Question Text:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.preferredQuestionText}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Definition:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.definition}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.valueDomain}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Data Element Concept:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.dataElementConcept}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Context:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.context}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Origin:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.origin}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Registration Status:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
+    </tr>
+</table>
+
+<br/>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="5" align="left">Reference Documents</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr>
         <td class="dataElementHeading">Document Name</td>
         <td class="dataElementHeading">Document Type</td>
@@ -34,36 +76,72 @@
         <td class="dataElementValue">{{refDoc.context}}</td>
         <td class="dataElementValue">{{refDoc.url}}</td>
     </tr>
-    </table><br />
-    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-        <tr class="cdeDetailsSubHeading">
-            <td colspan="4">Alternate Names</td>
-        </tr>
-        <tr>
-            <td class="dataElementHeading">Name</td>
-            <td class="dataElementHeading">Type</td>
-            <td class="dataElementHeading">Context</td>
-            <td class="dataElementHeading">Language</td>
-        </tr>
-        <tr class="dataElementViewTableTr" data-ng-repeat="altName in cdeDetails.dataElement.alternateNames">
-            <td class="dataElementValue">{{altName.name}}</td>
-            <td class="dataElementValue">{{altName.type}}</td>
-            <td class="dataElementValue">{{altName.context}}</td>
-            <td class="dataElementValue">{{altName.language}}</td>
-        </tr>
-    </table><Br />
+</table><br/>
+
 
 <!--
 
-    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-        <tr class="cdeDetailsSubHeading">
-            <td>Other Versions</td>
-        </tr>
-    </table><br />
+<table cellpadding="0" cellspacing="0" width="80%" align="center" >
+    <tr>
+        <td class="OraHeaderSubSub" width="100%">Alternate Names and Definitions</td>
+    </tr>
+    <tr>
+        <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
+    </tr>
+</table>
 
 -->
 
-<!--
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="4" align="left">Alternate Names and Definitions</th>
+    </tr>
+</table>
+
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+    <tr class="cdeDetailsSubSubHeading">
+        <td colspan="4">Alternate Names</td>
+    </tr>
+    <tr>
+        <td class="dataElementHeading">Name</td>
+        <td class="dataElementHeading">Type</td>
+        <td class="dataElementHeading">Context</td>
+        <td class="dataElementHeading">Language</td>
+    </tr>
+    <tr class="dataElementViewTableTr"
+        data-ng-repeat="altName in cdeDetails.dataElement.alternateNames">
+        <td class="dataElementValue">{{altName.name}}</td>
+        <td class="dataElementValue">{{altName.type}}</td>
+        <td class="dataElementValue">{{altName.context}}</td>
+        <td class="dataElementValue">{{altName.language}}</td>
+    </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+    <tr class="cdeDetailsSubSubHeading" border="0">
+        <td colspan="3">Alternate Definitions</td>
+    </tr>
+    <tr border="0">
+        <td class="dataElementHeading">Name</td>
+        <td class="dataElementHeading">Type</td>
+        <td class="dataElementHeading">Context</td>
+    </tr>
+    <tr class="dataElementViewTableTr" border="0">
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    </tr>
+</table>
+<Br/>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th align="left">Other Versions</th>
+    </tr>
+
 
     <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
         <tr>
@@ -74,30 +152,13 @@
             <td class="dataElementHeading">Context</td>
         </tr>
         <tr class="dataElementViewTableTr">
-            <td class="dataElementValue">3.0</td>
-            <td class="dataElementValue">Route Type</td>
-            <td class="dataElementValue">Retired Phased Out</td>
-            <td class="dataElementValue">Standard</td>
-            <td class="dataElementValue">CCR</td>
+            <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+            <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+            <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+            <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+            <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
         </tr>
-        <tr>
-            <td class="dataElementSubHeading" colspan="5">Classifications</td>
-        </tr>
-        <tr>
-            <td class="dataElementHeading">CS* Long Name</td>
-            <td class="dataElementHeading">CS* Definition</td>
-            <td class="dataElementHeading">CS* Public ID</td>
-            <td class="dataElementHeading">CSI* Name</td>
-            <td class="dataElementHeading">CSI* Type</td>            
-        </tr>
-        <tr class="dataElementViewTableTr">
-            <td class="dataElementValue">C3D Domain</td>
-            <td class="dataElementValue">Cancer Centralized Clinical Database</td>
-            <td class="dataElementValue">2008601</td>
-            <td class="dataElementValue">CTMSv3.02</td>
-            <td class="dataElementValue">C3D</td>
-        </tr>        
-    </table>    
 
--->
+    </table>
 
+</table><Br/>

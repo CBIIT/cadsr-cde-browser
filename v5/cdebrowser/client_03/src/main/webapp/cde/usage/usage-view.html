@@ -1,11 +1,12 @@
 
-<br/>
-
+<br>
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Selected Data Element</th>
+    </tr>
+</table>
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="2">Selected Data Element</td>
-    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.publicId}}</td>
@@ -17,29 +18,33 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
         <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.longName}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
         <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.shortName}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.preferredQuestionText</td>
-    </tr>  
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.preferredQuestionText}}</td>
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Definition:</td>
         <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.definition}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Workflow Status:</td>
         <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.workflowStatus}}</td>
-    </tr>                             
-</table>
-<br/>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="7">Form Usage</td>
     </tr>
+</table>
+<br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="7" align="left">Form Usage</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">Protocol Number</td>
         <td class="dataElementHeading">Lead Org</td>
@@ -48,15 +53,16 @@
         <td class="dataElementHeading">Form Usage Type</td>
         <td class="dataElementHeading">Public Id</td>
         <td class="dataElementHeading">Version</td>
-
     </tr>
-    <tr class="dataElementViewTableTr" ng-repeat="form in cdeDetails.usage.formUsages">
-        <td class="dataElementValue">10262</td>
-        <td class="dataElementValue">N/A</td>
-        <td class="dataElementValue">Concomitant Medications</td>
-        <td class="dataElementValue">Route</td>
-        <td class="dataElementValue">CRF</td>
-        <td class="dataElementValue"><a href="">4516331</a></td>
-        <td class="dataElementValue">1</td>
+    <tr class="dataElementViewTableTr" >
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue"><a href="">NOT YET PROVIDED FROM SERVER</a></td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
     </tr>  
-</table><br />
+</table>
+
+<br>

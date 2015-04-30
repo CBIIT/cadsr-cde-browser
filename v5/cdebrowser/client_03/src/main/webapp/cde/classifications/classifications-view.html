@@ -1,11 +1,12 @@
+<br>
 
-<br/>
-
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Selected Data Element</th>
+    </tr>
+</table>
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="2">Selected Data Element</td>
-    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.publicId}}</td>
@@ -17,50 +18,62 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.longName}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.shortName}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Preferred Question Text:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.preferredQuestionText}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Definition:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.definition}}</td>
-    </tr>  
+    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription"> Workflow Status:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.workflowStatus}}</td>
-    </tr>                             
+    </tr>
 </table>
-<br/>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+<br>
+
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="6">Classifications</td>
+        <td colspan="6" align="left">Classifications
+            <br>
+            <font size="-2" color="#336699">*CS:Classification Scheme&nbsp;&nbsp; CSI:Classification Scheme Item</font>
+        </td>
+    </tr>
+</table>
+
+<table class="dataElementViewTableWithScroller" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <th class="dataElementHeading">CS* Long Name</th>
+        <th class="dataElementHeading">CS* Definition</th>
+        <th class="dataElementHeading">CS* Public ID/Version</th>
+        <th class="dataElementHeading">CSI* Name</th>
+        <th class="dataElementHeading">CSI* Type</th>
+        <th class="dataElementHeading">CSI* Public ID/Version</th>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementHeading">CS* Long Name</td>
-        <td class="dataElementHeading">CS* Definition</td>
-        <td class="dataElementHeading">CS* Public ID/Version</td>
-        <td class="dataElementHeading">CSI* Name</td>
-        <td class="dataElementHeading">CSI* Type</td>
-        <td class="dataElementHeading">CSI* Public ID/Version</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
     </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">C3D Domain</td>
-        <td class="dataElementValue">Cancer Centralized Clinical Database</td>
-        <td class="dataElementValue">2008601v1.0</td>
-        <td class="dataElementValue">CTMSv3.02</td>
-        <td class="dataElementValue">C3D</td>
-        <td class="dataElementValue">2811686v1.0</td>
-    </tr>  
-</table><br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+</table><br>
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="7">Classifications Scheme Reference Documents</td>
+        <th colspan="7" align="left">Classifications Scheme Reference Documents</th>
     </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">CS* Long Name</td>
         <td class="dataElementHeading">CS* Version</td>
@@ -71,13 +84,23 @@
         <td class="dataElementHeading">Attachments</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementValue" colspan="7">There are no reference documents for the classifications.</td>
-    </tr>    
-</table><br />   
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="6">Classification Scheme Item Reference Document</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
     </tr>
+</table><br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="6" align="left">Classification Scheme Item Reference Document</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">CSI* Name</td>
         <td class="dataElementHeading">Document Name</td>
@@ -87,6 +110,10 @@
         <td class="dataElementHeading">Attachments</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementValue" colspan="6">There are no reference documents for the classifications.</td>
-    </tr>    
-</table><br />     
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    </tr>
+</table><br>

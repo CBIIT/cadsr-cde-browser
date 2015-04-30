@@ -104,6 +104,12 @@
     background-color: #999966;
 }
 
+.dataElementViewTableWithScroller {
+    width: 90%;
+    background-color: #999966;
+    overflow-y: scroll;
+}
+
 .dataElementViewTableTr {
     FONT-SIZE: 10pt;
     BACKGROUND: #f7f7e7;
@@ -147,12 +153,30 @@
     color: #000000
 }
 
+
+.cdeDetailsSubHeadingTable {
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 14pt;
+    color: #336699;
+    width: 90%;
+    border: none;
+    font-weight: bold
+}
+
 .cdeDetailsSubHeading {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 14pt;
     color: #336699;
     background-color: #fff;
+    border: none;
+    font-weight: bold
+}
 
+.cdeDetailsSubSubHeading {
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 10pt;
+    color: #336699;
+    background-color: #f7f7e7;
     border: none;
     font-weight: bold
 }

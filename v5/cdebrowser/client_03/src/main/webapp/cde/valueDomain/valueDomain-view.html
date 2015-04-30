@@ -1,11 +1,11 @@
-
-<br/>
-
+<br>
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Selected Data Element</th>
+    </tr>
+</table>
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="2">Selected Data Element</td>
-    </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.publicId}}</td>
@@ -35,11 +35,17 @@
         <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.workflowStatus}}</td>
     </tr>                        
 </table>
-<br/>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+<br>
+
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="2">Value Domain Details</td>
+        <th colspan="2" align="left">Value Domain Details</th>
     </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.publicId}}</td>
@@ -124,21 +130,29 @@
         <td class="dataElementDescription">Origin</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.origin}}</td>
     </tr> 
+</table><br>
 
-</table><br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td>Value Domain Concepts</td>
+        <th colspan="2" align="left">Value Domain Concepts</th>
     </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainConcepts}}</td>
     </tr>
-</table><br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+</table><br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="2">Representation</td>
+        <th colspan="2" align="left">Representation</th>
     </tr>
-    <tr class="dataElementViewTableTr">
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.representation.publicId}}</td>
     </tr>
@@ -158,31 +172,40 @@
         <td class="dataElementDescription">Context:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.representation.context}}</td>
     </tr>      
-</table><br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+</table><br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="6">Representation Concepts</td>
+        <th colspan="6" align="left">Representation Concepts</th>
     </tr>
-    <tr class="dataElementViewTableTr">
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">Concept Name</td>
         <td class="dataElementHeading">Concept Code</td>
         <td class="dataElementHeading">Public ID</td>
-        <td class="dataElementHeading">Definition Source</td>
+        <td class="dataElementHeading">Definition</td>
         <td class="dataElementHeading">EVS Source</td>
         <td class="dataElementHeading">Primary</td>
-    </tr>       
+    </tr>
+    <!--
     <tr class="dataElementViewTableTr" ng-repeat="representation in cdeDetails.valueDomain.representationConcepts">
-        <td class="dataElementValue">Condition</td>
-        <td class="dataElementValue"><a href="">C25457</a></td>
-        <td class="dataElementValue">2202899</td>
-        <td class="dataElementValue">NCI</td>
-        <td class="dataElementValue">NCI_CONCEPT_CODE </td>
-        <td class="dataElementValue">No</td>
+    -->
+    <tr class="dataElementViewTableTr" >
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
     </tr>          
-</table><br />
+</table><br>
+
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="8">Permissible Values</td>
+        <th colspan="8" align="left">Permissible Values</th>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">PV</td>
@@ -193,22 +216,29 @@
         <td class="dataElementHeading">PV End Date</td>
         <td class="dataElementHeading">VM Public ID</td>
         <td class="dataElementHeading">VM Version</td>
-    </tr>       
-    <tr class="dataElementViewTableTr" ng-repeat="p_value in representation in cdeDetails.valueDomain.permissibleValues">
-        <td class="dataElementValue">1</td>
-        <td class="dataElementValue"><a href="">Single Episode</a></td>
-        <td class="dataElementValue"><a href="">C48440:C75539(Primary)</a></td>
-        <td class="dataElementValue">Not accompanied by another or others; exclusive of anyone or anything else. : A noteworthy happening that is distinctive in a series of related events.</td>
-        <td class="dataElementValue">2003-09-30</td>
-        <td class="dataElementValue"></td>
-        <td class="dataElementValue">2567092</td>
-        <td class="dataElementValue">1.0</td>
-    </tr>          
-</table><br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <td colspan="5">Reference Documents</td>
     </tr>
+    <!--
+    <tr class="dataElementViewTableTr" ng-repeat="p_value in representation in cdeDetails.valueDomain.permissibleValues">
+    -->
+    <tr class="dataElementViewTableTr" >
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    </tr>
+</table><br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="5" align="left">Reference Documents</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">Document Name</td>
         <td class="dataElementHeading">Document Type</td>
@@ -216,8 +246,14 @@
         <td class="dataElementHeading">Context</td>
         <td class="dataElementHeading">URL</td>
     </tr>
+    <!--
     <tr class="dataElementViewTableTr" ng-repeat="doc in cdeDetails.valueDomain.valueDomainReferenceDocuments">
-        <td class="dataElementValue" colspan="5">There are no reference documents for the value domain.</td>
-    </tr>    
-</table><br />
-    
+    -->
+    <tr class="dataElementViewTableTr" >
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    </tr>
+</table><br>
