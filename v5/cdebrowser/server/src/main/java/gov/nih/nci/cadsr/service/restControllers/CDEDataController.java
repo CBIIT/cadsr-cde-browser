@@ -95,6 +95,7 @@ public class CDEDataController
         return cdeDetails;
     }
 
+
     /**********************************************************************/
     /**********************************************************************/
     /**
@@ -140,7 +141,7 @@ public class CDEDataController
         dataElementDetails.setWorkflowStatus( dataElementModel.getAslName() );
         dataElementDetails.setOrigin( dataElementModel.getOrigin() );
         dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
-        //dataElementDetails.setDirectLink( "STILL NEED TO TRACK DOWN Direct Link" );
+        dataElementDetails.setDirectLink( "STILL NEED TO Create rest service and Link" );
 
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "Data Element" Tab
@@ -204,7 +205,6 @@ public class CDEDataController
         // "Other Versions" of the "Data Element" Tab
         List<OtherVersion> otherVersions = new ArrayList<>();
         dataElement.setOtherVersions( otherVersions );
-
         // FIXME - Need to find out where to get Data otherVersions from dataElementModel
 
 
@@ -231,9 +231,7 @@ public class CDEDataController
         // "Data Element Concept Details" of the "Data Element Concept" Tab
         DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
         dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
-
         // FIXME - Need to find out where to get Data Element Concept Details from dataElementModel
-        // dataElementConceptDetails.setPublicId( dataElementModel. );
 
 
         /////////////////////////////////////////////////////
@@ -263,7 +261,6 @@ public class CDEDataController
 
         List<ObjectClassConcept> objectClassConcepts = new ArrayList<>();
         dataElementConcept.setObjectClassConcepts( objectClassConcepts );
-
         // FIXME - Need to find out where to get List of Object Class Concepts from dataElementModel
 
 
@@ -339,7 +336,7 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "value Domain Concepts" of the "value Domain" Tab
         //Just a string
-        valueDomain.setValueDomainConcepts( "STILL NEED TO TRACK DOWN ValueDomainConcepts" );
+        valueDomain.setValueDomainConcepts( "From Server - STILL NEED TO TRACK DOWN ValueDomainConcepts" );
 
 
         /////////////////////////////////////////////////////
@@ -362,7 +359,7 @@ public class CDEDataController
         List<RepresentationConcept> representationConcepts = new ArrayList<>();
         valueDomain.setRepresentationConcepts( representationConcepts );
         // FIXME - Need to find out where to get Representation Concepts from dataElementModel
-        //dataElementModel.getValueDomainModel().getConceptDerivationRuleModel().
+
 
         /////////////////////////////////////////////////////
         // "Permissible Values" of the "value Domain" Tab
@@ -370,13 +367,12 @@ public class CDEDataController
         valueDomain.setPermissibleValues( permissibleValues );
         // FIXME - Need to find out where to get Permissible Value List from dataElementModel
 
+
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "value Domain" Tab
         List<ValueDomainReferenceDocument> valueDomainReferenceDocuments = new ArrayList<>();
         valueDomain.setValueDomainReferenceDocuments( valueDomainReferenceDocuments );
-
         // FIXME - Need to find out where to get Reference Documents List from dataElementModel
-        //dataElementModel.getValueDomainModel().
 
         return valueDomain;
     }
@@ -457,12 +453,7 @@ public class CDEDataController
     private DataElementDerivation initDataElementDerivationTabData( DataElementModel dataElementModel )
     {
         DataElementDerivation dataElementDerivation = new DataElementDerivation();
-
-        // "Selected Data Element" of the "Data Elements Derivation" Tab
         dataElementDerivation.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
-
-
-        /////////////////////////////////////////////////////
         // FIXME - Need to find out where to get dataElementDerivationDetails from dataElementModel
 
         return dataElementDerivation;
@@ -482,7 +473,7 @@ public class CDEDataController
 
          AdminInfo adminInfo = new AdminInfo();
          // Default place holder
-         String placeHolder = "No Contact Information";
+         String placeHolder = "From Server - STILL NEED TO TRACK DOWN";
          adminInfo.setDataElementContacts( placeHolder );
          adminInfo.setDataElementConceptContacts( placeHolder );
          adminInfo.setObjectClassContacts( placeHolder );
