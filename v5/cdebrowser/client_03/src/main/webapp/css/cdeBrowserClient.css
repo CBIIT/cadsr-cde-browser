@@ -3,16 +3,11 @@ body {
     color: #222;
     padding: 0;
     margin: 0;
-
-    /*
-    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-    */
+    font-family: Arial, Helvetica, Geneva, sans-serif;
 
     font-weight: normal;
     font-style: normal;
     line-height: 1;
-    position: relative;
-
 }
 
 ul {
@@ -28,25 +23,29 @@ a:link {
 a:visited {
     color: #18344d;
 }
+
 a:active {
     color: #1A4660;
 }
+
 a:hover {
     color: #1A4660;
-
 }
 
-.hdrBG { /* for the cell that contains the required cancer.gov header */
+
+/* for the cell that contains the required cancer.gov header */
+.hdrBG {
   background-color: #a90101; /* constant: red */
 }
 
-
+/* The initial loading message or error message  */
 .bigMessage {
     font-size: 28px;
     font-weight: bold;
     background-color: #fff;
     color: #18344d;
-
+    position: fixed;
+    top: 156px;
 }
 
 .normMessage {
@@ -54,6 +53,8 @@ a:hover {
     font-weight: normal;
     background-color: #fff;
     color: #18344d;
+    position: fixed;
+    top: 156px;
 }
 
 .errorMessage {
@@ -61,10 +62,12 @@ a:hover {
     font-weight: normal;
     color: #800;
     background-color: #fff;
+    position: fixed;
+    top: 156px;
 }
 
+
 .topButtons {
-    background-color: #fff;
     color: #000;
     height: 90px;
 }
@@ -73,34 +76,32 @@ a:hover {
 .buttonCell {
     background-color: #fff;
     color: #a52a2a;
+    font-size: 10pt;
+
 }
 
 .toolLinks:link, .toolLinks:visited, .toolLinks:active, .toolLinks:hover{
     color: #663300;
 }
 
-#resultsDisplay {
-    background-color: #fff;
+/* Search results pane to the right of the Tree menu pane  */
+.resultsDisplay {
     color: #000;
     padding-left:15px;
 
     /*  Top of display pane  */
+    margin-top: 47px;  /* needs to match .treeMenu */
 
-    margin-top: 29px;  /* needs to match .treeMenu */
-    /*
-    margin-bottom: 29px;
-    */
     overflow-x: scroll ;
     overflow-y: scroll;
     resize: horizontal;
 }
 
-
-/* The tree for each tab  (with in treeWindow class)  */
+/* The tree for each tab  (within treeWindow class)  */
 .treeMenu {
     float: left;
     /* top of tree menu pane  */
-    margin-top: 29px;
+    margin-top: 47px;  /* needs to match .resultsDisplay */
     margin-left: 6px;
 
     font-size:13px;
@@ -123,15 +124,11 @@ a:hover {
 }
 
 
-/*  **********************************  */
-
+/* The search query input and options */
 .queryTypeRadioButtons {
     font-size: 11pt;
     color: #18344d;
     float: left;
-/*
-    width: 220px;
-*/
     width: 220px;
     padding-top: 4px;
     margin-top: 16px;
@@ -144,20 +141,15 @@ a:hover {
     margin-top: 16px;
 }
 
-#basicSearchQuery {
+.basicSearchQuery {
     width: 70%;
 }
 
-#basicSearchField {
-    float: right;
+.basicSearchField {
     margin-right: 10px;
     width: 80px;
 }
 
 .cdeTabs{
     background-color: #336699;
-}
-
-#rightHeader {
-padding-left:18%;
 }

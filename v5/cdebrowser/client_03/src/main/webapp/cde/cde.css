@@ -10,15 +10,6 @@
     padding-right: 5px;
 }
 
-#searchDisplay {
-    background-color: #fff;
-    color: #000;
-    padding-left: 15px;
-
-    /*  push the top of the search results table down, or the top paging buttons will not show  */
-    padding-top: 20px;
-}
-
 .cdeTabsUl {
     list-style: none;
     padding: 0;
@@ -50,12 +41,6 @@
     background:#bbb;
 }
 
-#mainView {
-    border: 1px solid black;
-    clear: both;
-    padding: 0 1em;
-}
-
 .active {
     background-color: #FFF;
     color: #000;
@@ -75,7 +60,7 @@
 }
 
 .tabNormal {
-    background-color: #3E6a84;
+    background-color: #336699;
     color: #ffffff;
 }
 

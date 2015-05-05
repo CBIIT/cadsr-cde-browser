@@ -1,82 +1,10 @@
-.ng-hide-add, .ng-hide-remove {
-    /* ensure visibility during the transition */
-    display: block !important; /* yes, important */
-}
 
-.cssFade {
-    transition: 0.35s linear all;
-    opacity: 1;
-}
-.cssFade.ng-hide {
-    opacity: 0;
-}
-
-/* ===================== */
-
-.tabCaptionWrapper {
-    background: #1A4660;
-    color: #ffffd0;
-
-    /*
-        position: fixed;
-        width: 100%;
-        height: 13px;
-        margin-top: 30px;
-    */
-
-    padding-left: 16px;
-    padding-top: 2px;
-    padding-bottom: 6px;
-
-    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-    font-size: 11pt;
-    font-weight: normal;
-    font-style: italic;
-
-
-}
-.tabCaption {
-    font-size: 12px;
-}
-/* Mouse over and not selected */
-.tabHover {
-    background: #325e78;
-    color: #ffffef;
-
-}
-
-/*  The selected tab  */
-.tabActive {
-    background: #1A4660;
-    color: #FFFFFF;
-}
-
-.tabNormal {
-    background-color: #3E6a84;
-    color: #ffffff;
-}
-
-.topButtons {
-    color: #ffffff;
-}
-
-/* The tree menus under the tabs  */
-/*.treeWindow {
-
-    background: #00ff77;
-    color: #FFFFFF;
+/*  The top of the Program Area tabs  */
+.topTabPos {
     position: fixed;
-    top: 128px;
-    left: 2px;
-    width: 98%;
-
-}*/
-
-#topTabPos {
-    position: fixed;
-    top: 148px;
+    top: 124px; /* if this is changed, you will also need to change .resultsDisplay & .treeMenu */
     left: 3px;
-    width: 100%; /* FIXME make this dynamically match the size of the tree menu frame */
+    width: 100%;
 
     /*
     This puts the tabs behind the search buttons.
@@ -86,6 +14,8 @@
     */
 }
 
+
+/*  The Program Area tabs  */
 #top_tabs {
     /* Tabs text font size  */
     font-size: 11pt;

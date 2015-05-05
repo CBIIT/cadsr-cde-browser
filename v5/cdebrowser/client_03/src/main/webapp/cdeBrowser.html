@@ -12,211 +12,210 @@
     <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
 
     <link rel="stylesheet" href="cde/cde.css">
-
 </head>
 <body>
-
 <!-- =============================================================================== -->
-<div class="topButtons" id="top-header-right">
+
+<!-- ************ Top Red header with NCI logo ************ -->
+<div class="topButtons">
     <table class="hdrBG" border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tbody>
         <tr>
             <th scope="row" align="left">
-                <a href="http://www.cancer.gov/"><img alt="National Cancer Institute" src="images/nci.jpg" border="0"
-                                                      height="37" width="283"></a>
+                <a href="http://www.cancer.gov/">
+                    <img alt="National Cancer Institute" src="images/nci.jpg" border="0"
+                         height="37" width="283">
+                </a>
             </th>
             <td>
                 &nbsp;
             </td>
             <td align="right">
-                <a href="http://www.cancer.gov/"><img alt="U.S. National Institutes of Health | www.cancer.gov"
-                                                      src="images/nih.jpg" border="0" height="37" width="295"></a>
+                <a href="http://www.cancer.gov/">
+                    <img alt="U.S. National Institutes of Health | www.cancer.gov"
+                         src="images/nih.jpg" border="0" height="37" width="295">
+                </a>
             </td>
         </tr>
-        </tbody>
     </table>
-    <TABLE valign="top" width=100%; Cellpadding=0 Cellspacing=0 border=0>
+
+
+    <!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
+    <table valign="top"  width=100%; Cellpadding=0 Cellspacing=0>
         <tr>
-            <td id="top-cadsrTd">
-                <div top-cadsr id="top-header-left">
-                    <a top_image id="top_image"
-                       href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
-                       target="_blank">
-                        <img src="icons/iconSet0/caDSR_logo.png">
-                    </a>
-                </div>
+
+            <!-- **** caDSR logo **** -->
+            <td>
+                <a top_image id="top_image"
+                   href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
+                   target="_blank">
+                    <img src="icons/iconSet0/caDSR_logo.png">
+                </a>
             </td>
 
 
-            <td id="rightHeader">
-                <!-- Logo and four buttons -->
-                <table border=0>
-                    <TR>
-                        <!-- large CDE Browser Logo  -->
-                        <td valign="top" align="left" nowrap>
+            <!-- **** CDE Browser logo and four buttons **** -->
+            <td>
+                <table width=100% >
+                    <tr>
+                        <!-- ** large CDE Browser Logo **  -->
+                        <td valign="top" align="right" nowrap>
                             <img src="icons/iconSet0/cdeBrowserLogo.png" border="0" alt="cdeBrowserLogo">
                         </td>
 
-
-                        <!--  Four buttons  -->
+                        <!-- ** Four round buttons **  -->
                         <td align=right valign=top colspan=3 align="right" nowrap>
-                            <TABLE Cellpadding=3 Cellspacing=0 border=0 id="headerButtons">
-                                <TR>
-                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a
-                                                href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
+                            <table Cellpadding=3 Cellspacing=0 id="headerButtons" bgcolor="#db7093">
+                                <tr>
+                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                                        <a href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
                                             <img
                                                     id="shoppingButton"
-                                                    src="icons/buttonIconSet0/brown/circle_shopping_cart.png"
+                                                    src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
                                                     alt="CDE Cart"
                                                     />
                                         </a>
                                         <br>
-                                        &nbsp;CDE &nbsp;Cart
-                                    </TD>
-                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a
-                                                href="/CDEBrowser/" target="_top">
+                                        <span> &nbsp;CDE&nbsp;Cart</span>
+                                    </td>
+                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                                        <a href="/CDEBrowser/" target="_top">
                                             <img
                                                     id="homeButton"
-                                                    src="icons/buttonIconSet0/brown/circle_home.png"
+                                                    src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
                                                     alt="Home"
                                                     />
                                         </a>
                                         <br>
                                         &nbsp;Home&nbsp;
-                                    </TD>
+                                    </td>
 
-                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a
-                                                href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
-                                                target="_blank">
+                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                                        <a href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
+                                           target="_blank">
                                             <img id="formButton"
-                                                 src="icons/buttonIconSet0/brown/circle_form.png"
+                                                 src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
                                                  alt="FormBuilder"
                                                     />
                                         </a>
                                         <br>
                                         &nbsp;FormBuilder&nbsp;
-                                    </TD>
+                                    </td>
 
-                                    <TD class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a
-                                                HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
-                                                target="_blank">
+                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                                        <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                                           target="_blank">
                                             <img id="helpButton"
-                                                 src="icons/buttonIconSet0/brown/circle_help.png"
+                                                 src="icons/buttonIconSet0/brown/75_percent/circle_help.png"
                                                  alt="Task Help"
                                                     />
                                         </a>
                                         <br>
                                         &nbsp;Help&nbsp;
-                                    </TD>
-                                </TR>
-                            </TABLE>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                         <!--  End Four buttons  -->
-
 
                     </tr>
                     <tr>
 
-                        <TABLE align="right" Cellpadding=6 Cellspacing=1 border=0>
+
+                        <!-- ************ Third row at top - Seven links:  ************ -->
+                        <!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
+
+                        <table align="right" Cellpadding=6 Cellspacing=1 >
                             <tr>
-                                <td valign="bottom" align="center" height="10" nowrap><span
-                                        style="font-size: 9pt; font-family: Arial">
-               <a class="toolLinks" href="http://cadsradmin.nci.nih.gov" target="_blank">Admin Tool&nbsp;</a> </span>
+                                <td valign="bottom" align="center" height="10" nowrap>
+                                    <span style="font-size: 9pt; font-family: Arial">
+                                        <a class="toolLinks" href="http://cadsradmin.nci.nih.gov" target="_blank">
+                                            Admin Tool
+                                        </a>&nbsp;
+                                    </span>
                                 </td>
 
-                                <td align="center" valign="bottom" height="10" nowrap><span
-                                        style="font-size: 9pt; font-family: Arial">
-                <a class="toolLinks" href="https://cdecurate.nci.nih.gov" target="_blank">
-                    Curation Tool&nbsp;</a></span>
-                                </td>
-                                <td align="center" valign="bottom" height="10" nowrap><span
-                                        style="font-size: 9pt; font-family: Arial">
-                <a class="toolLinks" href="http://ncim.nci.nih.gov/ncimbrowser" target="_blank">
-                    NCI Metathesaurus&nbsp;</a></span>
-                                </td>
-                                <td align="center" valign="bottom" height="10" nowrap><span
-                                        style="font-size: 9pt; font-family: Arial">
-                <a class="toolLinks" href="http://ncit.nci.nih.gov/ncitbrowser/start.jsf" target="_blank">
-                    NCI Terminology Server&nbsp;</a></span>
-                                </td>
-                                <td align="center" valign="bottom" height="10" nowrap><span
-                                        style="font-size: 9pt; font-family: Arial">
-                <a class="toolLinks" href="https://cadsrsentinel.nci.nih.gov" target="_blank">
-                    Sentinel Tool&nbsp;</a></span>
-                                </td>
-                                <td align="center" valign="bottom" height="10" nowrap><span
-                                        style="font-size: 9pt; font-family: Arial">
-                <a class="toolLinks" href="http://umlmodelbrowser.nci.nih.gov" target="_blank">
-                    UML Model Browser&nbsp;</a></span>
+                                <td align="center" valign="bottom" height="10" nowrap>
+                                    <span style="font-size: 9pt; font-family: Arial">
+                                        <a class="toolLinks" href="https://cdecurate.nci.nih.gov" target="_blank">
+                                            Curation Tool
+                                        </a>&nbsp;
+                                    </span>
                                 </td>
 
-                                <td height="10" valign="bottom" nowrap><span
-                                        style="font-size: 10.0pt; font-family: Arial">
-                &nbsp;&nbsp;<A class="toolLinks"
-                               HREF="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+4.0.4+Release+Notes"
-                               target="_blank">
-                                    What's new</a>&nbsp;&nbsp;</span>
-                                </td>
-                                <td height="10" valign="bottom" align="right" nowrap><span
-                                        style="font-size: 10.0pt; font-family: Arial">
-                <A class="toolLinks" HREF="https://wiki.nci.nih.gov/x/AbH9AQ" target="_blank">
-                    Available Downloads<sup><font color="red"><b>New!</b></font></sup></a>&nbsp;&nbsp;</span>
+                                <td align="center" valign="bottom" height="10" nowrap>
+                                    <span style="font-size: 9pt; font-family: Arial">
+                                        <a class="toolLinks" href="http://ncim.nci.nih.gov/ncimbrowser" target="_blank">
+                                            NCI Metathesaurus
+                                        </a>&nbsp;
+                                    </span>
                                 </td>
 
+                                <td align="center" valign="bottom" height="10" nowrap>
+                                    <span style="font-size: 9pt; font-family: Arial">
+                                        <a class="toolLinks" href="http://ncit.nci.nih.gov/ncitbrowser/start.jsf"
+                                           target="_blank">
+                                            NCI Terminology Server
+                                        </a>&nbsp;
+                                    </span>
+                                </td>
+
+                                <td align="center" valign="bottom" height="10" nowrap>
+                                    <span style="font-size: 9pt; font-family: Arial">
+                                        <a class="toolLinks" href="https://cadsrsentinel.nci.nih.gov" target="_blank">
+                                            Sentinel Tool
+                                        </a>&nbsp;
+                                    </span>
+                                </td>
+
+                                <td height="10" valign="bottom" nowrap>
+                                    <span style="font-size: 10.0pt; font-family: Arial">
+                                        <a class="toolLinks"
+                                           href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+4.0.5+Release+Notes"
+                                           target="_blank">
+                                            What's new
+                                        </a>&nbsp;
+                                    </span>
+                                </td>
+
+                                <td height="10" valign="bottom" align="right" nowrap>
+                                    <span style="font-size: 10.0pt; font-family: Arial">
+                                        <a class="toolLinks" href="https://wiki.nci.nih.gov/x/AbH9AQ" target="_blank">
+                                            Available Downloads
+                                        </a>&nbsp;
+                                    </span>
+                                </td>
                             </tr>
                         </table>
-
-                        <!--
-                        <TD colspan=1>
-                        <td align="right">
-                            Tools:
-
-                            <select id="ddlViewBy">
-                                <option value="1">Admin Tool</option>
-                                <option value="2">Curation Tool</option>
-                                <option value="3">NCI Metathesaurus</option>
-                                <option value="3">NCI Terminology Server</option>
-                                <option value="3">Sentinel Tool</option>
-                                <option value="3">UML Model Browser</option>
-                                <option value="3">Available Downloads</option>
-                            </select>
-                        </td>
-                        </TD>
--->
+                        <!-- End of Seven links-->
                     </tr>
                 </table>
-                <!-- End Logo and four buttons -->
+
             </td>
         </tr>
     </table>
 </div>
 
-<!-- =============================================================================== -->
+<!-- ********************************************************************** -->
+<!-- ********************* Start of AngularJS control ********************* -->
+<!-- ********************************************************************** -->
 
-<div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" ng-cloak class="ng-cloak">
+<div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" data-ng-cloak class="data-ng-cloak">
 
-    <!--  Status message at top  -->
+    <!-- ************ Status message at top ************ -->
     <div data-ng-class="{
              normMessage: messageClass == NORMAL,
              bigMessage: messageClass == BIG,
              errorMessage: messageClass == ERROR
              }">
-        <br><br><br>
-        <span ng-bind-html-unsafe="waitMessage">{{waitMessage}}</span>
-
+        <span data-ng-bind-html-unsafe="waitMessage">{{waitMessage}}</span>
     </div>
 
-
-    <!-- The tabs across the top -->
-    <div id="topTabPos">
+    <!-- ************ Program Area The tabs across the top  ************ -->
+    <div class="topTabPos">
         <ul>
             <!--
                 Just getting the parent top level nodes for the top tabs  nodeNumber is counter,
-                node is the actual node, we just need the text for the tabs
+                node is the actual node, we just need the text for the tabs.
             -->
             <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
 
@@ -224,56 +223,53 @@
                     data-ng-mouseenter="hover = true"
                     data-ng-mouseleave="hover = false"
                     data-ng-class="{
-                        tabActive:   isActiveTab(nodeNumber),
+                        tabActive: isActiveTab(nodeNumber),
                         tabHover: (! isActiveTab(nodeNumber)) &&  hover,
-                        tabNormal:   (! isActiveTab(nodeNumber)) &&  (! hover )
+                        tabNormal: (! isActiveTab(nodeNumber)) &&  (! hover )
                         }"
                     data-ng-click="onClickTab(nodeNumber)">
                     &nbsp;{{node.text}}&nbsp;
                 </li>
-
             </div>
         </ul>
     </div>
-    <Br/>
-    <!-- tree menu(s) for each tab -->
-    <div id="tabWrapper">
+    <br>
 
-        <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
-        <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
 
-            <div class="treeMenu" data-ng-show=show[nodeNumber]
-                 data-ng-style="resizeHeight()"
-                 resize
-                 notifier="notifyServiceOnChange(params)"
-                    >
+    <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
+    <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
+    <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
 
-                <div class="tabCaptionWrapper cssFade" data-ng-show=show[nodeNumber]>
-                    <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
-                        <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
-                    </div>
+        <div class="treeMenu" data-ng-show=show[nodeNumber]
+             data-ng-style="resizeHeight()"
+             resize
+             notifier="notifyServiceOnChange(params)"
+                >
+
+            <div class="tabCaptionWrapper cssFade" data-ng-show=show[nodeNumber]>
+                <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+                    <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
                 </div>
+            </div>
 
-                <div class="cssFade" data-ng-show=show[nodeNumber]
-                     data-cdebrowser-treeview="true"
-                     data-tree-id="tree"
-                     data-tree-model="contextListMaster[nodeNumber].children"
-                     data-node-action="href"
-                     data-node-childType="childType"
-                     data-node-isParent="isParent"
-                     data-node-type="type"
-                     data-node-label="text"
-                     data-node-hover="hover"
-                     data-node-children="children">
-                </div>
+            <div class="cssFade" data-ng-show=show[nodeNumber]
+                 data-cdebrowser-treeview="true"
+                 data-tree-id="tree"
+                 data-tree-model="contextListMaster[nodeNumber].children"
+                 data-node-action="href"
+                 data-node-childType="childType"
+                 data-node-isParent="isParent"
+                 data-node-type="type"
+                 data-node-label="text"
+                 data-node-hover="hover"
+                 data-node-children="children">
             </div>
         </div>
     </div>
 
     <!-- =============================================================================== -->
-    <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
-    <div id="resultsDisplay" ng-controller="cdeCtrl" ng-cloak class="ng-cloak" data-ng-show="initComplete"
+    <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" data-ng-show="initComplete"
          data-ng-style="resizeHeight()"
          resize
          notifier="notifyServiceOnChange(params)">
@@ -296,48 +292,47 @@
 
         <!-- Search field drop down, text input, search & clear button  -->
         <div class="searchInput">
-            <input id="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
+            <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
 
-            <select id="basicSearchField"
+            <select class="basicSearchField"
                     data-ng-model="queryField"
                     data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
             </select>
-            <br>
 
-            <button id="searchButton"
-                    data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
+            <br>
+            <button data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
                 Search
             </button>
-            <button id="clearSearchQueryButton" data-ng-click="basicSearchQuery=''">
+            <button data-ng-click="basicSearchQuery=''">
                 Clear
             </button>
         </div>
 
         <hr>
-        <span
-                data-ng-class="{
+        <span  data-ng-bind-html-unsafe="searchResultsMessage"  data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
              normSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
             {{searchResultsMessage}}
         </span>
 
-        <div ng-bind-html-unsafe="statusMessage">
+        <div data-ng-bind-html-unsafe="statusMessage">
             {{statusMessage}}
         </div>
 
         <div class="breadCrumbs">
-            <span ng-show="breadCrumbs">
-                <span ng-repeat="b in breadCrumbs">
-                    {{b}}<span ng-show="!$last"> >></span>
+            <span data-ng-show="breadCrumbs">
+                <span data-ng-repeat="b in breadCrumbs">
+                    {{b}}<span data-ng-show="!$last"> >></span>
                 </span><br/>
             </span>
         </div>
 
         <!-- the search results tabs and content below -->
-            <div class="cdeTabs">
-                <ul class="cdeTabsUl">
-<!--                     <li class="cdeTabsLi" ng-disabled="tabsEnabled" ng-repeat="(tabNumber,tab) in tabs"
+        <div class="cdeTabs">
+            <ul class="cdeTabsUl">
+                <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
+                        data-ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-mouseenter="hover = true"
                         data-ng-mouseleave="hover = false"
                         data-ng-class="{
@@ -345,28 +340,16 @@
                         tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
                         tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
                         }"
-                        ng-click="tabsEnabled || changeView(tabNumber,tab)">{{tab.title}}{{tabsEnabled}}
-                    </li> -->
-                    <!-- <li class="cdeTabsLi"> -->
-                    <button class="cdeTabsLi" ng-disabled="tabsDisabled && tabNumber" ng-repeat="(tabNumber,tab) in tabs"
-                        data-ng-mouseenter="hover = true"
-                        data-ng-mouseleave="hover = false"
-                        data-ng-class="{
-                        tabActive:   isActiveCdeTab(tabNumber),
-                        tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
-                        tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
-                        }"
-                        ng-click="changeView(tabNumber,tab)">{{tab.title}}
-                    </button>   
-                    <!-- </li>                  -->
-                </ul>
-            </div>
+                        data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
+                </button>
+            </ul>
+        </div>
 
 
-            <!-- The search tab views ========================================================== -->
-            <div class="cdeSearchTabsView"  ng-view></div>
+        <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
+        <div class="cdeSearchTabsView" data-ng-view></div>
+        <!-- =============================================================================== -->
 
-            <!-- =============================================================================== -->
 
         <div id="footer">
             <table>

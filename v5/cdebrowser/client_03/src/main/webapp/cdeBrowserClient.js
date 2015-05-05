@@ -1,5 +1,5 @@
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($scope, $http, $filter,$location, ngTableParams) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($scope, $http, $filter, $location, $route, ngTableParams) {
 
     $scope.show = [];
     $scope.initComplete = false;
@@ -320,6 +320,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     // start ngTable definition //
     $scope.resetSortOrder = function () {
         $scope.tableParams.sorting({'registrationSort':'asc'});
+
+/*
+        $scope.changeView(0,$scope.tabs[0]);
+*/
+
+       /*  FIXME still not getting the "view" back after reset sort order  */
+        $location.path("search").replace();
+        $route.reload();
+        $scope.currentCdeTab = 0;
+        console.log("View resetSortOrder: search: " + $location.path());
+
     }
 
     $scope.sortNames = {'registrationSort':'Registration Status','longName':'Long Name','preferredQuestionText':'Preferred Question Text','ownedBy':'Owned By','usedByContext':'Used By Context','workflowSort':'Workflow Status','publicId':'Public ID','version':'Version'};
@@ -346,5 +357,4 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
         }); 
   
 });
-
 
