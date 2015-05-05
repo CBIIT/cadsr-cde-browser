@@ -1,118 +1,54 @@
 package gov.nih.nci.cadsr.service.model.cdeData.adminInfo;
 
+import java.util.Date;
+
 /**
  * Created by lernermh on 4/23/15.
  */
 public class AdminInfo
 {
-    private String dataElementContacts;
-    private String dataElementConceptContacts;
-    private String objectClassContacts;
-    private String propertyContacts;
-    private String valueDomainContacts;
-    private String representationTermContacts;
-    private String valueMeaningContacts;
-    private String conceptContacts;
-    private String classificationSchemeContacts;
-    private String contextContacts;
+    private String createdBy;
+    private String dateCreated;
+    private String modifiedBy;
+    private String dateModified;
 
-    public String getDataElementContacts()
+    public String getCreatedBy()
     {
-        return dataElementContacts;
+        return createdBy;
     }
 
-    public void setDataElementContacts( String dataElementContacts )
+    public void setCreatedBy( String createdBy )
     {
-        this.dataElementContacts = dataElementContacts;
+        this.createdBy = createdBy;
     }
 
-    public String getDataElementConceptContacts()
+    public String getDateCreated()
     {
-        return dataElementConceptContacts;
+        return dateCreated;
     }
 
-    public void setDataElementConceptContacts( String dataElementConceptContacts )
+    public void setDateCreated( String dateCreated )
     {
-        this.dataElementConceptContacts = dataElementConceptContacts;
+        this.dateCreated = dateCreated;
     }
 
-    public String getObjectClassContacts()
+    public String getModifiedBy()
     {
-        return objectClassContacts;
+        return modifiedBy;
     }
 
-    public void setObjectClassContacts( String objectClassContacts )
+    public void setModifiedBy( String modifiedBy )
     {
-        this.objectClassContacts = objectClassContacts;
+        this.modifiedBy = modifiedBy;
     }
 
-    public String getPropertyContacts()
+    public String getDateModified()
     {
-        return propertyContacts;
+        return dateModified;
     }
 
-    public void setPropertyContacts( String propertyContacts )
+    public void setDateModified( String dateModified )
     {
-        this.propertyContacts = propertyContacts;
-    }
-
-    public String getValueDomainContacts()
-    {
-        return valueDomainContacts;
-    }
-
-    public void setValueDomainContacts( String valueDomainContacts )
-    {
-        this.valueDomainContacts = valueDomainContacts;
-    }
-
-    public String getRepresentationTermContacts()
-    {
-        return representationTermContacts;
-    }
-
-    public void setRepresentationTermContacts( String representationTermContacts )
-    {
-        this.representationTermContacts = representationTermContacts;
-    }
-
-    public String getValueMeaningContacts()
-    {
-        return valueMeaningContacts;
-    }
-
-    public void setValueMeaningContacts( String valueMeaningContacts )
-    {
-        this.valueMeaningContacts = valueMeaningContacts;
-    }
-
-    public String getConceptContacts()
-    {
-        return conceptContacts;
-    }
-
-    public void setConceptContacts( String conceptContacts )
-    {
-        this.conceptContacts = conceptContacts;
-    }
-
-    public String getClassificationSchemeContacts()
-    {
-        return classificationSchemeContacts;
-    }
-
-    public void setClassificationSchemeContacts( String classificationSchemeContacts )
-    {
-        this.classificationSchemeContacts = classificationSchemeContacts;
-    }
-
-    public String getContextContacts()
-    {
-        return contextContacts;
-    }
-
-    public void setContextContacts( String contextContacts )
-    {
-        this.contextContacts = contextContacts;
+        this.dateModified = dateModified;
     }
 }

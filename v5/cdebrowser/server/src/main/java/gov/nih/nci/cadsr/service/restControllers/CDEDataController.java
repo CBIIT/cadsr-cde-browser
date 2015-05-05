@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -469,22 +470,11 @@ public class CDEDataController
      */
      private AdminInfo initAdminInfoTabData( DataElementModel dataElementModel)
      {
-         //Just place holder test data for now
-
          AdminInfo adminInfo = new AdminInfo();
-         // Default place holder
-         String placeHolder = "From Server - STILL NEED TO TRACK DOWN";
-         adminInfo.setDataElementContacts( placeHolder );
-         adminInfo.setDataElementConceptContacts( placeHolder );
-         adminInfo.setObjectClassContacts( placeHolder );
-         adminInfo.setPropertyContacts( placeHolder );
-         adminInfo.setValueDomainContacts( placeHolder );
-         adminInfo.setRepresentationTermContacts( placeHolder );
-         adminInfo.setValueMeaningContacts( placeHolder );
-         adminInfo.setConceptContacts( placeHolder );
-         adminInfo.setClassificationSchemeContacts( placeHolder );
-         adminInfo.setContextContacts( placeHolder );
-
+         adminInfo.setCreatedBy( dataElementModel.getCreatedBy() );
+         adminInfo.setDateCreated( new SimpleDateFormat("dd MMM yyyy").format( dataElementModel.getDateCreated()));
+         adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
+         adminInfo.setDateModified( new SimpleDateFormat("dd MMM yyyy").format( dataElementModel.getDateModified()) );
          return adminInfo;
      }
 
