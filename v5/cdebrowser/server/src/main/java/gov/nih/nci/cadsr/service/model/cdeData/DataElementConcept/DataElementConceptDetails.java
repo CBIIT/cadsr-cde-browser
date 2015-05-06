@@ -9,7 +9,7 @@ public class DataElementConceptDetails
     private String definition;
     private String context;
     private String workflowStatus;
-    private String conceptualDomainPublicId;
+    private Integer conceptualDomainPublicId;
     private String conceptualDomainShortName;
     private String conceptualDomainContextName;
     private String getConceptualDomainVersion;
@@ -85,12 +85,12 @@ public class DataElementConceptDetails
         this.workflowStatus = workflowStatus;
     }
 
-    public String getConceptualDomainPublicId()
+    public Integer getConceptualDomainPublicId()
     {
         return conceptualDomainPublicId;
     }
 
-    public void setConceptualDomainPublicId( String conceptualDomainPublicId )
+    public void setConceptualDomainPublicId( Integer conceptualDomainPublicId )
     {
         this.conceptualDomainPublicId = conceptualDomainPublicId;
     }

@@ -137,7 +137,7 @@ public class CDEDataController
         dataElementDetails.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
         dataElementDetails.setDefinition( dataElementModel.getPreferredDefinition() );
         dataElementDetails.setValueDomain( dataElementModel.getValueDomainModel().getLongName() );
-        dataElementDetails.setDataElementConcept( "STILL NEED TO TRACK DOWN Data Element Concept" );
+        dataElementDetails.setDataElementConcept( dataElementModel.getDec().getLongName() );
         dataElementDetails.setContext( dataElementModel.getContextName() );
         dataElementDetails.setWorkflowStatus( dataElementModel.getAslName() );
         dataElementDetails.setOrigin( dataElementModel.getOrigin() );
@@ -226,14 +226,24 @@ public class CDEDataController
         DataElementConcept dataElementConcept = new DataElementConcept();
 
         // "Selected Data Element" of the "Data Element Concept" Tab
-        dataElementConcept.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
+        dataElementConcept.setSelectedDataElement(getSelectedDataElement(dataElementModel));
 
         /////////////////////////////////////////////////////
         // "Data Element Concept Details" of the "Data Element Concept" Tab
         DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
-        dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
+        dataElementConcept.setDataElementConceptDetails(dataElementConceptDetails);
         // FIXME - Need to find out where to get Data Element Concept Details from dataElementModel
-
+        dataElementConceptDetails.setPublicId(dataElementModel.getDec().getPublicId());
+        dataElementConceptDetails.setVersion(dataElementModel.getDec().getVersion());
+        dataElementConceptDetails.setLongName(dataElementModel.getDec().getLongName());
+        dataElementConceptDetails.setShortName(dataElementModel.getDec().getPreferredName());
+        dataElementConceptDetails.setDefinition(dataElementModel.getDec().getPreferredDefinition());
+        dataElementConceptDetails.setContext(dataElementModel.getDec().getCdContextName());
+        dataElementConceptDetails.setWorkflowStatus(dataElementModel.getDec().getAslName());
+        dataElementConceptDetails.setConceptualDomainPublicId(dataElementModel.getDec().getCdPublicId());
+        dataElementConceptDetails.setConceptualDomainShortName(dataElementModel.getDec().getCdPrefName());
+        dataElementConceptDetails.setVersion(dataElementModel.getDec().getCdVersion());
+        dataElementConceptDetails.setOrigin(dataElementModel.getDec().getOrigin());
 
         /////////////////////////////////////////////////////
         // "Object Class" of the "Data Element Concept" Tab
