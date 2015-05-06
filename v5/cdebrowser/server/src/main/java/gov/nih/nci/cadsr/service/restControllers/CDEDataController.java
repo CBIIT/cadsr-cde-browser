@@ -200,6 +200,13 @@ public class CDEDataController
         List<AlternateDefinition> alternateDefinitions = new ArrayList<>();
         dataElement.setAlternateDefinitions( alternateDefinitions );
         // FIXME - Need to find out where to get list of alternateDefinitions from dataElementModel
+        for (DefinitionModel definitionModel : dataElementModel.getDefinitionModels()) {
+            AlternateDefinition alternateDefinition = new AlternateDefinition();
+            alternateDefinition.setName(definitionModel.getDefinition());
+            alternateDefinition.setContext(definitionModel.getContext().getName());
+            alternateDefinition.setType(definitionModel.getDeflName());
+            alternateDefinitions.add(alternateDefinition);
+        }
 
 
         /////////////////////////////////////////////////////

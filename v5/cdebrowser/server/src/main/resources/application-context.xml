@@ -75,9 +75,13 @@
         <property name="contextDAO" ref="contextDAO"/>
         <property name="dataElementConceptDAO" ref="dataElementConceptDAO"/>
         <property name="valueDomainDAO" ref="valueDomainDAO"/>
+        <property name="definitionDAO" ref="definitionDAO"/>
         <property name="designationDAO" ref="designationDAO"/>
         <property name="referenceDocDAO" ref="referenceDocDAO"/>
         <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
+    </bean>
+    <bean id="definitionDAO" class="gov.nih.nci.cadsr.dao.DefinitionDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
     </bean>
     <bean id="designationDAO" class="gov.nih.nci.cadsr.dao.DesignationDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>

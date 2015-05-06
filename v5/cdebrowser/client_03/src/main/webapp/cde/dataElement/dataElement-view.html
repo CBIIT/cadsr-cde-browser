@@ -128,10 +128,10 @@
         <td class="dataElementHeading">Type</td>
         <td class="dataElementHeading">Context</td>
     </tr>
-    <tr class="dataElementViewTableTr" border="0">
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeDetails.dataElement.alternateDefinitions">
+        <td class="dataElementValue">{{altDef.name}}</td>
+        <td class="dataElementValue">{{altDef.type}}</td>
+        <td class="dataElementValue">{{altDef.context}}</td>
     </tr>
 </table>
 <Br/>
