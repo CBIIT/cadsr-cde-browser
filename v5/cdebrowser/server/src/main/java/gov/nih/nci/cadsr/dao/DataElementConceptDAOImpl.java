@@ -37,10 +37,8 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
     @Override
     public DataElementConceptModel getDecByDecIdseq(String decIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM SBR.DATA_ELEMENT_CONCEPTS WHERE DEC_IDSEQ = ?";
-        logger.warn(sql +  " " + decIdseq);
-//        DataElementConceptModel dataElementConceptModel = jdbcTemplate.queryForObject(sql, new Object[]{decIdseq}, new BeanPropertyRowMapper<DataElementConceptModel>(DataElementConceptModel.class));
         DataElementConceptModel dataElementConceptModel = jdbcTemplate.queryForObject(sql, new Object[]{decIdseq}, new DataElementConceptMapper(DataElementConceptModel.class));
-        logger.warn(dataElementConceptModel.toString());
+        //logger.warn(dataElementConceptModel.toString());
         return dataElementConceptModel;
     }
 

@@ -93,7 +93,7 @@ public class ContextDataController
             return errorNode;
         }
 
-        logger.debug( "Done rest call\n=========================\n" );
+        logger.debug( "Done rest call" );
         return contextNodes;
     }
 

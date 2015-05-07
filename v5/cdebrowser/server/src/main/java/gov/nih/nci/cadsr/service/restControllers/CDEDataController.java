@@ -41,7 +41,6 @@ public class CDEDataController
     public CdeDetails CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
-        logger.debug( "Received rest call \"CDEData\":  dataElementDAO.getCdeByDeIdseq( " + deIdseq + ")" );
 
         DataElementModel dataElementModel = null;
 
@@ -161,19 +160,19 @@ public class CDEDataController
         {
             ReferenceDocument referenceDoc = new ReferenceDocument();
             referenceDoc.setDocumentName( referenceDocModel.getDocName() );
-            logger.debug( referenceDocModel.getDocName() );
+            //logger.debug( referenceDocModel.getDocName() );
 
             referenceDoc.setDocumentType( referenceDocModel.getDocType() );
-            logger.debug( referenceDocModel.getDocType() );
+            //logger.debug( referenceDocModel.getDocType() );
 
             referenceDoc.setDocumentText( referenceDocModel.getDocText() );
-            logger.debug( referenceDocModel.getDocText() );
+            //logger.debug( referenceDocModel.getDocText() );
 
             referenceDoc.setContext( referenceDocModel.getContext().getName() );
-            logger.debug( referenceDocModel.getContext().getName() );
+            //logger.debug( referenceDocModel.getContext().getName() );
 
             referenceDoc.setUrl( referenceDocModel.getUrl() );
-            logger.debug( referenceDocModel.getUrl() );
+            //logger.debug( referenceDocModel.getUrl() );
 
             referenceDocuments.add( referenceDoc );
         }
