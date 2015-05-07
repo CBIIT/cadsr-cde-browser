@@ -18,6 +18,7 @@ public class DataElementModel extends BaseModel
     private String usingContexts; // not in table. Filled from designationModels.contexts.name where designationModels.detlName = 'USED_BY'
     private List<ReferenceDocModel> refDocs;// from ReferenceDocumentsView.ac_idseq = data_elements.de_idseq
     private List<DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
+    private List<DefinitionModel> definitionModels;
     private Integer publicId; // this is a duplicate of cdeId. do we really need this?
     private String idseq;
     private String registrationStatus; // not in table. Filled from SBR.AC_RESISTRATIONS.REGISTRATION_STATUS see DAO row mapper
@@ -116,6 +117,14 @@ public class DataElementModel extends BaseModel
 
     public void setDesignationModels(List<DesignationModel> designationModels) {
         this.designationModels = designationModels;
+    }
+
+    public List<DefinitionModel> getDefinitionModels() {
+        return definitionModels;
+    }
+
+    public void setDefinitionModels(List<DefinitionModel> definitionModels) {
+        this.definitionModels = definitionModels;
     }
 
     public Integer getPublicId() {
@@ -342,6 +351,8 @@ public class DataElementModel extends BaseModel
         if (getRefDocs() != null ? !getRefDocs().equals(that.getRefDocs()) : that.getRefDocs() != null) return false;
         if (getDesignationModels() != null ? !getDesignationModels().equals(that.getDesignationModels()) : that.getDesignationModels() != null)
             return false;
+        if (getDefinitionModels() != null ? !getDefinitionModels().equals(that.getDefinitionModels()) : that.getDefinitionModels() != null)
+            return false;
         if (getPublicId() != null ? !getPublicId().equals(that.getPublicId()) : that.getPublicId() != null)
             return false;
         if (getIdseq() != null ? !getIdseq().equals(that.getIdseq()) : that.getIdseq() != null) return false;
@@ -385,6 +396,7 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getUsingContexts() != null ? getUsingContexts().hashCode() : 0);
         result = 31 * result + (getRefDocs() != null ? getRefDocs().hashCode() : 0);
         result = 31 * result + (getDesignationModels() != null ? getDesignationModels().hashCode() : 0);
+        result = 31 * result + (getDefinitionModels() != null ? getDefinitionModels().hashCode() : 0);
         result = 31 * result + (getPublicId() != null ? getPublicId().hashCode() : 0);
         result = 31 * result + (getIdseq() != null ? getIdseq().hashCode() : 0);
         result = 31 * result + (getRegistrationStatus() != null ? getRegistrationStatus().hashCode() : 0);
@@ -418,6 +430,7 @@ public class DataElementModel extends BaseModel
                 ", usingContexts='" + usingContexts + '\'' +
                 ", refDocs=" + refDocs +
                 ", designationModels=" + designationModels +
+                ", definitionModels=" + definitionModels +
                 ", publicId=" + publicId +
                 ", idseq='" + idseq + '\'' +
                 ", registrationStatus='" + registrationStatus + '\'' +
@@ -425,7 +438,7 @@ public class DataElementModel extends BaseModel
                 ", dec=" + dec +
                 ", context=" + context +
                 ", deIdseq='" + deIdseq + '\'' +
-                ", version='" + version + '\'' +
+                ", version=" + version +
                 ", conteIdseq='" + conteIdseq + '\'' +
                 ", preferredName='" + preferredName + '\'' +
                 ", vdIdseq='" + vdIdseq + '\'' +
@@ -435,10 +448,10 @@ public class DataElementModel extends BaseModel
                 ", longName='" + longName + '\'' +
                 ", latestVerInd='" + latestVerInd + '\'' +
                 ", deletedInd='" + deletedInd + '\'' +
-                ", beginDate='" + beginDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                ", beginDate=" + beginDate +
+                ", endDate=" + endDate +
                 ", origin='" + origin + '\'' +
-                ", cdeId='" + cdeId + '\'' +
+                ", cdeId=" + cdeId +
                 ", question='" + question + '\'' +
                 '}';
     }

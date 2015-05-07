@@ -25,6 +25,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private DataElementConceptDAO dataElementConceptDAO;
     private ValueDomainDAO valueDomainDAO;
     private DesignationDAO designationDAO;
+    private DefinitionDAO definitionDAO;
     private ReferenceDocDAO referenceDocDAO;
     private AcRegistrationsDAO acRegistrationsDAO;
 
@@ -53,21 +54,21 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     @Override
     public DataElementModel getCdeByDeIdseq(String deIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM DATA_ELEMENTS WHERE de_idseq = ?";
-        DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{deIdseq}, new DataElementMapper());
+        DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{deIdseq}, new DataElementMapper(DataElementModel.class));
         return dataElementModel;
     }
 
     @Override
     public List<DataElementModel> getAllCdeByCdeId(Integer cdeId) {
         String sql = "SELECT * FROM DATA_ELEMENTS WHERE cde_id = ?";
-        List<DataElementModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{cdeId}, new DataElementMapper());
+        List<DataElementModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{cdeId}, new DataElementMapper(DataElementModel.class));
         return dataElementModel;
     }
 
     @Override
     public DataElementModel geCdeByCdeIdAndVersion(Integer cdeId, Integer version) {
         String sql = "SELECT * FROM DATA_ELEMENTS WHERE cde_id = ? and version = ?";
-        DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{cdeId, version}, new DataElementMapper());
+        DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{cdeId, version}, new DataElementMapper(DataElementModel.class));
         return dataElementModel;
     }
 
@@ -131,33 +132,45 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         this.acRegistrationsDAO = acRegistrationsDAO;
     }
 
+    public DefinitionDAO getDefinitionDAO() {
+        return definitionDAO;
+    }
+
+    public void setDefinitionDAO(DefinitionDAO definitionDAO) {
+        this.definitionDAO = definitionDAO;
+    }
+
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
+        public DataElementMapper(Class<DataElementModel> mappedClass) {
+            super(mappedClass);
+        }
+
         public DataElementModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            DataElementModel dataElementModel = new DataElementModel();
+            DataElementModel dataElementModel = super.mapRow(rs, rowNum);
 
             String deIdseq = rs.getString("DE_IDSEQ");
-            dataElementModel.setVersion(rs.getFloat("VERSION"));
-            dataElementModel.setIdseq(deIdseq);
+//            dataElementModel.setVersion(rs.getFloat("VERSION"));
+//            dataElementModel.setIdseq(deIdseq);
             dataElementModel.setDeIdseq(deIdseq);
-            dataElementModel.setPreferredName(rs.getString("PREFERRED_NAME"));
-            dataElementModel.setVdIdseq(rs.getString("VD_IDSEQ"));
-            dataElementModel.setDecIdseq(rs.getString("DEC_IDSEQ"));
-            dataElementModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
-            dataElementModel.setAslName(rs.getString("ASL_NAME"));
-            dataElementModel.setLongName(rs.getString("LONG_NAME"));
+//            dataElementModel.setPreferredName(rs.getString("PREFERRED_NAME"));
+//            dataElementModel.setVdIdseq(rs.getString("VD_IDSEQ"));
+//            dataElementModel.setDecIdseq(rs.getString("DEC_IDSEQ"));
+//            dataElementModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
+//            dataElementModel.setAslName(rs.getString("ASL_NAME"));
+//            dataElementModel.setLongName(rs.getString("LONG_NAME"));
             dataElementModel.setLatestVerInd(rs.getString("LATEST_VERSION_IND"));
-            dataElementModel.setDeletedInd(rs.getString("DELETED_IND"));
-            dataElementModel.setBeginDate(rs.getTimestamp("BEGIN_DATE"));
-            dataElementModel.setEndDate(rs.getTimestamp("END_DATE"));
-            dataElementModel.setOrigin(rs.getString("ORIGIN"));
-            dataElementModel.setCdeId(rs.getInt("CDE_ID"));
-            dataElementModel.setQuestion(rs.getString("QUESTION"));
-            dataElementModel.setModifiedBy(rs.getString("MODIFIED_BY"));
-            dataElementModel.setCreatedBy(rs.getString("CREATED_BY"));
-            dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
-            dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
+//            dataElementModel.setDeletedInd(rs.getString("DELETED_IND"));
+//            dataElementModel.setBeginDate(rs.getTimestamp("BEGIN_DATE"));
+//            dataElementModel.setEndDate(rs.getTimestamp("END_DATE"));
+//            dataElementModel.setOrigin(rs.getString("ORIGIN"));
+//            dataElementModel.setCdeId(rs.getInt("CDE_ID"));
+//            dataElementModel.setQuestion(rs.getString("QUESTION"));
+//            dataElementModel.setModifiedBy(rs.getString("MODIFIED_BY"));
+//            dataElementModel.setCreatedBy(rs.getString("CREATED_BY"));
+//            dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
+//            dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
             dataElementModel.fillPreferredQuestionText();
             dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
             dataElementModel.fillUsingContexts();
@@ -165,16 +178,22 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
 
             try {
+                dataElementModel.setDefinitionModels(getDefinitionDAO().getAllDefinitionsByAcIdseq(deIdseq));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No Definition Models found for Data Element with idseq: " + deIdseq);
+            }
+
+            try {
                 dataElementModel.setValueDomainModel(getValueDomainDAO().getValueDomainByIdseq(rs.getString("VD_IDSEQ")));
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No Value Domain found for Data Element with idseq: " + deIdseq + "  the vdIdseq is " + rs.getString("VD_IDSEQ"));
             }
 
-//            try {
-                dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(rs.getString("DEC_IDSEQ")));
-//            } catch (EmptyResultDataAccessException ex) {
-//                logger.warn("No DataElementConcept found for Data Element with idseq: " + deIdseq + "  the DEC_IDSEQ is " + rs.getString("DEC_IDSEQ"));
-//            }
+            try {
+            dataElementModel.setDec(getDataElementConceptDAO().getDecByDecIdseq(rs.getString("DEC_IDSEQ")));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No DataElementConcept found for Data Element with idseq: " + deIdseq + "  the DEC_IDSEQ is " + rs.getString("DEC_IDSEQ"));
+            }
             dataElementModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
             if (dataElementModel.getContext() != null && dataElementModel.getContext().getName()!= null) {
                 dataElementModel.setContextName(dataElementModel.getContext().getName());
@@ -183,9 +202,15 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 dataElementModel.setConteIdseq(dataElementModel.getContext().getConteIdseq()); // rudely redundant
             }
             dataElementModel.setPublicId(dataElementModel.getCdeId());
-            AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(deIdseq);
-            if (acRegistrationsModel != null && acRegistrationsModel.getRegistrationStatus() != null) {
-                dataElementModel.setRegistrationStatus(acRegistrationsModel.getRegistrationStatus());
+
+            try {
+                AcRegistrationsModel acRegistrationsModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(deIdseq);
+
+                if (acRegistrationsModel != null && acRegistrationsModel.getRegistrationStatus() != null) {
+                    dataElementModel.setRegistrationStatus(acRegistrationsModel.getRegistrationStatus());
+                }
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No AcRegistrationsModel found for Data Element with idseq: " + deIdseq);
             }
             return dataElementModel;
         }
