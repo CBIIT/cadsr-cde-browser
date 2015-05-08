@@ -4,6 +4,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     $scope.show = [];
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
+    $scope.showCdeSearchResults = true;
     $scope.searchResults = [];
     $scope.tabsDisabled = true;
     $scope.NORMAL = 0;
@@ -142,7 +143,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
 
         if (tabnumber == 0) {
             // $scope.initTableParams();
-            $scope.tableParams.reload();
+            //$scope.tableParams.reload();
+
+            $scope.showCdeSearchResults = true;
+        }
+        else
+        {
+            $scope.showCdeSearchResults = false;
         }
         //////////////////////////////////////////
 /*

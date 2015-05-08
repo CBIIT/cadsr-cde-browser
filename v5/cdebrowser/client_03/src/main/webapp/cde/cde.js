@@ -3,7 +3,6 @@
  */
 angular.module("cde", [
     "ngRoute",
-    "cdeSearch",
     "cdeAdminInfo",
     "cdeClassifications",
     "cdeDataElement",
@@ -15,10 +14,14 @@ angular.module("cde", [
 ]).config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider
+
+ /*
         .when("/search", {
             controller: "SearchCtrl",
             templateUrl: "cde/search/search-view.html"
         })
+
+*/
         .when("/adminInfo", {
             controller: "AdminInfoCtrl",
             templateUrl: "cde/adminInfo/adminInfo-view.html"

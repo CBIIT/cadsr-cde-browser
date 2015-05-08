@@ -32,10 +32,9 @@ a:hover {
     color: #1A4660;
 }
 
-
 /* for the cell that contains the required cancer.gov header */
 .hdrBG {
-  background-color: #a90101; /* constant: red */
+    background-color: #a90101; /* constant: red */
 }
 
 /* The initial loading message or error message  */
@@ -66,7 +65,6 @@ a:hover {
     top: 156px;
 }
 
-
 .topButtons {
     color: #000;
     height: 90px;
@@ -80,19 +78,20 @@ a:hover {
 
 }
 
-.toolLinks:link, .toolLinks:visited, .toolLinks:active, .toolLinks:hover{
+.toolLinks:link, .toolLinks:visited, .toolLinks:active, .toolLinks:hover {
     color: #663300;
 }
+
 
 /* Search results pane to the right of the Tree menu pane  */
 .resultsDisplay {
     color: #000;
-    padding-left:15px;
+    padding-left: 15px;
 
     /*  Top of display pane  */
-    margin-top: 47px;  /* needs to match .treeMenu */
+    margin-top: 58px; /* needs to match .treeMenu.  If you change this, you will also need to change .topTabPos */
 
-    overflow-x: scroll ;
+    overflow-x: scroll;
     overflow-y: scroll;
     resize: horizontal;
 }
@@ -101,28 +100,28 @@ a:hover {
 .treeMenu {
     float: left;
     /* top of tree menu pane  */
-    margin-top: 47px;  /* needs to match .resultsDisplay */
+    margin-top: 58px; /* needs to match .resultsDisplay.  If you change this, you will also need to change .topTabPos*/
     margin-left: 6px;
 
-    font-size:13px;
+    font-size: 13px;
+    font-weight: bold;
     padding-left: 0;
     padding-right: 0;
 
     /* The Starting/default width of the Tree menu pane */
     width: 25%;
 
-    overflow-x: scroll ;
+    overflow-x: scroll;
     overflow-y: scroll;
     resize: horizontal;
 
     /* Tree menu colors  */
-    background-color:  #f7f7e6;
+    background-color: #f7f7e6;
     color: #18344d;
 
     /* Spacing for each line, not the actual line. */
     line-height: 24px;
 }
-
 
 /* The search query input and options */
 .queryTypeRadioButtons {
@@ -134,10 +133,10 @@ a:hover {
     margin-top: 16px;
 }
 
-.searchInput{
+.searchInput {
     color: #18344d;
     margin-left: 250px;
-    padding-top : 4px;
+    padding-top: 4px;
     margin-top: 16px;
 }
 
@@ -150,6 +149,6 @@ a:hover {
     width: 80px;
 }
 
-.cdeTabs{
+.cdeTabs {
     background-color: #336699;
 }

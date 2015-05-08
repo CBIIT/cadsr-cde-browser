@@ -6,7 +6,7 @@
     border-top-width: 3px;
 
     margin-top: 29px;
-    padding-bottom: 5px; /* push the bottom down enough to make room for paging buttons */
+    padding-bottom: 15px; /* push the bottom down enough to make room for paging buttons */
     padding-right: 5px;
 }
 

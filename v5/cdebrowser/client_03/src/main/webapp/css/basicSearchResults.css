@@ -155,7 +155,7 @@
     color: #663300;
 }
 
-/** position rest and sort order text on page **/
+/** position reset and sort order text on page **/
 .sortOrder {
     position: relative;
     width: 100%;
@@ -177,6 +177,7 @@
 
 #searchResults {
     padding-left: 4px;
+
     /*margin-top:5px;*/
     /* Push down label - Sort Order: etc.*/
     color: #663300;
