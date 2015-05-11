@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,6 +29,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private DefinitionDAO definitionDAO;
     private ReferenceDocDAO referenceDocDAO;
     private AcRegistrationsDAO acRegistrationsDAO;
+    private CsCsiDAO csCsiDAO;
 
 //private String DataElementSql; //Spring DAOs are singletons.  Doing this whole passing sql around as member variables is totally not safe...
 
@@ -140,6 +142,14 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         this.definitionDAO = definitionDAO;
     }
 
+    public CsCsiDAO getCsCsiDAO() {
+        return csCsiDAO;
+    }
+
+    public void setCsCsiDAO(CsCsiDAO csCsiDAO) {
+        this.csCsiDAO = csCsiDAO;
+    }
+
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
@@ -172,13 +182,19 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
 //            dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
 //            dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
             dataElementModel.fillPreferredQuestionText();
-            dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
             dataElementModel.fillUsingContexts();
 
             dataElementModel.setRefDocs(getReferenceDocDAO().getRefDocsByAcIdseq(deIdseq));
 
             try {
+                dataElementModel.setDesignationModels(getDesignationDAO().getDesignationModelsByAcIdseq(deIdseq));
+                dataElementModel.fillCsCsiDesignations();
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No Designation Models found for Data Element with idseq: " + deIdseq);
+            }
+            try {
                 dataElementModel.setDefinitionModels(getDefinitionDAO().getAllDefinitionsByAcIdseq(deIdseq));
+                dataElementModel.fillCsCsiDefinitions();
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No Definition Models found for Data Element with idseq: " + deIdseq);
             }
@@ -211,6 +227,20 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 }
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No AcRegistrationsModel found for Data Element with idseq: " + deIdseq);
+            }
+
+            try {
+                List<CsCsiModel> csCsiModels = getCsCsiDAO().getAllCsCsisByDataElement(deIdseq);
+                if (csCsiModels != null && csCsiModels.size() > 0) {
+                    dataElementModel.fillCsCsiData(csCsiModels);
+                } else {
+                    // none found. Call fillCsCsiData() to initalize the "Unclassified" record
+                    dataElementModel.fillCsCsiData(new ArrayList<CsCsiModel>(0));
+                }
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No CsCsiModels found for Data Element with idseq: " + deIdseq);
+                // none found. Call fillCsCsiData() to initalize the "Unclassified" record
+                dataElementModel.fillCsCsiData(new ArrayList<CsCsiModel>(0));
             }
             return dataElementModel;
         }

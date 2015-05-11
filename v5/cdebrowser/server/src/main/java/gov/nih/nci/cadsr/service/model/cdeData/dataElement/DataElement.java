@@ -5,11 +5,12 @@ import java.util.List;
 
 public class DataElement
 {
-    private DataElementDetails dataElementDetails = null;
-    private List<ReferenceDocument> referenceDocuments = null;
-    private List<AlternateName> alternateNames = null;
-    private List<AlternateDefinition> alternateDefinitions = null;
-    private List<OtherVersion> otherVersions = null;
+    private DataElementDetails dataElementDetails;
+    private List<ReferenceDocument> referenceDocuments;
+    private List<AlternateName> alternateNames; // probably taking this out
+    private List<AlternateDefinition> alternateDefinitions; // probably taking this out
+    private List<CsCsi> csCsis;
+    private List<OtherVersion> otherVersions;
 
     public DataElementDetails getDataElementDetails()
     {
@@ -59,5 +60,13 @@ public class DataElement
     public void setOtherVersions( List<OtherVersion> otherVersions )
     {
         this.otherVersions = otherVersions;
+    }
+
+    public List<CsCsi> getCsCsis() {
+        return csCsis;
+    }
+
+    public void setCsCsis(List<CsCsi> csCsis) {
+        this.csCsis = csCsis;
     }
 }

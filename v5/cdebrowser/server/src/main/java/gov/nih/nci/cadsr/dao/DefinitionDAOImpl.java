@@ -1,6 +1,8 @@
 package gov.nih.nci.cadsr.dao;
 
+import gov.nih.nci.cadsr.dao.model.AcAttCsCsiModel;
 import gov.nih.nci.cadsr.dao.model.ContextModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.DefinitionModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +27,7 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
 
     private JdbcTemplate jdbcTemplate;
     private ContextDAO contextDAO;
+    private AcAttCsCsiDAO acAttCsCsiDAO;
 
     @Autowired
     DefinitionDAOImpl(DataSource dataSource) {
@@ -38,6 +42,14 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
 
     public void setContextDAO(ContextDAO contextDAO) {
         this.contextDAO = contextDAO;
+    }
+
+    public AcAttCsCsiDAO getAcAttCsCsiDAO() {
+        return acAttCsCsiDAO;
+    }
+
+    public void setAcAttCsCsiDAO(AcAttCsCsiDAO acAttCsCsiDAO) {
+        this.acAttCsCsiDAO = acAttCsCsiDAO;
     }
 
     @Override
@@ -70,6 +82,27 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
                 }
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("no contextModel found for CONTE_IDSEQ: " + rs.getString("CONTE_IDSEQ"));
+            }
+
+            try {
+                List<AcAttCsCsiModel> acAttCsCsiModels = getAcAttCsCsiDAO().getAllAcAttCsCsiByAttIdseq(rs.getString("DEFIN_IDSEQ"));
+                if (acAttCsCsiModels != null && acAttCsCsiModels.size() > 0) {
+                    definitionModel.setCsiIdseqs(new ArrayList<String>(acAttCsCsiModels.size()));
+                    for (AcAttCsCsiModel acAttCsCsiModel : acAttCsCsiModels) {
+                        if (acAttCsCsiModel.getCsCsiIdseq() != null) {
+                            definitionModel.getCsiIdseqs().add(acAttCsCsiModel.getCsCsiIdseq());
+                        }
+                    }
+                } else {
+                    // this Definition is unclassified
+                    definitionModel.setCsiIdseqs(new ArrayList<String>(1));
+                    definitionModel.getCsiIdseqs().add(CsCsiModel.UNCLASSIFIED);
+                }
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("no CSIs found for Definition: " + rs.getString("DEFIN_IDSEQ"));
+                // this Definition is unclassified
+                definitionModel.setCsiIdseqs(new ArrayList<String>(1));
+                definitionModel.getCsiIdseqs().add(CsCsiModel.UNCLASSIFIED);
             }
 
             return definitionModel;

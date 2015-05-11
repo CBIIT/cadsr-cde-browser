@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,8 +18,14 @@ public class DataElementModel extends BaseModel
     private String contextName; // do we really need this to be a separate field instead of context.getName()?
     private String usingContexts; // not in table. Filled from designationModels.contexts.name where designationModels.detlName = 'USED_BY'
     private List<ReferenceDocModel> refDocs;// from ReferenceDocumentsView.ac_idseq = data_elements.de_idseq
-    private List<DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
-    private List<DefinitionModel> definitionModels;
+    /**
+     * Hashmap of DesignationModels indexed by designationIdseq
+     */
+    private HashMap<String,DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
+    /**
+     * Hashmap of DefinitionModels indexed by definitionIdseq
+     */
+    private HashMap<String,DefinitionModel> definitionModels;
     private Integer publicId; // this is a duplicate of cdeId. do we really need this?
     private String idseq;
     private String registrationStatus; // not in table. Filled from SBR.AC_RESISTRATIONS.REGISTRATION_STATUS see DAO row mapper
@@ -26,7 +33,7 @@ public class DataElementModel extends BaseModel
     private DataElementConceptModel dec; // from dec_idseq
     private ContextModel context;
     private String deIdseq; // primary key
-    private Float version; // needs to be a Float!
+    private Float version;
     private String conteIdseq; // this field can't possibly be needed since we have a whole context model object
     private String preferredName;
     private String vdIdseq; // this field can't possibly be needed since we have a whole value domain model object
@@ -41,6 +48,20 @@ public class DataElementModel extends BaseModel
     private String origin;
     private Integer cdeId;
     private String question;
+    /**
+     * Hashmap of CsCsiModels indexed by csiIdseq. csiIdseq may be the value "UNCLASSIFIED"
+     */
+    private HashMap<String,CsCsiModel> csCsiData;
+    /**
+     * Hashmap of Lists of designationIdseqs indexed by csiIdseq. csiIdseq may be the value "UNCLASSIFIED"
+     * (each entry is a list of the designationIdseqs that are classified into the indexed csiIdseq)
+     */
+    private HashMap<String,List<String>> csCsiDesignations;
+    /**
+     * Hashmap of Lists of definitionIdseqs indexed by csiIdseq. csiIdseq may be the value "UNCLASSIFIED"
+     * (each entry is a list of the definitionIdseqs that are classified into the indexed csiIdseq)
+     */
+    private HashMap<String,List<String>> csCsiDefinitions;
 
     public DataElementModel() {
     }
@@ -76,7 +97,7 @@ public class DataElementModel extends BaseModel
     public void fillUsingContexts() {
         ArrayList<String> usingContexts = new ArrayList<>();
         if (getDesignationModels() != null) {
-            for (DesignationModel designationModel : getDesignationModels()) {
+            for (DesignationModel designationModel : getDesignationModels().values()) {
                 if (designationModel.getDetlName() != null
                         && designationModel.getDetlName().equals("USED_BY")
                         && designationModel.getContex().getName() != null) {
@@ -85,6 +106,51 @@ public class DataElementModel extends BaseModel
             }
         }
         setUsingContexts(StringUtils.join(usingContexts, ", "));
+    }
+
+    public void fillCsCsiData(List<CsCsiModel> csCsiModels) {
+        // initialize csCsiData
+        csCsiData = new HashMap<String,CsCsiModel>();
+        // Prepare a CsCsiModel for any definitions and designations that are unclassified
+        csCsiData.put(CsCsiModel.UNCLASSIFIED, new CsCsiModel(CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED));
+        // copy over the rest of the models, using the hashmap to remove duplicates
+        for (CsCsiModel csCsiModel : csCsiModels) {
+            csCsiData.put(csCsiModel.getCsIdseq(), csCsiModel);
+        }
+    }
+
+    public void fillCsCsiDesignations () {
+        if (getCsCsiDesignations() == null) {
+            setCsCsiDesignations(new HashMap<String, List<String>>());
+        }
+        for (DesignationModel designationModel : getDesignationModels().values()) {
+            if (designationModel.getCsiIdseqs() != null && designationModel.getCsiIdseqs().size() > 0) {
+                for (String csiIdseq : designationModel.getCsiIdseqs()) {
+                    if (getCsCsiDesignations().get(csiIdseq) == null) {
+                        getCsCsiDesignations().put(csiIdseq, new ArrayList<String>());
+                    }
+                    getCsCsiDesignations().get(csiIdseq).add(designationModel.getDesigIDSeq());
+                }
+            }
+        }
+
+    }
+
+    public void fillCsCsiDefinitions () {
+        if (getCsCsiDefinitions() == null) {
+            setCsCsiDefinitions(new HashMap<String, List<String>>());
+        }
+        for (DefinitionModel definitionModel : getDefinitionModels().values()) {
+            if (definitionModel.getCsiIdseqs() != null && definitionModel.getCsiIdseqs().size() > 0) {
+                for (String csiIdseq : definitionModel.getCsiIdseqs()) {
+                    if (getCsCsiDefinitions().get(csiIdseq) == null) {
+                        getCsCsiDefinitions().put(csiIdseq, new ArrayList<String>());
+                    }
+                    getCsCsiDefinitions().get(csiIdseq).add(definitionModel.getDefinIdseq());
+                }
+            }
+        }
+
     }
 
     public String getContextName() {
@@ -109,22 +175,6 @@ public class DataElementModel extends BaseModel
 
     public void setRefDocs(List<ReferenceDocModel> refDocs) {
         this.refDocs = refDocs;
-    }
-
-    public List<DesignationModel> getDesignationModels() {
-        return designationModels;
-    }
-
-    public void setDesignationModels(List<DesignationModel> designationModels) {
-        this.designationModels = designationModels;
-    }
-
-    public List<DefinitionModel> getDefinitionModels() {
-        return definitionModels;
-    }
-
-    public void setDefinitionModels(List<DefinitionModel> definitionModels) {
-        this.definitionModels = definitionModels;
     }
 
     public Integer getPublicId() {
@@ -335,6 +385,60 @@ public class DataElementModel extends BaseModel
         this.question = question;
     }
 
+    public HashMap<String, CsCsiModel> getCsCsiData() {
+        return csCsiData;
+    }
+
+    public void setCsCsiData(HashMap<String, CsCsiModel> csCsiData) {
+        this.csCsiData = csCsiData;
+    }
+
+    public HashMap<String, List<String>> getCsCsiDesignations() {
+        return csCsiDesignations;
+    }
+
+    public void setCsCsiDesignations(HashMap<String, List<String>> csCsiDesignations) {
+        this.csCsiDesignations = csCsiDesignations;
+    }
+
+    public HashMap<String, List<String>> getCsCsiDefinitions() {
+        return csCsiDefinitions;
+    }
+
+    public void setCsCsiDefinitions(HashMap<String, List<String>> csCsiDefinitions) {
+        this.csCsiDefinitions = csCsiDefinitions;
+    }
+
+    public HashMap<String, DesignationModel> getDesignationModels() {
+        return designationModels;
+    }
+
+    public void setDesignationModels(HashMap<String, DesignationModel> designationModels) {
+        this.designationModels = designationModels;
+    }
+
+    public void setDesignationModels(List<DesignationModel> designationModels) {
+        setDesignationModels(new HashMap<String,DesignationModel>());
+        for (DesignationModel designationModel : designationModels) {
+            getDesignationModels().put(designationModel.getDesigIDSeq(), designationModel);
+        }
+    }
+
+    public HashMap<String, DefinitionModel> getDefinitionModels() {
+        return definitionModels;
+    }
+
+    public void setDefinitionModels(HashMap<String, DefinitionModel> definitionModels) {
+        this.definitionModels = definitionModels;
+    }
+
+    public void setDefinitionModels(List<DefinitionModel> definitionModels) {
+        setDefinitionModels(new HashMap<String,DefinitionModel>());
+        for (DefinitionModel definitionModel : definitionModels) {
+            getDefinitionModels().put(definitionModel.getDefinIdseq(), definitionModel);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -385,7 +489,13 @@ public class DataElementModel extends BaseModel
         if (getEndDate() != null ? !getEndDate().equals(that.getEndDate()) : that.getEndDate() != null) return false;
         if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
         if (getCdeId() != null ? !getCdeId().equals(that.getCdeId()) : that.getCdeId() != null) return false;
-        return !(getQuestion() != null ? !getQuestion().equals(that.getQuestion()) : that.getQuestion() != null);
+        if (getQuestion() != null ? !getQuestion().equals(that.getQuestion()) : that.getQuestion() != null)
+            return false;
+        if (getCsCsiData() != null ? !getCsCsiData().equals(that.getCsCsiData()) : that.getCsCsiData() != null)
+            return false;
+        if (getCsCsiDesignations() != null ? !getCsCsiDesignations().equals(that.getCsCsiDesignations()) : that.getCsCsiDesignations() != null)
+            return false;
+        return !(getCsCsiDefinitions() != null ? !getCsCsiDefinitions().equals(that.getCsCsiDefinitions()) : that.getCsCsiDefinitions() != null);
 
     }
 
@@ -419,6 +529,9 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
         result = 31 * result + (getCdeId() != null ? getCdeId().hashCode() : 0);
         result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
+        result = 31 * result + (getCsCsiData() != null ? getCsCsiData().hashCode() : 0);
+        result = 31 * result + (getCsCsiDesignations() != null ? getCsCsiDesignations().hashCode() : 0);
+        result = 31 * result + (getCsCsiDefinitions() != null ? getCsCsiDefinitions().hashCode() : 0);
         return result;
     }
 
@@ -453,6 +566,9 @@ public class DataElementModel extends BaseModel
                 ", origin='" + origin + '\'' +
                 ", cdeId=" + cdeId +
                 ", question='" + question + '\'' +
+                ", csCsiData=" + csCsiData +
+                ", csCsiDesignations=" + csCsiDesignations +
+                ", csCsiDefinitions=" + csCsiDefinitions +
                 '}';
     }
 }

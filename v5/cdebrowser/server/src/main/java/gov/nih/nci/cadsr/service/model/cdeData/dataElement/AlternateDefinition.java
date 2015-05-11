@@ -1,10 +1,21 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
 
+import gov.nih.nci.cadsr.dao.model.DefinitionModel;
+
 public class AlternateDefinition
 {
     private String name;
     private String type;
     private String context;
+
+    public AlternateDefinition() {
+    }
+
+    public AlternateDefinition (DefinitionModel definitionModel) {
+        setName(definitionModel.getDefinition());
+        setContext(definitionModel.getContext().getName());
+        setType(definitionModel.getDeflName());
+    }
 
     public String getName()
     {

@@ -159,53 +159,71 @@ public class CDEDataController
         for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
         {
             ReferenceDocument referenceDoc = new ReferenceDocument();
-            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
+            referenceDoc.setDocumentName(referenceDocModel.getDocName());
             //logger.debug( referenceDocModel.getDocName() );
 
-            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
+            referenceDoc.setDocumentType(referenceDocModel.getDocType());
             //logger.debug( referenceDocModel.getDocType() );
 
-            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
+            referenceDoc.setDocumentText(referenceDocModel.getDocText());
             //logger.debug( referenceDocModel.getDocText() );
 
-            referenceDoc.setContext( referenceDocModel.getContext().getName() );
+            referenceDoc.setContext(referenceDocModel.getContext().getName());
             //logger.debug( referenceDocModel.getContext().getName() );
 
-            referenceDoc.setUrl( referenceDocModel.getUrl() );
+            referenceDoc.setUrl(referenceDocModel.getUrl());
             //logger.debug( referenceDocModel.getUrl() );
 
             referenceDocuments.add( referenceDoc );
         }
 
-        /////////////////////////////////////////////////////
-        // "Alternate Names" of the "Data Element" Tab
-
-        // List to populate for client side
-        List<AlternateName> alternateNames = new ArrayList<>();
-        dataElement.setAlternateNames( alternateNames );
-        List<DesignationModel> designationModels = dataElementModel.getDesignationModels();
-        for( DesignationModel designationModel : designationModels )
-        {
-            AlternateName alternateName = new AlternateName();
-            alternateName.setName( designationModel.getName() );
-            alternateName.setType( designationModel.getType() );
-            alternateName.setContext( designationModel.getContex().getName() );
-            alternateName.setLanguage( designationModel.getContex().getLanguage() );
-            alternateNames.add( alternateName );
-        }
 
         /////////////////////////////////////////////////////
-        // "Alternate Definitions" of the "Data Element" Tab
-        List<AlternateDefinition> alternateDefinitions = new ArrayList<>();
-        dataElement.setAlternateDefinitions( alternateDefinitions );
-        // FIXME - Need to find out where to get list of alternateDefinitions from dataElementModel
-        for (DefinitionModel definitionModel : dataElementModel.getDefinitionModels()) {
-            AlternateDefinition alternateDefinition = new AlternateDefinition();
-            alternateDefinition.setName(definitionModel.getDefinition());
-            alternateDefinition.setContext(definitionModel.getContext().getName());
-            alternateDefinition.setType(definitionModel.getDeflName());
-            alternateDefinitions.add(alternateDefinition);
+        // CS/CSI data of the "Data Element" Tab
+        List<CsCsi> dataElementCsCsis = new ArrayList<>();
+        // add all the cscsi's and their designations and definitions except the unclassified ones
+        for (CsCsiModel csCsiModel : dataElementModel.getCsCsiData().values()) {
+            if (!csCsiModel.getCsiIdseq().equals(csCsiModel.UNCLASSIFIED)) {
+                CsCsi csCsi = new CsCsi(csCsiModel);
+                ArrayList<AlternateName> alternateNames = new ArrayList<>();
+                if (dataElementModel.getCsCsiDesignations().get(csCsiModel.getCsiIdseq()) != null) { // if this CsCsiModel is only for definitions, might be null in designations
+                    // get the list of DesignationIdseq from DataElementModel.csCsiDesignations, a hashmap of Lists of designationIdseq's indexed by csCsiIdseq
+                    for (String designationIdseq : dataElementModel.getCsCsiDesignations().get(csCsiModel.getCsiIdseq())) {
+                        // call the AlternateName() constructor that takes a Designation model, giving it the model found by its index
+                        alternateNames.add(new AlternateName(dataElementModel.getDesignationModels().get(designationIdseq)));
+                    }
+                }
+                csCsi.setAlternateNames(alternateNames);
+                ArrayList<AlternateDefinition> alternateDefinitions = new ArrayList<>();
+                if (dataElementModel.getCsCsiDefinitions().get(csCsiModel.getCsiIdseq()) != null) { // if this CsCsiModel is only for designations, might be null in definitions
+                    // get the list of DefinitionIdseqs from DataElementModel.csCsiDefinitions, a hashmap of Lists of definitionIdseq's indexed by csCsiIdseq
+                    for (String definitionIdseq : dataElementModel.getCsCsiDefinitions().get(csCsiModel.getCsiIdseq())) {
+                        // call the AlternateDefinition constructor that takes a DefinitionModel, giving it the model found by its index
+                        alternateDefinitions.add(new AlternateDefinition(dataElementModel.getDefinitionModels().get(definitionIdseq)));
+                    }
+                }
+                csCsi.setAlternateDefinitions(alternateDefinitions);
+                dataElementCsCsis.add(csCsi);
+            }
         }
+        // now get the unclassified ones
+
+        CsCsi unclassCsCsi = new CsCsi(dataElementModel.getCsCsiData().get(CsCsiModel.UNCLASSIFIED));
+        ArrayList<AlternateName> unclassAlternateNames = new ArrayList<>();
+        if (dataElementModel.getCsCsiDesignations().get(CsCsiModel.UNCLASSIFIED) != null) {
+            for (String designationIdseq : dataElementModel.getCsCsiDesignations().get(CsCsiModel.UNCLASSIFIED)) {
+                unclassAlternateNames.add(new AlternateName(dataElementModel.getDesignationModels().get(designationIdseq)));
+            }
+        }
+        unclassCsCsi.setAlternateNames(unclassAlternateNames);
+        ArrayList<AlternateDefinition> unclassAlternateDefinitions = new ArrayList<>();
+        if (dataElementModel.getCsCsiDefinitions().get(CsCsiModel.UNCLASSIFIED) != null) {
+            for (String definitionIdseq : dataElementModel.getCsCsiDefinitions().get(CsCsiModel.UNCLASSIFIED)) {
+                unclassAlternateDefinitions.add(new AlternateDefinition(dataElementModel.getDefinitionModels().get(definitionIdseq)));
+            }
+        }
+        unclassCsCsi.setAlternateDefinitions(unclassAlternateDefinitions);
+        dataElementCsCsis.add(unclassCsCsi);
 
 
         /////////////////////////////////////////////////////
@@ -420,7 +438,7 @@ public class CDEDataController
         // "Classifications" section of the "Classifications" tab
         List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = new ArrayList<>();
         classifications.setClassificationsScheneRefernceDocuments( classificationsScheneRefernceDocuments );
-        // FIXME - Need to find out where to get classificationsScheneRefernceDocuments List from dataElementModel
+        // FIXME - Need to find out where to get classificationsSchemeReferenceDocuments List from dataElementModel
 
         /////////////////////////////////////////////////////
         // "Classification Scheme Item Reference Document

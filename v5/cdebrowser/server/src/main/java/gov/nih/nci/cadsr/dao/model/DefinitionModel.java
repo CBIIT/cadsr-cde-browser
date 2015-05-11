@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.dao.model;
 
+import java.util.List;
+
 /**
  * Created by lavezzojl on 5/6/15.
  */
@@ -12,6 +14,7 @@ public class DefinitionModel extends BaseModel
     private ContextModel context;
     private String laeName;
     private String deflName;
+    private List<String> csiIdseqs;
 
     public DefinitionModel() {
     }
@@ -64,6 +67,14 @@ public class DefinitionModel extends BaseModel
         this.deflName = deflName;
     }
 
+    public List<String> getCsiIdseqs() {
+        return csiIdseqs;
+    }
+
+    public void setCsiIdseqs(List<String> csiIdseqs) {
+        this.csiIdseqs = csiIdseqs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,7 +89,9 @@ public class DefinitionModel extends BaseModel
             return false;
         if (getContext() != null ? !getContext().equals(that.getContext()) : that.getContext() != null) return false;
         if (getLaeName() != null ? !getLaeName().equals(that.getLaeName()) : that.getLaeName() != null) return false;
-        return !(getDeflName() != null ? !getDeflName().equals(that.getDeflName()) : that.getDeflName() != null);
+        if (getDeflName() != null ? !getDeflName().equals(that.getDeflName()) : that.getDeflName() != null)
+            return false;
+        return !(getCsiIdseqs() != null ? !getCsiIdseqs().equals(that.getCsiIdseqs()) : that.getCsiIdseqs() != null);
 
     }
 
@@ -90,6 +103,7 @@ public class DefinitionModel extends BaseModel
         result = 31 * result + (getContext() != null ? getContext().hashCode() : 0);
         result = 31 * result + (getLaeName() != null ? getLaeName().hashCode() : 0);
         result = 31 * result + (getDeflName() != null ? getDeflName().hashCode() : 0);
+        result = 31 * result + (getCsiIdseqs() != null ? getCsiIdseqs().hashCode() : 0);
         return result;
     }
 
@@ -102,6 +116,7 @@ public class DefinitionModel extends BaseModel
                 ", context=" + context +
                 ", laeName='" + laeName + '\'' +
                 ", deflName='" + deflName + '\'' +
+                ", csiIdseqs=" + csiIdseqs +
                 '}';
     }
 }

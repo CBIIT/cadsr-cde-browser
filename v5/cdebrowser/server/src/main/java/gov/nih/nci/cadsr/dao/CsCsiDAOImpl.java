@@ -4,14 +4,19 @@
 
 package gov.nih.nci.cadsr.dao;
 
+import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -96,7 +101,7 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 + " order by CSI_LEVEL, upper(CSI_NAME)";
         //logger.debug( "getCsCsisById" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", csId ) );
-        result = getAll( sql, conteId, CsCsiModel.class );
+        result = getAll(sql, conteId, CsCsiModel.class);
         //logger.debug( sql.replace( "?", csId ) + " <<<<<<<" );
         //logger.debug( "Done getCsCsisById\n" );
 
@@ -127,5 +132,38 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
         return result;
     }
 
+    /**
+     * This method takes the Data Element's idseq to find the CS and CSI data associated
+     * with the DE's Definitions and Designations (alt names)
+     * @param deIdseq
+     * @return
+     */
+    @Override
+    public List<CsCsiModel> getAllCsCsisByDataElement(String deIdseq) {
+        List<CsCsiModel> csCsiModels;
+
+        String definitionCsCsiSql = "SELECT cs_csi.cs_idseq, cs_csi.cs_preffered_name AS cs_pref_name, cs_csi.cs_long_name, cs_csi.cstl_name, " +
+                "cs_csi.cs_preffred_definition, cs_csi.csi_idseq, cs_csi.csi_name, cs_csi.csitl_name, cs_csi.csi_description, " +
+                "cs_csi.cs_csi_idseq, csi_level, cs_csi.parent_csi_idseq, cs_csi.cs_conte_idseq " +
+                "FROM sbrext.br_cs_csi_hier_view_ext cs_csi, sbrext.ac_att_cscsi_ext att, sbr.definitions def " +
+                "WHERE def.ac_idseq = ? " +
+                "AND att.att_idseq = def.defin_idseq " +
+                "AND cs_csi.cs_csi_idseq = att.cs_csi_idseq";
+        //csCsiModels = jdbcTemplate.queryForList(definitionCsCsiSql, CsCsiModel.class, deIdseq);
+        csCsiModels = jdbcTemplate.query(definitionCsCsiSql, new Object[]{deIdseq}, new BeanPropertyRowMapper(CsCsiModel.class));
+
+
+        String designationCsCsiSql = "SELECT cs_csi.cs_idseq, cs_csi.cs_preffered_name AS cs_pref_name, cs_csi.cs_long_name, cs_csi.cstl_name, " +
+                "cs_csi.cs_preffred_definition, cs_csi.csi_idseq, cs_csi.csi_name, cs_csi.csitl_name, cs_csi.csi_description, " +
+                "cs_csi.cs_csi_idseq, csi_level, cs_csi.parent_csi_idseq, cs_csi.cs_conte_idseq " +
+                "FROM sbrext.br_cs_csi_hier_view_ext cs_csi, sbrext.ac_att_cscsi_ext att, sbr.designations desig" +
+                "WHERE desig.ac_idseq = ?" +
+                "AND att.att_idseq = desig.desig_idseq" +
+                "AND cs_csi.cs_csi_idseq = att.cs_csi_idseq";
+//        csCsiModels.addAll(jdbcTemplate.queryForList(definitionCsCsiSql, CsCsiModel.class, deIdseq));
+        csCsiModels.addAll(jdbcTemplate.query(definitionCsCsiSql, new Object[]{deIdseq}, new BeanPropertyRowMapper(CsCsiModel.class)));
+
+        return csCsiModels;
+    }
 
 }

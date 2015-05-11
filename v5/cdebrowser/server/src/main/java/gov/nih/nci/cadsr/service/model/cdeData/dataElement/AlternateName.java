@@ -1,11 +1,23 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
 
+import gov.nih.nci.cadsr.dao.model.DesignationModel;
+
 public class AlternateName
 {
     private String name;
     private String type;
     private String context;
     private String language;
+
+    public AlternateName() {
+    }
+
+    public AlternateName(DesignationModel designationModel) {
+        setName( designationModel.getName() );
+        setType( designationModel.getType() );
+        setContext( designationModel.getContex().getName() );
+        setLanguage( designationModel.getContex().getLanguage() );
+    }
 
     public String getName()
     {

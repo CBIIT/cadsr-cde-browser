@@ -10,8 +10,9 @@ import java.util.List;
 
 public interface CsCsiDAO
 {
-    public List<CsCsiModel> getCsCsisByParentCsCsi( String parentCsCsi );
-    public List<CsCsiModel> getCsCsisById( String csId );
-    public List<CsCsiModel> getAllCsCsis( );
+     List<CsCsiModel> getCsCsisByParentCsCsi( String parentCsCsi );
+     List<CsCsiModel> getCsCsisById( String csId );
+     List<CsCsiModel> getAllCsCsis( );
 
+    List<CsCsiModel> getAllCsCsisByDataElement(String deIdseq);
 }

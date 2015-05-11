@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.dao.model;
 
+import java.util.List;
+
 /**
  * Created by lavezzojl on 4/6/15.
  */
@@ -10,6 +12,7 @@ public class DesignationModel extends BaseModel {
     private ContextModel contex;
     private String lang;
     private String detlName;
+    private List<String> csiIdseqs;
 
     public DesignationModel() {
     }
@@ -72,6 +75,14 @@ public class DesignationModel extends BaseModel {
         this.detlName = detlName;
     }
 
+    public List<String> getCsiIdseqs() {
+        return csiIdseqs;
+    }
+
+    public void setCsiIdseqs(List<String> csiIdseqs) {
+        this.csiIdseqs = csiIdseqs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,7 +96,9 @@ public class DesignationModel extends BaseModel {
             return false;
         if (getContex() != null ? !getContex().equals(that.getContex()) : that.getContex() != null) return false;
         if (getLang() != null ? !getLang().equals(that.getLang()) : that.getLang() != null) return false;
-        return !(detlName != null ? !detlName.equals(that.detlName) : that.detlName != null);
+        if (getDetlName() != null ? !getDetlName().equals(that.getDetlName()) : that.getDetlName() != null)
+            return false;
+        return !(getCsiIdseqs() != null ? !getCsiIdseqs().equals(that.getCsiIdseqs()) : that.getCsiIdseqs() != null);
 
     }
 
@@ -96,19 +109,21 @@ public class DesignationModel extends BaseModel {
         result = 31 * result + (getDesigIDSeq() != null ? getDesigIDSeq().hashCode() : 0);
         result = 31 * result + (getContex() != null ? getContex().hashCode() : 0);
         result = 31 * result + (getLang() != null ? getLang().hashCode() : 0);
-        result = 31 * result + (detlName != null ? detlName.hashCode() : 0);
+        result = 31 * result + (getDetlName() != null ? getDetlName().hashCode() : 0);
+        result = 31 * result + (getCsiIdseqs() != null ? getCsiIdseqs().hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "DesignationModel{" +
-                "name='" + name + '\'' +
+                " name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", desigIDSeq='" + desigIDSeq + '\'' +
                 ", contex=" + contex +
                 ", lang='" + lang + '\'' +
                 ", detlName='" + detlName + '\'' +
-                '}';
+                ", csiIdseqs=" + csiIdseqs +
+                "} ";
     }
 }
