@@ -101,7 +101,7 @@
 
 
 <span data-ng-repeat="cdeCsi in cdeDetails.dataElement.csCsis">
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+<table ng-hide="cdeCsi.hide" class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
         <td class="dataElementHeading">CS Long Name</td>
         <td class="dataElementHeading">CS Definition</td>

@@ -11,6 +11,7 @@ public class CsCsi {
     private String csDefinition;
     private String csiName;
     private String csiType;
+    private Boolean hide;
 
     private List<AlternateName> alternateNames;
     private List<AlternateDefinition> alternateDefinitions;
@@ -23,6 +24,9 @@ public class CsCsi {
         csDefinition = csCsiModel.getCsPreffredDefinition();
         csiName = csCsiModel.getCsiName();
         csiType = csCsiModel.getCsitlName();
+        if (csiName == CsCsiModel.UNCLASSIFIED) {
+            hide = true;
+        }
     }
 
     public String getCsLongName() {
@@ -55,6 +59,14 @@ public class CsCsi {
 
     public void setCsiType(String csiType) {
         this.csiType = csiType;
+    }
+
+    public Boolean getHide() {
+        return hide;
+    }
+
+    public void setHide(Boolean hide) {
+        this.hide = hide;
     }
 
     public List<AlternateName> getAlternateNames() {
