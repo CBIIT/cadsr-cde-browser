@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -37,16 +38,16 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
     public List<DesignationModel> getDesignationModelsByAcIdseq(String acIdseq) {
 
         String sql = "SELECT * FROM SBR.DESIGNATIONS WHERE AC_IDSEQ = ?";
-        List<DesignationModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper(DesignationModel.class));
-        return dataElementModel;
+        List<DesignationModel> designationModels = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper(DesignationModel.class));
+        return designationModels;
     }
 
     @Override
     public List<DesignationModel> getUsedByDesignationModels(String acIdseq) {
 
         String sql = "SELECT * FROM SBR.DESIGNATIONS WHERE AC_IDSEQ = ? and DETL_NAME = 'USED_BY'";
-        List<DesignationModel> dataElementModel = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper(DesignationModel.class));
-        return dataElementModel;
+        List<DesignationModel> designationModels = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DesignationMapper(DesignationModel.class));
+        return designationModels;
     }
 
     public ContextDAO getContextDAO() {
@@ -88,23 +89,24 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
             }
 
             try {
+                // getAllAcAttCsCsiByAttIdseq() is pretty inefficient.  Could be moved into this DAO and just fetch DISTINCT cs_csi.csi_idseq
                 List<AcAttCsCsiModel> acAttCsCsiModels = getAcAttCsCsiDAO().getAllAcAttCsCsiByAttIdseq(rs.getString("DESIG_IDSEQ"));
                 if (acAttCsCsiModels != null && acAttCsCsiModels.size() > 0) {
-                    designationModel.setCsiIdseqs(new ArrayList<String>(acAttCsCsiModels.size()));
+                    designationModel.setCsiIdseqs(new HashSet<String>(acAttCsCsiModels.size()));
                     for (AcAttCsCsiModel acAttCsCsiModel : acAttCsCsiModels) {
                         if (acAttCsCsiModel.getCsCsiIdseq() != null) {
-                            designationModel.getCsiIdseqs().add(acAttCsCsiModel.getCsCsiIdseq());
+                            designationModel.getCsiIdseqs().add(acAttCsCsiModel.getCsiIdseq());
                         }
                     }
                 } else {
                     // this designation is unclassified
-                    designationModel.setCsiIdseqs(new ArrayList<String>(1));
+                    designationModel.setCsiIdseqs(new HashSet<String>(1));
                     designationModel.getCsiIdseqs().add(CsCsiModel.UNCLASSIFIED);
                 }
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("no CSIs found for Definition: " + rs.getString("DESIG_IDSEQ"));
                 // this designation is unclassified
-                designationModel.setCsiIdseqs(new ArrayList<String>(1));
+                designationModel.setCsiIdseqs(new HashSet<String>(1));
                 designationModel.getCsiIdseqs().add(CsCsiModel.UNCLASSIFIED);
             }
             return designationModel;

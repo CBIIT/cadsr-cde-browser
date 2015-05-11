@@ -181,6 +181,7 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // CS/CSI data of the "Data Element" Tab
         List<CsCsi> dataElementCsCsis = new ArrayList<>();
+        dataElement.setCsCsis(dataElementCsCsis);
         // add all the cscsi's and their designations and definitions except the unclassified ones
         for (CsCsiModel csCsiModel : dataElementModel.getCsCsiData().values()) {
             if (!csCsiModel.getCsiIdseq().equals(csCsiModel.UNCLASSIFIED)) {

@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.dao.model;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lavezzojl on 5/6/15.
@@ -14,7 +15,7 @@ public class DefinitionModel extends BaseModel
     private ContextModel context;
     private String laeName;
     private String deflName;
-    private List<String> csiIdseqs;
+    private Set<String> csiIdseqs;
 
     public DefinitionModel() {
     }
@@ -67,11 +68,11 @@ public class DefinitionModel extends BaseModel
         this.deflName = deflName;
     }
 
-    public List<String> getCsiIdseqs() {
+    public Set<String> getCsiIdseqs() {
         return csiIdseqs;
     }
 
-    public void setCsiIdseqs(List<String> csiIdseqs) {
+    public void setCsiIdseqs(Set<String> csiIdseqs) {
         this.csiIdseqs = csiIdseqs;
     }
 

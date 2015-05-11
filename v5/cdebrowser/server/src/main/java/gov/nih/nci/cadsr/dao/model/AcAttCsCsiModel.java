@@ -10,6 +10,7 @@ public class AcAttCsCsiModel extends BaseModel {
     private String csCsiIdseq;
     private String attIdseq;
     private String atlName;
+    private String csiIdseq;
     private Timestamp dateCreated;
     private Timestamp dateModified;
 
@@ -43,6 +44,14 @@ public class AcAttCsCsiModel extends BaseModel {
 
     public void setAtlName(String atlName) {
         this.atlName = atlName;
+    }
+
+    public String getCsiIdseq() {
+        return csiIdseq;
+    }
+
+    public void setCsiIdseq(String csiIdseq) {
+        this.csiIdseq = csiIdseq;
     }
 
     @Override
@@ -79,6 +88,8 @@ public class AcAttCsCsiModel extends BaseModel {
         if (getAttIdseq() != null ? !getAttIdseq().equals(that.getAttIdseq()) : that.getAttIdseq() != null)
             return false;
         if (getAtlName() != null ? !getAtlName().equals(that.getAtlName()) : that.getAtlName() != null) return false;
+        if (getCsiIdseq() != null ? !getCsiIdseq().equals(that.getCsiIdseq()) : that.getCsiIdseq() != null)
+            return false;
         if (getDateCreated() != null ? !getDateCreated().equals(that.getDateCreated()) : that.getDateCreated() != null)
             return false;
         return !(getDateModified() != null ? !getDateModified().equals(that.getDateModified()) : that.getDateModified() != null);
@@ -91,6 +102,7 @@ public class AcAttCsCsiModel extends BaseModel {
         result = 31 * result + (getCsCsiIdseq() != null ? getCsCsiIdseq().hashCode() : 0);
         result = 31 * result + (getAttIdseq() != null ? getAttIdseq().hashCode() : 0);
         result = 31 * result + (getAtlName() != null ? getAtlName().hashCode() : 0);
+        result = 31 * result + (getCsiIdseq() != null ? getCsiIdseq().hashCode() : 0);
         result = 31 * result + (getDateCreated() != null ? getDateCreated().hashCode() : 0);
         result = 31 * result + (getDateModified() != null ? getDateModified().hashCode() : 0);
         return result;
@@ -103,6 +115,7 @@ public class AcAttCsCsiModel extends BaseModel {
                 ", csCsiIdseq='" + csCsiIdseq + '\'' +
                 ", attIdseq='" + attIdseq + '\'' +
                 ", atlName='" + atlName + '\'' +
+                ", csiIdseq='" + csiIdseq + '\'' +
                 ", dateCreated=" + dateCreated +
                 ", dateModified=" + dateModified +
                 '}';

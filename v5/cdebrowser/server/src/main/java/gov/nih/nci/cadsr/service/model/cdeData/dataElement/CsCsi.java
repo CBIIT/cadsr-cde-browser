@@ -22,7 +22,7 @@ public class CsCsi {
         csLongName = csCsiModel.getCsLongName();
         csDefinition = csCsiModel.getCsPreffredDefinition();
         csiName = csCsiModel.getCsiName();
-        csiType = csCsiModel.getCsiType();
+        csiType = csCsiModel.getCsitlName();
     }
 
     public String getCsLongName() {

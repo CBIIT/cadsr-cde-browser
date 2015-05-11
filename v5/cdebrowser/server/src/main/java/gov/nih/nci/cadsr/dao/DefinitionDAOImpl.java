@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -85,23 +86,24 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
             }
 
             try {
+                // getAllAcAttCsCsiByAttIdseq() is pretty inefficient.  Could be moved into this DAO and just fetch DISTINCT cs_csi.csi_idseq
                 List<AcAttCsCsiModel> acAttCsCsiModels = getAcAttCsCsiDAO().getAllAcAttCsCsiByAttIdseq(rs.getString("DEFIN_IDSEQ"));
                 if (acAttCsCsiModels != null && acAttCsCsiModels.size() > 0) {
-                    definitionModel.setCsiIdseqs(new ArrayList<String>(acAttCsCsiModels.size()));
+                    definitionModel.setCsiIdseqs(new HashSet<String>(acAttCsCsiModels.size()));
                     for (AcAttCsCsiModel acAttCsCsiModel : acAttCsCsiModels) {
                         if (acAttCsCsiModel.getCsCsiIdseq() != null) {
-                            definitionModel.getCsiIdseqs().add(acAttCsCsiModel.getCsCsiIdseq());
+                            definitionModel.getCsiIdseqs().add(acAttCsCsiModel.getCsiIdseq());
                         }
                     }
                 } else {
                     // this Definition is unclassified
-                    definitionModel.setCsiIdseqs(new ArrayList<String>(1));
+                    definitionModel.setCsiIdseqs(new HashSet<String>(1));
                     definitionModel.getCsiIdseqs().add(CsCsiModel.UNCLASSIFIED);
                 }
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("no CSIs found for Definition: " + rs.getString("DEFIN_IDSEQ"));
                 // this Definition is unclassified
-                definitionModel.setCsiIdseqs(new ArrayList<String>(1));
+                definitionModel.setCsiIdseqs(new HashSet<String>(1));
                 definitionModel.getCsiIdseqs().add(CsCsiModel.UNCLASSIFIED);
             }
 
