@@ -132,6 +132,9 @@
         <td class="dataElementValue">{{altName.context}}</td>
         <td class="dataElementValue">{{altName.language}}</td>
     </tr>
+    <tr class="dataElementViewTableTr" ng-hide="cdeCsi.alternateNames.length">
+        <td colspan="4">No applicable Alternate Names</td>
+    </tr>
 </table>
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
@@ -147,6 +150,9 @@
         <td class="dataElementValue">{{altDef.name}}</td>
         <td class="dataElementValue">{{altDef.type}}</td>
         <td class="dataElementValue">{{altDef.context}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr" ng-hide="cdeCsi.alternateDefinitions.length">
+        <td colspan="3">No applicable Alternate Definitions</td>
     </tr>
 </table>
 <Br/>
