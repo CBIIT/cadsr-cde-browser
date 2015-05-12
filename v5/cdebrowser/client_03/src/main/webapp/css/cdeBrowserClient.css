@@ -143,7 +143,9 @@ a:hover {
 .basicSearchQuery {
     width: 70%;
 }
-
+.searchTips {
+    font-size: 8pt;
+}
 .basicSearchField {
     margin-right: 10px;
     width: 80px;

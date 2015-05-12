@@ -20,22 +20,21 @@
 <div class="topButtons">
     <table class="hdrBG" border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-            <td scope="row" align="left" >
-                <a href="http://www.cancer.gov/">
-                    <img   height="46" alt="National Cancer Institute" src="images/left_red_white_96.png" border="0" >
+            <td scope="row" align="left">
+                <a href="http://www.cancer.gov/" target="_blank">
+                    <img height="46" alt="National Cancer Institute" src="images/left_red_white_96.png" border="0">
                 </a>
             </td>
 
             <td>
                 &nbsp;
             </td>
-            <td align="right"  >
+            <td align="right">
 
-                <a href="http://www.cancer.gov/">
+                <a href="http://www.cancer.gov/" target="_blank">
                     <img height="46" alt="U.S. National Institutes of Health | www.cancer.gov"
                          src="images/right_red_white_96.png" border="0">
                 </a>
-
 
 
             </td>
@@ -221,9 +220,10 @@
                 node is the actual node, we just need the text for the tabs.
             -->
             <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
-
+                <!--
                 <li id="top_tabs"
                     data-ng-mouseenter="hover = true"
+                    data-ng-mouseover="hover = true"
                     data-ng-mouseleave="hover = false"
                     data-ng-class="{
                         tabActive: isActiveTab(nodeNumber),
@@ -233,6 +233,17 @@
                     data-ng-click="onClickTab(nodeNumber)">
                     &nbsp;{{node.text}}&nbsp;
                 </li>
+                -->
+
+                <li id="top_tabs"
+                    data-ng-class="{
+                        tabActive: isActiveTab(nodeNumber),
+                        tabNormal: (! isActiveTab(nodeNumber))
+                        }"
+                    data-ng-click="onClickTab(nodeNumber)">
+                    &nbsp;{{node.text}}&nbsp;
+                </li>
+
             </div>
         </ul>
     </div>
@@ -297,12 +308,14 @@
         <div class="searchInput">
             <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
 
+
             <select class="basicSearchField"
                     data-ng-model="queryField"
                     data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
             </select>
 
-            <br>
+            <div class="searchTips">Tip: This is an exact match search. To search for partial words or phrases use the * as a wildcard.</div>
+
             <button data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
                 Search
             </button>
@@ -334,17 +347,30 @@
         <!-- the search results tabs and content below -->
         <div class="cdeTabs">
             <ul class="cdeTabsUl">
+                <!--
                 <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
                         data-ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-mouseenter="hover = true"
                         data-ng-mouseleave="hover = false"
                         data-ng-class="{
+                                        tabActive:   isActiveCdeTab(tabNumber),
+                                        tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
+                                        tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
+                                        }"
+                        data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
+                </button>
+                -->
+
+                <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
+                        data-ng-repeat="(tabNumber,tab) in tabs"
+                        data-ng-class="{
                         tabActive:   isActiveCdeTab(tabNumber),
-                        tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
-                        tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
+                        tabNormal:   (! isActiveCdeTab(tabNumber))
                         }"
                         data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
                 </button>
+
+
             </ul>
         </div>
 
@@ -417,7 +443,7 @@
                     <td>
                         <a href="https://wiki.nci.nih.gov/display/caDSR/caDSR+Privacy+Policy+Statement;jsessionid=701CBEBAA93126F2C34FBD368135F532"
                            target="_blank">Privacy Notice</a></td>
-                    <td>Version 5</td>
+                    <td>Version 5.0 &nbsp;&nbsp;&nbsp;Build 01</td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
                     </td>
                 </tr>

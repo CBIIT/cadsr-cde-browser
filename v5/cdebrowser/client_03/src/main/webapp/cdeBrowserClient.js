@@ -259,6 +259,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
                 $scope.searchResultsMessage = "No search results";
                 $scope.haveSearchResults = false;
                 $scope.bigSearchResultsMessageClass = true;
+
+                $scope.tableParams.reload();
             }
         });
     };
