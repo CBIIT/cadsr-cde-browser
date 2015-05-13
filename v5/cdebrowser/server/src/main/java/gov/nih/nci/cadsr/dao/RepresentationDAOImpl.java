@@ -19,7 +19,7 @@ import java.sql.SQLException;
  */
 public class RepresentationDAOImpl extends AbstractDAOOperations implements RepresentationDAO {
 
-    private Logger logger = LogManager.getLogger(DataElementConceptDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger(RepresentationDAOImpl.class.getName());
 
     private JdbcTemplate jdbcTemplate;
 

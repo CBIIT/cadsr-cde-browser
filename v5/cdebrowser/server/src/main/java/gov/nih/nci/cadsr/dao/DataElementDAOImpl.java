@@ -30,6 +30,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private ReferenceDocDAO referenceDocDAO;
     private AcRegistrationsDAO acRegistrationsDAO;
     private CsCsiDAO csCsiDAO;
+    private UsageDAO usageDAO;
 
 //private String DataElementSql; //Spring DAOs are singletons.  Doing this whole passing sql around as member variables is totally not safe...
 
@@ -150,6 +151,14 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         this.csCsiDAO = csCsiDAO;
     }
 
+    public UsageDAO getUsageDAO() {
+        return usageDAO;
+    }
+
+    public void setUsageDAO(UsageDAO usageDAO) {
+        this.usageDAO = usageDAO;
+    }
+
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
@@ -242,6 +251,12 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 // none found. Call fillCsCsiData() to initalize the "Unclassified" record
                 dataElementModel.fillCsCsiData(new ArrayList<CsCsiModel>(0));
             }
+            try {
+                dataElementModel.setUsageModels(getUsageDAO().getUsagesByDeIdseq(deIdseq));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No UsageModels found for Data Element with idseq: " + deIdseq);
+            }
+
             return dataElementModel;
         }
     }

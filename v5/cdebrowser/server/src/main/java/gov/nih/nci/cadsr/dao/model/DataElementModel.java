@@ -62,6 +62,8 @@ public class DataElementModel extends BaseModel
      * (each entry is a list of the definitionIdseqs that are classified into the indexed csiIdseq)
      */
     private HashMap<String,List<String>> csCsiDefinitions;
+    private List<UsageModel> usageModels;
+
 
     public DataElementModel() {
     }
@@ -418,7 +420,7 @@ public class DataElementModel extends BaseModel
     }
 
     public void setDesignationModels(List<DesignationModel> designationModels) {
-        setDesignationModels(new HashMap<String,DesignationModel>());
+        setDesignationModels(new HashMap<String, DesignationModel>());
         for (DesignationModel designationModel : designationModels) {
             getDesignationModels().put(designationModel.getDesigIDSeq(), designationModel);
         }
@@ -437,6 +439,14 @@ public class DataElementModel extends BaseModel
         for (DefinitionModel definitionModel : definitionModels) {
             getDefinitionModels().put(definitionModel.getDefinIdseq(), definitionModel);
         }
+    }
+
+    public List<UsageModel> getUsageModels() {
+        return usageModels;
+    }
+
+    public void setUsageModels(List<UsageModel> usageModels) {
+        this.usageModels = usageModels;
     }
 
     @Override
@@ -495,7 +505,9 @@ public class DataElementModel extends BaseModel
             return false;
         if (getCsCsiDesignations() != null ? !getCsCsiDesignations().equals(that.getCsCsiDesignations()) : that.getCsCsiDesignations() != null)
             return false;
-        return !(getCsCsiDefinitions() != null ? !getCsCsiDefinitions().equals(that.getCsCsiDefinitions()) : that.getCsCsiDefinitions() != null);
+        if (getCsCsiDefinitions() != null ? !getCsCsiDefinitions().equals(that.getCsCsiDefinitions()) : that.getCsCsiDefinitions() != null)
+            return false;
+        return !(getUsageModels() != null ? !getUsageModels().equals(that.getUsageModels()) : that.getUsageModels() != null);
 
     }
 
@@ -532,6 +544,7 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getCsCsiData() != null ? getCsCsiData().hashCode() : 0);
         result = 31 * result + (getCsCsiDesignations() != null ? getCsCsiDesignations().hashCode() : 0);
         result = 31 * result + (getCsCsiDefinitions() != null ? getCsCsiDefinitions().hashCode() : 0);
+        result = 31 * result + (getUsageModels() != null ? getUsageModels().hashCode() : 0);
         return result;
     }
 
@@ -569,6 +582,7 @@ public class DataElementModel extends BaseModel
                 ", csCsiData=" + csCsiData +
                 ", csCsiDesignations=" + csCsiDesignations +
                 ", csCsiDefinitions=" + csCsiDefinitions +
+                ", usageModels=" + usageModels +
                 '}';
     }
 }

@@ -41,7 +41,7 @@
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="7" align="left">Form Usage</th>
+        <th colspan="7" align="left">Form Usage - Table needs a pager</th>
     </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
@@ -54,14 +54,14 @@
         <td class="dataElementHeading">Public Id</td>
         <td class="dataElementHeading">Version</td>
     </tr>
-    <tr class="dataElementViewTableTr" >
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue"><a href="">NOT YET PROVIDED FROM SERVER</a></td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    <tr class="dataElementViewTableTr" ng-repeat="usage in cdeDetails.usage.formUsages">
+        <td class="dataElementValue">{{usage.protocolNumber}}</td>
+        <td class="dataElementValue">{{usage.leadOrg}}</td>
+        <td class="dataElementValue">{{usage.formName}}</td>
+        <td class="dataElementValue">{{usage.questionName}}</td>
+        <td class="dataElementValue">{{usage.formUsageType}}</td>
+        <td class="dataElementValue"><a href="{{usage.url}}">{{usage.publicId}}</a></td>
+        <td class="dataElementValue">{{usage.version}}</td>
     </tr>  
 </table>
 

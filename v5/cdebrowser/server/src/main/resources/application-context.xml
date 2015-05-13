@@ -81,6 +81,7 @@
         <property name="referenceDocDAO" ref="referenceDocDAO"/>
         <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
         <property name="csCsiDAO" ref="csCsiDAO"/>
+        <property name="usageDAO" ref="usageDAO"/>
     </bean>
     <bean id="definitionDAO" class="gov.nih.nci.cadsr.dao.DefinitionDAOImpl" parent="abstractDao">
         <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>
@@ -106,6 +107,7 @@
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
+    <bean id="usageDAO" class="gov.nih.nci.cadsr.dao.UsageDAOImpl" parent="abstractDao"/>
     <bean id="valueDomainDAO" class="gov.nih.nci.cadsr.dao.ValueDomainDAOImpl" parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>

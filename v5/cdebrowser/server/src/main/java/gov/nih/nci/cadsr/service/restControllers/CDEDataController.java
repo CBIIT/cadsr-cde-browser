@@ -473,7 +473,14 @@ public class CDEDataController
         usage.setFormUsages( formUsages );
         // FIXME - Need to find out where to get FormUsage List from dataElementModel
         //dataElementModel.getUsingContexts()
-
+        if (dataElementModel.getUsageModels() != null && dataElementModel.getUsageModels().size() > 0) {
+            for (UsageModel usageModel : dataElementModel.getUsageModels()) {
+//                logger.error("current usage model: " + usageModel.getPublicId());
+                formUsages.add(new FormUsage(usageModel));
+            }
+        } else {
+            logger.error("no usage models");
+        }
         return usage;
     }
 

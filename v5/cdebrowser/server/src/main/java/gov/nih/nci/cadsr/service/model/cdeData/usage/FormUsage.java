@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.usage;
 
+import gov.nih.nci.cadsr.dao.model.UsageModel;
+
 /**
  * Created by lernermh on 4/22/15.
  */
@@ -12,6 +14,19 @@ public class FormUsage
     private String formUsageType ;
     private int publicId;
     private float version;
+    private String url;
+
+    public FormUsage(UsageModel usageModel) {
+        this.protocolNumber = usageModel.getProtocolNumber();
+        this.leadOrg = usageModel.getLeadOrg();
+        this.formName = usageModel.getFormName();
+        this.questionName = usageModel.getQuestionName();
+        this.formUsageType = usageModel.getFormUsageType();
+        this.publicId = usageModel.getPublicId();
+        this.version = usageModel.getVersion();
+        //FIXME: compose URL from properties/DB Values
+        this.url = "https://formbuilder-dev.nci.nih.gov/FormBuilder/formDetailsAction.do?method=getFormDetails&formIdSeq=" + usageModel.getFormIdseq();
+    }
 
     public String getProtocolNumber()
     {
@@ -81,5 +96,13 @@ public class FormUsage
     public void setVersion( float version )
     {
         this.version = version;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
