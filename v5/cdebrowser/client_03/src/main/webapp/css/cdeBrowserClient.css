@@ -71,18 +71,20 @@ a:hover {
     top: 156px;
 }
 
-
 .topButtons {
     color: #0f0;
     height: 90px;
 }
 
+
 /* The four round buttons - top right */
-.buttonCell {
+.roundButton {
+    font-size: 10pt;
+}
+.roundButton a {
     background-color: #fff;
     color: #a52a2a;
-    font-size: 10pt;
-
+    text-decoration: none;
 }
 
 .toolLinks:link, .toolLinks:visited, .toolLinks:active, .toolLinks:hover {
