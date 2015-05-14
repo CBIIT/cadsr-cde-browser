@@ -213,3 +213,7 @@ a:hover {
     right: 6px;
     top: 47px;
 }
+
+.top2-right-logo a {
+    text-decoration: none;
+}
