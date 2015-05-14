@@ -16,182 +16,118 @@
 <body>
 <!-- =============================================================================== -->
 
-<!-- ************ Top Red header with NCI logo ************ -->
-<div class="topButtons">
-    <table class="hdrBG" border="0" cellpadding="0" cellspacing="0" width="100%">
+<!-- ************ Top header with NCI logo ************ -->
+<div class="top-left-logo">
+    <a href="http://www.cancer.gov/" target="_blank">
+        <img alt="National Cancer Institute" src="images/CBIIT-36px-Logo-COLOR.png">
+    </a>
+</div>
+
+<div class="top-center-logo">
+    <img src="icons/iconSet0/cdeBrowserLogo.png" alt="cdeBrowserLogo">
+</div>
+
+<div class="top-right-logo">
+    <a href="http://www.cancer.gov/" target="_blank">
+        <span>U.S. National Institutes of Health | www.cancer.gov</span>
+    </a>
+</div>
+
+<!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
+<div class="top2-left-logo">
+    <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
+        <img src="icons/iconSet0/caDSR_logo2.png">
+    </a>
+</div>
+
+<!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
+<div class="top2-center-logo">
+    <span>
+        <a class="toolLinks" href="http://cadsradmin.nci.nih.gov" target="_blank">
+            Admin Tool
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://cdecurate.nci.nih.gov" target="_blank">
+            Curation Tool
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="http://ncim.nci.nih.gov/ncimbrowser" target="_blank">
+            NCI Metathesaurus
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="http://ncit.nci.nih.gov/ncitbrowser/start.jsf" target="_blank">
+            NCI Terminology Server
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://cadsrsentinel.nci.nih.gov" target="_blank">
+            Sentinel Tool
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://wiki.nci.nih.gov/x/egAxEQ" target="_blank">
+            What's new
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://wiki.nci.nih.gov/x/AbH9AQ" target="_blank">
+            Available Downloads
+        </a>&nbsp;
+    </span>
+</div>
+
+<!-- ** Four round buttons **  -->
+<div class="top2-right-logo">
+    <table Cellpadding=3 Cellspacing=0 id="headerButtons" bgcolor="#db7093">
         <tr>
-            <td scope="row" align="left">
-                <a href="http://www.cancer.gov/" target="_blank">
-                    <img height="46" alt="National Cancer Institute" src="images/left_red_white_96.png" border="0">
+            <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                <a href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
+                    <img
+                            id="shoppingButton"
+                            src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
+                            alt="CDE Cart"
+                            />
                 </a>
+                <br>
+                <span> &nbsp;CDE&nbsp;Cart</span>
             </td>
-
-            <td>
-                &nbsp;
-            </td>
-            <td align="right">
-
-                <a href="http://www.cancer.gov/" target="_blank">
-                    <img height="46" alt="U.S. National Institutes of Health | www.cancer.gov"
-                         src="images/right_red_white_96.png" border="0">
+            <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                <a href="/CDEBrowser/" target="_top">
+                    <img
+                            id="homeButton"
+                            src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
+                            alt="Home"
+                            />
                 </a>
-
-
+                <br>
+                &nbsp;Home&nbsp;
             </td>
-        </tr>
-    </table>
 
-    <!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
-    <table valign="top" width=100%; Cellpadding=0 Cellspacing=0>
-        <tr>
-
-            <!-- **** caDSR logo **** -->
-            <td>
-                <a top_image id="top_image"
-                   href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr"
+            <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                <a href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
                    target="_blank">
-                    <img src="icons/iconSet0/caDSR_logo.png">
+                    <img id="formButton"
+                         src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
+                         alt="FormBuilder"
+                            />
                 </a>
+                <br>
+                &nbsp;FormBuilder&nbsp;
             </td>
 
-
-            <!-- **** CDE Browser logo and four buttons **** -->
-            <td>
-                <table width=100%>
-                    <tr>
-                        <!-- ** large CDE Browser Logo **  -->
-                        <td valign="top" align="right" nowrap>
-                            <img src="icons/iconSet0/cdeBrowserLogo.png" border="0" alt="cdeBrowserLogo">
-                        </td>
-
-                        <!-- ** Four round buttons **  -->
-                        <td align=right valign=top colspan=3 align="right" nowrap>
-                            <table Cellpadding=3 Cellspacing=0 id="headerButtons" bgcolor="#db7093">
-                                <tr>
-                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
-                                            <img
-                                                    id="shoppingButton"
-                                                    src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
-                                                    alt="CDE Cart"
-                                                    />
-                                        </a>
-                                        <br>
-                                        <span> &nbsp;CDE&nbsp;Cart</span>
-                                    </td>
-                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a href="/CDEBrowser/" target="_top">
-                                            <img
-                                                    id="homeButton"
-                                                    src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
-                                                    alt="Home"
-                                                    />
-                                        </a>
-                                        <br>
-                                        &nbsp;Home&nbsp;
-                                    </td>
-
-                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
-                                           target="_blank">
-                                            <img id="formButton"
-                                                 src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
-                                                 alt="FormBuilder"
-                                                    />
-                                        </a>
-                                        <br>
-                                        &nbsp;FormBuilder&nbsp;
-                                    </td>
-
-                                    <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
-                                        <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
-                                           target="_blank">
-                                            <img id="helpButton"
-                                                 src="icons/buttonIconSet0/brown/75_percent/circle_help.png"
-                                                 alt="Task Help"
-                                                    />
-                                        </a>
-                                        <br>
-                                        &nbsp;Help&nbsp;
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                        <!--  End Four buttons  -->
-
-                    </tr>
-                    <tr>
-
-
-                        <!-- ************ Third row at top - Seven links:  ************ -->
-                        <!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
-
-                        <table align="right" Cellpadding=6 Cellspacing=1>
-                            <tr>
-                                <td valign="bottom" align="center" height="10" nowrap>
-                                    <span style="font-size: 9pt; font-family: Arial">
-                                        <a class="toolLinks" href="http://cadsradmin.nci.nih.gov" target="_blank">
-                                            Admin Tool
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-
-                                <td align="center" valign="bottom" height="10" nowrap>
-                                    <span style="font-size: 9pt; font-family: Arial">
-                                        <a class="toolLinks" href="https://cdecurate.nci.nih.gov" target="_blank">
-                                            Curation Tool
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-
-                                <td align="center" valign="bottom" height="10" nowrap>
-                                    <span style="font-size: 9pt; font-family: Arial">
-                                        <a class="toolLinks" href="http://ncim.nci.nih.gov/ncimbrowser" target="_blank">
-                                            NCI Metathesaurus
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-
-                                <td align="center" valign="bottom" height="10" nowrap>
-                                    <span style="font-size: 9pt; font-family: Arial">
-                                        <a class="toolLinks" href="http://ncit.nci.nih.gov/ncitbrowser/start.jsf"
-                                           target="_blank">
-                                            NCI Terminology Server
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-
-                                <td align="center" valign="bottom" height="10" nowrap>
-                                    <span style="font-size: 9pt; font-family: Arial">
-                                        <a class="toolLinks" href="https://cadsrsentinel.nci.nih.gov" target="_blank">
-                                            Sentinel Tool
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-
-                                <td height="10" valign="bottom" nowrap>
-                                    <span style="font-size: 10.0pt; font-family: Arial">
-                                        <a class="toolLinks"
-                                           href="https://wiki.nci.nih.gov/x/egAxEQ"
-                                           target="_blank">
-                                            What's new
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-
-                                <td height="10" valign="bottom" align="right" nowrap>
-                                    <span style="font-size: 10.0pt; font-family: Arial">
-                                        <a class="toolLinks" href="https://wiki.nci.nih.gov/x/AbH9AQ" target="_blank">
-                                            Available Downloads
-                                        </a>&nbsp;
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                        <!-- End of Seven links-->
-                    </tr>
-                </table>
-
+            <td class="buttonCell" valign="TOP" align="CENTER" colspan=1>
+                <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                   target="_blank">
+                    <img id="helpButton"
+                         src="icons/buttonIconSet0/brown/75_percent/circle_help.png"
+                         alt="Task Help"
+                            />
+                </a>
+                <br>
+                &nbsp;Help&nbsp;
             </td>
         </tr>
     </table>
@@ -313,8 +249,11 @@
                     data-ng-model="queryField"
                     data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
             </select>
+            <br>
 
-            <div class="searchTips">Tip: This is an exact match search. To search for partial words or phrases use the * as a wildcard.</div>
+            <div class="searchTips">Tip: This is an exact match search. To search for partial words or phrases use the *
+                as a wildcard.
+            </div>
 
             <button data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
                 Search
@@ -443,7 +382,7 @@
                     <td>
                         <a href="https://wiki.nci.nih.gov/display/caDSR/caDSR+Privacy+Policy+Statement;jsessionid=701CBEBAA93126F2C34FBD368135F532"
                            target="_blank">Privacy Notice</a></td>
-                    <td>Version 5.0 &nbsp;&nbsp;&nbsp;Build 01</td>
+                    <td>Version 5.0 &nbsp;&nbsp;Build 01</td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
                     </td>
                 </tr>

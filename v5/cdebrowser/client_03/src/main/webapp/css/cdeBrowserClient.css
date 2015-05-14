@@ -34,7 +34,13 @@ a:hover {
 
 /* for the cell that contains the required cancer.gov header */
 .hdrBG {
-    background-color: #a90101; /* constant: red */
+    /*
+    background-color: #a90101; /!* constant: red *!/
+    */
+    /*
+    background-color: #fff; /!* constant: red *!/
+    */
+    background-color: #0ff; /* constant: red */
 }
 
 /* The initial loading message or error message  */
@@ -65,8 +71,9 @@ a:hover {
     top: 156px;
 }
 
+
 .topButtons {
-    color: #000;
+    color: #0f0;
     height: 90px;
 }
 
@@ -89,7 +96,7 @@ a:hover {
     padding-left: 15px;
 
     /*  Top of display pane  */
-    margin-top: 58px; /* needs to match .treeMenu.  If you change this, you will also need to change .topTabPos */
+    margin-top: 110px; /* needs to match .treeMenu.  If you change this, you will also need to change .topTabPos */
 
     overflow-x: scroll;
     overflow-y: scroll;
@@ -100,7 +107,7 @@ a:hover {
 .treeMenu {
     float: left;
     /* top of tree menu pane  */
-    margin-top: 58px; /* needs to match .resultsDisplay.  If you change this, you will also need to change .topTabPos*/
+    margin-top: 110px; /* needs to match .resultsDisplay.  If you change this, you will also need to change .topTabPos*/
     margin-left: 6px;
 
     font-size: 13px;
@@ -143,7 +150,11 @@ a:hover {
 .basicSearchQuery {
     width: 70%;
 }
+
 .searchTips {
+    margin-top: 4px;
+    margin-bottom: 4px;
+
     font-size: 8pt;
 }
 .basicSearchField {
@@ -153,4 +164,52 @@ a:hover {
 
 .cdeTabs {
     background-color: #336699;
+}
+
+
+
+/* top row of logos and links */
+.top-left-logo {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+}
+.top-center-logo {
+    position: absolute;
+    right: 256px;
+    top: 4px;
+}
+
+.top-right-logo {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+}
+
+/*  No line under the text/link "U.S. National Institutes of Health | www.cancer.gov" */
+.top-right-logo a{
+    text-decoration: none;
+    font-size: 9pt;
+}
+
+
+/* the second top row of logos and links */
+.top2-left-logo {
+    position: absolute;
+    left: 10px;
+    top: 43px;
+}
+
+/* row of links  */
+.top2-center-logo {
+    position: absolute;
+    right: 250px;
+    top: 77px;
+    font-size: 9pt;
+}
+
+.top2-right-logo {
+    position: absolute;
+    right: 6px;
+    top: 47px;
 }

@@ -1,6 +1,6 @@
 properties =
 {
-    bottomOffset: 190
+    bottomOffset: 130
 }
 
 var nodeTypes = [ "Empty", "Container", "CSI", "Folder", "ProtocolFormsFolder", "CIS Folder", "Protocol" ];
