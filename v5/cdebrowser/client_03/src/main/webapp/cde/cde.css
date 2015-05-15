@@ -64,25 +64,6 @@
     color: #ffffff;
 }
 
-.dataElementDescriptionX {
-    list-style-type: none;
-    background-color: #BABC80;
-    color: #265085;
-    float: left;
-
-    align-content: space-between;
-}
-
-.dataElementValueX {
-    background-color: beige;
-    padding-left: 0;
-}
-
-.tdX {
-    margin: 0;
-    border: 1px SOLID #838550;
-}
-
 .dataElementViewTable {
 
     width: 90%;
@@ -96,18 +77,18 @@
 }
 
 .dataElementViewTableTr {
-    FONT-SIZE: 10pt;
-    BACKGROUND: #f7f7e7;
-    COLOR: #000000;
-    FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 10pt;
+    background: #f7f7e7;
+    color: #000000;
+    font-family: Arial, Helvetica, Geneva, sans-serif;
 }
 
 .dataElementDescription {
     width: 25%;
     FONT-WEIGHT: bold;
-    FONT-SIZE: 10pt;
-    COLOR: #336699;
-    FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 10pt;
+    color: #336699;
+    font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color: #cccc99;
     text-align: right;
 }
@@ -115,9 +96,9 @@
 .dataElementHeading {
     width: 25%;
     FONT-WEIGHT: bold;
-    FONT-SIZE: 10pt;
-    COLOR: #336699;
-    FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 10pt;
+    color: #336699;
+    font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color: #cccc99;
     text-align: left;
 }
@@ -125,9 +106,9 @@
 .dataElementSubHeading {
     width: 25%;
     FONT-WEIGHT: bold;
-    FONT-SIZE: 10pt;
-    COLOR: #336699;
-    FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 10pt;
+    color: #336699;
+    font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color:#fff;
     text-align: left;
 }
@@ -137,7 +118,6 @@
     font-size: 10pt;
     color: #000000
 }
-
 
 .cdeDetailsSubHeadingTable {
     font-family: Arial, Helvetica, Geneva, sans-serif;

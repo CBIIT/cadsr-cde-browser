@@ -32,16 +32,6 @@ a:hover {
     color: #1A4660;
 }
 
-/* for the cell that contains the required cancer.gov header */
-.hdrBG {
-    /*
-    background-color: #a90101; /!* constant: red *!/
-    */
-    /*
-    background-color: #fff; /!* constant: red *!/
-    */
-    background-color: #0ff; /* constant: red */
-}
 
 /* The initial loading message or error message  */
 .bigMessage {
@@ -159,6 +149,7 @@ a:hover {
 
     font-size: 8pt;
 }
+
 .basicSearchField {
     margin-right: 10px;
     width: 80px;
@@ -194,7 +185,6 @@ a:hover {
     font-size: 9pt;
 }
 
-
 /* the second top row of logos and links */
 .top2-left-logo {
     position: absolute;
@@ -216,6 +206,7 @@ a:hover {
     top: 47px;
 }
 
+/*  No line under the space between the round buttons */
 .top2-right-logo a {
     text-decoration: none;
 }

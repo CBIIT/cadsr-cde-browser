@@ -48,6 +48,8 @@
     padding: 5px;
 }
 
+/*** Search results table ***/
+
 /** override some ng-table styles **/
 .searchResultsLink:link, .searchResultsLink:active, .searchResultsLink:visited {
     color: #663300;
@@ -183,14 +185,12 @@
     color: #663300;
 }
 
+
+/***  Footer ***/
 #footer {
     background-color: #336699;
-    font-size: 80%;
+    font-size: 8pt;
     margin-top: 10px;
-    /*
-    margin-right: 10px;
-    margin-left: 10px;
-    */
     color: #fff;
 }
 

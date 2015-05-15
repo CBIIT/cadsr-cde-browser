@@ -258,7 +258,9 @@
             </button>
         </div>
 
+
         <hr>
+        <!-- Search status message -->
         <span data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
              normSearchResultsMessage: (! bigSearchResultsMessageClass)
@@ -270,6 +272,8 @@
             {{statusMessage}}
         </div>
 
+
+        <!--  Bread Crumbs  -->
         <div class="breadCrumbs">
             <span data-ng-show="breadCrumbs">
                 <span data-ng-repeat="b in breadCrumbs">
@@ -277,6 +281,7 @@
                 </span><br/>
             </span>
         </div>
+
 
         <!-- the search results tabs and content below -->
         <div class="cdeTabs">
@@ -304,12 +309,11 @@
                         data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
                 </button>
 
-
             </ul>
         </div>
 
         <!-- =============================================================================== -->
-        <!-- The search results tab - this is the only tab that is not an ng-view ========== -->
+        <!-- The search results tab with Search results table - this is the only tab that is not an ng-view ========== -->
         <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
             <div class="sortOrder">
                 <div class="sortOrder left" ng-repeat="(key,val) in tableParams.sorting()">Sort Order:
@@ -363,12 +367,12 @@
                 </tr>
             </table>
         </div>
-        <!-- =============================================================================== -->
 
         <!-- =============================================================================== -->
         <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
         <div class="cdeSearchTabsView" data-ng-view></div>
         <!-- =============================================================================== -->
+
 
         <div id="footer">
             <table>
@@ -389,15 +393,15 @@
 
 </div>
 
-<script type='text/javascript' src='angular.min.js'></script>
-<script type='text/javascript' src='angular-animate.min.js'></script>
-<script type='text/javascript' src='angular-route.min.js'></script>
-<script type='text/javascript' src="app.js"></script>
-<script type='text/javascript' src='cdeBrowserClient.js'></script>
-<script type='text/javascript' src="cdeBrowserProperties.js"></script>
-<script type='text/javascript' src="directives/treeModel.js"></script>
-<script type='text/javascript' src="directives/resize.js"></script>
-<script type='text/javascript' src="plugins/ng-table/ng-table.min.js"></script>
+<script src='angular.min.js'></script>
+<script src='angular-animate.min.js'></script>
+<script src='angular-route.min.js'></script>
+<script src="app.js"></script>
+<script src='cdeBrowserClient.js'></script>
+<script src="cdeBrowserProperties.js"></script>
+<script src="directives/treeModel.js"></script>
+<script src="directives/resize.js"></script>
+<script src="plugins/ng-table/ng-table.min.js"></script>
 
 <script src="cde/cde.js"></script>
 <script src="cde/adminInfo/cde-adminInfo.js"></script>
