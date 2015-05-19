@@ -77,11 +77,11 @@ public class ContextDataControllerTest extends TestCase
     {
         BaseNode contextNodeTree = unitTestCommon.initContextTree();
         // Sets first node in recursive call to "All", would have used the nodes text field if 2nd parameter was null.
-        contextDataController.addBreadCrumbsAll( contextNodeTree, "All" );
+        contextDataController.addBreadCrumbsAll( contextNodeTree, CaDSRConstants.ALL_CONTEXTS_STRING );
 
         // This array matches the data used by unitTestCommon.initContextTree() above
         ArrayList<String> tree = new ArrayList<>();
-        tree.add( "All" ); //First "Crumb" should always be all
+        tree.add( CaDSRConstants.ALL_CONTEXTS_STRING ); //First "Crumb" should always be all
         tree.add( "Bravo" );
         tree.add( "Charlie" );
         tree.add( "Delta" );
@@ -249,12 +249,12 @@ public class ContextDataControllerTest extends TestCase
     // initTopLevelContextNodes will be the first call when constructing the Context nodes
     public void testInitTopLevelContextNodes()
     {
-        String name[] = { "All", "CancerCenters", "NCI", "NCIConsortium", "NCTN/eNCTN", "NIHInstitutes", "SDOs", "UNASSIGNED" };
+        String name[] = { CaDSRConstants.ALL_CONTEXTS_STRING, "CancerCenters", "NCI", "NCIConsortium", "NCTN/eNCTN", "NIHInstitutes", "SDOs", "UNASSIGNED" };
         String description[] = { "", "CancerCenters/CancerInstitutes", "NCIDivisions/Centers/Programs", "NCIConsortrium", "NCIClinicalTrialsNetwork", "NIHInstitutes", "StandardsDevelopmentOrganizations", "null" };
 
         ContextNode[] contextNode = contextDataController.initTopLevelContextNodes();
-        //Make sure "All" was add to front of the array
-        assertEquals( "All", contextNode[0].getText() );
+        //Make sure "All Contexts" was add to front of the array
+        assertEquals( CaDSRConstants.ALL_CONTEXTS_STRING, contextNode[0].getText() );
 
         //Test data has 7 program areas, with "All" is 8
         assertEquals( 8, contextNode.length );

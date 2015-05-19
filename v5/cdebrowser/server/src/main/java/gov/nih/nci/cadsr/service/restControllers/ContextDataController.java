@@ -195,7 +195,7 @@ public class ContextDataController
         }
 
         // Set bread crumb data for Contexts in "All" Program Area
-        addBreadCrumbsAll( contextNodes[0], "All" );
+        addBreadCrumbsAll( contextNodes[0], CaDSRConstants.ALL_CONTEXTS_STRING );
 
         return contextNodes;
     }
@@ -267,7 +267,7 @@ public class ContextDataController
         if( programArea == 0 ) //All
         {
 
-            addBreadCrumbsAll( contextNodes[0], "All" );
+            addBreadCrumbsAll( contextNodes[0], CaDSRConstants.ALL_CONTEXTS_STRING );
         }
         else
         {
@@ -340,7 +340,7 @@ public class ContextDataController
         }
 
         //Add "All" contexts tab at the end
-        contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, true, "All", 0 );
+        contextNodes[0] = new ContextNode( CaDSRConstants.FOLDER, true, CaDSRConstants.ALL_CONTEXTS_STRING, 0 );
 
         return contextNodes;
     }
