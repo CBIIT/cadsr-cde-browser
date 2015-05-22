@@ -345,6 +345,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
 
     };
 
+    $scope.versionData = function() {
+        $http.get("version.json").success(function (response) {
+            console.log("GOOD: " + response);
+            $scope.versionPopover = response;
+            $scope.versionPopover.templateUrl = 'versionPopoverTemplate.html';
+            $scope.versionPopover.title = 'CDE Browser';
+        });
+    }
+
 
     // start ngTable definition //
     $scope.resetSortOrder = function () {
@@ -397,6 +406,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     $scope.initTableParams();
     $scope.hideContexts();
     $scope.dataLoadFromServer();
+    $scope.versionData();
 
 });
 

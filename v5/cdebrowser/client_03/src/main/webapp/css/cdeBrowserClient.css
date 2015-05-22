@@ -210,3 +210,13 @@ a:hover {
 .top2-right-logo a {
     text-decoration: none;
 }
+
+.versionPopover {
+    color: #222;
+}
+
+.versionButton {
+    color: #fff;
+        background: #336699;
+
+}

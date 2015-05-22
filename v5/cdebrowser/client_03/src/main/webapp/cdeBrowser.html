@@ -5,6 +5,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
@@ -219,7 +220,6 @@
          resize
          notifier="notifyServiceOnChange(params)">
 
-
         <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
         <div class="queryTypeRadioButtons">
             <label data-ng-repeat="qType in searchQueryTypes">
@@ -379,13 +379,26 @@
                 <tr>
                     <td>User: <span class="userName">Public User</span></td>
                     <td>
-                        <a href="https://wiki.nci.nih.gov/display/caDSR/caDSR+Privacy+Policy+Statement;jsessionid=701CBEBAA93126F2C34FBD368135F532"
-                           target="_blank">Privacy Notice</a></td>
-                    <td>Version 5.0 &nbsp;&nbsp;Build 01</td>
+                        <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a></td>
+                    <td>  <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version</button>
+                    </td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
                     </td>
                 </tr>
             </table>
+
+            <script type="text/ng-template" id="versionPopoverTemplate.html">
+                <div class="versionPopover">
+                    <label>Version:</label>
+                    <input type="text" ng-model="versionPopover.version" class="form-control">
+                    <label>SCM Tag:</label>
+                    <input type="text" ng-model="versionPopover.tag" class="form-control">
+                    <label>SCM Date:</label>
+                    <input type="text" ng-model="versionPopover.scm_date" class="form-control">
+                    <label>System Tier:</label>
+                    <input type="text" ng-model="versionPopover.tier" class="form-control">
+                </div>
+            </script>
         </div>
 
     </div>
@@ -395,6 +408,7 @@
 
 <script src='angular.min.js'></script>
 <script src='angular-animate.min.js'></script>
+<script src='ui-bootstrap-tpls-0.13.0.min.js'></script>
 <script src='angular-route.min.js'></script>
 <script src="app.js"></script>
 <script src='cdeBrowserClient.js'></script>
@@ -411,6 +425,7 @@
 <script src="cde/dataElementDerivation/cde-dataElementDerivation.js"></script>
 <script src="cde/usage/cde-usage.js"></script>
 <script src="cde/valueDomain/cde-valueDomain.js"></script>
+
 
 </body>
 </html>

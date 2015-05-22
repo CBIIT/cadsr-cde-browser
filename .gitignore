@@ -4,3 +4,5 @@ v5/cdebrowser/server/debug.log
 .idea
 .idea/*
 target/
+v5/cdebrowser/client_03/src/main/webapp/version.json
+
