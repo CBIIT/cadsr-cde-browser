@@ -21,7 +21,7 @@ public class DataElementModel extends BaseModel
     /**
      * Hashmap of DesignationModels indexed by designationIdseq
      */
-    private HashMap<String,DesignationModel> designationModels;// from DesignationsView.ac_idseq = data_elements.de_idseq
+    private HashMap<String,DesignationModel> designationModels; // from DesignationsView.ac_idseq = data_elements.de_idseq
     /**
      * Hashmap of DefinitionModels indexed by definitionIdseq
      */
@@ -39,7 +39,7 @@ public class DataElementModel extends BaseModel
     private String vdIdseq; // this field can't possibly be needed since we have a whole value domain model object
     private String decIdseq;
     private String preferredDefinition;
-    private String aslName;
+    private String aslName; // workflow status
     private String longName;
     private String latestVerInd;
     private String deletedInd;
@@ -63,6 +63,7 @@ public class DataElementModel extends BaseModel
      */
     private HashMap<String,List<String>> csCsiDefinitions;
     private List<UsageModel> usageModels;
+    private List<DEOtherVersionsModel> deOtherVersionsModels;
 
 
     public DataElementModel() {
@@ -449,6 +450,14 @@ public class DataElementModel extends BaseModel
         this.usageModels = usageModels;
     }
 
+    public List<DEOtherVersionsModel> getDeOtherVersionsModels() {
+        return deOtherVersionsModels;
+    }
+
+    public void setDeOtherVersionsModels(List<DEOtherVersionsModel> deOtherVersionsModels) {
+        this.deOtherVersionsModels = deOtherVersionsModels;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -507,7 +516,9 @@ public class DataElementModel extends BaseModel
             return false;
         if (getCsCsiDefinitions() != null ? !getCsCsiDefinitions().equals(that.getCsCsiDefinitions()) : that.getCsCsiDefinitions() != null)
             return false;
-        return !(getUsageModels() != null ? !getUsageModels().equals(that.getUsageModels()) : that.getUsageModels() != null);
+        if (getUsageModels() != null ? !getUsageModels().equals(that.getUsageModels()) : that.getUsageModels() != null)
+            return false;
+        return !(getDeOtherVersionsModels() != null ? !getDeOtherVersionsModels().equals(that.getDeOtherVersionsModels()) : that.getDeOtherVersionsModels() != null);
 
     }
 
@@ -545,6 +556,7 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getCsCsiDesignations() != null ? getCsCsiDesignations().hashCode() : 0);
         result = 31 * result + (getCsCsiDefinitions() != null ? getCsCsiDefinitions().hashCode() : 0);
         result = 31 * result + (getUsageModels() != null ? getUsageModels().hashCode() : 0);
+        result = 31 * result + (getDeOtherVersionsModels() != null ? getDeOtherVersionsModels().hashCode() : 0);
         return result;
     }
 
@@ -583,6 +595,7 @@ public class DataElementModel extends BaseModel
                 ", csCsiDesignations=" + csCsiDesignations +
                 ", csCsiDefinitions=" + csCsiDefinitions +
                 ", usageModels=" + usageModels +
+                ", deOtherVersionsModels=" + deOtherVersionsModels +
                 '}';
     }
 }

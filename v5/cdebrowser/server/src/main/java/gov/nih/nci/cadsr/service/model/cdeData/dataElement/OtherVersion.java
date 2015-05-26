@@ -1,5 +1,11 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
 
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class OtherVersion
 {
     private float version;
@@ -7,6 +13,21 @@ public class OtherVersion
     private String workFlowStatus;
     private String registrationStatus;
     private String context;
+    private List<CsCsi> csCsis;
+
+
+
+    public OtherVersion(DEOtherVersionsModel deOtherVersionsModel) {
+        this.version = deOtherVersionsModel.getVersion();
+        this.longName = deOtherVersionsModel.getLongName();
+        this.workFlowStatus = deOtherVersionsModel.getWorkflowStatus();
+        setRegistrationStatus(deOtherVersionsModel.getRegistrationStatus());
+        this.context = deOtherVersionsModel.getContextName();
+        csCsis = new ArrayList<CsCsi>(deOtherVersionsModel.getCsCsiModelList().size());
+        for (CsCsiModel csCsiModel : deOtherVersionsModel.getCsCsiModelList()) {
+            csCsis.add(new CsCsi(csCsiModel));
+        }
+    }
 
     public float getVersion()
     {
@@ -45,6 +66,9 @@ public class OtherVersion
 
     public void setRegistrationStatus( String registrationStatus )
     {
+        if (registrationStatus == null) {
+            registrationStatus = "Standard";
+        }
         this.registrationStatus = registrationStatus;
     }
 
@@ -56,5 +80,13 @@ public class OtherVersion
     public void setContext( String context )
     {
         this.context = context;
+    }
+
+    public List<CsCsi> getCsCsis() {
+        return csCsis;
+    }
+
+    public void setCsCsis(List<CsCsi> csCsis) {
+        this.csCsis = csCsis;
     }
 }

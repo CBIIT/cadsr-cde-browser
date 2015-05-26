@@ -22,10 +22,10 @@ public class CsCsiModel extends BaseModel
     private String acCsiIdseq; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
     private String cstlName;
 
-    private String csID; //Unused  this field is not in the view.  since it's marked unused, should be removed from class.
-    private Float csVersion; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
-    private Integer csiId; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
-    private Float csiVersion; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
+    private String csId;
+    private Float csVersion;
+    private Integer csiId;
+    private Float csiVersion;
 
     public CsCsiModel() {
     }
@@ -159,14 +159,14 @@ public class CsCsiModel extends BaseModel
         return cstlName;
     }
 
-    public String getCsID()
+    public String getCsId()
     {
-        return csID;
+        return csId;
     }
 
-    public void setCsID( String csID )
+    public void setCsId(String csId)
     {
-        this.csID = csID;
+        this.csId = csId;
     }
 
     public Float getCsVersion()
@@ -259,7 +259,7 @@ public class CsCsiModel extends BaseModel
             return false;
         if (getCstlName() != null ? !getCstlName().equals(that.getCstlName()) : that.getCstlName() != null)
             return false;
-        if (getCsID() != null ? !getCsID().equals(that.getCsID()) : that.getCsID() != null) return false;
+        if (getCsId() != null ? !getCsId().equals(that.getCsId()) : that.getCsId() != null) return false;
         if (getCsVersion() != null ? !getCsVersion().equals(that.getCsVersion()) : that.getCsVersion() != null)
             return false;
         if (getCsiId() != null ? !getCsiId().equals(that.getCsiId()) : that.getCsiId() != null) return false;
@@ -283,7 +283,7 @@ public class CsCsiModel extends BaseModel
         result = 31 * result + (getCsConteIdseq() != null ? getCsConteIdseq().hashCode() : 0);
         result = 31 * result + (getAcCsiIdseq() != null ? getAcCsiIdseq().hashCode() : 0);
         result = 31 * result + (getCstlName() != null ? getCstlName().hashCode() : 0);
-        result = 31 * result + (getCsID() != null ? getCsID().hashCode() : 0);
+        result = 31 * result + (getCsId() != null ? getCsId().hashCode() : 0);
         result = 31 * result + (getCsVersion() != null ? getCsVersion().hashCode() : 0);
         result = 31 * result + (getCsiId() != null ? getCsiId().hashCode() : 0);
         result = 31 * result + (getCsiVersion() != null ? getCsiVersion().hashCode() : 0);
@@ -307,7 +307,7 @@ public class CsCsiModel extends BaseModel
                 ", csConteIdseq='" + csConteIdseq + '\'' +
                 ", acCsiIdseq='" + acCsiIdseq + '\'' +
                 ", cstlName='" + cstlName + '\'' +
-                ", csID='" + csID + '\'' +
+                ", csId='" + csId + '\'' +
                 ", csVersion=" + csVersion +
                 ", csiId=" + csiId +
                 ", csiVersion=" + csiVersion +

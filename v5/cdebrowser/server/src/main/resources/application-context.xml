@@ -82,6 +82,7 @@
         <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
         <property name="csCsiDAO" ref="csCsiDAO"/>
         <property name="usageDAO" ref="usageDAO"/>
+        <property name="deOtherVersionsDAO" ref="deOtherVersionsDAO"/>
     </bean>
     <bean id="definitionDAO" class="gov.nih.nci.cadsr.dao.DefinitionDAOImpl" parent="abstractDao">
         <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>
@@ -90,6 +91,9 @@
     <bean id="designationDAO" class="gov.nih.nci.cadsr.dao.DesignationDAOImpl" parent="abstractDao">
         <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="deOtherVersionsDAO" class="gov.nih.nci.cadsr.dao.DEOtherVersionsDAOImpl" parent="abstractDao">
+        <property name="csCsiDAO" ref="csCsiDAO"/>
     </bean>
     <bean id="objectClassDAO" class="gov.nih.nci.cadsr.dao.ObjectClassDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>

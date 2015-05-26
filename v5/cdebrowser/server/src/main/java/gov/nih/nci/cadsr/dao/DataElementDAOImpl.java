@@ -31,9 +31,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private AcRegistrationsDAO acRegistrationsDAO;
     private CsCsiDAO csCsiDAO;
     private UsageDAO usageDAO;
-
-//private String DataElementSql; //Spring DAOs are singletons.  Doing this whole passing sql around as member variables is totally not safe...
-
+    private DEOtherVersionsDAO deOtherVersionsDAO;
 
     @Autowired
     DataElementDAOImpl(DataSource dataSource) {
@@ -159,6 +157,14 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         this.usageDAO = usageDAO;
     }
 
+    public DEOtherVersionsDAO getDeOtherVersionsDAO() {
+        return deOtherVersionsDAO;
+    }
+
+    public void setDeOtherVersionsDAO(DEOtherVersionsDAO deOtherVersionsDAO) {
+        this.deOtherVersionsDAO = deOtherVersionsDAO;
+    }
+
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
@@ -239,7 +245,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             }
 
             try {
-                List<CsCsiModel> csCsiModels = getCsCsiDAO().getAllCsCsisByDataElement(deIdseq);
+                List<CsCsiModel> csCsiModels = getCsCsiDAO().getAltNamesAndDefsByDataElement(deIdseq);
                 if (csCsiModels != null && csCsiModels.size() > 0) {
                     dataElementModel.fillCsCsiData(csCsiModels);
                 } else {
@@ -255,6 +261,11 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 dataElementModel.setUsageModels(getUsageDAO().getUsagesByDeIdseq(deIdseq));
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No UsageModels found for Data Element with idseq: " + deIdseq);
+            }
+            try {
+                dataElementModel.setDeOtherVersionsModels(getDeOtherVersionsDAO().getOtherVersions(dataElementModel.getCdeId(), deIdseq));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No Other Versions found for Data Element with idseq: " + deIdseq);
             }
 
             return dataElementModel;

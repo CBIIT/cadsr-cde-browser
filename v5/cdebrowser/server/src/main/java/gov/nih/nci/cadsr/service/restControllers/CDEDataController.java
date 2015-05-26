@@ -231,8 +231,10 @@ public class CDEDataController
         // "Other Versions" of the "Data Element" Tab
         List<OtherVersion> otherVersions = new ArrayList<>();
         dataElement.setOtherVersions( otherVersions );
-        // FIXME - Need to find out where to get Data otherVersions from dataElementModel
-
+        for (DEOtherVersionsModel deOtherVersionsModel : dataElementModel.getDeOtherVersionsModels()) {
+            OtherVersion otherVersion = new OtherVersion(deOtherVersionsModel);
+            otherVersions.add(otherVersion);
+        }
 
         return dataElement;
     }

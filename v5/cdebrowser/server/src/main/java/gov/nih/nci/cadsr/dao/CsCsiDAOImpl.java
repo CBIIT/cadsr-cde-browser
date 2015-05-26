@@ -132,6 +132,19 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
         return result;
     }
 
+    @Override
+    public List<CsCsiModel> getCsCsisByAcIdseq(String acIdseq) {
+        String sql = "SELECT cs.long_name cs_long_name, cs.preferred_definition cs_preffred_definition, " +
+                "cs.cs_id, cs.version cs_version, csi.csi_name, csi.csitl_name, csi.csi_id, csi.version csi_version " +
+                "FROM sbr.ac_csi, sbr.cs_csi, sbr.classification_schemes cs, sbr.cs_items csi " +
+                "WHERE ac_csi.ac_idseq = ? " +
+                "AND ac_csi.cs_csi_idseq = cs_csi.cs_csi_idseq " +
+                "AND cs_csi.cs_idseq = cs.cs_idseq " +
+                "AND cs_csi.csi_idseq = csi.csi_idseq";
+        List<CsCsiModel> csCsiModels = jdbcTemplate.query(sql, new Object[]{acIdseq}, new BeanPropertyRowMapper(CsCsiModel.class));
+        return csCsiModels;
+    }
+
     /**
      * This method takes the Data Element's idseq to find the CS and CSI data associated
      * with the DE's Definitions and Designations (alt names)
@@ -139,7 +152,7 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
      * @return
      */
     @Override
-    public List<CsCsiModel> getAllCsCsisByDataElement(String deIdseq) {
+    public List<CsCsiModel> getAltNamesAndDefsByDataElement(String deIdseq) {
         List<CsCsiModel> csCsiModels;
 
         String definitionCsCsiSql = "SELECT cs_csi.cs_idseq, cs_csi.cs_preffered_name AS cs_pref_name, cs_csi.cs_long_name, cs_csi.cstl_name, " +
