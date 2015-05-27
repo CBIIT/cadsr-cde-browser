@@ -176,26 +176,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             DataElementModel dataElementModel = super.mapRow(rs, rowNum);
 
             String deIdseq = rs.getString("DE_IDSEQ");
-//            dataElementModel.setVersion(rs.getFloat("VERSION"));
-//            dataElementModel.setIdseq(deIdseq);
             dataElementModel.setDeIdseq(deIdseq);
-//            dataElementModel.setPreferredName(rs.getString("PREFERRED_NAME"));
-//            dataElementModel.setVdIdseq(rs.getString("VD_IDSEQ"));
-//            dataElementModel.setDecIdseq(rs.getString("DEC_IDSEQ"));
-//            dataElementModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
-//            dataElementModel.setAslName(rs.getString("ASL_NAME"));
-//            dataElementModel.setLongName(rs.getString("LONG_NAME"));
             dataElementModel.setLatestVerInd(rs.getString("LATEST_VERSION_IND"));
-//            dataElementModel.setDeletedInd(rs.getString("DELETED_IND"));
-//            dataElementModel.setBeginDate(rs.getTimestamp("BEGIN_DATE"));
-//            dataElementModel.setEndDate(rs.getTimestamp("END_DATE"));
-//            dataElementModel.setOrigin(rs.getString("ORIGIN"));
-//            dataElementModel.setCdeId(rs.getInt("CDE_ID"));
-//            dataElementModel.setQuestion(rs.getString("QUESTION"));
-//            dataElementModel.setModifiedBy(rs.getString("MODIFIED_BY"));
-//            dataElementModel.setCreatedBy(rs.getString("CREATED_BY"));
-//            dataElementModel.setDateCreated(rs.getTimestamp("DATE_CREATED"));
-//            dataElementModel.setDateModified(rs.getTimestamp("DATE_MODIFIED"));
             dataElementModel.fillPreferredQuestionText();
             dataElementModel.fillUsingContexts();
 
@@ -267,6 +249,12 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No Other Versions found for Data Element with idseq: " + deIdseq);
             }
+            try {
+                dataElementModel.setClassifications(getCsCsiDAO().getCsCsisByAcIdseq(deIdseq));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No Other Versions found for Data Element with idseq: " + deIdseq);
+            }
+
 
             return dataElementModel;
         }

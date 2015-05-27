@@ -64,6 +64,7 @@ public class DataElementModel extends BaseModel
     private HashMap<String,List<String>> csCsiDefinitions;
     private List<UsageModel> usageModels;
     private List<DEOtherVersionsModel> deOtherVersionsModels;
+    private List<CsCsiModel> classifications;
 
 
     public DataElementModel() {
@@ -458,6 +459,14 @@ public class DataElementModel extends BaseModel
         this.deOtherVersionsModels = deOtherVersionsModels;
     }
 
+    public List<CsCsiModel> getClassifications() {
+        return classifications;
+    }
+
+    public void setClassifications(List<CsCsiModel> classifications) {
+        this.classifications = classifications;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -518,7 +527,9 @@ public class DataElementModel extends BaseModel
             return false;
         if (getUsageModels() != null ? !getUsageModels().equals(that.getUsageModels()) : that.getUsageModels() != null)
             return false;
-        return !(getDeOtherVersionsModels() != null ? !getDeOtherVersionsModels().equals(that.getDeOtherVersionsModels()) : that.getDeOtherVersionsModels() != null);
+        if (getDeOtherVersionsModels() != null ? !getDeOtherVersionsModels().equals(that.getDeOtherVersionsModels()) : that.getDeOtherVersionsModels() != null)
+            return false;
+        return !(getClassifications() != null ? !getClassifications().equals(that.getClassifications()) : that.getClassifications() != null);
 
     }
 
@@ -557,6 +568,7 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getCsCsiDefinitions() != null ? getCsCsiDefinitions().hashCode() : 0);
         result = 31 * result + (getUsageModels() != null ? getUsageModels().hashCode() : 0);
         result = 31 * result + (getDeOtherVersionsModels() != null ? getDeOtherVersionsModels().hashCode() : 0);
+        result = 31 * result + (getClassifications() != null ? getClassifications().hashCode() : 0);
         return result;
     }
 
@@ -596,6 +608,7 @@ public class DataElementModel extends BaseModel
                 ", csCsiDefinitions=" + csCsiDefinitions +
                 ", usageModels=" + usageModels +
                 ", deOtherVersionsModels=" + deOtherVersionsModels +
+                ", classifications=" + classifications +
                 '}';
     }
 }

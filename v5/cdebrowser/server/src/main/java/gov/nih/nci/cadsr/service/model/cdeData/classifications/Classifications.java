@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.classifications;
 
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.CsCsi;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class Classifications
 {
     private SelectedDataElement selectedDataElement = null;
-    private List<Classification> classificationList = null; // This breaks our naming convention of using (s) not (List) to name our lists
+    private List<CsCsi> classificationList = null; // This breaks our naming convention of using (s) not (List) to name our lists
     private List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = null;
     private ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument = null;
 
@@ -28,12 +29,12 @@ public class Classifications
         this.selectedDataElement = selectedDataElement;
     }
 
-    public List<Classification> getClassificationList()
+    public List<CsCsi> getClassificationList()
     {
         return classificationList;
     }
 
-    public void setClassificationList( List<Classification> classificationList )
+    public void setClassificationList( List<CsCsi> classificationList )
     {
         this.classificationList = classificationList;
     }

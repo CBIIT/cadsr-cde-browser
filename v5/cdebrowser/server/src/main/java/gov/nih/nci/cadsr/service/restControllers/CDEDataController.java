@@ -433,9 +433,12 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Classifications" section of the "Classifications" tab
-        List<Classification> classificationList = new ArrayList<>();
+        List<CsCsi> classificationList = new ArrayList<>();
         classifications.setClassificationList( classificationList );
-        // FIXME - Need to find out where to get classifications List from dataElementModel
+        for (CsCsiModel csCsiModel : dataElementModel.getClassifications()) {
+            CsCsi csCsi = new CsCsi(csCsiModel);
+            classificationList.add(csCsi);
+        }
 
         /////////////////////////////////////////////////////
         // "Classifications" section of the "Classifications" tab

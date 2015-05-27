@@ -58,13 +58,13 @@
         <th class="dataElementHeading">CSI* Type</th>
         <th class="dataElementHeading">CSI* Public ID/Version</th>
     </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    <tr class="dataElementViewTableTr"  data-ng-repeat="classif in cdeDetails.classifications.classificationList">
+        <td class="dataElementValue">{{classif.csLongName}}</td>
+        <td class="dataElementValue">{{classif.csDefinition}}</td>
+        <td class="dataElementValue">{{classif.csId}}v{{classif.csVersion}}</td>
+        <td class="dataElementValue">{{classif.csiName}}</td>
+        <td class="dataElementValue">{{classif.csiType}}</td>
+        <td class="dataElementValue">{{classif.csiId}}v{{classif.csiVersion}}</td>
     </tr>
 </table><br>
 
