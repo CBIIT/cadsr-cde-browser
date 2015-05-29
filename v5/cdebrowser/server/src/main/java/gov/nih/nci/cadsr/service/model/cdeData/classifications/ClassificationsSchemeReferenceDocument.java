@@ -1,9 +1,11 @@
 package gov.nih.nci.cadsr.service.model.cdeData.classifications;
 
+import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
+
 /**
  * Created by lernermh on 4/22/15.
  */
-public class ClassificationsScheneRefernceDocument
+public class ClassificationsSchemeReferenceDocument
 {
     private String csLongName;
     private float csVersion;
@@ -12,6 +14,20 @@ public class ClassificationsScheneRefernceDocument
     private String documentText;
     private String url;
     private String attachments;
+
+    public ClassificationsSchemeReferenceDocument() {
+    }
+
+    public ClassificationsSchemeReferenceDocument(CSRefDocModel csRefDocModel) {
+        this.csLongName = csRefDocModel.getCsLongName();
+        this.csVersion = csRefDocModel.getCsVersion();
+        this.documentName = csRefDocModel.getDocumentName();
+        this.documentType = csRefDocModel.getDocumentType();
+        this.documentText = csRefDocModel.getDocumentText();
+        this.url = csRefDocModel.getUrl();
+//        this.attachments = csRefDocModel.;
+        // todo attachements!
+    }
 
     public String getCsLongName()
     {

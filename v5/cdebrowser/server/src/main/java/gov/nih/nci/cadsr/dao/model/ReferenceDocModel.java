@@ -5,7 +5,7 @@ package gov.nih.nci.cadsr.dao.model;
  */
 public class ReferenceDocModel extends BaseModel {
     private String docName;
-    private String docType;
+    private String docType; // DCTL_NAME
     private String docIDSeq;
     private String docText;
     private String lang;

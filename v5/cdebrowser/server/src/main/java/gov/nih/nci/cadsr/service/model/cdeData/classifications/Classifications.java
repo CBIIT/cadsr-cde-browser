@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class Classifications
 {
-    private SelectedDataElement selectedDataElement = null;
-    private List<CsCsi> classificationList = null; // This breaks our naming convention of using (s) not (List) to name our lists
-    private List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = null;
-    private ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument = null;
+    private SelectedDataElement selectedDataElement;
+    private List<CsCsi> classificationList; // This breaks our naming convention of using (s) not (List) to name our lists
+    private List<ClassificationsSchemeReferenceDocument> classificationsSchemeReferenceDocuments;
+    private List<ClassificationsSchemeItemReferenceDocument> classificationsSchemeItemReferenceDocuments;
 
 
     public SelectedDataElement getSelectedDataElement()
@@ -39,23 +39,21 @@ public class Classifications
         this.classificationList = classificationList;
     }
 
-    public List<ClassificationsScheneRefernceDocument> getClassificationsScheneRefernceDocuments()
+    public List<ClassificationsSchemeReferenceDocument> getClassificationsSchemeReferenceDocuments()
     {
-        return classificationsScheneRefernceDocuments;
+        return classificationsSchemeReferenceDocuments;
     }
 
-    public void setClassificationsScheneRefernceDocuments( List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments )
+    public void setClassificationsSchemeReferenceDocuments(List<ClassificationsSchemeReferenceDocument> classificationsSchemeReferenceDocuments)
     {
-        this.classificationsScheneRefernceDocuments = classificationsScheneRefernceDocuments;
+        this.classificationsSchemeReferenceDocuments = classificationsSchemeReferenceDocuments;
     }
 
-    public ClassificationsSchemeItemReferenceDocument getClassificationsSchemeItemReferenceDocument()
-    {
-        return classificationsSchemeItemReferenceDocument;
+    public List<ClassificationsSchemeItemReferenceDocument> getClassificationsSchemeItemReferenceDocuments() {
+        return classificationsSchemeItemReferenceDocuments;
     }
 
-    public void setClassificationsSchemeItemReferenceDocument( ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument )
-    {
-        this.classificationsSchemeItemReferenceDocument = classificationsSchemeItemReferenceDocument;
+    public void setClassificationsSchemeItemReferenceDocuments(List<ClassificationsSchemeItemReferenceDocument> classificationsSchemeItemReferenceDocuments) {
+        this.classificationsSchemeItemReferenceDocuments = classificationsSchemeItemReferenceDocuments;
     }
 }

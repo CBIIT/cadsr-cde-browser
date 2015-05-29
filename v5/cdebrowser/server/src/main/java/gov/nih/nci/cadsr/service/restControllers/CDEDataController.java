@@ -6,10 +6,9 @@ import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.adminInfo.AdminInfo;
-import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classification;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
-import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsScheneRefernceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeReferenceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.*;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation.DataElementDerivation;
@@ -442,16 +441,20 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Classifications" section of the "Classifications" tab
-        List<ClassificationsScheneRefernceDocument> classificationsScheneRefernceDocuments = new ArrayList<>();
-        classifications.setClassificationsScheneRefernceDocuments( classificationsScheneRefernceDocuments );
-        // FIXME - Need to find out where to get classificationsSchemeReferenceDocuments List from dataElementModel
+        List<ClassificationsSchemeReferenceDocument> classificationsSchemeReferenceDocuments = new ArrayList<>();
+        classifications.setClassificationsSchemeReferenceDocuments(classificationsSchemeReferenceDocuments);
+        for (CSRefDocModel csRefDocModel : dataElementModel.getCsRefDocModels()) {
+            classificationsSchemeReferenceDocuments.add(new ClassificationsSchemeReferenceDocument(csRefDocModel));
+        }
+
 
         /////////////////////////////////////////////////////
         // "Classification Scheme Item Reference Document
-        ClassificationsSchemeItemReferenceDocument classificationsSchemeItemReferenceDocument = new ClassificationsSchemeItemReferenceDocument();
-        classifications.setClassificationsSchemeItemReferenceDocument( classificationsSchemeItemReferenceDocument );
-        // FIXME - Need to find out where to get classificationsSchemeItemReferenceDocument List from dataElementModel
-
+        List<ClassificationsSchemeItemReferenceDocument> classificationsSchemeItemReferenceDocuments = new ArrayList<>();
+        classifications.setClassificationsSchemeItemReferenceDocuments(classificationsSchemeItemReferenceDocuments);
+        for (CSIRefDocModel csiRefDocModel : dataElementModel.getCsiRefDocModels()) {
+            classificationsSchemeItemReferenceDocuments.add(new ClassificationsSchemeItemReferenceDocument(csiRefDocModel));
+        }
 
         return classifications;
     }

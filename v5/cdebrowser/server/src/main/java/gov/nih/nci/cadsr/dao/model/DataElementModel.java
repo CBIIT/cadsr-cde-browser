@@ -65,6 +65,8 @@ public class DataElementModel extends BaseModel
     private List<UsageModel> usageModels;
     private List<DEOtherVersionsModel> deOtherVersionsModels;
     private List<CsCsiModel> classifications;
+    private List<CSRefDocModel> csRefDocModels;
+    private List<CSIRefDocModel> csiRefDocModels;
 
 
     public DataElementModel() {
@@ -467,6 +469,22 @@ public class DataElementModel extends BaseModel
         this.classifications = classifications;
     }
 
+    public List<CSRefDocModel> getCsRefDocModels() {
+        return csRefDocModels;
+    }
+
+    public void setCsRefDocModels(List<CSRefDocModel> csRefDocModels) {
+        this.csRefDocModels = csRefDocModels;
+    }
+
+    public List<CSIRefDocModel> getCsiRefDocModels() {
+        return csiRefDocModels;
+    }
+
+    public void setCsiRefDocModels(List<CSIRefDocModel> csiRefDocModels) {
+        this.csiRefDocModels = csiRefDocModels;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -529,7 +547,11 @@ public class DataElementModel extends BaseModel
             return false;
         if (getDeOtherVersionsModels() != null ? !getDeOtherVersionsModels().equals(that.getDeOtherVersionsModels()) : that.getDeOtherVersionsModels() != null)
             return false;
-        return !(getClassifications() != null ? !getClassifications().equals(that.getClassifications()) : that.getClassifications() != null);
+        if (getClassifications() != null ? !getClassifications().equals(that.getClassifications()) : that.getClassifications() != null)
+            return false;
+        if (getCsRefDocModels() != null ? !getCsRefDocModels().equals(that.getCsRefDocModels()) : that.getCsRefDocModels() != null)
+            return false;
+        return !(getCsiRefDocModels() != null ? !getCsiRefDocModels().equals(that.getCsiRefDocModels()) : that.getCsiRefDocModels() != null);
 
     }
 
@@ -569,6 +591,8 @@ public class DataElementModel extends BaseModel
         result = 31 * result + (getUsageModels() != null ? getUsageModels().hashCode() : 0);
         result = 31 * result + (getDeOtherVersionsModels() != null ? getDeOtherVersionsModels().hashCode() : 0);
         result = 31 * result + (getClassifications() != null ? getClassifications().hashCode() : 0);
+        result = 31 * result + (getCsRefDocModels() != null ? getCsRefDocModels().hashCode() : 0);
+        result = 31 * result + (getCsiRefDocModels() != null ? getCsiRefDocModels().hashCode() : 0);
         return result;
     }
 
@@ -609,6 +633,8 @@ public class DataElementModel extends BaseModel
                 ", usageModels=" + usageModels +
                 ", deOtherVersionsModels=" + deOtherVersionsModels +
                 ", classifications=" + classifications +
+                ", csRefDocModels=" + csRefDocModels +
+                ", csiRefDocModels=" + csiRefDocModels +
                 '}';
     }
 }

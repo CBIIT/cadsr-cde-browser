@@ -66,6 +66,9 @@
         <td class="dataElementValue">{{classif.csiType}}</td>
         <td class="dataElementValue">{{classif.csiId}}v{{classif.csiVersion}}</td>
     </tr>
+    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationList.length">
+        <td colspan="3">No applicable Classifications</td>
+    </tr>
 </table><br>
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
@@ -83,21 +86,23 @@
         <td class="dataElementHeading">URL</td>
         <td class="dataElementHeading">Attachments</td>
     </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    <tr class="dataElementViewTableTr" data-ng-repeat="csrefdoc in cdeDetails.classifications.classificationsSchemeReferenceDocuments">
+        <td class="dataElementValue">{{csrefdoc.csLongName}}</td>
+        <td class="dataElementValue">{{csrefdoc.csVersion}}</td>
+        <td class="dataElementValue">{{csrefdoc.documentName}}</td>
+        <td class="dataElementValue">{{csrefdoc.documentType}}</td>
+        <td class="dataElementValue">{{csrefdoc.documentText}}</td>
+        <td class="dataElementValue">{{csrefdoc.url}}</td>
+        <td class="dataElementValue">&nbsp;</td>
+    </tr>
+    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationsSchemeReferenceDocuments.length">
+        <td colspan="3">No applicable Classifications Scheme Reference Documents</td>
     </tr>
 </table><br>
 
-
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="6" align="left">Classification Scheme Item Reference Document</th>
+        <th colspan="6" align="left">Classification Scheme Item Reference Documents</th>
     </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
@@ -109,11 +114,15 @@
         <td class="dataElementHeading">URL</td>
         <td class="dataElementHeading">Attachments</td>
     </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
-        <td class="dataElementValue">NOT YET PROVIDED FROM SERVER</td>
+    <tr class="dataElementViewTableTr" data-ng-repeat="csirefdoc in cdeDetails.classifications.classificationsSchemeItemReferenceDocuments">
+        <td class="dataElementValue">{{csirefdoc.csiName}}</td>
+        <td class="dataElementValue">{{csirefdoc.documentName}}</td>
+        <td class="dataElementValue">{{csirefdoc.documentType}}</td>
+        <td class="dataElementValue">{{csirefdoc.documentText}}</td>
+        <td class="dataElementValue">{{csirefdoc.url}}</td>
+        <td class="dataElementValue">&nbsp;</td>
+    </tr>
+    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
+        <td colspan="3">No applicable Classification Scheme Item Reference Documents</td>
     </tr>
 </table><br>

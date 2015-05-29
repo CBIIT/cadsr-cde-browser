@@ -66,6 +66,8 @@
     </bean>
     <bean id="contextDAO" class="gov.nih.nci.cadsr.dao.ContextDAOImpl" parent="abstractDao"/>
     <bean id="csCsiDAO" class="gov.nih.nci.cadsr.dao.CsCsiDAOImpl" parent="abstractDao"/>
+    <bean id="csRefDocDAO" class="gov.nih.nci.cadsr.dao.CSRefDocDAOImpl" parent="abstractDao"/>
+    <bean id="csiRefDocDAO" class="gov.nih.nci.cadsr.dao.CSIRefDocDAOImpl" parent="abstractDao"/>
     <bean id="dataElementConceptDAO" class="gov.nih.nci.cadsr.dao.DataElementConceptDAOImpl" parent="abstractDao">
         <property name="propertyDAO" ref="propertyDAO"/>
         <property name="objectClassDAO" ref="objectClassDAO"/>
@@ -73,16 +75,18 @@
         <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
     </bean>
     <bean id="dataElementDAO" class="gov.nih.nci.cadsr.dao.DataElementDAOImpl" parent="abstractDao">
+        <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
+        <property name="csCsiDAO" ref="csCsiDAO"/>
+        <property name="csRefDocDAO" ref="csRefDocDAO"/>
+        <property name="csiRefDocDAO" ref="csiRefDocDAO"/>
         <property name="dataElementConceptDAO" ref="dataElementConceptDAO"/>
-        <property name="valueDomainDAO" ref="valueDomainDAO"/>
+        <property name="deOtherVersionsDAO" ref="deOtherVersionsDAO"/>
         <property name="definitionDAO" ref="definitionDAO"/>
         <property name="designationDAO" ref="designationDAO"/>
         <property name="referenceDocDAO" ref="referenceDocDAO"/>
-        <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
-        <property name="csCsiDAO" ref="csCsiDAO"/>
         <property name="usageDAO" ref="usageDAO"/>
-        <property name="deOtherVersionsDAO" ref="deOtherVersionsDAO"/>
+        <property name="valueDomainDAO" ref="valueDomainDAO"/>
     </bean>
     <bean id="definitionDAO" class="gov.nih.nci.cadsr.dao.DefinitionDAOImpl" parent="abstractDao">
         <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>

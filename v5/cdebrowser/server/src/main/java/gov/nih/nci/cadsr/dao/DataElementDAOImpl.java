@@ -32,6 +32,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private CsCsiDAO csCsiDAO;
     private UsageDAO usageDAO;
     private DEOtherVersionsDAO deOtherVersionsDAO;
+    private CSRefDocDAO csRefDocDAO;
+    private CSIRefDocDAO csiRefDocDAO;
 
     @Autowired
     DataElementDAOImpl(DataSource dataSource) {
@@ -165,6 +167,22 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         this.deOtherVersionsDAO = deOtherVersionsDAO;
     }
 
+    public CSIRefDocDAO getCsiRefDocDAO() {
+        return csiRefDocDAO;
+    }
+
+    public void setCsiRefDocDAO(CSIRefDocDAO csiRefDocDAO) {
+        this.csiRefDocDAO = csiRefDocDAO;
+    }
+
+    public CSRefDocDAO getCsRefDocDAO() {
+        return csRefDocDAO;
+    }
+
+    public void setCsRefDocDAO(CSRefDocDAO csRefDocDAO) {
+        this.csRefDocDAO = csRefDocDAO;
+    }
+
     public final class DataElementMapper extends BeanPropertyRowMapper<DataElementModel> {
         private Logger logger = LogManager.getLogger(DataElementMapper.class.getName());
 
@@ -253,6 +271,16 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 dataElementModel.setClassifications(getCsCsiDAO().getCsCsisByAcIdseq(deIdseq));
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No Other Versions found for Data Element with idseq: " + deIdseq);
+            }
+            try {
+                dataElementModel.setCsRefDocModels(getCsRefDocDAO().getCSRefDocsByDEIdseq(deIdseq));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.info("No Classif scheme found for Reference Docs for Data Element with idseq: " + deIdseq);
+            }
+            try {
+                dataElementModel.setCsiRefDocModels(getCsiRefDocDAO().getCSIRefDocsByDEIdseq(deIdseq));
+            } catch (EmptyResultDataAccessException ex) {
+                logger.warn("No Classif scheme items found for Reference Docs for Data Element with idseq: " + deIdseq);
             }
 
 

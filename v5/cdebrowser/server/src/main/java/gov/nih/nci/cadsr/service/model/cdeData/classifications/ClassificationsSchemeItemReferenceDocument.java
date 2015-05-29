@@ -1,5 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.classifications;
 
+import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
+
 /**
  * Created by lernermh on 4/22/15.
  */
@@ -11,6 +13,19 @@ public class ClassificationsSchemeItemReferenceDocument
     private String documentText;
     private String url;
     private String attachments;
+
+    public ClassificationsSchemeItemReferenceDocument() {
+    }
+
+    public ClassificationsSchemeItemReferenceDocument(CSIRefDocModel csiRefDocModel) {
+        this.csiName = csiRefDocModel.getCsiName();
+        this.documentName = csiRefDocModel.getDocumentName();
+        this.documentType = csiRefDocModel.getDocumentType();
+        this.documentText = csiRefDocModel.getDocumentText();
+        this.url = csiRefDocModel.getUrl();
+//        this.attachments = csiRefDocModel.;
+        // todo attachements!
+    }
 
     public String getCsiName()
     {
