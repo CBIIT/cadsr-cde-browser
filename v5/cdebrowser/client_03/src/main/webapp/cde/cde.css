@@ -70,10 +70,15 @@
     background-color: #999966;
 }
 
+
 .dataElementViewTableWithScroller {
+    position: relative;
+    left: 5%;
     width: 90%;
-    background-color: #999966;
+    height: 264px;
     overflow-y: scroll;
+    background-color: #999966;
+
 }
 
 .dataElementViewTableTr {

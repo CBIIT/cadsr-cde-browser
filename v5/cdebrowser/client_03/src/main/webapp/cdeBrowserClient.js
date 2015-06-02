@@ -1,5 +1,7 @@
+
+
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($scope, $http, $filter, $location, $route, ngTableParams) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $filter, $location, $route, ngTableParams) {
 
     $scope.show = [];
     $scope.initComplete = false;
@@ -282,6 +284,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
         //return true;
     };
 
+
+    $scope.versionDisplay = function(ver, tag, scmDate, tier) {
+        $window.alert('Version: ' + ver + "\n\nSMC Tag: " + tag + "\n\nSMC Date: " + scmDate + "\n\nSystem Tier" + tier );
+    }
+
+
     //Just top three levels of the tree
     $scope.dataLoad1 = function () {
         $scope.dataLoad("data1.json");
@@ -409,4 +417,3 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($sc
     $scope.versionData();
 
 });
-

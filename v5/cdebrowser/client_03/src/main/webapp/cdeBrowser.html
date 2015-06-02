@@ -5,7 +5,9 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<!--
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+-->
     <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
@@ -373,19 +375,24 @@
         <div class="cdeSearchTabsView" data-ng-view></div>
         <!-- =============================================================================== -->
 
-
         <div id="footer">
             <table>
                 <tr>
                     <td>User: <span class="userName">Public User</span></td>
                     <td>
-                        <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a></td>
-                    <td>  <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
+                        <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
+                    </td>
+                    <td>
+                        <a ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version {{versionPopover.version}}</a>
+<!--
+                        <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
+-->
                     </td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
                     </td>
                 </tr>
             </table>
+<!--
 
             <script type="text/ng-template" id="versionPopoverTemplate.html">
                 <div class="versionPopover">
@@ -399,6 +406,7 @@
                     <input type="text" ng-model="versionPopover.tier" class="form-control">
                 </div>
             </script>
+-->
         </div>
 
     </div>
@@ -406,9 +414,12 @@
 
 </div>
 
+
 <script src='angular.min.js'></script>
 <script src='angular-animate.min.js'></script>
+<!--
 <script src='ui-bootstrap-tpls-0.13.0.min.js'></script>
+-->
 <script src='angular-route.min.js'></script>
 <script src="app.js"></script>
 <script src='cdeBrowserClient.js'></script>

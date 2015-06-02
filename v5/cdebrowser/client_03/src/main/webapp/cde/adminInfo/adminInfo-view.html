@@ -36,15 +36,26 @@
 </table><br>
 
 
-
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <th  align="left">Date modified</th>
     </tr>
 </table>
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementValue">{{cdeDetails.adminInfo.dateModified}}</td>
-    </tr> 
+    </tr>
 </table><br>
 
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th  align="left">Value Domain</th>
+    </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.longName}}</td>
+    </tr>
+</table><br>

@@ -35,8 +35,8 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
     {
         List<ProtocolModel> result;
 
-        String sql = " select * from SBREXT.PROTOCOLS_VIEW_EXT "
-                + " where  CONTE_IDSEQ = ? order by LONG_NAME";
+        String sql = " select distinct * from SBREXT.PROTOCOLS_VIEW_EXT "
+                + " where  CONTE_IDSEQ = ? order by UPPER(LONG_NAME)";
         result = getAll( sql, conteId, ProtocolModel.class );
         return result;
     }
@@ -45,7 +45,7 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
     {
         List<ProtocolModel> result;
 
-        String sql = " select PROTO_IDSEQ from SBREXT.PROTOCOLS_VIEW_EXT "
+        String sql = " select  distinct PROTO_IDSEQ from SBREXT.PROTOCOLS_VIEW_EXT "
                 + " where  CONTE_IDSEQ = ?";
         result = getAll( sql, conteId, ProtocolModel.class );
         return ( !result.isEmpty() );
@@ -56,8 +56,8 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
     {
         List<ProtocolModel> result;
 
-        String sql = " select * from SBREXT.PROTOCOLS_VIEW_EXT "
-                + " order by LONG_NAME";
+        String sql = " select distinct * from SBREXT.PROTOCOLS_VIEW_EXT "
+                + " order by UPPER(LONG_NAME)";
         result = getAll( sql, ProtocolModel.class );
 
         return result;

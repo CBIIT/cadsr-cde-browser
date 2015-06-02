@@ -163,7 +163,8 @@
         <th align="left">Other Versions</th>
     </tr>
 
-    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="other in cdeDetails.dataElement.otherVersions">
+    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1"
+           data-ng-repeat="other in cdeDetails.dataElement.otherVersions">
         <tr>
             <td class="dataElementHeading">Version</td>
             <td class="dataElementHeading">Long Name</td>
@@ -178,30 +179,34 @@
             <td class="dataElementValue">{{other.registrationStatus}}</td>
             <td class="dataElementValue">{{other.context}}</td>
         </tr>
-        <tr><td colspan="5">
-            <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-                <tr>
-                    <td class="dataElementValue" colspan="6">Classifications</td>
-                </tr>
-                <tr>
-                    <td class="dataElementHeading">CS Long Name</td>
-                    <td class="dataElementHeading">CS Definition</td>
-                    <td class="dataElementHeading">CS Public ID/Version</td>
-                    <td class="dataElementHeading">CSI Name</td>
-                    <td class="dataElementHeading">CSI Type</td>
-                    <td class="dataElementHeading">CSI Public ID/Version</td>
-                </tr>
-                <tr class="dataElementViewTableTr" data-ng-repeat="cscsi in other.csCsis">
-                    <td class="dataElementValue">{{cscsi.csLongName}}</td>
-                    <td class="dataElementValue">{{cscsi.csDefinition}}</td>
-                    <td class="dataElementValue">{{cscsi.csId}}v{{cscsi.csVersion}}</td>
-                    <td class="dataElementValue">{{cscsi.csiName}}</td>
-                    <td class="dataElementValue">{{cscsi.csiType}}</td>
-                    <td class="dataElementValue">{{cscsi.csiId}}v{{cscsi.csiVersion}}</td>
-                </tr>
-            </table>
-        </td></tr>
+
+
+        <tr width="100%">
+            <td colspan="5">
+                <table cellpadding="1" cellspacing="1">
+                    <tr>
+                        <td class="cdeDetailsSubSubHeading" colspan="6">Classifications</td>
+                    </tr>
+                    <tr>
+                        <td class="dataElementHeading">CS Long Name</td>
+                        <td class="dataElementHeading">CS Definition</td>
+                        <td class="dataElementHeading">CS Public ID/Version</td>
+                        <td class="dataElementHeading">CSI Name</td>
+                        <td class="dataElementHeading">CSI Type</td>
+                        <td class="dataElementHeading">CSI Public ID/Version</td>
+                    </tr>
+                    <tr class="dataElementViewTableTr" data-ng-repeat="cscsi in other.csCsis">
+                        <td class="dataElementValue">{{cscsi.csLongName}}</td>
+                        <td class="dataElementValue">{{cscsi.csDefinition}}</td>
+                        <td class="dataElementValue">{{cscsi.csId}}v{{cscsi.csVersion}}</td>
+                        <td class="dataElementValue">{{cscsi.csiName}}</td>
+                        <td class="dataElementValue">{{cscsi.csiType}}</td>
+                        <td class="dataElementValue">{{cscsi.csiId}}v{{cscsi.csiVersion}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
 
     </table>
-
+ 
 </table><Br/>

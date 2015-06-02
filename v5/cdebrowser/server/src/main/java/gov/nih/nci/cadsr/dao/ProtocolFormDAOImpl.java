@@ -34,7 +34,7 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
     @Override
     public List<ProtocolFormModel> getProtocolForms( String csidSeq )
     {
-        String sql = " select * from FB_FORMS_VIEW formview, sbr.cs_csi_view csc,sbr.ac_csi_view acs "
+        String sql = " select distinct * from FB_FORMS_VIEW formview, sbr.cs_csi_view csc,sbr.ac_csi_view acs "
                 + " where  csc.cs_idseq = ?"
                 + " and csc.cs_csi_idseq = acs.cs_csi_idseq "
                 + " and acs.AC_IDSEQ=formview.QC_IDSEQ "
@@ -47,8 +47,8 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
     public List<ProtocolFormModel> getProtocolFormByContextId( String ContextId )
     {
         List<ProtocolFormModel> result;
-        String sql = " select * from SBREXT.FB_FORMS_VIEW"
-                + " where  CONTE_IDSEQ = ? AND LATEST_VERSION_IND = 'Yes' ORDER BY LONG_NAME";
+        String sql = " select distinct * from SBREXT.FB_FORMS_VIEW"
+                + " where  CONTE_IDSEQ = ? AND LATEST_VERSION_IND = 'Yes' ORDER BY  upper(LONG_NAME)";
         logger.debug( "getProtocolFormByContextId" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", ContextId ) );
         result = getAll( sql, ContextId, ProtocolFormModel.class );
@@ -63,8 +63,8 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
     public List<ProtocolFormModel> getAllProtocolForm()
     {
         List<ProtocolFormModel> result;
-        String sql = " select * from SBREXT.FB_FORMS_VIEW"
-                + " where LATEST_VERSION_IND = 'Yes' ORDER BY LONG_NAME";
+        String sql = " select distinct * from SBREXT.FB_FORMS_VIEW"
+                + " where LATEST_VERSION_IND = 'Yes' ORDER BY  upper(LONG_NAME)";
         logger.debug( "getAllProtocolForm" );
         //logger.debug( ">>>>>>> " + sql );
         result = getAll( sql, ProtocolFormModel.class );
@@ -79,8 +79,8 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
     public List<ProtocolFormModel> getProtocolFormByProtoId( String protoIdseq )
     {
         List<ProtocolFormModel> result;
-        String sql = " select * from SBREXT.FB_FORMS_VIEW"
-                + " where  PROTO_IDSEQ = ? AND LATEST_VERSION_IND = 'Yes' ORDER BY LONG_NAME";
+        String sql = " select distinct * from SBREXT.FB_FORMS_VIEW"
+                + " where  PROTO_IDSEQ = ? AND LATEST_VERSION_IND = 'Yes' ORDER BY upper(LONG_NAME)";
         logger.debug( "getProtocolFormByProtoId" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", protoIdseq ) );
         result = getAll( sql, protoIdseq, ProtocolFormModel.class );

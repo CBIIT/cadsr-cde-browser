@@ -49,7 +49,9 @@
     </tr>
 </table>
 
-<table class="dataElementViewTableWithScroller" align="center" cellpadding="1" cellspacing="1">
+<div class="dataElementViewTableWithScroller"      >
+
+<table  align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <th class="dataElementHeading">CS* Long Name</th>
         <th class="dataElementHeading">CS* Definition</th>
@@ -69,13 +71,16 @@
     <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationList.length">
         <td colspan="3">No applicable Classifications</td>
     </tr>
-</table><br>
+</table>
+</div>
 
+<br>
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <th colspan="7" align="left">Classifications Scheme Reference Documents</th>
     </tr>
 </table>
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">CS* Long Name</td>
@@ -123,6 +128,10 @@
         <td class="dataElementValue">&nbsp;</td>
     </tr>
     <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
-        <td colspan="3">No applicable Classification Scheme Item Reference Documents</td>
+        <td colspan="2">No applicable Classification Scheme Item Reference Documents</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
 </table><br>
