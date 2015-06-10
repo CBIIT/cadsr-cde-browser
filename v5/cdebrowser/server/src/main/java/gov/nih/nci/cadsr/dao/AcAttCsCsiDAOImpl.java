@@ -32,7 +32,7 @@ public class AcAttCsCsiDAOImpl extends AbstractDAOOperations implements AcAttCsC
     @Override
     public List<AcAttCsCsiModel> getAllAcAttCsCsiByAttIdseq(String attIdseq) {
         String sql = "SELECT att.*, cs_csi.csi_idseq FROM sbrext.ac_att_cscsi_ext att, SBR.CS_CSI cs_csi WHERE att_idseq = ? AND att.cs_csi_idseq = cs_csi.cs_csi_idseq";
-        logger.debug(sql + " " + attIdseq);
+        //logger.debug(sql + " " + attIdseq);
         List<AcAttCsCsiModel> acAttCsCsiModels = jdbcTemplate.query(sql, new Object[]{attIdseq}, new BeanPropertyRowMapper(AcAttCsCsiModel.class));
         return acAttCsCsiModels;
     }

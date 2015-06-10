@@ -28,6 +28,10 @@
 
     <bean id="CDEDataController" class="gov.nih.nci.cadsr.service.restControllers.CDEDataController">
         <property name="dataElementDAO" ref="dataElementDAO"/>
+        <property name="referenceDocDAO" ref="referenceDocDAO"/>
+        <property name="permissibleValuesDAO" ref="permissibleValuesDAO"/>
+        <property name="representationConceptsDAO" ref="representationConceptsDAO"/>
+
     </bean>
 
     <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController">
@@ -74,6 +78,7 @@
         <property name="contextDAO" ref="contextDAO"/>
         <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
     </bean>
+
     <bean id="dataElementDAO" class="gov.nih.nci.cadsr.dao.DataElementDAOImpl" parent="abstractDao">
         <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
@@ -116,13 +121,18 @@
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
     <bean id="usageDAO" class="gov.nih.nci.cadsr.dao.UsageDAOImpl" parent="abstractDao"/>
+
+    <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl" parent="abstractDao">
+        <property name="representationDAO" ref="representationDAO"/>
+    </bean>
+
     <bean id="valueDomainDAO" class="gov.nih.nci.cadsr.dao.ValueDomainDAOImpl" parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
         <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
     </bean>
-
-
+    <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao"/>
+    <bean id="permissibleValuesDAO" class="gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl" parent="abstractDao"/>
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>
     </bean>

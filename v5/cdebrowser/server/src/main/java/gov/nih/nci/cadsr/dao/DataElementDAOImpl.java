@@ -58,6 +58,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     public DataElementModel getCdeByDeIdseq(String deIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM DATA_ELEMENTS WHERE de_idseq = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{deIdseq}, new DataElementMapper(DataElementModel.class));
+        logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
+
         return dataElementModel;
     }
 
@@ -216,6 +218,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
 
             try {
                 dataElementModel.setValueDomainModel(getValueDomainDAO().getValueDomainByIdseq(rs.getString("VD_IDSEQ")));
+                logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel().toString() );
+
             } catch (EmptyResultDataAccessException ex) {
                 logger.warn("No Value Domain found for Data Element with idseq: " + deIdseq + "  the vdIdseq is " + rs.getString("VD_IDSEQ"));
             }
@@ -283,6 +287,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 logger.warn("No Classif scheme items found for Reference Docs for Data Element with idseq: " + deIdseq);
             }
 
+            logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel().toString() );
+            logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
 
             return dataElementModel;
         }

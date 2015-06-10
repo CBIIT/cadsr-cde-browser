@@ -81,6 +81,11 @@ public class ReferenceDocModel extends BaseModel {
         return context;
     }
 
+    public String getContextName()
+    {
+        return context.getName();
+    }
+
     public void setContext( ContextModel context )
     {
         this.context = context;

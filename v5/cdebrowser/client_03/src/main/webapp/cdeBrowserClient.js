@@ -106,7 +106,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
-        console.log("onClickCdeDetails: " + deIdseq);
+        console.log("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
         $scope.getCdeDetailRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
 
     };
@@ -141,7 +141,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.changeView = function (tabnumber, tab) {
         $location.path(tab.view);
         $scope.currentCdeTab = tabnumber;
-        console.log("View: " + tab.view);
+        console.log("changeView View: " + tab.view);
 
         if (tabnumber == 0) {
             // $scope.initTableParams();
@@ -152,6 +152,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else
         {
             $scope.showCdeSearchResults = false;
+
         }
         //////////////////////////////////////////
 /*
@@ -191,7 +192,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.onClickBasicSearch = function (query, field, type) {
         $scope.currentCdeTab = 0;
         $location.path("/search").replace();
-        //$scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/basicSearch?query=" + query + "&field=" + field + "&queryType=" + type);
+
         $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port +
         "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
@@ -199,8 +200,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
-
-        console.log("currentTab: " + $scope.currentTab);
+        // Restore the view of search results table
+        $scope.changeView(0,0);
     };
 
     // sets sort order for columns that should not be alphabetical //

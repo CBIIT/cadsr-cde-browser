@@ -1,5 +1,8 @@
 package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
 
+import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
+import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
+import gov.nih.nci.cadsr.dao.model.RepresentationConceptModel;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 
 import java.util.List;
@@ -10,9 +13,12 @@ public class ValueDomain
     private ValueDomainDetails valueDomainDetails = null;
     private String valueDomainConcepts = "";
     private Representation representation = null;
-    private List<RepresentationConcept> representationConcepts = null;
-    private List<PermissibleValue> permissibleValues = null;
+    private List<RepresentationConceptModel> representationConcepts = null;
+    private List<PermissibleValuesModel> permissibleValues = null;
+/*
     private List<ValueDomainReferenceDocument> referenceDocuments = null;
+*/
+    private List<ReferenceDocModel> referenceDocuments = null;
 
     public SelectedDataElement getSelectedDataElement()
     {
@@ -54,25 +60,36 @@ public class ValueDomain
         this.representation = representation;
     }
 
-    public List<RepresentationConcept> getRepresentationConcepts()
+    public List<RepresentationConceptModel> getRepresentationConcepts()
     {
         return representationConcepts;
     }
 
-    public void setRepresentationConcepts( List<RepresentationConcept> representationConcepts )
+    public void setRepresentationConcepts( List<RepresentationConceptModel> representationConcepts )
     {
         this.representationConcepts = representationConcepts;
     }
 
-    public List<PermissibleValue> getPermissibleValues()
+    public List<PermissibleValuesModel> getPermissibleValues()
     {
         return permissibleValues;
     }
 
-    public void setPermissibleValues( List<PermissibleValue> permissibleValues )
+    public void setPermissibleValues( List<PermissibleValuesModel> permissibleValues )
     {
         this.permissibleValues = permissibleValues;
     }
+
+    public List<ReferenceDocModel> getValueDomainReferenceDocuments()
+    {
+        return referenceDocuments;
+    }
+
+    public void setValueDomainReferenceDocuments( List<ReferenceDocModel> referenceDocuments )
+    {
+        this.referenceDocuments = referenceDocuments;
+    }
+/*
 
     public List<ValueDomainReferenceDocument> getValueDomainReferenceDocuments()
     {
@@ -83,4 +100,5 @@ public class ValueDomain
     {
         this.referenceDocuments = referenceDocuments;
     }
+*/
 }

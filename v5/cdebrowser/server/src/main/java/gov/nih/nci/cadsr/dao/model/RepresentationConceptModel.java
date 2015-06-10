@@ -1,15 +1,13 @@
-package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
+package gov.nih.nci.cadsr.dao.model;
 
 /**
- * Created by lernermh on 4/22/15.
- * This is not used - see RepresentationConceptModel
- *
+ * Created by lernermh on 6/9/15.
  */
-public class RepresentationConcept
+public class RepresentationConceptModel  extends BaseModel
 {
     private String conceptName;
     private String conceptCode;
-    private int publicId;
+    private String publicId;
     private String definitionSource;
     private String evsSource;
     private String primary;
@@ -34,12 +32,12 @@ public class RepresentationConcept
         this.conceptCode = conceptCode;
     }
 
-    public int getPublicId()
+    public String getPublicId()
     {
         return publicId;
     }
 
-    public void setPublicId( int publicId )
+    public void setPublicId( String publicId )
     {
         this.publicId = publicId;
     }

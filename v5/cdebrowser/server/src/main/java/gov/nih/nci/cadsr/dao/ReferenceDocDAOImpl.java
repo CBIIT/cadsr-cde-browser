@@ -43,6 +43,8 @@ public class ReferenceDocDAOImpl extends AbstractDAOOperations implements Refere
     public List<ReferenceDocModel> getRefDocsByAcIdseq(String acIdseq) {
 
         String sql = "SELECT * FROM SBR.REFERENCE_DOCUMENTS WHERE AC_IDSEQ = ?";
+        logger.debug( sql.replace( "?", acIdseq ) + " <<<<<<<" );
+
         List<ReferenceDocModel> referenceDocModel = jdbcTemplate.query(sql, new Object[]{acIdseq}, new ReferenceDocMapper());
         return referenceDocModel;
     }

@@ -1,6 +1,10 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
+import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.DataElementDAOImpl;
+import gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl;
+import gov.nih.nci.cadsr.dao.ReferenceDocDAOImpl;
+import gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
@@ -34,6 +38,9 @@ public class CDEDataController
 {
     private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
     private DataElementDAOImpl dataElementDAO;
+    private ReferenceDocDAOImpl referenceDocDAO;
+    private PermissibleValuesDAOImpl permissibleValuesDAO;
+    private RepresentationConceptsDAOImpl representationConceptsDAO;
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
@@ -260,16 +267,16 @@ public class CDEDataController
         dataElementConcept.setDataElementConceptDetails(dataElementConceptDetails);
         // FIXME - Need to find out where to get Data Element Concept Details from dataElementModel
         dataElementConceptDetails.setPublicId(dataElementModel.getDec().getPublicId());
-        dataElementConceptDetails.setVersion(dataElementModel.getDec().getVersion());
+        dataElementConceptDetails.setVersion( dataElementModel.getDec().getVersion() );
         dataElementConceptDetails.setLongName(dataElementModel.getDec().getLongName());
-        dataElementConceptDetails.setShortName(dataElementModel.getDec().getPreferredName());
-        dataElementConceptDetails.setDefinition(dataElementModel.getDec().getPreferredDefinition());
-        dataElementConceptDetails.setContext(dataElementModel.getDec().getCdContextName());
-        dataElementConceptDetails.setWorkflowStatus(dataElementModel.getDec().getAslName());
-        dataElementConceptDetails.setConceptualDomainPublicId(dataElementModel.getDec().getCdPublicId());
-        dataElementConceptDetails.setConceptualDomainShortName(dataElementModel.getDec().getCdPrefName());
-        dataElementConceptDetails.setVersion(dataElementModel.getDec().getCdVersion());
-        dataElementConceptDetails.setOrigin(dataElementModel.getDec().getOrigin());
+        dataElementConceptDetails.setShortName( dataElementModel.getDec().getPreferredName() );
+        dataElementConceptDetails.setDefinition( dataElementModel.getDec().getPreferredDefinition() );
+        dataElementConceptDetails.setContext( dataElementModel.getDec().getCdContextName() );
+        dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
+        dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
+        dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
+        dataElementConceptDetails.setVersion( dataElementModel.getDec().getCdVersion() );
+        dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
 
         /////////////////////////////////////////////////////
         // "Object Class" of the "Data Element Concept" Tab
@@ -381,6 +388,20 @@ public class CDEDataController
         Representation representation = new Representation();
         valueDomain.setRepresentation( representation );
 
+        logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
+
+
+        representation.setPublicId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
+        if( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() != null )
+        {
+            representation.setVersion( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() );
+        }
+        representation.setLongName( dataElementModel.getValueDomainModel().getRepresentationModel().getLongName() );
+        representation.setShortName( dataElementModel.getValueDomainModel().getRepresentationModel().getPreferredName() );
+        representation.setContext( dataElementModel.getValueDomainModel().getRepresentationModel().getContext().getName() );
+
+/*
+
         representation.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
         if( dataElementModel.getValueDomainModel().getVersion() != null )
         {
@@ -390,26 +411,34 @@ public class CDEDataController
         representation.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
         representation.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
 
+*/
 
         /////////////////////////////////////////////////////
         // "Representation Concepts" of the "value Domain" Tab
-        List<RepresentationConcept> representationConcepts = new ArrayList<>();
+        List<RepresentationConceptModel> representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId());
         valueDomain.setRepresentationConcepts( representationConcepts );
-        // FIXME - Need to find out where to get Representation Concepts from dataElementModel
+
+
 
 
         /////////////////////////////////////////////////////
         // "Permissible Values" of the "value Domain" Tab
-        List<PermissibleValue> permissibleValues = new ArrayList<>();
+        List<PermissibleValuesModel> permissibleValues = permissibleValuesDAO.getPermissibleValuesByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
         valueDomain.setPermissibleValues( permissibleValues );
-        // FIXME - Need to find out where to get Permissible Value List from dataElementModel
-
+        logger.debug( "PermissibleValues count: " + permissibleValues.size() );
+        for( PermissibleValuesModel permissibleValuesModel: permissibleValues)
+        {
+            logger.debug( "PermissibleValues: " + permissibleValuesModel.getValue() );
+            logger.debug( "PermissibleValues: " + permissibleValuesModel.getShortMeaning() );
+            logger.debug( "PermissibleValues: " + permissibleValuesModel.getMeaningDescription() );
+        }
 
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "value Domain" Tab
-        List<ValueDomainReferenceDocument> valueDomainReferenceDocuments = new ArrayList<>();
+        List<ReferenceDocModel> valueDomainReferenceDocuments = referenceDocDAO.getRefDocsByAcIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
+        logger.debug( "valueDomainReferenceDocuments count: " + valueDomainReferenceDocuments.size() );
         valueDomain.setValueDomainReferenceDocuments( valueDomainReferenceDocuments );
-        // FIXME - Need to find out where to get Reference Documents List from dataElementModel
+
 
         return valueDomain;
     }
@@ -522,9 +551,9 @@ public class CDEDataController
      {
          AdminInfo adminInfo = new AdminInfo();
          adminInfo.setCreatedBy( dataElementModel.getCreatedBy() );
-         adminInfo.setDateCreated( new SimpleDateFormat("dd MMM yyyy").format( dataElementModel.getDateCreated()));
+         adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT).format( dataElementModel.getDateCreated()));
          adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
-         adminInfo.setDateModified( new SimpleDateFormat("dd MMM yyyy").format( dataElementModel.getDateModified()) );
+         adminInfo.setDateModified( new SimpleDateFormat(CaDSRConstants.DATE_FORMAT).format( dataElementModel.getDateModified()) );
          return adminInfo;
      }
 
@@ -574,6 +603,20 @@ public class CDEDataController
         this.dataElementDAO = dataElementDAO;
     }
 
+    public void setReferenceDocDAO( ReferenceDocDAOImpl referenceDocDAO )
+    {
+        this.referenceDocDAO = referenceDocDAO;
+    }
+
+    public void setPermissibleValuesDAO( PermissibleValuesDAOImpl permissibleValuesDAO )
+    {
+        this.permissibleValuesDAO = permissibleValuesDAO;
+    }
+
+    public void setRepresentationConceptsDAO( RepresentationConceptsDAOImpl representationConceptsDAO )
+    {
+        this.representationConceptsDAO = representationConceptsDAO;
+    }
 
     /////////////////////////////////////////////////////
     /////////////////////////////////////////////////////

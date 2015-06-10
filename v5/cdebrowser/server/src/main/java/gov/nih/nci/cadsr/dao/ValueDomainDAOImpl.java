@@ -20,7 +20,7 @@ import java.sql.SQLException;
  */
 public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDomainDAO {
 
-    private Logger logger = LogManager.getLogger(ValueDomainDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( ValueDomainDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
@@ -37,6 +37,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     @Override
     public ValueDomainModel getValueDomainByIdseq(String vdIdseq) throws EmptyResultDataAccessException {
         String sql = "SELECT * FROM SBR.VALUE_DOMAINS WHERE VD_IDSEQ = ?";
+        logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
         //String sql = "SELECT * FROM VALUE_DOMAINS_VIEW WHERE VD_IDSEQ = ?";
         ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject(sql, new Object[]{vdIdseq}, new ValueDomainMapper());
         return valueDomainModel;
@@ -67,6 +68,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     }
 
     public final class ValueDomainMapper extends BeanPropertyRowMapper<ValueDomainModel> {
+        private Logger logger = LogManager.getLogger( ValueDomainMapper.class.getName() );
 
         public ValueDomainModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             ValueDomainModel valueDomainModel = new ValueDomainModel();
@@ -91,6 +93,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             valueDomainModel.setCharSet(rs.getString("CHAR_SET_NAME"));
             valueDomainModel.setDecimalPlace(rs.getInt("DECIMAL_PLACE"));
             valueDomainModel.setVdType(rs.getString("VD_TYPE_FLAG"));
+
             try {
                 ConceptDerivationRuleModel conceptDerivationRuleModel = getConceptDerivationRuleDAO().getCDRByIdseq(rs.getString("CONDR_IDSEQ"));
                 if (conceptDerivationRuleModel != null) {
@@ -100,11 +103,19 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
                 // this isn't a problem, just means there's no associated ConceptDerivationRule
                 // valueDomainModel.setConceptDerivationRuleModel(new ConceptDerivationRuleModel());
             }
+
+
             try {
+                logger.debug( "rs.getString(\"REP_IDSEQ\"): " + rs.getString("REP_IDSEQ") );
                 valueDomainModel.setRepresentationModel(getRepresentationDAO().getRepresentationByIdseq(rs.getString("REP_IDSEQ")));
+
             } catch (EmptyResultDataAccessException ex) {
                 // this isn't a problem, just means there's no associated RepresentationModel
             }
+
+
+
+
             try {
                 ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq(rs.getString("CD_IDSEQ"));
                 if (conceptualDomainModel != null) {
@@ -122,6 +133,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             } catch (EmptyResultDataAccessException ex) {
                 // this isn't a problem, just means there's no associated ConceptualDomainModel
             }
+            logger.debug( "valueDomainModel.getRepresentationModel: " + valueDomainModel.getRepresentationModel().toString() );
 
             return valueDomainModel;
         }

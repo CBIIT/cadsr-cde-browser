@@ -39,7 +39,6 @@
 <br>
 
 
-
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <td colspan="6" align="left">Classifications
@@ -49,29 +48,29 @@
     </tr>
 </table>
 
-<div class="dataElementViewTableWithScroller"      >
+<div class="dataElementViewTableWithScroller">
 
-<table  align="center" cellpadding="1" cellspacing="1">
-    <tr class="dataElementViewTableTr">
-        <th class="dataElementHeading">CS* Long Name</th>
-        <th class="dataElementHeading">CS* Definition</th>
-        <th class="dataElementHeading">CS* Public ID/Version</th>
-        <th class="dataElementHeading">CSI* Name</th>
-        <th class="dataElementHeading">CSI* Type</th>
-        <th class="dataElementHeading">CSI* Public ID/Version</th>
-    </tr>
-    <tr class="dataElementViewTableTr"  data-ng-repeat="classif in cdeDetails.classifications.classificationList">
-        <td class="dataElementValue">{{classif.csLongName}}</td>
-        <td class="dataElementValue">{{classif.csDefinition}}</td>
-        <td class="dataElementValue">{{classif.csId}}v{{classif.csVersion}}</td>
-        <td class="dataElementValue">{{classif.csiName}}</td>
-        <td class="dataElementValue">{{classif.csiType}}</td>
-        <td class="dataElementValue">{{classif.csiId}}v{{classif.csiVersion}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationList.length">
-        <td colspan="3">No applicable Classifications</td>
-    </tr>
-</table>
+    <table align="center" cellpadding="1" cellspacing="1">
+        <tr class="dataElementViewTableTr">
+            <th class="dataElementHeading">CS* Long Name</th>
+            <th class="dataElementHeading">CS* Definition</th>
+            <th class="dataElementHeading">CS* Public ID/Version</th>
+            <th class="dataElementHeading">CSI* Name</th>
+            <th class="dataElementHeading">CSI* Type</th>
+            <th class="dataElementHeading">CSI* Public ID/Version</th>
+        </tr>
+        <tr class="dataElementViewTableTr" data-ng-repeat="classif in cdeDetails.classifications.classificationList">
+            <td class="dataElementValue">{{classif.csLongName}}</td>
+            <td class="dataElementValue">{{classif.csDefinition}}</td>
+            <td class="dataElementValue">{{classif.csId}}v{{classif.csVersion}}</td>
+            <td class="dataElementValue">{{classif.csiName}}</td>
+            <td class="dataElementValue">{{classif.csiType}}</td>
+            <td class="dataElementValue">{{classif.csiId}}v{{classif.csiVersion}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationList.length">
+            <td colspan="3">No applicable Classifications</td>
+        </tr>
+    </table>
 </div>
 
 <br>
@@ -91,7 +90,8 @@
         <td class="dataElementHeading">URL</td>
         <td class="dataElementHeading">Attachments</td>
     </tr>
-    <tr class="dataElementViewTableTr" data-ng-repeat="csrefdoc in cdeDetails.classifications.classificationsSchemeReferenceDocuments">
+    <tr class="dataElementViewTableTr"
+        data-ng-repeat="csrefdoc in cdeDetails.classifications.classificationsSchemeReferenceDocuments">
         <td class="dataElementValue">{{csrefdoc.csLongName}}</td>
         <td class="dataElementValue">{{csrefdoc.csVersion}}</td>
         <td class="dataElementValue">{{csrefdoc.documentName}}</td>
@@ -100,7 +100,8 @@
         <td class="dataElementValue">{{csrefdoc.url}}</td>
         <td class="dataElementValue">&nbsp;</td>
     </tr>
-    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationsSchemeReferenceDocuments.length">
+    <tr class="dataElementViewTableTr"
+        ng-hide="cdeDetails.classifications.classificationsSchemeReferenceDocuments.length">
         <td colspan="3">No applicable Classifications Scheme Reference Documents</td>
     </tr>
 </table><br>
@@ -119,7 +120,8 @@
         <td class="dataElementHeading">URL</td>
         <td class="dataElementHeading">Attachments</td>
     </tr>
-    <tr class="dataElementViewTableTr" data-ng-repeat="csirefdoc in cdeDetails.classifications.classificationsSchemeItemReferenceDocuments">
+    <tr class="dataElementViewTableTr"
+        data-ng-repeat="csirefdoc in cdeDetails.classifications.classificationsSchemeItemReferenceDocuments">
         <td class="dataElementValue">{{csirefdoc.csiName}}</td>
         <td class="dataElementValue">{{csirefdoc.documentName}}</td>
         <td class="dataElementValue">{{csirefdoc.documentType}}</td>
@@ -127,7 +129,8 @@
         <td class="dataElementValue">{{csirefdoc.url}}</td>
         <td class="dataElementValue">&nbsp;</td>
     </tr>
-    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
+    <tr class="dataElementViewTableTr"
+        ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
         <td colspan="2">No applicable Classification Scheme Item Reference Documents</td>
         <td></td>
         <td></td>

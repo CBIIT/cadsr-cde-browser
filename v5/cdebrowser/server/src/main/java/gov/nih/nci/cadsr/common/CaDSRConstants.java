@@ -33,6 +33,8 @@ public final class CaDSRConstants
     public static final int ERROR = 2;
     public static final int TEST = 3;
 
+    public static final String DATE_FORMAT="YYYY-MM-dd";
+
 
 
     public static final String USER_KEY = "nciUser";

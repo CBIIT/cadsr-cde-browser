@@ -290,7 +290,7 @@ public class BasicSearchController
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
         String  sql = dESearchQueryBuilder.getQueryCDEsOwnedAndUsedByContext( contexId );
-        //logger.debug("runCdeByContextQuery: " + sql);
+logger.debug("runCdeByContextQuery: " + sql);
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
 

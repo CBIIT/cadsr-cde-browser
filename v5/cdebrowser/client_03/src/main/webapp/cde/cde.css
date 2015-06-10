@@ -75,11 +75,11 @@
     position: relative;
     left: 5%;
     width: 90%;
-    height: 264px;
+    max-height: 264px;
     overflow-y: scroll;
     background-color: #999966;
-
 }
+
 
 .dataElementViewTableTr {
     font-size: 10pt;
@@ -89,7 +89,9 @@
 }
 
 .dataElementDescription {
+    /*
     width: 25%;
+    */
     FONT-WEIGHT: bold;
     font-size: 10pt;
     color: #336699;
@@ -99,7 +101,9 @@
 }
 
 .dataElementHeading {
-    width: 25%;
+ /*
+   width: 25%;
+*/
     FONT-WEIGHT: bold;
     font-size: 10pt;
     color: #336699;

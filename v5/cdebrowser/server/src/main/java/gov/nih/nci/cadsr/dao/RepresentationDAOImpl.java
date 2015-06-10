@@ -36,14 +36,25 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
     @Override
     public RepresentationModel getRepresentationByIdseq(String representationIdseq) {
         String sql = "SELECT * FROM SBREXT.REPRESENTATIONS_EXT WHERE REP_IDSEQ = ?";
+        logger.debug( sql.replace( "?", representationIdseq ) + " << << << <<" );
         RepresentationModel representationModel = jdbcTemplate.queryForObject(sql, new Object[] { representationIdseq }, new RepresentationMapper());
+        logger.debug("representationModel: " +  representationModel);
+        return representationModel;
+    }
+
+    @Override
+    public RepresentationModel getRepresentationById( String representationId )
+    {
+        String sql = "SELECT * FROM SBREXT.REPRESENTATIONS_EXT WHERE REP_ID = ?";
+        logger.debug( sql.replace( "?", representationId ) + " << << << <<" );
+        RepresentationModel representationModel = jdbcTemplate.queryForObject(sql, new Object[] { representationId }, new RepresentationMapper());
+        logger.debug("representationModel: " +  representationModel);
         return representationModel;
     }
 
 
-
-
     public final class RepresentationMapper extends BeanPropertyRowMapper<RepresentationModel> {
+        private Logger logger = LogManager.getLogger(RepresentationMapper.class.getName());
 
         public RepresentationModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             RepresentationModel representationModel = new RepresentationModel();

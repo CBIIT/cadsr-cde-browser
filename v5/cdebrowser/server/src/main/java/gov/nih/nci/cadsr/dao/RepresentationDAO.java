@@ -7,4 +7,6 @@ import gov.nih.nci.cadsr.dao.model.RepresentationModel;
  */
 public interface RepresentationDAO {
     RepresentationModel getRepresentationByIdseq(String representationIdseq);
+    RepresentationModel getRepresentationById(String representationId);
+
 }
