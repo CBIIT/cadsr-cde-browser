@@ -8,6 +8,7 @@ public class Representation
 {
     private int publicId;
     private float version;
+    private String formattedVersion;
     private String longName;
     private String shortName;
     private String context;
@@ -30,6 +31,19 @@ public class Representation
     public void setVersion( float version )
     {
         this.version = version;
+        //this will give us at least one digit to the right of the decimal place
+        this.formattedVersion = Float.toString( Float.valueOf(version) );
+
+    }
+
+    public String getFormattedVersion()
+    {
+        return formattedVersion;
+    }
+
+    public void setFormattedVersion( String formattedVersion )
+    {
+        this.formattedVersion = formattedVersion;
     }
 
     public String getLongName()

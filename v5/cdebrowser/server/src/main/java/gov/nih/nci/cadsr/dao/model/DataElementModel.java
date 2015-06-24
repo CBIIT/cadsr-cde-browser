@@ -249,6 +249,7 @@ public class DataElementModel extends BaseModel
     public void setVersion(Float version)
     {
         this.version = version;
+        setFormattedVersion(  version );
     }
 
     public String getConteIdseq()
@@ -389,6 +390,7 @@ public class DataElementModel extends BaseModel
     public void setQuestion(String question)
     {
         this.question = question;
+        setPreferredQuestionText( this.question );
     }
 
     public HashMap<String, CsCsiModel> getCsCsiData() {

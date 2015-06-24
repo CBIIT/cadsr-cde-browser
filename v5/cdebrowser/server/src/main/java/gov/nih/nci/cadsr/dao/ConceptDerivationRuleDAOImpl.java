@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.dao;
 
 import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,6 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
     private Logger logger = LogManager.getLogger(DataElementConceptDAOImpl.class.getName());
 
     private JdbcTemplate jdbcTemplate;
-
     private PropertyDAO propertyDAO;
     private ObjectClassDAO objectClassDAO;
 
@@ -39,7 +39,17 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
         return conceptDerivationRuleModel;
     }
 
-
+    @Override
+    /**
+     * Returns a conceptDerivationRuleModel for a Value Domain's Representation
+     */
+    public ConceptDerivationRuleModel getCDRByByRepId( String repId )
+    {
+        String sql = "SELECT CON_DERIVATION_RULES_EXT.* FROM sbrext.REPRESENTATIONS_EXT,CON_DERIVATION_RULES_EXT  WHERE sbrext.REPRESENTATIONS_EXT.REP_ID = ? AND CON_DERIVATION_RULES_EXT.condr_idseq = sbrext.REPRESENTATIONS_EXT.CONDR_IDSEQ";
+        logger.debug( ">>>>>>> " + sql.replace( "?", repId ) );
+        ConceptDerivationRuleModel conceptDerivationRuleModel = query( sql, repId, ConceptDerivationRuleModel.class );
+        return conceptDerivationRuleModel;
+    }
 
 
     public final class ConceptDerivationRuleMapper extends BeanPropertyRowMapper<ConceptDerivationRuleModel> {

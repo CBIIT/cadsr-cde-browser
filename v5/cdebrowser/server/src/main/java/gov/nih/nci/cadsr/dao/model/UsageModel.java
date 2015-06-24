@@ -31,6 +31,7 @@ public class UsageModel extends BaseModel
 
     public void setVersion(Float version) {
         this.version = version;
+        setFormattedVersion(  version );
     }
 
     public String getFormName() {

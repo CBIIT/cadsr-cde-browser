@@ -223,7 +223,6 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             console.log("* * * selectAction: [" + selectAction + "]");
                             console.log("* * * actionParts[0]: [" + actionParts[0] + "]");
 
-
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Context
                             if (/cdesByContext$/.test(actionParts[0])) {

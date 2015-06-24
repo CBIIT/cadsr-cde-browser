@@ -100,7 +100,8 @@ public class BasicSearchModel  extends BaseModel
 
     public void setDeVersion( String deVersion )
     {
-        this.deVersion = deVersion;
+        //this will give us at least one digit to the right of the decimal place
+        this.deVersion = Float.toString( Float.valueOf(deVersion) );
     }
 
     public String getDeUsedby()

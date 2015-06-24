@@ -98,6 +98,7 @@ public class ContextModel extends BaseModel
 
     public void setVersion(Float version) {
         this.version = version;
+        setFormattedVersion(  version );
     }
 
     /**

@@ -43,6 +43,7 @@ public class RepresentationModel extends BaseModel {
     public void setVersion( Float version )
     {
         this.version = version;
+        setFormattedVersion(  version );
     }
 
     public ContextModel getContext()

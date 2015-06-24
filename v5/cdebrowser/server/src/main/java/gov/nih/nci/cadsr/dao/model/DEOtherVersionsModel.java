@@ -22,6 +22,7 @@ public class DEOtherVersionsModel extends BaseModel
     }
 
     public void setVersion(Float version) {
+        setFormattedVersion(  version );
         this.version = version;
     }
 

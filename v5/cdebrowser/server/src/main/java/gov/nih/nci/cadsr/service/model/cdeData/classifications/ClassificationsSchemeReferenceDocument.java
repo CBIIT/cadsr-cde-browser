@@ -9,6 +9,7 @@ public class ClassificationsSchemeReferenceDocument
 {
     private String csLongName;
     private float csVersion;
+    private String formattedCsVersion;
     private String documentName;
     private String documentType;
     private String documentText;
@@ -21,6 +22,7 @@ public class ClassificationsSchemeReferenceDocument
     public ClassificationsSchemeReferenceDocument(CSRefDocModel csRefDocModel) {
         this.csLongName = csRefDocModel.getCsLongName();
         this.csVersion = csRefDocModel.getCsVersion();
+        this.formattedCsVersion = Float.toString( Float.valueOf(csVersion) );
         this.documentName = csRefDocModel.getDocumentName();
         this.documentType = csRefDocModel.getDocumentType();
         this.documentText = csRefDocModel.getDocumentText();
@@ -47,6 +49,17 @@ public class ClassificationsSchemeReferenceDocument
     public void setCsVersion( float csVersion )
     {
         this.csVersion = csVersion;
+        this.formattedCsVersion = Float.toString(  Float.valueOf(csVersion) );
+    }
+
+    public String getFormattedCsVersion()
+    {
+        return formattedCsVersion;
+    }
+
+    public void setFormattedCsVersion( String formattedCsVersion )
+    {
+        this.formattedCsVersion = formattedCsVersion;
     }
 
     public String getDocumentName()

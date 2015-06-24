@@ -224,6 +224,7 @@ public class ClassificationSchemeModel extends BaseModel
     public void setVersion( String version )
     {
         this.version = version;
+        setFormattedVersion(  this.version );
     }
 
     public String getWorkflowStatusDesc()

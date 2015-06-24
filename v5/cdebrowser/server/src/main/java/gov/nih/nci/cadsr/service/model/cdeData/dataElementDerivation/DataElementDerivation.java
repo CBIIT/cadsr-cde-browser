@@ -1,14 +1,19 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation;
 
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 
+import java.util.List;
+
 /**
- * There is probably more to this tha just a String, I am making inquiries to get a good example.
+ * There is probably more to this than just a String, I am making inquiries to get a good example.
  */
 public class DataElementDerivation
 {
     private SelectedDataElement selectedDataElement = null;
-    private String dataElementDerivationDetails;
+    private DataElementDerivationModel dataElementDerivationDetails;
+    private List<DataElementDerivationComponentModel> dataElementDerivationComponentModels;
 
     public SelectedDataElement getSelectedDataElement()
     {
@@ -20,13 +25,23 @@ public class DataElementDerivation
         this.selectedDataElement = selectedDataElement;
     }
 
-    public String getDataElementDerivationDetails()
+    public DataElementDerivationModel getDataElementDerivationDetails()
     {
         return dataElementDerivationDetails;
     }
 
-    public void setDataElementDerivationDetails( String dataElementDerivationDetails )
+    public void setDataElementDerivationDetails( DataElementDerivationModel dataElementDerivationDetails )
     {
         this.dataElementDerivationDetails = dataElementDerivationDetails;
+    }
+
+    public List<DataElementDerivationComponentModel> getDataElementDerivationComponentModels()
+    {
+        return dataElementDerivationComponentModels;
+    }
+
+    public void setDataElementDerivationComponentModels( List<DataElementDerivationComponentModel> dataElementDerivationComponentModels )
+    {
+        this.dataElementDerivationComponentModels = dataElementDerivationComponentModels;
     }
 }

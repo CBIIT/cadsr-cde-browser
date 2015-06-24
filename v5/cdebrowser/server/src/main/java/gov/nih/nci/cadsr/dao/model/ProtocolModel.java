@@ -54,6 +54,7 @@ public class ProtocolModel extends BaseModel
     public void setVersion( String version )
     {
         this.version = version;
+        setFormattedVersion(  version );
     }
 
     public String getPreferredName()

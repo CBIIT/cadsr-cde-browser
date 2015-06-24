@@ -8,12 +8,12 @@
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Public ID:</td>
+        <td class="dataElementDescription" width="20%">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.version}}</td>
+        <td class="dataElementValue">{{cdeDetails.classifications.selectedDataElement.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
@@ -93,7 +93,7 @@
     <tr class="dataElementViewTableTr"
         data-ng-repeat="csrefdoc in cdeDetails.classifications.classificationsSchemeReferenceDocuments">
         <td class="dataElementValue">{{csrefdoc.csLongName}}</td>
-        <td class="dataElementValue">{{csrefdoc.csVersion}}</td>
+        <td class="dataElementValue">{{csrefdoc.formattedCsVersion}}</td>
         <td class="dataElementValue">{{csrefdoc.documentName}}</td>
         <td class="dataElementValue">{{csrefdoc.documentType}}</td>
         <td class="dataElementValue">{{csrefdoc.documentText}}</td>

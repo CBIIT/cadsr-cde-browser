@@ -29,6 +29,7 @@ public class ConceptualDomainModel extends BaseModel {
 
     public void setVersion(Float version) {
         this.version = version;
+        setFormattedVersion(  this.version );
     }
 
     public int getCdId() {

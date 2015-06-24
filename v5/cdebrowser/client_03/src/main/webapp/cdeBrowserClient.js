@@ -224,7 +224,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
     };
 
-
     // Basic search query to get search results //
     $scope.basicSearchServerRestCall = function (serverUrl) {
         $scope.tabsDisabled = true;

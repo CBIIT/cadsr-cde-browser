@@ -1,10 +1,7 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.DataElementDAOImpl;
-import gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl;
-import gov.nih.nci.cadsr.dao.ReferenceDocDAOImpl;
-import gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl;
+import gov.nih.nci.cadsr.dao.*;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
@@ -41,6 +38,7 @@ public class CDEDataController
     private ReferenceDocDAOImpl referenceDocDAO;
     private PermissibleValuesDAOImpl permissibleValuesDAO;
     private RepresentationConceptsDAOImpl representationConceptsDAO;
+    private DataElementDerivationDAOImpl dataElementDerivationDAO;
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
@@ -68,31 +66,38 @@ public class CDEDataController
     // Build a CdeDetails to send to the client
     private CdeDetails buildCdeDetails( DataElementModel dataElementModel )
     {
+        logger.debug( "buildCdeDetails" );
         CdeDetails cdeDetails = new CdeDetails();
 
+
         // For the "Data Element" Tab
+        logger.debug( "\"Data Element\" Tab" );
+
         DataElement dataElement = initDataElementTabData( dataElementModel );
         cdeDetails.setDataElement( dataElement );
 
         // For the "Data Element Concept" Tab
+        logger.debug( "\"Data Element Concept\" Tab" );
+
         DataElementConcept dataElementConcept = initDataElementConceptTabData( dataElementModel );
         cdeDetails.setDataElementConcept( dataElementConcept );
 
         // For the "Value Domain" Tab
-        ValueDomain valueDomain = initValueDomainTabData(dataElementModel);
-        cdeDetails.setValueDomain(valueDomain);
+        logger.debug( "\"Value Domain\" Tab" );
+        ValueDomain valueDomain = initValueDomainTabData( dataElementModel );
+        cdeDetails.setValueDomain( valueDomain );
 
         // For the "Classifications" Tab
-        Classifications classifications = initClassificationsTabData(dataElementModel);
-        cdeDetails.setClassifications(classifications);
+        Classifications classifications = initClassificationsTabData( dataElementModel );
+        cdeDetails.setClassifications( classifications );
 
         // For the "Usage" tab
-        Usage usage = initUsageTabData(dataElementModel);
-        cdeDetails.setUsage(usage);
+        Usage usage = initUsageTabData( dataElementModel );
+        cdeDetails.setUsage( usage );
 
         // For the "Data Elements Derivation" tab
-        DataElementDerivation dataElementDerivation = initDataElementDerivationTabData(dataElementModel);
-        cdeDetails.setDataElementDerivation(dataElementDerivation);
+        DataElementDerivation dataElementDerivation = initDataElementDerivationTabData( dataElementModel );
+        cdeDetails.setDataElementDerivation( dataElementDerivation );
 
         // For the "Admin Info" tab
         AdminInfo adminInfo = initAdminInfoTabData( dataElementModel );
@@ -165,19 +170,19 @@ public class CDEDataController
         for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
         {
             ReferenceDocument referenceDoc = new ReferenceDocument();
-            referenceDoc.setDocumentName(referenceDocModel.getDocName());
+            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
             //logger.debug( referenceDocModel.getDocName() );
 
-            referenceDoc.setDocumentType(referenceDocModel.getDocType());
+            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
             //logger.debug( referenceDocModel.getDocType() );
 
-            referenceDoc.setDocumentText(referenceDocModel.getDocText());
+            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
             //logger.debug( referenceDocModel.getDocText() );
 
-            referenceDoc.setContext(referenceDocModel.getContext().getName());
+            referenceDoc.setContext( referenceDocModel.getContext().getName() );
             //logger.debug( referenceDocModel.getContext().getName() );
 
-            referenceDoc.setUrl(referenceDocModel.getUrl());
+            referenceDoc.setUrl( referenceDocModel.getUrl() );
             //logger.debug( referenceDocModel.getUrl() );
 
             referenceDocuments.add( referenceDoc );
@@ -187,59 +192,70 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // CS/CSI data of the "Data Element" Tab
         List<CsCsi> dataElementCsCsis = new ArrayList<>();
-        dataElement.setCsCsis(dataElementCsCsis);
+        dataElement.setCsCsis( dataElementCsCsis );
         // add all the cscsi's and their designations and definitions except the unclassified ones
-        for (CsCsiModel csCsiModel : dataElementModel.getCsCsiData().values()) {
-            if (!csCsiModel.getCsiIdseq().equals(csCsiModel.UNCLASSIFIED)) {
-                CsCsi csCsi = new CsCsi(csCsiModel);
+        for( CsCsiModel csCsiModel : dataElementModel.getCsCsiData().values() )
+        {
+            if( !csCsiModel.getCsiIdseq().equals( csCsiModel.UNCLASSIFIED ) )
+            {
+                CsCsi csCsi = new CsCsi( csCsiModel );
                 ArrayList<AlternateName> alternateNames = new ArrayList<>();
-                if (dataElementModel.getCsCsiDesignations().get(csCsiModel.getCsiIdseq()) != null) { // if this CsCsiModel is only for definitions, might be null in designations
+                if( dataElementModel.getCsCsiDesignations().get( csCsiModel.getCsiIdseq() ) != null )
+                { // if this CsCsiModel is only for definitions, might be null in designations
                     // get the list of DesignationIdseq from DataElementModel.csCsiDesignations, a hashmap of Lists of designationIdseq's indexed by csCsiIdseq
-                    for (String designationIdseq : dataElementModel.getCsCsiDesignations().get(csCsiModel.getCsiIdseq())) {
+                    for( String designationIdseq : dataElementModel.getCsCsiDesignations().get( csCsiModel.getCsiIdseq() ) )
+                    {
                         // call the AlternateName() constructor that takes a Designation model, giving it the model found by its index
-                        alternateNames.add(new AlternateName(dataElementModel.getDesignationModels().get(designationIdseq)));
+                        alternateNames.add( new AlternateName( dataElementModel.getDesignationModels().get( designationIdseq ) ) );
                     }
                 }
-                csCsi.setAlternateNames(alternateNames);
+                csCsi.setAlternateNames( alternateNames );
                 ArrayList<AlternateDefinition> alternateDefinitions = new ArrayList<>();
-                if (dataElementModel.getCsCsiDefinitions().get(csCsiModel.getCsiIdseq()) != null) { // if this CsCsiModel is only for designations, might be null in definitions
+                if( dataElementModel.getCsCsiDefinitions().get( csCsiModel.getCsiIdseq() ) != null )
+                { // if this CsCsiModel is only for designations, might be null in definitions
                     // get the list of DefinitionIdseqs from DataElementModel.csCsiDefinitions, a hashmap of Lists of definitionIdseq's indexed by csCsiIdseq
-                    for (String definitionIdseq : dataElementModel.getCsCsiDefinitions().get(csCsiModel.getCsiIdseq())) {
+                    for( String definitionIdseq : dataElementModel.getCsCsiDefinitions().get( csCsiModel.getCsiIdseq() ) )
+                    {
                         // call the AlternateDefinition constructor that takes a DefinitionModel, giving it the model found by its index
-                        alternateDefinitions.add(new AlternateDefinition(dataElementModel.getDefinitionModels().get(definitionIdseq)));
+                        alternateDefinitions.add( new AlternateDefinition( dataElementModel.getDefinitionModels().get( definitionIdseq ) ) );
                     }
                 }
-                csCsi.setAlternateDefinitions(alternateDefinitions);
-                dataElementCsCsis.add(csCsi);
+                csCsi.setAlternateDefinitions( alternateDefinitions );
+                dataElementCsCsis.add( csCsi );
             }
         }
         // now get the unclassified ones
 
-        CsCsi unclassCsCsi = new CsCsi(dataElementModel.getCsCsiData().get(CsCsiModel.UNCLASSIFIED));
+        CsCsi unclassCsCsi = new CsCsi( dataElementModel.getCsCsiData().get( CsCsiModel.UNCLASSIFIED ) );
         ArrayList<AlternateName> unclassAlternateNames = new ArrayList<>();
-        if (dataElementModel.getCsCsiDesignations().get(CsCsiModel.UNCLASSIFIED) != null) {
-            for (String designationIdseq : dataElementModel.getCsCsiDesignations().get(CsCsiModel.UNCLASSIFIED)) {
-                unclassAlternateNames.add(new AlternateName(dataElementModel.getDesignationModels().get(designationIdseq)));
+        if( dataElementModel.getCsCsiDesignations().get( CsCsiModel.UNCLASSIFIED ) != null )
+        {
+            for( String designationIdseq : dataElementModel.getCsCsiDesignations().get( CsCsiModel.UNCLASSIFIED ) )
+            {
+                unclassAlternateNames.add( new AlternateName( dataElementModel.getDesignationModels().get( designationIdseq ) ) );
             }
         }
-        unclassCsCsi.setAlternateNames(unclassAlternateNames);
+        unclassCsCsi.setAlternateNames( unclassAlternateNames );
         ArrayList<AlternateDefinition> unclassAlternateDefinitions = new ArrayList<>();
-        if (dataElementModel.getCsCsiDefinitions().get(CsCsiModel.UNCLASSIFIED) != null) {
-            for (String definitionIdseq : dataElementModel.getCsCsiDefinitions().get(CsCsiModel.UNCLASSIFIED)) {
-                unclassAlternateDefinitions.add(new AlternateDefinition(dataElementModel.getDefinitionModels().get(definitionIdseq)));
+        if( dataElementModel.getCsCsiDefinitions().get( CsCsiModel.UNCLASSIFIED ) != null )
+        {
+            for( String definitionIdseq : dataElementModel.getCsCsiDefinitions().get( CsCsiModel.UNCLASSIFIED ) )
+            {
+                unclassAlternateDefinitions.add( new AlternateDefinition( dataElementModel.getDefinitionModels().get( definitionIdseq ) ) );
             }
         }
-        unclassCsCsi.setAlternateDefinitions(unclassAlternateDefinitions);
-        dataElementCsCsis.add(unclassCsCsi);
+        unclassCsCsi.setAlternateDefinitions( unclassAlternateDefinitions );
+        dataElementCsCsis.add( unclassCsCsi );
 
 
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
         List<OtherVersion> otherVersions = new ArrayList<>();
         dataElement.setOtherVersions( otherVersions );
-        for (DEOtherVersionsModel deOtherVersionsModel : dataElementModel.getDeOtherVersionsModels()) {
-            OtherVersion otherVersion = new OtherVersion(deOtherVersionsModel);
-            otherVersions.add(otherVersion);
+        for( DEOtherVersionsModel deOtherVersionsModel : dataElementModel.getDeOtherVersionsModels() )
+        {
+            OtherVersion otherVersion = new OtherVersion( deOtherVersionsModel );
+            otherVersions.add( otherVersion );
         }
 
         return dataElement;
@@ -259,22 +275,26 @@ public class CDEDataController
         DataElementConcept dataElementConcept = new DataElementConcept();
 
         // "Selected Data Element" of the "Data Element Concept" Tab
-        dataElementConcept.setSelectedDataElement(getSelectedDataElement(dataElementModel));
+        dataElementConcept.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
 
         /////////////////////////////////////////////////////
         // "Data Element Concept Details" of the "Data Element Concept" Tab
         DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
-        dataElementConcept.setDataElementConceptDetails(dataElementConceptDetails);
+        dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
         // FIXME - Need to find out where to get Data Element Concept Details from dataElementModel
-        dataElementConceptDetails.setPublicId(dataElementModel.getDec().getPublicId());
+        dataElementConceptDetails.setPublicId( dataElementModel.getDec().getPublicId() );
         dataElementConceptDetails.setVersion( dataElementModel.getDec().getVersion() );
-        dataElementConceptDetails.setLongName(dataElementModel.getDec().getLongName());
+        dataElementConceptDetails.setLongName( dataElementModel.getDec().getLongName() );
         dataElementConceptDetails.setShortName( dataElementModel.getDec().getPreferredName() );
         dataElementConceptDetails.setDefinition( dataElementModel.getDec().getPreferredDefinition() );
         dataElementConceptDetails.setContext( dataElementModel.getDec().getCdContextName() );
         dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
         dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
         dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
+
+        // FIXME need to track down Conceptual Domain Version
+        //dataElementConceptDetails.setConceptualDomainVersion(
+
         dataElementConceptDetails.setVersion( dataElementModel.getDec().getCdVersion() );
         dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
 
@@ -283,14 +303,14 @@ public class CDEDataController
         ObjectClass objectClass = new ObjectClass();
         dataElementConcept.setObjectClass( objectClass );
 
-        if( dataElementModel.getDec() == null)
+        if( dataElementModel.getDec() == null )
         {
             logger.error( "dataElementModel.getDec() == null" );
         }
 
         objectClass.setPublicId( dataElementModel.getDec().getPublicId() );
 
-        if(  dataElementModel.getDec().getVersion() != null)
+        if( dataElementModel.getDec().getVersion() != null )
         {
             objectClass.setVersion( dataElementModel.getDec().getVersion() );
         }
@@ -345,6 +365,7 @@ public class CDEDataController
      */
     private ValueDomain initValueDomainTabData( DataElementModel dataElementModel )
     {
+        logger.debug( "initValueDomainTabData" );
         ValueDomain valueDomain = new ValueDomain();
 
         // "Selected Data Element" of the "Value Domain" Tab
@@ -415,10 +436,9 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Representation Concepts" of the "value Domain" Tab
-        List<RepresentationConceptModel> representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId());
+        logger.debug( "Representation Concepts of the value Domain" );
+        List<RepresentationConceptModel> representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
         valueDomain.setRepresentationConcepts( representationConcepts );
-
-
 
 
         /////////////////////////////////////////////////////
@@ -426,7 +446,7 @@ public class CDEDataController
         List<PermissibleValuesModel> permissibleValues = permissibleValuesDAO.getPermissibleValuesByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
         valueDomain.setPermissibleValues( permissibleValues );
         logger.debug( "PermissibleValues count: " + permissibleValues.size() );
-        for( PermissibleValuesModel permissibleValuesModel: permissibleValues)
+        for( PermissibleValuesModel permissibleValuesModel : permissibleValues )
         {
             logger.debug( "PermissibleValues: " + permissibleValuesModel.getValue() );
             logger.debug( "PermissibleValues: " + permissibleValuesModel.getShortMeaning() );
@@ -463,26 +483,29 @@ public class CDEDataController
         // "Classifications" section of the "Classifications" tab
         List<CsCsi> classificationList = new ArrayList<>();
         classifications.setClassificationList( classificationList );
-        for (CsCsiModel csCsiModel : dataElementModel.getClassifications()) {
-            CsCsi csCsi = new CsCsi(csCsiModel);
-            classificationList.add(csCsi);
+        for( CsCsiModel csCsiModel : dataElementModel.getClassifications() )
+        {
+            CsCsi csCsi = new CsCsi( csCsiModel );
+            classificationList.add( csCsi );
         }
 
         /////////////////////////////////////////////////////
-        // "Classifications" section of the "Classifications" tab
+        // "Classifications Scheme Reference Documents" section of the "Classifications" tab
         List<ClassificationsSchemeReferenceDocument> classificationsSchemeReferenceDocuments = new ArrayList<>();
-        classifications.setClassificationsSchemeReferenceDocuments(classificationsSchemeReferenceDocuments);
-        for (CSRefDocModel csRefDocModel : dataElementModel.getCsRefDocModels()) {
-            classificationsSchemeReferenceDocuments.add(new ClassificationsSchemeReferenceDocument(csRefDocModel));
+        classifications.setClassificationsSchemeReferenceDocuments( classificationsSchemeReferenceDocuments );
+        for( CSRefDocModel csRefDocModel : dataElementModel.getCsRefDocModels() )
+        {
+            classificationsSchemeReferenceDocuments.add( new ClassificationsSchemeReferenceDocument( csRefDocModel ) );
         }
 
 
         /////////////////////////////////////////////////////
         // "Classification Scheme Item Reference Document
         List<ClassificationsSchemeItemReferenceDocument> classificationsSchemeItemReferenceDocuments = new ArrayList<>();
-        classifications.setClassificationsSchemeItemReferenceDocuments(classificationsSchemeItemReferenceDocuments);
-        for (CSIRefDocModel csiRefDocModel : dataElementModel.getCsiRefDocModels()) {
-            classificationsSchemeItemReferenceDocuments.add(new ClassificationsSchemeItemReferenceDocument(csiRefDocModel));
+        classifications.setClassificationsSchemeItemReferenceDocuments( classificationsSchemeItemReferenceDocuments );
+        for( CSIRefDocModel csiRefDocModel : dataElementModel.getCsiRefDocModels() )
+        {
+            classificationsSchemeItemReferenceDocuments.add( new ClassificationsSchemeItemReferenceDocument( csiRefDocModel ) );
         }
 
         return classifications;
@@ -510,13 +533,16 @@ public class CDEDataController
         usage.setFormUsages( formUsages );
         // FIXME - Need to find out where to get FormUsage List from dataElementModel
         //dataElementModel.getUsingContexts()
-        if (dataElementModel.getUsageModels() != null && dataElementModel.getUsageModels().size() > 0) {
-            for (UsageModel usageModel : dataElementModel.getUsageModels()) {
+        if( dataElementModel.getUsageModels() != null && dataElementModel.getUsageModels().size() > 0 )
+        {
+            for( UsageModel usageModel : dataElementModel.getUsageModels() )
+            {
 //                logger.error("current usage model: " + usageModel.getPublicId());
-                formUsages.add(new FormUsage(usageModel));
+                formUsages.add( new FormUsage( usageModel ) );
             }
-        } else {
-            logger.error("no usage models");
+        } else
+        {
+            logger.error( "no usage models" );
         }
         return usage;
     }
@@ -534,8 +560,17 @@ public class CDEDataController
     {
         DataElementDerivation dataElementDerivation = new DataElementDerivation();
         dataElementDerivation.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
-        // FIXME - Need to find out where to get dataElementDerivationDetails from dataElementModel
 
+        DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeId( dataElementModel.getCdeId() );
+
+        // If dataElementDerivationModel == null then this Data element is not a derived data element.
+        if( dataElementDerivationModel != null )
+        {
+            logger.debug( "dataElementDerivationModel: " + dataElementDerivationModel.toString() );
+            dataElementDerivation.setDataElementDerivationDetails( dataElementDerivationModel );
+            List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId( dataElementModel.getCdeId() );
+            dataElementDerivation.setDataElementDerivationComponentModels( dataElementDerivationComponentModels );
+        }
         return dataElementDerivation;
     }
 
@@ -547,15 +582,15 @@ public class CDEDataController
      * @param dataElementModel data model from the database
      * @return Data model for the UI client.
      */
-     private AdminInfo initAdminInfoTabData( DataElementModel dataElementModel)
-     {
-         AdminInfo adminInfo = new AdminInfo();
-         adminInfo.setCreatedBy( dataElementModel.getCreatedBy() );
-         adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT).format( dataElementModel.getDateCreated()));
-         adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
-         adminInfo.setDateModified( new SimpleDateFormat(CaDSRConstants.DATE_FORMAT).format( dataElementModel.getDateModified()) );
-         return adminInfo;
-     }
+    private AdminInfo initAdminInfoTabData( DataElementModel dataElementModel )
+    {
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setCreatedBy( dataElementModel.getCreatedBy() );
+        adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateCreated() ) );
+        adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
+        adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
+        return adminInfo;
+    }
 
     /***************************************************************/
     /**
@@ -616,6 +651,11 @@ public class CDEDataController
     public void setRepresentationConceptsDAO( RepresentationConceptsDAOImpl representationConceptsDAO )
     {
         this.representationConceptsDAO = representationConceptsDAO;
+    }
+
+    public void setDataElementDerivationDAO( DataElementDerivationDAOImpl dataElementDerivationDAO )
+    {
+        this.dataElementDerivationDAO = dataElementDerivationDAO;
     }
 
     /////////////////////////////////////////////////////

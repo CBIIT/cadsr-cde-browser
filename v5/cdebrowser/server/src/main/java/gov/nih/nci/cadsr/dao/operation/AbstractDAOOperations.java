@@ -4,7 +4,10 @@
 
 package gov.nih.nci.cadsr.dao.operation;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -13,6 +16,7 @@ import java.util.List;
 
 public abstract class AbstractDAOOperations extends JdbcDaoSupport
 {
+    private Logger logger = LogManager.getLogger( AbstractDAOOperations.class.getName() );
 
     @Autowired
     AbstractDAOOperations( DataSource dataSource )
@@ -35,22 +39,49 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
     public <T> T query( String sql, String where, Class<T> type )
     {
 
-        T results = type.cast(
-                getJdbcTemplate().queryForObject(
-                        sql, new Object[]{ where },
-                        new BeanPropertyRowMapper( type ) ) );
 
-        return results;
+        try
+        {
+            T results = type.cast(
+                    getJdbcTemplate().queryForObject(
+                            sql, new Object[]{ where },
+                            new BeanPropertyRowMapper( type ) ) );
+
+            return results;
+        } catch( DataAccessException e )
+        {
+            logger.debug( "Error: [" + e.getMessage() + "]" );
+            logger.debug( "Error: [" + e.toString() + "]" );
+            if( e.getMessage().compareTo( "Incorrect result size: expected 1, actual 0" ) ==0)
+            {
+                logger.debug( "No results" );
+            }
+            else
+            {
+                e.printStackTrace();
+            }
+        }
+        catch( Exception e)
+        {
+            e.printStackTrace();
+        }
+        logger.debug( "Error: returning null." );
+        return null;
     }
 
-    /**
-     *
-     * @param sql
-     * @param where
-     * @param type
-     * @param <T>
-     * @return
-     */
+    public <T> T query( String sql, int where, Class<T> type )
+    {
+        return query( sql, Integer.toString( where ), type );
+    }
+
+        /**
+         *
+         * @param sql
+         * @param where
+         * @param type
+         * @param <T>
+         * @return
+         */
     public <T> List<T> getAll( String sql, String where, Class<T> type )
     {
 

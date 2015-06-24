@@ -17,6 +17,7 @@ package gov.nih.nci.cadsr.dao.model;
 public class CSRefDocModel extends BaseModel {
     public String csLongName;
     public Float csVersion;
+    private String formattedCsVersion;
     public String documentName;
     public String documentType;
     public String DocumentText;
@@ -40,6 +41,17 @@ public class CSRefDocModel extends BaseModel {
 
     public void setCsVersion(Float csVersion) {
         this.csVersion = csVersion;
+        this.formattedCsVersion = Float.toString( Float.valueOf(csVersion) );
+    }
+
+    public String getFormattedCsVersion()
+    {
+        return formattedCsVersion;
+    }
+
+    public void setFormattedCsVersion( String formattedCsVersion )
+    {
+        this.formattedCsVersion = formattedCsVersion;
     }
 
     public String getDocumentName() {

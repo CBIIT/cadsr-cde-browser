@@ -60,6 +60,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         DataElementModel dataElementModel = jdbcTemplate.queryForObject(sql, new Object[]{deIdseq}, new DataElementMapper(DataElementModel.class));
         logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
 
+        logger.debug( sql.replace( "?",  deIdseq ) + " <<<<<<<" );
+
         return dataElementModel;
     }
 

@@ -55,6 +55,7 @@ public class ProtocolFormModel extends BaseModel
     public void setVersion( String version )
     {
         this.version = version;
+        setFormattedVersion(  version );
     }
 
     public String getType()

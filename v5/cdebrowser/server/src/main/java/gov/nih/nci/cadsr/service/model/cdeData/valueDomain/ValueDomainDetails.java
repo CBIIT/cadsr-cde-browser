@@ -7,6 +7,7 @@ public class ValueDomainDetails
 {
     private int publicId;
     private float version;
+    private String formattedVersion;
     private String longName;
     private String shortName;
     private String context;
@@ -24,7 +25,8 @@ public class ValueDomainDetails
     private int conceptualDomainPublicId;
     private String conceptualDomainShortName;
     private String conceptualDomainContextName;
-    private Float getConceptualDomainVersion;
+    private Float conceptualDomainVersion;
+    private String formattedConceptualDomainVersion;
     private String origin;
 
     public int getPublicId()
@@ -45,6 +47,18 @@ public class ValueDomainDetails
     public void setVersion( float version )
     {
         this.version = version;
+        //this will give us at least one digit to the right of the decimal place
+        this.formattedVersion = Float.toString( Float.valueOf(version) );
+    }
+
+    public String getFormattedVersion()
+    {
+        return formattedVersion;
+    }
+
+    public void setFormattedVersion( String formattedVersion )
+    {
+        this.formattedVersion = formattedVersion;
     }
 
     public String getLongName()
@@ -217,14 +231,26 @@ public class ValueDomainDetails
         this.conceptualDomainContextName = conceptualDomainContextName;
     }
 
-    public Float getGetConceptualDomainVersion()
+    public Float getConceptualDomainVersion()
     {
-        return getConceptualDomainVersion;
+        return conceptualDomainVersion;
     }
 
-    public void setConceptualDomainVersion( Float getConceptualDomainVersion )
+    public void setConceptualDomainVersion( Float conceptualDomainVersion )
     {
-        this.getConceptualDomainVersion = getConceptualDomainVersion;
+        this.conceptualDomainVersion = conceptualDomainVersion;
+        this.formattedConceptualDomainVersion = Float.toString( Float.valueOf(conceptualDomainVersion) );
+
+    }
+
+    public String getFormattedConceptualDomainVersion()
+    {
+        return formattedConceptualDomainVersion;
+    }
+
+    public void setFormattedConceptualDomainVersion( String formattedConceptualDomainVersion )
+    {
+        this.formattedConceptualDomainVersion = formattedConceptualDomainVersion;
     }
 
     public String getOrigin()

@@ -19,6 +19,7 @@ public abstract class BaseModel implements Serializable, Audit
     protected Timestamp createdDate;
     protected String modifiedBy;
     protected Timestamp modifiedDate;
+    protected  String formattedVersion;
 
     public BaseModel()
     {
@@ -67,6 +68,22 @@ public abstract class BaseModel implements Serializable, Audit
     public Object clone() throws CloneNotSupportedException
     {
         return super.clone();
+    }
+
+    public String getFormattedVersion()
+    {
+        return formattedVersion;
+    }
+
+    public void setFormattedVersion( String formattedVersion )
+    {
+        this.formattedVersion = formattedVersion;
+        setFormattedVersion(Float.valueOf(formattedVersion));
+    }
+
+    public void setFormattedVersion( float formattedVersion )
+    {
+        this.formattedVersion = Float.toString(formattedVersion);
     }
 
     public String toString()

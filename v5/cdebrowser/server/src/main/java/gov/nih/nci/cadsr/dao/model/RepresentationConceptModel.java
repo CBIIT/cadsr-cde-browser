@@ -3,7 +3,7 @@ package gov.nih.nci.cadsr.dao.model;
 /**
  * Created by lernermh on 6/9/15.
  */
-public class RepresentationConceptModel  extends BaseModel
+public class RepresentationConceptModel extends BaseModel
 {
     private String conceptName;
     private String conceptCode;
@@ -71,4 +71,19 @@ public class RepresentationConceptModel  extends BaseModel
     {
         this.primary = primary;
     }
+
+    @Override
+    public String toString()
+    {
+        return "RepresentationConceptModel{" +
+                "conceptName='" + conceptName + '\'' +
+                ", conceptCode='" + conceptCode + '\'' +
+                ", publicId='" + publicId + '\'' +
+                ", definitionSource='" + definitionSource + '\'' +
+                ", evsSource='" + evsSource + '\'' +
+                ", primary='" + primary + '\'' +
+                "}";
+    }
+
+
 }

@@ -68,15 +68,16 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
 //            private ConceptDerivationRuleModel conceptDerivationRuleModel;
 
             representationModel.setPreferredName(rs.getString("PREFERRED_NAME"));
-            representationModel.setLongName(rs.getString("LONG_NAME"));
-            representationModel.setVersion(rs.getFloat("VERSION"));
-            representationModel.setPublicId(rs.getInt("REP_ID"));
-            representationModel.setIdseq(rs.getString("REP_IDSEQ"));
+            representationModel.setLongName( rs.getString( "LONG_NAME" ) );
+            representationModel.setVersion( rs.getFloat( "VERSION" ) );
+            representationModel.setPublicId( rs.getInt( "REP_ID" ) );
+            representationModel.setIdseq( rs.getString( "REP_IDSEQ" ) );
 
-            representationModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
-            representationModel.setConceptDerivationRuleModel(getConceptDerivationRuleDAO().getCDRByIdseq(rs.getString("CONDR_IDSEQ")));
+            representationModel.setContext( getContextDAO().getContextByIdseq( rs.getString( "CONTE_IDSEQ" ) ) );
+            representationModel.setConceptDerivationRuleModel( getConceptDerivationRuleDAO().getCDRByIdseq( rs.getString( "CONDR_IDSEQ" ) ) );
 
-
+logger.debug( "representationModel: " + representationModel );
+logger.debug( "representationModel ConceptDerivationRule: " + representationModel.getConceptDerivationRuleModel().toString() );
             return representationModel;
         }
     }

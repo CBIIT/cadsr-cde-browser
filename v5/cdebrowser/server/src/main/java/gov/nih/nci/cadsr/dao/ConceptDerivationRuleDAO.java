@@ -7,4 +7,6 @@ import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
  */
 public interface ConceptDerivationRuleDAO {
     ConceptDerivationRuleModel getCDRByIdseq(String condrIdseq);
-}
+    ConceptDerivationRuleModel getCDRByByRepId(String repId);
+
+    }

@@ -7,12 +7,12 @@
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Public ID:</td>
+        <td class="dataElementDescription" width="20%">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.version}}</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
@@ -46,12 +46,12 @@
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
-        <td width="25%" class="dataElementDescription">Public ID:</td>
+        <td class="dataElementDescription" width="20%">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.version}}</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
@@ -107,7 +107,8 @@
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Value Domain Type:</td>
-        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.valueDomainType}}</td>
+        <td class="dataElementValue" ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType=='E'">Enumerated</td>
+        <td class="dataElementValue" ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType!='E'">Non Enumerated</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Public ID:</td>
@@ -123,7 +124,7 @@
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Version:</td>
-        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.getConceptualDomainVersion}}</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.formattedConceptualDomainVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Origin</td>
@@ -152,12 +153,12 @@
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
-        <td width="25%" class="dataElementDescription">Public ID:</td>
+        <td  class="dataElementDescription" width="20%">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.valueDomain.representation.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.version}}</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
@@ -195,7 +196,7 @@
         <td class="dataElementValue">{{representation.publicId}}</td>
         <td class="dataElementValue">{{representation.definitionSource}}</td>
         <td class="dataElementValue">{{representation.evsSource}}</td>
-        <td class="dataElementValue"></td>
+        <td class="dataElementValue">{{representation.primary}}</td>
     </tr>
 </table><br>
 
@@ -207,12 +208,7 @@
 </table>
 
 <div class="dataElementViewTableWithScroller">
-    <table align="center" cellpadding="1" cellspacing="1">
-        <!--
-            <tr class="cdeDetailsSubHeading">
-                <th colspan="8" align="left">Permissible Values</th>
-            </tr>
-        -->
+    <table align="center" cellpadding="1" cellspacing="1" width="100%">
         <tr class="dataElementViewTableTr">
             <td width="24px" class="dataElementHeading">PV</td>
             <td class="dataElementHeading">PV Meaning</td>

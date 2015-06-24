@@ -8,12 +8,12 @@
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Public ID:</td>
+        <td class="dataElementDescription" width="20%">Public ID:</td>
         <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.version}}</td>
+        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
@@ -41,11 +41,13 @@
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="7" align="left">Form Usage - Table needs a pager</th>
+        <th colspan="7" align="left">Form Usage</th>
     </tr>
 </table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="dataElementViewTableTr">
+<div class="dataElementViewTableWithScroller">
+
+    <table align="center" cellpadding="1" cellspacing="1">
+        <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">Protocol Number</td>
         <td class="dataElementHeading">Lead Org</td>
         <td class="dataElementHeading">Form Name</td>
@@ -64,5 +66,5 @@
         <td class="dataElementValue">{{usage.version}}</td>
     </tr>  
 </table>
-
+</div>
 <br>

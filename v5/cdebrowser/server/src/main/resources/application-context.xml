@@ -31,7 +31,7 @@
         <property name="referenceDocDAO" ref="referenceDocDAO"/>
         <property name="permissibleValuesDAO" ref="permissibleValuesDAO"/>
         <property name="representationConceptsDAO" ref="representationConceptsDAO"/>
-
+        <property name="dataElementDerivationDAO" ref="dataElementDerivationDAO"/>
     </bean>
 
     <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController">
@@ -124,6 +124,8 @@
 
     <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl" parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>
+        <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+
     </bean>
 
     <bean id="valueDomainDAO" class="gov.nih.nci.cadsr.dao.ValueDomainDAOImpl" parent="abstractDao">
@@ -131,6 +133,9 @@
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
         <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
     </bean>
+    <bean id="dataElementDerivationDAO" class="gov.nih.nci.cadsr.dao.DataElementDerivationDAOImpl" parent="abstractDao"/>
+
+
     <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao"/>
     <bean id="permissibleValuesDAO" class="gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl" parent="abstractDao"/>
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
