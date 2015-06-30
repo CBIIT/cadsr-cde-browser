@@ -281,7 +281,7 @@ public class CDEDataController
         // "Data Element Concept Details" of the "Data Element Concept" Tab
         DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
         dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
-        // FIXME - Need to find out where to get Data Element Concept Details from dataElementModel
+
         dataElementConceptDetails.setPublicId( dataElementModel.getDec().getPublicId() );
         dataElementConceptDetails.setVersion( dataElementModel.getDec().getVersion() );
         dataElementConceptDetails.setLongName( dataElementModel.getDec().getLongName() );
@@ -322,6 +322,8 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "Object Class Concepts" of the "Data Element Concept" Tab
         // This is a list of ObjectClassConcept
+
+        logger.debug( "DEC: " + dataElementModel.getDec() );
 
         List<ObjectClassConcept> objectClassConcepts = new ArrayList<>();
         dataElementConcept.setObjectClassConcepts( objectClassConcepts );
@@ -384,6 +386,7 @@ public class CDEDataController
         valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
         valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
         valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
+        valueDomainDetails.setDefinition( dataElementModel.getValueDomainModel().getPreferredDefinition() );
         valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
         valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
         valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
@@ -397,6 +400,7 @@ public class CDEDataController
         valueDomainDetails.setConceptualDomainShortName( dataElementModel.getValueDomainModel().getCdPrefName() );
         valueDomainDetails.setConceptualDomainContextName( dataElementModel.getValueDomainModel().getCdContextName() );
         valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
+        valueDomainDetails.setOrigin( dataElementModel.getValueDomainModel().getOrigin() );
 
         /////////////////////////////////////////////////////
         // "value Domain Concepts" of the "value Domain" Tab
@@ -531,13 +535,12 @@ public class CDEDataController
         // "Classifications" section of the "Classifications" tab
         List<FormUsage> formUsages = new ArrayList<>();
         usage.setFormUsages( formUsages );
-        // FIXME - Need to find out where to get FormUsage List from dataElementModel
+
         //dataElementModel.getUsingContexts()
         if( dataElementModel.getUsageModels() != null && dataElementModel.getUsageModels().size() > 0 )
         {
             for( UsageModel usageModel : dataElementModel.getUsageModels() )
             {
-//                logger.error("current usage model: " + usageModel.getPublicId());
                 formUsages.add( new FormUsage( usageModel ) );
             }
         } else

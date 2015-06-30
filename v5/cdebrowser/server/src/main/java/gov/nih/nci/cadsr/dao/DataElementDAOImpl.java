@@ -45,11 +45,11 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     public List<DataElementModel> getCdeBySearchString(String dataElementSql) {
         List<DataElementModel> results;
 
-        logger.debug("basicSearch");
-        //logger.debug( ">>>>>>> "+ sql );
+        logger.debug("getCdeBySearchString");
+        logger.debug( ">>>>>>> "+ dataElementSql );
         results = getAll(dataElementSql, DataElementModel.class);
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug("Done basicSearch");
+        logger.debug("Done getCdeBySearchString");
 
         return results;
     }

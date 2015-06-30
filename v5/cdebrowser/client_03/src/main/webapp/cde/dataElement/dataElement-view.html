@@ -100,63 +100,77 @@
 </table>
 
 
-<span data-ng-repeat="cdeCsi in cdeDetails.dataElement.csCsis">
-<table ng-hide="cdeCsi.hide" class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-    <tr>
-        <td class="dataElementHeading">CS Long Name</td>
-        <td class="dataElementHeading">CS Definition</td>
-        <td class="dataElementHeading">CSI Name</td>
-        <td class="dataElementHeading">CSI Type</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">{{cdeCsi.csLongName}}</td>
-        <td class="dataElementValue">{{cdeCsi.csDefinition}}</td>
-        <td class="dataElementValue">{{cdeCsi.csiName}}</td>
-        <td class="dataElementValue">{{cdeCsi.csiType}}</td>
-    </tr>
-</table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-    <tr class="cdeDetailsSubSubHeading">
-        <td colspan="4">Alternate Names</td>
-    </tr>
-    <tr>
-        <td class="dataElementHeading">Name</td>
-        <td class="dataElementHeading">Type</td>
-        <td class="dataElementHeading">Context</td>
-        <td class="dataElementHeading">Language</td>
-    </tr>
-    <tr class="dataElementViewTableTr"
-        data-ng-repeat="altName in cdeCsi.alternateNames">
-        <td class="dataElementValue">{{altName.name}}</td>
-        <td class="dataElementValue">{{altName.type}}</td>
-        <td class="dataElementValue">{{altName.context}}</td>
-        <td class="dataElementValue">{{altName.language}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr" ng-hide="cdeCsi.alternateNames.length">
-        <td colspan="4">No applicable Alternate Names</td>
-    </tr>
-</table>
+<span data-ng-repeat="(n, cdeCsi) in cdeDetails.dataElement.csCsis">
 
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-    <tr class="cdeDetailsSubSubHeading" border="0">
-        <td colspan="3">Alternate Definitions</td>
-    </tr>
-    <tr border="0">
-        <td class="dataElementHeading">Name</td>
-        <td class="dataElementHeading">Type</td>
-        <td class="dataElementHeading">Context</td>
-    </tr>
-    <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeCsi.alternateDefinitions">
-        <td class="dataElementValue">{{altDef.name}}</td>
-        <td class="dataElementValue">{{altDef.type}}</td>
-        <td class="dataElementValue">{{altDef.context}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr" ng-hide="cdeCsi.alternateDefinitions.length">
-        <td colspan="3">No applicable Alternate Definitions</td>
-    </tr>
-</table>
-<Br/>
+    <table ng-hide="cdeCsi.hide" class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+        <tr>
+            <td class="dataElementHeading">CS Long Name</td>
+            <td class="dataElementHeading">CS Definition</td>
+            <td class="dataElementHeading">CSI Name</td>
+            <td class="dataElementHeading">CSI Type</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementValue">{{cdeCsi.csLongName}}</td>
+            <td class="dataElementValue">{{cdeCsi.csDefinition}}</td>
+            <td class="dataElementValue">{{cdeCsi.csiName}}</td>
+            <td class="dataElementValue">{{cdeCsi.csiType}}</td>
+        </tr>
+    </table>
+
+
+
+    <span ng-show="(( cdeDetails.dataElement.csCsis.length > 1) && (n != ( cdeDetails.dataElement.csCsis.length - 1 )) || (cdeCsi.alternateNames.length > 0))">
+
+        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
+            <tr class="cdeDetailsSubSubHeading">
+                <td colspan="4">Alternate Names</td>
+            </tr>
+            <tr>
+                <td class="dataElementHeading">Name</td>
+                <td class="dataElementHeading">Type</td>
+                <td class="dataElementHeading">Context</td>
+                <td class="dataElementHeading">Language</td>
+            </tr>
+            <tr class="dataElementViewTableTr"
+                data-ng-repeat="altName in cdeCsi.alternateNames">
+                <td class="dataElementValue">{{altName.name}}</td>
+                <td class="dataElementValue">{{altName.type}}</td>
+                <td class="dataElementValue">{{altName.context}}</td>
+                <td class="dataElementValue">{{altName.language}}</td>
+            </tr>
+
+            <tr class="dataElementViewTableTr" ng-hide="cdeCsi.alternateNames.length">
+                <td colspan="4">No applicable Alternate Names</td>
+            </tr>
+        </table>
+
+
+        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+            <tr class="cdeDetailsSubSubHeading" border="0">
+                <td colspan="3">Alternate Definitions</td>
+            </tr>
+            <tr border="0">
+                <td class="dataElementHeading">Name</td>
+                <td class="dataElementHeading">Type</td>
+                <td class="dataElementHeading">Context</td>
+            </tr>
+            <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeCsi.alternateDefinitions">
+                <td class="dataElementValue">{{altDef.name}}</td>
+                <td class="dataElementValue">{{altDef.type}}</td>
+                <td class="dataElementValue">{{altDef.context}}</td>
+            </tr>
+            <tr class="dataElementViewTableTr" ng-hide="cdeCsi.alternateDefinitions.length">
+
+                <td colspan="3">There are no alternate definitions for the selected CDE.</td>
+            </tr>
+        </table>
+
+    </span>
+
+
+    <Br/>
 </span>
+
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
@@ -204,10 +218,10 @@
                         <tr class="dataElementViewTableTr" data-ng-repeat="cscsi in other.csCsis">
                             <td class="dataElementValue">{{cscsi.csLongName}}</td>
                             <td class="dataElementValue">{{cscsi.csDefinition}}</td>
-                            <td class="dataElementValue">{{cscsi.csId}}v{{cscsi.csVersion}}</td>
+                            <td class="dataElementValue">{{cscsi.csId}}v{{cscsi.formattedCsVersion}}</td>
                             <td class="dataElementValue">{{cscsi.csiName}}</td>
                             <td class="dataElementValue">{{cscsi.csiType}}</td>
-                            <td class="dataElementValue">{{cscsi.csiId}}v{{cscsi.csiVersion}}</td>
+                            <td class="dataElementValue">{{cscsi.csiId}}v{{cscsi.formattedCsiVersion}}</td>
                         </tr>
                     </table>
                 </td>

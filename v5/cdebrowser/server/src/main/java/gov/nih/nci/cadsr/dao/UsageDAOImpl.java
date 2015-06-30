@@ -42,7 +42,8 @@ public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO {
                 "WHERE qc_basic.de_idseq = ?\n" +
                 "AND qc_basic.DN_CRF_IDSEQ = qc_crf.qc_idseq\n" +
                 "AND p.PROTO_IDSEQ = pq.PROTO_IDSEQ\n" +
-                "AND qc_crf.qc_idseq = pq.qc_idseq";
+                "AND qc_crf.qc_idseq = pq.qc_idseq\n" +
+                " order by protocol_number";
         List<UsageModel> usageModels = jdbcTemplate.query(sql, new Object[]{deIdseq}, new BeanPropertyRowMapper(UsageModel.class));
         return usageModels;
     }

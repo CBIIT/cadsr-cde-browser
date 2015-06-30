@@ -9,6 +9,7 @@ import java.util.List;
 public class OtherVersion
 {
     private float version;
+    private String formattedVersion;
     private String longName;
     private String workFlowStatus;
     private String registrationStatus;
@@ -18,7 +19,9 @@ public class OtherVersion
 
 
     public OtherVersion(DEOtherVersionsModel deOtherVersionsModel) {
+
         this.version = deOtherVersionsModel.getVersion();
+        this.formattedVersion = deOtherVersionsModel.getFormattedVersion();
         this.longName = deOtherVersionsModel.getLongName();
         this.workFlowStatus = deOtherVersionsModel.getWorkflowStatus();
         setRegistrationStatus(deOtherVersionsModel.getRegistrationStatus());
@@ -37,6 +40,16 @@ public class OtherVersion
     public void setVersion( float version )
     {
         this.version = version;
+    }
+
+    public String getFormattedVersion()
+    {
+        return formattedVersion;
+    }
+
+    public void setFormattedVersion( String formattedVersion )
+    {
+        this.formattedVersion = formattedVersion;
     }
 
     public String getLongName()

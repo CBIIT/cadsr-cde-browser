@@ -87,9 +87,6 @@
         <tr class="dataElementViewTableTr"
             data-ng-repeat="elements in cdeDetails.dataElementDerivation.dataElementDerivationComponentModels">
             <td class="dataElementValue">{{elements.displayOrder}}</td>
-          <!--
-            <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
-          -->
             <td class="dataElementValue"><a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(elements.deIdseq)">{{elements.longName}}</a></td>
             <td class="dataElementValue">{{elements.context}}</td>
             <td class="dataElementValue">{{elements.workflowStatus}}</td>

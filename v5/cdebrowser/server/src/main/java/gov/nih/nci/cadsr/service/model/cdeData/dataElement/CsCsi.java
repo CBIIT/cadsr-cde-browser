@@ -13,8 +13,10 @@ public class CsCsi {
     private String csiType;
     private String csId;
     private Float csVersion;
+    private String formattedCsVersion;
     private Integer csiId;
     private Float csiVersion;
+    private String formattedCsiVersion;
     private Boolean hide;
 
     private List<AlternateName> alternateNames;
@@ -28,10 +30,18 @@ public class CsCsi {
         csDefinition = csCsiModel.getCsPreffredDefinition();
         csId = csCsiModel.getCsId();
         csVersion = csCsiModel.getCsVersion();
+        if( csVersion != null)
+        {
+            formattedCsVersion = Float.toString( Float.valueOf( csVersion ) );
+        }
         csiName = csCsiModel.getCsiName();
         csiType = csCsiModel.getCsitlName();
         csiId = csCsiModel.getCsiId();
         csiVersion = csCsiModel.getCsiVersion();
+        if( csiVersion != null )
+        {
+            formattedCsiVersion = Float.toString( Float.valueOf( csiVersion ) );
+        }
         if (csiName == CsCsiModel.UNCLASSIFIED) {
             hide = true;
         }
@@ -91,6 +101,26 @@ public class CsCsi {
 
     public void setCsiId(Integer csiId) {
         this.csiId = csiId;
+    }
+
+    public String getFormattedCsiVersion()
+    {
+        return formattedCsiVersion;
+    }
+
+    public void setFormattedCsiVersion( String formattedCsiVersion )
+    {
+        this.formattedCsiVersion = formattedCsiVersion;
+    }
+
+    public String getFormattedCsVersion()
+    {
+        return formattedCsVersion;
+    }
+
+    public void setFormattedCsVersion( String formattedCsVersion )
+    {
+        this.formattedCsVersion = formattedCsVersion;
     }
 
     public Float getCsiVersion() {

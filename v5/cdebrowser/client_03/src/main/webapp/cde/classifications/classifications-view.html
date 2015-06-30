@@ -50,7 +50,7 @@
 
 <div class="dataElementViewTableWithScroller">
 
-    <table align="center" cellpadding="1" cellspacing="1">
+    <table align="center" cellpadding="1" cellspacing="1" width="100%">
         <tr class="dataElementViewTableTr">
             <th class="dataElementHeading">CS* Long Name</th>
             <th class="dataElementHeading">CS* Definition</th>
@@ -74,9 +74,17 @@
 </div>
 
 <br>
+
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="7" align="left">Classifications Scheme Reference Documents</th>
+        <td colspan="7" align="left">
+            Classifications Scheme Reference Documents
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <font size="-2" color="#336699">*CS:Classification Scheme&nbsp;&nbsp; </font>
+        </td>
     </tr>
 </table>
 
@@ -97,7 +105,10 @@
         <td class="dataElementValue">{{csrefdoc.documentName}}</td>
         <td class="dataElementValue">{{csrefdoc.documentType}}</td>
         <td class="dataElementValue">{{csrefdoc.documentText}}</td>
-        <td class="dataElementValue">{{csrefdoc.url}}</td>
+        <td class="dataElementValue">
+        <a href="{{csrefdoc.url}}" target="AuxWindow"> {{csrefdoc.url}}</a>
+        </td>
+
         <td class="dataElementValue">&nbsp;</td>
     </tr>
     <tr class="dataElementViewTableTr"
@@ -106,11 +117,15 @@
     </tr>
 </table><br>
 
+
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="6" align="left">Classification Scheme Item Reference Documents</th>
+        <td colspan="6" align="left">Classification Scheme Item Reference Documents
+            <br>
+            <font size="-2" color="#336699">*CSI:Classification Scheme Item</font></td>
     </tr>
 </table>
+
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementHeading">CSI* Name</td>
@@ -131,10 +146,6 @@
     </tr>
     <tr class="dataElementViewTableTr"
         ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
-        <td colspan="2">No applicable Classification Scheme Item Reference Documents</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="6">No applicable Classification Scheme Item Reference Documents</td>
     </tr>
 </table><br>

@@ -14,6 +14,7 @@ public class FormUsage
     private String formUsageType ;
     private int publicId;
     private float version;
+    private String formattedVersion;
     private String url;
 
     public FormUsage(UsageModel usageModel) {
@@ -24,6 +25,7 @@ public class FormUsage
         this.formUsageType = usageModel.getFormUsageType();
         this.publicId = usageModel.getPublicId();
         this.version = usageModel.getVersion();
+        this.formattedVersion = usageModel.getFormattedVersion();
         //FIXME: compose URL from properties/DB Values
         this.url = "https://formbuilder-dev.nci.nih.gov/FormBuilder/formDetailsAction.do?method=getFormDetails&formIdSeq=" + usageModel.getFormIdseq();
     }
@@ -96,6 +98,16 @@ public class FormUsage
     public void setVersion( float version )
     {
         this.version = version;
+    }
+
+    public String getFormattedVersion()
+    {
+        return formattedVersion;
+    }
+
+    public void setFormattedVersion( String formattedVersion )
+    {
+        this.formattedVersion = formattedVersion;
     }
 
     public String getUrl() {
