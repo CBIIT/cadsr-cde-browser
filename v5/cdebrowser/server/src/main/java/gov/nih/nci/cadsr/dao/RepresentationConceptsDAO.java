@@ -1,6 +1,6 @@
 package gov.nih.nci.cadsr.dao;
 
-import gov.nih.nci.cadsr.dao.model.RepresentationConceptModel;
+import gov.nih.nci.cadsr.dao.model.ConceptModel;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface RepresentationConceptsDAO
 {
-    public List<RepresentationConceptModel> getRepresentationConceptByRepresentationId( String representationId );
-    public List<RepresentationConceptModel> getRepresentationConceptByRepresentationId( int representationId );
+    public List<ConceptModel> getRepresentationConceptByRepresentationId( String representationId );
+    public List<ConceptModel> getRepresentationConceptByRepresentationId( int representationId );
 }

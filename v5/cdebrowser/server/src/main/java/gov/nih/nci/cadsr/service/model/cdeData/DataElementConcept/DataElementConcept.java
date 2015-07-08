@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept;
 
+import gov.nih.nci.cadsr.dao.model.ConceptModel;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public class DataElementConcept
     private SelectedDataElement selectedDataElement = null;
      private DataElementConceptDetails dataElementConceptDetails = null;
     private ObjectClass objectClass = null;
-    private List<ObjectClassConcept> objectClassConcepts = null;
+    private List<ConceptModel> objectClassConcepts = null;
     private Property property = null;
-    private List<PropertyConcept> propertyConcepts = null;
+    private List<ConceptModel> propertyConcepts = null;
 
 
     public SelectedDataElement getSelectedDataElement()
@@ -44,12 +45,12 @@ public class DataElementConcept
         this.objectClass = objectClass;
     }
 
-    public List<ObjectClassConcept> getObjectClassConcepts()
+    public List<ConceptModel> getObjectClassConcepts()
     {
         return objectClassConcepts;
     }
 
-    public void setObjectClassConcepts( List<ObjectClassConcept> objectClassConcepts )
+    public void setObjectClassConcepts( List<ConceptModel> objectClassConcepts )
     {
         this.objectClassConcepts = objectClassConcepts;
     }
@@ -64,12 +65,12 @@ public class DataElementConcept
         this.property = property;
     }
 
-    public List<PropertyConcept> getPropertyConcepts()
+    public List<ConceptModel> getPropertyConcepts()
     {
         return propertyConcepts;
     }
 
-    public void setPropertyConcepts( List<PropertyConcept> propertyConcepts )
+    public void setPropertyConcepts( List<ConceptModel> propertyConcepts )
     {
         this.propertyConcepts = propertyConcepts;
     }

@@ -2,7 +2,7 @@ package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
 
 /**
  * Created by lernermh on 4/22/15.
- * This is not used - see RepresentationConceptModel
+ * This is not used - see ConceptModel
  *
  */
 public class RepresentationConcept

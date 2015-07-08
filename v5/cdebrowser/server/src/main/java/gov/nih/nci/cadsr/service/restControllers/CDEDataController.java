@@ -39,6 +39,8 @@ public class CDEDataController
     private PermissibleValuesDAOImpl permissibleValuesDAO;
     private RepresentationConceptsDAOImpl representationConceptsDAO;
     private DataElementDerivationDAOImpl dataElementDerivationDAO;
+    private ObjectClassConceptDAOImpl objectClassConceptDAO;
+    private ConceptDAOImpl conceptDAO;
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
@@ -287,13 +289,15 @@ public class CDEDataController
         dataElementConceptDetails.setLongName( dataElementModel.getDec().getLongName() );
         dataElementConceptDetails.setShortName( dataElementModel.getDec().getPreferredName() );
         dataElementConceptDetails.setDefinition( dataElementModel.getDec().getPreferredDefinition() );
-        dataElementConceptDetails.setContext( dataElementModel.getDec().getCdContextName() );
+
+        //FIXME
+        dataElementConceptDetails.setContext( dataElementModel.getDec().getObjClassContextName() );
+        //FIXME
+        dataElementConceptDetails.setConceptualDomainContextName( dataElementModel.getDec().getCdContextName());
+
         dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
         dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
         dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
-
-        // FIXME need to track down Conceptual Domain Version
-        //dataElementConceptDetails.setConceptualDomainVersion(
 
         dataElementConceptDetails.setVersion( dataElementModel.getDec().getCdVersion() );
         dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
@@ -308,15 +312,16 @@ public class CDEDataController
             logger.error( "dataElementModel.getDec() == null" );
         }
 
-        objectClass.setPublicId( dataElementModel.getDec().getPublicId() );
+        //objectClass.setPublicId( dataElementModel.getDec().getPublicId() );
+        objectClass.setPublicId( dataElementModel.getDec().getObjClassPublicId());
 
-        if( dataElementModel.getDec().getVersion() != null )
+        if( dataElementModel.getDec().getObjClassVersion() != null )
         {
-            objectClass.setVersion( dataElementModel.getDec().getVersion() );
+            objectClass.setVersion( dataElementModel.getDec().getObjClassVersion() );
         }
-        objectClass.setLongName( dataElementModel.getDec().getLongName() );
-        objectClass.setShortName( dataElementModel.getDec().getPreferredName() );
-        objectClass.setContext( dataElementModel.getDec().getCdContextName() );
+        objectClass.setLongName( dataElementModel.getDec().getObjectClassModel().getLongName() );
+        objectClass.setShortName( dataElementModel.getDec().getObjClassPrefName() );
+        objectClass.setContext( dataElementModel.getDec().getObjClassContextName() );
         objectClass.setQualifier( dataElementModel.getDec().getObjClassQualifier() );
 
         /////////////////////////////////////////////////////
@@ -325,10 +330,8 @@ public class CDEDataController
 
         logger.debug( "DEC: " + dataElementModel.getDec() );
 
-        List<ObjectClassConcept> objectClassConcepts = new ArrayList<>();
+        List<ConceptModel> objectClassConcepts = objectClassConceptDAO.getObjectClassConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setObjectClassConcepts( objectClassConcepts );
-        // FIXME - Need to find out where to get List of Object Class Concepts from dataElementModel
-
 
         /////////////////////////////////////////////////////
         // "Property" of the "Data Element Concept" Tab
@@ -347,7 +350,7 @@ public class CDEDataController
         // "Property Concepts" of the "Data Element Concept" Tab
         // This is a list of PropertyConcept
 
-        List<PropertyConcept> propertyConcepts = new ArrayList<>();
+        List<ConceptModel> propertyConcepts = conceptDAO.getConceptByConceptCode( dataElementModel.getDec().getProperty().getPreferredName() );
         dataElementConcept.setPropertyConcepts( propertyConcepts );
 
         // FIXME - Need to find out where to get list of Property Concept from dataElementModel
@@ -441,7 +444,7 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "Representation Concepts" of the "value Domain" Tab
         logger.debug( "Representation Concepts of the value Domain" );
-        List<RepresentationConceptModel> representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
+        List<ConceptModel> representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
         valueDomain.setRepresentationConcepts( representationConcepts );
 
 
@@ -659,6 +662,21 @@ public class CDEDataController
     public void setDataElementDerivationDAO( DataElementDerivationDAOImpl dataElementDerivationDAO )
     {
         this.dataElementDerivationDAO = dataElementDerivationDAO;
+    }
+
+    public void setObjectClassConceptDAO( ObjectClassConceptDAOImpl objectClassConceptDAO )
+    {
+        this.objectClassConceptDAO = objectClassConceptDAO;
+    }
+
+    public ConceptDAOImpl getConceptDAO()
+    {
+        return conceptDAO;
+    }
+
+    public void setConceptDAO( ConceptDAOImpl conceptDAO )
+    {
+        this.conceptDAO = conceptDAO;
     }
 
     /////////////////////////////////////////////////////

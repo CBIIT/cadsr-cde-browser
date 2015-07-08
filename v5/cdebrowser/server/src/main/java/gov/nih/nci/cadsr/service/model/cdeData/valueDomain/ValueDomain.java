@@ -1,8 +1,8 @@
 package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
 
+import gov.nih.nci.cadsr.dao.model.ConceptModel;
 import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
 import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
-import gov.nih.nci.cadsr.dao.model.RepresentationConceptModel;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ValueDomain
     private ValueDomainDetails valueDomainDetails = null;
     private String valueDomainConcepts = "";
     private Representation representation = null;
-    private List<RepresentationConceptModel> representationConcepts = null;
+    private List<ConceptModel> representationConcepts = null;
     private List<PermissibleValuesModel> permissibleValues = null;
 /*
     private List<ValueDomainReferenceDocument> referenceDocuments = null;
@@ -60,12 +60,12 @@ public class ValueDomain
         this.representation = representation;
     }
 
-    public List<RepresentationConceptModel> getRepresentationConcepts()
+    public List<ConceptModel> getRepresentationConcepts()
     {
         return representationConcepts;
     }
 
-    public void setRepresentationConcepts( List<RepresentationConceptModel> representationConcepts )
+    public void setRepresentationConcepts( List<ConceptModel> representationConcepts )
     {
         this.representationConcepts = representationConcepts;
     }

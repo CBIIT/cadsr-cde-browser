@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * This is just a test class used in the early stages of populating CDE Details of the client, it will deleted soon.
- */
 
 public class DataElementModel extends BaseModel
 {

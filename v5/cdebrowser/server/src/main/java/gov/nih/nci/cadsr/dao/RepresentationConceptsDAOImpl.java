@@ -1,7 +1,6 @@
 package gov.nih.nci.cadsr.dao;
 
-import gov.nih.nci.cadsr.dao.model.RepresentationConceptModel;
-import gov.nih.nci.cadsr.dao.model.RepresentationModel;
+import gov.nih.nci.cadsr.dao.model.ConceptModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +18,7 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
 {
     private RepresentationDAO representationDAO;
     private ConceptDerivationRuleDAOImpl conceptDerivationRuleDAO;
+    private ConceptDAOImpl conceptDAO;
 
     private Logger logger = LogManager.getLogger( RepresentationConceptsDAOImpl.class.getName() );
     private JdbcTemplate jdbcTemplate;
@@ -32,14 +32,21 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
 
 
     @Override
-    public List<RepresentationConceptModel> getRepresentationConceptByRepresentationId( String representationId )
+    // FIXMENOW - rename ConceptModel to ConceptModel to use with Object Class Concepts
+    public List<ConceptModel> getRepresentationConceptByRepresentationId( String representationId )
     {
         logger.debug( "representationModel(" + representationId + ")" );
 
         //select CON_DERIVATION_RULES_EXT.NAME   from sbrext.REPRESENTATIONS_EXT,CON_DERIVATION_RULES_EXT  where sbrext.REPRESENTATIONS_EXT.REP_ID = '3125303' and CON_DERIVATION_RULES_EXT.condr_idseq = sbrext.REPRESENTATIONS_EXT.CONDR_IDSEQ;
 
+        String conceptCodeStr = conceptDerivationRuleDAO.getCDRByByRepId( representationId ).getName();
+return conceptDAO.getConceptByConceptCode( conceptCodeStr );
+/*
+
+        // FIXMENOW - put the rest of this method into its own getConceptsByConceptCodes( colon delimited list of concept codes)
         // First get the list of Representation Concepts.Concept Codes
-        String[] conceptCode = conceptDerivationRuleDAO.getCDRByByRepId( representationId ).getName().split(":");
+        String[] conceptCode = conceptCodeStr.split( ":" );
+
         String primaryConcept = conceptCode[conceptCode.length - 1];
         logger.debug( "primaryConcept[" + primaryConcept + "]");
 
@@ -60,9 +67,9 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
 
         logger.debug( "representationModel(" + representationId + "): \n" + sql );
 
-        List<RepresentationConceptModel> results = getAll( sql, RepresentationConceptModel.class );
+        List<ConceptModel> results = getAll( sql, ConceptModel.class );
         // The last concept code in the colon delimited list is the "Primary", others are No
-        for( RepresentationConceptModel concept: results)
+        for( ConceptModel concept: results)
         {
             if( concept.getConceptCode().compareTo( primaryConcept ) == 0)
             {
@@ -73,14 +80,14 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
                 concept.setPrimary("No");
             }
 
-            logger.debug( "RepresentationConceptModel: " + results.toString() );
+            logger.debug( "ConceptModel: " + results.toString() );
         }
 
         // A quick hack to sort the list by the order of the Concept Codes in conceptDerivationRule
-        List<RepresentationConceptModel> results2 = new ArrayList<>(  );
+        List<ConceptModel> results2 = new ArrayList<>(  );
         for( int f = 0; f < conceptCode.length; f++)
         {
-            for( RepresentationConceptModel concept: results)
+            for( ConceptModel concept: results)
             {
                 if( concept.getConceptCode().compareTo(conceptCode[f]  ) == 0)
                 {
@@ -91,13 +98,24 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
         }
 
         return results2;
+*/
 
     }
 
     @Override
-    public List<RepresentationConceptModel> getRepresentationConceptByRepresentationId( int representationId )
+    public List<ConceptModel> getRepresentationConceptByRepresentationId( int representationId )
     {
         return getRepresentationConceptByRepresentationId( new Integer( representationId ).toString() );
+    }
+
+    public ConceptDAOImpl getConceptDAO()
+    {
+        return conceptDAO;
+    }
+
+    public void setConceptDAO( ConceptDAOImpl conceptDAO )
+    {
+        this.conceptDAO = conceptDAO;
     }
 
     public ConceptDerivationRuleDAOImpl getConceptDerivationRuleDAO()
