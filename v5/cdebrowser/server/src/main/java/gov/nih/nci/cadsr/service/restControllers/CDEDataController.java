@@ -40,6 +40,7 @@ public class CDEDataController
     private RepresentationConceptsDAOImpl representationConceptsDAO;
     private DataElementDerivationDAOImpl dataElementDerivationDAO;
     private ObjectClassConceptDAOImpl objectClassConceptDAO;
+    private PropertyConceptDAOImpl propertyConceptDAO;
     private ConceptDAOImpl conceptDAO;
 
     @RequestMapping( value = "/CDEData" )
@@ -293,7 +294,7 @@ public class CDEDataController
         //FIXME
         dataElementConceptDetails.setContext( dataElementModel.getDec().getObjClassContextName() );
         //FIXME
-        dataElementConceptDetails.setConceptualDomainContextName( dataElementModel.getDec().getCdContextName());
+        dataElementConceptDetails.setConceptualDomainContextName( dataElementModel.getDec().getCdContextName() );
 
         dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
         dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
@@ -313,7 +314,7 @@ public class CDEDataController
         }
 
         //objectClass.setPublicId( dataElementModel.getDec().getPublicId() );
-        objectClass.setPublicId( dataElementModel.getDec().getObjClassPublicId());
+        objectClass.setPublicId( dataElementModel.getDec().getObjClassPublicId() );
 
         if( dataElementModel.getDec().getObjClassVersion() != null )
         {
@@ -350,11 +351,16 @@ public class CDEDataController
         // "Property Concepts" of the "Data Element Concept" Tab
         // This is a list of PropertyConcept
 
+/*
         List<ConceptModel> propertyConcepts = conceptDAO.getConceptByConceptCode( dataElementModel.getDec().getProperty().getPreferredName() );
         dataElementConcept.setPropertyConcepts( propertyConcepts );
-
-        // FIXME - Need to find out where to get list of Property Concept from dataElementModel
-
+*/
+        if( propertyConceptDAO == null )
+        {
+            logger.error( "propertyConceptDAO is null" );
+        }
+        List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
+        dataElementConcept.setPropertyConcepts( propertyConcepts );
 
         return dataElementConcept;
     }
@@ -677,6 +683,16 @@ public class CDEDataController
     public void setConceptDAO( ConceptDAOImpl conceptDAO )
     {
         this.conceptDAO = conceptDAO;
+    }
+
+    public PropertyConceptDAOImpl getPropertyConceptDAO()
+    {
+        return propertyConceptDAO;
+    }
+
+    public void setPropertyConceptDAO( PropertyConceptDAOImpl propertyConceptDAO )
+    {
+        this.propertyConceptDAO = propertyConceptDAO;
     }
 
     /////////////////////////////////////////////////////

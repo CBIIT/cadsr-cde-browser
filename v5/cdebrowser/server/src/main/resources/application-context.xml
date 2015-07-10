@@ -34,6 +34,8 @@
         <property name="dataElementDerivationDAO" ref="dataElementDerivationDAO"/>
         <property name="objectClassConceptDAO" ref="objectClassConceptDAO"/>
         <property name="conceptDAO" ref="conceptDAO"/>
+        <property name="propertyConceptDAO" ref="propertyConceptDAO"/>
+
     </bean>
 
     <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController">
@@ -112,6 +114,10 @@
     <bean id="objectClassDAO" class="gov.nih.nci.cadsr.dao.ObjectClassDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
+    <bean id="propertyConceptDAO" class="gov.nih.nci.cadsr.dao.PropertyConceptDAOImpl" parent="abstractDao">
+        <property name="conceptDAO" ref="conceptDAO"/>
+    </bean>
+
     <bean id="programAreaDAO" class="gov.nih.nci.cadsr.dao.ProgramAreaDAOImpl" parent="abstractDao"/>
     <bean id="propertyDAO" class="gov.nih.nci.cadsr.dao.PropertyDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>
