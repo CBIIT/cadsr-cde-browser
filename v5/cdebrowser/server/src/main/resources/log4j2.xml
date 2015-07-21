@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<Configuration level="DEBUG">
+
+-->
+
+
+<Configuration status="DEBUG">
+    <Appenders>
+
+        <Console name="STDOUT" target="SYSTEM_OUT">
+<!--
+            <PatternLayout pattern="%m%n"/>
+-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level  (%F:%L)  %logger{36} - %msg%n" />
+        </Console>
+
+
+        <File name="FILE" fileName="debug.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level   %logger{36} - %msg%n" />
+        </File>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Root level="DEBUG">
+
+            <!--
+            <AppenderRef ref="FILE" />
+            -->
+            <AppenderRef ref="STDOUT" />
+        </Root>
+
+    </Loggers>
+
+</Configuration>

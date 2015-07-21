@@ -1,0 +1,40 @@
+
+/*  The top of the Program Area tabs  */
+.topTabPos {
+    position: fixed;
+    top: 97px; /* if this is changed, you will also need to change .resultsDisplay & .treeMenu */
+    left: 3px;
+    width: 100%;
+
+    /*
+    This puts the tabs behind the search buttons.
+
+    Might need to do this after we can dynamically set width style of the results frame
+        z-index: -1;
+    */
+}
+
+
+/*  The Program Area tabs  */
+#top_tabs {
+    /* Tabs text font size  */
+    font-size: 11pt;
+
+    height: 16px;
+    float: left;
+    /*
+       position: fixed;
+   */
+
+    /* Rounded corners */
+    border-top-left-radius : 4px;
+    border-top-right-radius : 4px;
+    border: 1px outset #1A4660;
+    /*
+        border: 1px solid #6ebae6 ;
+    */
+    border-bottom-width: 0;
+    /*  Tab spacing */
+    margin: 3px 3px 0px 3px;
+    padding: 5px 8px 4px 8px;
+}

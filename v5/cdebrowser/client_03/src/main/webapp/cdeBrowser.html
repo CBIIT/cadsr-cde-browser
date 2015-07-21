@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client 3.01</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<!--
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+-->
+    <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
+    <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
+    <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
+    <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
+    <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
+    <link rel="stylesheet" type="text/css" href="cde/cde.css">
+
+</head>
+<body>
+<!-- =============================================================================== -->
+
+<!-- ************ Top header with NCI logo ************ -->
+<div class="top-left-logo">
+    <a href="http://www.cancer.gov/" target="_blank">
+        <img alt="National Cancer Institute, Center for Biomedical Infomatics & Information Technology."
+             src="images/CBIIT-36px-Logo-COLOR.png">
+    </a>
+</div>
+
+<div class="top-center-logo">
+    <img alt="CDE Browser Logo" src="icons/iconSet0/cdeBrowserLogo.png">
+</div>
+
+<div class="top-right-logo">
+    <a href="http://www.cancer.gov/" target="_blank">
+        <span>U.S. National Institutes of Health | www.cancer.gov</span>
+    </a>
+</div>
+
+<!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
+<div class="top2-left-logo">
+    <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
+        <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2.png">
+    </a>
+</div>
+
+<!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
+<div class="top2-center-logo">
+    <span>
+        <a class="toolLinks" href="http://cadsradmin.nci.nih.gov" target="_blank">
+            Admin Tool
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://cdecurate.nci.nih.gov" target="_blank">
+            Curation Tool
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="http://ncim.nci.nih.gov/ncimbrowser" target="_blank">
+            NCI Metathesaurus
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="http://ncit.nci.nih.gov/ncitbrowser/start.jsf" target="_blank">
+            NCI Terminology Server
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://cadsrsentinel.nci.nih.gov" target="_blank">
+            Sentinel Tool
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://wiki.nci.nih.gov/x/egAxEQ" target="_blank">
+            What's new
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="toolLinks" href="https://wiki.nci.nih.gov/x/AbH9AQ" target="_blank">
+            Available Downloads
+        </a>&nbsp;
+    </span>
+</div>
+
+<!-- ** Four round buttons **  -->
+<div class="top2-right-logo">
+    <table Cellpadding=3 Cellspacing=0>
+        <tr>
+            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                <a href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
+                    <img src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
+                         alt="CDE Cart button"
+                            />
+                    <br>
+                    <span> &nbsp;CDE&nbsp;Cart</span>
+                </a>
+            </td>
+            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                <a href="/CDEBrowser/" target="_top">
+                    <img src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
+                         alt="CDE Browser Home button"
+                            />
+                    <br>
+                    &nbsp;Home&nbsp;
+                </a>
+            </td>
+
+            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                <a href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
+                   target="_blank">
+                    <img src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
+                         alt="Form Builder button"
+                            />
+                    <br>
+                    &nbsp;FormBuilder&nbsp;
+                </a>
+            </td>
+
+            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                   target="_blank">
+                    <img src="icons/buttonIconSet0/brown/75_percent/circle_help.png"
+                         alt="CDE Browser User Guide button"
+                            />
+                    <br>
+                    &nbsp;Help&nbsp;
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- ********************************************************************** -->
+<!-- ********************* Start of AngularJS control ********************* -->
+<!-- ********************************************************************** -->
+
+<div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" data-ng-cloak class="data-ng-cloak">
+
+    <!-- ************ Status message at top ************ -->
+    <div data-ng-class="{
+             normMessage: messageClass == NORMAL,
+             bigMessage: messageClass == BIG,
+             errorMessage: messageClass == ERROR
+             }">
+        <span data-ng-bind-html-unsafe="waitMessage">{{waitMessage}}</span>
+    </div>
+
+    <!-- ************ Program Area The tabs across the top  ************ -->
+    <div class="topTabPos">
+        <ul>
+            <!--
+                Just getting the parent top level nodes for the top tabs  nodeNumber is counter,
+                node is the actual node, we just need the text for the tabs.
+            -->
+            <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+                <!--
+                <li id="top_tabs"
+                    data-ng-mouseenter="hover = true"
+                    data-ng-mouseover="hover = true"
+                    data-ng-mouseleave="hover = false"
+                    data-ng-class="{
+                        tabActive: isActiveTab(nodeNumber),
+                        tabHover: (! isActiveTab(nodeNumber)) &&  hover,
+                        tabNormal: (! isActiveTab(nodeNumber)) &&  (! hover )
+                        }"
+                    data-ng-click="onClickTab(nodeNumber)">
+                    &nbsp;{{node.text}}&nbsp;
+                </li>
+                -->
+
+                <li id="top_tabs"
+                    data-ng-class="{
+                        tabActive: isActiveTab(nodeNumber),
+                        tabNormal: (! isActiveTab(nodeNumber))
+                        }"
+                    data-ng-click="onClickTab(nodeNumber)">
+                    &nbsp;{{node.text}}&nbsp;
+                </li>
+
+            </div>
+        </ul>
+    </div>
+    <br>
+
+
+    <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
+    <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
+    <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+
+        <div class="treeMenu" data-ng-show=show[nodeNumber]
+             data-ng-style="resizeHeight()"
+             resize
+             notifier="notifyServiceOnChange(params)"
+                >
+
+            <div class="tabCaptionWrapper cssFade" data-ng-show=show[nodeNumber]>
+                <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+                    <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
+                </div>
+            </div>
+
+            <div class="cssFade" data-ng-show=show[nodeNumber]
+                 data-cdebrowser-treeview="true"
+                 data-tree-id="tree"
+                 data-tree-model="contextListMaster[nodeNumber].children"
+                 data-node-action="href"
+                 data-node-childType="childType"
+                 data-node-isParent="isParent"
+                 data-node-type="type"
+                 data-node-label="text"
+                 data-node-hover="hover"
+                 data-node-children="children">
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================================================== -->
+    <!--  Right side,  search and search results.  -->
+    <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" data-ng-show="initComplete"
+         data-ng-style="resizeHeight()"
+         resize
+         notifier="notifyServiceOnChange(params)">
+
+        <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
+        <div class="queryTypeRadioButtons">
+            <label data-ng-repeat="qType in searchQueryTypes">
+                <div>
+                    <input
+                            name="selectedQueryType"
+                            type="radio"
+                            value="{{qType.id}}"
+                            data-ng-model="$parent.selectedQueryType"/>
+                    {{qType.name}}
+                </div>
+            </label>
+        </div>
+
+
+        <!-- Search field drop down, text input, search & clear button  -->
+        <div class="searchInput">
+            <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
+
+
+            <select class="basicSearchField"
+                    data-ng-model="queryField"
+                    data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
+            </select>
+            <br>
+
+            <div class="searchTips">Tip: This is an exact match search. To search for partial words or phrases use the *
+                as a wildcard.
+            </div>
+
+            <button data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
+                Search
+            </button>
+            <button data-ng-click="basicSearchQuery=''">
+                Clear
+            </button>
+        </div>
+
+
+        <hr>
+        <!-- Search status message -->
+        <span data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
+             bigSearchResultsMessage: bigSearchResultsMessageClass,
+             normSearchResultsMessage: (! bigSearchResultsMessageClass)
+             }">
+            {{searchResultsMessage}}
+        </span>
+
+        <div data-ng-bind-html-unsafe="statusMessage">
+            {{statusMessage}}
+        </div>
+
+
+        <!--  Bread Crumbs  -->
+        <div class="breadCrumbs">
+            <span data-ng-show="breadCrumbs">
+                <span data-ng-repeat="b in breadCrumbs">
+                    {{b}}<span data-ng-show="!$last"> >></span>
+                </span><br/>
+            </span>
+        </div>
+
+
+        <!-- the search results tabs and content below -->
+        <div class="cdeTabs">
+            <ul class="cdeTabsUl">
+                <!--
+                <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
+                        data-ng-repeat="(tabNumber,tab) in tabs"
+                        data-ng-mouseenter="hover = true"
+                        data-ng-mouseleave="hover = false"
+                        data-ng-class="{
+                                        tabActive:   isActiveCdeTab(tabNumber),
+                                        tabHover: (! isActiveCdeTab(tabNumber)) &&  hover,
+                                        tabNormal:   (! isActiveCdeTab(tabNumber)) &&  (! hover )
+                                        }"
+                        data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
+                </button>
+                -->
+
+
+
+                <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
+                        data-ng-repeat="(tabNumber,tab) in tabs"
+                        data-ng-class="{
+                        tabActive:   isActiveCdeTab(tabNumber),
+                        tabNormal:   (! isActiveCdeTab(tabNumber))
+                        }"
+                        data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
+                </button>
+
+
+            </ul>
+        </div>
+
+        <!-- =============================================================================== -->
+        <!-- The search results tab with Search results table - this is the only tab that is not an ng-view ========== -->
+        <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
+            <div class="sortOrder">
+                <div class="sortOrder left" ng-repeat="(key,val) in tableParams.sorting()">Sort Order:
+                    {{sortNames[key]}}
+                    [{{val}}]
+                </div>
+
+                <div class="sortOrder right">
+                    <a href="#" ng-click="resetSortOrder()">Reset Sort Order</a>
+                </div>
+            </div>
+            <br/>
+
+            <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
+
+            <br/>
+            <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+                <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
+            </script>
+
+            <table ng-table="tableParams" class="searchResultsTable">
+                <tr class="searchResultsTableTr" ng-repeat="result in $data">
+                    <td header="'ng-table/headers/checkbox.html'">
+                        <input type="checkbox" ng-model="checkboxes.items[result.publicId]">
+                    </td>
+
+                    <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
+                        <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
+                    </td>
+                    <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'"
+                        class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}
+                    </td>
+                    <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">
+                        {{result.ownedBy}}
+                    </td>
+                    <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd"
+                        width="14%">{{result.usedByContext}}
+                    </td>
+                    <td data-title="'Registration Status'" sortable="'registrationSort'" class="searchResultsTableTd"
+                        width="14%">{{result.registrationStatus}}
+                    </td>
+                    <td data-title="'Workflow Status'" sortable="'workflowSort'" class="searchResultsTableTd"
+                        width="14%">{{result.workflowStatus}}
+                    </td>
+                    <td data-title="'Public ID'" sortable="'publicId'" class="searchResultsTableTd" width="10%">
+                        {{result.publicId}}
+                    </td>
+                    <td data-title="'Version'" sortable="'version'" class="searchResultsTableTd" width="7%">
+                        {{result.version}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- =============================================================================== -->
+        <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
+        <div class="cdeSearchTabsView" data-ng-view></div>
+        <!-- =============================================================================== -->
+
+        <div id="footer">
+            <table>
+                <tr>
+                    <td>User: <span class="userName">Public User</span></td>
+                    <td>
+                        <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
+                    </td>
+                    <td>
+                        <a ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version {{versionPopover.version}}</a>
+<!--
+                        <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
+-->
+                    </td>
+                    <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
+                    </td>
+                </tr>
+            </table>
+<!--
+
+            <script type="text/ng-template" id="versionPopoverTemplate.html">
+                <div class="versionPopover">
+                    <label>Version:</label>
+                    <input type="text" ng-model="versionPopover.version" class="form-control">
+                    <label>SCM Tag:</label>
+                    <input type="text" ng-model="versionPopover.tag" class="form-control">
+                    <label>SCM Date:</label>
+                    <input type="text" ng-model="versionPopover.scm_date" class="form-control">
+                    <label>System Tier:</label>
+                    <input type="text" ng-model="versionPopover.tier" class="form-control">
+                </div>
+            </script>
+-->
+        </div>
+
+    </div>
+    <!-- =============================================================================== -->
+
+</div>
+
+
+<script src='angular.min.js'></script>
+<script src='angular-animate.min.js'></script>
+<!--
+<script src='ui-bootstrap-tpls-0.13.0.min.js'></script>
+-->
+<script src='angular-route.min.js'></script>
+<script src="app.js"></script>
+<script src='cdeBrowserClient.js'></script>
+<script src="cdeBrowserProperties.js"></script>
+<script src="directives/treeModel.js"></script>
+<script src="directives/resize.js"></script>
+<script src="plugins/ng-table/ng-table.min.js"></script>
+
+<script src="cde/cde.js"></script>
+<script src="cde/adminInfo/cde-adminInfo.js"></script>
+<script src="cde/classifications/cde-classifications.js"></script>
+<script src="cde/dataElement/cde-dataElement.js"></script>
+<script src="cde/dataElementConcept/cde-dataElementConcept.js"></script>
+<script src="cde/dataElementDerivation/cde-dataElementDerivation.js"></script>
+<script src="cde/usage/cde-usage.js"></script>
+<script src="cde/valueDomain/cde-valueDomain.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+body {
+    background: #fff;
+    color: #222;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a:link {
+    color: #18344d;
+}
+
+a:visited {
+    color: #18344d;
+}
+
+a:active {
+    color: #1A4660;
+}
+
+a:hover {
+    color: #1A4660;
+}
+
+/*  Testing */
+.OraHeaderSubSub {font-family:Arial, Helvetica, Geneva, sans-serif; font-size: 12pt; color:#336699; font-weight:bold}
+
+/* The initial loading message or error message  */
+.bigMessage {
+    font-size: 28px;
+    font-weight: bold;
+    background-color: #fff;
+    color: #18344d;
+    position: fixed;
+    top: 156px;
+}
+
+.normMessage {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #fff;
+    color: #18344d;
+    position: fixed;
+    top: 156px;
+}
+
+.errorMessage {
+    font-size: 22px;
+    font-weight: normal;
+    color: #800;
+    background-color: #fff;
+    position: fixed;
+    top: 156px;
+}
+
+.topButtons {
+    color: #0f0;
+    height: 90px;
+}
+
+
+/* The four round buttons - top right */
+.roundButton {
+    font-size: 10pt;
+}
+.roundButton a {
+    background-color: #fff;
+    color: #a52a2a;
+    text-decoration: none;
+}
+
+.toolLinks:link, .toolLinks:visited, .toolLinks:active, .toolLinks:hover {
+    color: #663300;
+}
+
+
+/* Search results pane to the right of the Tree menu pane  */
+.resultsDisplay {
+    color: #000;
+    padding-left: 15px;
+
+    /*  Top of display pane  */
+    margin-top: 110px; /* needs to match .treeMenu.  If you change this, you will also need to change .topTabPos */
+
+    overflow-x: scroll;
+    overflow-y: scroll;
+    resize: horizontal;
+}
+
+/* The tree for each tab  (within treeWindow class)  */
+.treeMenu {
+    float: left;
+    /* top of tree menu pane  */
+    margin-top: 110px; /* needs to match .resultsDisplay.  If you change this, you will also need to change .topTabPos*/
+    margin-left: 6px;
+
+    font-size: 13px;
+    font-weight: bold;
+    padding-left: 0;
+    padding-right: 0;
+
+    /* The Starting/default width of the Tree menu pane */
+    width: 25%;
+
+    overflow-x: scroll;
+    overflow-y: scroll;
+    resize: horizontal;
+
+    /* Tree menu colors  */
+    background-color: #f7f7e6;
+    color: #18344d;
+
+    /* Spacing for each line, not the actual line. */
+    line-height: 24px;
+}
+
+/* The search query input and options */
+.queryTypeRadioButtons {
+    font-size: 11pt;
+    color: #18344d;
+    float: left;
+    width: 220px;
+    padding-top: 4px;
+    margin-top: 16px;
+}
+
+.searchInput {
+    color: #18344d;
+    margin-left: 250px;
+    padding-top: 4px;
+    margin-top: 16px;
+}
+
+.basicSearchQuery {
+    width: 70%;
+}
+
+.searchTips {
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    font-size: 8pt;
+}
+
+.basicSearchField {
+    margin-right: 10px;
+    width: 80px;
+}
+
+.cdeTabs {
+    background-color: #336699;
+}
+
+
+
+/* top row of logos and links */
+.top-left-logo {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+}
+.top-center-logo {
+    position: absolute;
+    right: 256px;
+    top: 4px;
+}
+
+.top-right-logo {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+}
+
+/*  No line under the text/link "U.S. National Institutes of Health | www.cancer.gov" */
+.top-right-logo a{
+    text-decoration: none;
+    font-size: 9pt;
+}
+
+/* the second top row of logos and links */
+.top2-left-logo {
+    position: absolute;
+    left: 10px;
+    top: 43px;
+}
+
+/* row of links  */
+.top2-center-logo {
+    position: absolute;
+    right: 250px;
+    top: 77px;
+    font-size: 9pt;
+}
+
+.top2-right-logo {
+    position: absolute;
+    right: 6px;
+    top: 47px;
+}
+
+/*  No line under the space between the round buttons */
+.top2-right-logo a {
+    text-decoration: none;
+}
+
+.versionPopover {
+    color: #222;
+}
+
+.versionButton {
+    color: #fff;
+        background: #336699;
+
+}

@@ -1,0 +1,105 @@
+<br/>
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Selected Data Element</th>
+    </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription" width="20%">Public ID:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.publicId}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Version:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.formattedVersion}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Long Name:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.longName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Short Name:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.shortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Preferred Question Text:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.preferredQuestionText}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Definition:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.definition}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Workflow Status:</td>
+        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.workflowStatus}}</td>
+    </tr>
+</table>
+<br/>
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Data Element Derivation Details</th>
+    </tr>
+</table>
+
+<div ng-show="cdeDetails.dataElementDerivation.dataElementDerivationComponentModels.length > 0">
+    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription" width="20%">Derivation Type:</td>
+            <td class="dataElementValue">
+                {{cdeDetails.dataElementDerivation.dataElementDerivationDetails.derivationType}}
+            </td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Rule:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementDerivation.dataElementDerivationDetails.rule}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Method:</td>
+            <td class="dataElementValue">{{cdeDetails.dataElementDerivation.dataElementDerivationDetails.method}}</td>
+        </tr>
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementDescription">Concatenation Character:</td>
+            <td class="dataElementValue">
+                {{cdeDetails.dataElementDerivation.dataElementDerivationDetails.concatenationCharacter}}
+            </td>
+        </tr>
+    </table>
+    <br/>
+
+    <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="cdeDetailsSubHeading">
+            <th colspan="2" align="left">Component Data Elements</th>
+        </tr>
+    </table>
+
+    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementHeading">Display Order</td>
+            <td class="dataElementHeading">Long Name</td>
+            <td class="dataElementHeading">Context</td>
+            <td class="dataElementHeading">Workflow Status</td>
+            <td class="dataElementHeading">Public ID</td>
+            <td class="dataElementHeading">Version</td>
+        </tr>
+        <tr class="dataElementViewTableTr"
+            data-ng-repeat="elements in cdeDetails.dataElementDerivation.dataElementDerivationComponentModels">
+            <td class="dataElementValue">{{elements.displayOrder}}</td>
+            <td class="dataElementValue"><a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(elements.deIdseq)">{{elements.longName}}</a></td>
+            <td class="dataElementValue">{{elements.context}}</td>
+            <td class="dataElementValue">{{elements.workflowStatus}}</td>
+            <td class="dataElementValue">{{elements.publicId}}</td>
+            <td class="dataElementValue">{{elements.formattedVersion}}</td>
+        </tr>
+    </table>
+</div>
+
+<div ng-hide="cdeDetails.dataElementDerivation.dataElementDerivationComponentModels.length > 0">
+    <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="dataElementViewTableTr">
+            <td class="dataElementValue">Selected CDE is not a derived data element.</td>
+        </tr>
+    </table>
+</div>

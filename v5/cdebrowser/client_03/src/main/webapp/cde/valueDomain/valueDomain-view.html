@@ -1,0 +1,303 @@
+<br>
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Selected Data Element</th>
+    </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription" width="20%">Public ID:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.publicId}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Version:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.formattedVersion}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Long Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.longName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Short Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.shortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Preferred Question Text:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.preferredQuestionText}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Definition:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.definition}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Workflow Status:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.selectedDataElement.workflowStatus}}</td>
+    </tr>
+</table>
+<br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Value Domain Details</th>
+    </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription" width="20%">Public ID:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.publicId}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Version:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.formattedVersion}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Long Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.longName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Short Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.shortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Context Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.context}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Definition:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.definition}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Workflow Status:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.workflowStatus}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Datatype:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.dataType}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Unit of Measure:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.unitOfMeasure}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Display Format:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.displayFormat}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Maximum Length:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.maximumLength}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Minimum Length:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.minimumLength}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Decimal Place:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.decimalPlace}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">High Value:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.highValue}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Low Value:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.lowValue}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Type:</td>
+        <td class="dataElementValue" ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType=='E'">
+            Enumerated
+        </td>
+        <td class="dataElementValue" ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType!='E'">Non
+            Enumerated
+        </td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Conceptual Domain Public ID:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.conceptualDomainPublicId}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Conceptual Domain Short Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.conceptualDomainShortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Conceptual Domain Context Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.conceptualDomainContextName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Conceptual Domain Version:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.formattedConceptualDomainVersion}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Origin</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainDetails.origin}}</td>
+    </tr>
+</table><br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="6" align="left">Value Domain Concepts</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-show="cdeDetails.valueDomain.valueDomainConcepts.length">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementHeading">Concept Name</td>
+        <td class="dataElementHeading">Concept Code</td>
+        <td class="dataElementHeading">Public ID</td>
+        <td class="dataElementHeading">Definition Source</td>
+        <td class="dataElementHeading">EVS Source</td>
+        <td class="dataElementHeading">Primary</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr" ng-repeat="vdConcept in cdeDetails.valueDomain.valueDomainConcepts">
+        <td class="dataElementValue">{{vdConcept.conceptName}}</td>
+        <td class="dataElementValue">
+            <a class="link" TARGET="_blank"
+               href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{vdConcept.conceptCode}}">{{vdConcept.conceptCode}}</a>
+        </td>
+        <td class="dataElementValue">{{vdConcept.publicId}}</td>
+        <td class="dataElementValue">{{vdConcept.definitionSource}}</td>
+        <td class="dataElementValue">{{vdConcept.evsSource}}</td>
+        <td class="dataElementValue">{{vdConcept.primary}}</td>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-hide="cdeDetails.valueDomain.valueDomainConcepts.length">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue" >Value Domain does not have any Concepts.</td>
+    </tr>
+</table>
+
+<br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Representation</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription" width="20%">Public ID:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.publicId}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Version:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.formattedVersion}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Long Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.longName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Short Name:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.shortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Context:</td>
+        <td class="dataElementValue">{{cdeDetails.valueDomain.representation.context}}</td>
+    </tr>
+</table><br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="6" align="left">Representation Concepts</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementHeading">Concept Name</td>
+        <td class="dataElementHeading">Concept Code</td>
+        <td class="dataElementHeading">Public ID</td>
+        <td class="dataElementHeading">Definition Source</td>
+        <td class="dataElementHeading">EVS Source</td>
+        <td class="dataElementHeading">Primary</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr" ng-repeat="representation in cdeDetails.valueDomain.representationConcepts">
+        <td class="dataElementValue">{{representation.conceptName}}</td>
+        <td class="dataElementValue">
+            <a class="link" TARGET="_blank"
+               href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{representation.conceptCode}}">{{representation.conceptCode}}</a>
+        </td>
+        <td class="dataElementValue">{{representation.publicId}}</td>
+        <td class="dataElementValue">{{representation.definitionSource}}</td>
+        <td class="dataElementValue">{{representation.evsSource}}</td>
+        <td class="dataElementValue">{{representation.primary}}</td>
+    </tr>
+</table><br>
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <td colspan="6" align="left">Permissible Values
+        </td>
+    </tr>
+</table>
+
+<div class="dataElementViewTableWithScroller" data-ng-show="cdeDetails.valueDomain.permissibleValues.length">
+    <table align="center" cellpadding="1" cellspacing="1" width="100%">
+        <tr class="dataElementViewTableTr">
+            <td width="24px" class="dataElementHeading">PV</td>
+            <td class="dataElementHeading">PV Meaning</td>
+            <td class="dataElementHeading">PV Meaning Concept Codes</td>
+            <td class="dataElementHeading">PV Meaning Description</td>
+            <td class="dataElementHeading">PV Begin Date</td>
+            <td class="dataElementHeading">PV End Date</td>
+            <td class="dataElementHeading">VM Public ID</td>
+            <td class="dataElementHeading">VM Version</td>
+        </tr>
+        <tr class="dataElementViewTableTr" ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
+            <td width="24px" class="dataElementValue">{{p_value.value}}</td>
+
+            <td class="dataElementValue">{{p_value.shortMeaning}}</td>
+
+            <td class="dataElementValue">
+                <a class="link" TARGET="_blank"
+                   href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{p_value.conceptCode}}">{{p_value.conceptCode}}</a>
+            </td>
+            <td class="dataElementValue">{{p_value.vmDescription}}</td>
+            <td class="dataElementValue">{{p_value.beginDateString}}</td>
+            <td class="dataElementValue">{{p_value.endDateString}}</td>
+            <td class="dataElementValue">{{p_value.vmId}}</td>
+            <td class="dataElementValue">{{p_value.vmVersion}}</td>
+        </tr>
+    </table>
+</div>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-hide="cdeDetails.valueDomain.permissibleValues.length">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue" >This Value Domain is Non Enumerated.</td>
+    </tr>
+</table>
+
+<br>
+
+
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="5" align="left">Reference Documents</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementHeading">Document Name</td>
+        <td class="dataElementHeading">Document Type</td>
+        <td class="dataElementHeading">Document Text</td>
+        <td class="dataElementHeading">Context</td>
+        <td class="dataElementHeading">URL</td>
+    </tr>
+
+
+    <tr class="dataElementViewTableTr" ng-repeat="doc in cdeDetails.valueDomain.valueDomainReferenceDocuments">
+        <td class="dataElementValue">{{doc.docName}}</td>
+        <td class="dataElementValue">{{doc.docType}}</td>
+        <td class="dataElementValue">{{doc.docText}}</td>
+        <td class="dataElementValue">{{doc.context.name}}</td>
+        <td class="dataElementValue"><a href={{doc.url}} target="_blank">{{doc.url}}</a></td>
+    </tr>
+    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.valueDomain.valueDomainReferenceDocuments.length">
+        <td colspan="5">There are no reference documents for the value domain</td>
+    </tr>
+</table><br>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="gov.nih.nci.cadsr"/>
+
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+    <context:property-placeholder location="classpath:cdeBrowser.server.properties"/>
+
+    <bean id="testController" class="gov.nih.nci.cadsr.service.restControllers.TestController">
+    </bean>
+
+    <bean id="CDEDataController" class="gov.nih.nci.cadsr.service.restControllers.CDEDataController">
+        <property name="dataElementDAO" ref="dataElementDAO"/>
+        <property name="referenceDocDAO" ref="referenceDocDAO"/>
+        <property name="permissibleValuesDAO" ref="permissibleValuesDAO"/>
+        <property name="representationConceptsDAO" ref="representationConceptsDAO"/>
+        <property name="valueDomainConceptDAO" ref="valueDomainConceptDAO"/>
+
+        <property name="dataElementDerivationDAO" ref="dataElementDerivationDAO"/>
+        <property name="objectClassConceptDAO" ref="objectClassConceptDAO"/>
+        <property name="conceptDAO" ref="conceptDAO"/>
+        <property name="propertyConceptDAO" ref="propertyConceptDAO"/>
+
+    </bean>
+
+    <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController">
+        <property name="basicSearchDAO" ref="basicSearchDAO"/>
+        <property name="dataElementDAO" ref="dataElementDAO"/>
+        <property name="restControllerCommon" ref="resControllerCommon"/>
+    </bean>
+
+    <bean id="contextDataController" class="gov.nih.nci.cadsr.service.restControllers.ContextDataController">
+        <property name="classificationSchemeDAO" ref="classificationSchemeDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
+        <property name="csCsiDAO" ref="csCsiDAO"/>
+        <property name="protocolFormDAO" ref="protocolFormDAO"/>
+        <property name="protocolDAO" ref="protocolDAO"/>
+        <property name="restControllerCommon" ref="resControllerCommon"/>
+    </bean>
+
+    <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
+        <constructor-arg name="dataSource" index="0" ref="dataSource"/>
+    </bean>
+
+    <bean id="resControllerCommon" class="gov.nih.nci.cadsr.service.restControllers.RestControllerCommon">
+        <property name="programAreaDAO" ref="programAreaDAO"/>
+    </bean>
+
+    <bean id="acRegistrationsDAO" class="gov.nih.nci.cadsr.dao.AcRegistrationsDAOImpl" parent="abstractDao"/>
+    <bean id="acAttCsCsiDAO" class="gov.nih.nci.cadsr.dao.AcAttCsCsiDAOImpl" parent="abstractDao"/>
+    <bean id="basicSearchDAO" class="gov.nih.nci.cadsr.dao.BasicSearchDAOImpl" parent="abstractDao"/>
+    <bean id="conceptDAO" class="gov.nih.nci.cadsr.dao.ConceptDAOImpl" parent="abstractDao"/>
+
+    <bean id="classificationSchemeDAO" class="gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl" parent="abstractDao"/>
+    <bean id="conceptDerivationRuleDAO" class="gov.nih.nci.cadsr.dao.ConceptDerivationRuleDAOImpl" parent="abstractDao">
+        <property name="propertyDAO" ref="propertyDAO"/>
+        <property name="objectClassDAO" ref="objectClassDAO"/>
+    </bean>
+
+    <bean id="conceptualDomainDAO" class="gov.nih.nci.cadsr.dao.ConceptualDomainDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="contextDAO" class="gov.nih.nci.cadsr.dao.ContextDAOImpl" parent="abstractDao"/>
+    <bean id="csCsiDAO" class="gov.nih.nci.cadsr.dao.CsCsiDAOImpl" parent="abstractDao"/>
+    <bean id="csRefDocDAO" class="gov.nih.nci.cadsr.dao.CSRefDocDAOImpl" parent="abstractDao"/>
+    <bean id="csiRefDocDAO" class="gov.nih.nci.cadsr.dao.CSIRefDocDAOImpl" parent="abstractDao"/>
+    <bean id="dataElementConceptDAO" class="gov.nih.nci.cadsr.dao.DataElementConceptDAOImpl" parent="abstractDao">
+        <property name="propertyDAO" ref="propertyDAO"/>
+        <property name="objectClassDAO" ref="objectClassDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
+        <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
+    </bean>
+
+    <bean id="dataElementDAO" class="gov.nih.nci.cadsr.dao.DataElementDAOImpl" parent="abstractDao">
+        <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
+        <property name="csCsiDAO" ref="csCsiDAO"/>
+        <property name="csRefDocDAO" ref="csRefDocDAO"/>
+        <property name="csiRefDocDAO" ref="csiRefDocDAO"/>
+        <property name="dataElementConceptDAO" ref="dataElementConceptDAO"/>
+        <property name="deOtherVersionsDAO" ref="deOtherVersionsDAO"/>
+        <property name="definitionDAO" ref="definitionDAO"/>
+        <property name="designationDAO" ref="designationDAO"/>
+        <property name="referenceDocDAO" ref="referenceDocDAO"/>
+        <property name="usageDAO" ref="usageDAO"/>
+        <property name="valueDomainDAO" ref="valueDomainDAO"/>
+    </bean>
+    <bean id="definitionDAO" class="gov.nih.nci.cadsr.dao.DefinitionDAOImpl" parent="abstractDao">
+        <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="designationDAO" class="gov.nih.nci.cadsr.dao.DesignationDAOImpl" parent="abstractDao">
+        <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="deOtherVersionsDAO" class="gov.nih.nci.cadsr.dao.DEOtherVersionsDAOImpl" parent="abstractDao">
+        <property name="csCsiDAO" ref="csCsiDAO"/>
+    </bean>
+    <bean id="objectClassDAO" class="gov.nih.nci.cadsr.dao.ObjectClassDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="propertyConceptDAO" class="gov.nih.nci.cadsr.dao.PropertyConceptDAOImpl" parent="abstractDao">
+        <property name="conceptDAO" ref="conceptDAO"/>
+    </bean>
+
+    <bean id="programAreaDAO" class="gov.nih.nci.cadsr.dao.ProgramAreaDAOImpl" parent="abstractDao"/>
+    <bean id="propertyDAO" class="gov.nih.nci.cadsr.dao.PropertyDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="protocolDAO" class="gov.nih.nci.cadsr.dao.ProtocolDAOImpl" parent="abstractDao"/>
+    <bean id="protocolFormDAO" class="gov.nih.nci.cadsr.dao.ProtocolFormDAOImpl" parent="abstractDao"/>
+    <bean id="referenceDocDAO" class="gov.nih.nci.cadsr.dao.ReferenceDocDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="representationDAO" class="gov.nih.nci.cadsr.dao.RepresentationDAOImpl" parent="abstractDao">
+        <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="usageDAO" class="gov.nih.nci.cadsr.dao.UsageDAOImpl" parent="abstractDao"/>
+
+    <bean id="valueDomainConceptDAO" class="gov.nih.nci.cadsr.dao.ValueDomainConceptDAOImpl" parent="abstractDao">
+        <property name="conceptDAO" ref="conceptDAO"/>
+
+    </bean>
+
+
+
+    <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl" parent="abstractDao">
+        <property name="representationDAO" ref="representationDAO"/>
+        <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+        <property name="conceptDAO" ref="conceptDAO"/>
+    </bean>
+
+    <bean id="valueDomainDAO" class="gov.nih.nci.cadsr.dao.ValueDomainDAOImpl" parent="abstractDao">
+        <property name="representationDAO" ref="representationDAO"/>
+        <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+        <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
+    </bean>
+    <bean id="dataElementDerivationDAO" class="gov.nih.nci.cadsr.dao.DataElementDerivationDAOImpl"
+          parent="abstractDao"/>
+    <bean id="objectClassConceptDAO" class="gov.nih.nci.cadsr.dao.ObjectClassConceptDAOImpl" parent="abstractDao">
+        <property name="conceptDAO" ref="conceptDAO"/>
+    </bean>
+
+
+    <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao"/>
+    <bean id="permissibleValuesDAO" class="gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl" parent="abstractDao"/>
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>
+    </bean>
+
+</beans>
