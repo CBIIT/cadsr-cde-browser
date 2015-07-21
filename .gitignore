@@ -1,1 +1,9 @@
 
+.idea/
+target/
+*.iml
+
+v5/cdebrowser/server/debug.log
+v5/cdebrowser/client_03/src/main/webapp/version.json
+software/
+
