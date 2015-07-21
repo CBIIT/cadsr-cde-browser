@@ -286,7 +286,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 
     $scope.versionDisplay = function(ver, tag, scmDate, tier) {
-        $window.alert('Version: ' + ver + "\n\nSMC Tag: " + tag + "\n\nSMC Date: " + scmDate + "\n\nSystem Tier" + tier );
+        $window.alert('Version: ' + ver + "\n\nSMC Tag: " + tag + "\n\nSMC Date: " + scmDate + "\n\nSystem Tier: " + tier );
     }
 
 

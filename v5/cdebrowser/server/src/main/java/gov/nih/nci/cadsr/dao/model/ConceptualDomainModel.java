@@ -11,6 +11,7 @@ public class ConceptualDomainModel extends BaseModel {
     private Float version;
     private int cdId; //aka public id
     private ContextModel contextModel;
+    private String conteIdseq;
 
     public ConceptualDomainModel() {
     }
@@ -46,6 +47,16 @@ public class ConceptualDomainModel extends BaseModel {
 
     public void setContextModel(ContextModel contextModel) {
         this.contextModel = contextModel;
+    }
+
+    public String getConteIdseq()
+    {
+        return conteIdseq;
+    }
+
+    public void setConteIdseq( String conteIdseq )
+    {
+        this.conteIdseq = conteIdseq;
     }
 
     @Override

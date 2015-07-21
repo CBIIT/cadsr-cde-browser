@@ -11,7 +11,7 @@ public class ValueDomain
 {
     private SelectedDataElement selectedDataElement = null;
     private ValueDomainDetails valueDomainDetails = null;
-    private String valueDomainConcepts = "";
+    private List<ConceptModel> valueDomainConcepts = null;
     private Representation representation = null;
     private List<ConceptModel> representationConcepts = null;
     private List<PermissibleValuesModel> permissibleValues = null;
@@ -40,12 +40,12 @@ public class ValueDomain
         this.valueDomainDetails = valueDomainDetails;
     }
 
-    public String getValueDomainConcepts()
+    public List<ConceptModel> getValueDomainConcepts()
     {
         return valueDomainConcepts;
     }
 
-    public void setValueDomainConcepts( String valueDomainConcepts )
+    public void setValueDomainConcepts( List<ConceptModel> valueDomainConcepts )
     {
         this.valueDomainConcepts = valueDomainConcepts;
     }

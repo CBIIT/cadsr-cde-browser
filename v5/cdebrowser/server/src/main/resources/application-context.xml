@@ -31,6 +31,8 @@
         <property name="referenceDocDAO" ref="referenceDocDAO"/>
         <property name="permissibleValuesDAO" ref="permissibleValuesDAO"/>
         <property name="representationConceptsDAO" ref="representationConceptsDAO"/>
+        <property name="valueDomainConceptDAO" ref="valueDomainConceptDAO"/>
+
         <property name="dataElementDerivationDAO" ref="dataElementDerivationDAO"/>
         <property name="objectClassConceptDAO" ref="objectClassConceptDAO"/>
         <property name="conceptDAO" ref="conceptDAO"/>
@@ -133,8 +135,14 @@
     </bean>
     <bean id="usageDAO" class="gov.nih.nci.cadsr.dao.UsageDAOImpl" parent="abstractDao"/>
 
-    <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl"
-          parent="abstractDao">
+    <bean id="valueDomainConceptDAO" class="gov.nih.nci.cadsr.dao.ValueDomainConceptDAOImpl" parent="abstractDao">
+        <property name="conceptDAO" ref="conceptDAO"/>
+
+    </bean>
+
+
+
+    <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl" parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
         <property name="conceptDAO" ref="conceptDAO"/>

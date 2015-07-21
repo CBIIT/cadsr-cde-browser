@@ -56,6 +56,13 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
             {
                 logger.debug( "No results" );
             }
+            // FIXME - this is a WORK AROUND FOR SOME BAD DATA - MAKE SURE
+            else if(  e.getMessage().startsWith( "Incorrect result size: expected 1, actual" ))
+            {
+                logger.debug( e.getMessage() );
+                logger.debug( sql + " where " + where );
+                return  getAll(  sql,  where,  type ).get(0);
+            }
             else
             {
                 e.printStackTrace();

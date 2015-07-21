@@ -139,15 +139,38 @@
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="2" align="left">Value Domain Concepts</th>
+        <th colspan="6" align="left">Value Domain Concepts</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-show="cdeDetails.valueDomain.valueDomainConcepts.length">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementHeading">Concept Name</td>
+        <td class="dataElementHeading">Concept Code</td>
+        <td class="dataElementHeading">Public ID</td>
+        <td class="dataElementHeading">Definition Source</td>
+        <td class="dataElementHeading">EVS Source</td>
+        <td class="dataElementHeading">Primary</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr" ng-repeat="vdConcept in cdeDetails.valueDomain.valueDomainConcepts">
+        <td class="dataElementValue">{{vdConcept.conceptName}}</td>
+        <td class="dataElementValue">
+            <a class="link" TARGET="_blank"
+               href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{vdConcept.conceptCode}}">{{vdConcept.conceptCode}}</a>
+        </td>
+        <td class="dataElementValue">{{vdConcept.publicId}}</td>
+        <td class="dataElementValue">{{vdConcept.definitionSource}}</td>
+        <td class="dataElementValue">{{vdConcept.evsSource}}</td>
+        <td class="dataElementValue">{{vdConcept.primary}}</td>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-hide="cdeDetails.valueDomain.valueDomainConcepts.length">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue" >Value Domain does not have any Concepts.</td>
     </tr>
 </table>
 
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">{{cdeDetails.valueDomain.valueDomainConcepts}}</td>
-    </tr>
-</table><br>
+<br>
 
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
@@ -214,7 +237,7 @@
     </tr>
 </table>
 
-<div class="dataElementViewTableWithScroller">
+<div class="dataElementViewTableWithScroller" data-ng-show="cdeDetails.valueDomain.permissibleValues.length">
     <table align="center" cellpadding="1" cellspacing="1" width="100%">
         <tr class="dataElementViewTableTr">
             <td width="24px" class="dataElementHeading">PV</td>
@@ -228,7 +251,9 @@
         </tr>
         <tr class="dataElementViewTableTr" ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
             <td width="24px" class="dataElementValue">{{p_value.value}}</td>
+
             <td class="dataElementValue">{{p_value.shortMeaning}}</td>
+
             <td class="dataElementValue">
                 <a class="link" TARGET="_blank"
                    href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{p_value.conceptCode}}">{{p_value.conceptCode}}</a>
@@ -241,6 +266,12 @@
         </tr>
     </table>
 </div>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-hide="cdeDetails.valueDomain.permissibleValues.length">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue" >This Value Domain is Non Enumerated.</td>
+    </tr>
+</table>
+
 <br>
 
 

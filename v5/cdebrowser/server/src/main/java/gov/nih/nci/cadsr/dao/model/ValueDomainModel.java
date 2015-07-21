@@ -19,6 +19,7 @@ public class ValueDomainModel extends BaseModel {
     private String datatype;
     private String uom;
     private String dispFormat;
+    private String formlName;
     private int maxLength;
     private int minLength;
     private String highVal;
@@ -124,6 +125,16 @@ public class ValueDomainModel extends BaseModel {
     public void setOrigin( String origin )
     {
         this.origin = origin;
+    }
+
+    public String getFormlName()
+    {
+        return formlName;
+    }
+
+    public void setFormlName( String formlName )
+    {
+        this.formlName = formlName;
     }
 
     public String getIdseq()
@@ -323,6 +334,7 @@ public class ValueDomainModel extends BaseModel {
                 ", datatype='" + datatype + '\'' +
                 ", uom='" + uom + '\'' +
                 ", dispFormat='" + dispFormat + '\'' +
+                ", formlName='" + formlName + '\'' +
                 ", maxLength='" + maxLength + '\'' +
                 ", minLength='" + minLength + '\'' +
                 ", highVal='" + highVal + '\'' +

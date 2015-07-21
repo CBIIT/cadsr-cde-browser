@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
 
         //select CON_DERIVATION_RULES_EXT.NAME   from sbrext.REPRESENTATIONS_EXT,CON_DERIVATION_RULES_EXT  where sbrext.REPRESENTATIONS_EXT.REP_ID = '3125303' and CON_DERIVATION_RULES_EXT.condr_idseq = sbrext.REPRESENTATIONS_EXT.CONDR_IDSEQ;
 
-        String conceptCodeStr = conceptDerivationRuleDAO.getCDRByByRepId( representationId ).getName();
+        String conceptCodeStr = conceptDerivationRuleDAO.getCDRByRepId( representationId ).getName();
 return conceptDAO.getConceptByConceptCode( conceptCodeStr );
 /*
 

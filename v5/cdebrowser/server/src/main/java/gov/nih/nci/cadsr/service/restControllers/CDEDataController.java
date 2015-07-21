@@ -41,6 +41,7 @@ public class CDEDataController
     private DataElementDerivationDAOImpl dataElementDerivationDAO;
     private ObjectClassConceptDAOImpl objectClassConceptDAO;
     private PropertyConceptDAOImpl propertyConceptDAO;
+    private ValueDomainConceptDAOImpl valueDomainConceptDAO;
     private ConceptDAOImpl conceptDAO;
 
     @RequestMapping( value = "/CDEData" )
@@ -291,16 +292,15 @@ public class CDEDataController
         dataElementConceptDetails.setShortName( dataElementModel.getDec().getPreferredName() );
         dataElementConceptDetails.setDefinition( dataElementModel.getDec().getPreferredDefinition() );
 
-        //FIXME
-        dataElementConceptDetails.setContext( dataElementModel.getDec().getObjClassContextName() );
-        //FIXME
+        dataElementConceptDetails.setContext( dataElementModel.getDec().getConteName() );
         dataElementConceptDetails.setConceptualDomainContextName( dataElementModel.getDec().getCdContextName() );
-
         dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
         dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
         dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
 
-        dataElementConceptDetails.setVersion( dataElementModel.getDec().getCdVersion() );
+        //Conceptual Domain Version
+
+        dataElementConceptDetails.setFormattedConceptualDomainVersion( dataElementModel.getDec().getCdVersion().toString() );
         dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
 
         /////////////////////////////////////////////////////
@@ -308,12 +308,6 @@ public class CDEDataController
         ObjectClass objectClass = new ObjectClass();
         dataElementConcept.setObjectClass( objectClass );
 
-        if( dataElementModel.getDec() == null )
-        {
-            logger.error( "dataElementModel.getDec() == null" );
-        }
-
-        //objectClass.setPublicId( dataElementModel.getDec().getPublicId() );
         objectClass.setPublicId( dataElementModel.getDec().getObjClassPublicId() );
 
         if( dataElementModel.getDec().getObjClassVersion() != null )
@@ -328,9 +322,6 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "Object Class Concepts" of the "Data Element Concept" Tab
         // This is a list of ObjectClassConcept
-
-        logger.debug( "DEC: " + dataElementModel.getDec() );
-
         List<ConceptModel> objectClassConcepts = objectClassConceptDAO.getObjectClassConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setObjectClassConcepts( objectClassConcepts );
 
@@ -350,15 +341,6 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "Property Concepts" of the "Data Element Concept" Tab
         // This is a list of PropertyConcept
-
-/*
-        List<ConceptModel> propertyConcepts = conceptDAO.getConceptByConceptCode( dataElementModel.getDec().getProperty().getPreferredName() );
-        dataElementConcept.setPropertyConcepts( propertyConcepts );
-*/
-        if( propertyConceptDAO == null )
-        {
-            logger.error( "propertyConceptDAO is null" );
-        }
         List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setPropertyConcepts( propertyConcepts );
 
@@ -399,6 +381,7 @@ public class CDEDataController
         valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
         valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
         valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
+        valueDomainDetails.setDisplayFormat( dataElementModel.getValueDomainModel().getDispFormat() );
         valueDomainDetails.setMaximumLength( dataElementModel.getValueDomainModel().getMaxLength() );
         valueDomainDetails.setMinimumLength( dataElementModel.getValueDomainModel().getMinLength() );
         valueDomainDetails.setDecimalPlace( dataElementModel.getValueDomainModel().getDecimalPlace() );
@@ -414,16 +397,16 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "value Domain Concepts" of the "value Domain" Tab
         //Just a string
-        valueDomain.setValueDomainConcepts( "From Server - STILL NEED TO TRACK DOWN ValueDomainConcepts" );
+
+        logger.debug( "value Domain Concepts of the value Domain" );
+        List<ConceptModel> valueDomainConcepts = valueDomainConceptDAO.getValueDomainConceptByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
+        valueDomain.setValueDomainConcepts( valueDomainConcepts );
 
 
         /////////////////////////////////////////////////////
         // "Representation" of the "value Domain" Tab
         Representation representation = new Representation();
         valueDomain.setRepresentation( representation );
-
-        logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
-
 
         representation.setPublicId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
         if( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() != null )
@@ -434,18 +417,6 @@ public class CDEDataController
         representation.setShortName( dataElementModel.getValueDomainModel().getRepresentationModel().getPreferredName() );
         representation.setContext( dataElementModel.getValueDomainModel().getRepresentationModel().getContext().getName() );
 
-/*
-
-        representation.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
-        if( dataElementModel.getValueDomainModel().getVersion() != null )
-        {
-            representation.setVersion( dataElementModel.getValueDomainModel().getVersion() );
-        }
-        representation.setLongName( dataElementModel.getValueDomainModel().getLongName() );
-        representation.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
-        representation.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
-
-*/
 
         /////////////////////////////////////////////////////
         // "Representation Concepts" of the "value Domain" Tab
@@ -693,6 +664,16 @@ public class CDEDataController
     public void setPropertyConceptDAO( PropertyConceptDAOImpl propertyConceptDAO )
     {
         this.propertyConceptDAO = propertyConceptDAO;
+    }
+
+    public ValueDomainConceptDAOImpl getValueDomainConceptDAO()
+    {
+        return valueDomainConceptDAO;
+    }
+
+    public void setValueDomainConceptDAO( ValueDomainConceptDAOImpl valueDomainConceptDAO )
+    {
+        this.valueDomainConceptDAO = valueDomainConceptDAO;
     }
 
     /////////////////////////////////////////////////////

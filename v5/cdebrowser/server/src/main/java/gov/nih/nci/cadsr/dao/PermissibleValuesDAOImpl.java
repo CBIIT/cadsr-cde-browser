@@ -38,13 +38,35 @@ public class PermissibleValuesDAOImpl extends AbstractDAOOperations implements P
     {
         //String sql = "select distinct SBR.PERMISSIBLE_VALUES.* from SBR.PERMISSIBLE_VALUES , SBR.VD_PVS where SBR.PERMISSIBLE_VALUES.pv_idseq = SBR.VD_PVS.pv_idseq and SBR.VD_PVS.vd_idseq = ?  order by upper(SBR.PERMISSIBLE_VALUES.value)";
 
-        String sql = "select distinct SBR.PERMISSIBLE_VALUES.*, SBREXT.UP_SEMANTIC_METADATA_MVW.CONCEPT_CODE, SBR.VALUE_MEANINGS.description as vm_description, SBR.VALUE_MEANINGS.vm_id , SBR.VALUE_MEANINGS.version as vm_version, SBR.VD_PVS.con_idseq " +
+        String sql =
+                "select distinct " +
+                        " SBR.PERMISSIBLE_VALUES.*," +
+                       // " SBREXT.UP_SEMANTIC_METADATA_MVW.CONCEPT_CODE," +
+                        " SBR.VALUE_MEANINGS.description as vm_description," +
+                        " SBR.VALUE_MEANINGS.vm_id," +
+                        " SBR.VALUE_MEANINGS.version as vm_version," +
+                        " SBR.VD_PVS.con_idseq " +
+                "from" +
+                        " SBR.PERMISSIBLE_VALUES," +
+                        " SBR.VD_PVS," +
+                        " SBR.VALUE_MEANINGS," +
+                        " SBREXT.UP_SEMANTIC_METADATA_MVW " +
+                "where" +
+                        " SBR.PERMISSIBLE_VALUES.pv_idseq = SBR.VD_PVS.pv_idseq " +
+                        " and SBR.VD_PVS.vd_idseq = ? " +
+                        " and SBR.VALUE_MEANINGS.vm_idseq = SBR.PERMISSIBLE_VALUES.vm_idseq " +
+                     //   " and SBREXT.UP_SEMANTIC_METADATA_MVW.public_id = SBR.VALUE_MEANINGS.vm_id " +
+                "order by" +
+                        " upper(SBR.PERMISSIBLE_VALUES.value)";
+/*
+       String sql = "select distinct SBR.PERMISSIBLE_VALUES.*, SBREXT.UP_SEMANTIC_METADATA_MVW.CONCEPT_CODE, SBR.VALUE_MEANINGS.description as vm_description, SBR.VALUE_MEANINGS.vm_id , SBR.VALUE_MEANINGS.version as vm_version, SBR.VD_PVS.con_idseq " +
                 "from SBR.PERMISSIBLE_VALUES , SBR.VD_PVS, SBR.VALUE_MEANINGS, SBREXT.UP_SEMANTIC_METADATA_MVW " +
                 "where SBR.PERMISSIBLE_VALUES.pv_idseq = SBR.VD_PVS.pv_idseq " +
                 "and SBR.VD_PVS.vd_idseq = ? " +
                 "and SBR.VALUE_MEANINGS.vm_idseq = SBR.PERMISSIBLE_VALUES.vm_idseq " +
                 "and SBREXT.UP_SEMANTIC_METADATA_MVW.public_id = SBR.VALUE_MEANINGS.vm_id " +
                 "order by upper(SBR.PERMISSIBLE_VALUES.value)";
+*/
 
         logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
 

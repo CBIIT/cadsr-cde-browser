@@ -34,18 +34,6 @@ public class PropertyConceptDAOImpl extends AbstractDAOOperations implements Pro
     public List<ConceptModel> getPropertyConceptByDecIdseq( String decIdseq )
     {
 
-/*
-        SELECT PROP_IDSEQ FROM SBR.DATA_ELEMENT_CONCEPTS
-        WHERE DEC_IDSEQ = 'FD5ED17A-51E1-2455-E034-0003BA3F9857'
-                ;
-
-        select CONDR_IDSEQ from PROPERTIES_EXT
-        where PROP_IDSEQ = 'FD5ECD38-48BD-230F-E034-0003BA3F9857';
-
-        select name from CON_DERIVATION_RULES_EXT
-        where CONDR_IDSEQ = 'FD5ECD38-48BA-230F-E034-0003BA3F9857'
-                ;
-*/
         String sql = "SELECT PROP_IDSEQ from SBR.DATA_ELEMENT_CONCEPTS where DEC_IDSEQ = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", decIdseq ) );
         PropertyConceptModel propertyConceptModel = query( sql, decIdseq, PropertyConceptModel.class );

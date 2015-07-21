@@ -38,8 +38,7 @@ public class PermissibleValuesModel extends BaseModel
 
     public String getVmVersion()
     {
-        //return vmVersion;
-        return "TESTING";
+        return vmVersion;
     }
 
     public void setVmVersion( String vmVersion )

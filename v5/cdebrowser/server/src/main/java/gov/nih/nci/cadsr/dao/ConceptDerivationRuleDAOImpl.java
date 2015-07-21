@@ -43,7 +43,7 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
     /**
      * Returns a conceptDerivationRuleModel for a Value Domain's Representation
      */
-    public ConceptDerivationRuleModel getCDRByByRepId( String repId )
+    public ConceptDerivationRuleModel getCDRByRepId( String repId )
     {
         String sql = "SELECT CON_DERIVATION_RULES_EXT.* FROM sbrext.REPRESENTATIONS_EXT,CON_DERIVATION_RULES_EXT  WHERE sbrext.REPRESENTATIONS_EXT.REP_ID = ? AND CON_DERIVATION_RULES_EXT.condr_idseq = sbrext.REPRESENTATIONS_EXT.CONDR_IDSEQ";
         logger.debug( ">>>>>>> " + sql.replace( "?", repId ) );

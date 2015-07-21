@@ -16,36 +16,40 @@ import java.sql.SQLException;
 /**
  * Created by lavezzojl on 4/22/15.
  */
-public class ConceptualDomainDAOImpl extends AbstractDAOOperations implements ConceptualDomainDAO {
-
-    private Logger logger = LogManager.getLogger(DataElementConceptDAOImpl.class.getName());
-
+public class ConceptualDomainDAOImpl extends AbstractDAOOperations implements ConceptualDomainDAO
+{
+    private Logger logger = LogManager.getLogger( DataElementConceptDAOImpl.class.getName() );
     private JdbcTemplate jdbcTemplate;
-
     private ContextDAO contextDAO;
 
-
     @Autowired
-    ConceptualDomainDAOImpl(DataSource dataSource) {
-        setDataSource(dataSource);
+    ConceptualDomainDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
     @Override
-    public ConceptualDomainModel getConceptualDomainByIdseq(String cdIdseq) {
+    public ConceptualDomainModel getConceptualDomainByIdseq( String cdIdseq )
+    {
         String sql = "SELECT * FROM SBR.CONCEPTUAL_DOMAINS WHERE CD_IDSEQ = ?";
-        ConceptualDomainModel conceptualDomainModel = jdbcTemplate.queryForObject(sql, new Object[]{cdIdseq}, new ConceptualDomainMapper());
+        ConceptualDomainModel conceptualDomainModel = query( sql, cdIdseq, ConceptualDomainModel.class );
+        // Use the conte_idseq to get the context
+        conceptualDomainModel.setContextModel( getContextDAO().getContextByIdseq( conceptualDomainModel.getConteIdseq() ) );
         return conceptualDomainModel;
     }
 
-    public ContextDAO getContextDAO() {
+    public ContextDAO getContextDAO()
+    {
         return contextDAO;
     }
 
-    public void setContextDAO(ContextDAO contextDAO) {
+    public void setContextDAO( ContextDAO contextDAO )
+    {
         this.contextDAO = contextDAO;
     }
 
+/*
     public final class ConceptualDomainMapper extends BeanPropertyRowMapper<ConceptualDomainModel> {
 
         public ConceptualDomainModel mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -59,4 +63,5 @@ public class ConceptualDomainDAOImpl extends AbstractDAOOperations implements Co
             return conceptualDomainModel;
         }
     }
+*/
 }

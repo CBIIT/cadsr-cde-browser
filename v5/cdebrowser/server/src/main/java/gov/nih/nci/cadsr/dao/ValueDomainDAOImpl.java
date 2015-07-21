@@ -18,7 +18,8 @@ import java.sql.SQLException;
 /**
  * Created by lavezzojl on 4/15/15.
  */
-public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDomainDAO {
+public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDomainDAO
+{
 
     private Logger logger = LogManager.getLogger( ValueDomainDAOImpl.class.getName() );
 
@@ -29,108 +30,127 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     private ConceptualDomainDAO conceptualDomainDAO;
 
     @Autowired
-    ValueDomainDAOImpl(DataSource dataSource) {
-        setDataSource(dataSource);
+    ValueDomainDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
     @Override
-    public ValueDomainModel getValueDomainByIdseq(String vdIdseq) throws EmptyResultDataAccessException {
+    public ValueDomainModel getValueDomainByIdseq( String vdIdseq ) throws EmptyResultDataAccessException
+    {
         String sql = "SELECT * FROM SBR.VALUE_DOMAINS WHERE VD_IDSEQ = ?";
         logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
         //String sql = "SELECT * FROM VALUE_DOMAINS_VIEW WHERE VD_IDSEQ = ?";
-        ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject(sql, new Object[]{vdIdseq}, new ValueDomainMapper());
+        ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject( sql, new Object[]{ vdIdseq }, new ValueDomainMapper() );
         return valueDomainModel;
     }
 
-    public RepresentationDAO getRepresentationDAO() {
+    public RepresentationDAO getRepresentationDAO()
+    {
         return representationDAO;
     }
 
-    public void setRepresentationDAO(RepresentationDAO representationDAO) {
+    public void setRepresentationDAO( RepresentationDAO representationDAO )
+    {
         this.representationDAO = representationDAO;
     }
 
-    public ConceptDerivationRuleDAO getConceptDerivationRuleDAO() {
+    public ConceptDerivationRuleDAO getConceptDerivationRuleDAO()
+    {
         return conceptDerivationRuleDAO;
     }
 
-    public void setConceptDerivationRuleDAO(ConceptDerivationRuleDAO conceptDerivationRuleDAO) {
+    public void setConceptDerivationRuleDAO( ConceptDerivationRuleDAO conceptDerivationRuleDAO )
+    {
         this.conceptDerivationRuleDAO = conceptDerivationRuleDAO;
     }
 
-    public ConceptualDomainDAO getConceptualDomainDAO() {
+    public ConceptualDomainDAO getConceptualDomainDAO()
+    {
         return conceptualDomainDAO;
     }
 
-    public void setConceptualDomainDAO(ConceptualDomainDAO conceptualDomainDAO) {
+    public void setConceptualDomainDAO( ConceptualDomainDAO conceptualDomainDAO )
+    {
         this.conceptualDomainDAO = conceptualDomainDAO;
     }
 
-    public final class ValueDomainMapper extends BeanPropertyRowMapper<ValueDomainModel> {
+    public final class ValueDomainMapper extends BeanPropertyRowMapper<ValueDomainModel>
+    {
         private Logger logger = LogManager.getLogger( ValueDomainMapper.class.getName() );
 
-        public ValueDomainModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public ValueDomainModel mapRow( ResultSet rs, int rowNum ) throws SQLException
+        {
             ValueDomainModel valueDomainModel = new ValueDomainModel();
-            valueDomainModel.setPreferredName(rs.getString("PREFERRED_NAME"));
-            valueDomainModel.setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
-            valueDomainModel.setLongName(rs.getString("LONG_NAME"));
-            valueDomainModel.setAslName(rs.getString("ASL_NAME"));
-            valueDomainModel.setVersion(rs.getFloat("VERSION"));
-            valueDomainModel.setDeletedInd(rs.getString("DELETED_IND"));
-            valueDomainModel.setLatestVerInd(rs.getString("LATEST_VERSION_IND"));
-            valueDomainModel.setPublicId(rs.getInt("VD_ID"));
-            valueDomainModel.setOrigin(rs.getString("ORIGIN"));
-            valueDomainModel.setIdseq(rs.getString("VD_IDSEQ"));
-            valueDomainModel.setVdIdseq(rs.getString("VD_IDSEQ"));// duplicate
-            valueDomainModel.setDatatype(rs.getString("DTL_NAME")); // according to old code (BC4JValueDomainTransferObject)
-            valueDomainModel.setUom(rs.getString("UOML_NAME")); // according to old code (BC4JValueDomainTransferObject)
-            valueDomainModel.setDispFormat(rs.getString("FORML_NAME"));
-            valueDomainModel.setMaxLength(rs.getInt("MAX_LENGTH_NUM"));
-            valueDomainModel.setMinLength(rs.getInt("MIN_LENGTH_NUM"));
-            valueDomainModel.setHighVal(rs.getString("HIGH_VALUE_NUM"));
-            valueDomainModel.setLowVal(rs.getString("LOW_VALUE_NUM"));
-            valueDomainModel.setCharSet(rs.getString("CHAR_SET_NAME"));
-            valueDomainModel.setDecimalPlace(rs.getInt("DECIMAL_PLACE"));
-            valueDomainModel.setVdType(rs.getString("VD_TYPE_FLAG"));
+            valueDomainModel.setPreferredName( rs.getString( "PREFERRED_NAME" ) );
+            valueDomainModel.setPreferredDefinition( rs.getString( "PREFERRED_DEFINITION" ) );
+            valueDomainModel.setLongName( rs.getString( "LONG_NAME" ) );
+            valueDomainModel.setAslName( rs.getString( "ASL_NAME" ) );
+            valueDomainModel.setVersion( rs.getFloat( "VERSION" ) );
+            valueDomainModel.setDeletedInd( rs.getString( "DELETED_IND" ) );
+            valueDomainModel.setLatestVerInd( rs.getString( "LATEST_VERSION_IND" ) );
+            valueDomainModel.setPublicId( rs.getInt( "VD_ID" ) );
+            valueDomainModel.setOrigin( rs.getString( "ORIGIN" ) );
+            valueDomainModel.setIdseq( rs.getString( "VD_IDSEQ" ) );
+            valueDomainModel.setVdIdseq( rs.getString( "VD_IDSEQ" ) );// duplicate
+            valueDomainModel.setDatatype( rs.getString( "DTL_NAME" ) ); // according to old code (BC4JValueDomainTransferObject)
+            valueDomainModel.setUom( rs.getString( "UOML_NAME" ) ); // according to old code (BC4JValueDomainTransferObject)
+            valueDomainModel.setDispFormat( rs.getString( "FORML_NAME" ) );
+            valueDomainModel.setMaxLength( rs.getInt( "MAX_LENGTH_NUM" ) );
+            valueDomainModel.setMinLength( rs.getInt( "MIN_LENGTH_NUM" ) );
+            valueDomainModel.setHighVal( rs.getString( "HIGH_VALUE_NUM" ) );
+            valueDomainModel.setLowVal( rs.getString( "LOW_VALUE_NUM" ) );
+            valueDomainModel.setCharSet( rs.getString( "CHAR_SET_NAME" ) );
+            valueDomainModel.setDecimalPlace( rs.getInt( "DECIMAL_PLACE" ) );
+            valueDomainModel.setVdType( rs.getString( "VD_TYPE_FLAG" ) );
 
-            try {
-                ConceptDerivationRuleModel conceptDerivationRuleModel = getConceptDerivationRuleDAO().getCDRByIdseq(rs.getString("CONDR_IDSEQ"));
-                if (conceptDerivationRuleModel != null) {
-                    valueDomainModel.setConceptDerivationRuleModel(conceptDerivationRuleModel);
+            try
+            {
+                ConceptDerivationRuleModel conceptDerivationRuleModel = getConceptDerivationRuleDAO().getCDRByIdseq( rs.getString( "CONDR_IDSEQ" ) );
+                if( conceptDerivationRuleModel != null )
+                {
+                    valueDomainModel.setConceptDerivationRuleModel( conceptDerivationRuleModel );
                 }
-            } catch (EmptyResultDataAccessException ex) {
+            } catch( EmptyResultDataAccessException ex )
+            {
                 // this isn't a problem, just means there's no associated ConceptDerivationRule
                 // valueDomainModel.setConceptDerivationRuleModel(new ConceptDerivationRuleModel());
             }
 
 
-            try {
-                logger.debug( "rs.getString(\"REP_IDSEQ\"): " + rs.getString("REP_IDSEQ") );
-                valueDomainModel.setRepresentationModel(getRepresentationDAO().getRepresentationByIdseq(rs.getString("REP_IDSEQ")));
+            try
+            {
+                logger.debug( "rs.getString(\"REP_IDSEQ\"): " + rs.getString( "REP_IDSEQ" ) );
+                valueDomainModel.setRepresentationModel( getRepresentationDAO().getRepresentationByIdseq( rs.getString( "REP_IDSEQ" ) ) );
 
-            } catch (EmptyResultDataAccessException ex) {
+            } catch( EmptyResultDataAccessException ex )
+            {
                 // this isn't a problem, just means there's no associated RepresentationModel
             }
 
 
-
-
-            try {
-                ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq(rs.getString("CD_IDSEQ"));
-                if (conceptualDomainModel != null) {
-                    valueDomainModel.setCdPublicId(conceptualDomainModel.getCdId());
-                    if (conceptualDomainModel.getPreferredName() != null) {
-                        valueDomainModel.setCdPrefName(conceptualDomainModel.getPreferredName());
+            try
+            {
+                ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq( rs.getString( "CD_IDSEQ" ) );
+                if( conceptualDomainModel != null )
+                {
+                    valueDomainModel.setCdPublicId( conceptualDomainModel.getCdId() );
+                    if( conceptualDomainModel.getPreferredName() != null )
+                    {
+                        valueDomainModel.setCdPrefName( conceptualDomainModel.getPreferredName() );
                     }
-                    if (conceptualDomainModel.getVersion() != null) {
-                        valueDomainModel.setCdVersion(conceptualDomainModel.getVersion());
+                    if( conceptualDomainModel.getVersion() != null )
+                    {
+                        valueDomainModel.setCdVersion( conceptualDomainModel.getVersion() );
                     }
-                    if (conceptualDomainModel.getContextModel() != null && conceptualDomainModel.getContextModel().getName() != null) {
-                        valueDomainModel.setCdContextName(conceptualDomainModel.getContextModel().getName());
+                    if( conceptualDomainModel.getContextModel() != null && conceptualDomainModel.getContextModel().getName() != null )
+                    {
+                        valueDomainModel.setCdContextName( conceptualDomainModel.getContextModel().getName() );
                     }
                 }
-            } catch (EmptyResultDataAccessException ex) {
+            } catch( EmptyResultDataAccessException ex )
+            {
                 // this isn't a problem, just means there's no associated ConceptualDomainModel
             }
             logger.debug( "valueDomainModel.getRepresentationModel: " + valueDomainModel.getRepresentationModel().toString() );
