@@ -35,7 +35,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>
+                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}</connection-url>
             </properties>
         </profile>
     </profiles>
