@@ -1,24 +1,24 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
- 
-  <mirrors>
-    <mirror>
-      <!-- This sends everything else to /public -->
-      <id>nexus</id>
-      <mirrorOf>*</mirrorOf>
-      <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>
-    </mirror>
-  </mirrors>
-  <pluginGroups>
-    <!-- define the sonatype plugin group, so the nexus plugins will work without typing the groupId -->
+
+    <mirrors>
+        <mirror>
+            <!-- This sends everything else to /public -->
+            <id>nexus</id>
+            <mirrorOf>*</mirrorOf>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>
+        </mirror>
+    </mirrors>
+    <pluginGroups>
+        <!-- define the sonatype plugin group, so the nexus plugins will work without typing the groupId -->
         <pluginGroup>org.sonatype.plugins</pluginGroup>
-  </pluginGroups>
+    </pluginGroups>
     <profiles>
         <profile>
             <id>defaults</id>
             <activation>
-            <activeByDefault>true</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <connection-url>jdbc:oracle:thin:@ncidb-d110-d.nci.nih.gov:1551:DSRDEV</connection-url>
@@ -35,7 +35,8 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>
+                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}
+                </connection-url>
             </properties>
         </profile>
     </profiles>

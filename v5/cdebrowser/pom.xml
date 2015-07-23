@@ -8,7 +8,7 @@
     <name>cdeBrowser</name>
 
     <modules>
-        <module>client_03</module>
+        <module>client</module>
         <module>server</module>
     </modules>
     

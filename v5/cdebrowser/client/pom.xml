@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cdebrowserClient03</groupId>
-    <artifactId>cdebrowserClient03</artifactId>
+    <groupId>cdebrowserClient</groupId>
+    <artifactId>cdebrowserClient</artifactId>
     <packaging>war</packaging>
     <version>5.0</version>
-    <name>cdebrowserClient03</name>
+    <name>cdebrowserClient</name>
     <dependencies>
      </dependencies>
 
     <build>
-        <finalName>cdebrowserClient03</finalName>
+        <finalName>cdebrowserClient</finalName>
         <resources>
             <resource>
                 <directory>src/main/webapp</directory>

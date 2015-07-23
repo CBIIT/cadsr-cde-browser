@@ -1,0 +1,6 @@
+{
+  "Version":"5.0",
+  "Tag":"${tag}",
+  "Tier":"${tier}",
+  "scm_date":"${scm_date}"
+}

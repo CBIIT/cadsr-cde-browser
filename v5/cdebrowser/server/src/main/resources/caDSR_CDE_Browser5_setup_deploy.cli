@@ -34,9 +34,7 @@ end-if
 # not part of this deployment
 
 # deploy war files
-deploy --force /local/content/cdebrowser/artifacts/cdebrowserClient01.war
-deploy --force /local/content/cdebrowser/artifacts/cdebrowserClient02.war
-deploy --force /local/content/cdebrowser/artifacts/cdebrowserClient03.war
+deploy --force /local/content/cdebrowser/artifacts/cdebrowserClient.war
 deploy --force /local/content/cdebrowser/artifacts/cdebrowserServer.war
 
 
