@@ -106,8 +106,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
-        console.log("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
-        $scope.getCdeDetailRestCall("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
+        console.log(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
+        $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
 
     };
 
@@ -193,10 +193,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.currentCdeTab = 0;
         $location.path("/search").replace();
 
-        $scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port +
+        $scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
         "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
-        console.log("onClickBasicSearch:   http://" + window.location.hostname + ":" + window.location.port +
+        console.log("onClickBasicSearch:   " + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
         "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
@@ -319,7 +319,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.dataLoadFromServer = function () {
         console.log("$scope.dataLoadFromServer");
-        $scope.dataLoad("http://" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData");
+        $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData");
     };
 
     $scope.dataLoad = function (dataSource) {

@@ -182,14 +182,14 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             if (selectedNode.text == 'Classifications' || selectedNode.text == 'ProtocolForms') {
                                 if (!selectedNode['dataLoaded'] && selectedNode['children'].length) {
 
-                                    console.log("* * * selectAction: [" + "http://" + window.location.hostname + ":" + window.location.port +
+                                    console.log("* * * selectAction: [" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +
                                     "/" + parameters[0] +
                                     "/?contextId=" + parameters[1] +
                                     "&programArea=" + parameters[2] +
                                     "&folderType=" + parameters[3] + "]");
 
                                     // $http.get("data6.json").success(function (response) {
-                                    $http.get("http://" + window.location.hostname + ":" + window.location.port +
+                                    $http.get(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
                                     "/" + parameters[0] +
                                     "/?contextId=" + parameters[1] +
                                     "&programArea=" + parameters[2] +
@@ -226,46 +226,46 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Context
                             if (/cdesByContext$/.test(actionParts[0])) {
-                                scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?contextId=" + actionParts[1]);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification
                             if (/cdesByClassificationScheme$/.test(actionParts[0])) {
-                                console.log("cdesByClassificationScheme$     http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                console.log("cdesByClassificationScheme$     " + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?classificationSchemeId=" + actionParts[1]);
 
-                                scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?classificationSchemeId=" + actionParts[1]);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification Scheme
                             if (/cdesByClassificationSchemeItem$/.test(actionParts[0])) {
-                                console.log("Click cdesByClassificationSchemeItem, action: [http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                console.log("Click cdesByClassificationSchemeItem, action: [" + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?classificationSchemeItemId=" + actionParts[1] + "]");
 
-                                scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?classificationSchemeItemId=" + actionParts[1]);
                             }
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol
                             if (/cdesByProtocol$/.test(actionParts[0])) {
-                                console.log("Click on text, action: [http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                console.log("Click on text, action: [" + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?protocolId=" + actionParts[1] + "]");
 
-                                scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?protocolId=" + actionParts[1]);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol Form
                             if (/cdesByProtocolForm$/.test(actionParts[0])) {
-                                console.log("Click on text, action: [http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                console.log("Click on text, action: [" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?id=" + actionParts[1] + "]");
 
-                                scope.basicSearchServerRestCall("http://" + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
+                                scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
                                 "?id=" + actionParts[1]);
                             }
 

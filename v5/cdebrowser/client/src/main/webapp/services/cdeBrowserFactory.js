@@ -1,3 +1,4 @@
+/*
 cdeBrowserApp.factory('cdeBrowserFactory',
     function($http,$q) {
         var obj = this;
@@ -29,3 +30,4 @@ cdeBrowserApp.factory('cdeBrowserFactory',
         return obj;
     }
 );
+*/

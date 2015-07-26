@@ -21,7 +21,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <connection-url>jdbc:oracle:thin:@ncidb-d110-d.nci.nih.gov:1551:DSRDEV</connection-url>
+                <connection-url>jdbc:oracle:thin:@ncidb-dsr-d.nci.nih.gov:1551:DSRDEV</connection-url>
                 <CADSR_DS_USER>cdebrowser</CADSR_DS_USER>
                 <CADSR_DS_PSWD>dsr#browser0225</CADSR_DS_PSWD>
                 <tier>set tier at build time</tier>
