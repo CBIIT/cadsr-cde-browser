@@ -10,12 +10,12 @@
 which git > /dev/null
 if [  $? -ne 0 ]
 then
-   echo Git is not on the PATH
+   echo Git is not on the $PATH
    export scm_date2=`/usr/local/bin/git show --pretty=format:%ci | sed -n 1p| sed 's/ \-/ \\\-/g'`
 else
     export scm_date2=`git show --pretty=format:%ci | sed -n 1p| sed 's/ \-/ \\\-/g'`
 fi
-
+echo Commit Date/Time: $scm_date2
 # Not using sed with -i because it does not work on Mac
 #sed -i "s/^scm-date.*/scm-date=${scm_date2}/g" src/main/resources/cdeBrowser.server.properties
 
