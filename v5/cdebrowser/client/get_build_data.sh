@@ -7,9 +7,16 @@
 # This script is called by maven (configured in v5/cdebrowser/client/pom.xml)
 
 #if git is not on the PATH, then we are probably running within AntHillPro and it will be in /usr/loclal/bin
-export PATH=/usr/local/bin:$PATH
+which git > /dev/null
+if [  $? -ne 0 ]
+then
+   echo Git is not on the PATH
+   xport scm_date2=`/usr/local/bin/git show --pretty=format:%ci | sed -n 1p| sed 's/ \-/ \\\-/g'`
 
-export scm_date2=`git show --pretty=format:%ci | sed -n 1p| sed 's/ \-/ \\\-/g'`
+else
+    export scm_date2=`git show --pretty=format:%ci | sed -n 1p| sed 's/ \-/ \\\-/g'`
+fi
+
 echo Update build time:  ${scm_date2}
 
 # Not using sed with -i because it does not work on Mac
