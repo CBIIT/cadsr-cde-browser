@@ -252,6 +252,7 @@
         <tr class="dataElementViewTableTr" ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
             <td width="24px" class="dataElementValue">{{p_value.value}}</td>
 
+
             <td class="dataElementValue">{{p_value.shortMeaning}}</td>
 
             <td class="dataElementValue">
@@ -262,7 +263,7 @@
             <td class="dataElementValue">{{p_value.beginDateString}}</td>
             <td class="dataElementValue">{{p_value.endDateString}}</td>
             <td class="dataElementValue">{{p_value.vmId}}</td>
-            <td class="dataElementValue">{{p_value.vmVersion}}</td>
+            <td class="dataElementValue">{{p_value.formattedVersion}}</td>
         </tr>
     </table>
 </div>

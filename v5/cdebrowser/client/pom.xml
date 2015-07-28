@@ -22,6 +22,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -42,6 +43,34 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <executions>
+                    <execution>
+                        <id>Get commit date</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>./get_build_data.sh</executable>
+                    <!--
+                                        <workingDirectory>/Users/lernermh/cadsr-cde-browser/v5/cdebrowser/server/</workingDirectory>
+                    -->
+                </configuration>
+            </plugin>
+
+
+
+
         </plugins>
     </build>
 
