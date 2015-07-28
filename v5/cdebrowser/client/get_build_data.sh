@@ -7,10 +7,15 @@
 # This script is called by maven (configured in v5/cdebrowser/client/pom.xml)
 
 export scm_date2=`git show --pretty=format:%ci | sed -n 1p| sed 's/ \-/ \\\-/g'`
+echo Update build time:  ${scm_date2}
 
 # Not using sed with -i because it does not work on Mac
 #sed -i "s/^scm-date.*/scm-date=${scm_date2}/g" src/main/resources/cdeBrowser.server.properties
 
+echo Copy src/main/webapp/version.json to  /tmp/version.json
 sed  "s/\"scm_date\":.*/\"scm_date\":\"${scm_date2}\"/g" src/main/webapp/version.json > /tmp/version.json
+ls -l /tmp/
+echo copy /tmp/version.json to src/main/webapp/version.json
 cp /tmp/version.json src/main/webapp/version.json
+cat src/main/webapp/version.json
 
