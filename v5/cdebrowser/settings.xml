@@ -32,15 +32,39 @@
                 <tag>set tag at build time</tag>
             </properties>
         </profile>
+
         <profile>
             <id>AHP</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}
-                </connection-url>
+                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}</connection-url>
+                <build-profile>AHP</build-profile>
             </properties>
         </profile>
+
+        <profile>
+            <id>DEV</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}</connection-url>
+                <build-profile>DEV</build-profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>QA</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}</connection-url>
+                <build-profile>QA</build-profile>
+            </properties>
+        </profile>
+
     </profiles>
 </settings>
