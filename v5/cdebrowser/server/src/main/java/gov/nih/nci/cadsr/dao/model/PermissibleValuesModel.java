@@ -44,6 +44,7 @@ public class PermissibleValuesModel extends BaseModel
     public void setVmVersion( String vmVersion )
     {
         this.vmVersion = vmVersion;
+        this.formattedVersion = Float.toString( Float.valueOf(vmVersion));
     }
 
     public String getVmDescription()

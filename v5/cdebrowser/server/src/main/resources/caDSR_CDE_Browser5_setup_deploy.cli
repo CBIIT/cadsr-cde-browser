@@ -1,4 +1,5 @@
 #caDSR CDE Browser v5 Wildfly setup scripts
+# Profile ${build-profile}
 
 connect localhost:19990
 
