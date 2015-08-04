@@ -1,4 +1,3 @@
-
 <br>
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
@@ -38,33 +37,45 @@
 </table>
 <br>
 
+    <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+        <tr class="cdeDetailsSubHeading">
+            <th colspan="7" align="left" ng-show="cdeDetails.usage.formUsages.length > 0">Form Usage - <small>{{cdeDetails.usage.formUsages.length}}</small></th>
+            <th colspan="7" align="left" ng-hide="cdeDetails.usage.formUsages.length > 0">Form Usage</th>
+        </tr>
+    </table>
 
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th colspan="7" align="left">Form Usage</th>
-    </tr>
-</table>
-<div class="dataElementViewTableWithScroller">
+    <div class="dataElementViewTableWithScroller">
 
-    <table align="center" cellpadding="1" cellspacing="1" width="100%">
-        <tr class="dataElementViewTableTr">
-        <td class="dataElementHeading">Protocol Number</td>
-        <td class="dataElementHeading">Lead Org</td>
-        <td class="dataElementHeading">Form Name</td>
-        <td class="dataElementHeading">Question Name</td>
-        <td class="dataElementHeading">Form Usage Type</td>
-        <td class="dataElementHeading">Public Id</td>
-        <td class="dataElementHeading">Version</td>
-    </tr>
-    <tr class="dataElementViewTableTr" ng-repeat="usage in cdeDetails.usage.formUsages">
-        <td class="dataElementValue">{{usage.protocolNumber}}</td>
-        <td class="dataElementValue">{{usage.leadOrg}}</td>
-        <td class="dataElementValue">{{usage.formlName}}</td>
-        <td class="dataElementValue">{{usage.questionName}}</td>
-        <td class="dataElementValue">{{usage.formUsageType}}</td>
-        <td class="dataElementValue"><a href="{{usage.url}}">{{usage.publicId}}</a></td>
-        <td class="dataElementValue">{{usage.formattedVersion}}</td>
-    </tr>  
-</table>
-</div>
+        <table align="center" cellpadding="1" cellspacing="1" width="100%">
+            <tr class="dataElementViewTableTr">
+                <td class="dataElementHeading">Protocol Number</td>
+                <td class="dataElementHeading">Lead Org</td>
+                <td class="dataElementHeading">Form Name</td>
+                <td class="dataElementHeading">Question Name</td>
+                <td class="dataElementHeading">Form Usage Type</td>
+                <td class="dataElementHeading">Public Id</td>
+                <td class="dataElementHeading">Version</td>
+            </tr>
+            <tr class="dataElementViewTableTr" ng-show="cdeDetails.usage.formUsages.length > 0" ng-repeat="usage in cdeDetails.usage.formUsages">
+                <td class="dataElementValue">{{usage.protocolNumber}}</td>
+                <td class="dataElementValue">{{usage.leadOrg}}</td>
+                <td class="dataElementValue">{{usage.formName}}</td>
+                <td class="dataElementValue">{{usage.questionName}}</td>
+                <td class="dataElementValue">{{usage.formUsageType}}</td>
+                <!--  We don't have the back end Rest service for this yet.
+                      When we do want to include the url, uncomment it in the sql in UsageDAOImpl.getUsagesByDeIdseq
+                <td class="dataElementValue"><a href="{{usage.url}}">{{usage.publicId}}</a></td>
+                -->
+                <td class="dataElementValue">{{usage.publicId}}</td>
+                <td class="dataElementValue">{{usage.formattedVersion}}</td>
+            </tr>
+            <tr class="dataElementViewTableTr"
+                ng-hide="cdeDetails.usage.formUsages.length > 0">
+                <td class="dataElementValue" colspan="7">No Form usages exist for the selected CDE.</td>
+            </tr>
+
+        </table>
+    </div>
+
+
 <br>

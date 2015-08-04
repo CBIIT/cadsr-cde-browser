@@ -14,37 +14,60 @@ import java.util.List;
 /**
  * Created by lavezzojl on 5/13/15.
  */
-public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO {
+public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO
+{
 
-    private Logger logger = LogManager.getLogger(UsageDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( UsageDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    UsageDAOImpl( DataSource dataSource ) {
-        setDataSource(dataSource);
+    UsageDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
-// todo: this needs left join on protocols_ext to allow for null protocols!
     @Override
-    public List<UsageModel> getUsagesByDeIdseq(String deIdseq) {
-        String sql = "select qc_basic.long_name question_name\n" +
-                ", qc_basic.DN_CRF_IDSEQ\n" +
-                ", qc_crf.version\n" +
-                ", qc_crf.long_name form_name\n" +
-                ", qc_crf.qc_id public_id\n" +
-                ", qc_crf.qtl_name form_usage_type\n" +
-                ", qc_crf.qc_idseq form_idseq\n" +
-                ", p.lead_org\n" +
-                ", p.long_name protocol_number\n" +
-                "FROM quest_contents_ext qc_basic, quest_contents_ext qc_crf, protocols_ext p, protocol_qc_ext pq\n" +
-                "WHERE qc_basic.de_idseq = ?\n" +
-                "AND qc_basic.DN_CRF_IDSEQ = qc_crf.qc_idseq\n" +
-                "AND p.PROTO_IDSEQ = pq.PROTO_IDSEQ\n" +
-                "AND qc_crf.qc_idseq = pq.qc_idseq\n" +
-                " order by protocol_number";
-        List<UsageModel> usageModels = jdbcTemplate.query(sql, new Object[]{deIdseq}, new BeanPropertyRowMapper(UsageModel.class));
+    public List<UsageModel> getUsagesByDeIdseq( String deIdseq )
+    {
+        String sql = "SELECT " +
+                " NVL(proto.long_name,'N/A') protocol_number " +
+                ", NVL(proto.lead_org,'N/A') lead_org" +
+                ", crf.long_name form_name" +
+                ", crf.qtl_name form_usage_type" +
+                //      ", crf.qc_idseq crf_idseq " +
+                //      ", proto.proto_idseq " +
+                //      ", que.de_idseq " +
+                ", que.long_name question_name " +
+                //      ", que.de_idseq que_de_idseq " +
+                ", crf.qc_id public_id " +
+                ", crf.version version " +
+
+                //For usage.publicId in usage-view.html when we have a service to answer.
+                //    ", (SELECT (SELECT VALUE FROM tool_options_ext WHERE tool_name ='FormBuilder' AND property='URL') FROM dual) FRM_URL" +
+                //    ", (SELECT (SELECT VALUE FROM tool_options_ext WHERE tool_name ='FormBuilder' AND property='FRM_DET_URL') FROM dual) FRM_DET_URL " +
+
+                " FROM " +
+                " sbrext.protocols_ext proto" +
+                ", sbrext.quest_contents_ext crf" +
+                ", sbrext.quest_contents_ext que" +
+                ", sbrext.protocol_qc_ext proto_qc " +
+
+                " WHERE " +
+                "crf.qc_idseq = proto_qc.qc_idseq(+) " +
+                "AND proto.proto_idseq(+) = proto_qc.proto_idseq " +
+                "AND crf.qc_idseq = que.dn_crf_idseq " +
+                "AND que.de_idseq = ? " +
+                "AND crf.qtl_name IN ('CRF','TEMPLATE') " +
+                "AND que.qtl_name = 'QUESTION' " +
+                "AND crf.deleted_ind = 'No' " +
+                " ORDER BY " +
+                " protocol_number" +
+                ", form_name" +
+                ", question_name";
+        logger.debug( sql.replace( "?", deIdseq ) );
+        List<UsageModel> usageModels = jdbcTemplate.query( sql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( UsageModel.class ) );
         return usageModels;
     }
 }

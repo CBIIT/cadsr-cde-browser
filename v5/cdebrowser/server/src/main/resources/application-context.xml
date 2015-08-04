@@ -24,6 +24,7 @@
     <context:property-placeholder location="classpath:cdeBrowser.server.properties"/>
 
     <bean id="testController" class="gov.nih.nci.cadsr.service.restControllers.TestController">
+        <property name="testDao" ref="testDAO"/>
     </bean>
 
     <bean id="CDEDataController" class="gov.nih.nci.cadsr.service.restControllers.CDEDataController">
@@ -134,6 +135,7 @@
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
     <bean id="usageDAO" class="gov.nih.nci.cadsr.dao.UsageDAOImpl" parent="abstractDao"/>
+    <bean id="testDAO" class="gov.nih.nci.cadsr.dao.TestDaoImpl" parent="abstractDao"/>
 
     <bean id="valueDomainConceptDAO" class="gov.nih.nci.cadsr.dao.ValueDomainConceptDAOImpl" parent="abstractDao">
         <property name="conceptDAO" ref="conceptDAO"/>
@@ -165,5 +167,7 @@
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>
     </bean>
+
+
 
 </beans>

@@ -14,7 +14,6 @@ import java.util.List;
 public class BasicSearchDAOImpl extends AbstractDAOOperations implements BasicSearchDAO
 {
     private Logger logger = LogManager.getLogger( BasicSearchDAOImpl.class.getName() );
-
     private JdbcTemplate jdbcTemplate;
 
     private String basicSearchSql;
