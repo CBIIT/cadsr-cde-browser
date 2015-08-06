@@ -62,11 +62,15 @@
                 <td class="dataElementValue">{{usage.formName}}</td>
                 <td class="dataElementValue">{{usage.questionName}}</td>
                 <td class="dataElementValue">{{usage.formUsageType}}</td>
-                <!--  We don't have the back end Rest service for this yet.
+                <!--  02_AUG_2015 We don't have the back end Rest service for this yet.
                       When we do want to include the url, uncomment it in the sql in UsageDAOImpl.getUsagesByDeIdseq
-                <td class="dataElementValue"><a href="{{usage.url}}">{{usage.publicId}}</a></td>
+
+                      Update - 05_AUG_2015 - Denise Warzel says turn this link on, it will hit the Form builder tool, no need for new service.
                 -->
+                <td class="dataElementValue"><a href="{{usage.url}}">{{usage.publicId}}</a></td>
+                <!--
                 <td class="dataElementValue">{{usage.publicId}}</td>
+                -->
                 <td class="dataElementValue">{{usage.formattedVersion}}</td>
             </tr>
             <tr class="dataElementViewTableTr"
