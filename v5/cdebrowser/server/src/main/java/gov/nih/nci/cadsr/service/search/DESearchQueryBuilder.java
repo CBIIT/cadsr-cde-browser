@@ -78,22 +78,22 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         //excludeArr will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
         {
-            registrationExcludeWhere = " and " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
+            registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
         }
 
         String workflowExcludeWhere = "";
         //aslNameExcludeList will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !StringUtils.isArrayWithEmptyStrings( aslNameExcludeList ) )
         {
-            //workflowExcludeWhere = " and " + searchBean.getExcludeWhereClause( "asl.asl_name", aslNameExcludeList );
-            workflowExcludeWhere = " and " + getExcludeWhereClause( "asl.asl_name", aslNameExcludeList );
+            //workflowExcludeWhere = " AND " + searchBean.getExcludeWhereClause( "asl.asl_name", aslNameExcludeList );
+            workflowExcludeWhere = " AND " + getExcludeWhereClause( "asl.asl_name", aslNameExcludeList );
         }
 
         String contextExludeWhere = "";
         //CONTEXT_EXCLUDES will eventually be set as a preference or settings from client, currently set in the abstract class.
         if( !CONTEXT_EXCLUDES.equals( "" ) )
         {
-            contextExludeWhere = " and conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
+            contextExludeWhere = " AND conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
         }
 
         /*
@@ -102,7 +102,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         */
 
         //set filter on "version"
-        latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
+        latestWhere = " AND de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
 
         String programAreaWhere = "";
         String wkFlowWhere = "";
@@ -115,7 +115,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( !programArea.isEmpty() )
         {
-            programAreaWhere = " conte.pal_name = '" + programArea + "' and ";
+            programAreaWhere = " conte.pal_name = '" + programArea + "' AND ";
         }
 
         wkFlowWhere = this.buildStatusWhereClause( statusWhere );
@@ -126,14 +126,14 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( clientSearchField == PUBLIC_ID_FIELD )
         {
             String newCdeStr = StringReplace.strReplace( query, "*", "%" );
-            cdeIdWhere = " and " + buildSearchString( "to_char(de.cde_id) like 'SRCSTR'",
+            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'",
                     newCdeStr, clientSearchMode );
         }
 
         if( !valueDomain.equals( "" ) )
         {
-            vdWhere = " and vd.vd_idseq = '" + valueDomain + "'"
-                    + " and vd.vd_idseq = de.vd_idseq ";
+            vdWhere = " AND vd.vd_idseq = '" + valueDomain + "'"
+                    + " AND vd.vd_idseq = de.vd_idseq ";
             vdFrom = " ,sbr.value_domains_view vd ";
 
         }
@@ -158,7 +158,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         Will not be needed until "Search only Derived DEs" is implemented
         if( !cdeType.equals( "" ) )
         {
-            deDerivWhere = " and comp_de.P_DE_IDSEQ = de.de_idseq";
+            deDerivWhere = " AND comp_de.P_DE_IDSEQ = de.de_idseq";
             deDerivFrom = ", sbr.COMPLEX_DATA_ELEMENTS_VIEW comp_de ";
         }
         */
@@ -175,7 +175,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 
 
         whereClause = whereBuffer.toString();
-        String fromWhere = " from sbr.data_elements_view de , " +
+        String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
                 vdFrom +
@@ -183,12 +183,12 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 registrationFrom +
                 wkFlowFrom +
                 deDerivFrom +
-                " where " +
+                " WHERE " +
                 programAreaWhere +
-                " de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
+                " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text'" +
                 registrationExcludeWhere + workflowExcludeWhere + contextExludeWhere +
-                " and de.asl_name != 'RETIRED DELETED' " +
-                " and conte.conte_idseq = de.conte_idseq " +
+                " AND de.asl_name != 'RETIRED DELETED' " +
+                " AND conte.conte_idseq = de.conte_idseq " +
                 whereClause + registrationWhere + workFlowWhere + deDerivWhere;
 
         StringBuffer finalSqlStmt = new StringBuffer();
@@ -218,7 +218,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( statusList.length == 1 )
         {
             wkFlow = statusList[0];
-            wkFlowWhere = " and de.asl_name = '" + wkFlow + "'";
+            wkFlowWhere = " AND de.asl_name = '" + wkFlow + "'";
         }
         else
         {
@@ -233,7 +233,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     wkFlow = wkFlow + "," + "'" + statusList[i] + "'";
                 }
             }
-            wkFlowWhere = " and de.asl_name IN (" + wkFlow + ")";
+            wkFlowWhere = " AND de.asl_name IN (" + wkFlow + ")";
         }
 
         return wkFlowWhere;
@@ -252,7 +252,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( regStatusList.length == 1 )
         {
             regStatus = regStatusList[0];
-            regStatWhere = " and acr.registration_status = '" + regStatus + "'";
+            regStatWhere = " AND acr.registration_status = '" + regStatus + "'";
         }
         else
         {
@@ -267,7 +267,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                     regStatus = regStatus + "," + "'" + regStatusList[i] + "'";
                 }
             }
-            regStatWhere = " and acr.registration_status IN (" + regStatus + ")";
+            regStatWhere = " AND acr.registration_status IN (" + regStatus + ")";
 
         }
         logger.debug( "regStatWhere: " + regStatWhere );
@@ -293,14 +293,14 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( StringUtils.containsKey( searchDomain, "ALL" ) ||
                 StringUtils.containsKey( searchDomain, "Long Name" ) )
         {
-            longNameWhere = buildSearchString( "upper (de1.long_name) like upper ('SRCSTR') ", newSearchStr, searchMode );
+            longNameWhere = buildSearchString( "UPPER (de1.long_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
         if( StringUtils.containsKey( searchDomain, "ALL" ) ||
                 StringUtils.containsKey( searchDomain, "Short Name" ) )
         {
 
-            shortNameWhere = buildSearchString( "upper (de1.preferred_name) like upper ('SRCSTR') ", newSearchStr, searchMode );
+            shortNameWhere = buildSearchString( "UPPER (de1.preferred_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
         if( StringUtils.containsKey( searchDomain, "ALL" ) ||
@@ -309,7 +309,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         {
 
             docTextSearchWhere =
-                    buildSearchString( "upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode );
+                    buildSearchString( "UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
         // compose the search for data elements table
@@ -326,29 +326,29 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( searchWhere == null && docTextSearchWhere != null )
         {
-            searchWhere = " and " + docTextSearchWhere;
+            searchWhere = " AND " + docTextSearchWhere;
         }
         else if( docTextSearchWhere != null )
         {
             searchWhere = searchWhere + " OR " + docTextSearchWhere;
-            searchWhere = " and (" + searchWhere + ") ";
+            searchWhere = " AND (" + searchWhere + ") ";
         }
 
         if( StringUtils.containsKey( searchDomain, "ALL" ) ||
                 ( StringUtils.containsKey( searchDomain, "Doc Text" ) &&
                         StringUtils.containsKey( searchDomain, "Hist" ) ) )
         {
-            docWhere = "(select de_idseq "
-                    + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
-                    + " where  de1.de_idseq  = rd1.ac_idseq (+) "
-                    + " and    rd1.dctl_name (+) = 'Preferred Question Text' "
+            docWhere = "(SELECT de_idseq "
+                    + " FROM sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
+                    + " WHERE  de1.de_idseq  = rd1.ac_idseq (+) "
+                    + " AND    rd1.dctl_name (+) = 'Preferred Question Text' "
                     + searchWhere
-                    + " union "
-                    + " select de_idseq "
-                    + " from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
-                    + " where  de2.de_idseq  = rd2.ac_idseq (+) "
-                    + " and    rd2.dctl_name (+) = 'Alternate Question Text' "
-                    + " and    " + buildSearchString( "upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
+                    + " UNION "
+                    + " SELECT de_idseq "
+                    + " FROM sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
+                    + " WHERE  de2.de_idseq  = rd2.ac_idseq (+) "
+                    + " AND    rd2.dctl_name (+) = 'Alternate Question Text' "
+                    + " AND    " + buildSearchString( "UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode ) + ") ";
 
 
         }
@@ -365,17 +365,17 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         if( docTextSearchWhere == null && searchWhere != null )
         {
             //this is a search not involving reference documents
-            docWhere = "(select de_idseq "
-                    + " from sbr.data_elements_view de1 "
-                    + " where  " + searchWhere + " ) ";
+            docWhere = "(SELECT de_idseq "
+                    + " FROM sbr.data_elements_view de1 "
+                    + " WHERE  " + searchWhere + " ) ";
 
         }
         else if( docWhere == null && docTextTypeWhere != null )
         {
-            docWhere = "(select de_idseq "
-                    + " from sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
-                    + " where  de1.de_idseq  = rd1.ac_idseq (+) "
-                    + " and  " + docTextTypeWhere
+            docWhere = "(SELECT de_idseq "
+                    + " FROM sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
+                    + " WHERE  de1.de_idseq  = rd1.ac_idseq (+) "
+                    + " AND  " + docTextTypeWhere
                     + searchWhere + " ) ";
 
         }
@@ -385,27 +385,27 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
                 StringUtils.containsKey( searchDomain, "UML ALT Name" ) )
         {
             umlAltNameWhere =
-                    " (select de_idseq  from sbr.designations_view dsn, sbr.data_elements_view de1  "
-                            + "where  de1.de_idseq  = dsn.ac_idseq (+)  "
-                            + "and dsn.detl_name = 'UML Class:UML Attr'  and "
-                            + buildSearchString( "upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode )
+                    " (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "
+                            + "WHERE  de1.de_idseq  = dsn.ac_idseq (+)  "
+                            + "AND dsn.detl_name = 'UML Class:UML Attr'  AND "
+                            + buildSearchString( "UPPER (nvl(dsn.name,'%')) LIKE UPPER ('SRCSTR')", newSearchStr, searchMode )
                             + " )";
 
             if( docWhere == null )
             {
-                return " and de.de_idseq IN " + umlAltNameWhere;
+                return " AND de.de_idseq IN " + umlAltNameWhere;
             }
             else
             {
-                String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
-                        + " union " + docWhere + ") ";
+                String nameWhere = " AND de.de_idseq IN (" + umlAltNameWhere
+                        + " UNION " + docWhere + ") ";
                 return nameWhere;
             }
         }
         logger.debug( "  buildSearchTextWhere - docWhere: " + docWhere );
         logger.debug( "  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere );
 
-        return " and de.de_idseq IN " + docWhere;
+        return " AND de.de_idseq IN " + docWhere;
     }
 
     private String buildSearchString( String whereTemplate, String searchPhrase, String searchMode )
@@ -421,11 +421,11 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
         String oper = null;
         if( searchMode.equals( ProcessConstants.DE_SEARCH_MODE_ANY ) )
         {
-            oper = " or ";
+            oper = " OR ";
         }
         else
         {
-            oper = " and ";
+            oper = " AND ";
         }
 
         String[] words = searchPhrase.split( " " );
@@ -479,9 +479,9 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
     private String buildWordMatch( Matcher matcher, String word )
     {
         return "(" + matcher.replaceAll( "% " + word + " %" )
-                + " or " + matcher.replaceAll( word + " %" )
-                + " or " + matcher.replaceAll( word )
-                + " or " + matcher.replaceAll( "% " + word ) + ")";
+                + " OR " + matcher.replaceAll( word + " %" )
+                + " OR " + matcher.replaceAll( word )
+                + " OR " + matcher.replaceAll( "% " + word ) + ")";
     }
 
 

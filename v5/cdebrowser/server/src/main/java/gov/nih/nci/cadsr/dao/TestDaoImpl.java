@@ -1,12 +1,9 @@
 package gov.nih.nci.cadsr.dao;
 
-import gov.nih.nci.cadsr.dao.model.TestModel;
-import gov.nih.nci.cadsr.dao.model.UsageModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
@@ -41,15 +38,14 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
     }
 
 
-
-    public List<String> getRowsByTableCol(  final String tableName  ,final List<String> rowList )
+    public List<String> getRowsByTableCol( final String tableName, final List<String> rowList )
     {
-        String[] args={};
-        final String[] tabCol = tableName.split(",");
-        final List<String> rowVals = new ArrayList<>(  );
-        String sql = "select * from " +  tabCol[0] + " WHERE " +  tabCol[1] + " LIKE '%C43234%' OR "  +  tabCol[1] + " LIKE '%C17459%' OR " +
+        String[] args = {};
+        final String[] tabCol = tableName.split( "," );
+        final List<String> rowVals = new ArrayList<>();
+        String sql = "SELECT * FROM " + tabCol[0] + " WHERE " + tabCol[1] + " LIKE '%C43234%' OR " + tabCol[1] + " LIKE '%C17459%' OR " +
                 tabCol[1] + " LIKE '%C17998%' OR " + tabCol[1] + " LIKE '%C41222%' ";
-                ;
+        ;
         //String sql = "select " + tabCol[1] + " from " +  tabCol[0] + " WHERE " +  tabCol[1] +" LIKE '%C43234%'" ;
         logger.debug( sql + " <<<<<<<" );
 
@@ -63,14 +59,14 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
                         int i = rsmd.getColumnCount();
                         for( int f = 1; f <= i; f++ )
                         {
-                            strResults += "[" + tabCol[0] +"] [" +  rsmd.getColumnName(f) + "] [";
+                            strResults += "[" + tabCol[0] + "] [" + rsmd.getColumnName( f ) + "] [";
                             strResults += rs.getString( f ) + "] | ";
                             //logger.debug( "RS: " + rs.isLast() );
                             //logger.debug( "RS: " + rs.getString( 2 ) );
                             //rowVals.add( rs.getRow() );
                         }
                         //logger.debug( "RS: " + strResults );
-                         System.out.println( strResults );
+                        System.out.println( strResults );
                         /*
                         if( tableName.compareTo( "SBR.AC_CI_BU,AC_IDSEQ" ) == 0)
                         {
@@ -81,7 +77,7 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
                             System.out.println( strResults );
                         }
 */
-                        rowVals.add( strResults);
+                        rowVals.add( strResults );
                     }
                 }
         );
@@ -89,12 +85,12 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
     }
 
     @Override
-    public void getRoewsByTable( int rowCount, final String tableName ,final List<String> rowList )
+    public void getRoewsByTable( int rowCount, final String tableName, final List<String> rowList )
     {
-        String strRowCount = Integer.toString(rowCount + 1);
-        String[] args={};
-        final List<String> rowVals = new ArrayList<>(  );
-        String sql = "select * from " +  tableName + " WHERE ROWNUM < " + strRowCount;
+        String strRowCount = Integer.toString( rowCount + 1 );
+        String[] args = {};
+        final List<String> rowVals = new ArrayList<>();
+        String sql = "SELECT * FROM " + tableName + " WHERE ROWNUM < " + strRowCount;
         logger.debug( sql + " <<<<<<<" );
 
         jdbcTemplate.query( sql, args, new RowCallbackHandler()
@@ -109,7 +105,7 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
                         {
                             strResults += rsmd.getColumnName( f ) + "[";
                             strResults += rs.getString( f ) + "]";
-                            if( f != i)
+                            if( f != i )
                             {
                                 strResults += " | ";
 
@@ -125,7 +121,6 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
         );
 
     }
-
 
 
 }

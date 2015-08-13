@@ -16,24 +16,27 @@ import java.util.List;
 /**
  * DAO for SBREXT.AC_ATT_CSCSI_EXT
  */
-public class AcAttCsCsiDAOImpl extends AbstractDAOOperations implements AcAttCsCsiDAO {
+public class AcAttCsCsiDAOImpl extends AbstractDAOOperations implements AcAttCsCsiDAO
+{
 
-    private Logger logger = LogManager.getLogger(AcAttCsCsiDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( AcAttCsCsiDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
     private ContextDAO contextDAO;
 
     @Autowired
-    AcAttCsCsiDAOImpl(DataSource dataSource) {
-        setDataSource(dataSource);
+    AcAttCsCsiDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
     @Override
-    public List<AcAttCsCsiModel> getAllAcAttCsCsiByAttIdseq(String attIdseq) {
-        String sql = "SELECT att.*, cs_csi.csi_idseq FROM sbrext.ac_att_cscsi_ext att, SBR.CS_CSI cs_csi WHERE att_idseq = ? AND att.cs_csi_idseq = cs_csi.cs_csi_idseq";
+    public List<AcAttCsCsiModel> getAllAcAttCsCsiByAttIdseq( String attIdseq )
+    {
+        String sql = "SELECT att.*, cs_csi.csi_idseq FROM sbrext.ac_att_cscsi_ext att, sbr.cs_csi cs_csi WHERE att_idseq = ? AND att.cs_csi_idseq = cs_csi.cs_csi_idseq";
         //logger.debug(sql + " " + attIdseq);
-        List<AcAttCsCsiModel> acAttCsCsiModels = jdbcTemplate.query(sql, new Object[]{attIdseq}, new BeanPropertyRowMapper(AcAttCsCsiModel.class));
+        List<AcAttCsCsiModel> acAttCsCsiModels = jdbcTemplate.query( sql, new Object[]{ attIdseq }, new BeanPropertyRowMapper( AcAttCsCsiModel.class ) );
         return acAttCsCsiModels;
     }
 

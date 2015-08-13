@@ -41,15 +41,15 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
     {
         String sql;
         //sql = "select * from SBR.CSCSI_VIEW WHERE CS_IDSEQ=? order by lower(CSI_DESCRIPTION)";
-        sql = "select CS_IDSEQ, CS_PREFFERED_NAME, CS_LONG_NAME, CSTL_NAME, "
-                + "CS_PREFFRED_DEFINITION, "
-                + "CSI_IDSEQ, CSI_NAME, CSITL_NAME, CSI_DESCRIPTION, "
-                + "CS_CSI_IDSEQ, CSI_LEVEL, PARENT_CSI_IDSEQ, CS_CONTE_IDSEQ "
-                + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-                + " where CS_ASL_NAME = 'RELEASED' "
-                + " and CSTL_NAME != 'Publishing' "
-                + " and PARENT_CSI_IDSEQ = ?"
-                + " order by CSI_LEVEL, upper(csi_name)";
+        sql = "SELECT cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
+                + "cs_preffred_definition, "
+                + "csi_idseq, csi_name, csitl_name, csi_description, "
+                + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
+                + " FROM sbrext.br_cs_csi_hier_view_ext "
+                + " WHERE cs_asl_name = 'RELEASED' "
+                + " AND cstl_name != 'Publishing' "
+                + " AND parent_csi_idseq = ?"
+                + " ORDER BY csi_level, UPPER(csi_name)";
         //logger.debug( "("+ parentCsCsi +")  " + sql );
 
         return getAll( sql, parentCsCsi, CsCsiModel.class );
@@ -62,15 +62,15 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
         String sql;
 
         //sql = "select * from SBR.CSCSI_VIEW WHERE CS_IDSEQ=? order by lower(CSI_DESCRIPTION)";
-        sql = "select CS_IDSEQ, CS_PREFFERED_NAME, CS_LONG_NAME, CSTL_NAME, "
-                + "CS_PREFFRED_DEFINITION, "
-                + "CSI_IDSEQ, CSI_NAME, CSITL_NAME, CSI_DESCRIPTION, "
-                + "CS_CSI_IDSEQ, CSI_LEVEL, PARENT_CSI_IDSEQ, CS_CONTE_IDSEQ "
-                + " FROM SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-                + " where CS_ASL_NAME = 'RELEASED' "
-                + " and CSTL_NAME != 'Publishing' "
-                + " and CS_IDSEQ = ?"
-                + " order by CSI_LEVEL, upper(CSI_NAME)";
+        sql = "SELECT cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
+                + "cs_preffred_definition, "
+                + "csi_idseq, csi_name, csitl_name, csi_description, "
+                + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
+                + " FROM sbrext.br_cs_csi_hier_view_ext "
+                + " WHERE cs_asl_name = 'RELEASED' "
+                + " AND cstl_name != 'Publishing' "
+                + " AND cs_idseq = ?"
+                + " ORDER BY csi_level, UPPER(csi_name)";
         //logger.debug( "getCsCsisById" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", csId ) );
         result = getAll( sql, csId, CsCsiModel.class );
@@ -83,21 +83,20 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
     public List<CsCsiModel> getCsCsisByConteId( String conteId )
     {
         List<CsCsiModel> result;
-        String sql;
+        String sql = "SELECT cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
+                + "cs_preffred_definition, "
+                + "csi_idseq, csi_name, csitl_name, csi_description, "
+                + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
+                + " FROM sbrext.br_cs_csi_hier_view_ext "
+                + " WHERE cs_asl_name = 'RELEASED' "
+                + " AND cstl_name != 'Publishing' "
+                + " AND cs_conte_idseq = ?"
+                + " ORDER By csi_level, UPPER(csi_name)";
 
-        //sql = "select * from SBR.CSCSI_VIEW WHERE CS_IDSEQ=? order by lower(CSI_DESCRIPTION)";
-        sql = "select CS_IDSEQ, CS_PREFFERED_NAME, CS_LONG_NAME, CSTL_NAME, "
-                + "CS_PREFFRED_DEFINITION, "
-                + "CSI_IDSEQ, CSI_NAME, CSITL_NAME, CSI_DESCRIPTION, "
-                + "CS_CSI_IDSEQ, CSI_LEVEL, PARENT_CSI_IDSEQ, CS_CONTE_IDSEQ "
-                + " FROM SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-                + " where CS_ASL_NAME = 'RELEASED' "
-                + " and CSTL_NAME != 'Publishing' "
-                + " and CS_CONTE_IDSEQ = ?"
-                + " order by CSI_LEVEL, upper(CSI_NAME)";
+
         //logger.debug( "getCsCsisById" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", csId ) );
-        result = getAll(sql, conteId, CsCsiModel.class);
+        result = getAll( sql, conteId, CsCsiModel.class );
         //logger.debug( sql.replace( "?", csId ) + " <<<<<<<" );
         //logger.debug( "Done getCsCsisById\n" );
 
@@ -111,14 +110,14 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
         String sql;
 
         //sql = "select * from SBR.CSCSI_VIEW WHERE CS_IDSEQ=? order by lower(CSI_DESCRIPTION)";
-        sql = "select CS_IDSEQ, CS_PREFFERED_NAME, CS_LONG_NAME, CSTL_NAME, "
-                + "CS_PREFFRED_DEFINITION, "
-                + "CSI_IDSEQ, CSI_NAME, CSITL_NAME, CSI_DESCRIPTION, "
-                + "CS_CSI_IDSEQ, CSI_LEVEL, PARENT_CSI_IDSEQ, CS_CONTE_IDSEQ "
-                + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-                + " where CS_ASL_NAME = 'RELEASED' "
-                + " and CSTL_NAME != 'Publishing' "
-                + " order by CSI_LEVEL, upper(csi_name)";
+        sql = "SELECT cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
+                + "cs_preffred_definition, "
+                + "csi_idseq, csi_name, csitl_name, csi_description, "
+                + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
+                + " FROM sbrext.br_cs_csi_hier_view_ext "
+                + " WHERE cs_asl_name = 'released' "
+                + " AND cstl_name != 'Publishing' "
+                + " ORDER BY csi_level, UPPER(csi_name)";
         logger.debug( "getAllCsCsis" );
         //logger.debug( ">>>>>>> " + sql);
         result = getAll( sql, CsCsiModel.class );
@@ -129,7 +128,8 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
     }
 
     @Override
-    public List<CsCsiModel> getCsCsisByAcIdseq(String acIdseq) {
+    public List<CsCsiModel> getCsCsisByAcIdseq( String acIdseq )
+    {
         String sql = "SELECT cs.long_name cs_long_name, cs.preferred_definition cs_preffred_definition, " +
                 "cs.cs_id, cs.version cs_version, csi.csi_name, csi.csitl_name, csi.csi_id, csi.version csi_version " +
                 "FROM sbr.ac_csi, sbr.cs_csi, sbr.classification_schemes cs, sbr.cs_items csi " +
@@ -137,18 +137,20 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 "AND ac_csi.cs_csi_idseq = cs_csi.cs_csi_idseq " +
                 "AND cs_csi.cs_idseq = cs.cs_idseq " +
                 "AND cs_csi.csi_idseq = csi.csi_idseq";
-        List<CsCsiModel> csCsiModels = jdbcTemplate.query(sql, new Object[]{acIdseq}, new BeanPropertyRowMapper(CsCsiModel.class));
+        List<CsCsiModel> csCsiModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new BeanPropertyRowMapper( CsCsiModel.class ) );
         return csCsiModels;
     }
 
     /**
      * This method takes the Data Element's idseq to find the CS and CSI data associated
      * with the DE's Definitions and Designations (alt names)
+     *
      * @param deIdseq
      * @return
      */
     @Override
-    public List<CsCsiModel> getAltNamesAndDefsByDataElement(String deIdseq) {
+    public List<CsCsiModel> getAltNamesAndDefsByDataElement( String deIdseq )
+    {
         List<CsCsiModel> csCsiModels;
 
         String definitionCsCsiSql = "SELECT cs_csi.cs_idseq, cs_csi.cs_preffered_name AS cs_pref_name, cs_csi.cs_long_name, cs_csi.cstl_name, " +
@@ -159,7 +161,7 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 "AND att.att_idseq = def.defin_idseq " +
                 "AND cs_csi.cs_csi_idseq = att.cs_csi_idseq";
         //csCsiModels = jdbcTemplate.queryForList(definitionCsCsiSql, CsCsiModel.class, deIdseq);
-        csCsiModels = jdbcTemplate.query(definitionCsCsiSql, new Object[]{deIdseq}, new BeanPropertyRowMapper(CsCsiModel.class));
+        csCsiModels = jdbcTemplate.query( definitionCsCsiSql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( CsCsiModel.class ) );
 
 
         String designationCsCsiSql = "SELECT cs_csi.cs_idseq, cs_csi.cs_preffered_name AS cs_pref_name, cs_csi.cs_long_name, cs_csi.cstl_name, " +
@@ -170,7 +172,7 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 "AND att.att_idseq = desig.desig_idseq" +
                 "AND cs_csi.cs_csi_idseq = att.cs_csi_idseq";
 //        csCsiModels.addAll(jdbcTemplate.queryForList(definitionCsCsiSql, CsCsiModel.class, deIdseq));
-        csCsiModels.addAll(jdbcTemplate.query(definitionCsCsiSql, new Object[]{deIdseq}, new BeanPropertyRowMapper(CsCsiModel.class)));
+        csCsiModels.addAll( jdbcTemplate.query( definitionCsCsiSql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( CsCsiModel.class ) ) );
 
         return csCsiModels;
     }

@@ -55,14 +55,14 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
 
     @Override
     public DefinitionModel getDefinitionByDefinIdseq(String definIdseq) {
-        String sql = "SELECT * FROM SBR.DEFINITIONS WHERE defin_idseq = ?";
+        String sql = "SELECT * FROM sbr.definitions WHERE defin_idseq = ?";
         DefinitionModel definitionModel = jdbcTemplate.queryForObject(sql, new Object[]{ definIdseq }, new DefinitionMapper(DefinitionModel.class));
         return definitionModel;
     }
 
     @Override
     public List<DefinitionModel> getAllDefinitionsByAcIdseq(String acIdseq) {
-        String sql = "SELECT * FROM SBR.DEFINITIONS WHERE ac_idseq = ?";
+        String sql = "SELECT * FROM sbr.definitions WHERE ac_idseq = ?";
         List<DefinitionModel> definitionModels = jdbcTemplate.query(sql, new Object[]{acIdseq}, new DefinitionMapper(DefinitionModel.class));
         return definitionModels;
     }

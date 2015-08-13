@@ -203,13 +203,13 @@ public class DBUtil
 		try {
       dataToReturn = new Vector();
       stmt = conn.createStatement();
-  	  stmt_str = "select ";
+  	  stmt_str = "SELECT ";
   		for (int i = 0;i < tableFields.length; i++){
 		  	if (i < tableFields.length - 1){
 				  stmt_str += tableFields[i] + ", ";
   			}
 	  		else{
-			  	stmt_str += (String) tableFields[i] + " from " + tableName + " " + whereClause;
+			  	stmt_str += (String) tableFields[i] + " FROM " + tableName + " " + whereClause;
   			}
 	  	}
 
@@ -304,12 +304,12 @@ public class DBUtil
 		try {
       dataToReturn = new Vector();
       stmt = conn.createStatement();
-			stmt_str = "select ";
+			stmt_str = "SELECT ";
 			for (int i = 0;i < tableFields.length; i++) {
 				if (i < tableFields.length - 1) {
 					stmt_str += tableFields[i] + ", ";
 				} else {
-					stmt_str += (String) tableFields[i] + " from " + tableName + " " + whereClause;
+					stmt_str += (String) tableFields[i] + " FROM " + tableName + " " + whereClause;
 				}
 			}
 

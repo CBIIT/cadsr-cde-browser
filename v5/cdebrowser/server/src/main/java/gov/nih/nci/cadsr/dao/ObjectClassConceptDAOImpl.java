@@ -33,17 +33,17 @@ public class ObjectClassConceptDAOImpl extends AbstractDAOOperations implements 
     public List<ConceptModel> getObjectClassConceptByDecIdseq( String decIdseq )
     {
 
-        String sql = "SELECT OC_IDSEQ from sbr.DATA_ELEMENT_CONCEPTS where DEC_IDSEQ = ?";
+        String sql = "SELECT oc_idseq FROM sbr.data_element_concepts WHERE dec_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", decIdseq ) );
         ObjectClassConceptModel objectClassConceptModel = query( sql, decIdseq, ObjectClassConceptModel.class );
         logger.debug( ">>>>>>> ocIdseq: " + objectClassConceptModel.getOcIdseq() );
 
-        sql = "SELECT CONDR_IDSEQ from OBJECT_CLASSES_EXT where OC_IDSEQ = ?";
+        sql = "SELECT condr_idseq FROM object_classes_ext WHERE oc_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", objectClassConceptModel.getOcIdseq() ) );
         objectClassConceptModel = query( sql, objectClassConceptModel.getOcIdseq(), ObjectClassConceptModel.class );
         logger.debug( ">>>>>>> condrIdseq: " + objectClassConceptModel .getCondrIdseq());
 
-        sql = "SELECT name from CON_DERIVATION_RULES_EXT where CONDR_IDSEQ = ?";
+        sql = "SELECT name FROM con_derivation_rules_ext WHERE condr_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", objectClassConceptModel.getCondrIdseq() ) );
         objectClassConceptModel = query( sql, objectClassConceptModel.getCondrIdseq(), ObjectClassConceptModel.class );
         logger.debug( ">>>>>>> Codes: " + objectClassConceptModel.getName());

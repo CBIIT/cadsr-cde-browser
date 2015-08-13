@@ -28,7 +28,7 @@ public class VdPvsDAOImpl extends AbstractDAOOperations implements VdPvsDAO
     @Override
     public List<VdPvsModel> getVdPvs( String vdIdseq )
     {
-        String sql = " select distinct * from SBR.VD_PVS where VD_IDSEQ = ?";
+        String sql = " SELECT DISTINCT * FROM sbr.vd_pvs WHERE vd_idseq = ?";
         return getAll( sql, vdIdseq, VdPvsModel.class );
     }
 }

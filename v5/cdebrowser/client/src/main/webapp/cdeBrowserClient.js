@@ -358,7 +358,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             console.log("GOOD: " + response);
             $scope.versionPopover = response;
             $scope.versionPopover.templateUrl = 'versionPopoverTemplate.html';
-            $scope.versionPopover.title = 'CDE Browser';
+            $scope.versionPopover.title2 = 'CDE Browser';
+            $scope.versionPopover.shortBuildVersionORIG = response.scm_date;
+            $scope.versionPopover.shortBuildVersion = response.scm_date.replace(/ .*/,"");
         });
     }
 

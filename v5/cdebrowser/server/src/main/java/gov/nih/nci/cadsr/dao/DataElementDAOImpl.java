@@ -60,7 +60,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     @Override
     public DataElementModel getCdeByDeIdseq( String deIdseq ) throws EmptyResultDataAccessException
     {
-        String sql = "SELECT * FROM DATA_ELEMENTS WHERE de_idseq = ?";
+        String sql = "SELECT * FROM data_elements WHERE de_idseq = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject( sql, new Object[]{ deIdseq }, new DataElementMapper( DataElementModel.class ) );
         //logger.debug( "dataElementModel: " + dataElementModel.toString() );
         logger.debug( sql.replace( "?", deIdseq ) + " <<<<<<<" );
@@ -71,7 +71,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     @Override
     public List<DataElementModel> getAllCdeByCdeId( Integer cdeId )
     {
-        String sql = "SELECT * FROM DATA_ELEMENTS WHERE cde_id = ?";
+        String sql = "SELECT * FROM data_elements WHERE cde_id = ?";
         List<DataElementModel> dataElementModel = jdbcTemplate.query( sql, new Object[]{ cdeId }, new DataElementMapper( DataElementModel.class ) );
         return dataElementModel;
     }
@@ -79,7 +79,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     @Override
     public DataElementModel geCdeByCdeIdAndVersion( Integer cdeId, Integer version )
     {
-        String sql = "SELECT * FROM DATA_ELEMENTS WHERE cde_id = ? and version = ?";
+        String sql = "SELECT * FROM data_elements WHERE cde_id = ? AND version = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject( sql, new Object[]{ cdeId, version }, new DataElementMapper( DataElementModel.class ) );
         return dataElementModel;
     }
@@ -241,7 +241,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             {
                 dataElementModel.setDesignationModels( getDesignationDAO().getDesignationModelsByAcIdseq( deIdseq ) );
                 dataElementModel.fillCsCsiDesignations();
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No Designation Models found for Data Element with idseq: " + deIdseq );
             }
@@ -249,7 +250,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             {
                 dataElementModel.setDefinitionModels( getDefinitionDAO().getAllDefinitionsByAcIdseq( deIdseq ) );
                 dataElementModel.fillCsCsiDefinitions();
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No Definition Models found for Data Element with idseq: " + deIdseq );
             }
@@ -259,7 +261,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 dataElementModel.setValueDomainModel( getValueDomainDAO().getValueDomainByIdseq( rs.getString( "VD_IDSEQ" ) ) );
                 logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel().toString() );
 
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No Value Domain found for Data Element with idseq: " + deIdseq + "  the vdIdseq is " + rs.getString( "VD_IDSEQ" ) );
             }
@@ -267,7 +270,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             try
             {
                 dataElementModel.setDec( getDataElementConceptDAO().getDecByDecIdseq( rs.getString( "DEC_IDSEQ" ) ) );
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No DataElementConcept found for Data Element with idseq: " + deIdseq + "  the DEC_IDSEQ is " + rs.getString( "DEC_IDSEQ" ) );
             }
@@ -291,7 +295,8 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 {
                     dataElementModel.setRegistrationStatus( acRegistrationsModel.getRegistrationStatus() );
                 }
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No AcRegistrationsModel found for Data Element with idseq: " + deIdseq );
             }
@@ -302,12 +307,14 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 if( csCsiModels != null && csCsiModels.size() > 0 )
                 {
                     dataElementModel.fillCsCsiData( csCsiModels );
-                } else
+                }
+                else
                 {
                     // none found. Call fillCsCsiData() to initalize the "Unclassified" record
                     dataElementModel.fillCsCsiData( new ArrayList<CsCsiModel>( 0 ) );
                 }
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No CsCsiModels found for Data Element with idseq: " + deIdseq );
                 // none found. Call fillCsCsiData() to initalize the "Unclassified" record
@@ -316,35 +323,40 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             try
             {
                 dataElementModel.setUsageModels( getUsageDAO().getUsagesByDeIdseq( deIdseq ) );
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No UsageModels found for Data Element with idseq: " + deIdseq );
             }
             try
             {
                 dataElementModel.setDeOtherVersionsModels( getDeOtherVersionsDAO().getOtherVersions( dataElementModel.getCdeId(), deIdseq ) );
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No Other Versions found for Data Element with idseq: " + deIdseq );
             }
             try
             {
                 dataElementModel.setClassifications( getCsCsiDAO().getCsCsisByAcIdseq( deIdseq ) );
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No Other Versions found for Data Element with idseq: " + deIdseq );
             }
             try
             {
                 dataElementModel.setCsRefDocModels( getCsRefDocDAO().getCSRefDocsByDEIdseq( deIdseq ) );
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.info( "No Classif scheme found for Reference Docs for Data Element with idseq: " + deIdseq );
             }
             try
             {
                 dataElementModel.setCsiRefDocModels( getCsiRefDocDAO().getCSIRefDocsByDEIdseq( deIdseq ) );
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No Classif scheme items found for Reference Docs for Data Element with idseq: " + deIdseq );
             }

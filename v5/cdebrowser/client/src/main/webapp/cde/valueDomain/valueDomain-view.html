@@ -107,10 +107,10 @@
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Value Domain Type:</td>
-        <td class="dataElementValue" ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType=='E'">
+        <td class="dataElementValue" data-ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType=='E'">
             Enumerated
         </td>
-        <td class="dataElementValue" ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType!='E'">Non
+        <td class="dataElementValue" data-ng-show="cdeDetails.valueDomain.valueDomainDetails.valueDomainType!='E'">Non
             Enumerated
         </td>
     </tr>
@@ -152,7 +152,7 @@
         <td class="dataElementHeading">Primary</td>
     </tr>
 
-    <tr class="dataElementViewTableTr" ng-repeat="vdConcept in cdeDetails.valueDomain.valueDomainConcepts">
+    <tr class="dataElementViewTableTr" data-ng-repeat="vdConcept in cdeDetails.valueDomain.valueDomainConcepts">
         <td class="dataElementValue">{{vdConcept.conceptName}}</td>
         <td class="dataElementValue">
             <a class="link" TARGET="_blank"
@@ -217,7 +217,7 @@
         <td class="dataElementHeading">Primary</td>
     </tr>
 
-    <tr class="dataElementViewTableTr" ng-repeat="representation in cdeDetails.valueDomain.representationConcepts">
+    <tr class="dataElementViewTableTr" data-ng-repeat="representation in cdeDetails.valueDomain.representationConcepts">
         <td class="dataElementValue">{{representation.conceptName}}</td>
         <td class="dataElementValue">
             <a class="link" TARGET="_blank"
@@ -249,7 +249,7 @@
             <td class="dataElementHeading">VM Public ID</td>
             <td class="dataElementHeading">VM Version</td>
         </tr>
-        <tr class="dataElementViewTableTr" ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
+        <tr class="dataElementViewTableTr" data-ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
             <td width="24px" class="dataElementValue">{{p_value.value}}</td>
 
 
@@ -291,14 +291,14 @@
     </tr>
 
 
-    <tr class="dataElementViewTableTr" ng-repeat="doc in cdeDetails.valueDomain.valueDomainReferenceDocuments">
+    <tr class="dataElementViewTableTr" data-ng-repeat="doc in cdeDetails.valueDomain.valueDomainReferenceDocuments">
         <td class="dataElementValue">{{doc.docName}}</td>
         <td class="dataElementValue">{{doc.docType}}</td>
         <td class="dataElementValue">{{doc.docText}}</td>
         <td class="dataElementValue">{{doc.context.name}}</td>
         <td class="dataElementValue"><a href={{doc.url}} target="_blank">{{doc.url}}</a></td>
     </tr>
-    <tr class="dataElementViewTableTr" ng-hide="cdeDetails.valueDomain.valueDomainReferenceDocuments.length">
+    <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.valueDomain.valueDomainReferenceDocuments.length">
         <td colspan="5">There are no reference documents for the value domain</td>
     </tr>
 </table><br>

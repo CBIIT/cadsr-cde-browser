@@ -33,7 +33,7 @@ public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectC
 
     @Override
     public ObjectClassModel getObjectClassByIdseq(String ocIdseq) {
-        String sql = "SELECT * FROM SBREXT.OBJECT_CLASSES_EXT WHERE OC_IDSEQ = ?";
+        String sql = "SELECT * FROM sbrext.object_classes_ext WHERE oc_idseq = ?";
         ObjectClassModel objectClassModel = jdbcTemplate.queryForObject(sql, new Object[] { ocIdseq }, new ObjectClassMapper(ObjectClassModel.class));
         return objectClassModel;
     }

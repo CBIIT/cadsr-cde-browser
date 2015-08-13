@@ -5,9 +5,9 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<!--
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
--->
+    <!--
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    -->
     <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
@@ -40,7 +40,10 @@
 
 <!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
 <div class="top2-left-logo">
+    <!-- JIRA says change link url
     <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
+    -->
+    <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models" target="_blank">
         <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2.png">
     </a>
 </div>
@@ -304,7 +307,6 @@
                 -->
 
 
-
                 <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
                         data-ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-class="{
@@ -319,31 +321,32 @@
         </div>
 
         <!-- =============================================================================== -->
-        <!-- The search results tab with Search results table - this is the only tab that is not an ng-view ========== -->
+        <!-- The search results tab with Search results table - this is the only tab that is not an data-ng-view ========== -->
         <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
             <div class="sortOrder">
-                <div class="sortOrder left" ng-repeat="(key,val) in tableParams.sorting()">Sort Order:
+                <div class="sortOrder left" data-ng-repeat="(key,val) in tableParams.sorting()">Sort Order:
                     {{sortNames[key]}}
                     [{{val}}]
                 </div>
 
                 <div class="sortOrder right">
-                    <a href="#" ng-click="resetSortOrder()">Reset Sort Order</a>
+                    <a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a>
                 </div>
             </div>
             <br/>
 
-            <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
+            <div data-ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
 
             <br/>
             <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-                <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
+                <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
+                       value=""/>
             </script>
 
-            <table ng-table="tableParams" class="searchResultsTable">
-                <tr class="searchResultsTableTr" ng-repeat="result in $data">
+            <table data-ng-table="tableParams" class="searchResultsTable">
+                <tr class="searchResultsTableTr" data-ng-repeat="result in $data">
                     <td header="'ng-table/headers/checkbox.html'">
-                        <input type="checkbox" ng-model="checkboxes.items[result.publicId]">
+                        <input type="checkbox" data-ng-model="checkboxes.items[result.publicId]">
                     </td>
 
                     <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
@@ -387,30 +390,33 @@
                         <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
                     </td>
                     <td>
-                        <a ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version {{versionPopover.version}}</a>
-<!--
-                        <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
--->
+
+                        <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version
+                            {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
+                        </a>
+                        <!--
+                               <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
+                        -->
                     </td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
                     </td>
                 </tr>
             </table>
-<!--
+            <!--
 
-            <script type="text/ng-template" id="versionPopoverTemplate.html">
-                <div class="versionPopover">
-                    <label>Version:</label>
-                    <input type="text" ng-model="versionPopover.version" class="form-control">
-                    <label>SCM Tag:</label>
-                    <input type="text" ng-model="versionPopover.tag" class="form-control">
-                    <label>SCM Date:</label>
-                    <input type="text" ng-model="versionPopover.scm_date" class="form-control">
-                    <label>System Tier:</label>
-                    <input type="text" ng-model="versionPopover.tier" class="form-control">
-                </div>
-            </script>
--->
+                        <script type="text/ng-template" id="versionPopoverTemplate.html">
+                            <div class="versionPopover">
+                                <label>Version:</label>
+                                <input type="text" data-ng-model="versionPopover.version" class="form-control">
+                                <label>SCM Tag:</label>
+                                <input type="text" data-ng-model="versionPopover.tag" class="form-control">
+                                <label>SCM Date:</label>
+                                <input type="text" data-ng-model="versionPopover.scm_date" class="form-control">
+                                <label>System Tier:</label>
+                                <input type="text" data-ng-model="versionPopover.tier" class="form-control">
+                            </div>
+                        </script>
+            -->
         </div>
 
     </div>

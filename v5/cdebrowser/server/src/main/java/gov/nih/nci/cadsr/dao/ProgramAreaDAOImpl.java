@@ -17,8 +17,9 @@ public class ProgramAreaDAOImpl extends AbstractDAOOperations implements Program
 
 
     @Autowired
-    ProgramAreaDAOImpl( DataSource dataSource ) {
-        setDataSource(dataSource);
+    ProgramAreaDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
@@ -27,8 +28,8 @@ public class ProgramAreaDAOImpl extends AbstractDAOOperations implements Program
     public List<ProgramAreaModel> getAllProgramAreas()
     {
         List<ProgramAreaModel> result;
-        String sql = " select * from PROGRAM_AREAS_LOV_VIEW";
-        result = getAll( sql , ProgramAreaModel.class );
+        String sql = " SELECT * FROM program_areas_lov_view";
+        result = getAll( sql, ProgramAreaModel.class );
         //logger.debug( "Done getAllProgramAreas" );
         return result;
     }

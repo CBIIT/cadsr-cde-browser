@@ -1,11 +1,8 @@
 package gov.nih.nci.cadsr.dao.model;
 
 import java.sql.Timestamp;
-
-/**
- * Created by lavezzojl on 5/8/15.
- */
-public class AcAttCsCsiModel extends BaseModel {
+public class AcAttCsCsiModel extends BaseModel
+{
     private String acaIdseq;
     private String csCsiIdseq;
     private String attIdseq;

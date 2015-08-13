@@ -34,11 +34,11 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
     @Override
     public List<ProtocolFormModel> getProtocolForms( String csidSeq )
     {
-        String sql = " select distinct * from FB_FORMS_VIEW formview, sbr.cs_csi_view csc,sbr.ac_csi_view acs "
-                + " where  csc.cs_idseq = ?"
-                + " and csc.cs_csi_idseq = acs.cs_csi_idseq "
-                + " and acs.AC_IDSEQ=formview.QC_IDSEQ "
-                + " order by upper(protocol_long_name), upper(context_name)";
+        String sql = " select distinct * from FB_FORMS_VIEW FORMVIEW, SBR.CS_CSI_VIEW CSC,SBR.AC_CSI_VIEW ACS "
+                + " WHERE  csc.cs_idseq = ?"
+                + " AND csc.cs_csi_idseq = acs.cs_csi_idseq "
+                + " AND acs.AC_IDSEQ=formview.QC_IDSEQ "
+                + " ORDER BY UPPER(protocol_long_name), UPPER(context_name)";
 
         return getAll( sql, csidSeq, ProtocolFormModel.class );
     }
@@ -47,8 +47,8 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
     public List<ProtocolFormModel> getProtocolFormByContextId( String ContextId )
     {
         List<ProtocolFormModel> result;
-        String sql = " select distinct * from SBREXT.FB_FORMS_VIEW"
-                + " where  CONTE_IDSEQ = ? AND LATEST_VERSION_IND = 'Yes' ORDER BY  upper(LONG_NAME)";
+        String sql = " SELECT DISTINCT * FROM sbrext.fb_forms_view"
+                + " WHERE  conte_idseq = ? AND latest_version_ind = 'Yes' ORDER BY  UPPER(long_name)";
         logger.debug( "getProtocolFormByContextId" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", ContextId ) );
         result = getAll( sql, ContextId, ProtocolFormModel.class );

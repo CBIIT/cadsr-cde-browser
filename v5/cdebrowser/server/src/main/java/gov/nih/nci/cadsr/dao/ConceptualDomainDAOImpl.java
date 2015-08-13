@@ -13,9 +13,6 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by lavezzojl on 4/22/15.
- */
 public class ConceptualDomainDAOImpl extends AbstractDAOOperations implements ConceptualDomainDAO
 {
     private Logger logger = LogManager.getLogger( DataElementConceptDAOImpl.class.getName() );
@@ -32,7 +29,7 @@ public class ConceptualDomainDAOImpl extends AbstractDAOOperations implements Co
     @Override
     public ConceptualDomainModel getConceptualDomainByIdseq( String cdIdseq )
     {
-        String sql = "SELECT * FROM SBR.CONCEPTUAL_DOMAINS WHERE CD_IDSEQ = ?";
+        String sql = "SELECT * FROM sbr.conceptual_domains WHERE cd_idseq = ?";
         ConceptualDomainModel conceptualDomainModel = query( sql, cdIdseq, ConceptualDomainModel.class );
         // Use the conte_idseq to get the context
         conceptualDomainModel.setContextModel( getContextDAO().getContextByIdseq( conceptualDomainModel.getConteIdseq() ) );

@@ -11,9 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lernermh on 7/14/15.
- */
 public class ValueDomainConceptDAOImpl extends AbstractDAOOperations implements ValueDomainConceptDAO
 {
 
@@ -29,12 +26,10 @@ public class ValueDomainConceptDAOImpl extends AbstractDAOOperations implements 
         jdbcTemplate = getJdbcTemplate();
     }
 
-
     @Override
     public List<ConceptModel> getValueDomainConceptByVdIdseq( String vdIdseq )
     {
-        //SELECT CON_DERIVATION_RULES_EXT.* FROM SBR.VALUE_DOMAINS,CON_DERIVATION_RULES_EXT  WHERE SBR.VALUE_DOMAINS.VD_ID = '4768431' AND CON_DERIVATION_RULES_EXT.condr_idseq = SBR.VALUE_DOMAINS.CONDR_IDSEQ;
-        String sql = "SELECT CON_DERIVATION_RULES_EXT.* FROM SBR.VALUE_DOMAINS,CON_DERIVATION_RULES_EXT WHERE vd_idseq = ? AND CON_DERIVATION_RULES_EXT.condr_idseq = SBR.VALUE_DOMAINS.CONDR_IDSEQ";
+        String sql = "SELECT con_derivation_rules_ext.* FROM sbr.value_domains,con_derivation_rules_ext WHERE vd_idseq = ? AND con_derivation_rules_ext.condr_idseq = sbr.value_domains.condr_idseq";
         logger.debug( ">>>>>>> " + sql.replace( "?", vdIdseq ) );
         ConceptDerivationRuleModel conceptDerivationRuleModel = query( sql, vdIdseq, ConceptDerivationRuleModel.class );
 
@@ -42,11 +37,10 @@ public class ValueDomainConceptDAOImpl extends AbstractDAOOperations implements 
         {
             return null; // no results
         }
-        logger.debug("conceptDerivationRuleModel.getName: " + conceptDerivationRuleModel.getName());
+        logger.debug( "conceptDerivationRuleModel.getName: " + conceptDerivationRuleModel.getName() );
 
         String conceptCodeStr = conceptDerivationRuleModel.getName();
         return conceptDAO.getConceptByConceptCode( conceptCodeStr );
-
     }
 
     public ConceptDAOImpl getConceptDAO()

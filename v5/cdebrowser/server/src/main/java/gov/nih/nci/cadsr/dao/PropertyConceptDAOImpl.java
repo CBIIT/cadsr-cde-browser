@@ -34,17 +34,17 @@ public class PropertyConceptDAOImpl extends AbstractDAOOperations implements Pro
     public List<ConceptModel> getPropertyConceptByDecIdseq( String decIdseq )
     {
 
-        String sql = "SELECT PROP_IDSEQ from SBR.DATA_ELEMENT_CONCEPTS where DEC_IDSEQ = ?";
+        String sql = "SELECT prop_idseq FROM sbr.data_element_concepts WHERE dec_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", decIdseq ) );
         PropertyConceptModel propertyConceptModel = query( sql, decIdseq, PropertyConceptModel.class );
         logger.debug( ">>>>>>> propIdseq: " + propertyConceptModel.getPropIdseq() );
 
-        sql = "SELECT CONDR_IDSEQ from PROPERTIES_EXT where PROP_IDSEQ = ?";
+        sql = "SELECT condr_idseq FROM properties_ext WHERE prop_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", propertyConceptModel.getPropIdseq() ) );
         propertyConceptModel = query( sql, propertyConceptModel.getPropIdseq(), PropertyConceptModel.class );
         logger.debug( ">>>>>>> condrIdseq: " + propertyConceptModel.getCondrIdseq());
 
-        sql = "SELECT name from CON_DERIVATION_RULES_EXT where CONDR_IDSEQ = ?";
+        sql = "SELECT name FROM con_derivation_rules_ext WHERE condr_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", propertyConceptModel.getCondrIdseq() ) );
         propertyConceptModel = query( sql, propertyConceptModel.getCondrIdseq(), PropertyConceptModel.class );
         logger.debug( ">>>>>>> Codes: " + propertyConceptModel.getName());

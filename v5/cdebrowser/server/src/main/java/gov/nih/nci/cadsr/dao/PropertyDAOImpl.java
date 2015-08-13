@@ -32,7 +32,7 @@ public class PropertyDAOImpl extends AbstractDAOOperations implements PropertyDA
     }
 
     public PropertyModel getPropertyByIdseq(String propIdseq) {
-        String sql = "SELECT * FROM SBREXT.PROPERTIES_EXT WHERE PROP_IDSEQ = ?";
+        String sql = "SELECT * FROM sbrext.properties_ext WHERE prop_idseq = ?";
         PropertyModel propertyModel = jdbcTemplate.queryForObject(sql, new Object[] { propIdseq }, new PropertyMapper(PropertyModel.class));
         return propertyModel;
     }

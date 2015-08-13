@@ -31,7 +31,6 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
 
 
     @Override
-    // FIXMENOW - rename ConceptModel to ConceptModel to use with Object Class Concepts
     public List<ConceptModel> getRepresentationConceptByRepresentationId( String representationId )
     {
         logger.debug( "representationModel(" + representationId + ")" );
@@ -39,65 +38,8 @@ public class RepresentationConceptsDAOImpl extends AbstractDAOOperations impleme
         //select CON_DERIVATION_RULES_EXT.NAME   from sbrext.REPRESENTATIONS_EXT,CON_DERIVATION_RULES_EXT  where sbrext.REPRESENTATIONS_EXT.REP_ID = '3125303' and CON_DERIVATION_RULES_EXT.condr_idseq = sbrext.REPRESENTATIONS_EXT.CONDR_IDSEQ;
 
         String conceptCodeStr = conceptDerivationRuleDAO.getCDRByRepId( representationId ).getName();
-return conceptDAO.getConceptByConceptCode( conceptCodeStr );
-/*
+        return conceptDAO.getConceptByConceptCode( conceptCodeStr );
 
-        // FIXMENOW - put the rest of this method into its own getConceptsByConceptCodes( colon delimited list of concept codes)
-        // First get the list of Representation Concepts.Concept Codes
-        String[] conceptCode = conceptCodeStr.split( ":" );
-
-        String primaryConcept = conceptCode[conceptCode.length - 1];
-        logger.debug( "primaryConcept[" + primaryConcept + "]");
-
-        StringBuilder whereClause = new StringBuilder( " where ");
-        for( int f = 0; f < conceptCode.length; f++)
-        {
-            if( f > 0 )
-            {
-                whereClause.append( " or " );
-            }
-            whereClause.append( " preferred_name = '" + conceptCode[f] + "'" );
-        }
-
-        String sql = "select long_name as concept_name, preferred_name as concept_code, con_id as public_id, definition_source, evs_source from CONCEPTS_EXT " +
-                whereClause.toString() +
-                " order by concept_code";
-
-
-        logger.debug( "representationModel(" + representationId + "): \n" + sql );
-
-        List<ConceptModel> results = getAll( sql, ConceptModel.class );
-        // The last concept code in the colon delimited list is the "Primary", others are No
-        for( ConceptModel concept: results)
-        {
-            if( concept.getConceptCode().compareTo( primaryConcept ) == 0)
-            {
-                concept.setPrimary("Yes");
-            }
-            else
-            {
-                concept.setPrimary("No");
-            }
-
-            logger.debug( "ConceptModel: " + results.toString() );
-        }
-
-        // A quick hack to sort the list by the order of the Concept Codes in conceptDerivationRule
-        List<ConceptModel> results2 = new ArrayList<>(  );
-        for( int f = 0; f < conceptCode.length; f++)
-        {
-            for( ConceptModel concept: results)
-            {
-                if( concept.getConceptCode().compareTo(conceptCode[f]  ) == 0)
-                {
-                    results2.add( concept );
-                    continue;
-                }
-            }
-        }
-
-        return results2;
-*/
 
     }
 

@@ -39,8 +39,8 @@
 
     <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
         <tr class="cdeDetailsSubHeading">
-            <th colspan="7" align="left" ng-show="cdeDetails.usage.formUsages.length > 0">Form Usage - <small>{{cdeDetails.usage.formUsages.length}}</small></th>
-            <th colspan="7" align="left" ng-hide="cdeDetails.usage.formUsages.length > 0">Form Usage</th>
+            <th colspan="7" align="left" data-ng-show="cdeDetails.usage.formUsages.length > 0">Form Usage - <small>{{cdeDetails.usage.formUsages.length}}</small></th>
+            <th colspan="7" align="left" data-ng-hide="cdeDetails.usage.formUsages.length > 0">Form Usage</th>
         </tr>
     </table>
 
@@ -56,7 +56,7 @@
                 <td class="dataElementHeading">Public Id</td>
                 <td class="dataElementHeading">Version</td>
             </tr>
-            <tr class="dataElementViewTableTr" ng-show="cdeDetails.usage.formUsages.length > 0" ng-repeat="usage in cdeDetails.usage.formUsages">
+            <tr class="dataElementViewTableTr" data-ng-show="cdeDetails.usage.formUsages.length > 0" data-ng-repeat="usage in cdeDetails.usage.formUsages">
                 <td class="dataElementValue">{{usage.protocolNumber}}</td>
                 <td class="dataElementValue">{{usage.leadOrg}}</td>
                 <td class="dataElementValue">{{usage.formName}}</td>
@@ -74,7 +74,7 @@
                 <td class="dataElementValue">{{usage.formattedVersion}}</td>
             </tr>
             <tr class="dataElementViewTableTr"
-                ng-hide="cdeDetails.usage.formUsages.length > 0">
+                data-ng-hide="cdeDetails.usage.formUsages.length > 0">
                 <td class="dataElementValue" colspan="7">No Form usages exist for the selected CDE.</td>
             </tr>
 

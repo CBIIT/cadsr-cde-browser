@@ -5,9 +5,7 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-/**
- * Created by lernermh on 6/3/15.
- */
+
 public class PermissibleValuesModel extends BaseModel
 {
     private String pvIdseq;
@@ -44,7 +42,7 @@ public class PermissibleValuesModel extends BaseModel
     public void setVmVersion( String vmVersion )
     {
         this.vmVersion = vmVersion;
-        this.formattedVersion = Float.toString( Float.valueOf(vmVersion));
+        this.formattedVersion = Float.toString( Float.valueOf( vmVersion ) );
     }
 
     public String getVmDescription()
@@ -115,7 +113,7 @@ public class PermissibleValuesModel extends BaseModel
     public void setBeginDate( Timestamp beginDate )
     {
         this.beginDate = beginDate;
-        if( (beginDate != null) )
+        if( ( beginDate != null ) )
         {
             this.beginDateString = new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( beginDate );
         }
@@ -143,7 +141,7 @@ public class PermissibleValuesModel extends BaseModel
     public void setEndDate( Timestamp endDate )
     {
         this.endDate = endDate;
-        if( (endDate != null) )
+        if( ( endDate != null ) )
         {
             this.endDateString = new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( endDate );
         }

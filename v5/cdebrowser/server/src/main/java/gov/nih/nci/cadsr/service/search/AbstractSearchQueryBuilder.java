@@ -8,9 +8,9 @@ public abstract class AbstractSearchQueryBuilder
     public static String REPLACE_TOKEN = "SRCSTR";
 
     public static String wkFlowFrom = " , sbr.ac_status_lov_view asl ";
-    public static String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
+    public static String workFlowWhere = " AND de.asl_name = asl.asl_name (+)";
 
-    public static String selectClause = "SELECT distinct de.de_idseq "
+    public static String selectClause = "SELECT DISTINCT de.de_idseq "
             + "      ,de.preferred_name de_preferred_name"
             + "      ,de.long_name "
             + "      ,rd.doc_text "
@@ -42,8 +42,8 @@ public abstract class AbstractSearchQueryBuilder
 
     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
     public String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
-    public String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) ";
+    public String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
 
-    //jspValueDomain is in advancedSearch_inc.jsp associated with a field labeled “Search for Value Domains”.  It’s an odd hidden field associated with a “LOV” and with a text field that is disabled.  There’s a DB table for value_domains.  Value Domain (VD), Value Meaning (VM) and Permissible Values (PV) all contribute to the data about what can be the answers to questions.
+    //jspValueDomain is in advancedSearch_inc.jsp associated with a field labeled “Search for Value Domains”.  It’s an odd hidden field associated with a “LOV” AND with a text field that is disabled.  There’s a DB table for value_domains.  Value Domain (VD), Value Meaning (VM) AND Permissible Values (PV) all contribute to the data about what can be the answers to questions.
     public String valueDomain = "";
 }

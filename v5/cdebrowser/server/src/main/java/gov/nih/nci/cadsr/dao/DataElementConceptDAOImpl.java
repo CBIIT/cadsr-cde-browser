@@ -13,9 +13,6 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by lavezzojl on 4/15/15.
- */
 public class DataElementConceptDAOImpl extends AbstractDAOOperations implements DataElementConceptDAO
 {
 
@@ -39,9 +36,9 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
     @Override
     public DataElementConceptModel getDecByDecIdseq( String decIdseq ) throws EmptyResultDataAccessException
     {
-        String sql = "SELECT * FROM SBR.DATA_ELEMENT_CONCEPTS WHERE DEC_IDSEQ = ?";
+        String sql = "SELECT * FROM sbr.data_element_concepts WHERE dec_idseq = ?";
         DataElementConceptModel dataElementConceptModel = jdbcTemplate.queryForObject( sql, new Object[]{ decIdseq }, new DataElementConceptMapper( DataElementConceptModel.class ) );
-        logger.debug("dataElementConceptModel: " + dataElementConceptModel.toString());
+        logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
         return dataElementConceptModel;
     }
 
@@ -137,7 +134,8 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                         dataElementConceptModel.setPropertyVersion( propertyModel.getVersion() );
                     }
                 }
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no Property found for propIdseq: " + rs.getString( "PROP_IDSEQ" ) );
             }
@@ -162,7 +160,8 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                         dataElementConceptModel.setObjClassVersion( objectClassModel.getVersion() );
                     }
                 }
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no ObjectClassModel found for OC_IDSEQ: " + rs.getString( "OC_IDSEQ" ) );
             }
@@ -173,7 +172,8 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                 {
                     dataElementConceptModel.setConteName( contextModel.getName() );
                 }
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no contextModel found for CONTE_IDSEQ: " + rs.getString( "CONTE_IDSEQ" ) );
             }
@@ -199,7 +199,8 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                     }
                     logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
                 }
-            } catch( EmptyResultDataAccessException ex )
+            }
+            catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no dataElementConceptModel found for CD_IDSEQ: " + rs.getString( "CD_IDSEQ" ) );
             }

@@ -11,12 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lavezzojl on 5/27/15.
- */
 public class CSRefDocDAOImpl extends AbstractDAOOperations implements CSRefDocDAO
 {
-    private Logger logger = LogManager.getLogger(CSRefDocDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( CSRefDocDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
@@ -28,9 +25,9 @@ public class CSRefDocDAOImpl extends AbstractDAOOperations implements CSRefDocDA
     }
 
 
-
     @Override
-    public List<CSRefDocModel> getCSRefDocsByDEIdseq(String deIdseq) {
+    public List<CSRefDocModel> getCSRefDocsByDEIdseq( String deIdseq )
+    {
         /*
     public String csLongName;
     public Float csVersion;
@@ -48,7 +45,7 @@ public class CSRefDocDAOImpl extends AbstractDAOOperations implements CSRefDocDA
                 "AND ac_csi.cs_csi_idseq = cs_csi.cs_csi_idseq " +
                 ") " +
                 "AND cs.cs_idseq = rd.ac_idseq";
-        List<CSRefDocModel> csRefDocModels = jdbcTemplate.query(sql, new Object[]{deIdseq}, new BeanPropertyRowMapper(CSRefDocModel.class));
+        List<CSRefDocModel> csRefDocModels = jdbcTemplate.query( sql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( CSRefDocModel.class ) );
         return csRefDocModels;
     }
 }

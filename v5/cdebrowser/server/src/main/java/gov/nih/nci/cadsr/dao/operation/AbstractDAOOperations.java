@@ -29,7 +29,6 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
     }
 
     /**
-     *
      * @param sql
      * @param where
      * @param type
@@ -48,27 +47,28 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
                             new BeanPropertyRowMapper( type ) ) );
 
             return results;
-        } catch( DataAccessException e )
+        }
+        catch( DataAccessException e )
         {
             logger.debug( "Error: [" + e.getMessage() + "]" );
             logger.debug( "Error: [" + e.toString() + "]" );
-            if( e.getMessage().compareTo( "Incorrect result size: expected 1, actual 0" ) ==0)
+            if( e.getMessage().compareTo( "Incorrect result size: expected 1, actual 0" ) == 0 )
             {
                 logger.debug( "No results" );
             }
             // FIXME - this is a WORK AROUND FOR SOME BAD DATA - MAKE SURE
-            else if(  e.getMessage().startsWith( "Incorrect result size: expected 1, actual" ))
+            else if( e.getMessage().startsWith( "Incorrect result size: expected 1, actual" ) )
             {
                 logger.debug( e.getMessage() );
                 logger.debug( sql + " where " + where );
-                return  getAll(  sql,  where,  type ).get(0);
+                return getAll( sql, where, type ).get( 0 );
             }
             else
             {
                 e.printStackTrace();
             }
         }
-        catch( Exception e)
+        catch( Exception e )
         {
             e.printStackTrace();
         }
@@ -81,14 +81,13 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
         return query( sql, Integer.toString( where ), type );
     }
 
-        /**
-         *
-         * @param sql
-         * @param where
-         * @param type
-         * @param <T>
-         * @return
-         */
+    /**
+     * @param sql
+     * @param where
+     * @param type
+     * @param <T>
+     * @return
+     */
     public <T> List<T> getAll( String sql, String where, Class<T> type )
     {
 
@@ -100,15 +99,14 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
         return allColumns;
     }
 
-    public Integer getOneInt(String sql, String where )
+    public Integer getOneInt( String sql, String where )
     {
-        Integer n = (Integer)getJdbcTemplate().queryForObject(
-                sql, new Object[] { where }, Integer.class);
+        Integer n = (Integer) getJdbcTemplate().queryForObject(
+                sql, new Object[]{ where }, Integer.class );
         return n;
     }
 
     /**
-     *
      * @param sql
      * @param type
      * @param <T>
@@ -125,7 +123,6 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
     }
 
     /**
-     *
      * @param table
      * @param type
      * @param <T>
@@ -135,7 +132,7 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
     {
 
         List<T> allRowsAndColumns = getJdbcTemplate().query(
-                "select * from " + table,
+                "SELECT * FROM " + table,
                 new BeanPropertyRowMapper( type )
         );
 

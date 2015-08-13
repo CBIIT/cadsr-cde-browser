@@ -67,7 +67,7 @@
             <td class="dataElementValue">{{classif.csiType}}</td>
             <td class="dataElementValue">{{classif.csiId}}v{{classif.csiVersion}}</td>
         </tr>
-        <tr class="dataElementViewTableTr" ng-hide="cdeDetails.classifications.classificationList.length">
+        <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.classifications.classificationList.length">
             <td colspan="3">No applicable Classifications</td>
         </tr>
     </table>
@@ -112,7 +112,7 @@
         <td class="dataElementValue">&nbsp;</td>
     </tr>
     <tr class="dataElementViewTableTr"
-        ng-hide="cdeDetails.classifications.classificationsSchemeReferenceDocuments.length">
+        data-ng-hide="cdeDetails.classifications.classificationsSchemeReferenceDocuments.length">
         <td colspan="3">No applicable Classifications Scheme Reference Documents</td>
     </tr>
 </table><br>
@@ -145,7 +145,7 @@
         <td class="dataElementValue">&nbsp;</td>
     </tr>
     <tr class="dataElementViewTableTr"
-        ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
+        data-ng-hide="cdeDetails.classifications.classificationsSchemeItemReferenceDocuments.length">
         <td colspan="6">No applicable Classification Scheme Item Reference Documents</td>
     </tr>
 </table><br>

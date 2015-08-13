@@ -543,7 +543,7 @@ public class ContextDataController
 
     protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel, int programArea )
     {
-        logger.debug( "classificationsParentNode: " + classificationsParentNode.getText() );
+        logger.debug( "MHL classificationsParentNode: " + classificationsParentNode.getText() + "    csModelList.size: " + csModelList.size() );
         //////////////////////////////////////////////////
         //CS (Classification Scheme) List for this Context
         //////////////////////////////////////////////////
@@ -589,7 +589,7 @@ public class ContextDataController
                         classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
                         classificationSchemeItemNode.setCollapsed( true );
                         classificationSchemeItemNode.setProgramArea( programArea );
-                        //logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
+   logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
                         addChildrenToCsi( classificationSchemeItemNode );
 
                         //Add this CSI to the CS

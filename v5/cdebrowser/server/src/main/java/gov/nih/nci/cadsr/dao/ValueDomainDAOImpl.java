@@ -39,9 +39,9 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     @Override
     public ValueDomainModel getValueDomainByIdseq( String vdIdseq ) throws EmptyResultDataAccessException
     {
-        String sql = "SELECT * FROM SBR.VALUE_DOMAINS WHERE VD_IDSEQ = ?";
+        String sql = "SELECT * FROM sbr.value_domains WHERE vd_idseq = ?";
         logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
-        //String sql = "SELECT * FROM VALUE_DOMAINS_VIEW WHERE VD_IDSEQ = ?";
+        //String sql = "SELECT * FROM value_domains_view where vd_idseq = ?";
         ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject( sql, new Object[]{ vdIdseq }, new ValueDomainMapper() );
         return valueDomainModel;
     }

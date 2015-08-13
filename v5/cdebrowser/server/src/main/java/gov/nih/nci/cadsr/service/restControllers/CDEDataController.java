@@ -376,7 +376,11 @@ public class CDEDataController
         }
         valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
         valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
-        valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
+
+        // CHECKME - need to see where this is getting the wrong value.
+        //valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
+        valueDomainDetails.setContext( dataElementModel.getContextName() );// CHECKME
+
         valueDomainDetails.setDefinition( dataElementModel.getValueDomainModel().getPreferredDefinition() );
         valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
         valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );

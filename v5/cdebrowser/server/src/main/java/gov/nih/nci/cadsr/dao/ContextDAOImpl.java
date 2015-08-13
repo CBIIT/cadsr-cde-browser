@@ -41,7 +41,7 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
     {
         List<ContextModel> results;
         // FIXME  excludes need to come from a setting
-        String sql = "select * from SBR.CONTEXTS  where name !=  'TEST' order by lower(name)";
+        String sql = "SELECT * FROM sbr.contexts  WHERE name !=  'TEST' ORDER BY LOWER(name)";
         results = getAll( sql, ContextModel.class );
 
         return results;
@@ -53,7 +53,7 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
     {
         List<ContextModel> results;
 
-        String sql = "select * from SBR.CONTEXTS where NAME=?";
+        String sql = "SELECT * FROM sbr.contexts WHERE name=?";
         //logger.debug( ">>>>>>> "+ sql.replace( "?", name ) );
         results = getAll( sql, name, ContextModel.class );
         //logger.debug( sql.replace( "?", name ) + " <<<<<<<" );
@@ -64,7 +64,7 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
     @Override
     public ContextModel getContextByIdseq(String contextIdseq)
     {
-        String sql = "select * from SBR.CONTEXTS where CONTE_IDSEQ=?";
+        String sql = "SELECT * FROM sbr.contexts WHERE conte_idseq=?";
         ContextModel results = query( sql, contextIdseq, ContextModel.class );
 
         return results;

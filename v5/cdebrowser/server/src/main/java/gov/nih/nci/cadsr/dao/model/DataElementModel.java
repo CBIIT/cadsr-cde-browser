@@ -18,11 +18,11 @@ public class DataElementModel extends BaseModel
     /**
      * Hashmap of DesignationModels indexed by designationIdseq
      */
-    private HashMap<String,DesignationModel> designationModels; // from DesignationsView.ac_idseq = data_elements.de_idseq
+    private HashMap<String, DesignationModel> designationModels; // from DesignationsView.ac_idseq = data_elements.de_idseq
     /**
      * Hashmap of DefinitionModels indexed by definitionIdseq
      */
-    private HashMap<String,DefinitionModel> definitionModels;
+    private HashMap<String, DefinitionModel> definitionModels;
     private Integer publicId; // this is a duplicate of cdeId. do we really need this?
     private String idseq;
     private String registrationStatus; // not in table. Filled from SBR.AC_RESISTRATIONS.REGISTRATION_STATUS see DAO row mapper
@@ -48,17 +48,17 @@ public class DataElementModel extends BaseModel
     /**
      * Hashmap of CsCsiModels indexed by csiIdseq. csiIdseq may be the value "UNCLASSIFIED"
      */
-    private HashMap<String,CsCsiModel> csCsiData;
+    private HashMap<String, CsCsiModel> csCsiData;
     /**
      * Hashmap of Lists of designationIdseqs indexed by csiIdseq. csiIdseq may be the value "UNCLASSIFIED"
      * (each entry is a list of the designationIdseqs that are classified into the indexed csiIdseq)
      */
-    private HashMap<String,List<String>> csCsiDesignations;
+    private HashMap<String, List<String>> csCsiDesignations;
     /**
      * Hashmap of Lists of definitionIdseqs indexed by csiIdseq. csiIdseq may be the value "UNCLASSIFIED"
      * (each entry is a list of the definitionIdseqs that are classified into the indexed csiIdseq)
      */
-    private HashMap<String,List<String>> csCsiDefinitions;
+    private HashMap<String, List<String>> csCsiDefinitions;
     private List<UsageModel> usageModels;
     private List<DEOtherVersionsModel> deOtherVersionsModels;
     private List<CsCsiModel> classifications;
@@ -66,14 +66,17 @@ public class DataElementModel extends BaseModel
     private List<CSIRefDocModel> csiRefDocModels;
 
 
-    public DataElementModel() {
+    public DataElementModel()
+    {
     }
 
-    public String getPreferredQuestionText() {
+    public String getPreferredQuestionText()
+    {
         return preferredQuestionText;
     }
 
-    public void setPreferredQuestionText(String preferredQuestionText) {
+    public void setPreferredQuestionText( String preferredQuestionText )
+    {
         this.preferredQuestionText = preferredQuestionText;
     }
 
@@ -81,12 +84,16 @@ public class DataElementModel extends BaseModel
      * populate the preferred question text (longCDEName) field out of the
      * reference doc where DCTL_NAME is "Preferred Question Text"
      */
-    public void fillPreferredQuestionText() {
-        if (getRefDocs() != null) {
-            for (ReferenceDocModel referenceDocModel : getRefDocs()) {
-                if (referenceDocModel.getDctlName() != null && referenceDocModel.getDctlName().equals("Preferred Question Text")
-                        && referenceDocModel.getDocText() != null) {
-                    setPreferredQuestionText(referenceDocModel.getDocText());
+    public void fillPreferredQuestionText()
+    {
+        if( getRefDocs() != null )
+        {
+            for( ReferenceDocModel referenceDocModel : getRefDocs() )
+            {
+                if( referenceDocModel.getDctlName() != null && referenceDocModel.getDctlName().equals( "Preferred Question Text" )
+                        && referenceDocModel.getDocText() != null )
+                {
+                    setPreferredQuestionText( referenceDocModel.getDocText() );
                     return;
                 }
             }
@@ -97,134 +104,170 @@ public class DataElementModel extends BaseModel
      * populate the usingContexts field by concatenating the designationModels' contexts' names
      * where
      */
-    public void fillUsingContexts() {
+    public void fillUsingContexts()
+    {
         ArrayList<String> usingContexts = new ArrayList<>();
-        if (getDesignationModels() != null) {
-            for (DesignationModel designationModel : getDesignationModels().values()) {
-                if (designationModel.getDetlName() != null
-                        && designationModel.getDetlName().equals("USED_BY")
-                        && designationModel.getContex().getName() != null) {
-                    usingContexts.add(designationModel.getContex().getName());
+        if( getDesignationModels() != null )
+        {
+            for( DesignationModel designationModel : getDesignationModels().values() )
+            {
+                if( designationModel.getDetlName() != null
+                        && designationModel.getDetlName().equals( "USED_BY" )
+                        && designationModel.getContex().getName() != null )
+                {
+                    usingContexts.add( designationModel.getContex().getName() );
                 }
             }
         }
-        setUsingContexts(StringUtils.join(usingContexts, ", "));
+        setUsingContexts( StringUtils.join( usingContexts, ", " ) );
     }
 
-    public void fillCsCsiData(List<CsCsiModel> csCsiModels) {
+    public void fillCsCsiData( List<CsCsiModel> csCsiModels )
+    {
         // initialize csCsiData
-        csCsiData = new HashMap<String,CsCsiModel>();
+        csCsiData = new HashMap<String, CsCsiModel>();
         // Prepare a CsCsiModel for any definitions and designations that are unclassified
-        csCsiData.put(CsCsiModel.UNCLASSIFIED, new CsCsiModel(CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED));
+        csCsiData.put( CsCsiModel.UNCLASSIFIED, new CsCsiModel( CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED, CsCsiModel.UNCLASSIFIED ) );
         // copy over the rest of the models, using the hashmap to remove duplicates
-        for (CsCsiModel csCsiModel : csCsiModels) {
-            csCsiData.put(csCsiModel.getCsIdseq(), csCsiModel);
+        for( CsCsiModel csCsiModel : csCsiModels )
+        {
+            csCsiData.put( csCsiModel.getCsIdseq(), csCsiModel );
         }
     }
 
-    public void fillCsCsiDesignations () {
-        if (getCsCsiDesignations() == null) {
-            setCsCsiDesignations(new HashMap<String, List<String>>());
+    public void fillCsCsiDesignations()
+    {
+        if( getCsCsiDesignations() == null )
+        {
+            setCsCsiDesignations( new HashMap<String, List<String>>() );
         }
-        for (DesignationModel designationModel : getDesignationModels().values()) {
-            if (designationModel.getCsiIdseqs() != null && designationModel.getCsiIdseqs().size() > 0) {
-                for (String csiIdseq : designationModel.getCsiIdseqs()) {
-                    if (getCsCsiDesignations().get(csiIdseq) == null) {
-                        getCsCsiDesignations().put(csiIdseq, new ArrayList<String>());
+        for( DesignationModel designationModel : getDesignationModels().values() )
+        {
+            if( designationModel.getCsiIdseqs() != null && designationModel.getCsiIdseqs().size() > 0 )
+            {
+                for( String csiIdseq : designationModel.getCsiIdseqs() )
+                {
+                    if( getCsCsiDesignations().get( csiIdseq ) == null )
+                    {
+                        getCsCsiDesignations().put( csiIdseq, new ArrayList<String>() );
                     }
-                    getCsCsiDesignations().get(csiIdseq).add(designationModel.getDesigIDSeq());
+                    getCsCsiDesignations().get( csiIdseq ).add( designationModel.getDesigIDSeq() );
                 }
             }
         }
 
     }
 
-    public void fillCsCsiDefinitions () {
-        if (getCsCsiDefinitions() == null) {
-            setCsCsiDefinitions(new HashMap<String, List<String>>());
+    public void fillCsCsiDefinitions()
+    {
+        if( getCsCsiDefinitions() == null )
+        {
+            setCsCsiDefinitions( new HashMap<String, List<String>>() );
         }
-        for (DefinitionModel definitionModel : getDefinitionModels().values()) {
-            if (definitionModel.getCsiIdseqs() != null && definitionModel.getCsiIdseqs().size() > 0) {
-                for (String csiIdseq : definitionModel.getCsiIdseqs()) {
-                    if (getCsCsiDefinitions().get(csiIdseq) == null) {
-                        getCsCsiDefinitions().put(csiIdseq, new ArrayList<String>());
+        for( DefinitionModel definitionModel : getDefinitionModels().values() )
+        {
+            if( definitionModel.getCsiIdseqs() != null && definitionModel.getCsiIdseqs().size() > 0 )
+            {
+                for( String csiIdseq : definitionModel.getCsiIdseqs() )
+                {
+                    if( getCsCsiDefinitions().get( csiIdseq ) == null )
+                    {
+                        getCsCsiDefinitions().put( csiIdseq, new ArrayList<String>() );
                     }
-                    getCsCsiDefinitions().get(csiIdseq).add(definitionModel.getDefinIdseq());
+                    getCsCsiDefinitions().get( csiIdseq ).add( definitionModel.getDefinIdseq() );
                 }
             }
         }
 
     }
 
-    public String getContextName() {
+    public String getContextName()
+    {
         return contextName;
     }
 
-    public void setContextName(String contextName) {
+    public void setContextName( String contextName )
+    {
         this.contextName = contextName;
     }
 
-    public String getUsingContexts() {
+    public String getUsingContexts()
+    {
         return usingContexts;
     }
 
-    public void setUsingContexts(String usingContexts) {
+    public void setUsingContexts( String usingContexts )
+    {
         this.usingContexts = usingContexts;
     }
 
-    public List<ReferenceDocModel> getRefDocs() {
+    public List<ReferenceDocModel> getRefDocs()
+    {
         return refDocs;
     }
 
-    public void setRefDocs(List<ReferenceDocModel> refDocs) {
+    public void setRefDocs( List<ReferenceDocModel> refDocs )
+    {
         this.refDocs = refDocs;
     }
 
-    public Integer getPublicId() {
+    public Integer getPublicId()
+    {
         return publicId;
     }
 
-    public void setPublicId(Integer publicId) {
+    public void setPublicId( Integer publicId )
+    {
         this.publicId = publicId;
     }
 
-    public String getIdseq() {
+    public String getIdseq()
+    {
         return idseq;
     }
 
-    public void setIdseq(String idseq) {
+    public void setIdseq( String idseq )
+    {
         this.idseq = idseq;
     }
 
-    public String getRegistrationStatus() {
+    public String getRegistrationStatus()
+    {
         return registrationStatus;
     }
 
-    public void setRegistrationStatus(String registrationStatus) {
+    public void setRegistrationStatus( String registrationStatus )
+    {
         this.registrationStatus = registrationStatus;
     }
 
-    public ValueDomainModel getValueDomainModel() {
+    public ValueDomainModel getValueDomainModel()
+    {
         return valueDomainModel;
     }
 
-    public void setValueDomainModel(ValueDomainModel valueDomainModel) {
+    public void setValueDomainModel( ValueDomainModel valueDomainModel )
+    {
         this.valueDomainModel = valueDomainModel;
     }
 
-    public DataElementConceptModel getDec() {
+    public DataElementConceptModel getDec()
+    {
         return dec;
     }
 
-    public void setDec(DataElementConceptModel dec) {
+    public void setDec( DataElementConceptModel dec )
+    {
         this.dec = dec;
     }
 
-    public ContextModel getContext() {
+    public ContextModel getContext()
+    {
         return context;
     }
 
-    public void setContext(ContextModel context) {
+    public void setContext( ContextModel context )
+    {
         this.context = context;
     }
 
@@ -233,7 +276,7 @@ public class DataElementModel extends BaseModel
         return deIdseq;
     }
 
-    public void setDeIdseq(String deIdseq)
+    public void setDeIdseq( String deIdseq )
     {
         this.deIdseq = deIdseq;
     }
@@ -243,10 +286,10 @@ public class DataElementModel extends BaseModel
         return version;
     }
 
-    public void setVersion(Float version)
+    public void setVersion( Float version )
     {
         this.version = version;
-        setFormattedVersion(  version );
+        setFormattedVersion( version );
     }
 
     public String getConteIdseq()
@@ -254,7 +297,7 @@ public class DataElementModel extends BaseModel
         return conteIdseq;
     }
 
-    public void setConteIdseq(String conteIdseq)
+    public void setConteIdseq( String conteIdseq )
     {
         this.conteIdseq = conteIdseq;
     }
@@ -264,7 +307,7 @@ public class DataElementModel extends BaseModel
         return preferredName;
     }
 
-    public void setPreferredName(String preferredName)
+    public void setPreferredName( String preferredName )
     {
         this.preferredName = preferredName;
     }
@@ -274,7 +317,7 @@ public class DataElementModel extends BaseModel
         return vdIdseq;
     }
 
-    public void setVdIdseq(String vdIdseq)
+    public void setVdIdseq( String vdIdseq )
     {
         this.vdIdseq = vdIdseq;
     }
@@ -284,7 +327,7 @@ public class DataElementModel extends BaseModel
         return decIdseq;
     }
 
-    public void setDecIdseq(String decIdseq)
+    public void setDecIdseq( String decIdseq )
     {
         this.decIdseq = decIdseq;
     }
@@ -294,7 +337,7 @@ public class DataElementModel extends BaseModel
         return preferredDefinition;
     }
 
-    public void setPreferredDefinition(String preferredDefinition)
+    public void setPreferredDefinition( String preferredDefinition )
     {
         this.preferredDefinition = preferredDefinition;
     }
@@ -304,7 +347,7 @@ public class DataElementModel extends BaseModel
         return aslName;
     }
 
-    public void setAslName(String aslName)
+    public void setAslName( String aslName )
     {
         this.aslName = aslName;
     }
@@ -314,7 +357,7 @@ public class DataElementModel extends BaseModel
         return longName;
     }
 
-    public void setLongName(String longName)
+    public void setLongName( String longName )
     {
         this.longName = longName;
     }
@@ -324,7 +367,7 @@ public class DataElementModel extends BaseModel
         return latestVerInd;
     }
 
-    public void setLatestVerInd(String latestVerInd)
+    public void setLatestVerInd( String latestVerInd )
     {
         this.latestVerInd = latestVerInd;
     }
@@ -334,7 +377,7 @@ public class DataElementModel extends BaseModel
         return deletedInd;
     }
 
-    public void setDeletedInd(String deletedInd)
+    public void setDeletedInd( String deletedInd )
     {
         this.deletedInd = deletedInd;
     }
@@ -344,7 +387,7 @@ public class DataElementModel extends BaseModel
         return beginDate;
     }
 
-    public void setBeginDate(Timestamp beginDate)
+    public void setBeginDate( Timestamp beginDate )
     {
         this.beginDate = beginDate;
     }
@@ -354,7 +397,7 @@ public class DataElementModel extends BaseModel
         return endDate;
     }
 
-    public void setEndDate(Timestamp endDate)
+    public void setEndDate( Timestamp endDate )
     {
         this.endDate = endDate;
     }
@@ -364,7 +407,7 @@ public class DataElementModel extends BaseModel
         return origin;
     }
 
-    public void setOrigin(String origin)
+    public void setOrigin( String origin )
     {
         this.origin = origin;
     }
@@ -374,7 +417,7 @@ public class DataElementModel extends BaseModel
         return cdeId;
     }
 
-    public void setCdeId(Integer cdeId)
+    public void setCdeId( Integer cdeId )
     {
         this.cdeId = cdeId;
     }
@@ -384,219 +427,333 @@ public class DataElementModel extends BaseModel
         return question;
     }
 
-    public void setQuestion(String question)
+    public void setQuestion( String question )
     {
         this.question = question;
         setPreferredQuestionText( this.question );
     }
 
-    public HashMap<String, CsCsiModel> getCsCsiData() {
+    public HashMap<String, CsCsiModel> getCsCsiData()
+    {
         return csCsiData;
     }
 
-    public void setCsCsiData(HashMap<String, CsCsiModel> csCsiData) {
+    public void setCsCsiData( HashMap<String, CsCsiModel> csCsiData )
+    {
         this.csCsiData = csCsiData;
     }
 
-    public HashMap<String, List<String>> getCsCsiDesignations() {
+    public HashMap<String, List<String>> getCsCsiDesignations()
+    {
         return csCsiDesignations;
     }
 
-    public void setCsCsiDesignations(HashMap<String, List<String>> csCsiDesignations) {
+    public void setCsCsiDesignations( HashMap<String, List<String>> csCsiDesignations )
+    {
         this.csCsiDesignations = csCsiDesignations;
     }
 
-    public HashMap<String, List<String>> getCsCsiDefinitions() {
+    public HashMap<String, List<String>> getCsCsiDefinitions()
+    {
         return csCsiDefinitions;
     }
 
-    public void setCsCsiDefinitions(HashMap<String, List<String>> csCsiDefinitions) {
+    public void setCsCsiDefinitions( HashMap<String, List<String>> csCsiDefinitions )
+    {
         this.csCsiDefinitions = csCsiDefinitions;
     }
 
-    public HashMap<String, DesignationModel> getDesignationModels() {
+    public HashMap<String, DesignationModel> getDesignationModels()
+    {
         return designationModels;
     }
 
-    public void setDesignationModels(HashMap<String, DesignationModel> designationModels) {
+    public void setDesignationModels( HashMap<String, DesignationModel> designationModels )
+    {
         this.designationModels = designationModels;
     }
 
-    public void setDesignationModels(List<DesignationModel> designationModels) {
-        setDesignationModels(new HashMap<String, DesignationModel>());
-        for (DesignationModel designationModel : designationModels) {
-            getDesignationModels().put(designationModel.getDesigIDSeq(), designationModel);
+    public void setDesignationModels( List<DesignationModel> designationModels )
+    {
+        setDesignationModels( new HashMap<String, DesignationModel>() );
+        for( DesignationModel designationModel : designationModels )
+        {
+            getDesignationModels().put( designationModel.getDesigIDSeq(), designationModel );
         }
     }
 
-    public HashMap<String, DefinitionModel> getDefinitionModels() {
+    public HashMap<String, DefinitionModel> getDefinitionModels()
+    {
         return definitionModels;
     }
 
-    public void setDefinitionModels(HashMap<String, DefinitionModel> definitionModels) {
+    public void setDefinitionModels( HashMap<String, DefinitionModel> definitionModels )
+    {
         this.definitionModels = definitionModels;
     }
 
-    public void setDefinitionModels(List<DefinitionModel> definitionModels) {
-        setDefinitionModels(new HashMap<String,DefinitionModel>());
-        for (DefinitionModel definitionModel : definitionModels) {
-            getDefinitionModels().put(definitionModel.getDefinIdseq(), definitionModel);
+    public void setDefinitionModels( List<DefinitionModel> definitionModels )
+    {
+        setDefinitionModels( new HashMap<String, DefinitionModel>() );
+        for( DefinitionModel definitionModel : definitionModels )
+        {
+            getDefinitionModels().put( definitionModel.getDefinIdseq(), definitionModel );
         }
     }
 
-    public List<UsageModel> getUsageModels() {
+    public List<UsageModel> getUsageModels()
+    {
         return usageModels;
     }
 
-    public void setUsageModels(List<UsageModel> usageModels) {
+    public void setUsageModels( List<UsageModel> usageModels )
+    {
         this.usageModels = usageModels;
     }
 
-    public List<DEOtherVersionsModel> getDeOtherVersionsModels() {
+    public List<DEOtherVersionsModel> getDeOtherVersionsModels()
+    {
         return deOtherVersionsModels;
     }
 
-    public void setDeOtherVersionsModels(List<DEOtherVersionsModel> deOtherVersionsModels) {
+    public void setDeOtherVersionsModels( List<DEOtherVersionsModel> deOtherVersionsModels )
+    {
         this.deOtherVersionsModels = deOtherVersionsModels;
     }
 
-    public List<CsCsiModel> getClassifications() {
+    public List<CsCsiModel> getClassifications()
+    {
         return classifications;
     }
 
-    public void setClassifications(List<CsCsiModel> classifications) {
+    public void setClassifications( List<CsCsiModel> classifications )
+    {
         this.classifications = classifications;
     }
 
-    public List<CSRefDocModel> getCsRefDocModels() {
+    public List<CSRefDocModel> getCsRefDocModels()
+    {
         return csRefDocModels;
     }
 
-    public void setCsRefDocModels(List<CSRefDocModel> csRefDocModels) {
+    public void setCsRefDocModels( List<CSRefDocModel> csRefDocModels )
+    {
         this.csRefDocModels = csRefDocModels;
     }
 
-    public List<CSIRefDocModel> getCsiRefDocModels() {
+    public List<CSIRefDocModel> getCsiRefDocModels()
+    {
         return csiRefDocModels;
     }
 
-    public void setCsiRefDocModels(List<CSIRefDocModel> csiRefDocModels) {
+    public void setCsiRefDocModels( List<CSIRefDocModel> csiRefDocModels )
+    {
         this.csiRefDocModels = csiRefDocModels;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DataElementModel)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o )
+        {
+            return true;
+        }
+        if( !( o instanceof DataElementModel ) )
+        {
+            return false;
+        }
 
         DataElementModel that = (DataElementModel) o;
 
-        if (getPreferredQuestionText() != null ? !getPreferredQuestionText().equals(that.getPreferredQuestionText()) : that.getPreferredQuestionText() != null)
+        if( getPreferredQuestionText() != null ? !getPreferredQuestionText().equals( that.getPreferredQuestionText() ) : that.getPreferredQuestionText() != null )
+        {
             return false;
-        if (getContextName() != null ? !getContextName().equals(that.getContextName()) : that.getContextName() != null)
+        }
+        if( getContextName() != null ? !getContextName().equals( that.getContextName() ) : that.getContextName() != null )
+        {
             return false;
-        if (getUsingContexts() != null ? !getUsingContexts().equals(that.getUsingContexts()) : that.getUsingContexts() != null)
+        }
+        if( getUsingContexts() != null ? !getUsingContexts().equals( that.getUsingContexts() ) : that.getUsingContexts() != null )
+        {
             return false;
-        if (getRefDocs() != null ? !getRefDocs().equals(that.getRefDocs()) : that.getRefDocs() != null) return false;
-        if (getDesignationModels() != null ? !getDesignationModels().equals(that.getDesignationModels()) : that.getDesignationModels() != null)
+        }
+        if( getRefDocs() != null ? !getRefDocs().equals( that.getRefDocs() ) : that.getRefDocs() != null )
+        {
             return false;
-        if (getDefinitionModels() != null ? !getDefinitionModels().equals(that.getDefinitionModels()) : that.getDefinitionModels() != null)
+        }
+        if( getDesignationModels() != null ? !getDesignationModels().equals( that.getDesignationModels() ) : that.getDesignationModels() != null )
+        {
             return false;
-        if (getPublicId() != null ? !getPublicId().equals(that.getPublicId()) : that.getPublicId() != null)
+        }
+        if( getDefinitionModels() != null ? !getDefinitionModels().equals( that.getDefinitionModels() ) : that.getDefinitionModels() != null )
+        {
             return false;
-        if (getIdseq() != null ? !getIdseq().equals(that.getIdseq()) : that.getIdseq() != null) return false;
-        if (getRegistrationStatus() != null ? !getRegistrationStatus().equals(that.getRegistrationStatus()) : that.getRegistrationStatus() != null)
+        }
+        if( getPublicId() != null ? !getPublicId().equals( that.getPublicId() ) : that.getPublicId() != null )
+        {
             return false;
-        if (getValueDomainModel() != null ? !getValueDomainModel().equals(that.getValueDomainModel()) : that.getValueDomainModel() != null)
+        }
+        if( getIdseq() != null ? !getIdseq().equals( that.getIdseq() ) : that.getIdseq() != null )
+        {
             return false;
-        if (getDec() != null ? !getDec().equals(that.getDec()) : that.getDec() != null) return false;
-        if (getContext() != null ? !getContext().equals(that.getContext()) : that.getContext() != null) return false;
-        if (getDeIdseq() != null ? !getDeIdseq().equals(that.getDeIdseq()) : that.getDeIdseq() != null) return false;
-        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
-        if (getConteIdseq() != null ? !getConteIdseq().equals(that.getConteIdseq()) : that.getConteIdseq() != null)
+        }
+        if( getRegistrationStatus() != null ? !getRegistrationStatus().equals( that.getRegistrationStatus() ) : that.getRegistrationStatus() != null )
+        {
             return false;
-        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+        }
+        if( getValueDomainModel() != null ? !getValueDomainModel().equals( that.getValueDomainModel() ) : that.getValueDomainModel() != null )
+        {
             return false;
-        if (getVdIdseq() != null ? !getVdIdseq().equals(that.getVdIdseq()) : that.getVdIdseq() != null) return false;
-        if (getDecIdseq() != null ? !getDecIdseq().equals(that.getDecIdseq()) : that.getDecIdseq() != null)
+        }
+        if( getDec() != null ? !getDec().equals( that.getDec() ) : that.getDec() != null )
+        {
             return false;
-        if (getPreferredDefinition() != null ? !getPreferredDefinition().equals(that.getPreferredDefinition()) : that.getPreferredDefinition() != null)
+        }
+        if( getContext() != null ? !getContext().equals( that.getContext() ) : that.getContext() != null )
+        {
             return false;
-        if (getAslName() != null ? !getAslName().equals(that.getAslName()) : that.getAslName() != null) return false;
-        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+        }
+        if( getDeIdseq() != null ? !getDeIdseq().equals( that.getDeIdseq() ) : that.getDeIdseq() != null )
+        {
             return false;
-        if (getLatestVerInd() != null ? !getLatestVerInd().equals(that.getLatestVerInd()) : that.getLatestVerInd() != null)
+        }
+        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null )
+        {
             return false;
-        if (getDeletedInd() != null ? !getDeletedInd().equals(that.getDeletedInd()) : that.getDeletedInd() != null)
+        }
+        if( getConteIdseq() != null ? !getConteIdseq().equals( that.getConteIdseq() ) : that.getConteIdseq() != null )
+        {
             return false;
-        if (getBeginDate() != null ? !getBeginDate().equals(that.getBeginDate()) : that.getBeginDate() != null)
+        }
+        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
+        {
             return false;
-        if (getEndDate() != null ? !getEndDate().equals(that.getEndDate()) : that.getEndDate() != null) return false;
-        if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
-        if (getCdeId() != null ? !getCdeId().equals(that.getCdeId()) : that.getCdeId() != null) return false;
-        if (getQuestion() != null ? !getQuestion().equals(that.getQuestion()) : that.getQuestion() != null)
+        }
+        if( getVdIdseq() != null ? !getVdIdseq().equals( that.getVdIdseq() ) : that.getVdIdseq() != null )
+        {
             return false;
-        if (getCsCsiData() != null ? !getCsCsiData().equals(that.getCsCsiData()) : that.getCsCsiData() != null)
+        }
+        if( getDecIdseq() != null ? !getDecIdseq().equals( that.getDecIdseq() ) : that.getDecIdseq() != null )
+        {
             return false;
-        if (getCsCsiDesignations() != null ? !getCsCsiDesignations().equals(that.getCsCsiDesignations()) : that.getCsCsiDesignations() != null)
+        }
+        if( getPreferredDefinition() != null ? !getPreferredDefinition().equals( that.getPreferredDefinition() ) : that.getPreferredDefinition() != null )
+        {
             return false;
-        if (getCsCsiDefinitions() != null ? !getCsCsiDefinitions().equals(that.getCsCsiDefinitions()) : that.getCsCsiDefinitions() != null)
+        }
+        if( getAslName() != null ? !getAslName().equals( that.getAslName() ) : that.getAslName() != null )
+        {
             return false;
-        if (getUsageModels() != null ? !getUsageModels().equals(that.getUsageModels()) : that.getUsageModels() != null)
+        }
+        if( getLongName() != null ? !getLongName().equals( that.getLongName() ) : that.getLongName() != null )
+        {
             return false;
-        if (getDeOtherVersionsModels() != null ? !getDeOtherVersionsModels().equals(that.getDeOtherVersionsModels()) : that.getDeOtherVersionsModels() != null)
+        }
+        if( getLatestVerInd() != null ? !getLatestVerInd().equals( that.getLatestVerInd() ) : that.getLatestVerInd() != null )
+        {
             return false;
-        if (getClassifications() != null ? !getClassifications().equals(that.getClassifications()) : that.getClassifications() != null)
+        }
+        if( getDeletedInd() != null ? !getDeletedInd().equals( that.getDeletedInd() ) : that.getDeletedInd() != null )
+        {
             return false;
-        if (getCsRefDocModels() != null ? !getCsRefDocModels().equals(that.getCsRefDocModels()) : that.getCsRefDocModels() != null)
+        }
+        if( getBeginDate() != null ? !getBeginDate().equals( that.getBeginDate() ) : that.getBeginDate() != null )
+        {
             return false;
-        return !(getCsiRefDocModels() != null ? !getCsiRefDocModels().equals(that.getCsiRefDocModels()) : that.getCsiRefDocModels() != null);
+        }
+        if( getEndDate() != null ? !getEndDate().equals( that.getEndDate() ) : that.getEndDate() != null )
+        {
+            return false;
+        }
+        if( getOrigin() != null ? !getOrigin().equals( that.getOrigin() ) : that.getOrigin() != null )
+        {
+            return false;
+        }
+        if( getCdeId() != null ? !getCdeId().equals( that.getCdeId() ) : that.getCdeId() != null )
+        {
+            return false;
+        }
+        if( getQuestion() != null ? !getQuestion().equals( that.getQuestion() ) : that.getQuestion() != null )
+        {
+            return false;
+        }
+        if( getCsCsiData() != null ? !getCsCsiData().equals( that.getCsCsiData() ) : that.getCsCsiData() != null )
+        {
+            return false;
+        }
+        if( getCsCsiDesignations() != null ? !getCsCsiDesignations().equals( that.getCsCsiDesignations() ) : that.getCsCsiDesignations() != null )
+        {
+            return false;
+        }
+        if( getCsCsiDefinitions() != null ? !getCsCsiDefinitions().equals( that.getCsCsiDefinitions() ) : that.getCsCsiDefinitions() != null )
+        {
+            return false;
+        }
+        if( getUsageModels() != null ? !getUsageModels().equals( that.getUsageModels() ) : that.getUsageModels() != null )
+        {
+            return false;
+        }
+        if( getDeOtherVersionsModels() != null ? !getDeOtherVersionsModels().equals( that.getDeOtherVersionsModels() ) : that.getDeOtherVersionsModels() != null )
+        {
+            return false;
+        }
+        if( getClassifications() != null ? !getClassifications().equals( that.getClassifications() ) : that.getClassifications() != null )
+        {
+            return false;
+        }
+        if( getCsRefDocModels() != null ? !getCsRefDocModels().equals( that.getCsRefDocModels() ) : that.getCsRefDocModels() != null )
+        {
+            return false;
+        }
+        return !( getCsiRefDocModels() != null ? !getCsiRefDocModels().equals( that.getCsiRefDocModels() ) : that.getCsiRefDocModels() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getPreferredQuestionText() != null ? getPreferredQuestionText().hashCode() : 0;
-        result = 31 * result + (getContextName() != null ? getContextName().hashCode() : 0);
-        result = 31 * result + (getUsingContexts() != null ? getUsingContexts().hashCode() : 0);
-        result = 31 * result + (getRefDocs() != null ? getRefDocs().hashCode() : 0);
-        result = 31 * result + (getDesignationModels() != null ? getDesignationModels().hashCode() : 0);
-        result = 31 * result + (getDefinitionModels() != null ? getDefinitionModels().hashCode() : 0);
-        result = 31 * result + (getPublicId() != null ? getPublicId().hashCode() : 0);
-        result = 31 * result + (getIdseq() != null ? getIdseq().hashCode() : 0);
-        result = 31 * result + (getRegistrationStatus() != null ? getRegistrationStatus().hashCode() : 0);
-        result = 31 * result + (getValueDomainModel() != null ? getValueDomainModel().hashCode() : 0);
-        result = 31 * result + (getDec() != null ? getDec().hashCode() : 0);
-        result = 31 * result + (getContext() != null ? getContext().hashCode() : 0);
-        result = 31 * result + (getDeIdseq() != null ? getDeIdseq().hashCode() : 0);
-        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
-        result = 31 * result + (getConteIdseq() != null ? getConteIdseq().hashCode() : 0);
-        result = 31 * result + (getPreferredName() != null ? getPreferredName().hashCode() : 0);
-        result = 31 * result + (getVdIdseq() != null ? getVdIdseq().hashCode() : 0);
-        result = 31 * result + (getDecIdseq() != null ? getDecIdseq().hashCode() : 0);
-        result = 31 * result + (getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0);
-        result = 31 * result + (getAslName() != null ? getAslName().hashCode() : 0);
-        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
-        result = 31 * result + (getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0);
-        result = 31 * result + (getDeletedInd() != null ? getDeletedInd().hashCode() : 0);
-        result = 31 * result + (getBeginDate() != null ? getBeginDate().hashCode() : 0);
-        result = 31 * result + (getEndDate() != null ? getEndDate().hashCode() : 0);
-        result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
-        result = 31 * result + (getCdeId() != null ? getCdeId().hashCode() : 0);
-        result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
-        result = 31 * result + (getCsCsiData() != null ? getCsCsiData().hashCode() : 0);
-        result = 31 * result + (getCsCsiDesignations() != null ? getCsCsiDesignations().hashCode() : 0);
-        result = 31 * result + (getCsCsiDefinitions() != null ? getCsCsiDefinitions().hashCode() : 0);
-        result = 31 * result + (getUsageModels() != null ? getUsageModels().hashCode() : 0);
-        result = 31 * result + (getDeOtherVersionsModels() != null ? getDeOtherVersionsModels().hashCode() : 0);
-        result = 31 * result + (getClassifications() != null ? getClassifications().hashCode() : 0);
-        result = 31 * result + (getCsRefDocModels() != null ? getCsRefDocModels().hashCode() : 0);
-        result = 31 * result + (getCsiRefDocModels() != null ? getCsiRefDocModels().hashCode() : 0);
+        result = 31 * result + ( getContextName() != null ? getContextName().hashCode() : 0 );
+        result = 31 * result + ( getUsingContexts() != null ? getUsingContexts().hashCode() : 0 );
+        result = 31 * result + ( getRefDocs() != null ? getRefDocs().hashCode() : 0 );
+        result = 31 * result + ( getDesignationModels() != null ? getDesignationModels().hashCode() : 0 );
+        result = 31 * result + ( getDefinitionModels() != null ? getDefinitionModels().hashCode() : 0 );
+        result = 31 * result + ( getPublicId() != null ? getPublicId().hashCode() : 0 );
+        result = 31 * result + ( getIdseq() != null ? getIdseq().hashCode() : 0 );
+        result = 31 * result + ( getRegistrationStatus() != null ? getRegistrationStatus().hashCode() : 0 );
+        result = 31 * result + ( getValueDomainModel() != null ? getValueDomainModel().hashCode() : 0 );
+        result = 31 * result + ( getDec() != null ? getDec().hashCode() : 0 );
+        result = 31 * result + ( getContext() != null ? getContext().hashCode() : 0 );
+        result = 31 * result + ( getDeIdseq() != null ? getDeIdseq().hashCode() : 0 );
+        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
+        result = 31 * result + ( getConteIdseq() != null ? getConteIdseq().hashCode() : 0 );
+        result = 31 * result + ( getPreferredName() != null ? getPreferredName().hashCode() : 0 );
+        result = 31 * result + ( getVdIdseq() != null ? getVdIdseq().hashCode() : 0 );
+        result = 31 * result + ( getDecIdseq() != null ? getDecIdseq().hashCode() : 0 );
+        result = 31 * result + ( getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0 );
+        result = 31 * result + ( getAslName() != null ? getAslName().hashCode() : 0 );
+        result = 31 * result + ( getLongName() != null ? getLongName().hashCode() : 0 );
+        result = 31 * result + ( getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0 );
+        result = 31 * result + ( getDeletedInd() != null ? getDeletedInd().hashCode() : 0 );
+        result = 31 * result + ( getBeginDate() != null ? getBeginDate().hashCode() : 0 );
+        result = 31 * result + ( getEndDate() != null ? getEndDate().hashCode() : 0 );
+        result = 31 * result + ( getOrigin() != null ? getOrigin().hashCode() : 0 );
+        result = 31 * result + ( getCdeId() != null ? getCdeId().hashCode() : 0 );
+        result = 31 * result + ( getQuestion() != null ? getQuestion().hashCode() : 0 );
+        result = 31 * result + ( getCsCsiData() != null ? getCsCsiData().hashCode() : 0 );
+        result = 31 * result + ( getCsCsiDesignations() != null ? getCsCsiDesignations().hashCode() : 0 );
+        result = 31 * result + ( getCsCsiDefinitions() != null ? getCsCsiDefinitions().hashCode() : 0 );
+        result = 31 * result + ( getUsageModels() != null ? getUsageModels().hashCode() : 0 );
+        result = 31 * result + ( getDeOtherVersionsModels() != null ? getDeOtherVersionsModels().hashCode() : 0 );
+        result = 31 * result + ( getClassifications() != null ? getClassifications().hashCode() : 0 );
+        result = 31 * result + ( getCsRefDocModels() != null ? getCsRefDocModels().hashCode() : 0 );
+        result = 31 * result + ( getCsiRefDocModels() != null ? getCsiRefDocModels().hashCode() : 0 );
         return result;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "DataElementModel{" +
                 "preferredQuestionText='" + preferredQuestionText + '\'' +
                 ", contextName='" + contextName + '\'' +

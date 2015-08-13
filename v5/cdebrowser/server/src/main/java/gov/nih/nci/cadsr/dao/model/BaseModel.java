@@ -19,7 +19,7 @@ public abstract class BaseModel implements Serializable, Audit
     protected Timestamp createdDate;
     protected String modifiedBy;
     protected Timestamp modifiedDate;
-    protected  String formattedVersion;
+    protected String formattedVersion;
 
     public BaseModel()
     {
@@ -78,12 +78,12 @@ public abstract class BaseModel implements Serializable, Audit
     public void setFormattedVersion( String formattedVersion )
     {
         this.formattedVersion = formattedVersion;
-        setFormattedVersion(Float.valueOf(formattedVersion));
+        setFormattedVersion( Float.valueOf( formattedVersion ) );
     }
 
     public void setFormattedVersion( float formattedVersion )
     {
-        this.formattedVersion = Float.toString(formattedVersion);
+        this.formattedVersion = Float.toString( formattedVersion );
     }
 
     public String toString()
@@ -93,7 +93,8 @@ public abstract class BaseModel implements Serializable, Audit
         if( this.getDateCreated() == null )
         {
             sb.append( CaDSRConstants.ATTR_SEPARATOR + "dateCreated=null" );
-        } else
+        }
+        else
         {
             sb.append( CaDSRConstants.ATTR_SEPARATOR + "dateCreated=" + getDateCreated().toString() );
         }
@@ -102,7 +103,8 @@ public abstract class BaseModel implements Serializable, Audit
         if( this.getDateModified() == null )
         {
             sb.append( CaDSRConstants.ATTR_SEPARATOR + "dateModified=null" );
-        } else
+        }
+        else
         {
             sb.append( CaDSRConstants.ATTR_SEPARATOR + "dateModified=" + getDateModified().toString() );
         }

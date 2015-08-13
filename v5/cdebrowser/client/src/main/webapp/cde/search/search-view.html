@@ -1,27 +1,27 @@
 <div id="searchResults" data-ng-show="true">
 
     <div class="sortOrder">
-        <div class="sortOrder left" ng-repeat="(key,val) in tableParams.sorting()">Sort Order: {{sortNames[key]}}
+        <div class="sortOrder left" data-ng-repeat="(key,val) in tableParams.sorting()">XXX Sort Order: {{sortNames[key]}}
             [{{val}}]
         </div>
 
         <div class="sortOrder right">
-            <a href="#" ng-click="resetSortOrder()">Reset Sort Order</a>
+            <a href="#" data-ng-click="resetSortOrder()">XXX Reset Sort Order</a>
         </div>
     </div>
     <br/>
 
-    <div ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
+    <div data-ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
 
     <br/>
     <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
+        <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
     </script>
 
-    <table ng-table="tableParams" class="searchResultsTable">
-        <tr class="searchResultsTableTr" ng-repeat="result in $data">
+    <table data-ng-table="tableParams" class="searchResultsTable">
+        <tr class="searchResultsTableTr" data-ng-repeat="result in $data">
             <td header="'ng-table/headers/checkbox.html'">
-                <input type="checkbox" ng-model="checkboxes.items[result.publicId]">
+                <input type="checkbox" data-ng-model="checkboxes.items[result.publicId]">
             </td>
 
             <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">

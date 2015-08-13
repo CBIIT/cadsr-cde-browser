@@ -47,9 +47,9 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
                 " WHERE  cs_idseq = c_cs_idseq " +
                 " AND rl_name = 'HAS_A' " +
                 " AND p_cs_idseq = ?" +
-                " order by long_name  ";
+                " ORDER BY long_name  ";
 
-        logger.debug("getChildrenClassificationSchemesByCsId( String csId ) executing query " + sql + " (p_cs_idseq is " + csId + ")");
+        logger.debug( "getChildrenClassificationSchemesByCsId( String csId ) executing query " + sql + " (p_cs_idseq is " + csId + ")" );
 
 
         //sql = "select * from SBREXT.CABIO_CLASS_SCHEMES_VIEW WHERE CONTE_IDSEQ=? order by PREFERRED_DEFINITION";
@@ -65,7 +65,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public List<ClassificationSchemeModel> getAllClassificationSchemes()
     {
         List<ClassificationSchemeModel> results;
-        sql = "select * from SBR.CLASSIFICATION_SCHEMES WHERE ASL_NAME='RELEASED' order by lower(long_name)";
+        sql = "SELECT * FROM sbr.classification_schemes WHERE asl_name='RELEASED' ORDER BY LOWER(long_name)";
         results = getAll( sql, ClassificationSchemeModel.class );
         return results;
     }
@@ -79,7 +79,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     {
         List<ClassificationSchemeModel> results;
 
-        sql = "select * from SBR.CLASSIFICATION_SCHEMES where CONTE_IDSEQ=? and ASL_NAME='RELEASED' order by lower(LONG_NAME)";
+        sql = "SELECT * FROM sbr.classification_schemes WHERE conte_idseq=? AND asl_name='RELEASED' ORDER BY LOWER(long_name)";
 
         //logger.debug( "getClassificationSchemes" );
         logger.debug( ">>>>>>> " + sql.replace( "?", conteId ) );
@@ -95,9 +95,9 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     {
         Integer results;
 
-        sql = "select count(CS_IDSEQ) from SBR.CLASSIFICATION_SCHEMES_VIEW where CONTE_IDSEQ=? and ASL_NAME='RELEASED'";
+        sql = "SELECT COUNT(cs_idseq) FROM sbr.classification_schemes_view WHERE conte_idseq=? AND asl_name='RELEASED'";
         results = getOneInt( sql, conteId );
-        return (  results > 0 );
+        return ( results > 0 );
     }
 
 
@@ -109,15 +109,15 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public ClassificationSchemeModel getClassificationSchemeById( String contextId )
     {
 
-        sql = "select * from SBREXT.CABIO_CLASS_SCHEMES_VIEW WHERE CONTE_IDSEQ=?";
+        sql = "SELECT * FROM sbrext.cabio_class_schemes_view WHERE conte_idseq=?";
 
-        sql = "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
+        sql = "SELECT DISTINCT cs_idseq , preferred_name, long_name, " +
                 "preferred_definition, cstl_name,asl_name,conte_idseq " +
                 " FROM sbr.classification_Schemes_view" +
-                " WHERE CONTE_IDSEQ = ? " +
-                " and ASL_NAME = 'RELEASED' " +
-                " and CSTL_NAME != 'Publishing' " +
-                "  order by UPPER(long_name)  ";
+                " WHERE conte_idseq = ? " +
+                " AND asl_name = 'RELEASED' " +
+                " AND cstl_name != 'Publishing' " +
+                " ORDER BY UPPER(long_name)  ";
 
         //logger.warn( "SQL ["+ contextId +"]: " + sql );
         ClassificationSchemeModel results = query( sql, contextId, ClassificationSchemeModel.class );

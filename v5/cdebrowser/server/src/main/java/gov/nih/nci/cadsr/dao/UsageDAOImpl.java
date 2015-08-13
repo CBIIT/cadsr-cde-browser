@@ -36,7 +36,7 @@ public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO
                 ", NVL(proto.lead_org,'N/A') lead_org" +
                 ", crf.long_name form_name" +
                 ", crf.qtl_name form_usage_type" +
-                //      ", crf.qc_idseq crf_idseq " +
+ ", crf.qc_idseq form_idseq " +
                 //      ", proto.proto_idseq " +
                 //      ", que.de_idseq " +
                 ", que.long_name question_name " +

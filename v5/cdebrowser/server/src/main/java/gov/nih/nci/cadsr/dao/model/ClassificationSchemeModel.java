@@ -8,6 +8,7 @@
 package gov.nih.nci.cadsr.dao.model;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+
 import java.sql.Timestamp;
 
 public class ClassificationSchemeModel extends BaseModel
@@ -224,7 +225,7 @@ public class ClassificationSchemeModel extends BaseModel
     public void setVersion( String version )
     {
         this.version = version;
-        setFormattedVersion(  this.version );
+        setFormattedVersion( this.version );
     }
 
     public String getWorkflowStatusDesc()

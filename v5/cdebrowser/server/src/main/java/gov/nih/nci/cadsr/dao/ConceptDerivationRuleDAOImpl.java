@@ -14,12 +14,10 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by lavezzojl on 4/16/15.
- */
-public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implements ConceptDerivationRuleDAO {
+public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implements ConceptDerivationRuleDAO
+{
 
-    private Logger logger = LogManager.getLogger(DataElementConceptDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( DataElementConceptDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
     private PropertyDAO propertyDAO;
@@ -27,15 +25,17 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
 
 
     @Autowired
-    ConceptDerivationRuleDAOImpl( DataSource dataSource ) {
-        setDataSource(dataSource);
+    ConceptDerivationRuleDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
     @Override
-    public ConceptDerivationRuleModel getCDRByIdseq(String condrIdseq) throws EmptyResultDataAccessException {
-        String sql = "SELECT * FROM SBREXT.CON_DERIVATION_RULES_EXT WHERE CONDR_IDSEQ = ?";
-        ConceptDerivationRuleModel conceptDerivationRuleModel = jdbcTemplate.queryForObject(sql, new Object[] { condrIdseq }, new ConceptDerivationRuleMapper());
+    public ConceptDerivationRuleModel getCDRByIdseq( String condrIdseq ) throws EmptyResultDataAccessException
+    {
+        String sql = "SELECT * FROM sbrext.con_derivation_rules_ext WHERE condr_idseq = ?";
+        ConceptDerivationRuleModel conceptDerivationRuleModel = jdbcTemplate.queryForObject( sql, new Object[]{ condrIdseq }, new ConceptDerivationRuleMapper() );
         return conceptDerivationRuleModel;
     }
 
@@ -45,16 +45,18 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
      */
     public ConceptDerivationRuleModel getCDRByRepId( String repId )
     {
-        String sql = "SELECT CON_DERIVATION_RULES_EXT.* FROM sbrext.REPRESENTATIONS_EXT,CON_DERIVATION_RULES_EXT  WHERE sbrext.REPRESENTATIONS_EXT.REP_ID = ? AND CON_DERIVATION_RULES_EXT.condr_idseq = sbrext.REPRESENTATIONS_EXT.CONDR_IDSEQ";
+        String sql = "SELECT con_derivation_rules_ext.* FROM sbrext.representations_ext,con_derivation_rules_ext  WHERE sbrext.representations_ext.rep_id = ? AND con_derivation_rules_ext.condr_idseq = sbrext.representations_ext.condr_idseq";
         logger.debug( ">>>>>>> " + sql.replace( "?", repId ) );
         ConceptDerivationRuleModel conceptDerivationRuleModel = query( sql, repId, ConceptDerivationRuleModel.class );
         return conceptDerivationRuleModel;
     }
 
 
-    public final class ConceptDerivationRuleMapper extends BeanPropertyRowMapper<ConceptDerivationRuleModel> {
+    public final class ConceptDerivationRuleMapper extends BeanPropertyRowMapper<ConceptDerivationRuleModel>
+    {
 
-        public ConceptDerivationRuleModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public ConceptDerivationRuleModel mapRow( ResultSet rs, int rowNum ) throws SQLException
+        {
             ConceptDerivationRuleModel conceptDerivationRuleModel = new ConceptDerivationRuleModel();
             // don't know what needs to be mapped yet
             return conceptDerivationRuleModel;
