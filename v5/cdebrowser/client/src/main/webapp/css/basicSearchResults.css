@@ -192,21 +192,38 @@
     background-color: #336699;
     font-size: 8pt;
     margin-top: 10px;
-    color: #fff;
-}
-
-#footer td {
-    width: 21%;
-}
-
-#footer td.last {
-    width: 37%;
-}
-
-#footer .userName {
+    padding-top: 4px;
+    padding-bottom: 4px;
     color: #F7F7E6;
 }
 
-#footer a {
-    color: #F7F7E6
+#footer .links {
+
+    color: #F7F7E6;
 }
+
+#footer .userName {
+    position: relative;
+    left: 1%;
+    color: #F7F7E6;
+}
+
+#footer .PrivacyNotice {
+    position: relative;
+    left: 15%;
+    color: #F7F7E6;
+}
+
+#footer .version {
+    position: relative;
+    left: 25%;
+    color: #F7F7E6;
+}
+
+#footer .suggestions {
+    position: relative;
+    left: 35%;
+    color: #F7F7E6;
+}
+
+

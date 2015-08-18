@@ -50,6 +50,8 @@ public class BasicSearchController
     @ResponseBody
     public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType, @RequestParam( "programArea" ) int programArea )
     {
+        logger.debug("basicSearchWithProgramArea   query: " + query + "   field: " + field + "    queryType: " + queryType + "     programArea: " + programArea);
+
         BasicSearchNode[] results = null;
         try
         {
@@ -190,6 +192,8 @@ public class BasicSearchController
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
 
         String sql = dESearchQueryBuilder.getQueryStmt();
+        logger.debug("sql: " + sql);
+
         //If we could not build sql from the parameters return a empty search results
         if( sql == null )
         {
