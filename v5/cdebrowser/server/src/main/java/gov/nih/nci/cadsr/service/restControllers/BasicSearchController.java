@@ -31,38 +31,40 @@ public class BasicSearchController
     {
     }
 
-    @RequestMapping( value = "/basicSearch" )
+    @RequestMapping(value = "/basicSearch")
     @ResponseBody
-    public BasicSearchNode[] basicSearch( @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType )
+    public BasicSearchNode[] basicSearch( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType )
     {
         BasicSearchNode[] results = null;
         try
         {
             results = basicSearch( query, field, queryType, "" );
-        } catch( Exception e )
+        }
+        catch( Exception e )
         {
-            return createErrorNode( "Server Error:\nbasicSearch( " + query + ", " + field + ", " + queryType + " ) failed ", e );
+            return  createErrorNode( "Server Error:\nbasicSearch( " + query + ", " + field + ", " + queryType + " ) failed ", e );
         }
         return results;
     }
 
-    @RequestMapping( value = "/basicSearchWithProgramArea" )
+    @RequestMapping(value = "/basicSearchWithProgramArea")
     @ResponseBody
-    public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType, @RequestParam( "programArea" ) int programArea )
+    public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam("query") String query, @RequestParam("field") int field, @RequestParam("queryType") int queryType, @RequestParam("programArea") int programArea )
     {
-        logger.debug("basicSearchWithProgramArea   query: " + query + "   field: " + field + "    queryType: " + queryType + "     programArea: " + programArea);
-
         BasicSearchNode[] results = null;
         try
         {
             programAreaModelList = restControllerCommon.getProgramAreaList();
             results = basicSearch( query, field, queryType, getProgramAreaPalNameByIndex( programArea ) );
-        } catch( Exception e )
+        }
+        catch( Exception e )
         {
 
-            return createErrorNode( "Server Error:\nbasicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
+            return  createErrorNode( "Server Error:\nbasicSearchWithProgramArea: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
         }
         return results;
+
+
 
 
     }
@@ -82,105 +84,99 @@ public class BasicSearchController
 */
 
 
-    @RequestMapping( value = "/cdesByContext" )
+    @RequestMapping(value = "/cdesByContext")
     @ResponseBody
-    public BasicSearchNode[] getCDEsByContext( @RequestParam( "contextId" ) String contexId )
+    public BasicSearchNode[] getCDEsByContext( @RequestParam("contextId") String contexId )
     {
-        // Sample contextId   DCC52A25-A107-42D4-E040-BB89AD4346A7
-        // Check for bad values of contextId - defend against SQL Injection
-        if( contexId.matches( "^[0-9A-Za-z-]+$" ) )
-        {
-            logger.debug( "Good contexId: " + contexId );
-        } else
-        {
-            // Log this, as it may be an attempt to hack the SQL server.  Return null to the client
-            logger.warn("getCDEsByContext failed Bad contex ID [" + contexId + "]");
-            return null;
-            //return createErrorNode( "Server Error:\ngetCDEsByContext failed: Bad contex ID [" + contexId + "]", contexId );
-        }
-
         BasicSearchNode[] results = null;
         try
         {
             results = runCdeByContextQuery( contexId );
-            Exception e = new Exception();
-        } catch( Exception e )
+            Exception e = new Exception(  );
+        }
+        catch( Exception e )
         {
 
-            return createErrorNode( "Server Error:\ngetCDEsByContext failed ", e );
+            return  createErrorNode( "Server Error:\ngetCDEsByContext failed ", e );
         }
         return results;
     }
 
-    @RequestMapping( value = "/cdesByClassificationScheme" )
+    @RequestMapping(value = "/cdesByClassificationScheme")
     @ResponseBody
-    public BasicSearchNode[] getCDEsByClassificationScheme( @RequestParam( "classificationSchemeId" ) String classificationSchemeId )
+    public BasicSearchNode[] getCDEsByClassificationScheme( @RequestParam("classificationSchemeId") String classificationSchemeId )
     {
         BasicSearchNode[] results = null;
         try
         {
             results = runCdeByContextClassificationSchemeQuery( classificationSchemeId );
-        } catch( Exception e )
+        }
+        catch( Exception e )
         {
 
-            return createErrorNode( "Server Error:\ngetCDEsByClassificationScheme failed ", e );
+            return  createErrorNode( "Server Error:\ngetCDEsByClassificationScheme failed ", e );
         }
         return results;
     }
 
-    @RequestMapping( value = "/cdesByClassificationSchemeItem" )
+    @RequestMapping(value = "/cdesByClassificationSchemeItem")
     @ResponseBody
-    public BasicSearchNode[] getCDEsByClassificationSchemeItem( @RequestParam( "classificationSchemeItemId" ) String classificationSchemeItemId )
+    public BasicSearchNode[] getCDEsByClassificationSchemeItem( @RequestParam("classificationSchemeItemId") String classificationSchemeItemId )
     {
         BasicSearchNode[] results = null;
         try
         {
             results = runCdeByContextClassificationSchemeItemQuery( classificationSchemeItemId );
-        } catch( Exception e )
+        }
+        catch( Exception e )
         {
 
-            return createErrorNode( "Server Error:\ngetCDEsByClassificationSchemeItem failed ", e );
+            return  createErrorNode( "Server Error:\ngetCDEsByClassificationSchemeItem failed ", e );
         }
         return results;
     }
 
-    @RequestMapping( value = "/cdesByProtocol" )
+    @RequestMapping(value = "/cdesByProtocol")
     @ResponseBody
-    public BasicSearchNode[] getCDEsByProtocol( @RequestParam( "protocolId" ) String protocolId )
+    public BasicSearchNode[] getCDEsByProtocol( @RequestParam("protocolId") String protocolId )
     {
         BasicSearchNode[] results = null;
         try
         {
             results = runCdeByProtocolQuery( protocolId );
-        } catch( Exception e )
+        }
+        catch( Exception e )
         {
 
-            return createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
+            return  createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
         }
         return results;
     }
 
-    @RequestMapping( value = "/cdesByProtocolForm" )
+    @RequestMapping(value = "/cdesByProtocolForm")
     @ResponseBody
-    public BasicSearchNode[] getCDEsByProtocolForm( @RequestParam( "id" ) String id )
+    public BasicSearchNode[] getCDEsByProtocolForm( @RequestParam("id") String id )
     {
         BasicSearchNode[] results = null;
         try
         {
             results = runCdeByProtocolFormQuery( id );
-        } catch( Exception e )
+        }
+        catch( Exception e )
         {
 
-            return createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
+            return  createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
         }
         return results;
     }
 
 
+
     /**
-     * @param query       The text of the users search input.
-     * @param field       0=Name 1=PublicId
-     * @param queryType   0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE
+     *
+     * @param query The text of the users search input.
+     * @param field  0=Name 1=PublicId
+     * @param queryType 0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE
      * @param programArea Constrain a search to the specified Program Area, if programArea is empty, search all.
      * @return an array of BasicSearchNodes.
      */
@@ -192,8 +188,6 @@ public class BasicSearchController
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
 
         String sql = dESearchQueryBuilder.getQueryStmt();
-        logger.debug("sql: " + sql);
-
         //If we could not build sql from the parameters return a empty search results
         if( sql == null )
         {
@@ -239,13 +233,14 @@ public class BasicSearchController
         }
 
         // If the index is too high, the client has sent us an incorrect program area, log a warning, and return "All"
-        if( index > programAreaModelList.size() )
+        if(  index > programAreaModelList.size() )
         {
             logger.warn( "Client has requested in invalid Program area index [" + index + "] using All." );
             return ""; //All
         }
         return programAreaModelList.get( index - 1 ).getPalName();// -1 because the client uses 0 for all.
     }
+
 
 
     /**
@@ -289,23 +284,21 @@ public class BasicSearchController
         basicSearchDAO.setBasicSearchSql( sql );
         return basicSearchDAO.getAllContexts();
     }
-
     protected BasicSearchNode[] runCdeByContextQuery( String contexId )
     {
 
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder();
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
-        String sql = dESearchQueryBuilder.getQueryCDEsOwnedAndUsedByContext( contexId );
-        logger.debug( "runCdeByContextQuery: " + sql );
+        String  sql = dESearchQueryBuilder.getQueryCDEsOwnedAndUsedByContext( contexId );
+logger.debug("runCdeByContextQuery: " + sql);
         basicSearchDAO.setBasicSearchSql( sql );
         List<BasicSearchModel> results = basicSearchDAO.getAllContexts();
 
         return buildSearchResultsNodes( results );
     }
-
     protected BasicSearchNode[] runCdeByContextClassificationSchemeQuery( String classificationSchemeId )
     {
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder();
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
         String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationScheme( classificationSchemeId );
         //logger.debug( "SQL: " + sql );
@@ -317,7 +310,7 @@ public class BasicSearchController
 
     protected BasicSearchNode[] runCdeByContextClassificationSchemeItemQuery( String classificationSchemeItemId )
     {
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder();
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
         String sql = dESearchQueryBuilder.getQueryCdeByContextClassificationSchemeItem( classificationSchemeItemId );
         //logger.debug( "SQL: " + sql );
@@ -330,7 +323,7 @@ public class BasicSearchController
 
     protected BasicSearchNode[] runCdeByProtocolQuery( String protocolId )
     {
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder();
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
         String sql = dESearchQueryBuilder.getQueryCdeByProtocol( protocolId );
         //logger.debug( "SQL: " + sql );
@@ -340,10 +333,9 @@ public class BasicSearchController
         return buildSearchResultsNodes( results );
 
     }
-
     protected BasicSearchNode[] runCdeByProtocolFormQuery( String id )
     {
-        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder();
+        DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder(  );
 
         String sql = dESearchQueryBuilder.getQueryCdeByProtocolForm( id );
         //logger.debug( "SQL: " + sql );
@@ -356,21 +348,11 @@ public class BasicSearchController
 
     public BasicSearchNode[] createErrorNode( String text, Exception e )
     {
-        return createErrorNode( text, e.getMessage() );
-    }
-
-    public BasicSearchNode[] createErrorNode( String text )
-    {
-        return createErrorNode( text, "" );
-    }
-
-    public BasicSearchNode[] createErrorNode( String text, String logString )
-    {
-        logger.error( "createErrorNode: " + text + "  " + logString );
+        logger.error( "createErrorNode: " + text + e.getMessage() );
         BasicSearchNode[] errorNode = new BasicSearchNode[1];
         errorNode[0] = new BasicSearchNode();
         errorNode[0].setStatus( CaDSRConstants.ERROR );
-        errorNode[0].setLongName( text );
+        errorNode[0].setLongName( text  );
         return errorNode;
     }
 
@@ -401,6 +383,7 @@ public class BasicSearchController
     {
         this.programAreaModelList = programAreaModelList;
     }
+
 
 
 }

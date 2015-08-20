@@ -65,8 +65,6 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             return;
         }
 
-        query = StringUtils.sanitizeForSql( query);
-
         String vdFrom = "";
         String latestWhere = "";
         String fromClause = "";

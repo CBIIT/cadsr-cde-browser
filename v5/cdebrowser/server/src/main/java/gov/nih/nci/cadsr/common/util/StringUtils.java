@@ -437,28 +437,12 @@ public class StringUtils
     }
 
 
-    public static String sanitizeForSql( String text)
-    {
-        String cleanString = text;
-
-        // Anything escaped
-        cleanString = cleanString.replaceAll( "\\\\.?", " " );
-
-        // Possibly dangerous characters. or ASCII format hex
-        // " ' | & ; $ @ % ) ( > < + 0x..
-        cleanString = cleanString.replaceAll( "(?i)[\"\'\\|&;$@%)(><+]|0x..", " " );
-
-        // Cleanup possible extra spaces
-        cleanString = cleanString.replaceAll( " +", " " );
-        return cleanString;
-    }
-
     public static void main( String[] args )
     {
-        String str = "\"test xxx\\Q\' |AAA & BBB; (CCC) + III <stuff> +  $ddd EEE$ %FFFF% ggg@HHHH zzz 0x0a 0X0a 0x0A JJJJJ \\Q' \"\\";
+        String str = "\"test\"";
         String newStr = "\\\"";
         System.out.println( str );
-        String result = StringUtils.sanitizeForSql( str );
+        String result = StringUtils.strReplace( str, "\"", "\\\"" );
         System.out.println( result );
     }
 }

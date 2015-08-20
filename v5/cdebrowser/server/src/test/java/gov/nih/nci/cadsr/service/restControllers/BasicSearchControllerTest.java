@@ -163,7 +163,7 @@ public class BasicSearchControllerTest extends TestCase
         Gson gson = new GsonBuilder().create();
         String json = null;
 
-        System.out.println( "restDataFile: " + unitTestCommon.getTestDataDir() );
+        //System.out.println( "restDataFile: " + unitTestCommon.getTestDataDir() );
         try
         {
             String s = null;

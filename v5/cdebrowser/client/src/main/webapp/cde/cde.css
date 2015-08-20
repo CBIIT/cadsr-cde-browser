@@ -60,8 +60,14 @@
 }
 
 .tabNormal {
-    background-color: #336699;
+    background-color: #2b5681; /* color: #336699; */
     color: #ffffff;
+}
+
+.tabDisabled {
+    /*  I can't seem to over ride the ng-disabled background-color */
+    background-color: #ffff00;
+    color: #4a4a4a;
 }
 
 .dataElementViewTable {
@@ -94,7 +100,7 @@
     */
     FONT-WEIGHT: bold;
     font-size: 10pt;
-    color: #336699;
+    color: #2b5681; /* color: #336699; */
     font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color: #cccc99;
     text-align: right;
@@ -102,11 +108,12 @@
 
 .dataElementHeading {
  /*
+ FIXMENOW Color contrast fail!  try 2b5681 
    width: 25%;
 */
     FONT-WEIGHT: bold;
     font-size: 10pt;
-    color: #336699;
+    color: #2b5681; /* color: #336699; */
     font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color: #cccc99;
     text-align: left;
@@ -116,7 +123,7 @@
     width: 25%;
     FONT-WEIGHT: bold;
     font-size: 10pt;
-    color: #336699;
+    color: #2b5681; /* color: #336699; */
     font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color:#fff;
     text-align: left;
@@ -131,7 +138,7 @@
 .cdeDetailsSubHeadingTable {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 14pt;
-    color: #336699;
+    color: #2b5681; /* color: #336699; */
     width: 90%;
     border: none;
     font-weight: bold
@@ -140,7 +147,7 @@
 .cdeDetailsSubHeading {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 14pt;
-    color: #336699;
+    color: #2b5681; /* color: #336699; */
     background-color: #fff;
     border: none;
     font-weight: bold
@@ -149,7 +156,7 @@
 .cdeDetailsSubSubHeading {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 10pt;
-    color: #336699;
+    color: #2b5681; /* color: #336699; */
     background-color: #f7f7e7;
     border: none;
     font-weight: bold
