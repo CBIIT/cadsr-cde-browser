@@ -24,7 +24,7 @@
 <div class="top-left-logo">
     <a href="http://www.cancer.gov/" target="_blank">
         <img alt="National Cancer Institute, Center for Biomedical Infomatics & Information Technology."
-             src="images/CBIIT-36px-Logo-COLOR.png">
+             src="images/CBIIT-36px-Logo-COLOR_contrast.png">
     </a>
 </div>
 
@@ -43,9 +43,8 @@
     <!-- JIRA says change link url
     <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
     -->
-    <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models"
-       target="_blank">
-        <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2.png">
+    <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models" target="_blank">
+        <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2_contrast.png">
     </a>
 </div>
 
@@ -308,11 +307,12 @@
                 -->
 
 
-                <button class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
+                <button  class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
                         data-ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-class="{
                         tabActive:   isActiveCdeTab(tabNumber),
-                        tabNormal:   (! isActiveCdeTab(tabNumber))
+                        tabNormal:   (! isActiveCdeTab(tabNumber)),
+                        tabDisabled: (tabsDisabled && tabNumber)
                         }"
                         data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
                 </button>
@@ -384,59 +384,27 @@
         <!-- =============================================================================== -->
 
         <div id="footer">
-            <span class="userName">User: Public User</span>
+            <table>
+                <tr>
+                    <td>User: <span class="userName">Public User</span></td>
+                    <td>
+                        <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
+                    </td>
+                    <td>
 
-            <span >
-                <a class="PrivacyNotice"  href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
-            </span>
-
-
-            <span >
-                <a class="version" data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version
-                    {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
-                </a>
-            </span>
-
-            <span  class="suggestions">
-                Please send comments and suggestions to <a class="links" href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
-            </span>
+                        <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version
+                            {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
+                        </a>
+                        <!--
+                               <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
+                        -->
+                    </td>
+                    <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
+                    </td>
+                </tr>
+            </table>
             <!--
 
-
-                        <span class="name">
-                            <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version
-                               {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
-                            </a>
-                        </span>
-                       <span width="25%">
-                           Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
-                       </span>
-
-
-            -->
-
-
-
-            <!--           <table>
-                           <tr>
-                               <td>User: <span class="userName">Public User</span></td>
-                               <td>
-                                   <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
-                               </td>
-                               <td>
-
-                                   <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version
-                                       {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
-                                   </a>
-                                   &lt;!&ndash;
-                                          <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
-                                   &ndash;&gt;
-                               </td>
-                               <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
-                               </td>
-                           </tr>
-                       </table>
-           -->            <!--
                         <script type="text/ng-template" id="versionPopoverTemplate.html">
                             <div class="versionPopover">
                                 <label>Version:</label>
