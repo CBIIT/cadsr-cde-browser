@@ -16,6 +16,10 @@ ul {
     margin: 0;
 }
 
+.focus {
+    background: #ffff00;
+}
+
 a:link {
     color: #18344d;
 }

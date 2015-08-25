@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.service.model.cdeData.usage;
 
+import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 import gov.nih.nci.cadsr.dao.model.UsageModel;
 
 /**
@@ -7,17 +8,20 @@ import gov.nih.nci.cadsr.dao.model.UsageModel;
  */
 public class FormUsage
 {
-    private String protocolNumber ;
-    private String leadOrg ;
-    private String formName ;
-    private String questionName ;
-    private String formUsageType ;
+    private String protocolNumber;
+    private String leadOrg;
+    private String formName;
+    private String questionName;
+    private String formUsageType;
     private int publicId;
     private float version;
     private String formattedVersion;
     private String url;
+    private ToolOptionsModel formBuilderOptionsModel;
 
-    public FormUsage(UsageModel usageModel) {
+    public FormUsage( UsageModel usageModel, ToolOptionsModel toolOptionsModel )
+    {
+        this.formBuilderOptionsModel = toolOptionsModel;
         this.protocolNumber = usageModel.getProtocolNumber();
         this.leadOrg = usageModel.getLeadOrg();
         this.formName = usageModel.getFormName();
@@ -26,8 +30,17 @@ public class FormUsage
         this.publicId = usageModel.getPublicId();
         this.version = usageModel.getVersion();
         this.formattedVersion = usageModel.getFormattedVersion();
-        //FIXME: compose URL from properties/DB Values
-        this.url = "https://formbuilder-dev.nci.nih.gov/FormBuilder/formDetailsAction.do?method=getFormDetails&formIdSeq=" + usageModel.getFormIdseq();
+        this.url = formBuilderOptionsModel.getValue() + "/FormBuilder/formDetailsAction.do?method=getFormDetails&formIdSeq=" + usageModel.getFormIdseq();
+    }
+
+    public ToolOptionsModel getFormBuilderOptionsModel()
+    {
+        return formBuilderOptionsModel;
+    }
+
+    public void setFormBuilderOptionsModel( ToolOptionsModel formBuilderOptionsModel )
+    {
+        this.formBuilderOptionsModel = formBuilderOptionsModel;
     }
 
     public String getProtocolNumber()
@@ -110,11 +123,13 @@ public class FormUsage
         this.formattedVersion = formattedVersion;
     }
 
-    public String getUrl() {
+    public String getUrl()
+    {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl( String url )
+    {
         this.url = url;
     }
 }

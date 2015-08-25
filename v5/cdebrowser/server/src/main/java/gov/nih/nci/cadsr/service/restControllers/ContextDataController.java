@@ -60,8 +60,7 @@ public class ContextDataController
     {
     }
 
-
-    @RequestMapping(value = "/contextData")
+     @RequestMapping(value = "/contextData")
     @ResponseBody
     public ContextNode[] contextData()
     {

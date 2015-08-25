@@ -38,12 +38,20 @@
     </a>
 </div>
 
+<!-- ********************************************************************** -->
+<!-- ********************* Start of AngularJS control ********************* -->
+<!-- ********************************************************************** -->
+
+<div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" data-ng-cloak class="data-ng-cloak">
+
+
 <!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
 <div class="top2-left-logo">
     <!-- JIRA says change link url
     <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
     -->
-    <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models" target="_blank">
+    <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models"
+       target="_blank">
         <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2_contrast.png">
     </a>
 </div>
@@ -51,12 +59,12 @@
 <!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
 <div class="top2-center-logo">
     <span>
-        <a class="toolLinks" href="http://cadsradmin.nci.nih.gov" target="_blank">
+        <a class="toolLinks" href="{{admintoolToolHost}}" target="_blank">
             Admin Tool
         </a>&nbsp;
     </span>
     <span>
-        <a class="toolLinks" href="https://cdecurate.nci.nih.gov" target="_blank">
+        <a class="toolLinks" href="{{curationToolHost}}" target="_blank">
             Curation Tool
         </a>&nbsp;
     </span>
@@ -71,7 +79,7 @@
         </a>&nbsp;
     </span>
     <span>
-        <a class="toolLinks" href="https://cadsrsentinel.nci.nih.gov" target="_blank">
+        <a class="toolLinks" href="{{sentinelToolHost}}" target="_blank">
             Sentinel Tool
         </a>&nbsp;
     </span>
@@ -92,7 +100,7 @@
     <table Cellpadding=3 Cellspacing=0>
         <tr>
             <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top">
+                <a href="{{objectcartapiToolHost}}cdeCartAction.do?method=displayCDECart" target="_top">
                     <img src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
                          alt="CDE Cart button"
                             />
@@ -101,7 +109,7 @@
                 </a>
             </td>
             <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="/CDEBrowser/" target="_top">
+                <a href="cdebrowserClient/cdeBrowser.html" target="_top">
                     <img src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
                          alt="CDE Browser Home button"
                             />
@@ -111,7 +119,7 @@
             </td>
 
             <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="https://formbuilder.nci.nih.gov/FormBuilder/formSearchAction.do"
+                <a href="{{formbuilderToolHost}}/FormBuilder/formSearchAction.do"
                    target="_blank">
                     <img src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
                          alt="Form Builder button"
@@ -135,11 +143,6 @@
     </table>
 </div>
 
-<!-- ********************************************************************** -->
-<!-- ********************* Start of AngularJS control ********************* -->
-<!-- ********************************************************************** -->
-
-<div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" data-ng-cloak class="data-ng-cloak">
 
     <!-- ************ Status message at top ************ -->
     <div data-ng-class="{
@@ -307,13 +310,18 @@
                 -->
 
 
-                <button  class="cdeTabsLi" data-ng-disabled="tabsDisabled && tabNumber"
+                <button class="cdeTabsLi"
+                        data-ng-disabled="tabsDisabled && tabNumber"
+                        id="tab_" + tabNumber
                         data-ng-repeat="(tabNumber,tab) in tabs"
                         data-ng-class="{
                         tabActive:   isActiveCdeTab(tabNumber),
-                        tabNormal:   (! isActiveCdeTab(tabNumber)),
-                        tabDisabled: (tabsDisabled && tabNumber)
+                        tabNormal:   ( ( ! cdeTabHasFocus[tabNumber] ) && ( ! isActiveCdeTab( tabNumber ) ) ),
+                        tabDisabled: ( tabsDisabled && tabNumber) ,
+                        tabFocused:  ( ( cdeTabHasFocus[tabNumber] ) && ( ! isActiveCdeTab( tabNumber ) ) )
                         }"
+                        data-ng-blur="lostFocus(tabNumber)"
+                        data-ng-focus="gotFocus(tabNumber)"
                         data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
                 </button>
 

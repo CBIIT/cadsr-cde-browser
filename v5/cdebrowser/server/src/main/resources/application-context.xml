@@ -33,7 +33,7 @@
         <property name="permissibleValuesDAO" ref="permissibleValuesDAO"/>
         <property name="representationConceptsDAO" ref="representationConceptsDAO"/>
         <property name="valueDomainConceptDAO" ref="valueDomainConceptDAO"/>
-
+        <property name="toolOptionsDAO" ref="toolOptionsDAO"/>
         <property name="dataElementDerivationDAO" ref="dataElementDerivationDAO"/>
         <property name="objectClassConceptDAO" ref="objectClassConceptDAO"/>
         <property name="conceptDAO" ref="conceptDAO"/>
@@ -54,6 +54,10 @@
         <property name="protocolFormDAO" ref="protocolFormDAO"/>
         <property name="protocolDAO" ref="protocolDAO"/>
         <property name="restControllerCommon" ref="resControllerCommon"/>
+    </bean>
+
+    <bean id="tierHostController" class="gov.nih.nci.cadsr.service.restControllers.TierHostController">
+        <property name="toolOptionsDAO" ref="toolOptionsDAO"/>
     </bean>
 
     <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
@@ -142,9 +146,10 @@
 
     </bean>
 
+    <bean id="toolOptionsDAO" class="gov.nih.nci.cadsr.dao.ToolOptionsDAOImpl" parent="abstractDao"/>
 
-
-    <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl" parent="abstractDao">
+    <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl"
+          parent="abstractDao">
         <property name="representationDAO" ref="representationDAO"/>
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
         <property name="conceptDAO" ref="conceptDAO"/>
@@ -167,7 +172,6 @@
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>
     </bean>
-
 
 
 </beans>

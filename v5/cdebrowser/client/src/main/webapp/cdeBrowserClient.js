@@ -8,10 +8,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.haveSearchResults = false;
     $scope.showCdeSearchResults = true;
     $scope.searchResults = [];
+    $scope.cdeTabHasFocus = [];
     $scope.tabsDisabled = true;
     $scope.NORMAL = 0;
     $scope.BIG = 1;
     $scope.ERROR = 2;
+
+
+
     window.scope = $scope;
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
@@ -136,6 +140,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
          */
         return cdeTabNumber == $scope.currentCdeTab;
         //return true;
+    };
+
+    $scope.gotFocus = function (tabnumber) {
+        //$scope.changeView(tabnumber);
+        $scope.cdeTabHasFocus[tabnumber] = true;
+        console.log("gotFocus: " + tabnumber);
+    };
+
+    $scope.lostFocus = function (tabnumber) {
+        $scope.cdeTabHasFocus[tabnumber] = false;
+        console.log("lostFocus: " + tabnumber);
     };
 
     $scope.changeView = function (tabnumber, tab) {
@@ -350,10 +365,84 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
 
         console.log("End dataLoad: " + dataSource);
-
     };
 
-    $scope.versionData = function() {
+    // Get the urls for the tools we link to from this page.  I got all that where in the database, although we do not use them all
+    $scope.getToolHosts = function () {
+        var restService = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/getAllToolHost"
+
+        $http.get(restService).success(function (response) {
+
+            for( var i = 0; i < response.length; i++)
+            {
+                if( response[i].toolName =="CURATION" )
+                {
+                    $scope.curationToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="caDSR" )
+                {
+                    $scope.cadsrToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="CADSRAPI" )
+                {
+                    $scope.cadsrapiToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="EVS" )
+                {
+                    $scope.evsToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="FREESTYLE" )
+                {
+                    $scope.freestyleToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="SENTINEL" )
+                {
+                    $scope.sentinelToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="BROWSER" )
+                {
+                    $scope.browserToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="EVSAPI" )
+                {
+                    $scope.evsapiToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="FormBuilder" )
+                {
+                    $scope.formbuilderToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="UMLBrowser" )
+                {
+                    $scope.umlbrowserToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="AdminTool" )
+                {
+                    $scope.admintoolToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="CDEBrowser" )
+                {
+                    $scope.cdebrowserToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="EVSBrowser" )
+                {
+                    $scope.evsbrowserToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="ObjectCartAPI" )
+                {
+                    $scope.objectcartapiToolHost = response[i].value;
+                }
+                else if( response[i].toolName =="PasswordChangeStation" )
+                {
+                    $scope.passwordchangestationToolHost = response[i].value;
+                }
+
+            }
+
+        });
+    };
+
+
+        $scope.versionData = function() {
         $http.get("version.json").success(function (response) {
             console.log("GOOD: " + response);
             $scope.versionPopover = response;
@@ -417,5 +506,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.hideContexts();
     $scope.dataLoadFromServer();
     $scope.versionData();
+    $scope.getToolHosts();
 
 });

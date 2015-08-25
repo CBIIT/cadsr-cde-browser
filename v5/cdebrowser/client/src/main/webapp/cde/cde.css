@@ -70,6 +70,18 @@
     color: #4a4a4a;
 }
 
+.tabFocused {
+    border-top-width: 3px;
+    border-top-color: #000;
+
+    border-right-width: 3px;
+    border-right-color:  #000;
+
+    background-color: #2b5681; /* color: #336699; */
+    color: #ffffbd;
+
+}
+
 .dataElementViewTable {
 
     width: 90%;

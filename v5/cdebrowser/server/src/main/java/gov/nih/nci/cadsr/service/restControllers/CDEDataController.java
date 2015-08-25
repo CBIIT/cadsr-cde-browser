@@ -43,6 +43,7 @@ public class CDEDataController
     private PropertyConceptDAOImpl propertyConceptDAO;
     private ValueDomainConceptDAOImpl valueDomainConceptDAO;
     private ConceptDAOImpl conceptDAO;
+    private ToolOptionsDAOImpl toolOptionsDAO;
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
@@ -520,12 +521,14 @@ public class CDEDataController
         List<FormUsage> formUsages = new ArrayList<>();
         usage.setFormUsages( formUsages );
 
-        //dataElementModel.getUsingContexts()
+        // Get FormBuilder host for links in "Public Id" column
+        ToolOptionsModel formBuilderOptions = getToolOptionsDAO().getToolOptionsByToolNameAndProperty("FormBuilder", "URL");
+
         if( dataElementModel.getUsageModels() != null && dataElementModel.getUsageModels().size() > 0 )
         {
             for( UsageModel usageModel : dataElementModel.getUsageModels() )
             {
-                formUsages.add( new FormUsage( usageModel ) );
+                formUsages.add( new FormUsage( usageModel, formBuilderOptions ) );
             }
         } else
         {
@@ -678,6 +681,16 @@ public class CDEDataController
     public void setValueDomainConceptDAO( ValueDomainConceptDAOImpl valueDomainConceptDAO )
     {
         this.valueDomainConceptDAO = valueDomainConceptDAO;
+    }
+
+    public ToolOptionsDAOImpl getToolOptionsDAO()
+    {
+        return toolOptionsDAO;
+    }
+
+    public void setToolOptionsDAO( ToolOptionsDAOImpl toolOptionsDAO )
+    {
+        this.toolOptionsDAO = toolOptionsDAO;
     }
 
     /////////////////////////////////////////////////////

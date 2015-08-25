@@ -109,7 +109,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     public ClassificationSchemeModel getClassificationSchemeById( String contextId )
     {
 
-        sql = "SELECT * FROM sbrext.cabio_class_schemes_view WHERE conte_idseq=?";
+        //sql = "SELECT * FROM sbrext.cabio_class_schemes_view WHERE conte_idseq=?";
 
         sql = "SELECT DISTINCT cs_idseq , preferred_name, long_name, " +
                 "preferred_definition, cstl_name,asl_name,conte_idseq " +
