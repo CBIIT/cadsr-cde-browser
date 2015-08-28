@@ -241,7 +241,7 @@ public class BasicSearchController
         // If the index is too high, the client has sent us an incorrect program area, log a warning, and return "All"
         if( index > programAreaModelList.size() )
         {
-            logger.warn( "Client has requested in invalid Program area index [" + index + "] using All." );
+            logger.debug( "Client has requested in invalid Program area index [" + index + "] using All." );
             return ""; //All
         }
         return programAreaModelList.get( index - 1 ).getPalName();// -1 because the client uses 0 for all.

@@ -37,7 +37,12 @@ a:hover {
 }
 
 /*  Testing */
-.OraHeaderSubSub {font-family:Arial, Helvetica, Geneva, sans-serif; font-size: 12pt; color:#336699; font-weight:bold}
+.OraHeaderSubSub {
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 12pt;
+    color: #336699;
+    font-weight: bold
+}
 
 /* The initial loading message or error message  */
 .bigMessage {
@@ -72,11 +77,11 @@ a:hover {
     height: 90px;
 }
 
-
 /* The four round buttons - top right */
 .roundButton {
     font-size: 10pt;
 }
+
 .roundButton a {
     background-color: #fff;
     color: #a52a2a;
@@ -86,7 +91,6 @@ a:hover {
 .toolLinks:link, .toolLinks:visited, .toolLinks:active, .toolLinks:hover {
     color: #663300;
 }
-
 
 /* Search results pane to the right of the Tree menu pane  */
 .resultsDisplay {
@@ -165,14 +169,13 @@ a:hover {
     background-color: #336699;
 }
 
-
-
 /* top row of logos and links */
 .top-left-logo {
     position: absolute;
     left: 10px;
     top: 4px;
 }
+
 .top-center-logo {
     position: absolute;
     right: 256px;
@@ -186,7 +189,7 @@ a:hover {
 }
 
 /*  No line under the text/link "U.S. National Institutes of Health | www.cancer.gov" */
-.top-right-logo a{
+.top-right-logo a {
     text-decoration: none;
     font-size: 9pt;
 }
@@ -223,6 +226,15 @@ a:hover {
 
 .versionButton {
     color: #fff;
-        background: #336699;
+    background: #336699;
+}
 
+.versionNormal {
+    background: #00aa00;
+    color: #ffff00;
+
+}
+.versionFocused {
+    color: #00aa00;
+    background: #ffff00;
 }

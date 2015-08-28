@@ -45,19 +45,19 @@
 <div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" data-ng-cloak class="data-ng-cloak">
 
 
-<!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
-<div class="top2-left-logo">
-    <!-- JIRA says change link url
-    <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
-    -->
-    <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models"
-       target="_blank">
-        <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2_contrast.png">
-    </a>
-</div>
+    <!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
+    <div class="top2-left-logo">
+        <!-- JIRA says change link url
+        <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
+        -->
+        <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models"
+           target="_blank">
+            <img alt="CADSR logo" src="icons/iconSet0/caDSR_logo2_contrast.png">
+        </a>
+    </div>
 
-<!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
-<div class="top2-center-logo">
+    <!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
+    <div class="top2-center-logo">
     <span>
         <a class="toolLinks" href="{{admintoolToolHost}}" target="_blank">
             Admin Tool
@@ -93,55 +93,55 @@
             Available Downloads
         </a>&nbsp;
     </span>
-</div>
+    </div>
 
-<!-- ** Four round buttons **  -->
-<div class="top2-right-logo">
-    <table Cellpadding=3 Cellspacing=0>
-        <tr>
-            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="{{objectcartapiToolHost}}cdeCartAction.do?method=displayCDECart" target="_top">
-                    <img src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
-                         alt="CDE Cart button"
-                            />
-                    <br>
-                    <span> &nbsp;CDE&nbsp;Cart</span>
-                </a>
-            </td>
-            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="cdebrowserClient/cdeBrowser.html" target="_top">
-                    <img src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
-                         alt="CDE Browser Home button"
-                            />
-                    <br>
-                    &nbsp;Home&nbsp;
-                </a>
-            </td>
+    <!-- ** Four round buttons **  -->
+    <div class="top2-right-logo">
+        <table Cellpadding=3 Cellspacing=0>
+            <tr>
+                <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                    <a href="{{objectcartapiToolHost}}cdeCartAction.do?method=displayCDECart" target="_top">
+                        <img src="icons/buttonIconSet0/brown/75_percent/circle_shopping_cart.png"
+                             alt="CDE Cart button"
+                                />
+                        <br>
+                        <span> &nbsp;CDE&nbsp;Cart</span>
+                    </a>
+                </td>
+                <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                    <a href="cdebrowserClient/cdeBrowser.html" target="_top">
+                        <img src="icons/buttonIconSet0/brown/75_percent/circle_home.png"
+                             alt="CDE Browser Home button"
+                                />
+                        <br>
+                        &nbsp;Home&nbsp;
+                    </a>
+                </td>
 
-            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="{{formbuilderToolHost}}/FormBuilder/formSearchAction.do"
-                   target="_blank">
-                    <img src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
-                         alt="Form Builder button"
-                            />
-                    <br>
-                    &nbsp;FormBuilder&nbsp;
-                </a>
-            </td>
+                <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                    <a href="{{formbuilderToolHost}}/FormBuilder/formSearchAction.do"
+                       target="_blank">
+                        <img src="icons/buttonIconSet0/brown/75_percent/circle_form.png"
+                             alt="Form Builder button"
+                                />
+                        <br>
+                        &nbsp;FormBuilder&nbsp;
+                    </a>
+                </td>
 
-            <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
-                   target="_blank">
-                    <img src="icons/buttonIconSet0/brown/75_percent/circle_help.png"
-                         alt="CDE Browser User Guide button"
-                            />
-                    <br>
-                    &nbsp;Help&nbsp;
-                </a>
-            </td>
-        </tr>
-    </table>
-</div>
+                <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                    <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                       target="_blank">
+                        <img src="icons/buttonIconSet0/brown/75_percent/circle_help.png"
+                             alt="CDE Browser User Guide button"
+                                />
+                        <br>
+                        &nbsp;Help&nbsp;
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 
     <!-- ************ Status message at top ************ -->
@@ -391,17 +391,20 @@
         <div class="cdeSearchTabsView" data-ng-view></div>
         <!-- =============================================================================== -->
 
-        <div id="footer">
+        <div id="footer" ng-init="focused=false">
             <table>
                 <tr>
                     <td>User: <span class="userName">Public User</span></td>
                     <td>
                         <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
                     </td>
-                    <td>
+                    <td title="Version: {{versionPopover.version}}&#10;SMC Tag: {{versionPopover.tag}}&#10;SMC Date: {{versionPopover.scm_date}}&#10;System Tier: {{versionPopover.tier}}">
 
-                        <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)">Version
-                            {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
+                        <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)"
+                           ng-focus="focused=true"
+                           ng-blur="focused=false"
+                         >
+                            Version {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}} Focus: {{focused}}
                         </a>
                         <!--
                                <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
