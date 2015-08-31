@@ -400,11 +400,8 @@
                     </td>
                     <td title="Version: {{versionPopover.version}}&#10;SMC Tag: {{versionPopover.tag}}&#10;SMC Date: {{versionPopover.scm_date}}&#10;System Tier: {{versionPopover.tier}}">
 
-                        <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)"
-                           ng-focus="focused=true"
-                           ng-blur="focused=false"
-                         >
-                            Version {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}} Focus: {{focused}}
+                        <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)" >
+                            Version {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
                         </a>
                         <!--
                                <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
