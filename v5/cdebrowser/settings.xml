@@ -16,13 +16,15 @@
     </pluginGroups>
     <profiles>
         <profile>
+            <!-- The defaults profile is just for development or ver generic builds. -->
             <id>defaults</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <!-- FIXMENOW this is a hasty tweak to mitigate a security breach, this will break my developers install script -->
                 <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}</connection-url>
+                <CADSR_DS_USER>DEV_USER</CADSR_DS_USER>
+                <CADSR_DS_PSWD>DEV_PW</CADSR_DS_PSWD>
                 <tier>set tier at build time</tier>
                 <!--
                   The scm_date gets updated in version.json by get_build_data.shi (called by Maven), which inserts the commit date of the source code in Git.
