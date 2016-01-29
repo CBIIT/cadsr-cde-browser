@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Leidos Biomedical Research, Inc.
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
 package gov.nih.nci.cadsr.common;

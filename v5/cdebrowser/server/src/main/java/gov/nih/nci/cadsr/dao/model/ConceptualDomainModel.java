@@ -1,9 +1,10 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lavezzojl on 4/22/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
-public class ConceptualDomainModel extends BaseModel {
+
+public class ConceptualDomainModel extends BaseModel
+{
 
 
     // these are all the fields used for now
@@ -13,39 +14,48 @@ public class ConceptualDomainModel extends BaseModel {
     private ContextModel contextModel;
     private String conteIdseq;
 
-    public ConceptualDomainModel() {
+    public ConceptualDomainModel()
+    {
     }
 
-    public String getPreferredName() {
+    public String getPreferredName()
+    {
         return preferredName;
     }
 
-    public void setPreferredName(String preferredName) {
+    public void setPreferredName( String preferredName )
+    {
         this.preferredName = preferredName;
     }
 
-    public Float getVersion() {
+    public Float getVersion()
+    {
         return version;
     }
 
-    public void setVersion(Float version) {
+    public void setVersion( Float version )
+    {
         this.version = version;
-        setFormattedVersion(  this.version );
+        setFormattedVersion( this.version );
     }
 
-    public int getCdId() {
+    public int getCdId()
+    {
         return cdId;
     }
 
-    public void setCdId(int cdId) {
+    public void setCdId( int cdId )
+    {
         this.cdId = cdId;
     }
 
-    public ContextModel getContextModel() {
+    public ContextModel getContextModel()
+    {
         return contextModel;
     }
 
-    public void setContextModel(ContextModel contextModel) {
+    public void setContextModel( ContextModel contextModel )
+    {
         this.contextModel = contextModel;
     }
 
@@ -60,7 +70,8 @@ public class ConceptualDomainModel extends BaseModel {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ConceptualDomainModel{" +
                 "preferredName='" + preferredName + '\'' +
                 ", version=" + version +
@@ -70,26 +81,28 @@ public class ConceptualDomainModel extends BaseModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ConceptualDomainModel)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o ) return true;
+        if( !( o instanceof ConceptualDomainModel ) ) return false;
 
-        ConceptualDomainModel that = (ConceptualDomainModel) o;
+        ConceptualDomainModel that = ( ConceptualDomainModel ) o;
 
-        if (getCdId() != that.getCdId()) return false;
-        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+        if( getCdId() != that.getCdId() ) return false;
+        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
             return false;
-        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
-        return !(getContextModel() != null ? !getContextModel().equals(that.getContextModel()) : that.getContextModel() != null);
+        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null ) return false;
+        return !( getContextModel() != null ? !getContextModel().equals( that.getContextModel() ) : that.getContextModel() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
-        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
+        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
         result = 31 * result + getCdId();
-        result = 31 * result + (getContextModel() != null ? getContextModel().hashCode() : 0);
+        result = 31 * result + ( getContextModel() != null ? getContextModel().hashCode() : 0 );
         return result;
     }
 }

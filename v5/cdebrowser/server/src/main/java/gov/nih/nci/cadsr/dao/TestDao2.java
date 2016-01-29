@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,7 +29,7 @@ public class TestDao2 // extends AbstractDAOOperations
     public void setDataSource( DataSource dataSource )
     {
         this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+        this.jdbcTemplate = new JdbcTemplate( this.dataSource );
 
     }
 
@@ -34,10 +37,6 @@ public class TestDao2 // extends AbstractDAOOperations
     {
         // setVersion("Version set in constructor");
     }
-
-
-
-
 
 
     public String getVersion()
@@ -64,11 +63,12 @@ public class TestDao2 // extends AbstractDAOOperations
             return "jdbcTemplate is null";
         }
 
-        int rowCount = this.jdbcTemplate.queryForObject("select count(*) from SBR.CONTEXTS", Integer.class);
+        int rowCount = this.jdbcTemplate.queryForObject( "select count(*) from SBR.CONTEXTS", Integer.class );
         results = "Got " + rowCount + " Contexts";
         return results;
 
     }
+
     public List<ContextModel> getAllContext()
     {
 
@@ -78,15 +78,16 @@ public class TestDao2 // extends AbstractDAOOperations
         }
         List<ContextModel> allContext = this.jdbcTemplate.query(
                 "select NAME, DESCRIPTION from SBR.CONTEXTS",
-                new RowMapper<ContextModel>() {
-                    public ContextModel mapRow(ResultSet rs, int rowNum) throws SQLException
+                new RowMapper<ContextModel>()
+                {
+                    public ContextModel mapRow( ResultSet rs, int rowNum ) throws SQLException
                     {
                         ContextModel context = new ContextModel();
                         context.setName( rs.getString( "NAME" ) );
                         context.setDescription( rs.getString( "DESCRIPTION" ) );
                         return context;
                     }
-                });
+                } );
 
         return allContext;
     }

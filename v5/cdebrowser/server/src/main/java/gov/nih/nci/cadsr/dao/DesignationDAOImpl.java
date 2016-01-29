@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.AcAttCsCsiModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
@@ -93,8 +96,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
             try
             {
                 designationModel.setContex( getContextDAO().getContextByIdseq( rs.getString( "CONTE_IDSEQ" ) ) );
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no Context found for Definition using context idseq: " + rs.getString( "CONTE_IDSEQ" ) );
             }
@@ -120,8 +122,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
                     designationModel.setCsiIdseqs( new HashSet<String>( 1 ) );
                     designationModel.getCsiIdseqs().add( CsCsiModel.UNCLASSIFIED );
                 }
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no CSIs found for Definition: " + rs.getString( "DESIG_IDSEQ" ) );
                 // this designation is unclassified

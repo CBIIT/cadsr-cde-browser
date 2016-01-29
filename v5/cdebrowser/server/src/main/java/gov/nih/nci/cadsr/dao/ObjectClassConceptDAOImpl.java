@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ConceptModel;
 import gov.nih.nci.cadsr.dao.model.ObjectClassConceptModel;
@@ -12,9 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lernermh on 7/6/15.
- */
 public class ObjectClassConceptDAOImpl extends AbstractDAOOperations implements ObjectClassConceptDAO
 {
     private Logger logger = LogManager.getLogger( ObjectClassConceptDAOImpl.class.getName() );
@@ -41,12 +41,12 @@ public class ObjectClassConceptDAOImpl extends AbstractDAOOperations implements 
         sql = "SELECT condr_idseq FROM object_classes_ext WHERE oc_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", objectClassConceptModel.getOcIdseq() ) );
         objectClassConceptModel = query( sql, objectClassConceptModel.getOcIdseq(), ObjectClassConceptModel.class );
-        logger.debug( ">>>>>>> condrIdseq: " + objectClassConceptModel .getCondrIdseq());
+        logger.debug( ">>>>>>> condrIdseq: " + objectClassConceptModel.getCondrIdseq() );
 
         sql = "SELECT name FROM con_derivation_rules_ext WHERE condr_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", objectClassConceptModel.getCondrIdseq() ) );
         objectClassConceptModel = query( sql, objectClassConceptModel.getCondrIdseq(), ObjectClassConceptModel.class );
-        logger.debug( ">>>>>>> Codes: " + objectClassConceptModel.getName());
+        logger.debug( ">>>>>>> Codes: " + objectClassConceptModel.getName() );
 
 
         return conceptDAO.getConceptByConceptCode( objectClassConceptModel.getName() );

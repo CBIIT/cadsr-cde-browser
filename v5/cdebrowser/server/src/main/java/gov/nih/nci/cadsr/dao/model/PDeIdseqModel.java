@@ -1,9 +1,9 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lernermh on 6/18/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
-public class PDeIdseqModel  extends BaseModel
+
+public class PDeIdseqModel extends BaseModel
 {
     private String pDeIdseq;
 

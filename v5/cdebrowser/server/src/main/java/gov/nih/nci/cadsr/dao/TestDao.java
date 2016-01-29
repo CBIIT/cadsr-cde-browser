@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.TestModel;
@@ -22,5 +25,5 @@ import java.util.List;
  */
 public interface TestDao
 {
-    void getRoewsByTable( int rowCount, final String tableName ,final List<String> rowList );
+    void getRoewsByTable( int rowCount, final String tableName, final List<String> rowList );
 }

@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.restControllers;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.*;
@@ -133,7 +136,8 @@ public class CDEDataController
         {
             dataElementDetails.setPublicId( -1 );
             logger.error( " dataElementModel.getPublicId() == null" );
-        } else
+        }
+        else
         {
             dataElementDetails.setPublicId( dataElementModel.getPublicId() );
         }
@@ -142,7 +146,8 @@ public class CDEDataController
         {
             dataElementDetails.setVersion( -1 );
             logger.error( " dataElementModel.getVersion() == null" );
-        } else
+        }
+        else
         {
             dataElementDetails.setVersion( dataElementModel.getVersion() );
         }
@@ -522,7 +527,7 @@ public class CDEDataController
         usage.setFormUsages( formUsages );
 
         // Get FormBuilder host for links in "Public Id" column
-        ToolOptionsModel formBuilderOptions = getToolOptionsDAO().getToolOptionsByToolNameAndProperty("FormBuilder", "URL");
+        ToolOptionsModel formBuilderOptions = getToolOptionsDAO().getToolOptionsByToolNameAndProperty( "FormBuilder", "URL" );
 
         if( dataElementModel.getUsageModels() != null && dataElementModel.getUsageModels().size() > 0 )
         {
@@ -530,7 +535,8 @@ public class CDEDataController
             {
                 formUsages.add( new FormUsage( usageModel, formBuilderOptions ) );
             }
-        } else
+        }
+        else
         {
             logger.error( "no usage models" );
         }
@@ -599,7 +605,8 @@ public class CDEDataController
         {
             selectedDataElement.setPublicId( -1 );
             logger.error( " dataElementModel.getPublicId() == null" );
-        } else
+        }
+        else
         {
             selectedDataElement.setPublicId( dataElementModel.getPublicId() );
         }
@@ -608,7 +615,8 @@ public class CDEDataController
         {
             selectedDataElement.setVersion( -1 );
             logger.error( " dataElementModel.getVersion() == null" );
-        } else
+        }
+        else
         {
             selectedDataElement.setVersion( dataElementModel.getVersion() );
         }

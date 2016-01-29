@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.DefinitionModel;
 
@@ -8,13 +11,15 @@ public class AlternateDefinition
     private String type;
     private String context;
 
-    public AlternateDefinition() {
+    public AlternateDefinition()
+    {
     }
 
-    public AlternateDefinition (DefinitionModel definitionModel) {
-        setName(definitionModel.getDefinition());
-        setContext(definitionModel.getContext().getName());
-        setType(definitionModel.getDeflName());
+    public AlternateDefinition( DefinitionModel definitionModel )
+    {
+        setName( definitionModel.getDefinition() );
+        setContext( definitionModel.getContext().getName() );
+        setType( definitionModel.getDeflName() );
     }
 
     public String getName()

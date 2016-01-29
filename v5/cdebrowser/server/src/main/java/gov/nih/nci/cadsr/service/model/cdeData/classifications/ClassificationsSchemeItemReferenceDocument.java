@@ -1,10 +1,10 @@
 package gov.nih.nci.cadsr.service.model.cdeData.classifications;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
 
-/**
- * Created by lernermh on 4/22/15.
- */
 public class ClassificationsSchemeItemReferenceDocument
 {
     private String csiName;
@@ -14,10 +14,12 @@ public class ClassificationsSchemeItemReferenceDocument
     private String url;
     private String attachments;
 
-    public ClassificationsSchemeItemReferenceDocument() {
+    public ClassificationsSchemeItemReferenceDocument()
+    {
     }
 
-    public ClassificationsSchemeItemReferenceDocument(CSIRefDocModel csiRefDocModel) {
+    public ClassificationsSchemeItemReferenceDocument( CSIRefDocModel csiRefDocModel )
+    {
         this.csiName = csiRefDocModel.getCsiName();
         this.documentName = csiRefDocModel.getDocumentName();
         this.documentType = csiRefDocModel.getDocumentType();

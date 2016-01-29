@@ -1,8 +1,8 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lernermh on 8/21/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
+
 public class ToolOptionsModel extends BaseModel
 {
     private String toolIdseq;

@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -62,7 +61,7 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
 
 
     @Override
-    public ContextModel getContextByIdseq(String contextIdseq)
+    public ContextModel getContextByIdseq( String contextIdseq )
     {
         String sql = "SELECT * FROM sbr.contexts WHERE conte_idseq=?";
         ContextModel results = query( sql, contextIdseq, ContextModel.class );

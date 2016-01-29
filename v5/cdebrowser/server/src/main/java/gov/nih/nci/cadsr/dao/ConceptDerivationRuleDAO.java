@@ -1,12 +1,13 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
 
-/**
- * Created by lavezzojl on 4/16/15.
- */
-public interface ConceptDerivationRuleDAO {
-    ConceptDerivationRuleModel getCDRByIdseq(String condrIdseq);
+public interface ConceptDerivationRuleDAO
+{
+    ConceptDerivationRuleModel getCDRByIdseq( String condrIdseq );
     ConceptDerivationRuleModel getCDRByRepId( String repId );
 
-    }
+}

@@ -1,14 +1,14 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
 
 import java.util.List;
 
-/**
- * Created by lernermh on 6/3/15.
- */
 public interface PermissibleValuesDAO
 {
-    List<PermissibleValuesModel> getPermissibleValuesByPvIdseq( String pvIdseq);
-    List<PermissibleValuesModel> getPermissibleValuesByVdIdseq( String vdIdseq);
+    List<PermissibleValuesModel> getPermissibleValuesByPvIdseq( String pvIdseq );
+    List<PermissibleValuesModel> getPermissibleValuesByVdIdseq( String vdIdseq );
 }

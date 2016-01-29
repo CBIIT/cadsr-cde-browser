@@ -1,13 +1,13 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.VdPvsModel;
 
 import java.util.List;
 
-/**
- * Created by lernermh on 6/3/15.
- */
 public interface VdPvsDAO
 {
-    List<VdPvsModel> getVdPvs( String vdIdseq);
+    List<VdPvsModel> getVdPvs( String vdIdseq );
 }

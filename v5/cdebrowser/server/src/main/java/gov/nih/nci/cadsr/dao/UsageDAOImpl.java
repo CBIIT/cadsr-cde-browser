@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.UsageModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -11,9 +14,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lavezzojl on 5/13/15.
- */
 public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO
 {
 
@@ -36,7 +36,7 @@ public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO
                 ", NVL(proto.lead_org,'N/A') lead_org" +
                 ", crf.long_name form_name" +
                 ", crf.qtl_name form_usage_type" +
- ", crf.qc_idseq form_idseq " +
+                ", crf.qc_idseq form_idseq " +
                 //      ", proto.proto_idseq " +
                 //      ", que.de_idseq " +
                 ", que.long_name question_name " +

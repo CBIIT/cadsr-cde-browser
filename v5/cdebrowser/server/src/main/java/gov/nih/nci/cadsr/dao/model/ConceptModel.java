@@ -1,8 +1,8 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lernermh on 6/9/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
+
 public class ConceptModel extends BaseModel
 {
     private String conceptName;

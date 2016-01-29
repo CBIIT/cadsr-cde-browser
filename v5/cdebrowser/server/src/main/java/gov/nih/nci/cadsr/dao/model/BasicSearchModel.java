@@ -1,8 +1,11 @@
 package gov.nih.nci.cadsr.dao.model;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
-public class BasicSearchModel  extends BaseModel
+public class BasicSearchModel extends BaseModel
 {
     String deIdseq;
     String dePreferredName;
@@ -101,7 +104,7 @@ public class BasicSearchModel  extends BaseModel
     public void setDeVersion( String deVersion )
     {
         //this will give us at least one digit to the right of the decimal place
-        this.deVersion = Float.toString( Float.valueOf(deVersion) );
+        this.deVersion = Float.toString( Float.valueOf( deVersion ) );
     }
 
     public String getDeUsedby()
@@ -207,13 +210,13 @@ public class BasicSearchModel  extends BaseModel
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "aslName=" + getAslName() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "deCdeid=" + getCdeid() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "deVersion=" + getDeVersion() );
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "deUsedby=" +  getDeUsedby());
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "deUsedby=" + getDeUsedby() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "vdIdseq=" + getVdIdseq() );
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "decIdseq=" +  getDecIdseq());
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "decIdseq=" + getDecIdseq() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "conteIdesq=" + getConteIdesq() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "preferredDefinition=" + getPreferredDefinition() );
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "registrationStatus=" +  getRegistrationStatus());
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "displayOrder=" +  getDisplayOrder());
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "registrationStatus=" + getRegistrationStatus() );
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "displayOrder=" + getDisplayOrder() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "workflowOrder=" + getDisplayOrder() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "cdeid=" + getCdeid() );
 

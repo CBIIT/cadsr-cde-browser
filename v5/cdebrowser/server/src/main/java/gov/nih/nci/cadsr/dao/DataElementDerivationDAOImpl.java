@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
@@ -12,9 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lernermh on 6/17/15.
- */
 public class DataElementDerivationDAOImpl extends AbstractDAOOperations implements DataElementDerivationDAO
 {
     public DataElementDerivationDAOImpl()

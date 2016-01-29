@@ -1,8 +1,8 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lerner on 7/29/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
+
 public class TestModel extends BaseModel
 {
     private String ACTL_NAME;
@@ -892,153 +892,594 @@ public class TestModel extends BaseModel
     public String toString()
     {
         StringBuilder str = new StringBuilder();
-        if( ! ACTL_NAME.isEmpty() ){str.append( "ACTL_NAME[" + ACTL_NAME + "]\n");}
-if( ! AL_NAME.isEmpty() ){str.append( "AL_NAME[" + AL_NAME + "]\n");}
-if( ! APCTL_NAME.isEmpty() ){str.append( "APCTL_NAME[" + APCTL_NAME + "]\n");}
-if( ! ASL_NAME.isEmpty() ){str.append( "ASL_NAME[" + ASL_NAME + "]\n");}
-if( ! ASL_NAME_OF_MATCH.isEmpty() ){str.append( "ASL_NAME_OF_MATCH[" + ASL_NAME_OF_MATCH + "]\n");}
-if( ! ASMP_NAME.isEmpty() ){str.append( "ASMP_NAME[" + ASMP_NAME + "]\n");}
-if( ! ATL_NAME.isEmpty() ){str.append( "ATL_NAME[" + ATL_NAME + "]\n");}
-if( ! ATTRIBUTE_NAME.isEmpty() ){str.append( "ATTRIBUTE_NAME[" + ATTRIBUTE_NAME + "]\n");}
-if( ! BA_EXT_NAME.isEmpty() ){str.append( "BA_EXT_NAME[" + BA_EXT_NAME + "]\n");}
-if( ! BA_NAME.isEmpty() ){str.append( "BA_NAME[" + BA_NAME + "]\n");}
-if( ! BP_NAME.isEmpty() ){str.append( "BP_NAME[" + BP_NAME + "]\n");}
-if( ! BQT_TABLE_NAME.isEmpty() ){str.append( "BQT_TABLE_NAME[" + BQT_TABLE_NAME + "]\n");}
-if( ! BRL_NAME.isEmpty() ){str.append( "BRL_NAME[" + BRL_NAME + "]\n");}
-if( ! BR_NAME.isEmpty() ){str.append( "BR_NAME[" + BR_NAME + "]\n");}
-if( ! BR_WORKBOOK_NAME.isEmpty() ){str.append( "BR_WORKBOOK_NAME[" + BR_WORKBOOK_NAME + "]\n");}
-if( ! BS_SHEET_NAME.isEmpty() ){str.append( "BS_SHEET_NAME[" + BS_SHEET_NAME + "]\n");}
-if( ! CDR_NAME.isEmpty() ){str.append( "CDR_NAME[" + CDR_NAME + "]\n");}
-if( ! CD_CONTE_NAME.isEmpty() ){str.append( "CD_CONTE_NAME[" + CD_CONTE_NAME + "]\n");}
-if( ! CD_PREFERRED_NAME.isEmpty() ){str.append( "CD_PREFERRED_NAME[" + CD_PREFERRED_NAME + "]\n");}
-if( ! CHAR_SET_NAME.isEmpty() ){str.append( "CHAR_SET_NAME[" + CHAR_SET_NAME + "]\n");}
-if( ! CHILD_GRP_NAME.isEmpty() ){str.append( "CHILD_GRP_NAME[" + CHILD_GRP_NAME + "]\n");}
-if( ! CLASS_GMENAMESPACE.isEmpty() ){str.append( "CLASS_GMENAMESPACE[" + CLASS_GMENAMESPACE + "]\n");}
-if( ! CMSL_NAME.isEmpty() ){str.append( "CMSL_NAME[" + CMSL_NAME + "]\n");}
-if( ! CODE.isEmpty() ){str.append( "CODE[" + CODE + "]\n");}
-if( ! CODEGEN_COMPATIBILITY_IND.isEmpty() ){str.append( "CODEGEN_COMPATIBILITY_IND[" + CODEGEN_COMPATIBILITY_IND + "]\n");}
-if( ! COLUMN_NAME.isEmpty() ){str.append( "COLUMN_NAME[" + COLUMN_NAME + "]\n");}
-if( ! CONCEPT_CODE.isEmpty() ){str.append( "CONCEPT_CODE[" + CONCEPT_CODE + "]\n");}
-if( ! CONCEPT_DEFINITION.isEmpty() ){str.append( "CONCEPT_DEFINITION[" + CONCEPT_DEFINITION + "]\n");}
-if( ! CONCEPT_NAME.isEmpty() ){str.append( "CONCEPT_NAME[" + CONCEPT_NAME + "]\n");}
-if( ! CONCEPT_VALUE.isEmpty() ){str.append( "CONCEPT_VALUE[" + CONCEPT_VALUE + "]\n");}
-if( ! CONTEXT_NAME.isEmpty() ){str.append( "CONTEXT_NAME[" + CONTEXT_NAME + "]\n");}
-if( ! CONTE_NAME.isEmpty() ){str.append( "CONTE_NAME[" + CONTE_NAME + "]\n");}
-if( ! CON_NAME.isEmpty() ){str.append( "CON_NAME[" + CON_NAME + "]\n");}
-if( ! CRTL_NAME.isEmpty() ){str.append( "CRTL_NAME[" + CRTL_NAME + "]\n");}
-if( ! CSITL_NAME.isEmpty() ){str.append( "CSITL_NAME[" + CSITL_NAME + "]\n");}
-if( ! CSI_NAME.isEmpty() ){str.append( "CSI_NAME[" + CSI_NAME + "]\n");}
-if( ! CSL_NAME.isEmpty() ){str.append( "CSL_NAME[" + CSL_NAME + "]\n");}
-if( ! CSTL_NAME.isEmpty() ){str.append( "CSTL_NAME[" + CSTL_NAME + "]\n");}
-if( ! CS_PREFERRED_NAME.isEmpty() ){str.append( "CS_PREFERRED_NAME[" + CS_PREFERRED_NAME + "]\n");}
-if( ! CTL_NAME.isEmpty() ){str.append( "CTL_NAME[" + CTL_NAME + "]\n");}
-if( ! DCTL_NAME.isEmpty() ){str.append( "DCTL_NAME[" + DCTL_NAME + "]\n");}
-if( ! DEC_LONG_NAME.isEmpty() ){str.append( "DEC_LONG_NAME[" + DEC_LONG_NAME + "]\n");}
-if( ! DEC_PREFERRED_NAME.isEmpty() ){str.append( "DEC_PREFERRED_NAME[" + DEC_PREFERRED_NAME + "]\n");}
-if( ! DEFL_NAME.isEmpty() ){str.append( "DEFL_NAME[" + DEFL_NAME + "]\n");}
-if( ! DETL_NAME.isEmpty() ){str.append( "DETL_NAME[" + DETL_NAME + "]\n");}
-if( ! DE_LONG_NAME.isEmpty() ){str.append( "DE_LONG_NAME[" + DE_LONG_NAME + "]\n");}
-if( ! DE_PREFERRED_NAME.isEmpty() ){str.append( "DE_PREFERRED_NAME[" + DE_PREFERRED_NAME + "]\n");}
-if( ! DHN_NAME.isEmpty() ){str.append( "DHN_NAME[" + DHN_NAME + "]\n");}
-if( ! DISPLAY_NAME.isEmpty() ){str.append( "DISPLAY_NAME[" + DISPLAY_NAME + "]\n");}
-if( ! DOC_NAME.isEmpty() ){str.append( "DOC_NAME[" + DOC_NAME + "]\n");}
-if( ! DOM_NAME.isEmpty() ){str.append( "DOM_NAME[" + DOM_NAME + "]\n");}
-if( ! DTL_NAME.isEmpty() ){str.append( "DTL_NAME[" + DTL_NAME + "]\n");}
-if( ! EU_USERNAME.isEmpty() ){str.append( "EU_USERNAME[" + EU_USERNAME + "]\n");}
-if( ! EXP_NAME.isEmpty() ){str.append( "EXP_NAME[" + EXP_NAME + "]\n");}
-if( ! FA_NAME_S.isEmpty() ){str.append( "FA_NAME_S[" + FA_NAME_S + "]\n");}
-if( ! FC_NAME_S.isEmpty() ){str.append( "FC_NAME_S[" + FC_NAME_S + "]\n");}
-if( ! FILE_NAME.isEmpty() ){str.append( "FILE_NAME[" + FILE_NAME + "]\n");}
-if( ! FNAME.isEmpty() ){str.append( "FNAME[" + FNAME + "]\n");}
-if( ! FORML_NAME.isEmpty() ){str.append( "FORML_NAME[" + FORML_NAME + "]\n");}
-if( ! FRAME_NAME.isEmpty() ){str.append( "FRAME_NAME[" + FRAME_NAME + "]\n");}
-if( ! FROM_ASL_NAME.isEmpty() ){str.append( "FROM_ASL_NAME[" + FROM_ASL_NAME + "]\n");}
-if( ! FULLY_QUALIFIED_CLASS_NAME.isEmpty() ){str.append( "FULLY_QUALIFIED_CLASS_NAME[" + FULLY_QUALIFIED_CLASS_NAME + "]\n");}
-if( ! FULLY_QUALIFIED_NAME.isEmpty() ){str.append( "FULLY_QUALIFIED_NAME[" + FULLY_QUALIFIED_NAME + "]\n");}
-if( ! FUN_EXT_NAME.isEmpty() ){str.append( "FUN_EXT_NAME[" + FUN_EXT_NAME + "]\n");}
-if( ! FUN_NAME.isEmpty() ){str.append( "FUN_NAME[" + FUN_NAME + "]\n");}
-if( ! GMENAMESPACE.isEmpty() ){str.append( "GMENAMESPACE[" + GMENAMESPACE + "]\n");}
-if( ! GRP_NAME.isEmpty() ){str.append( "GRP_NAME[" + GRP_NAME + "]\n");}
-if( ! GW_GATEWAY_NAME.isEmpty() ){str.append( "GW_GATEWAY_NAME[" + GW_GATEWAY_NAME + "]\n");}
-if( ! GW_PRODUCT_NAME.isEmpty() ){str.append( "GW_PRODUCT_NAME[" + GW_PRODUCT_NAME + "]\n");}
-if( ! HI_NAME.isEmpty() ){str.append( "HI_NAME[" + HI_NAME + "]\n");}
-if( ! HN_NAME.isEmpty() ){str.append( "HN_NAME[" + HN_NAME + "]\n");}
-if( ! IMAGE_USE_NAME.isEmpty() ){str.append( "IMAGE_USE_NAME[" + IMAGE_USE_NAME + "]\n");}
-if( ! KEY_NAME.isEmpty() ){str.append( "KEY_NAME[" + KEY_NAME + "]\n");}
-if( ! LAE_NAME.isEmpty() ){str.append( "LAE_NAME[" + LAE_NAME + "]\n");}
-if( ! LANGUAGENAME.isEmpty() ){str.append( "LANGUAGENAME[" + LANGUAGENAME + "]\n");}
-if( ! LL_NAME.isEmpty() ){str.append( "LL_NAME[" + LL_NAME + "]\n");}
-if( ! LNAME.isEmpty() ){str.append( "LNAME[" + LNAME + "]\n");}
-if( ! LONGNAME.isEmpty() ){str.append( "LONGNAME[" + LONGNAME + "]\n");}
-if( ! LONG_NAME.isEmpty() ){str.append( "LONG_NAME[" + LONG_NAME + "]\n");}
-if( ! MTL_NAME.isEmpty() ){str.append( "MTL_NAME[" + MTL_NAME + "]\n");}
-if( ! MT_NAME.isEmpty() ){str.append( "MT_NAME[" + MT_NAME + "]\n");}
-if( ! NAME1.isEmpty() ){str.append( "NAME1[" + NAME1 + "]\n");}
-if( ! NAME2.isEmpty() ){str.append( "NAME2[" + NAME2 + "]\n");}
-if( ! NAME.isEmpty() ){str.append( "NAME[" + NAME + "]\n");}
-if( ! OBJECT_NAME.isEmpty() ){str.append( "OBJECT_NAME[" + OBJECT_NAME + "]\n");}
-if( ! OBJ_NAME.isEmpty() ){str.append( "OBJ_NAME[" + OBJ_NAME + "]\n");}
-if( ! OCL_NAME.isEmpty() ){str.append( "OCL_NAME[" + OCL_NAME + "]\n");}
-if( ! ORG_NAME.isEmpty() ){str.append( "ORG_NAME[" + ORG_NAME + "]\n");}
-if( ! OVRID_LONG_NAME.isEmpty() ){str.append( "OVRID_LONG_NAME[" + OVRID_LONG_NAME + "]\n");}
-if( ! PAL_NAME.isEmpty() ){str.append( "PAL_NAME[" + PAL_NAME + "]\n");}
-if( ! POSTAL_CODE.isEmpty() ){str.append( "POSTAL_CODE[" + POSTAL_CODE + "]\n");}
-if( ! POSTCODE.isEmpty() ){str.append( "POSTCODE[" + POSTCODE + "]\n");}
-if( ! PREFERRED_NAME.isEmpty() ){str.append( "PREFERRED_NAME[" + PREFERRED_NAME + "]\n");}
-if( ! PRIV_NAME.isEmpty() ){str.append( "PRIV_NAME[" + PRIV_NAME + "]\n");}
-if( ! PROJECT_LONG_NAME.isEmpty() ){str.append( "PROJECT_LONG_NAME[" + PROJECT_LONG_NAME + "]\n");}
-if( ! PROJECT_NAME.isEmpty() ){str.append( "PROJECT_NAME[" + PROJECT_NAME + "]\n");}
-if( ! PROPL_NAME.isEmpty() ){str.append( "PROPL_NAME[" + PROPL_NAME + "]\n");}
-if( ! QCDL_NAME.isEmpty() ){str.append( "QCDL_NAME[" + QCDL_NAME + "]\n");}
-if( ! QS_DOC_NAME.isEmpty() ){str.append( "QS_DOC_NAME[" + QS_DOC_NAME + "]\n");}
-if( ! QTL_NAME.isEmpty() ){str.append( "QTL_NAME[" + QTL_NAME + "]\n");}
-if( ! QUALIFIER_NAME.isEmpty() ){str.append( "QUALIFIER_NAME[" + QUALIFIER_NAME + "]\n");}
-if( ! RDTL_NAME.isEmpty() ){str.append( "RDTL_NAME[" + RDTL_NAME + "]\n");}
-if( ! REF_DOC_NAME.isEmpty() ){str.append( "REF_DOC_NAME[" + REF_DOC_NAME + "]\n");}
-if( ! REL_DEC_CONTE_NAME.isEmpty() ){str.append( "REL_DEC_CONTE_NAME[" + REL_DEC_CONTE_NAME + "]\n");}
-if( ! REL_DEC_PREFERRED_NAME.isEmpty() ){str.append( "REL_DEC_PREFERRED_NAME[" + REL_DEC_PREFERRED_NAME + "]\n");}
-if( ! REL_NAME.isEmpty() ){str.append( "REL_NAME[" + REL_NAME + "]\n");}
-if( ! REP_CONTE_NAME.isEmpty() ){str.append( "REP_CONTE_NAME[" + REP_CONTE_NAME + "]\n");}
-if( ! REP_LONG_NAME.isEmpty() ){str.append( "REP_LONG_NAME[" + REP_LONG_NAME + "]\n");}
-if( ! REP_PREFERRED_NAME.isEmpty() ){str.append( "REP_PREFERRED_NAME[" + REP_PREFERRED_NAME + "]\n");}
-if( ! RL_NAME.isEmpty() ){str.append( "RL_NAME[" + RL_NAME + "]\n");}
-if( ! ROLE_NAME.isEmpty() ){str.append( "ROLE_NAME[" + ROLE_NAME + "]\n");}
-if( ! RRL_NAME.isEmpty() ){str.append( "RRL_NAME[" + RRL_NAME + "]\n");}
-if( ! SCHEMA_NAME.isEmpty() ){str.append( "SCHEMA_NAME[" + SCHEMA_NAME + "]\n");}
-if( ! SCL_NAME.isEmpty() ){str.append( "SCL_NAME[" + SCL_NAME + "]\n");}
-if( ! SDO_TABLE_NAME.isEmpty() ){str.append( "SDO_TABLE_NAME[" + SDO_TABLE_NAME + "]\n");}
-if( ! SEQ_NAME.isEmpty() ){str.append( "SEQ_NAME[" + SEQ_NAME + "]\n");}
-if( ! SHORT_NAME.isEmpty() ){str.append( "SHORT_NAME[" + SHORT_NAME + "]\n");}
-if( ! SOURCE_GMENAMESPACE.isEmpty() ){str.append( "SOURCE_GMENAMESPACE[" + SOURCE_GMENAMESPACE + "]\n");}
-if( ! SQ_NAME.isEmpty() ){str.append( "SQ_NAME[" + SQ_NAME + "]\n");}
-if( ! SRC_NAME.isEmpty() ){str.append( "SRC_NAME[" + SRC_NAME + "]\n");}
-if( ! SRS_NAME.isEmpty() ){str.append( "SRS_NAME[" + SRS_NAME + "]\n");}
-if( ! STAND_NAME.isEmpty() ){str.append( "STAND_NAME[" + STAND_NAME + "]\n");}
-if( ! STATUS_CODE.isEmpty() ){str.append( "STATUS_CODE[" + STATUS_CODE + "]\n");}
-if( ! SUBJ_NAME.isEmpty() ){str.append( "SUBJ_NAME[" + SUBJ_NAME + "]\n");}
-if( ! SUBMITTED_LONG_CDE_NAME.isEmpty() ){str.append( "SUBMITTED_LONG_CDE_NAME[" + SUBMITTED_LONG_CDE_NAME + "]\n");}
-if( ! SUB_PROJECT_NAME.isEmpty() ){str.append( "SUB_PROJECT_NAME[" + SUB_PROJECT_NAME + "]\n");}
-if( ! S_QTL_NAME.isEmpty() ){str.append( "S_QTL_NAME[" + S_QTL_NAME + "]\n");}
-if( ! TABLE_NAME.isEmpty() ){str.append( "TABLE_NAME[" + TABLE_NAME + "]\n");}
-if( ! TAB_NAME.isEmpty() ){str.append( "TAB_NAME[" + TAB_NAME + "]\n");}
-if( ! TARGET_GMENAMESPACE.isEmpty() ){str.append( "TARGET_GMENAMESPACE[" + TARGET_GMENAMESPACE + "]\n");}
-if( ! TOOL_NAME.isEmpty() ){str.append( "TOOL_NAME[" + TOOL_NAME + "]\n");}
-if( ! TO_ASL_NAME.isEmpty() ){str.append( "TO_ASL_NAME[" + TO_ASL_NAME + "]\n");}
-if( ! TSTL_NAME.isEmpty() ){str.append( "TSTL_NAME[" + TSTL_NAME + "]\n");}
-if( ! T_MODULE_NAME.isEmpty() ){str.append( "T_MODULE_NAME[" + T_MODULE_NAME + "]\n");}
-if( ! T_QTL_NAME.isEmpty() ){str.append( "T_QTL_NAME[" + T_QTL_NAME + "]\n");}
-if( ! T_QUESTION_NAME.isEmpty() ){str.append( "T_QUESTION_NAME[" + T_QUESTION_NAME + "]\n");}
-if( ! UA_NAME.isEmpty() ){str.append( "UA_NAME[" + UA_NAME + "]\n");}
-if( ! UIAL_NAME.isEmpty() ){str.append( "UIAL_NAME[" + UIAL_NAME + "]\n");}
-if( ! UITL_NAME.isEmpty() ){str.append( "UITL_NAME[" + UITL_NAME + "]\n");}
-if( ! UOML_NAME.isEmpty() ){str.append( "UOML_NAME[" + UOML_NAME + "]\n");}
-if( ! USER_NAME.isEmpty() ){str.append( "USER_NAME[" + USER_NAME + "]\n");}
-if( ! VD_CONTEXT_NAME.isEmpty() ){str.append( "VD_CONTEXT_NAME[" + VD_CONTEXT_NAME + "]\n");}
-if( ! VD_CONTE_NAME.isEmpty() ){str.append( "VD_CONTE_NAME[" + VD_CONTE_NAME + "]\n");}
-if( ! VD_DTL_NAME.isEmpty() ){str.append( "VD_DTL_NAME[" + VD_DTL_NAME + "]\n");}
-if( ! VD_LONG_NAME.isEmpty() ){str.append( "VD_LONG_NAME[" + VD_LONG_NAME + "]\n");}
-if( ! VD_PREFERRED_NAME.isEmpty() ){str.append( "VD_PREFERRED_NAME[" + VD_PREFERRED_NAME + "]\n");}
-if( ! VER_MIN_CODE_VER.isEmpty() ){str.append( "VER_MIN_CODE_VER[" + VER_MIN_CODE_VER + "]\n");}
+        if( !ACTL_NAME.isEmpty() )
+        {
+            str.append( "ACTL_NAME[" + ACTL_NAME + "]\n" );
+        }
+        if( !AL_NAME.isEmpty() )
+        {
+            str.append( "AL_NAME[" + AL_NAME + "]\n" );
+        }
+        if( !APCTL_NAME.isEmpty() )
+        {
+            str.append( "APCTL_NAME[" + APCTL_NAME + "]\n" );
+        }
+        if( !ASL_NAME.isEmpty() )
+        {
+            str.append( "ASL_NAME[" + ASL_NAME + "]\n" );
+        }
+        if( !ASL_NAME_OF_MATCH.isEmpty() )
+        {
+            str.append( "ASL_NAME_OF_MATCH[" + ASL_NAME_OF_MATCH + "]\n" );
+        }
+        if( !ASMP_NAME.isEmpty() )
+        {
+            str.append( "ASMP_NAME[" + ASMP_NAME + "]\n" );
+        }
+        if( !ATL_NAME.isEmpty() )
+        {
+            str.append( "ATL_NAME[" + ATL_NAME + "]\n" );
+        }
+        if( !ATTRIBUTE_NAME.isEmpty() )
+        {
+            str.append( "ATTRIBUTE_NAME[" + ATTRIBUTE_NAME + "]\n" );
+        }
+        if( !BA_EXT_NAME.isEmpty() )
+        {
+            str.append( "BA_EXT_NAME[" + BA_EXT_NAME + "]\n" );
+        }
+        if( !BA_NAME.isEmpty() )
+        {
+            str.append( "BA_NAME[" + BA_NAME + "]\n" );
+        }
+        if( !BP_NAME.isEmpty() )
+        {
+            str.append( "BP_NAME[" + BP_NAME + "]\n" );
+        }
+        if( !BQT_TABLE_NAME.isEmpty() )
+        {
+            str.append( "BQT_TABLE_NAME[" + BQT_TABLE_NAME + "]\n" );
+        }
+        if( !BRL_NAME.isEmpty() )
+        {
+            str.append( "BRL_NAME[" + BRL_NAME + "]\n" );
+        }
+        if( !BR_NAME.isEmpty() )
+        {
+            str.append( "BR_NAME[" + BR_NAME + "]\n" );
+        }
+        if( !BR_WORKBOOK_NAME.isEmpty() )
+        {
+            str.append( "BR_WORKBOOK_NAME[" + BR_WORKBOOK_NAME + "]\n" );
+        }
+        if( !BS_SHEET_NAME.isEmpty() )
+        {
+            str.append( "BS_SHEET_NAME[" + BS_SHEET_NAME + "]\n" );
+        }
+        if( !CDR_NAME.isEmpty() )
+        {
+            str.append( "CDR_NAME[" + CDR_NAME + "]\n" );
+        }
+        if( !CD_CONTE_NAME.isEmpty() )
+        {
+            str.append( "CD_CONTE_NAME[" + CD_CONTE_NAME + "]\n" );
+        }
+        if( !CD_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "CD_PREFERRED_NAME[" + CD_PREFERRED_NAME + "]\n" );
+        }
+        if( !CHAR_SET_NAME.isEmpty() )
+        {
+            str.append( "CHAR_SET_NAME[" + CHAR_SET_NAME + "]\n" );
+        }
+        if( !CHILD_GRP_NAME.isEmpty() )
+        {
+            str.append( "CHILD_GRP_NAME[" + CHILD_GRP_NAME + "]\n" );
+        }
+        if( !CLASS_GMENAMESPACE.isEmpty() )
+        {
+            str.append( "CLASS_GMENAMESPACE[" + CLASS_GMENAMESPACE + "]\n" );
+        }
+        if( !CMSL_NAME.isEmpty() )
+        {
+            str.append( "CMSL_NAME[" + CMSL_NAME + "]\n" );
+        }
+        if( !CODE.isEmpty() )
+        {
+            str.append( "CODE[" + CODE + "]\n" );
+        }
+        if( !CODEGEN_COMPATIBILITY_IND.isEmpty() )
+        {
+            str.append( "CODEGEN_COMPATIBILITY_IND[" + CODEGEN_COMPATIBILITY_IND + "]\n" );
+        }
+        if( !COLUMN_NAME.isEmpty() )
+        {
+            str.append( "COLUMN_NAME[" + COLUMN_NAME + "]\n" );
+        }
+        if( !CONCEPT_CODE.isEmpty() )
+        {
+            str.append( "CONCEPT_CODE[" + CONCEPT_CODE + "]\n" );
+        }
+        if( !CONCEPT_DEFINITION.isEmpty() )
+        {
+            str.append( "CONCEPT_DEFINITION[" + CONCEPT_DEFINITION + "]\n" );
+        }
+        if( !CONCEPT_NAME.isEmpty() )
+        {
+            str.append( "CONCEPT_NAME[" + CONCEPT_NAME + "]\n" );
+        }
+        if( !CONCEPT_VALUE.isEmpty() )
+        {
+            str.append( "CONCEPT_VALUE[" + CONCEPT_VALUE + "]\n" );
+        }
+        if( !CONTEXT_NAME.isEmpty() )
+        {
+            str.append( "CONTEXT_NAME[" + CONTEXT_NAME + "]\n" );
+        }
+        if( !CONTE_NAME.isEmpty() )
+        {
+            str.append( "CONTE_NAME[" + CONTE_NAME + "]\n" );
+        }
+        if( !CON_NAME.isEmpty() )
+        {
+            str.append( "CON_NAME[" + CON_NAME + "]\n" );
+        }
+        if( !CRTL_NAME.isEmpty() )
+        {
+            str.append( "CRTL_NAME[" + CRTL_NAME + "]\n" );
+        }
+        if( !CSITL_NAME.isEmpty() )
+        {
+            str.append( "CSITL_NAME[" + CSITL_NAME + "]\n" );
+        }
+        if( !CSI_NAME.isEmpty() )
+        {
+            str.append( "CSI_NAME[" + CSI_NAME + "]\n" );
+        }
+        if( !CSL_NAME.isEmpty() )
+        {
+            str.append( "CSL_NAME[" + CSL_NAME + "]\n" );
+        }
+        if( !CSTL_NAME.isEmpty() )
+        {
+            str.append( "CSTL_NAME[" + CSTL_NAME + "]\n" );
+        }
+        if( !CS_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "CS_PREFERRED_NAME[" + CS_PREFERRED_NAME + "]\n" );
+        }
+        if( !CTL_NAME.isEmpty() )
+        {
+            str.append( "CTL_NAME[" + CTL_NAME + "]\n" );
+        }
+        if( !DCTL_NAME.isEmpty() )
+        {
+            str.append( "DCTL_NAME[" + DCTL_NAME + "]\n" );
+        }
+        if( !DEC_LONG_NAME.isEmpty() )
+        {
+            str.append( "DEC_LONG_NAME[" + DEC_LONG_NAME + "]\n" );
+        }
+        if( !DEC_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "DEC_PREFERRED_NAME[" + DEC_PREFERRED_NAME + "]\n" );
+        }
+        if( !DEFL_NAME.isEmpty() )
+        {
+            str.append( "DEFL_NAME[" + DEFL_NAME + "]\n" );
+        }
+        if( !DETL_NAME.isEmpty() )
+        {
+            str.append( "DETL_NAME[" + DETL_NAME + "]\n" );
+        }
+        if( !DE_LONG_NAME.isEmpty() )
+        {
+            str.append( "DE_LONG_NAME[" + DE_LONG_NAME + "]\n" );
+        }
+        if( !DE_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "DE_PREFERRED_NAME[" + DE_PREFERRED_NAME + "]\n" );
+        }
+        if( !DHN_NAME.isEmpty() )
+        {
+            str.append( "DHN_NAME[" + DHN_NAME + "]\n" );
+        }
+        if( !DISPLAY_NAME.isEmpty() )
+        {
+            str.append( "DISPLAY_NAME[" + DISPLAY_NAME + "]\n" );
+        }
+        if( !DOC_NAME.isEmpty() )
+        {
+            str.append( "DOC_NAME[" + DOC_NAME + "]\n" );
+        }
+        if( !DOM_NAME.isEmpty() )
+        {
+            str.append( "DOM_NAME[" + DOM_NAME + "]\n" );
+        }
+        if( !DTL_NAME.isEmpty() )
+        {
+            str.append( "DTL_NAME[" + DTL_NAME + "]\n" );
+        }
+        if( !EU_USERNAME.isEmpty() )
+        {
+            str.append( "EU_USERNAME[" + EU_USERNAME + "]\n" );
+        }
+        if( !EXP_NAME.isEmpty() )
+        {
+            str.append( "EXP_NAME[" + EXP_NAME + "]\n" );
+        }
+        if( !FA_NAME_S.isEmpty() )
+        {
+            str.append( "FA_NAME_S[" + FA_NAME_S + "]\n" );
+        }
+        if( !FC_NAME_S.isEmpty() )
+        {
+            str.append( "FC_NAME_S[" + FC_NAME_S + "]\n" );
+        }
+        if( !FILE_NAME.isEmpty() )
+        {
+            str.append( "FILE_NAME[" + FILE_NAME + "]\n" );
+        }
+        if( !FNAME.isEmpty() )
+        {
+            str.append( "FNAME[" + FNAME + "]\n" );
+        }
+        if( !FORML_NAME.isEmpty() )
+        {
+            str.append( "FORML_NAME[" + FORML_NAME + "]\n" );
+        }
+        if( !FRAME_NAME.isEmpty() )
+        {
+            str.append( "FRAME_NAME[" + FRAME_NAME + "]\n" );
+        }
+        if( !FROM_ASL_NAME.isEmpty() )
+        {
+            str.append( "FROM_ASL_NAME[" + FROM_ASL_NAME + "]\n" );
+        }
+        if( !FULLY_QUALIFIED_CLASS_NAME.isEmpty() )
+        {
+            str.append( "FULLY_QUALIFIED_CLASS_NAME[" + FULLY_QUALIFIED_CLASS_NAME + "]\n" );
+        }
+        if( !FULLY_QUALIFIED_NAME.isEmpty() )
+        {
+            str.append( "FULLY_QUALIFIED_NAME[" + FULLY_QUALIFIED_NAME + "]\n" );
+        }
+        if( !FUN_EXT_NAME.isEmpty() )
+        {
+            str.append( "FUN_EXT_NAME[" + FUN_EXT_NAME + "]\n" );
+        }
+        if( !FUN_NAME.isEmpty() )
+        {
+            str.append( "FUN_NAME[" + FUN_NAME + "]\n" );
+        }
+        if( !GMENAMESPACE.isEmpty() )
+        {
+            str.append( "GMENAMESPACE[" + GMENAMESPACE + "]\n" );
+        }
+        if( !GRP_NAME.isEmpty() )
+        {
+            str.append( "GRP_NAME[" + GRP_NAME + "]\n" );
+        }
+        if( !GW_GATEWAY_NAME.isEmpty() )
+        {
+            str.append( "GW_GATEWAY_NAME[" + GW_GATEWAY_NAME + "]\n" );
+        }
+        if( !GW_PRODUCT_NAME.isEmpty() )
+        {
+            str.append( "GW_PRODUCT_NAME[" + GW_PRODUCT_NAME + "]\n" );
+        }
+        if( !HI_NAME.isEmpty() )
+        {
+            str.append( "HI_NAME[" + HI_NAME + "]\n" );
+        }
+        if( !HN_NAME.isEmpty() )
+        {
+            str.append( "HN_NAME[" + HN_NAME + "]\n" );
+        }
+        if( !IMAGE_USE_NAME.isEmpty() )
+        {
+            str.append( "IMAGE_USE_NAME[" + IMAGE_USE_NAME + "]\n" );
+        }
+        if( !KEY_NAME.isEmpty() )
+        {
+            str.append( "KEY_NAME[" + KEY_NAME + "]\n" );
+        }
+        if( !LAE_NAME.isEmpty() )
+        {
+            str.append( "LAE_NAME[" + LAE_NAME + "]\n" );
+        }
+        if( !LANGUAGENAME.isEmpty() )
+        {
+            str.append( "LANGUAGENAME[" + LANGUAGENAME + "]\n" );
+        }
+        if( !LL_NAME.isEmpty() )
+        {
+            str.append( "LL_NAME[" + LL_NAME + "]\n" );
+        }
+        if( !LNAME.isEmpty() )
+        {
+            str.append( "LNAME[" + LNAME + "]\n" );
+        }
+        if( !LONGNAME.isEmpty() )
+        {
+            str.append( "LONGNAME[" + LONGNAME + "]\n" );
+        }
+        if( !LONG_NAME.isEmpty() )
+        {
+            str.append( "LONG_NAME[" + LONG_NAME + "]\n" );
+        }
+        if( !MTL_NAME.isEmpty() )
+        {
+            str.append( "MTL_NAME[" + MTL_NAME + "]\n" );
+        }
+        if( !MT_NAME.isEmpty() )
+        {
+            str.append( "MT_NAME[" + MT_NAME + "]\n" );
+        }
+        if( !NAME1.isEmpty() )
+        {
+            str.append( "NAME1[" + NAME1 + "]\n" );
+        }
+        if( !NAME2.isEmpty() )
+        {
+            str.append( "NAME2[" + NAME2 + "]\n" );
+        }
+        if( !NAME.isEmpty() )
+        {
+            str.append( "NAME[" + NAME + "]\n" );
+        }
+        if( !OBJECT_NAME.isEmpty() )
+        {
+            str.append( "OBJECT_NAME[" + OBJECT_NAME + "]\n" );
+        }
+        if( !OBJ_NAME.isEmpty() )
+        {
+            str.append( "OBJ_NAME[" + OBJ_NAME + "]\n" );
+        }
+        if( !OCL_NAME.isEmpty() )
+        {
+            str.append( "OCL_NAME[" + OCL_NAME + "]\n" );
+        }
+        if( !ORG_NAME.isEmpty() )
+        {
+            str.append( "ORG_NAME[" + ORG_NAME + "]\n" );
+        }
+        if( !OVRID_LONG_NAME.isEmpty() )
+        {
+            str.append( "OVRID_LONG_NAME[" + OVRID_LONG_NAME + "]\n" );
+        }
+        if( !PAL_NAME.isEmpty() )
+        {
+            str.append( "PAL_NAME[" + PAL_NAME + "]\n" );
+        }
+        if( !POSTAL_CODE.isEmpty() )
+        {
+            str.append( "POSTAL_CODE[" + POSTAL_CODE + "]\n" );
+        }
+        if( !POSTCODE.isEmpty() )
+        {
+            str.append( "POSTCODE[" + POSTCODE + "]\n" );
+        }
+        if( !PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "PREFERRED_NAME[" + PREFERRED_NAME + "]\n" );
+        }
+        if( !PRIV_NAME.isEmpty() )
+        {
+            str.append( "PRIV_NAME[" + PRIV_NAME + "]\n" );
+        }
+        if( !PROJECT_LONG_NAME.isEmpty() )
+        {
+            str.append( "PROJECT_LONG_NAME[" + PROJECT_LONG_NAME + "]\n" );
+        }
+        if( !PROJECT_NAME.isEmpty() )
+        {
+            str.append( "PROJECT_NAME[" + PROJECT_NAME + "]\n" );
+        }
+        if( !PROPL_NAME.isEmpty() )
+        {
+            str.append( "PROPL_NAME[" + PROPL_NAME + "]\n" );
+        }
+        if( !QCDL_NAME.isEmpty() )
+        {
+            str.append( "QCDL_NAME[" + QCDL_NAME + "]\n" );
+        }
+        if( !QS_DOC_NAME.isEmpty() )
+        {
+            str.append( "QS_DOC_NAME[" + QS_DOC_NAME + "]\n" );
+        }
+        if( !QTL_NAME.isEmpty() )
+        {
+            str.append( "QTL_NAME[" + QTL_NAME + "]\n" );
+        }
+        if( !QUALIFIER_NAME.isEmpty() )
+        {
+            str.append( "QUALIFIER_NAME[" + QUALIFIER_NAME + "]\n" );
+        }
+        if( !RDTL_NAME.isEmpty() )
+        {
+            str.append( "RDTL_NAME[" + RDTL_NAME + "]\n" );
+        }
+        if( !REF_DOC_NAME.isEmpty() )
+        {
+            str.append( "REF_DOC_NAME[" + REF_DOC_NAME + "]\n" );
+        }
+        if( !REL_DEC_CONTE_NAME.isEmpty() )
+        {
+            str.append( "REL_DEC_CONTE_NAME[" + REL_DEC_CONTE_NAME + "]\n" );
+        }
+        if( !REL_DEC_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "REL_DEC_PREFERRED_NAME[" + REL_DEC_PREFERRED_NAME + "]\n" );
+        }
+        if( !REL_NAME.isEmpty() )
+        {
+            str.append( "REL_NAME[" + REL_NAME + "]\n" );
+        }
+        if( !REP_CONTE_NAME.isEmpty() )
+        {
+            str.append( "REP_CONTE_NAME[" + REP_CONTE_NAME + "]\n" );
+        }
+        if( !REP_LONG_NAME.isEmpty() )
+        {
+            str.append( "REP_LONG_NAME[" + REP_LONG_NAME + "]\n" );
+        }
+        if( !REP_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "REP_PREFERRED_NAME[" + REP_PREFERRED_NAME + "]\n" );
+        }
+        if( !RL_NAME.isEmpty() )
+        {
+            str.append( "RL_NAME[" + RL_NAME + "]\n" );
+        }
+        if( !ROLE_NAME.isEmpty() )
+        {
+            str.append( "ROLE_NAME[" + ROLE_NAME + "]\n" );
+        }
+        if( !RRL_NAME.isEmpty() )
+        {
+            str.append( "RRL_NAME[" + RRL_NAME + "]\n" );
+        }
+        if( !SCHEMA_NAME.isEmpty() )
+        {
+            str.append( "SCHEMA_NAME[" + SCHEMA_NAME + "]\n" );
+        }
+        if( !SCL_NAME.isEmpty() )
+        {
+            str.append( "SCL_NAME[" + SCL_NAME + "]\n" );
+        }
+        if( !SDO_TABLE_NAME.isEmpty() )
+        {
+            str.append( "SDO_TABLE_NAME[" + SDO_TABLE_NAME + "]\n" );
+        }
+        if( !SEQ_NAME.isEmpty() )
+        {
+            str.append( "SEQ_NAME[" + SEQ_NAME + "]\n" );
+        }
+        if( !SHORT_NAME.isEmpty() )
+        {
+            str.append( "SHORT_NAME[" + SHORT_NAME + "]\n" );
+        }
+        if( !SOURCE_GMENAMESPACE.isEmpty() )
+        {
+            str.append( "SOURCE_GMENAMESPACE[" + SOURCE_GMENAMESPACE + "]\n" );
+        }
+        if( !SQ_NAME.isEmpty() )
+        {
+            str.append( "SQ_NAME[" + SQ_NAME + "]\n" );
+        }
+        if( !SRC_NAME.isEmpty() )
+        {
+            str.append( "SRC_NAME[" + SRC_NAME + "]\n" );
+        }
+        if( !SRS_NAME.isEmpty() )
+        {
+            str.append( "SRS_NAME[" + SRS_NAME + "]\n" );
+        }
+        if( !STAND_NAME.isEmpty() )
+        {
+            str.append( "STAND_NAME[" + STAND_NAME + "]\n" );
+        }
+        if( !STATUS_CODE.isEmpty() )
+        {
+            str.append( "STATUS_CODE[" + STATUS_CODE + "]\n" );
+        }
+        if( !SUBJ_NAME.isEmpty() )
+        {
+            str.append( "SUBJ_NAME[" + SUBJ_NAME + "]\n" );
+        }
+        if( !SUBMITTED_LONG_CDE_NAME.isEmpty() )
+        {
+            str.append( "SUBMITTED_LONG_CDE_NAME[" + SUBMITTED_LONG_CDE_NAME + "]\n" );
+        }
+        if( !SUB_PROJECT_NAME.isEmpty() )
+        {
+            str.append( "SUB_PROJECT_NAME[" + SUB_PROJECT_NAME + "]\n" );
+        }
+        if( !S_QTL_NAME.isEmpty() )
+        {
+            str.append( "S_QTL_NAME[" + S_QTL_NAME + "]\n" );
+        }
+        if( !TABLE_NAME.isEmpty() )
+        {
+            str.append( "TABLE_NAME[" + TABLE_NAME + "]\n" );
+        }
+        if( !TAB_NAME.isEmpty() )
+        {
+            str.append( "TAB_NAME[" + TAB_NAME + "]\n" );
+        }
+        if( !TARGET_GMENAMESPACE.isEmpty() )
+        {
+            str.append( "TARGET_GMENAMESPACE[" + TARGET_GMENAMESPACE + "]\n" );
+        }
+        if( !TOOL_NAME.isEmpty() )
+        {
+            str.append( "TOOL_NAME[" + TOOL_NAME + "]\n" );
+        }
+        if( !TO_ASL_NAME.isEmpty() )
+        {
+            str.append( "TO_ASL_NAME[" + TO_ASL_NAME + "]\n" );
+        }
+        if( !TSTL_NAME.isEmpty() )
+        {
+            str.append( "TSTL_NAME[" + TSTL_NAME + "]\n" );
+        }
+        if( !T_MODULE_NAME.isEmpty() )
+        {
+            str.append( "T_MODULE_NAME[" + T_MODULE_NAME + "]\n" );
+        }
+        if( !T_QTL_NAME.isEmpty() )
+        {
+            str.append( "T_QTL_NAME[" + T_QTL_NAME + "]\n" );
+        }
+        if( !T_QUESTION_NAME.isEmpty() )
+        {
+            str.append( "T_QUESTION_NAME[" + T_QUESTION_NAME + "]\n" );
+        }
+        if( !UA_NAME.isEmpty() )
+        {
+            str.append( "UA_NAME[" + UA_NAME + "]\n" );
+        }
+        if( !UIAL_NAME.isEmpty() )
+        {
+            str.append( "UIAL_NAME[" + UIAL_NAME + "]\n" );
+        }
+        if( !UITL_NAME.isEmpty() )
+        {
+            str.append( "UITL_NAME[" + UITL_NAME + "]\n" );
+        }
+        if( !UOML_NAME.isEmpty() )
+        {
+            str.append( "UOML_NAME[" + UOML_NAME + "]\n" );
+        }
+        if( !USER_NAME.isEmpty() )
+        {
+            str.append( "USER_NAME[" + USER_NAME + "]\n" );
+        }
+        if( !VD_CONTEXT_NAME.isEmpty() )
+        {
+            str.append( "VD_CONTEXT_NAME[" + VD_CONTEXT_NAME + "]\n" );
+        }
+        if( !VD_CONTE_NAME.isEmpty() )
+        {
+            str.append( "VD_CONTE_NAME[" + VD_CONTE_NAME + "]\n" );
+        }
+        if( !VD_DTL_NAME.isEmpty() )
+        {
+            str.append( "VD_DTL_NAME[" + VD_DTL_NAME + "]\n" );
+        }
+        if( !VD_LONG_NAME.isEmpty() )
+        {
+            str.append( "VD_LONG_NAME[" + VD_LONG_NAME + "]\n" );
+        }
+        if( !VD_PREFERRED_NAME.isEmpty() )
+        {
+            str.append( "VD_PREFERRED_NAME[" + VD_PREFERRED_NAME + "]\n" );
+        }
+        if( !VER_MIN_CODE_VER.isEmpty() )
+        {
+            str.append( "VER_MIN_CODE_VER[" + VER_MIN_CODE_VER + "]\n" );
+        }
 
 
         return str.toString();

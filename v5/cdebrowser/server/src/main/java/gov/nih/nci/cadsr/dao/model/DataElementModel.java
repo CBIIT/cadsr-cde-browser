@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao.model;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -563,7 +566,7 @@ public class DataElementModel extends BaseModel
             return false;
         }
 
-        DataElementModel that = (DataElementModel) o;
+        DataElementModel that = ( DataElementModel ) o;
 
         if( getPreferredQuestionText() != null ? !getPreferredQuestionText().equals( that.getPreferredQuestionText() ) : that.getPreferredQuestionText() != null )
         {

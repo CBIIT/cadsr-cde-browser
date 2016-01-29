@@ -1,6 +1,6 @@
 package gov.nih.nci.cadsr.service.search;
 /*
- * Copyright 2015 Leidos Biomedical Research, Inc.
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
 import gov.nih.nci.cadsr.common.util.StringReplace;
@@ -65,7 +65,7 @@ public class DESearchQueryBuilder extends AbstractSearchQueryBuilder
             return;
         }
 
-        query = StringUtils.sanitizeForSql( query);
+        query = StringUtils.sanitizeForSql( query );
 
         String vdFrom = "";
         String latestWhere = "";

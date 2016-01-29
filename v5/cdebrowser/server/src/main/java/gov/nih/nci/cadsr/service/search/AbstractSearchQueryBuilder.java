@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.search;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 public abstract class AbstractSearchQueryBuilder
 {
@@ -36,8 +39,8 @@ public abstract class AbstractSearchQueryBuilder
     protected String[] statusWhere = { "ALL" };
     protected String[] excludeArr = { "Retired" };
     protected String altName = "";
-    public static String[] aslNameExcludeList =  {"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN"};
-    protected String[] searchIn = {"ALL"};
+    public static String[] aslNameExcludeList = { "CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN" };
+    protected String[] searchIn = { "ALL" };
 
 
     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"

@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.dao.model;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 public class CsCsiModel extends BaseModel
 {
@@ -27,10 +26,12 @@ public class CsCsiModel extends BaseModel
     private Integer csiId;
     private Float csiVersion;
 
-    public CsCsiModel() {
+    public CsCsiModel()
+    {
     }
 
-    public CsCsiModel(String csiIdseq, String csPrefName, String csPreffredDefinition, String csiName, String csitlName ) {
+    public CsCsiModel( String csiIdseq, String csPrefName, String csPreffredDefinition, String csiName, String csitlName )
+    {
         this.csiName = csiName;
         this.csitlName = csitlName;
         this.csPreffredDefinition = csPreffredDefinition;
@@ -164,7 +165,7 @@ public class CsCsiModel extends BaseModel
         return csId;
     }
 
-    public void setCsId(String csId)
+    public void setCsId( String csId )
     {
         this.csId = csId;
     }
@@ -219,79 +220,84 @@ public class CsCsiModel extends BaseModel
         this.cstlName = cstlName;
     }
 
-    public String getCsitlName() {
+    public String getCsitlName()
+    {
         return csitlName;
     }
 
-    public void setCsitlName(String csitlName) {
+    public void setCsitlName( String csitlName )
+    {
         this.csitlName = csitlName;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CsCsiModel)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o ) return true;
+        if( !( o instanceof CsCsiModel ) ) return false;
 
-        CsCsiModel that = (CsCsiModel) o;
+        CsCsiModel that = ( CsCsiModel ) o;
 
-        if (getCsiName() != null ? !getCsiName().equals(that.getCsiName()) : that.getCsiName() != null) return false;
-        if (getCsiType() != null ? !getCsiType().equals(that.getCsiType()) : that.getCsiType() != null) return false;
-        if (getCsitlName() != null ? !getCsitlName().equals(that.getCsitlName()) : that.getCsitlName() != null)
+        if( getCsiName() != null ? !getCsiName().equals( that.getCsiName() ) : that.getCsiName() != null ) return false;
+        if( getCsiType() != null ? !getCsiType().equals( that.getCsiType() ) : that.getCsiType() != null ) return false;
+        if( getCsitlName() != null ? !getCsitlName().equals( that.getCsitlName() ) : that.getCsitlName() != null )
             return false;
-        if (getCsiIdseq() != null ? !getCsiIdseq().equals(that.getCsiIdseq()) : that.getCsiIdseq() != null)
+        if( getCsiIdseq() != null ? !getCsiIdseq().equals( that.getCsiIdseq() ) : that.getCsiIdseq() != null )
             return false;
-        if (getCsCsiIdseq() != null ? !getCsCsiIdseq().equals(that.getCsCsiIdseq()) : that.getCsCsiIdseq() != null)
+        if( getCsCsiIdseq() != null ? !getCsCsiIdseq().equals( that.getCsCsiIdseq() ) : that.getCsCsiIdseq() != null )
             return false;
-        if (getCsiDescription() != null ? !getCsiDescription().equals(that.getCsiDescription()) : that.getCsiDescription() != null)
+        if( getCsiDescription() != null ? !getCsiDescription().equals( that.getCsiDescription() ) : that.getCsiDescription() != null )
             return false;
-        if (getParentCsiIdseq() != null ? !getParentCsiIdseq().equals(that.getParentCsiIdseq()) : that.getParentCsiIdseq() != null)
+        if( getParentCsiIdseq() != null ? !getParentCsiIdseq().equals( that.getParentCsiIdseq() ) : that.getParentCsiIdseq() != null )
             return false;
-        if (getCsIdseq() != null ? !getCsIdseq().equals(that.getCsIdseq()) : that.getCsIdseq() != null) return false;
-        if (getCsPreffredDefinition() != null ? !getCsPreffredDefinition().equals(that.getCsPreffredDefinition()) : that.getCsPreffredDefinition() != null)
+        if( getCsIdseq() != null ? !getCsIdseq().equals( that.getCsIdseq() ) : that.getCsIdseq() != null ) return false;
+        if( getCsPreffredDefinition() != null ? !getCsPreffredDefinition().equals( that.getCsPreffredDefinition() ) : that.getCsPreffredDefinition() != null )
             return false;
-        if (getCsLongName() != null ? !getCsLongName().equals(that.getCsLongName()) : that.getCsLongName() != null)
+        if( getCsLongName() != null ? !getCsLongName().equals( that.getCsLongName() ) : that.getCsLongName() != null )
             return false;
-        if (getCsPrefName() != null ? !getCsPrefName().equals(that.getCsPrefName()) : that.getCsPrefName() != null)
+        if( getCsPrefName() != null ? !getCsPrefName().equals( that.getCsPrefName() ) : that.getCsPrefName() != null )
             return false;
-        if (getCsConteIdseq() != null ? !getCsConteIdseq().equals(that.getCsConteIdseq()) : that.getCsConteIdseq() != null)
+        if( getCsConteIdseq() != null ? !getCsConteIdseq().equals( that.getCsConteIdseq() ) : that.getCsConteIdseq() != null )
             return false;
-        if (getAcCsiIdseq() != null ? !getAcCsiIdseq().equals(that.getAcCsiIdseq()) : that.getAcCsiIdseq() != null)
+        if( getAcCsiIdseq() != null ? !getAcCsiIdseq().equals( that.getAcCsiIdseq() ) : that.getAcCsiIdseq() != null )
             return false;
-        if (getCstlName() != null ? !getCstlName().equals(that.getCstlName()) : that.getCstlName() != null)
+        if( getCstlName() != null ? !getCstlName().equals( that.getCstlName() ) : that.getCstlName() != null )
             return false;
-        if (getCsId() != null ? !getCsId().equals(that.getCsId()) : that.getCsId() != null) return false;
-        if (getCsVersion() != null ? !getCsVersion().equals(that.getCsVersion()) : that.getCsVersion() != null)
+        if( getCsId() != null ? !getCsId().equals( that.getCsId() ) : that.getCsId() != null ) return false;
+        if( getCsVersion() != null ? !getCsVersion().equals( that.getCsVersion() ) : that.getCsVersion() != null )
             return false;
-        if (getCsiId() != null ? !getCsiId().equals(that.getCsiId()) : that.getCsiId() != null) return false;
-        return !(getCsiVersion() != null ? !getCsiVersion().equals(that.getCsiVersion()) : that.getCsiVersion() != null);
+        if( getCsiId() != null ? !getCsiId().equals( that.getCsiId() ) : that.getCsiId() != null ) return false;
+        return !( getCsiVersion() != null ? !getCsiVersion().equals( that.getCsiVersion() ) : that.getCsiVersion() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getCsiName() != null ? getCsiName().hashCode() : 0;
-        result = 31 * result + (getCsiType() != null ? getCsiType().hashCode() : 0);
-        result = 31 * result + (getCsitlName() != null ? getCsitlName().hashCode() : 0);
-        result = 31 * result + (getCsiIdseq() != null ? getCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getCsCsiIdseq() != null ? getCsCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getCsiDescription() != null ? getCsiDescription().hashCode() : 0);
-        result = 31 * result + (getParentCsiIdseq() != null ? getParentCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getCsIdseq() != null ? getCsIdseq().hashCode() : 0);
-        result = 31 * result + (getCsPreffredDefinition() != null ? getCsPreffredDefinition().hashCode() : 0);
-        result = 31 * result + (getCsLongName() != null ? getCsLongName().hashCode() : 0);
-        result = 31 * result + (getCsPrefName() != null ? getCsPrefName().hashCode() : 0);
-        result = 31 * result + (getCsConteIdseq() != null ? getCsConteIdseq().hashCode() : 0);
-        result = 31 * result + (getAcCsiIdseq() != null ? getAcCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getCstlName() != null ? getCstlName().hashCode() : 0);
-        result = 31 * result + (getCsId() != null ? getCsId().hashCode() : 0);
-        result = 31 * result + (getCsVersion() != null ? getCsVersion().hashCode() : 0);
-        result = 31 * result + (getCsiId() != null ? getCsiId().hashCode() : 0);
-        result = 31 * result + (getCsiVersion() != null ? getCsiVersion().hashCode() : 0);
+        result = 31 * result + ( getCsiType() != null ? getCsiType().hashCode() : 0 );
+        result = 31 * result + ( getCsitlName() != null ? getCsitlName().hashCode() : 0 );
+        result = 31 * result + ( getCsiIdseq() != null ? getCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCsCsiIdseq() != null ? getCsCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCsiDescription() != null ? getCsiDescription().hashCode() : 0 );
+        result = 31 * result + ( getParentCsiIdseq() != null ? getParentCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCsIdseq() != null ? getCsIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCsPreffredDefinition() != null ? getCsPreffredDefinition().hashCode() : 0 );
+        result = 31 * result + ( getCsLongName() != null ? getCsLongName().hashCode() : 0 );
+        result = 31 * result + ( getCsPrefName() != null ? getCsPrefName().hashCode() : 0 );
+        result = 31 * result + ( getCsConteIdseq() != null ? getCsConteIdseq().hashCode() : 0 );
+        result = 31 * result + ( getAcCsiIdseq() != null ? getAcCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCstlName() != null ? getCstlName().hashCode() : 0 );
+        result = 31 * result + ( getCsId() != null ? getCsId().hashCode() : 0 );
+        result = 31 * result + ( getCsVersion() != null ? getCsVersion().hashCode() : 0 );
+        result = 31 * result + ( getCsiId() != null ? getCsiId().hashCode() : 0 );
+        result = 31 * result + ( getCsiVersion() != null ? getCsiVersion().hashCode() : 0 );
         return result;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "CsCsiModel{" +
                 "csiName='" + csiName + '\'' +
                 ", csiType='" + csiType + '\'' +

@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -11,12 +14,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lavezzojl on 5/27/15.
- */
 public class CSIRefDocDAOImpl extends AbstractDAOOperations implements CSIRefDocDAO
 {
-    private Logger logger = LogManager.getLogger(CSIRefDocDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( CSIRefDocDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
@@ -28,7 +28,8 @@ public class CSIRefDocDAOImpl extends AbstractDAOOperations implements CSIRefDoc
     }
 
     @Override
-    public List<CSIRefDocModel> getCSIRefDocsByDEIdseq(String deIdseq) {
+    public List<CSIRefDocModel> getCSIRefDocsByDEIdseq( String deIdseq )
+    {
         /*
     public String csiName;
     public String documentName;
@@ -45,7 +46,7 @@ public class CSIRefDocDAOImpl extends AbstractDAOOperations implements CSIRefDoc
                 "AND ac_csi.cs_csi_idseq = cs_csi.cs_csi_idseq " +
                 ") " +
                 "AND csi.csi_idseq = rd.ac_idseq";
-        List<CSIRefDocModel> csiRefDocModels = jdbcTemplate.query(sql, new Object[]{deIdseq}, new BeanPropertyRowMapper(CSIRefDocModel.class));
+        List<CSIRefDocModel> csiRefDocModels = jdbcTemplate.query( sql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( CSIRefDocModel.class ) );
         return csiRefDocModels;
     }
 }

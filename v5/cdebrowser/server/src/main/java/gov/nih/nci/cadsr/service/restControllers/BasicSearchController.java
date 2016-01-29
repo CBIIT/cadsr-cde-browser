@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.restControllers;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.BasicSearchDAOImpl;
@@ -50,7 +53,7 @@ public class BasicSearchController
     @ResponseBody
     public BasicSearchNode[] basicSearchWithProgramArea( @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType, @RequestParam( "programArea" ) int programArea )
     {
-        logger.debug("basicSearchWithProgramArea   query: " + query + "   field: " + field + "    queryType: " + queryType + "     programArea: " + programArea);
+        logger.debug( "basicSearchWithProgramArea   query: " + query + "   field: " + field + "    queryType: " + queryType + "     programArea: " + programArea );
 
         BasicSearchNode[] results = null;
         try
@@ -91,10 +94,11 @@ public class BasicSearchController
         if( contexId.matches( "^[0-9A-Za-z-]+$" ) )
         {
             logger.debug( "Good contexId: " + contexId );
-        } else
+        }
+        else
         {
             // Log this, as it may be an attempt to hack the SQL server.  Return null to the client
-            logger.warn("getCDEsByContext failed Bad contex ID [" + contexId + "]");
+            logger.warn( "getCDEsByContext failed Bad contex ID [" + contexId + "]" );
             return null;
             //return createErrorNode( "Server Error:\ngetCDEsByContext failed: Bad contex ID [" + contexId + "]", contexId );
         }
@@ -192,7 +196,7 @@ public class BasicSearchController
         DESearchQueryBuilder dESearchQueryBuilder = new DESearchQueryBuilder( query, searchMode, field, programArea );
 
         String sql = dESearchQueryBuilder.getQueryStmt();
-        logger.debug("sql: " + sql);
+        logger.debug( "sql: " + sql );
 
         //If we could not build sql from the parameters return a empty search results
         if( sql == null )

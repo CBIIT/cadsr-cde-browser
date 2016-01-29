@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -10,9 +13,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lernermh on 8/21/15.
- */
 public class ToolOptionsDAOImpl extends AbstractDAOOperations implements ToolOptionsDAO
 {
     private Logger logger = LogManager.getLogger( ToolOptionsDAOImpl.class.getName() );
@@ -30,7 +30,7 @@ public class ToolOptionsDAOImpl extends AbstractDAOOperations implements ToolOpt
     @Override
     public ToolOptionsModel getToolOptionsByToolNameAndProperty( String toolName, String property )
     {
-        String sql = "SELECT * FROM tool_options_ext WHERE tool_name = \'" + toolName + "\' AND property = ?" ;
+        String sql = "SELECT * FROM tool_options_ext WHERE tool_name = \'" + toolName + "\' AND property = ?";
 
         ToolOptionsModel toolOptionsModel = query( sql, property, ToolOptionsModel.class );
 
@@ -39,11 +39,11 @@ public class ToolOptionsDAOImpl extends AbstractDAOOperations implements ToolOpt
     }
 
     @Override
-    public List<ToolOptionsModel> getToolOptionsByProperty(  String property )
+    public List<ToolOptionsModel> getToolOptionsByProperty( String property )
     {
-        String sql = "SELECT * FROM tool_options_ext WHERE property = ?" ;
+        String sql = "SELECT * FROM tool_options_ext WHERE property = ?";
 
-        List<ToolOptionsModel>   toolOptionsModels = getAll( sql, property, ToolOptionsModel.class );
+        List<ToolOptionsModel> toolOptionsModels = getAll( sql, property, ToolOptionsModel.class );
 
         return toolOptionsModels;
 

@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.service.model.context;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import org.apache.logging.log4j.LogManager;
@@ -150,7 +149,7 @@ public abstract class BaseNode implements Serializable
     public String getTrimText()
     {
         String str = text;
-        if( ( !str.isEmpty() )&& (str.length() > CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN) )
+        if( ( !str.isEmpty() ) && ( str.length() > CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN ) )
         {
             str = str.substring( 0, CaDSRConstants.MAX_TITLE_WITH_DESCRIPTION_LEN ) + "...";
         }
@@ -234,8 +233,8 @@ public abstract class BaseNode implements Serializable
         sb.append( "ConteIdSeq=" + this.getIdSeq() + "\n" );
         sb.append( "href=" + this.getHref() + "\n" );
         sb.append( "hover=" + this.getHover() + "\n" );
-        sb.append( "type[" +  this.getType()  + "]=" + CaDSRConstants.nodeType[this.getType()] + "\n" );
-        sb.append( "childType[" +  this.getChildType()  + "]=" + CaDSRConstants.nodeType[this.getChildType()] + "\n" );
+        sb.append( "type[" + this.getType() + "]=" + CaDSRConstants.nodeType[this.getType()] + "\n" );
+        sb.append( "childType[" + this.getChildType() + "]=" + CaDSRConstants.nodeType[this.getChildType()] + "\n" );
         sb.append( "isParent=" + this.isIsParent() + "\n" );
         sb.append( "isChild=" + this.isIsChild() + "\n" );
         sb.append( "programArea=" + this.getProgramArea() + "\n" );

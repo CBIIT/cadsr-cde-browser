@@ -1,9 +1,9 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lernermh on 6/18/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
-public class DataElementDerivationComponentModel  extends BaseModel
+
+public class DataElementDerivationComponentModel extends BaseModel
 {
     private String displayOrder;
     private String longName;
@@ -71,7 +71,7 @@ public class DataElementDerivationComponentModel  extends BaseModel
     public void setVersion( String version )
     {
         this.version = version;
-        setFormattedVersion(  version );
+        setFormattedVersion( version );
     }
 
     public String getDeIdseq()

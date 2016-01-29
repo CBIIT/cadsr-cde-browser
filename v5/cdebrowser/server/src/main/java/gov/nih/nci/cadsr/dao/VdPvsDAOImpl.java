@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.VdPvsModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -10,9 +13,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * Created by lernermh on 6/3/15.
- */
 public class VdPvsDAOImpl extends AbstractDAOOperations implements VdPvsDAO
 {
     private Logger logger = LogManager.getLogger( VdPvsDAOImpl.class.getName() );

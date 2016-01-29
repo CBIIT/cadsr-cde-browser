@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.PropertyModel;
@@ -13,12 +16,10 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by lavezzojl on 4/16/15.
- */
-public class PropertyDAOImpl extends AbstractDAOOperations implements PropertyDAO {
+public class PropertyDAOImpl extends AbstractDAOOperations implements PropertyDAO
+{
 
-    private Logger logger = LogManager.getLogger(PropertyDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( PropertyDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
@@ -26,43 +27,50 @@ public class PropertyDAOImpl extends AbstractDAOOperations implements PropertyDA
 
 
     @Autowired
-    PropertyDAOImpl( DataSource dataSource ) {
-        setDataSource(dataSource);
+    PropertyDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
-    public PropertyModel getPropertyByIdseq(String propIdseq) {
+    public PropertyModel getPropertyByIdseq( String propIdseq )
+    {
         String sql = "SELECT * FROM sbrext.properties_ext WHERE prop_idseq = ?";
-        PropertyModel propertyModel = jdbcTemplate.queryForObject(sql, new Object[] { propIdseq }, new PropertyMapper(PropertyModel.class));
+        PropertyModel propertyModel = jdbcTemplate.queryForObject( sql, new Object[]{ propIdseq }, new PropertyMapper( PropertyModel.class ) );
         return propertyModel;
     }
 
 
-    public ContextDAO getContextDAO() {
+    public ContextDAO getContextDAO()
+    {
         return contextDAO;
     }
 
-    public void setContextDAO(ContextDAO contextDAO) {
+    public void setContextDAO( ContextDAO contextDAO )
+    {
         this.contextDAO = contextDAO;
     }
 
 
-    public final class PropertyMapper extends BeanPropertyRowMapper<PropertyModel> {
-        public PropertyMapper(Class<PropertyModel> mappedClass) {
-            super(mappedClass);
+    public final class PropertyMapper extends BeanPropertyRowMapper<PropertyModel>
+    {
+        public PropertyMapper( Class<PropertyModel> mappedClass )
+        {
+            super( mappedClass );
         }
 
-        public PropertyModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            PropertyModel propertyModel = super.mapRow(rs, rowNum);
+        public PropertyModel mapRow( ResultSet rs, int rowNum ) throws SQLException
+        {
+            PropertyModel propertyModel = super.mapRow( rs, rowNum );
 
 //            propertyModel.setPreferredName(rs.getString("PREFERRED_NAME"));
 //            propertyModel.setLongName(rs.getString("LONG_NAME"));
 //            propertyModel.setVersion(rs.getFloat("VERSION"));
-            propertyModel.setPublicId(rs.getInt("PROP_ID"));
+            propertyModel.setPublicId( rs.getInt( "PROP_ID" ) );
 //            propertyModel.setName(rs.getString(""));
 //            propertyModel.setQualifier(rs.getString(""));
 
-            propertyModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
+            propertyModel.setContext( getContextDAO().getContextByIdseq( rs.getString( "CONTE_IDSEQ" ) ) );
             return propertyModel;
         }
     }

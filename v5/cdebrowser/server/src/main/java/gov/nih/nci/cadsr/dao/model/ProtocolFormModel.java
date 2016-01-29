@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.dao.model;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
@@ -34,7 +33,8 @@ public class ProtocolFormModel extends BaseModel
     private String csCsiIdseq;
     private String acIdseq;
 
-    public ProtocolFormModel() {
+    public ProtocolFormModel()
+    {
     }
 
     public String getQcIdseq()
@@ -55,7 +55,7 @@ public class ProtocolFormModel extends BaseModel
     public void setVersion( String version )
     {
         this.version = version;
-        setFormattedVersion(  version );
+        setFormattedVersion( version );
     }
 
     public String getType()
@@ -311,82 +311,84 @@ public class ProtocolFormModel extends BaseModel
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProtocolFormModel)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o ) return true;
+        if( !( o instanceof ProtocolFormModel ) ) return false;
 
-        ProtocolFormModel that = (ProtocolFormModel) o;
+        ProtocolFormModel that = ( ProtocolFormModel ) o;
 
-        if (getPublicId() != that.getPublicId()) return false;
-        if (getQcIdseq() != null ? !getQcIdseq().equals(that.getQcIdseq()) : that.getQcIdseq() != null) return false;
-        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
-        if (getType() != null ? !getType().equals(that.getType()) : that.getType() != null) return false;
-        if (getConteIdseq() != null ? !getConteIdseq().equals(that.getConteIdseq()) : that.getConteIdseq() != null)
+        if( getPublicId() != that.getPublicId() ) return false;
+        if( getQcIdseq() != null ? !getQcIdseq().equals( that.getQcIdseq() ) : that.getQcIdseq() != null ) return false;
+        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null ) return false;
+        if( getType() != null ? !getType().equals( that.getType() ) : that.getType() != null ) return false;
+        if( getConteIdseq() != null ? !getConteIdseq().equals( that.getConteIdseq() ) : that.getConteIdseq() != null )
             return false;
-        if (getCategoryName() != null ? !getCategoryName().equals(that.getCategoryName()) : that.getCategoryName() != null)
+        if( getCategoryName() != null ? !getCategoryName().equals( that.getCategoryName() ) : that.getCategoryName() != null )
             return false;
-        if (getWorkflow() != null ? !getWorkflow().equals(that.getWorkflow()) : that.getWorkflow() != null)
+        if( getWorkflow() != null ? !getWorkflow().equals( that.getWorkflow() ) : that.getWorkflow() != null )
             return false;
-        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
             return false;
-        if (getDefinition() != null ? !getDefinition().equals(that.getDefinition()) : that.getDefinition() != null)
+        if( getDefinition() != null ? !getDefinition().equals( that.getDefinition() ) : that.getDefinition() != null )
             return false;
-        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+        if( getLongName() != null ? !getLongName().equals( that.getLongName() ) : that.getLongName() != null )
             return false;
-        if (getProtoIdseq() != null ? !getProtoIdseq().equals(that.getProtoIdseq()) : that.getProtoIdseq() != null)
+        if( getProtoIdseq() != null ? !getProtoIdseq().equals( that.getProtoIdseq() ) : that.getProtoIdseq() != null )
             return false;
-        if (getProtocolLongName() != null ? !getProtocolLongName().equals(that.getProtocolLongName()) : that.getProtocolLongName() != null)
+        if( getProtocolLongName() != null ? !getProtocolLongName().equals( that.getProtocolLongName() ) : that.getProtocolLongName() != null )
             return false;
-        if (getContextName() != null ? !getContextName().equals(that.getContextName()) : that.getContextName() != null)
+        if( getContextName() != null ? !getContextName().equals( that.getContextName() ) : that.getContextName() != null )
             return false;
-        if (getProtoPreferredDefinition() != null ? !getProtoPreferredDefinition().equals(that.getProtoPreferredDefinition()) : that.getProtoPreferredDefinition() != null)
+        if( getProtoPreferredDefinition() != null ? !getProtoPreferredDefinition().equals( that.getProtoPreferredDefinition() ) : that.getProtoPreferredDefinition() != null )
             return false;
-        if (getChangeNote() != null ? !getChangeNote().equals(that.getChangeNote()) : that.getChangeNote() != null)
+        if( getChangeNote() != null ? !getChangeNote().equals( that.getChangeNote() ) : that.getChangeNote() != null )
             return false;
-        if (getLatestVersionInd() != null ? !getLatestVersionInd().equals(that.getLatestVersionInd()) : that.getLatestVersionInd() != null)
+        if( getLatestVersionInd() != null ? !getLatestVersionInd().equals( that.getLatestVersionInd() ) : that.getLatestVersionInd() != null )
             return false;
-        if (getCsIdseq() != null ? !getCsIdseq().equals(that.getCsIdseq()) : that.getCsIdseq() != null) return false;
-        if (getpCsCsiIdseq() != null ? !getpCsCsiIdseq().equals(that.getpCsCsiIdseq()) : that.getpCsCsiIdseq() != null)
+        if( getCsIdseq() != null ? !getCsIdseq().equals( that.getCsIdseq() ) : that.getCsIdseq() != null ) return false;
+        if( getpCsCsiIdseq() != null ? !getpCsCsiIdseq().equals( that.getpCsCsiIdseq() ) : that.getpCsCsiIdseq() != null )
             return false;
-        if (getLinkCsCsiIdseq() != null ? !getLinkCsCsiIdseq().equals(that.getLinkCsCsiIdseq()) : that.getLinkCsCsiIdseq() != null)
+        if( getLinkCsCsiIdseq() != null ? !getLinkCsCsiIdseq().equals( that.getLinkCsCsiIdseq() ) : that.getLinkCsCsiIdseq() != null )
             return false;
-        if (getLabel() != null ? !getLabel().equals(that.getLabel()) : that.getLabel() != null) return false;
-        if (getDispalyOrder() != null ? !getDispalyOrder().equals(that.getDispalyOrder()) : that.getDispalyOrder() != null)
+        if( getLabel() != null ? !getLabel().equals( that.getLabel() ) : that.getLabel() != null ) return false;
+        if( getDispalyOrder() != null ? !getDispalyOrder().equals( that.getDispalyOrder() ) : that.getDispalyOrder() != null )
             return false;
-        if (getAcCsiIdseq() != null ? !getAcCsiIdseq().equals(that.getAcCsiIdseq()) : that.getAcCsiIdseq() != null)
+        if( getAcCsiIdseq() != null ? !getAcCsiIdseq().equals( that.getAcCsiIdseq() ) : that.getAcCsiIdseq() != null )
             return false;
-        if (getCsCsiIdseq() != null ? !getCsCsiIdseq().equals(that.getCsCsiIdseq()) : that.getCsCsiIdseq() != null)
+        if( getCsCsiIdseq() != null ? !getCsCsiIdseq().equals( that.getCsCsiIdseq() ) : that.getCsCsiIdseq() != null )
             return false;
-        return !(getAcIdseq() != null ? !getAcIdseq().equals(that.getAcIdseq()) : that.getAcIdseq() != null);
+        return !( getAcIdseq() != null ? !getAcIdseq().equals( that.getAcIdseq() ) : that.getAcIdseq() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getQcIdseq() != null ? getQcIdseq().hashCode() : 0;
-        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
-        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
-        result = 31 * result + (getConteIdseq() != null ? getConteIdseq().hashCode() : 0);
-        result = 31 * result + (getCategoryName() != null ? getCategoryName().hashCode() : 0);
-        result = 31 * result + (getWorkflow() != null ? getWorkflow().hashCode() : 0);
-        result = 31 * result + (getPreferredName() != null ? getPreferredName().hashCode() : 0);
-        result = 31 * result + (getDefinition() != null ? getDefinition().hashCode() : 0);
-        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
-        result = 31 * result + (getProtoIdseq() != null ? getProtoIdseq().hashCode() : 0);
-        result = 31 * result + (getProtocolLongName() != null ? getProtocolLongName().hashCode() : 0);
-        result = 31 * result + (getContextName() != null ? getContextName().hashCode() : 0);
-        result = 31 * result + (getProtoPreferredDefinition() != null ? getProtoPreferredDefinition().hashCode() : 0);
+        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
+        result = 31 * result + ( getType() != null ? getType().hashCode() : 0 );
+        result = 31 * result + ( getConteIdseq() != null ? getConteIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCategoryName() != null ? getCategoryName().hashCode() : 0 );
+        result = 31 * result + ( getWorkflow() != null ? getWorkflow().hashCode() : 0 );
+        result = 31 * result + ( getPreferredName() != null ? getPreferredName().hashCode() : 0 );
+        result = 31 * result + ( getDefinition() != null ? getDefinition().hashCode() : 0 );
+        result = 31 * result + ( getLongName() != null ? getLongName().hashCode() : 0 );
+        result = 31 * result + ( getProtoIdseq() != null ? getProtoIdseq().hashCode() : 0 );
+        result = 31 * result + ( getProtocolLongName() != null ? getProtocolLongName().hashCode() : 0 );
+        result = 31 * result + ( getContextName() != null ? getContextName().hashCode() : 0 );
+        result = 31 * result + ( getProtoPreferredDefinition() != null ? getProtoPreferredDefinition().hashCode() : 0 );
         result = 31 * result + getPublicId();
-        result = 31 * result + (getChangeNote() != null ? getChangeNote().hashCode() : 0);
-        result = 31 * result + (getLatestVersionInd() != null ? getLatestVersionInd().hashCode() : 0);
-        result = 31 * result + (getCsIdseq() != null ? getCsIdseq().hashCode() : 0);
-        result = 31 * result + (getpCsCsiIdseq() != null ? getpCsCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getLinkCsCsiIdseq() != null ? getLinkCsCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getLabel() != null ? getLabel().hashCode() : 0);
-        result = 31 * result + (getDispalyOrder() != null ? getDispalyOrder().hashCode() : 0);
-        result = 31 * result + (getAcCsiIdseq() != null ? getAcCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getCsCsiIdseq() != null ? getCsCsiIdseq().hashCode() : 0);
-        result = 31 * result + (getAcIdseq() != null ? getAcIdseq().hashCode() : 0);
+        result = 31 * result + ( getChangeNote() != null ? getChangeNote().hashCode() : 0 );
+        result = 31 * result + ( getLatestVersionInd() != null ? getLatestVersionInd().hashCode() : 0 );
+        result = 31 * result + ( getCsIdseq() != null ? getCsIdseq().hashCode() : 0 );
+        result = 31 * result + ( getpCsCsiIdseq() != null ? getpCsCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getLinkCsCsiIdseq() != null ? getLinkCsCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getLabel() != null ? getLabel().hashCode() : 0 );
+        result = 31 * result + ( getDispalyOrder() != null ? getDispalyOrder().hashCode() : 0 );
+        result = 31 * result + ( getAcCsiIdseq() != null ? getAcCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCsCsiIdseq() != null ? getCsCsiIdseq().hashCode() : 0 );
+        result = 31 * result + ( getAcIdseq() != null ? getAcIdseq().hashCode() : 0 );
         return result;
     }
 }

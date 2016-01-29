@@ -1,15 +1,6 @@
-package gov.nih.nci.cadsr.common.util;/*L
- * Copyright SAIC-F Inc.
- *
- * Distributed under the OSI-approved BSD 3-Clause License.
- * See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
- *
- * Portions of this source file not modified since 2008 are covered by:
- *
- * Copyright 2000-2008 Oracle, Inc.
- *
- * Distributed under the caBIG Software License.  For details see
- * http://ncip.github.com/cadsr-cde-browser/LICENSE-caBIG.txt
+package gov.nih.nci.cadsr.common.util;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
 
@@ -40,10 +31,10 @@ public class DBUtil
   public DBUtil() {
     conn = null;
   }
-  
+
   /**
    * get the property from the property file
-   * @return String 
+   * @return String
    */
   public String getJNDIProperty()
   {
@@ -51,14 +42,14 @@ public class DBUtil
 	  try {
 		  InputStream ins = getClass().getResourceAsStream("/gov/nih/nci/ncicb/cadsr/common/jndi.properties");
 		  Properties props = new Properties();
-		  props.load(ins);		  
+		  props.load(ins);
 		  jndiName = props.getProperty("datasource.jndi.name");
-		} catch (IOException e) {		
+		} catch (IOException e) {
 			logger.error( "unable to get property file", e );
-		}	  
+		}
 	  return (jndiName == null) ? "" : jndiName;
   }
-  
+
   /**
    * gets the datasource
    * @return DataSource
@@ -106,12 +97,12 @@ public class DBUtil
     }
     return isConnected;
   }
-  
+
   /**
  *  This method returns a Oracle Connection obtained by createing a Datasource using the
  *  connection information in cle-providers.xml
  *  This is a temporary fix till we move to 9i libs
- *  
+ *
   */
  /* public boolean getOracleConnectionFromContainer()
                     throws Exception {
@@ -119,14 +110,14 @@ public class DBUtil
    {
      this.returnConnection();
    }
-    if (!isConnected) {     
-      try {     
+    if (!isConnected) {
+      try {
         ConnectionManager manager = ConnectionManager.getInstance();
         ConnectionProvider provider = manager.getProvider(CDEBROWSER_PROVIDER);
-        
+
         DataSource ds = DataSourceUtil.getOracleDataSource(provider.getConnectionString(),provider.getUserName(),provider.getPassword());
         conn = ds.getConnection();
-      
+
         isConnected = true;
         isOracleConnection = true;
         logger.info
@@ -150,7 +141,7 @@ public class DBUtil
     int columnCount;
     Statement stmt = null;
     ResultSet	rs = null;
-    boolean isThereResult =false;     
+    boolean isThereResult =false;
 		try {
       dataToReturn = new Vector();
       stmt = conn.createStatement();
@@ -169,7 +160,7 @@ public class DBUtil
     catch (SQLException sqle) {
 			logger.error( "Exception in gov.nih.nci.cadsr.common.util.DBUtil.retrieveMultipleRecordsDB(String )" );
 			logger.error( "The statement executed : " + sqlStmt, sqle );
-         
+
       throw sqle;
 		}
     finally {
@@ -408,18 +399,18 @@ public class DBUtil
     }
     return id;
   }
-  
+
   public void returnConnection() throws SQLException {
     try {
       if (conn != null) {
         conn.close();
         isConnected = false;
       }
-    } 
+    }
     catch (SQLException sqle) {
       //logger.error("Error occured in returing DB connection to the container", sqle);
       //throw sqle;
-    } 
+    }
   }
 
   public Connection getConnection(){
@@ -433,11 +424,11 @@ public class DBUtil
       stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                                   ResultSet.CONCUR_READ_ONLY);
       rs = stmt.executeQuery(sqlStmt);
-    } 
+    }
     catch (SQLException ex) {
       logger.error( "Exception occurred in executeQuery " + sqlStmt, ex );
       throw ex;
-    } 
+    }
     return rs;
   }
 
@@ -463,7 +454,7 @@ public class DBUtil
     OracleDataSource ds = DataSourceUtil.getOracleDataSource(dbURL,username,password);
     return (OracleConnection)ds.getConnection();
     }
-  
+
   */
 /*
    * Need to recode after the class loading problem is fixed
@@ -477,9 +468,9 @@ public class DBUtil
     ) throws Exception {
       OracleJBossNativeJdbcExtractor extractor = new OracleJBossNativeJdbcExtractor();
       return extractor.doGetOracleConnection(conn);
-    }    
-    
-   
+    }
+
+
 */
 
   public static void main(String[] args) {
@@ -492,6 +483,6 @@ public class DBUtil
     ObjectLocator locator  = new SpringObjectLocatorImpl();
     return (ServiceLocator)locator.findObject("serviceLocator");
   }
-    
+
 */
 }

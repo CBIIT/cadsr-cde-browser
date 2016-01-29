@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 public class PropertyConcept
 {

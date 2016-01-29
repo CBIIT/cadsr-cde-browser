@@ -1,12 +1,13 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.UsageModel;
 
 import java.util.List;
 
-/**
- * Created by lavezzojl on 5/13/15.
- */
-public interface UsageDAO {
-    List<UsageModel> getUsagesByDeIdseq(String deIdseq);
+public interface UsageDAO
+{
+    List<UsageModel> getUsagesByDeIdseq( String deIdseq );
 }

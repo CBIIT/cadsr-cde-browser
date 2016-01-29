@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Leidos Biomedical Research, Inc.
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
 package gov.nih.nci.cadsr.common;
@@ -21,20 +21,19 @@ public final class CaDSRConstants
     public static final int PROTOCOL_FORMS_FOLDER = 4;
     public static final int CIS_FOLDER = 5;
     public static final int PROTOCOL = 6;
-    public static final int[] INTERVAL_SIZE = { 26, 26, 13, 9, 8, 6, 5, 4, 4, 2};
+    public static final int[] INTERVAL_SIZE = { 26, 26, 13, 9, 8, 6, 5, 4, 4, 2 };
     public static final int MAX_TITLE_WITH_DESCRIPTION_LEN = 30;
-    public static final String[] SEARCH_MODE={"Exact phrase", "All of the words", "At least one of the words"};
+    public static final String[] SEARCH_MODE = { "Exact phrase", "All of the words", "At least one of the words" };
 
-    public static  final int CLASSIFICATIONS_TYPE_FOLDER = 0;
-    public static  final int PROTOCOLFORMS_TYPE_FOLDER = 1;
+    public static final int CLASSIFICATIONS_TYPE_FOLDER = 0;
+    public static final int PROTOCOLFORMS_TYPE_FOLDER = 1;
 
     public static final int OK = 0;
     public static final int WARN = 1;
     public static final int ERROR = 2;
     public static final int TEST = 3;
 
-    public static final String DATE_FORMAT="YYYY-MM-dd";
-
+    public static final String DATE_FORMAT = "YYYY-MM-dd";
 
 
     public static final String USER_KEY = "nciUser";

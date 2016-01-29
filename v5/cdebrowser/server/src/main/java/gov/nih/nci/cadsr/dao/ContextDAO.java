@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 
@@ -15,7 +14,7 @@ public interface ContextDAO
 
     public List<ContextModel> getAllContexts();
     public List<ContextModel> getContextsByName( String name );
-    public ContextModel getContextByIdseq(String contextIdseq);
+    public ContextModel getContextByIdseq( String contextIdseq );
     public Collection getContexts( String username, String businessRole );
 
     /**

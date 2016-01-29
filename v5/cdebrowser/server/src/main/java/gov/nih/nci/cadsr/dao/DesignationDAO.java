@@ -1,13 +1,14 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.DesignationModel;
 
 import java.util.List;
 
-/**
- * Created by lavezzojl on 4/15/15.
- */
-public interface DesignationDAO {
-    List<DesignationModel> getDesignationModelsByAcIdseq(String acIdseq);
-    List<DesignationModel> getUsedByDesignationModels(String acIdseq);
+public interface DesignationDAO
+{
+    List<DesignationModel> getDesignationModelsByAcIdseq( String acIdseq );
+    List<DesignationModel> getUsedByDesignationModels( String acIdseq );
 }

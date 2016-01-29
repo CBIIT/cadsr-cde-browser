@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.search;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.service.model.context.BaseNode;
 import org.apache.logging.log4j.LogManager;
@@ -62,7 +65,7 @@ public class BasicSearchNode
 
     public void setPublicId( String publicId )
     {
-        this.publicId = Integer.valueOf(publicId);
+        this.publicId = Integer.valueOf( publicId );
     }
 
     public String getWorkflowStatus()

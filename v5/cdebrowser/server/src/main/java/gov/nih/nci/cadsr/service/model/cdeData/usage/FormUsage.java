@@ -1,11 +1,11 @@
 package gov.nih.nci.cadsr.service.model.cdeData.usage;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 import gov.nih.nci.cadsr.dao.model.UsageModel;
 
-/**
- * Created by lernermh on 4/22/15.
- */
 public class FormUsage
 {
     private String protocolNumber;

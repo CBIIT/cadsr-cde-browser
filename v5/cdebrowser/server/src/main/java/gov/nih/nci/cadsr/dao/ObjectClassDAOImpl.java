@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
@@ -13,12 +16,10 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by lavezzojl on 4/16/15.
- */
-public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectClassDAO {
+public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectClassDAO
+{
 
-    private Logger logger = LogManager.getLogger(ObjectClassDAOImpl.class.getName());
+    private Logger logger = LogManager.getLogger( ObjectClassDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
@@ -26,43 +27,50 @@ public class ObjectClassDAOImpl extends AbstractDAOOperations implements ObjectC
 
 
     @Autowired
-    ObjectClassDAOImpl( DataSource dataSource ) {
-        setDataSource(dataSource);
+    ObjectClassDAOImpl( DataSource dataSource )
+    {
+        setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
 
     @Override
-    public ObjectClassModel getObjectClassByIdseq(String ocIdseq) {
+    public ObjectClassModel getObjectClassByIdseq( String ocIdseq )
+    {
         String sql = "SELECT * FROM sbrext.object_classes_ext WHERE oc_idseq = ?";
-        ObjectClassModel objectClassModel = jdbcTemplate.queryForObject(sql, new Object[] { ocIdseq }, new ObjectClassMapper(ObjectClassModel.class));
+        ObjectClassModel objectClassModel = jdbcTemplate.queryForObject( sql, new Object[]{ ocIdseq }, new ObjectClassMapper( ObjectClassModel.class ) );
         return objectClassModel;
     }
 
 
-    public ContextDAO getContextDAO() {
+    public ContextDAO getContextDAO()
+    {
         return contextDAO;
     }
 
-    public void setContextDAO(ContextDAO contextDAO) {
+    public void setContextDAO( ContextDAO contextDAO )
+    {
         this.contextDAO = contextDAO;
     }
 
 
-    public final class ObjectClassMapper extends BeanPropertyRowMapper<ObjectClassModel> {
-        public ObjectClassMapper(Class<ObjectClassModel> mappedClass) {
-            super(mappedClass);
+    public final class ObjectClassMapper extends BeanPropertyRowMapper<ObjectClassModel>
+    {
+        public ObjectClassMapper( Class<ObjectClassModel> mappedClass )
+        {
+            super( mappedClass );
         }
 
-        public ObjectClassModel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            ObjectClassModel objectClassModel = super.mapRow(rs, rowNum);
+        public ObjectClassModel mapRow( ResultSet rs, int rowNum ) throws SQLException
+        {
+            ObjectClassModel objectClassModel = super.mapRow( rs, rowNum );
 
 //            objectClassModel.setPreferredName(rs.getString("PREFERRED_NAME"));
 //            objectClassModel.setLongName(rs.getString("LONG_NAME"));
 //            objectClassModel.setVersion(rs.getFloat("VERSION"));
-            objectClassModel.setPublicId(rs.getInt("OC_ID"));
-            objectClassModel.setIdseq(rs.getString("OC_IDSEQ"));
+            objectClassModel.setPublicId( rs.getInt( "OC_ID" ) );
+            objectClassModel.setIdseq( rs.getString( "OC_IDSEQ" ) );
 
-            objectClassModel.setContext(getContextDAO().getContextByIdseq(rs.getString("CONTE_IDSEQ")));
+            objectClassModel.setContext( getContextDAO().getContextByIdseq( rs.getString( "CONTE_IDSEQ" ) ) );
             return objectClassModel;
         }
     }

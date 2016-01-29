@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;

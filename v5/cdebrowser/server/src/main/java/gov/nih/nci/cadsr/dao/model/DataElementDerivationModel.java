@@ -1,8 +1,8 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lernermh on 6/17/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
+
 public class DataElementDerivationModel extends BaseModel
 {
     private String derivationType;

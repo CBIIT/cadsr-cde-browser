@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.DesignationModel;
 
@@ -9,10 +12,12 @@ public class AlternateName
     private String context;
     private String language;
 
-    public AlternateName() {
+    public AlternateName()
+    {
     }
 
-    public AlternateName(DesignationModel designationModel) {
+    public AlternateName( DesignationModel designationModel )
+    {
         setName( designationModel.getName() );
         setType( designationModel.getType() );
         setContext( designationModel.getContex().getName() );

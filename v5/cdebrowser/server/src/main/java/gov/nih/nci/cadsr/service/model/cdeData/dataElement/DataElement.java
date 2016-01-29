@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import java.util.List;
 
@@ -62,11 +65,13 @@ public class DataElement
         this.otherVersions = otherVersions;
     }
 
-    public List<CsCsi> getCsCsis() {
+    public List<CsCsi> getCsCsis()
+    {
         return csCsis;
     }
 
-    public void setCsCsis(List<CsCsi> csCsis) {
+    public void setCsCsis( List<CsCsi> csCsis )
+    {
         this.csCsis = csCsis;
     }
 }

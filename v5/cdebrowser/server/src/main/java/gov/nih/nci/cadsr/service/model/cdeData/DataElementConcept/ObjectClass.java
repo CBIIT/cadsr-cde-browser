@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 public class ObjectClass
 {
@@ -29,7 +32,7 @@ public class ObjectClass
     {
         this.version = version;
         //this will give us at least one digit to the right of the decimal place
-        this.formattedVersion = Float.toString( Float.valueOf(version) );
+        this.formattedVersion = Float.toString( Float.valueOf( version ) );
     }
 
     public String getFormattedVersion()

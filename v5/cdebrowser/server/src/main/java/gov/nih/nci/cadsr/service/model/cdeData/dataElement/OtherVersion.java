@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
@@ -17,18 +20,19 @@ public class OtherVersion
     private List<CsCsi> csCsis;
 
 
-
-    public OtherVersion(DEOtherVersionsModel deOtherVersionsModel) {
+    public OtherVersion( DEOtherVersionsModel deOtherVersionsModel )
+    {
 
         this.version = deOtherVersionsModel.getVersion();
         this.formattedVersion = deOtherVersionsModel.getFormattedVersion();
         this.longName = deOtherVersionsModel.getLongName();
         this.workFlowStatus = deOtherVersionsModel.getWorkflowStatus();
-        setRegistrationStatus(deOtherVersionsModel.getRegistrationStatus());
+        setRegistrationStatus( deOtherVersionsModel.getRegistrationStatus() );
         this.context = deOtherVersionsModel.getContextName();
-        csCsis = new ArrayList<CsCsi>(deOtherVersionsModel.getCsCsiModelList().size());
-        for (CsCsiModel csCsiModel : deOtherVersionsModel.getCsCsiModelList()) {
-            csCsis.add(new CsCsi(csCsiModel));
+        csCsis = new ArrayList<CsCsi>( deOtherVersionsModel.getCsCsiModelList().size() );
+        for( CsCsiModel csCsiModel : deOtherVersionsModel.getCsCsiModelList() )
+        {
+            csCsis.add( new CsCsi( csCsiModel ) );
         }
     }
 
@@ -79,7 +83,8 @@ public class OtherVersion
 
     public void setRegistrationStatus( String registrationStatus )
     {
-        if (registrationStatus == null) {
+        if( registrationStatus == null )
+        {
             registrationStatus = "Standard";
         }
         this.registrationStatus = registrationStatus;
@@ -95,11 +100,13 @@ public class OtherVersion
         this.context = context;
     }
 
-    public List<CsCsi> getCsCsis() {
+    public List<CsCsi> getCsCsis()
+    {
         return csCsis;
     }
 
-    public void setCsCsis(List<CsCsi> csCsis) {
+    public void setCsCsis( List<CsCsi> csCsis )
+    {
         this.csCsis = csCsis;
     }
 }

@@ -1,10 +1,10 @@
 package gov.nih.nci.cadsr.service.model.cdeData.adminInfo;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import java.util.Date;
 
-/**
- * Created by lernermh on 4/23/15.
- */
 public class AdminInfo
 {
     private String createdBy;

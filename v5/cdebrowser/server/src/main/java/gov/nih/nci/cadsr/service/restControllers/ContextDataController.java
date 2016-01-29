@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.service.restControllers;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.*;
@@ -33,25 +32,25 @@ public class ContextDataController
 
     private Map csi = new HashMap();
 
-    @Value("${maxHoverTextLen}")
+    @Value( "${maxHoverTextLen}" )
     private String maxHoverTextLenStr;
 
-    @Value("${oneContextRestService}")
+    @Value( "${oneContextRestService}" )
     private String oneContextRestServiceName;
 
-    @Value("${cdesByClassificationSchemeRestService}")
+    @Value( "${cdesByClassificationSchemeRestService}" )
     private String cdesByClassificationSchemeRestServiceName;
 
-    @Value("${cdesByClassificationSchemeItemRestService}")
+    @Value( "${cdesByClassificationSchemeItemRestService}" )
     private String cdesByClassificationSchemeItemRestServiceName;
 
-    @Value("${cdesByProtocolRestService}")
+    @Value( "${cdesByProtocolRestService}" )
     private String cdesByProtocolRestServiceName;
 
-    @Value("${cdesByProtocolFormRestService}")
+    @Value( "${cdesByProtocolFormRestService}" )
     private String cdesByProtocolFormRestServiceName;
 
-    @Value("${treeRetrievalWaitMessage}")
+    @Value( "${treeRetrievalWaitMessage}" )
     private String treeRetrievalWaitMessage;
 
     private int contextPalNameCount;
@@ -60,7 +59,7 @@ public class ContextDataController
     {
     }
 
-     @RequestMapping(value = "/contextData")
+    @RequestMapping( value = "/contextData" )
     @ResponseBody
     public ContextNode[] contextData()
     {
@@ -69,8 +68,7 @@ public class ContextDataController
         try
         {
             programAreaModelList = restControllerCommon.getProgramAreaList();
-        }
-        catch( Exception e )
+        } catch( Exception e )
         {
             logger.error( "Server Error:\nCould not retrieve Program Areas from database" );
             ContextNode[] errorNode = new ContextNode[1];
@@ -83,8 +81,7 @@ public class ContextDataController
         try
         {
             contextNodes = getAllTopLevelTreeData();
-        }
-        catch( Exception e )
+        } catch( Exception e )
         {
             logger.error( "Server Error:\nCould not retrieve Program Areas from database" );
             ContextNode[] errorNode = new ContextNode[1];
@@ -102,9 +99,9 @@ public class ContextDataController
      * @param folderType  Is it a "Classifications" or "Protocol Forms" folder? We us this to determine which should be collapsed, and which oopen
      * @return The complete Context tree from "Classifications" and "Protocol Forms" down.
      */
-    @RequestMapping(value = "/oneContextData")
+    @RequestMapping( value = "/oneContextData" )
     @ResponseBody
-    public List<ParentNode> oneContextData( @RequestParam("contextId") String contextId, @RequestParam("programArea") int programArea, @RequestParam("folderType") int folderType )
+    public List<ParentNode> oneContextData( @RequestParam( "contextId" ) String contextId, @RequestParam( "programArea" ) int programArea, @RequestParam( "folderType" ) int folderType )
     {
         logger.debug( "Received rest call \"oneContextData\" [" + contextId + "]   Program Area[" + programArea + "]   FolderType[" + folderType + "]" );
         programAreaModelList = restControllerCommon.getProgramAreaList();
@@ -588,7 +585,7 @@ public class ContextDataController
                         classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
                         classificationSchemeItemNode.setCollapsed( true );
                         classificationSchemeItemNode.setProgramArea( programArea );
-   logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
+                        logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
                         addChildrenToCsi( classificationSchemeItemNode );
 
                         //Add this CSI to the CS
@@ -620,7 +617,7 @@ public class ContextDataController
             String searchKey = node.getText();
             if( csi.containsKey( searchKey ) )
             {
-                if( depth < (int) csi.get( searchKey ) )
+                if( depth < ( int ) csi.get( searchKey ) )
                 {
                     i.remove();
                 }
@@ -665,14 +662,13 @@ public class ContextDataController
     }
 
 
-
     /**
      * Populate a Protocol form model node from a  ProtocolFormModel.
      * The ProtocolFormModel represents the data straight from the Database.
      * The ProtocolFormNode is data sent to the client.
      *
      * @param protocolFormModel The Protocol Form Model from the database
-     * @param programArea The Protocol's Program Area
+     * @param programArea       The Protocol's Program Area
      * @return The new Protocol Form Node, which now has what data it needs from the Protocol Form Model
      */
     protected ProtocolFormNode initProtocolFormNode( ProtocolFormModel protocolFormModel, int programArea )
@@ -727,13 +723,13 @@ public class ContextDataController
 
     /**
      * Creates an Error message to send back to a client.
-     *
+     * <p/>
      * TODO allow for a null value for the Exception, so we can use this when there was an error condition, but no Exception.
      *
      * @param text The text of the error message
-     * @param e the exception ( if error eas the result of an Exception)
-     * @param c The Class type that need to return.
-     * @param <T> The Class type that need to return.
+     * @param e    the exception ( if error eas the result of an Exception)
+     * @param c    The Class type that need to return.
+     * @param <T>  The Class type that need to return.
      * @return The new Error object
      */
     private <T extends BaseNode> T createErrorNode( String text, Exception e, Class<T> c )

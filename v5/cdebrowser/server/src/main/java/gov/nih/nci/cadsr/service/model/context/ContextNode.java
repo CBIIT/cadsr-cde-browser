@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.service.model.context;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.model.ContextModel;
@@ -18,8 +17,8 @@ import java.util.ArrayList;
 public class ContextNode extends BaseNode
 {
     private Logger logger = LogManager.getLogger( ContextNode.class.getName() );
-    private String palName ="";
-    private String palNameDescription ="";
+    private String palName = "";
+    private String palNameDescription = "";
 
     public ContextNode()
     {
@@ -50,9 +49,9 @@ public class ContextNode extends BaseNode
      * Initialize (as much as possible) this new Context node.
      * Hover text is set to empty String
      *
-     * @param type Folder/node type. 0="Empty" 1="Container" 2="Csi" 3="Folder" 4="ProtocolFormsFolder" 4="CIS Folder" 5="Protocol"
+     * @param type        Folder/node type. 0="Empty" 1="Container" 2="Csi" 3="Folder" 4="ProtocolFormsFolder" 4="CIS Folder" 5="Protocol"
      * @param isCollapsed This only used as a UI display hint for clients.
-     * @param name Display text.
+     * @param name        Display text.
      * @param programArea The Program Area, which is used by the client to display top level Tabs/Categories, and to constrain searches when Program Area is selected.
      */
     public ContextNode( int type, boolean isCollapsed, String name, int programArea )
@@ -64,11 +63,11 @@ public class ContextNode extends BaseNode
     /**
      * Initialize (as much as possible) this new Context node.
      *
-     * @param type Folder/node type. 0="Empty" 1="Container" 2="Csi" 3="Folder" 4="ProtocolFormsFolder" 4="CIS Folder" 5="Protocol"
+     * @param type        Folder/node type. 0="Empty" 1="Container" 2="Csi" 3="Folder" 4="ProtocolFormsFolder" 4="CIS Folder" 5="Protocol"
      * @param isCollapsed This only used as a UI display hint for clients.
-     * @param name Display text.
+     * @param name        Display text.
      * @param programArea The Program Area, which is used by the client to display top level Tabs/Categories, and to constrain searches when Program Area is selected.
-     * @param hoverText Hover text/tooltip
+     * @param hoverText   Hover text/tooltip
      */
     public ContextNode( int type, boolean isCollapsed, String name, int programArea, String hoverText )
     {
@@ -87,9 +86,10 @@ public class ContextNode extends BaseNode
     /**
      * Copy constructor
      * Create a new ContextNode, with the contents of an existing ContextNode, will deep copy all children.
+     *
      * @param aContextNode The node to be duplicated.
      */
-    public ContextNode( ContextNode aContextNode)
+    public ContextNode( ContextNode aContextNode )
     {
         super();
         this.setPalNameDescription( aContextNode.getPalNameDescription() );
@@ -106,16 +106,17 @@ public class ContextNode extends BaseNode
         this.setType( aContextNode.getType() );
         this.setTreePath( aContextNode.getTreePath() );
 
-        this.setChildren( copyChildren(aContextNode.getChildren()) );
+        this.setChildren( copyChildren( aContextNode.getChildren() ) );
 
     }
 
     /**
      * Recursively copy a nodes children
+     *
      * @param sourceChildren The children to be duplicated.
      * @return Duplicate of sourceChildren
      */
-    public ArrayList<BaseNode> copyChildren( ArrayList<BaseNode> sourceChildren)
+    public ArrayList<BaseNode> copyChildren( ArrayList<BaseNode> sourceChildren )
     {
         ArrayList<BaseNode> newChildren = new ArrayList<>();
         for( BaseNode node : sourceChildren )
@@ -133,7 +134,7 @@ public class ContextNode extends BaseNode
             newChildNode.setTreePath( node.getTreePath() );
             newChildNode.setType( node.getType() );
 
-            if( ! node.getChildren().isEmpty())
+            if( !node.getChildren().isEmpty() )
             {
                 newChildNode.setChildren( copyChildren( node.getChildren() ) );
             }
@@ -147,7 +148,7 @@ public class ContextNode extends BaseNode
      *
      * @param contextModel database model returned by SQL query
      */
-    public ContextNode( ContextModel contextModel, int programArea)
+    public ContextNode( ContextModel contextModel, int programArea )
     {
         super();
         this.setText( contextModel.getName() + " (" + contextModel.getDescription() + ") " );
@@ -156,7 +157,7 @@ public class ContextNode extends BaseNode
         this.setProgramArea( programArea );
         this.setCollapsed( true );
         this.setIsParent( false );
-        this.setHref( "cdebrowserServer/cdesByContext," + contextModel.getConteIdseq());
+        this.setHref( "cdebrowserServer/cdesByContext," + contextModel.getConteIdseq() );
 
         this.setChildType( 0 );
         this.setIdSeq( contextModel.getConteIdseq() );

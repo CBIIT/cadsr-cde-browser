@@ -1,9 +1,10 @@
 package gov.nih.nci.cadsr.dao.model;
-
-/**
- * Created by lavezzojl on 4/6/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
-public class DataElementConceptModel extends BaseModel {
+
+public class DataElementConceptModel extends BaseModel
+{
     private String preferredName;
     private String preferredDefinition;
     private String longName;
@@ -36,7 +37,8 @@ public class DataElementConceptModel extends BaseModel {
     private PropertyModel property;
     private ObjectClassModel objectClassModel; // Object Class
 
-    public DataElementConceptModel() {
+    public DataElementConceptModel()
+    {
     }
 
     public String getPreferredName()
@@ -87,7 +89,7 @@ public class DataElementConceptModel extends BaseModel {
     public void setVersion( Float version )
     {
         this.version = version;
-        setFormattedVersion(  version );
+        setFormattedVersion( version );
     }
 
     public String getDeletedInd()
@@ -351,105 +353,108 @@ public class DataElementConceptModel extends BaseModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DataElementConceptModel)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o ) return true;
+        if( !( o instanceof DataElementConceptModel ) ) return false;
 
-        DataElementConceptModel that = (DataElementConceptModel) o;
+        DataElementConceptModel that = ( DataElementConceptModel ) o;
 
-        if (getPublicId() != that.getPublicId()) return false;
-        if (getCdPublicId() != that.getCdPublicId()) return false;
-        if (getObjClassPublicId() != that.getObjClassPublicId()) return false;
-        if (getPreferredName() != null ? !getPreferredName().equals(that.getPreferredName()) : that.getPreferredName() != null)
+        if( getPublicId() != that.getPublicId() ) return false;
+        if( getCdPublicId() != that.getCdPublicId() ) return false;
+        if( getObjClassPublicId() != that.getObjClassPublicId() ) return false;
+        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
             return false;
-        if (getPreferredDefinition() != null ? !getPreferredDefinition().equals(that.getPreferredDefinition()) : that.getPreferredDefinition() != null)
+        if( getPreferredDefinition() != null ? !getPreferredDefinition().equals( that.getPreferredDefinition() ) : that.getPreferredDefinition() != null )
             return false;
-        if (getLongName() != null ? !getLongName().equals(that.getLongName()) : that.getLongName() != null)
+        if( getLongName() != null ? !getLongName().equals( that.getLongName() ) : that.getLongName() != null )
             return false;
-        if (getAslName() != null ? !getAslName().equals(that.getAslName()) : that.getAslName() != null) return false;
-        if (getVersion() != null ? !getVersion().equals(that.getVersion()) : that.getVersion() != null) return false;
-        if (getDeletedInd() != null ? !getDeletedInd().equals(that.getDeletedInd()) : that.getDeletedInd() != null)
+        if( getAslName() != null ? !getAslName().equals( that.getAslName() ) : that.getAslName() != null ) return false;
+        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null ) return false;
+        if( getDeletedInd() != null ? !getDeletedInd().equals( that.getDeletedInd() ) : that.getDeletedInd() != null )
             return false;
-        if (getLatestVerInd() != null ? !getLatestVerInd().equals(that.getLatestVerInd()) : that.getLatestVerInd() != null)
+        if( getLatestVerInd() != null ? !getLatestVerInd().equals( that.getLatestVerInd() ) : that.getLatestVerInd() != null )
             return false;
-        if (getOrigin() != null ? !getOrigin().equals(that.getOrigin()) : that.getOrigin() != null) return false;
-        if (getIdseq() != null ? !getIdseq().equals(that.getIdseq()) : that.getIdseq() != null) return false;
-        if (getDecIdseq() != null ? !getDecIdseq().equals(that.getDecIdseq()) : that.getDecIdseq() != null)
+        if( getOrigin() != null ? !getOrigin().equals( that.getOrigin() ) : that.getOrigin() != null ) return false;
+        if( getIdseq() != null ? !getIdseq().equals( that.getIdseq() ) : that.getIdseq() != null ) return false;
+        if( getDecIdseq() != null ? !getDecIdseq().equals( that.getDecIdseq() ) : that.getDecIdseq() != null )
             return false;
-        if (getCdIdseq() != null ? !getCdIdseq().equals(that.getCdIdseq()) : that.getCdIdseq() != null) return false;
-        if (getProplName() != null ? !getProplName().equals(that.getProplName()) : that.getProplName() != null)
+        if( getCdIdseq() != null ? !getCdIdseq().equals( that.getCdIdseq() ) : that.getCdIdseq() != null ) return false;
+        if( getProplName() != null ? !getProplName().equals( that.getProplName() ) : that.getProplName() != null )
             return false;
-        if (getOclName() != null ? !getOclName().equals(that.getOclName()) : that.getOclName() != null) return false;
-        if (getObjClassQualifier() != null ? !getObjClassQualifier().equals(that.getObjClassQualifier()) : that.getObjClassQualifier() != null)
+        if( getOclName() != null ? !getOclName().equals( that.getOclName() ) : that.getOclName() != null ) return false;
+        if( getObjClassQualifier() != null ? !getObjClassQualifier().equals( that.getObjClassQualifier() ) : that.getObjClassQualifier() != null )
             return false;
-        if (getPropertyQualifier() != null ? !getPropertyQualifier().equals(that.getPropertyQualifier()) : that.getPropertyQualifier() != null)
+        if( getPropertyQualifier() != null ? !getPropertyQualifier().equals( that.getPropertyQualifier() ) : that.getPropertyQualifier() != null )
             return false;
-        if (getChangeNote() != null ? !getChangeNote().equals(that.getChangeNote()) : that.getChangeNote() != null)
+        if( getChangeNote() != null ? !getChangeNote().equals( that.getChangeNote() ) : that.getChangeNote() != null )
             return false;
-        if (getObjClassPrefName() != null ? !getObjClassPrefName().equals(that.getObjClassPrefName()) : that.getObjClassPrefName() != null)
+        if( getObjClassPrefName() != null ? !getObjClassPrefName().equals( that.getObjClassPrefName() ) : that.getObjClassPrefName() != null )
             return false;
-        if (getObjClassContextName() != null ? !getObjClassContextName().equals(that.getObjClassContextName()) : that.getObjClassContextName() != null)
+        if( getObjClassContextName() != null ? !getObjClassContextName().equals( that.getObjClassContextName() ) : that.getObjClassContextName() != null )
             return false;
-        if (getPropertyPrefName() != null ? !getPropertyPrefName().equals(that.getPropertyPrefName()) : that.getPropertyPrefName() != null)
+        if( getPropertyPrefName() != null ? !getPropertyPrefName().equals( that.getPropertyPrefName() ) : that.getPropertyPrefName() != null )
             return false;
-        if (getPropertyContextName() != null ? !getPropertyContextName().equals(that.getPropertyContextName()) : that.getPropertyContextName() != null)
+        if( getPropertyContextName() != null ? !getPropertyContextName().equals( that.getPropertyContextName() ) : that.getPropertyContextName() != null )
             return false;
-        if (getPropertyVersion() != null ? !getPropertyVersion().equals(that.getPropertyVersion()) : that.getPropertyVersion() != null)
+        if( getPropertyVersion() != null ? !getPropertyVersion().equals( that.getPropertyVersion() ) : that.getPropertyVersion() != null )
             return false;
-        if (getObjClassVersion() != null ? !getObjClassVersion().equals(that.getObjClassVersion()) : that.getObjClassVersion() != null)
+        if( getObjClassVersion() != null ? !getObjClassVersion().equals( that.getObjClassVersion() ) : that.getObjClassVersion() != null )
             return false;
-        if (getConteName() != null ? !getConteName().equals(that.getConteName()) : that.getConteName() != null)
+        if( getConteName() != null ? !getConteName().equals( that.getConteName() ) : that.getConteName() != null )
             return false;
-        if (getCdPrefName() != null ? !getCdPrefName().equals(that.getCdPrefName()) : that.getCdPrefName() != null)
+        if( getCdPrefName() != null ? !getCdPrefName().equals( that.getCdPrefName() ) : that.getCdPrefName() != null )
             return false;
-        if (getCdContextName() != null ? !getCdContextName().equals(that.getCdContextName()) : that.getCdContextName() != null)
+        if( getCdContextName() != null ? !getCdContextName().equals( that.getCdContextName() ) : that.getCdContextName() != null )
             return false;
-        if (getCdVersion() != null ? !getCdVersion().equals(that.getCdVersion()) : that.getCdVersion() != null)
+        if( getCdVersion() != null ? !getCdVersion().equals( that.getCdVersion() ) : that.getCdVersion() != null )
             return false;
-        if (getProperty() != null ? !getProperty().equals(that.getProperty()) : that.getProperty() != null)
+        if( getProperty() != null ? !getProperty().equals( that.getProperty() ) : that.getProperty() != null )
             return false;
-        return !(getObjectClassModel() != null ? !getObjectClassModel().equals(that.getObjectClassModel()) : that.getObjectClassModel() != null);
+        return !( getObjectClassModel() != null ? !getObjectClassModel().equals( that.getObjectClassModel() ) : that.getObjectClassModel() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
-        result = 31 * result + (getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0);
-        result = 31 * result + (getLongName() != null ? getLongName().hashCode() : 0);
-        result = 31 * result + (getAslName() != null ? getAslName().hashCode() : 0);
-        result = 31 * result + (getVersion() != null ? getVersion().hashCode() : 0);
-        result = 31 * result + (getDeletedInd() != null ? getDeletedInd().hashCode() : 0);
-        result = 31 * result + (getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0);
+        result = 31 * result + ( getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0 );
+        result = 31 * result + ( getLongName() != null ? getLongName().hashCode() : 0 );
+        result = 31 * result + ( getAslName() != null ? getAslName().hashCode() : 0 );
+        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
+        result = 31 * result + ( getDeletedInd() != null ? getDeletedInd().hashCode() : 0 );
+        result = 31 * result + ( getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0 );
         result = 31 * result + getPublicId();
-        result = 31 * result + (getOrigin() != null ? getOrigin().hashCode() : 0);
-        result = 31 * result + (getIdseq() != null ? getIdseq().hashCode() : 0);
-        result = 31 * result + (getDecIdseq() != null ? getDecIdseq().hashCode() : 0);
-        result = 31 * result + (getCdIdseq() != null ? getCdIdseq().hashCode() : 0);
-        result = 31 * result + (getProplName() != null ? getProplName().hashCode() : 0);
-        result = 31 * result + (getOclName() != null ? getOclName().hashCode() : 0);
-        result = 31 * result + (getObjClassQualifier() != null ? getObjClassQualifier().hashCode() : 0);
-        result = 31 * result + (getPropertyQualifier() != null ? getPropertyQualifier().hashCode() : 0);
-        result = 31 * result + (getChangeNote() != null ? getChangeNote().hashCode() : 0);
-        result = 31 * result + (getObjClassPrefName() != null ? getObjClassPrefName().hashCode() : 0);
-        result = 31 * result + (getObjClassContextName() != null ? getObjClassContextName().hashCode() : 0);
-        result = 31 * result + (getPropertyPrefName() != null ? getPropertyPrefName().hashCode() : 0);
-        result = 31 * result + (getPropertyContextName() != null ? getPropertyContextName().hashCode() : 0);
-        result = 31 * result + (getPropertyVersion() != null ? getPropertyVersion().hashCode() : 0);
-        result = 31 * result + (getObjClassVersion() != null ? getObjClassVersion().hashCode() : 0);
-        result = 31 * result + (getConteName() != null ? getConteName().hashCode() : 0);
-        result = 31 * result + (getCdPrefName() != null ? getCdPrefName().hashCode() : 0);
-        result = 31 * result + (getCdContextName() != null ? getCdContextName().hashCode() : 0);
-        result = 31 * result + (getCdVersion() != null ? getCdVersion().hashCode() : 0);
+        result = 31 * result + ( getOrigin() != null ? getOrigin().hashCode() : 0 );
+        result = 31 * result + ( getIdseq() != null ? getIdseq().hashCode() : 0 );
+        result = 31 * result + ( getDecIdseq() != null ? getDecIdseq().hashCode() : 0 );
+        result = 31 * result + ( getCdIdseq() != null ? getCdIdseq().hashCode() : 0 );
+        result = 31 * result + ( getProplName() != null ? getProplName().hashCode() : 0 );
+        result = 31 * result + ( getOclName() != null ? getOclName().hashCode() : 0 );
+        result = 31 * result + ( getObjClassQualifier() != null ? getObjClassQualifier().hashCode() : 0 );
+        result = 31 * result + ( getPropertyQualifier() != null ? getPropertyQualifier().hashCode() : 0 );
+        result = 31 * result + ( getChangeNote() != null ? getChangeNote().hashCode() : 0 );
+        result = 31 * result + ( getObjClassPrefName() != null ? getObjClassPrefName().hashCode() : 0 );
+        result = 31 * result + ( getObjClassContextName() != null ? getObjClassContextName().hashCode() : 0 );
+        result = 31 * result + ( getPropertyPrefName() != null ? getPropertyPrefName().hashCode() : 0 );
+        result = 31 * result + ( getPropertyContextName() != null ? getPropertyContextName().hashCode() : 0 );
+        result = 31 * result + ( getPropertyVersion() != null ? getPropertyVersion().hashCode() : 0 );
+        result = 31 * result + ( getObjClassVersion() != null ? getObjClassVersion().hashCode() : 0 );
+        result = 31 * result + ( getConteName() != null ? getConteName().hashCode() : 0 );
+        result = 31 * result + ( getCdPrefName() != null ? getCdPrefName().hashCode() : 0 );
+        result = 31 * result + ( getCdContextName() != null ? getCdContextName().hashCode() : 0 );
+        result = 31 * result + ( getCdVersion() != null ? getCdVersion().hashCode() : 0 );
         result = 31 * result + getCdPublicId();
         result = 31 * result + getObjClassPublicId();
-        result = 31 * result + (getProperty() != null ? getProperty().hashCode() : 0);
-        result = 31 * result + (getObjectClassModel() != null ? getObjectClassModel().hashCode() : 0);
+        result = 31 * result + ( getProperty() != null ? getProperty().hashCode() : 0 );
+        result = 31 * result + ( getObjectClassModel() != null ? getObjectClassModel().hashCode() : 0 );
         return result;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "DataElementConceptModel{" +
                 "preferredName='" + preferredName + '\'' +
                 ", preferredDefinition='" + preferredDefinition + '\'' +

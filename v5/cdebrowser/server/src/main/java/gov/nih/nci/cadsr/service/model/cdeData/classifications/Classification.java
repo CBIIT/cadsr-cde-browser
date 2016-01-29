@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.classifications;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 /**
  * A list of these makes the Classifications section of the Classifications tab

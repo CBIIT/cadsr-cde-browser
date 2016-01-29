@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -134,8 +137,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                         dataElementConceptModel.setPropertyVersion( propertyModel.getVersion() );
                     }
                 }
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no Property found for propIdseq: " + rs.getString( "PROP_IDSEQ" ) );
             }
@@ -160,8 +162,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                         dataElementConceptModel.setObjClassVersion( objectClassModel.getVersion() );
                     }
                 }
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no ObjectClassModel found for OC_IDSEQ: " + rs.getString( "OC_IDSEQ" ) );
             }
@@ -172,8 +173,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                 {
                     dataElementConceptModel.setConteName( contextModel.getName() );
                 }
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no contextModel found for CONTE_IDSEQ: " + rs.getString( "CONTE_IDSEQ" ) );
             }
@@ -199,8 +199,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                     }
                     logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
                 }
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "no dataElementConceptModel found for CD_IDSEQ: " + rs.getString( "CD_IDSEQ" ) );
             }

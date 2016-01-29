@@ -1,10 +1,10 @@
 package gov.nih.nci.cadsr.service.model.cdeData.classifications;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
 
-/**
- * Created by lernermh on 4/22/15.
- */
 public class ClassificationsSchemeReferenceDocument
 {
     private String csLongName;
@@ -16,13 +16,15 @@ public class ClassificationsSchemeReferenceDocument
     private String url;
     private String attachments;
 
-    public ClassificationsSchemeReferenceDocument() {
+    public ClassificationsSchemeReferenceDocument()
+    {
     }
 
-    public ClassificationsSchemeReferenceDocument(CSRefDocModel csRefDocModel) {
+    public ClassificationsSchemeReferenceDocument( CSRefDocModel csRefDocModel )
+    {
         this.csLongName = csRefDocModel.getCsLongName();
         this.csVersion = csRefDocModel.getCsVersion();
-        this.formattedCsVersion = Float.toString( Float.valueOf(csVersion) );
+        this.formattedCsVersion = Float.toString( Float.valueOf( csVersion ) );
         this.documentName = csRefDocModel.getDocumentName();
         this.documentType = csRefDocModel.getDocumentType();
         this.documentText = csRefDocModel.getDocumentText();
@@ -49,7 +51,7 @@ public class ClassificationsSchemeReferenceDocument
     public void setCsVersion( float csVersion )
     {
         this.csVersion = csVersion;
-        this.formattedCsVersion = Float.toString(  Float.valueOf(csVersion) );
+        this.formattedCsVersion = Float.toString( Float.valueOf( csVersion ) );
     }
 
     public String getFormattedCsVersion()

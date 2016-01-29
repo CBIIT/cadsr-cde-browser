@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -31,13 +34,13 @@ public class BasicSearchDAOImpl extends AbstractDAOOperations implements BasicSe
 
     public List<BasicSearchModel> getAllContexts()
     {
-        List<BasicSearchModel>  results;
+        List<BasicSearchModel> results;
 
-        logger.debug( "basicSearch");
+        logger.debug( "basicSearch" );
         //logger.debug( ">>>>>>> "+ basicSearchSql );
         results = getAll( basicSearchSql, BasicSearchModel.class );
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done basicSearch");
+        logger.debug( "Done basicSearch" );
 
         return results;
     }

@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 public class ReferenceDocument
 {

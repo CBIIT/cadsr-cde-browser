@@ -1,21 +1,19 @@
 package gov.nih.nci.cadsr.dao.model;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
-/**
- * Created with IntelliJ IDEA.
- * User: lernermh
- * Date: 3/2/15
- * Time: 10:29 AM
- * To change this template use File | Settings | File Templates.
- */
+
 public class ProgramAreaModel extends BaseModel
 {
     private String comments;
     private String description;
     private String palName;
 
-    public ProgramAreaModel() {
+    public ProgramAreaModel()
+    {
     }
 
     public String getComments()
@@ -62,25 +60,27 @@ public class ProgramAreaModel extends BaseModel
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProgramAreaModel)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o ) return true;
+        if( !( o instanceof ProgramAreaModel ) ) return false;
 
-        ProgramAreaModel that = (ProgramAreaModel) o;
+        ProgramAreaModel that = ( ProgramAreaModel ) o;
 
-        if (getComments() != null ? !getComments().equals(that.getComments()) : that.getComments() != null)
+        if( getComments() != null ? !getComments().equals( that.getComments() ) : that.getComments() != null )
             return false;
-        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+        if( getDescription() != null ? !getDescription().equals( that.getDescription() ) : that.getDescription() != null )
             return false;
-        return !(getPalName() != null ? !getPalName().equals(that.getPalName()) : that.getPalName() != null);
+        return !( getPalName() != null ? !getPalName().equals( that.getPalName() ) : that.getPalName() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getComments() != null ? getComments().hashCode() : 0;
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getPalName() != null ? getPalName().hashCode() : 0);
+        result = 31 * result + ( getDescription() != null ? getDescription().hashCode() : 0 );
+        result = 31 * result + ( getPalName() != null ? getPalName().hashCode() : 0 );
         return result;
     }
 }

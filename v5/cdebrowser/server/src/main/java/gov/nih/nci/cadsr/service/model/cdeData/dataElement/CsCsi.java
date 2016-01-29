@@ -1,12 +1,14 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import java.util.List;
+
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 
-/**
- * Created by lavezzojl on 5/8/15.
- */
-public class CsCsi {
+public class CsCsi
+{
     private String csLongName;
     private String csDefinition;
     private String csiName;
@@ -22,15 +24,17 @@ public class CsCsi {
     private List<AlternateName> alternateNames;
     private List<AlternateDefinition> alternateDefinitions;
 
-    public CsCsi() {
+    public CsCsi()
+    {
     }
 
-    public CsCsi(CsCsiModel csCsiModel) {
+    public CsCsi( CsCsiModel csCsiModel )
+    {
         csLongName = csCsiModel.getCsLongName();
         csDefinition = csCsiModel.getCsPreffredDefinition();
         csId = csCsiModel.getCsId();
         csVersion = csCsiModel.getCsVersion();
-        if( csVersion != null)
+        if( csVersion != null )
         {
             formattedCsVersion = Float.toString( Float.valueOf( csVersion ) );
         }
@@ -42,64 +46,79 @@ public class CsCsi {
         {
             formattedCsiVersion = Float.toString( Float.valueOf( csiVersion ) );
         }
-        if (csiName == CsCsiModel.UNCLASSIFIED) {
+        if( csiName == CsCsiModel.UNCLASSIFIED )
+        {
             hide = true;
         }
     }
 
-    public String getCsLongName() {
+    public String getCsLongName()
+    {
         return csLongName;
     }
 
-    public void setCsLongName(String csLongName) {
+    public void setCsLongName( String csLongName )
+    {
         this.csLongName = csLongName;
     }
 
-    public String getCsDefinition() {
+    public String getCsDefinition()
+    {
         return csDefinition;
     }
 
-    public void setCsDefinition(String csDefinition) {
+    public void setCsDefinition( String csDefinition )
+    {
         this.csDefinition = csDefinition;
     }
 
-    public String getCsiName() {
+    public String getCsiName()
+    {
         return csiName;
     }
 
-    public void setCsiName(String csiName) {
+    public void setCsiName( String csiName )
+    {
         this.csiName = csiName;
     }
 
-    public String getCsiType() {
+    public String getCsiType()
+    {
         return csiType;
     }
 
-    public void setCsiType(String csiType) {
+    public void setCsiType( String csiType )
+    {
         this.csiType = csiType;
     }
 
-    public String getCsId() {
+    public String getCsId()
+    {
         return csId;
     }
 
-    public void setCsId(String csId) {
+    public void setCsId( String csId )
+    {
         this.csId = csId;
     }
 
-    public Float getCsVersion() {
+    public Float getCsVersion()
+    {
         return csVersion;
     }
 
-    public void setCsVersion(Float csVersion) {
+    public void setCsVersion( Float csVersion )
+    {
         this.csVersion = csVersion;
     }
 
-    public Integer getCsiId() {
+    public Integer getCsiId()
+    {
         return csiId;
     }
 
-    public void setCsiId(Integer csiId) {
+    public void setCsiId( Integer csiId )
+    {
         this.csiId = csiId;
     }
 
@@ -123,82 +142,95 @@ public class CsCsi {
         this.formattedCsVersion = formattedCsVersion;
     }
 
-    public Float getCsiVersion() {
+    public Float getCsiVersion()
+    {
         return csiVersion;
     }
 
-    public void setCsiVersion(Float csiVersion) {
+    public void setCsiVersion( Float csiVersion )
+    {
         this.csiVersion = csiVersion;
     }
 
-    public Boolean getHide() {
+    public Boolean getHide()
+    {
         return hide;
     }
 
-    public void setHide(Boolean hide) {
+    public void setHide( Boolean hide )
+    {
         this.hide = hide;
     }
 
-    public List<AlternateName> getAlternateNames() {
+    public List<AlternateName> getAlternateNames()
+    {
         return alternateNames;
     }
 
-    public void setAlternateNames(List<AlternateName> alternateNames) {
+    public void setAlternateNames( List<AlternateName> alternateNames )
+    {
         this.alternateNames = alternateNames;
     }
 
-    public List<AlternateDefinition> getAlternateDefinitions() {
+    public List<AlternateDefinition> getAlternateDefinitions()
+    {
         return alternateDefinitions;
     }
 
-    public void setAlternateDefinitions(List<AlternateDefinition> alternateDefinitions) {
+    public void setAlternateDefinitions( List<AlternateDefinition> alternateDefinitions )
+    {
         this.alternateDefinitions = alternateDefinitions;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CsCsi)) return false;
+    public boolean equals( Object o )
+    {
+        if( this == o ) return true;
+        if( !( o instanceof CsCsi ) ) return false;
 
-        CsCsi csCsi = (CsCsi) o;
+        CsCsi csCsi = ( CsCsi ) o;
 
-        if (getCsLongName() != null ? !getCsLongName().equals(csCsi.getCsLongName()) : csCsi.getCsLongName() != null)
+        if( getCsLongName() != null ? !getCsLongName().equals( csCsi.getCsLongName() ) : csCsi.getCsLongName() != null )
             return false;
-        if (getCsDefinition() != null ? !getCsDefinition().equals(csCsi.getCsDefinition()) : csCsi.getCsDefinition() != null)
+        if( getCsDefinition() != null ? !getCsDefinition().equals( csCsi.getCsDefinition() ) : csCsi.getCsDefinition() != null )
             return false;
-        if (getCsiName() != null ? !getCsiName().equals(csCsi.getCsiName()) : csCsi.getCsiName() != null) return false;
-        if (getCsiType() != null ? !getCsiType().equals(csCsi.getCsiType()) : csCsi.getCsiType() != null) return false;
-        if (getCsId() != null ? !getCsId().equals(csCsi.getCsId()) : csCsi.getCsId() != null) return false;
-        if (getCsVersion() != null ? !getCsVersion().equals(csCsi.getCsVersion()) : csCsi.getCsVersion() != null)
+        if( getCsiName() != null ? !getCsiName().equals( csCsi.getCsiName() ) : csCsi.getCsiName() != null )
             return false;
-        if (getCsiId() != null ? !getCsiId().equals(csCsi.getCsiId()) : csCsi.getCsiId() != null) return false;
-        if (getCsiVersion() != null ? !getCsiVersion().equals(csCsi.getCsiVersion()) : csCsi.getCsiVersion() != null)
+        if( getCsiType() != null ? !getCsiType().equals( csCsi.getCsiType() ) : csCsi.getCsiType() != null )
             return false;
-        if (getHide() != null ? !getHide().equals(csCsi.getHide()) : csCsi.getHide() != null) return false;
-        if (getAlternateNames() != null ? !getAlternateNames().equals(csCsi.getAlternateNames()) : csCsi.getAlternateNames() != null)
+        if( getCsId() != null ? !getCsId().equals( csCsi.getCsId() ) : csCsi.getCsId() != null ) return false;
+        if( getCsVersion() != null ? !getCsVersion().equals( csCsi.getCsVersion() ) : csCsi.getCsVersion() != null )
             return false;
-        return !(getAlternateDefinitions() != null ? !getAlternateDefinitions().equals(csCsi.getAlternateDefinitions()) : csCsi.getAlternateDefinitions() != null);
+        if( getCsiId() != null ? !getCsiId().equals( csCsi.getCsiId() ) : csCsi.getCsiId() != null ) return false;
+        if( getCsiVersion() != null ? !getCsiVersion().equals( csCsi.getCsiVersion() ) : csCsi.getCsiVersion() != null )
+            return false;
+        if( getHide() != null ? !getHide().equals( csCsi.getHide() ) : csCsi.getHide() != null ) return false;
+        if( getAlternateNames() != null ? !getAlternateNames().equals( csCsi.getAlternateNames() ) : csCsi.getAlternateNames() != null )
+            return false;
+        return !( getAlternateDefinitions() != null ? !getAlternateDefinitions().equals( csCsi.getAlternateDefinitions() ) : csCsi.getAlternateDefinitions() != null );
 
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = getCsLongName() != null ? getCsLongName().hashCode() : 0;
-        result = 31 * result + (getCsDefinition() != null ? getCsDefinition().hashCode() : 0);
-        result = 31 * result + (getCsiName() != null ? getCsiName().hashCode() : 0);
-        result = 31 * result + (getCsiType() != null ? getCsiType().hashCode() : 0);
-        result = 31 * result + (getCsId() != null ? getCsId().hashCode() : 0);
-        result = 31 * result + (getCsVersion() != null ? getCsVersion().hashCode() : 0);
-        result = 31 * result + (getCsiId() != null ? getCsiId().hashCode() : 0);
-        result = 31 * result + (getCsiVersion() != null ? getCsiVersion().hashCode() : 0);
-        result = 31 * result + (getHide() != null ? getHide().hashCode() : 0);
-        result = 31 * result + (getAlternateNames() != null ? getAlternateNames().hashCode() : 0);
-        result = 31 * result + (getAlternateDefinitions() != null ? getAlternateDefinitions().hashCode() : 0);
+        result = 31 * result + ( getCsDefinition() != null ? getCsDefinition().hashCode() : 0 );
+        result = 31 * result + ( getCsiName() != null ? getCsiName().hashCode() : 0 );
+        result = 31 * result + ( getCsiType() != null ? getCsiType().hashCode() : 0 );
+        result = 31 * result + ( getCsId() != null ? getCsId().hashCode() : 0 );
+        result = 31 * result + ( getCsVersion() != null ? getCsVersion().hashCode() : 0 );
+        result = 31 * result + ( getCsiId() != null ? getCsiId().hashCode() : 0 );
+        result = 31 * result + ( getCsiVersion() != null ? getCsiVersion().hashCode() : 0 );
+        result = 31 * result + ( getHide() != null ? getHide().hashCode() : 0 );
+        result = 31 * result + ( getAlternateNames() != null ? getAlternateNames().hashCode() : 0 );
+        result = 31 * result + ( getAlternateDefinitions() != null ? getAlternateDefinitions().hashCode() : 0 );
         return result;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "CsCsi{" +
                 "csLongName='" + csLongName + '\'' +
                 ", csDefinition='" + csDefinition + '\'' +

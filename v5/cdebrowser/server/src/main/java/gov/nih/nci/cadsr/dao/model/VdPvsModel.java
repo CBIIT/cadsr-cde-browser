@@ -1,17 +1,17 @@
 package gov.nih.nci.cadsr.dao.model;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import java.sql.Timestamp;
 
-/**
- * Created by lernermh on 6/3/15.
- */
-public class VdPvsModel  extends BaseModel
+public class VdPvsModel extends BaseModel
 {
-    private String  vpIdseq;
-    private String  vdIdseq;
-    private String  pvIdseq;
-    private String  conteIdseq;
-    private String   origin;
+    private String vpIdseq;
+    private String vdIdseq;
+    private String pvIdseq;
+    private String conteIdseq;
+    private String origin;
     private String conIdesq;
     private Timestamp beginDate;
     private Timestamp endDate;

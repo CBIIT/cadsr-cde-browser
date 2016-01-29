@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
@@ -80,8 +83,7 @@ public class DEOtherVersionsDAOImpl extends AbstractDAOOperations implements DEO
                 {
                     deOtherVersionsModel.setCsCsiModelList( new ArrayList<CsCsiModel>() );
                 }
-            }
-            catch( EmptyResultDataAccessException ex )
+            } catch( EmptyResultDataAccessException ex )
             {
                 deOtherVersionsModel.setCsCsiModelList( new ArrayList<CsCsiModel>() );
                 logger.warn( "No CsCsiModels found for Other Version Data Element with idseq: " + rs.getString( "de_idseq" ) );

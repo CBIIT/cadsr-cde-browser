@@ -1,14 +1,14 @@
 package gov.nih.nci.cadsr.dao;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 
 import java.util.List;
 
-/**
- * Created by lernermh on 8/21/15.
- */
 public interface ToolOptionsDAO
 {
-    ToolOptionsModel getToolOptionsByToolNameAndProperty( String toolName, String property);
-    List<ToolOptionsModel> getToolOptionsByProperty( String property);
+    ToolOptionsModel getToolOptionsByToolNameAndProperty( String toolName, String property );
+    List<ToolOptionsModel> getToolOptionsByProperty( String property );
 }

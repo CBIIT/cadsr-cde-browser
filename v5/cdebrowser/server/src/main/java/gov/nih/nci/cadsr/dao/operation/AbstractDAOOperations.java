@@ -1,8 +1,7 @@
-/*
- * Copyright 2015 Leidos Biomedical Research, Inc.
- */
-
 package gov.nih.nci.cadsr.dao.operation;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,8 +46,7 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
                             new BeanPropertyRowMapper( type ) ) );
 
             return results;
-        }
-        catch( DataAccessException e )
+        } catch( DataAccessException e )
         {
             logger.debug( "Error: [" + e.getMessage() + "]" );
             logger.debug( "Error: [" + e.toString() + "]" );
@@ -67,8 +65,7 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
             {
                 e.printStackTrace();
             }
-        }
-        catch( Exception e )
+        } catch( Exception e )
         {
             e.printStackTrace();
         }
@@ -101,7 +98,7 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
 
     public Integer getOneInt( String sql, String where )
     {
-        Integer n = (Integer) getJdbcTemplate().queryForObject(
+        Integer n = ( Integer ) getJdbcTemplate().queryForObject(
                 sql, new Object[]{ where }, Integer.class );
         return n;
     }

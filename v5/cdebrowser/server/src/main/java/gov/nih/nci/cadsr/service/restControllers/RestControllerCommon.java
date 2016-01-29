@@ -1,4 +1,7 @@
 package gov.nih.nci.cadsr.service.restControllers;
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
+ */
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.ProgramAreaDAOImpl;
@@ -32,7 +35,6 @@ public class RestControllerCommon
     {
         this.programAreaDAO = programAreaDAO;
     }
-
 
 
     protected List<ProgramAreaModel> getProgramAreaList()
