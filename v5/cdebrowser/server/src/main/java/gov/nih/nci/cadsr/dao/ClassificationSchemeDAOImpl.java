@@ -50,9 +50,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
         logger.debug( "getChildrenClassificationSchemesByCsId( String csId ) executing query " + sql + " (p_cs_idseq is " + csId + ")" );
 
-
-        //sql = "select * from SBREXT.CABIO_CLASS_SCHEMES_VIEW WHERE CONTE_IDSEQ=? order by PREFERRED_DEFINITION";
-        //logger.debug( "SQL:  " + sql);
         return getAll( sql, csId, ClassificationSchemeModel.class );
     }
 
@@ -107,9 +104,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     @Override
     public ClassificationSchemeModel getClassificationSchemeById( String contextId )
     {
-
-        //sql = "SELECT * FROM sbrext.cabio_class_schemes_view WHERE conte_idseq=?";
-
         sql = "SELECT DISTINCT cs_idseq , preferred_name, long_name, " +
                 "preferred_definition, cstl_name,asl_name,conte_idseq " +
                 " FROM sbr.classification_Schemes_view" +
@@ -118,7 +112,6 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
                 " AND cstl_name != 'Publishing' " +
                 " ORDER BY UPPER(long_name)  ";
 
-        //logger.warn( "SQL ["+ contextId +"]: " + sql );
         ClassificationSchemeModel results = query( sql, contextId, ClassificationSchemeModel.class );
 
         return results;

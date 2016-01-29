@@ -143,7 +143,6 @@
 
     <bean id="valueDomainConceptDAO" class="gov.nih.nci.cadsr.dao.ValueDomainConceptDAOImpl" parent="abstractDao">
         <property name="conceptDAO" ref="conceptDAO"/>
-
     </bean>
 
     <bean id="toolOptionsDAO" class="gov.nih.nci.cadsr.dao.ToolOptionsDAOImpl" parent="abstractDao"/>
