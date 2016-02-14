@@ -501,7 +501,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         'version': 'Version'
     };
 
-
     $scope.initTableParams();
     $scope.hideContexts();
     $scope.dataLoadFromServer();

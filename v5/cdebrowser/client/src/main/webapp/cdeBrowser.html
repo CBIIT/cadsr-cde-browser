@@ -41,12 +41,8 @@
 
 <div data-ng-app="cdeBrowserApp" data-ng-controller="cdeBrowserController" data-ng-cloak class="data-ng-cloak">
 
-
     <!-- ************ Second row at top - caDSR logo, CDE Browser logo, four round buttons ************ -->
     <div class="top2-left-logo">
-        <!-- JIRA says change link url
-        <a href="http://ncicb.nci.nih.gov/NCICB/infrastructure/cacore_overview/cadsr" target="_blank">
-        -->
         <a href="http://cbiit.nci.nih.gov/ncip/biomedical-informatics-resources/interoperability-and-semantics/metadata-and-models"
            target="_blank">
             <img alt="CADSR logo" src="icons/caDSR_logo2_contrast.png">
@@ -154,7 +150,7 @@
     <div class="topTabPos">
         <ul>
             <!--
-                Just getting the parent top level nodes for the top tabs  nodeNumber is counter,
+                Just getting the parent top level nodes for the top tabs, nodeNumber is counter,
                 node is the actual node, we just need the text for the tabs.
             -->
             <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
@@ -181,8 +177,7 @@
         <div class="treeMenu" data-ng-show=show[nodeNumber]
              data-ng-style="resizeHeight()"
              resize
-             notifier="notifyServiceOnChange(params)"
-                >
+             notifier="notifyServiceOnChange(params)">
 
             <div class="tabCaptionWrapper cssFade" data-ng-show=show[nodeNumber]>
                 <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
@@ -372,29 +367,11 @@
                         <a data-ng-click="versionDisplay(versionPopover.version, versionPopover.tag, versionPopover.scm_date, versionPopover.tier)" >
                             Version {{versionPopover.version}} &nbsp; Build {{versionPopover.shortBuildVersion}}
                         </a>
-                        <!--
-                               <button class="btn versionButton" type="text" popover-template="versionPopover.templateUrl" popover-trigger="focus">Version {{versionPopover.version}}</button>
-                        -->
                     </td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
                     </td>
                 </tr>
             </table>
-            <!--
-
-                        <script type="text/ng-template" id="versionPopoverTemplate.html">
-                            <div class="versionPopover">
-                                <label>Version:</label>
-                                <input type="text" data-ng-model="versionPopover.version" class="form-control">
-                                <label>SCM Tag:</label>
-                                <input type="text" data-ng-model="versionPopover.tag" class="form-control">
-                                <label>SCM Date:</label>
-                                <input type="text" data-ng-model="versionPopover.scm_date" class="form-control">
-                                <label>System Tier:</label>
-                                <input type="text" data-ng-model="versionPopover.tier" class="form-control">
-                            </div>
-                        </script>
-            -->
         </div>
 
     </div>
