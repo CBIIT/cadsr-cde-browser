@@ -137,15 +137,19 @@
                 </executions>
             </plugin>
 
-
+            <!--
+            This will make sure the compiler creates 1.8 compatible code. It does not force the use of 1.8 to do the compile.
+            If we want to force the use of Java 8, not just compatibility, add plugin "maven-enforcer-plugin".
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.5.3</version>
