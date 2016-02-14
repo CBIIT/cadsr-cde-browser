@@ -4,7 +4,7 @@
     <groupId>ov.nih.nci.cadsr</groupId>
     <artifactId>cdebrowserServer</artifactId>
     <packaging>war</packaging>
-    <version>5.0</version>
+    <version>5.1</version>
     <name>cdebrowser server</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

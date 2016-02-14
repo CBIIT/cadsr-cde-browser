@@ -4,7 +4,7 @@
     <groupId>cdebrowserClient</groupId>
     <artifactId>cdebrowserClient</artifactId>
     <packaging>war</packaging>
-    <version>5.0</version>
+    <version>5.1</version>
     <name>cdebrowserClient</name>
     <dependencies>
      </dependencies>
