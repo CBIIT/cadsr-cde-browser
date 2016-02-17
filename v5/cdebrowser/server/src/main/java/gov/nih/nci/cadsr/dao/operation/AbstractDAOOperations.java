@@ -43,7 +43,7 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
             T results = type.cast(
                     getJdbcTemplate().queryForObject(
                             sql, new Object[]{ where },
-                            new BeanPropertyRowMapper( type ) ) );
+                            new BeanPropertyRowMapper<T>( type ) ) );
 
             return results;
         } catch( DataAccessException e )
