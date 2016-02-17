@@ -183,7 +183,7 @@ L-->
 		<param-name>org.apache.myfaces.STRICT_XHTML_LINKS</param-name>
 		<param-value>true</param-value>
 	</context-param>
-−
+
 	<context-param>
 		<param-name>org.apache.myfaces.CONFIG_REFRESH_PERIOD</param-name>
 		<param-value>2</param-value>

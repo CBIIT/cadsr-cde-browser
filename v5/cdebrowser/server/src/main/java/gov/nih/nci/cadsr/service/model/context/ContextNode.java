@@ -157,7 +157,7 @@ public class ContextNode extends BaseNode
         this.setProgramArea( programArea );
         this.setCollapsed( true );
         this.setIsParent( false );
-        this.setHref( "cdebrowserServer/cdesByContext," + contextModel.getConteIdseq() );
+        this.setHref( "cdebrowserServer/rest/cdesByContext," + contextModel.getConteIdseq() );
 
         this.setChildType( 0 );
         this.setIdSeq( contextModel.getConteIdseq() );

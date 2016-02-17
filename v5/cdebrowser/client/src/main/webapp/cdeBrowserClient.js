@@ -110,8 +110,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
-        console.log(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
-        $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/CDEData?deIdseq=" + deIdseq);
+        console.log(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
+        $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
 
     };
 
@@ -209,10 +209,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $location.path("/search").replace();
 
         $scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
-        "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+        "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
         console.log("onClickBasicSearch:   " + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
-        "/cdebrowserServer/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+        "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
@@ -334,7 +334,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.dataLoadFromServer = function () {
         console.log("$scope.dataLoadFromServer");
-        $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/contextData");
+        $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/contextData");
     };
 
     $scope.dataLoad = function (dataSource) {
@@ -369,7 +369,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Get the urls for the tools we link to from this page.  I got all that where in the database, although we do not use them all
     $scope.getToolHosts = function () {
-        var restService = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/getAllToolHost"
+        var restService = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/getAllToolHost"
 
         $http.get(restService).success(function (response) {
 
