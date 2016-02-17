@@ -171,11 +171,5 @@
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>
     </bean>
-	
-	<bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownload">
-        <constructor-arg name="dataSource" index="0" ref="dataSource"/>
-        <property name="localDownloadDirectory" value="/local/content/cdebrowser/output/"/>
-        <property name="excelFileNamePrefix" value="DataElements_"/>
-     </bean>
 
 </beans>
