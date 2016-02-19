@@ -19,5 +19,18 @@ fi
 
 echo Commit Date/Time: $scm_date2
 
-sed -i  .json "s/\"scm_date\":.*/\"scm_date\":\"${scm_date2}\"/g" src/main/webapp/version.json 
+export OS=`uname`
+if [ ${OS} = Linux ]
+then
+    sed -i "s/\"scm_date\":.*/\"scm_date\":\"${scm_date2}\"/g" src/main/webapp/version.json
+elif [ ${OS} = Darwin ]
+then
+    sed -i  .json "s/\"scm_date\":.*/\"scm_date\":\"${scm_date2}\"/g" src/main/webapp/version.json
+else
+    # Default, should never get here
+    sed -i  "s/\"scm_date\":.*/\"scm_date\":\"${scm_date2}\"/g" src/main/webapp/version.json
+fi
+
+
+
 
