@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.download.ExcelDownloadTypes;
-import gov.nih.nci.cadsr.download.GetExcelDownload;
+import gov.nih.nci.cadsr.download.GetExcelDownloadInterface;
 import gov.nih.nci.cadsr.service.ClientException;
 import gov.nih.nci.cadsr.service.ServerException;
 /**
@@ -40,12 +40,12 @@ import gov.nih.nci.cadsr.service.ServerException;
 public class DownloadExcelController {
 	private Logger logger = LogManager.getLogger(DownloadExcelController.class.getName());
 	@Autowired
-	GetExcelDownload getExcelDownload;
+	GetExcelDownloadInterface getExcelDownload;
 
 	@Value("${registrationAuthorityIdentifier}")
 	String registrationAuthorityIdentifier;
 
-	public void setGetExcelDownload(GetExcelDownload getExcelDownload) {
+	public void setGetExcelDownload(GetExcelDownloadInterface getExcelDownload) {
 		this.getExcelDownload = getExcelDownload;
 	}
 

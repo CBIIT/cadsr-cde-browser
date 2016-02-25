@@ -40,14 +40,14 @@ import gov.nih.nci.cadsr.service.ClientException;
  * @author asafievan
  *
  */
-public class GetExcelDownload extends JdbcDaoSupport {
+public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownloadInterface {
     private Logger logger = LogManager.getLogger(GetExcelDownload.class.getName());
 
 	//This value will be provided by the service taken from component properties file
 	//public static final String DEFAULT_RAI = "2.16.840.1.113883.3.26.2";
 
 	//this is parameterized 
-	private String localDownloadDirectory;  //"/local/content/cdebrowser/output" is a value provided in Bean context
+	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" is a value provided in Bean context
 	private String excelFileNamePrefix; // a value provided in Bean context
 
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
@@ -67,17 +67,10 @@ public class GetExcelDownload extends JdbcDaoSupport {
 		String fileId = jdbcTemplate.queryForObject("SELECT SBREXT.XML_FILE_SEQ.NEXTVAL from dual", new Object[]{}, String.class);
 		return fileId;
     }
-    /**
-     * This method is called from DownloadExcelController.
-     * Parameters validity is expected to be checked by the service.
-     * This method does not check validity of parameters.
-     * 
-     * @param itemIds shall be not null or empty. These are internal DE IDs.
-     * @param RAI application parameter
-     * @param source type of download @see gov.nih.nci.cadsr.download.ExcelDownloadTypes
-     * @return a local absolute file name used to save Excel table which will be return by the service.
-     * @throws Exception
-     */
+    /* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.download.GetExcelDownloadInterface#persist(java.util.Collection, java.lang.String, java.lang.String)
+	 */
+	@Override
 	public String persist(Collection<String> itemIds, String RAI, String source) throws Exception {
 
 		String excelFileSuffix;
@@ -85,9 +78,11 @@ public class GetExcelDownload extends JdbcDaoSupport {
 		//this is currently taken from DB sequence
 		excelFileSuffix = generateExcelFileId() ;
 		//the Bean properties set up in the Spring context
-		excelFilename = localDownloadDirectory +  excelFileNamePrefix + excelFileSuffix + ".xls";;
+		excelFilename = localDownloadDirectory +  excelFileNamePrefix + excelFileSuffix + ".xls";
+		//prepare List of ColumnInfo objects
+		List<ColumnInfo> colInfo = this.initColumnInfo(source);
 		//this function saves the file on the local drive
-		generateExcelFile(excelFilename, itemIds, RAI, source);
+		generateExcelFile(excelFilename, itemIds, RAI, source, colInfo);
 		//the file name returned to the RESTful service to build the response
 		return excelFilename;
 
@@ -111,11 +106,21 @@ public class GetExcelDownload extends JdbcDaoSupport {
 		}
 		
 	}
+	/**
+	 * This method generates Excel file with the given file name.
+	 * 
+	 * @param filename absolute file name
+	 * @param itemIds internal IDs
+	 * @param RAI
+	 * @param source @see gov.nih.nci.cadsr.download.ExcelDownloadTypes
+	 * @param colInfo List of ColumnInfo objects
+	 * @throws Exception
+	 */
 	protected void generateExcelFile(
 			final String filename,
 			final Collection<String> itemIds,
 			String RAI,
-			final String source) throws Exception {
+			final String source, List<ColumnInfo> colInfo) throws Exception {
 		Connection cn = null;
 
 		Statement st = null;
@@ -126,7 +131,6 @@ public class GetExcelDownload extends JdbcDaoSupport {
 		
 		try {
 			//source tells what type of download do we do: "deSearch", "deCart", "deSearchPrior"
-			List<ColumnInfo> colInfo = this.initColumnInfo(source);
 			wb = new HSSFWorkbook();
 
 			HSSFSheet sheet = wb.createSheet();
@@ -137,35 +141,10 @@ public class GetExcelDownload extends JdbcDaoSupport {
 			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 			boldCellStyle.setFont(font);
 			boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
-
-
-			// Create a row and put the column header in it
-			HSSFRow row = sheet.createRow(rowNumber++);
-			int col = 0;
-
-			for (int i = 0; i < colInfo.size(); i++) {
-				ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
-
-				if (currCol.type.indexOf("Array") >= 0) {//StructArray or Array
-					for (int nestedI = 0; nestedI < currCol.nestedColumns.size();
-					nestedI++) {
-						ColumnInfo nestedCol =
-							(ColumnInfo) currCol.nestedColumns.get(nestedI);
-
-						HSSFCell cell = row.createCell(col++);
-						cell.setCellValue(currCol.displayName + nestedCol.displayName);
-						cell.setCellStyle(boldCellStyle);
-					}
-				}
-				else {
-					HSSFCell cell = row.createCell(col++);
-
-					cell.setCellValue(currCol.displayName);
-					cell.setCellStyle(boldCellStyle);
-				}
-			}
-
-			int maxRowNumber = 0;
+			//create sheet headers
+			generateExcelHeaders(sheet, boldCellStyle, source, colInfo);
+			
+			rowNumber++; //this is the row where we want to start data
 			
 			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
 			st = cn.createStatement();
@@ -180,125 +159,8 @@ public class GetExcelDownload extends JdbcDaoSupport {
 			//+" ORDER BY PREFERRED_NAME ";
 			rs = st.executeQuery(sqlStmt);
 			
-			while (rs.next()) {
-				row = sheet.createRow(rowNumber);//NA new main row
-				col = 0;
-				//in ColumnInfo Array type has column name; nested ColumnInfo has a rs index inside the nested rs
-				for (int i = 0; i < colInfo.size(); i++) {
-					ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
-
-					if (currCol.type.indexOf("Array") >= 0) {
-						Array sqlArray = null;//NA java.sql types variable names are prefixed with 'sql' as sqlArray in here
-						if (currCol.type.equalsIgnoreCase("Array")) {
-							sqlArray = rs.getArray(currCol.rsColumnName);
-						}
-						else if (currCol.type.equalsIgnoreCase("StructArray")) {
-							Struct structSql = (Struct)rs.getObject(currCol.rsColumnName);
-							Object[] valueStruct = structSql.getAttributes();
-							sqlArray = (Array)valueStruct[currCol.rsIndex];
-						}
-
-						if (sqlArray != null) {
-							ResultSet nestedRs = sqlArray.getResultSet();
-
-							int nestedRowNumber = 0;  
-
-							while (nestedRs.next()) {
-								row = sheet.getRow(rowNumber + nestedRowNumber);
-
-								if (row == null) {
-									row = sheet.createRow(rowNumber + nestedRowNumber);//NA creating a dependent row
-
-									maxRowNumber = rowNumber + nestedRowNumber;
-								}
-								Struct valueStructSql = null;
-								try {									
-									valueStructSql = (Struct) nestedRs.getObject(2);
-								}
-								catch (SQLException sqlEx) {										
-									logger.info("SQLException when getting STRUCT from nester ResultSet: " + sqlEx);											
-								}
-								
-								if ( valueStructSql != null ) {//NA adding multi-row columns values related to Oracle type arrays
-									Object[] valueDatum = valueStructSql.getAttributes();
-									for (short nestedI = 0; nestedI < currCol.nestedColumns.size(); nestedI++) 
-									{
-										ColumnInfo nestedCol =
-											(ColumnInfo) currCol.nestedColumns.get(nestedI);
-	
-										HSSFCell cell = row.createCell((col + nestedI));
-	
-										if (nestedCol.rsSubIndex < 0) {
-											if (valueDatum[nestedCol.rsIndex] != null) {
-												if (nestedCol.type.equalsIgnoreCase("Number")) {
-													cell.setCellValue(((BigDecimal)valueDatum[nestedCol.rsIndex]).floatValue());
-												}
-												else if (nestedCol.type.equalsIgnoreCase("Date")){  
-													Object obj = valueDatum[nestedCol.rsIndex];
-													if (obj instanceof java.util.Date) {//both java.sqlTimestamp and java.sql.Date extend java.util.Date
-														java.sql.Date dateVal = new java.sql.Date(((java.util.Date)obj).getTime());//we use here java.sql.Date to drop the Time part of Timestamp
-														cell.setCellValue(dateVal.toString());		
-													}
-													else {
-														logger.debug("!!! valueDatum[nestedCol.rsIndex] unexpected class: " + obj.getClass().getName());
-														cell.setCellValue(obj.toString());
-													}
-												}
-												else {  
-													String stringCellValue=(String) valueDatum[nestedCol.rsIndex];
-													cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
-												}
-											}
-										}//if (nestedCol.rsSubIndex < 0
-										else {
-											Struct nestedStructSql = (Struct)valueDatum[nestedCol.rsIndex];
-											Object[] nestedDatum = nestedStructSql.getAttributes();
-											if (nestedCol.type.equalsIgnoreCase("Number")) {
-												//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
-												cell.setCellValue(nestedDatum[nestedCol.rsSubIndex].toString());
-											}
-											else if (nestedCol.type.equalsIgnoreCase("String")) {
-												String stringCellValue=(String) nestedDatum[nestedCol.rsSubIndex];
-												cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
-											}
-											else {
-												logger.info("!!! nestedCol.type unexpected type: " + nestedCol);
-											}
-										}
-									}//end of for
-								}//end of ( valueStructSql != null )
-
-								nestedRowNumber++;
-							}//end of while (nestedRs.next())
-						}//end of (sqlArray != null)
-
-						col += currCol.nestedColumns.size();
-					}//end of (currCol.type.indexOf("Array") >= 0)
-					else if (currCol.type.equalsIgnoreCase("Struct")) {
-						Struct struct =
-								(Struct)rs.getObject(currCol.rsColumnName);
-						
-						Object[] valueStruct = struct.getAttributes();
-						HSSFCell cell = row.createCell(col++);
-						cell.setCellValue(StringUtils.updateDataForSpecialCharacters((String) valueStruct[currCol.rsIndex]));
-					}
-					else {
-						row = sheet.getRow(rowNumber);
-						HSSFCell cell = row.createCell(col++);
-						// Changed the way date is displayed in Excel in 4.0
-						String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
-						if(currCol.type.equalsIgnoreCase("Date")){
-							cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
-						}else{
-							cell.setCellValue(StringUtils.updateDataForSpecialCharacters(rs.getString(columnName)));
-						}
-					}
-				}
-				if (maxRowNumber > rowNumber)
-					rowNumber = maxRowNumber + 2;
-				else 
-					rowNumber += 2;
-			}//end of while
+			//this method will populate Excel data while looping though the result set
+			generateWorkbook(rs, sheet, rowNumber, source, colInfo);
 			
 			fileOut = new FileOutputStream(filename);
 			wb.write(fileOut);
@@ -348,7 +210,182 @@ public class GetExcelDownload extends JdbcDaoSupport {
 			}
 		}//finally
 	}
+	/**
+	 * This method generates headers in the first row based on list of ColumnInfo.
+	 * 
+	 * @param sheet
+	 * @param boldCellStyle
+	 * @param source
+	 * @param colInfo
+	 */
+	protected void generateExcelHeaders(HSSFSheet sheet, final HSSFCellStyle boldCellStyle, 
+			final String source, final List<ColumnInfo> colInfo) {
+		// Create the first row and put the column header in it
+		HSSFRow row = sheet.createRow(0);
+		int col = 0;
 
+		for (int i = 0; i < colInfo.size(); i++) {
+			ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
+
+			if (currCol.type.indexOf("Array") >= 0) {//StructArray or Array
+				for (int nestedI = 0; nestedI < currCol.nestedColumns.size();
+				nestedI++) {
+					ColumnInfo nestedCol =
+						(ColumnInfo) currCol.nestedColumns.get(nestedI);
+
+					HSSFCell cell = row.createCell(col++);
+					cell.setCellValue(currCol.displayName + nestedCol.displayName);
+					cell.setCellStyle(boldCellStyle);
+				}
+			}
+			else {
+				HSSFCell cell = row.createCell(col++);
+
+				cell.setCellValue(currCol.displayName);
+				cell.setCellStyle(boldCellStyle);
+			}
+		}		
+	}
+	
+	/**
+	 * This method populates provided HSSFSheet.
+	 * It loops through the provided ResultSet, but it does not close it. This is a job of the calling method.
+	 * 
+	 * @param rs ResultSet to retrieve DB CDE data for Excel
+	 * @param sheet HSSFSheet created by the calling method which will be populated with DB data
+	 * @param rowNumber the row number in Excel table which shall be the first one created by this method
+	 * @param source
+	 * @param colInfo
+	 * @throws Exception
+	 */
+	protected void generateWorkbook(ResultSet rs, 
+		HSSFSheet sheet, int rowNumber, 
+		final String source, final List<ColumnInfo> colInfo) throws Exception 
+	{
+		int maxRowNumber = 0;
+		
+		while (rs.next()) {
+			HSSFRow row = sheet.createRow(rowNumber);//NA new main row
+			int col = 0;
+			//in ColumnInfo Array type has column name; nested ColumnInfo has a rs index inside the nested rs
+			for (int i = 0; i < colInfo.size(); i++) {
+				ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
+
+				if (currCol.type.indexOf("Array") >= 0) {
+					Array sqlArray = null;//NA java.sql types variable names are prefixed with 'sql' as sqlArray in here
+					if (currCol.type.equalsIgnoreCase("Array")) {
+						sqlArray = rs.getArray(currCol.rsColumnName);
+					}
+					else if (currCol.type.equalsIgnoreCase("StructArray")) {
+						Struct structSql = (Struct)rs.getObject(currCol.rsColumnName);
+						Object[] valueStruct = structSql.getAttributes();
+						sqlArray = (Array)valueStruct[currCol.rsIndex];
+					}
+
+					if (sqlArray != null) {
+						ResultSet nestedRs = sqlArray.getResultSet();
+
+						int nestedRowNumber = 0;  
+
+						while (nestedRs.next()) {
+							row = sheet.getRow(rowNumber + nestedRowNumber);
+
+							if (row == null) {
+								row = sheet.createRow(rowNumber + nestedRowNumber);//NA creating a dependent row
+
+								maxRowNumber = rowNumber + nestedRowNumber;
+							}
+							Struct valueStructSql = null;
+							try {									
+								valueStructSql = (Struct) nestedRs.getObject(2);
+//								The second column stores the element value; the first column stores the index into the array for 
+//								that element (with the first array element being at index 1).
+							}
+							catch (SQLException sqlEx) {										
+								logger.info("SQLException when getting STRUCT from nester ResultSet: " + sqlEx);											
+							}
+							
+							if ( valueStructSql != null ) {//NA adding multi-row columns values related to Oracle type arrays
+								Object[] valueDatum = valueStructSql.getAttributes();
+								for (short nestedI = 0; nestedI < currCol.nestedColumns.size(); nestedI++) 
+								{
+									ColumnInfo nestedCol =
+										(ColumnInfo) currCol.nestedColumns.get(nestedI);
+
+									HSSFCell cell = row.createCell((col + nestedI));
+
+									if (nestedCol.rsSubIndex < 0) {
+										if (valueDatum[nestedCol.rsIndex] != null) {
+											if (nestedCol.type.equalsIgnoreCase("Number")) {
+												cell.setCellValue(((BigDecimal)valueDatum[nestedCol.rsIndex]).floatValue());
+											}
+											else if (nestedCol.type.equalsIgnoreCase("Date")){  
+												Object obj = valueDatum[nestedCol.rsIndex];
+												if (obj instanceof java.util.Date) {//both java.sqlTimestamp and java.sql.Date extend java.util.Date
+													java.sql.Date dateVal = new java.sql.Date(((java.util.Date)obj).getTime());//we use here java.sql.Date to drop the Time part of Timestamp
+													cell.setCellValue(dateVal.toString());		
+												}
+												else {
+													logger.debug("!!! valueDatum[nestedCol.rsIndex] unexpected class: " + obj.getClass().getName());
+													cell.setCellValue(obj.toString());
+												}
+											}
+											else {  
+												String stringCellValue=(String) valueDatum[nestedCol.rsIndex];
+												cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+											}
+										}
+									}//if (nestedCol.rsSubIndex < 0
+									else {
+										Struct nestedStructSql = (Struct)valueDatum[nestedCol.rsIndex];
+										Object[] nestedDatum = nestedStructSql.getAttributes();
+										if (nestedCol.type.equalsIgnoreCase("Number")) {
+											//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
+											cell.setCellValue(nestedDatum[nestedCol.rsSubIndex].toString());
+										}
+										else if (nestedCol.type.equalsIgnoreCase("String")) {
+											String stringCellValue=(String) nestedDatum[nestedCol.rsSubIndex];
+											cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+										}
+										else {
+											logger.info("!!! nestedCol.type unexpected type: " + nestedCol);
+										}
+									}
+								}//end of for
+							}//end of ( valueStructSql != null )
+
+							nestedRowNumber++;
+						}//end of while (nestedRs.next())
+					}//end of (sqlArray != null)
+
+					col += currCol.nestedColumns.size();
+				}//end of (currCol.type.indexOf("Array") >= 0)
+				else if (currCol.type.equalsIgnoreCase("Struct")) {
+					Struct struct =
+							(Struct)rs.getObject(currCol.rsColumnName);
+					
+					Object[] valueStruct = struct.getAttributes();
+					HSSFCell cell = row.createCell(col++);
+					cell.setCellValue(StringUtils.updateDataForSpecialCharacters((String) valueStruct[currCol.rsIndex]));
+				}
+				else {
+					row = sheet.getRow(rowNumber);
+					HSSFCell cell = row.createCell(col++);
+					// Changed the way date is displayed in Excel in 4.0
+					String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
+					if(currCol.type.equalsIgnoreCase("Date")){
+						cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
+					}else{
+						cell.setCellValue(StringUtils.updateDataForSpecialCharacters(rs.getString(columnName)));
+					}
+				}
+			}
+			if (maxRowNumber > rowNumber)
+				rowNumber = maxRowNumber + 2;
+			else 
+				rowNumber += 2;
+		}//end of while
+	}
 	private List<ColumnInfo> initColumnInfo(String source) {
 		List<ColumnInfo> columnInfo = new ArrayList<>();
 
