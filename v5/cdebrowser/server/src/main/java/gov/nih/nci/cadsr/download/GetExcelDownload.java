@@ -386,7 +386,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 				rowNumber += 2;
 		}//end of while
 	}
-	private List<ColumnInfo> initColumnInfo(String source) {
+	protected List<ColumnInfo> initColumnInfo(String source) {
 		List<ColumnInfo> columnInfo = new ArrayList<>();
 
 		columnInfo.add(

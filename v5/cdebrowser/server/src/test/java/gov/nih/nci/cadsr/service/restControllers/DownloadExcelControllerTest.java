@@ -13,18 +13,23 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+//import org.springframework.mock.web.MockHttpServletRequest;
+//import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import gov.nih.nci.cadsr.download.GetExcelDownloadInterface;
 import gov.nih.nci.cadsr.download.GetExcelDownloadTestImpl;
+import gov.nih.nci.cadsr.service.ClientException;
+import gov.nih.nci.cadsr.service.ServerException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-application-context.xml")
@@ -37,7 +42,48 @@ public class DownloadExcelControllerTest {
 	@Autowired DownloadExcelController downloadExcelController;
 	
 	@Autowired GetExcelDownloadTestImpl getExcelDownload;
+	@Before
+	public void resetGetExcelDownload() {
+		downloadExcelController.setGetExcelDownload(getExcelDownload);		
+	}
 	
+	@Test(expected=ServerException.class)
+	public void testDownloadExcelServer() throws Exception {
+		GetExcelDownloadInterface getExcelDownloadMock = Mockito.mock(GetExcelDownloadInterface.class);
+		downloadExcelController.setGetExcelDownload(getExcelDownloadMock);
+		Mockito.when(getExcelDownloadMock.persist(Mockito.anyCollectionOf(String.class), 
+			Mockito.anyString(), Mockito.eq("deSearch")))
+			.thenThrow(new ServerException("test exception"));
+		List<String> idList = new ArrayList<>();
+		idList.add("testId1");		
+		//MUT
+		downloadExcelController.downloadExcel("deSearch", idList);
+	}
+	@Test(expected=ClientException.class)
+	public void testDownloadExcelEmptyList() throws Exception {
+		List<String> idList = new ArrayList<>();
+		//MUT
+		downloadExcelController.downloadExcel("deSearch", idList);	
+	}
+	@Test(expected=ClientException.class)
+	public void testDownloadExcelNullList() throws Exception {
+		//MUT
+		downloadExcelController.downloadExcel("deSearch", null);	
+	}
+	@Test(expected=ClientException.class)
+	public void testDownloadExcelNullSource() throws Exception {
+		List<String> idList = new ArrayList<>();
+		idList.add("testId1");	
+		//MUT
+		downloadExcelController.downloadExcel(null, idList);	
+	}
+	@Test(expected=ClientException.class)
+	public void testDownloadExcelWrongSource() throws Exception {
+		List<String> idList = new ArrayList<>();
+		idList.add("testId1");	
+		//MUT
+		downloadExcelController.downloadExcel("deSearchWrong", idList);	
+	}	
 	@Test
 	public void testDownloadExcel() throws Exception {
 //		request.setQueryString("src=deSearch");
@@ -45,6 +91,7 @@ public class DownloadExcelControllerTest {
 //		request.setMethod("POST");
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");
+
 		//MUT
 		ResponseEntity<InputStreamResource> responseEntity = downloadExcelController.downloadExcel("deSearch", idList);
 		//check results

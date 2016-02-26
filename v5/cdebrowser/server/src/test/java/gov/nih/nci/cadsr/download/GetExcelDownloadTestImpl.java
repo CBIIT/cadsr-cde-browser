@@ -66,7 +66,7 @@ public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 		//This shall be cleaned by the calling test
 		String dir = System.getProperty("user.dir");
 		String fileName = dir + "/src/test/resources/" + excelFileName;
-		System.out.println("fileName: " + fileName);
+		//System.out.println("fileName: " + fileName);
 		FileOutputStream fileOut = new FileOutputStream(fileName);
 		wb.write(fileOut);
 		wb.close();
