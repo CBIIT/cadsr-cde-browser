@@ -173,3 +173,9 @@
     border: none;
     font-weight: bold
 }
+
+.cdeDownloadButtons li{
+display: inline;
+list-style-type: none;
+padding-right: 10px;
+}
