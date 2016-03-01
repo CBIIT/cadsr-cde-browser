@@ -17,6 +17,6 @@
     <bean id="downloadExcelController" class="gov.nih.nci.cadsr.service.restControllers.DownloadExcelController" depends-on="getExcelDownload">
     </bean>
     <bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownloadTestImpl">
-        <property name="excelFileName" value="TestExcelDownload1"/>
+
     </bean>
 </beans>

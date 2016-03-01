@@ -64,14 +64,13 @@ public class DownloadExcelController {
 		getExcelDownload.setFileNamePrefix(fileNamePrefix);
 		getExcelDownload.setLocalDownloadDirectory(downloadDirectory);
 		
-
 		URI url = request.getUrl();
 
 		String path = String.format("%s://%s:%d%s",url.getScheme(),  url.getHost(), url.getPort(), url.getPath());
 
 		//String path = url.getPath();
 		List<String> cdeIds = request.getBody();
-		logger.debug("Received rest call \"src\": " + source + ", " + cdeIds);
+		logger.debug("Requested list of IDs:" + cdeIds);
 		
 		validateDownloadParameters(cdeIds, source);
 		// this is an example of Internal CDE ID we expect in here; shall come
@@ -88,7 +87,7 @@ public class DownloadExcelController {
 		if (excelFileId != null) {
 			HttpHeaders responseHeaders = new HttpHeaders();
 			String location = path + '/'+ excelFileId;
-			logger.debug("Location header value: " + location);			
+			logger.debug("Location header value: " + location);	
 			responseHeaders.set("Location", location);
 			return new ResponseEntity<byte[]>(excelFileId.getBytes(), responseHeaders, HttpStatus.CREATED);
 		}
@@ -98,10 +97,9 @@ public class DownloadExcelController {
 	}
 	
 	@RequestMapping(value = "/{fileId}", produces = "application/vnd.ms-excel", method = RequestMethod.GET)
-	public ResponseEntity<InputStreamResource> downloadExcel(@PathVariable("fileId") String fileId) throws Exception {
-		logger.debug("Received rest call \"src\": " + fileId + ", " + fileId);
+	public ResponseEntity<InputStreamResource> retrieveExcelFile(@PathVariable("fileId") String fileId) throws Exception {
+		logger.debug("Received RESTful call to retrieve Excel file; fileId: " + fileId);
 		String excelFileName = downloadDirectory + fileNamePrefix + fileId + ".xls";
-		logger.debug("Requested excelFileName" + excelFileName);
 		
 		File file = new File (excelFileName);
 		if (! file.exists()) {

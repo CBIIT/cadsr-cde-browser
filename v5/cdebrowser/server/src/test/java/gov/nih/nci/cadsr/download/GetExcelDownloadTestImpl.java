@@ -14,28 +14,20 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
-	private String excelFileName; // a value provided in Bean context
+	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" a value provided by service controller
+	private String fileNamePrefix; // a value provided by service controller
 
-
-	
-	@Override
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
-
+		this.localDownloadDirectory = localDownloadDirectory;
 	}
 
-	@Override
 	public void setFileNamePrefix(String excelFileNamePrefix) {
-		
+		this.fileNamePrefix = excelFileNamePrefix;
 	}
+	private String fileId = "007";
 
-	public String getExcelFileName() {
-		String dir = System.getProperty("user.dir");
-		String fileName = dir + "/src/test/resources/" + excelFileName;
-		return fileName;
-	}
-
-	public void setExcelFileName(String excelFileName) {
-		this.excelFileName = excelFileName;
+	public String getFileId() {
+		return fileId;
 	}
 
 	/**
@@ -76,14 +68,17 @@ public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 		cell.setCellValue("Test Column Data");
 		
 		//This shall be cleaned by the calling test
-		String fileName = getExcelFileName();
+		String fileName = buildDownloadAbsoluteFileName(fileId);
 		//System.out.println("fileName: " + fileName);
 		FileOutputStream fileOut = new FileOutputStream(fileName);
 		wb.write(fileOut);
 		wb.close();
 		fileOut.flush();
 		fileOut.close();
-		return fileName;
+		return fileId;
 	}
-
+	public String buildDownloadAbsoluteFileName(String excelFileSuffix) {
+		String excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix + ".xls";
+		return excelFilename;
+	}
 }

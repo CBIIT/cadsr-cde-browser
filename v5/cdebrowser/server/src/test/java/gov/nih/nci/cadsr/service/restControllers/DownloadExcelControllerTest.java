@@ -8,7 +8,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
@@ -19,8 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.mock.web.MockHttpServletRequest;
@@ -100,7 +100,7 @@ public class DownloadExcelControllerTest {
 		downloadExcelController.downloadExcel("deSearchWrong", request);	
 	}
 	//FIXME fix this test after changes done to controllers
-	//@Test
+	@Test
 	public void testDownloadExcel() throws Exception {
 //		request.setQueryString("src=deSearch");
 //		request.setContentType("applicatopn/json");
@@ -109,25 +109,48 @@ public class DownloadExcelControllerTest {
 		idList.add("testId1");
 		URI uri = new URI("http://localhost/downloadExcel");
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
-
+		String dir = System.getProperty("user.dir");
+		getExcelDownload.setLocalDownloadDirectory(dir + "/src/test/resources/");
+		getExcelDownload.setFileNamePrefix("TestExcelFile");
+		
 		//MUT
 		ResponseEntity<byte[]> responseEntity = downloadExcelController.downloadExcel("deSearch", request);
 		//check results
 		assertNotNull(responseEntity);
 		Object resObj = responseEntity.getBody();
 		assertNotNull(resObj);
-		assertEquals(InputStreamResource.class, resObj.getClass());
-		InputStreamResource resStream = (InputStreamResource)resObj;
+		assertEquals(byte[].class, resObj.getClass());
+		String fileIdExpected = getExcelDownload.getFileId();
+		String fileIdReceivedStr = new String((byte[])resObj);
 		
-		InputStream receivedInput = resStream.getInputStream();
-		byte[] receivedBytes = streamCollector(receivedInput);
-		InputStream expectedInput = new FileInputStream(getExcelDownload.getExcelFileName());
-		byte[] expectedBytes = streamCollector(expectedInput);
-		assertTrue(isByteArraysEqual(expectedBytes, receivedBytes));
+		System.out.println(new String((byte[])resObj));
+		assertEquals(fileIdExpected, fileIdReceivedStr);
 		
-		//clean up
-		File file = new File(getExcelDownload.getExcelFileName());
-		boolean isDeleted = file.delete();
+		HttpStatus httpStatusReceived = responseEntity.getStatusCode();
+		assertNotNull(httpStatusReceived);
+		assertEquals(HttpStatus.CREATED, httpStatusReceived);
+		
+		HttpHeaders headersReceived = responseEntity.getHeaders();
+		assertNotNull(headersReceived);
+		List<String> locationReceived = headersReceived.get("Location");
+		assertNotNull(locationReceived);
+		assertEquals(1, locationReceived.size());
+		String locationUrlReceived = locationReceived.get(0);
+		assertTrue(locationUrlReceived.contains(fileIdExpected));
+		
+//		InputStreamResource resStream = (InputStreamResource)resObj;
+//		
+//		InputStream receivedInput = resStream.getInputStream();
+//		byte[] receivedBytes = streamCollector(receivedInput);
+//		InputStream expectedInput = new FileInputStream(getExcelDownload.getExcelFileName());
+//		byte[] expectedBytes = streamCollector(expectedInput);
+//		assertTrue(isByteArraysEqual(expectedBytes, receivedBytes));
+		
+		//clean up the created test file	
+		String fileName = getExcelDownload.buildDownloadAbsoluteFileName(fileIdExpected);
+		File fileReceived = new File(fileName);
+		assertTrue(fileReceived.exists());
+		boolean isDeleted = fileReceived.delete();
 		assertTrue(isDeleted);
 		
 	}

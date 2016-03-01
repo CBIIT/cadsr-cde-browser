@@ -47,8 +47,8 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	//public static final String DEFAULT_RAI = "2.16.840.1.113883.3.26.2";
 
 	//this is parameterized 
-	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" is a value provided in Bean context
-	private String fileNamePrefix; // a value provided in Bean context
+	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" a value provided by service controller
+	private String fileNamePrefix; // a value provided by service controller
 
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
@@ -78,15 +78,17 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		//this is currently taken from DB sequence
 		excelFileSuffix = generateExcelFileId() ;
 		//the Bean properties set up in the Spring context
-		excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix + ".xls";
+		excelFilename = buildDownloadAbsoluteFileName(excelFileSuffix);
 		//prepare List of ColumnInfo objects
 		List<ColumnInfo> colInfo = this.initColumnInfo(source);
 		//this function saves the file on the local drive
 		generateExcelFile(excelFilename, itemIds, RAI, source, colInfo);
 		//the file name returned to the RESTful service to build the response
 		return excelFileSuffix;
-
-
+	}
+	public String buildDownloadAbsoluteFileName(String excelFileSuffix) {
+		String excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix + ".xls";
+		return excelFilename;
 	}
 	protected String buildSqlInCondition(final Collection<String> itemIds) throws Exception {
 		if ((itemIds != null) && (!(itemIds.isEmpty())) && (itemIds.size() <= 1000)) {
