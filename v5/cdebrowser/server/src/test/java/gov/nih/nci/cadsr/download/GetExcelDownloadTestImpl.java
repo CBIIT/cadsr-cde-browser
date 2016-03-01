@@ -16,14 +16,26 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 	private String excelFileName; // a value provided in Bean context
 
-	public void setExcelFileName(String excelFileName) {
-		this.excelFileName = excelFileName;
-	}
+
 	
+	@Override
+	public void setLocalDownloadDirectory(String localDownloadDirectory) {
+
+	}
+
+	@Override
+	public void setFileNamePrefix(String excelFileNamePrefix) {
+		
+	}
+
 	public String getExcelFileName() {
 		String dir = System.getProperty("user.dir");
 		String fileName = dir + "/src/test/resources/" + excelFileName;
 		return fileName;
+	}
+
+	public void setExcelFileName(String excelFileName) {
+		this.excelFileName = excelFileName;
 	}
 
 	/**
@@ -64,8 +76,7 @@ public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 		cell.setCellValue("Test Column Data");
 		
 		//This shall be cleaned by the calling test
-		String dir = System.getProperty("user.dir");
-		String fileName = dir + "/src/test/resources/" + excelFileName;
+		String fileName = getExcelFileName();
 		//System.out.println("fileName: " + fileName);
 		FileOutputStream fileOut = new FileOutputStream(fileName);
 		wb.write(fileOut);

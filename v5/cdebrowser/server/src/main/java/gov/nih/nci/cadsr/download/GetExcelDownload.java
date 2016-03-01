@@ -48,14 +48,14 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 
 	//this is parameterized 
 	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" is a value provided in Bean context
-	private String excelFileNamePrefix; // a value provided in Bean context
+	private String fileNamePrefix; // a value provided in Bean context
 
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
 	}
 
-	public void setExcelFileNamePrefix(String excelFileNamePrefix) {
-		this.excelFileNamePrefix = excelFileNamePrefix;
+	public void setFileNamePrefix(String excelFileNamePrefix) {
+		this.fileNamePrefix = excelFileNamePrefix;
 	}
 	@Autowired
 	public GetExcelDownload(DataSource dataSource) {
@@ -78,13 +78,13 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		//this is currently taken from DB sequence
 		excelFileSuffix = generateExcelFileId() ;
 		//the Bean properties set up in the Spring context
-		excelFilename = localDownloadDirectory +  excelFileNamePrefix + excelFileSuffix + ".xls";
+		excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix + ".xls";
 		//prepare List of ColumnInfo objects
 		List<ColumnInfo> colInfo = this.initColumnInfo(source);
 		//this function saves the file on the local drive
 		generateExcelFile(excelFilename, itemIds, RAI, source, colInfo);
 		//the file name returned to the RESTful service to build the response
-		return excelFilename;
+		return excelFileSuffix;
 
 
 	}

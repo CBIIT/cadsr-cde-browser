@@ -15,9 +15,10 @@ public interface GetExcelDownloadInterface {
 	 * @param itemIds shall be not null or empty. These are internal DE IDs.
 	 * @param RAI application parameter
 	 * @param source type of download @see gov.nih.nci.cadsr.download.ExcelDownloadTypes
-	 * @return a local absolute file name used to save Excel table which will be return by the service.
+	 * @return a local file ID used to save Excel table which will be return by the service.
 	 * @throws Exception
 	 */
 	String persist(Collection<String> itemIds, String RAI, String source) throws Exception;
-
+	void setLocalDownloadDirectory(String localDownloadDirectory);
+	public void setFileNamePrefix(String excelFileNamePrefix);
 }
