@@ -247,6 +247,24 @@
 
 
         <hr>
+        <!-- start Download Buttons -->
+        <span ng-show="searchResults.length">
+            <ul class="cdeDownloadButtons">
+                <li>
+                    <button data-ng-click="downloadToExcel()" ng-disabled="!checkedItemsForDownload.length">
+                        Download to Excel
+                    </button>
+                </li>
+                <li>
+                    <button data-ng-click="downloadToExcel('prior')" ng-disabled="!checkedItemsForDownload.length">
+                        Download to Prior Excel
+                    </button>
+                </li>            
+            </ul>
+        <hr> 
+        </span>
+        <!-- end Download Buttons -->
+
         <!-- Search status message -->
         <span data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
@@ -315,11 +333,11 @@
                 <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
                        value=""/>
             </script>
-
             <table data-ng-table="tableParams" class="searchResultsTable">
                 <tr class="searchResultsTableTr" data-ng-repeat="result in $data">
                     <td header="'ng-table/headers/checkbox.html'">
-                        <input type="checkbox" data-ng-model="checkboxes.items[result.publicId]">
+                        <!--<input type="checkbox" data-ng-model="checkboxes.items[result.publicId]" ng-click="">-->
+                        <input type="checkbox" data-ng-model="checkboxes.items[result.deIdseq]" ng-click="">
                     </td>
 
                     <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">

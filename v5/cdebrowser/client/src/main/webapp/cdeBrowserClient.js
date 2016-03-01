@@ -14,7 +14,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.BIG = 1;
     $scope.ERROR = 2;
 
-
+    $scope.checkedItemsForDownload = [];
 
     window.scope = $scope;
     // Search query types - radio buttons
@@ -54,11 +54,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // watch for check all checkbox
     $scope.$watch('checkboxes.checked', function (value) {
         angular.forEach($scope.records, function (item) {
-            if (angular.isDefined(item.publicId)) {
-                $scope.checkboxes.items[item.publicId] = value;
+            if (angular.isDefined(item.deIdseq)) {
+                $scope.checkboxes.items[item.deIdseq] = value;
             }
         });
     });
+
+    // watch for search results. reset checkboxes and checked items //
+    $scope.$watch('searchResults', function () {
+        $scope.checkboxes.checked=false;
+        $scope.checkboxes.items = {};
+        $scope.checkedItemsForDownload = [];
+    });
+
 
     // watch for data checkboxes
     $scope.$watch('checkboxes.items', function (values) {
@@ -66,10 +74,23 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             return;
         }
         var checked = 0, unchecked = 0,
-            total = $scope.records.length;
+        total = $scope.records.length;
         angular.forEach($scope.records, function (item) {
-            checked += ($scope.checkboxes.items[item.publicId]) || 0;
-            unchecked += (!$scope.checkboxes.items[item.publicId]) || 0;
+            checked += ($scope.checkboxes.items[item.deIdseq]) || 0;
+            unchecked += (!$scope.checkboxes.items[item.deIdseq]) || 0;
+
+            // creates array of items to send when a user clicks download on any of the download buttons //
+            var indexOfItem = $scope.checkedItemsForDownload.indexOf(item.deIdseq);
+            if ($scope.checkboxes.items[item.deIdseq]==false || $scope.checkboxes.items[item.deIdseq] == undefined) {
+                if (indexOfItem!=-1) {
+                    $scope.checkedItemsForDownload.splice(indexOfItem,1);
+                }
+            }
+            else {
+                if ($scope.checkedItemsForDownload.indexOf(item.deIdseq)==-1) {
+                    $scope.checkedItemsForDownload.push(item.deIdseq);
+                }
+            }
         });
         if ((unchecked == 0) || (checked == 0)) {
             $scope.checkboxes.checked = (checked == total);
@@ -248,6 +269,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
+
             $scope.searchResults = response;
 
             if ($scope.searchResults.length > 0) {
@@ -506,5 +528,33 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataLoadFromServer();
     $scope.versionData();
     $scope.getToolHosts();
+
+    // downloads selected search results to an excel file //
+    $scope.downloadToExcel = function(param) {
+        if ($scope.checkedItemsForDownload.length>1000) {
+            alert("You are trying to download more than the maximum 1,000 records. Click OK and reduce the number of records and submit the download again.")
+        }
+        else {
+            if (param) { // download to prior excel
+              $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
+              success(function(data, status, headers, config) {
+                window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data)
+              }).
+              error(function(data, status, headers, config) {
+                console.log("FAIL")
+              });             
+            }
+            else { // download to excel 
+              $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
+              success(function(data, status, headers, config) {
+                window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data)
+              }).
+              error(function(data, status, headers, config) {
+                console.log("FAIL")
+              }); 
+            }
+        }
+
+    }
 
 });
