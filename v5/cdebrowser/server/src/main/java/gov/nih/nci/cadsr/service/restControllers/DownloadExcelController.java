@@ -4,8 +4,10 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,8 +17,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,15 +48,79 @@ public class DownloadExcelController {
 
 	@Value("${registrationAuthorityIdentifier}")
 	String registrationAuthorityIdentifier;
+	@Value("${downloadDirectory}")
+	String downloadDirectory;
+	@Value("${downloadFileNamePrefix}")
+	String fileNamePrefix;
 
 	public void setGetExcelDownload(GetExcelDownloadInterface getExcelDownload) {
 		this.getExcelDownload = getExcelDownload;
 	}
 
-	@RequestMapping(produces = "application/vnd.ms-excel", consumes = "application/json", method = RequestMethod.POST)
-	public ResponseEntity<InputStreamResource> downloadExcel(@RequestParam("src") String source,
-			@RequestBody List<String> cdeIds) throws Exception {
+	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> downloadExcel(@RequestParam("src") String source,
+			RequestEntity<List<String>> request) throws Exception {
+		logger.debug("Received rest call downloadExcel \"src\": " + source);
+		getExcelDownload.setFileNamePrefix(fileNamePrefix);
+		getExcelDownload.setLocalDownloadDirectory(downloadDirectory);
+		
+
+		URI url = request.getUrl();
+
+		String path = String.format("%s://%s:%d%s",url.getScheme(),  url.getHost(), url.getPort(), url.getPath());
+
+		//String path = url.getPath();
+		List<String> cdeIds = request.getBody();
 		logger.debug("Received rest call \"src\": " + source + ", " + cdeIds);
+		
+		validateDownloadParameters(cdeIds, source);
+		// this is an example of Internal CDE ID we expect in here; shall come
+		// from the request body
+		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
+		
+		String excelFileId = null;
+		try {
+			excelFileId = getExcelDownload.persist(cdeIds, registrationAuthorityIdentifier, source);
+		} catch (Exception e) {
+			throw new ServerException("Download Excel: error occured in building Excel document", e);
+		}
+		
+		if (excelFileId != null) {
+			HttpHeaders responseHeaders = new HttpHeaders();
+			String location = path + '/'+ excelFileId;
+			logger.debug("Location header value: " + location);			
+			responseHeaders.set("Location", location);
+			return new ResponseEntity<byte[]>(excelFileId.getBytes(), responseHeaders, HttpStatus.CREATED);
+		}
+		else {
+			throw new ServerException("Download Excel: error occured in building Excel document");
+		}
+	}
+	
+	@RequestMapping(value = "/{fileId}", produces = "application/vnd.ms-excel", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> downloadExcel(@PathVariable("fileId") String fileId) throws Exception {
+		logger.debug("Received rest call \"src\": " + fileId + ", " + fileId);
+		String excelFileName = downloadDirectory + fileNamePrefix + fileId + ".xls";
+		logger.debug("Requested excelFileName" + excelFileName);
+		
+		File file = new File (excelFileName);
+		if (! file.exists()) {
+			throw new ClientException("Download Excel file is not found: " + excelFileName);
+		}
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults.xls");
+		try {
+			InputStream inputStream = getExcelFileAsInputStream(excelFileName);
+			InputStreamResource isr = new InputStreamResource(inputStream);
+			logger.debug("Sending excel file:" + excelFileName);
+			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
+		} catch (Exception e) {
+			throw new ServerException("Download Excel: error occurred in Excel document streaming", e);
+		}
+	
+	}
+	
+	protected void validateDownloadParameters(List<String> cdeIds, String source) throws ClientException {
 		if (!ExcelDownloadTypes.isDownloadTypeValid(source)) {
 			throw new ClientException("Unexpected Download to Excel type: " + source);
 		}
@@ -61,34 +129,8 @@ public class DownloadExcelController {
 		}
 		if (cdeIds.size() > 1000) {//this Exception does not happen in Spring MCV - when the 
 			throw new ClientException("Download Excel allowed amount of IDs exceed 1000 limit: " + cdeIds.size());
-		}
-		// this is an example of Internal CDE ID we expect in here; shall come
-		// from the request body
-		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
-		
-		String excelFileName = null;
-		try {
-			excelFileName = getExcelDownload.persist(cdeIds, registrationAuthorityIdentifier, source);
-		} catch (Exception e) {
-			throw new ServerException("Download Excel: error occured in building Excel document", e);
-		}
-		
-		if (excelFileName != null) {
-			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults.xls");
-			try {
-				InputStream inputStream = getExcelFileAsInputStream(excelFileName);
-				InputStreamResource isr = new InputStreamResource(inputStream);
-				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
-			} catch (Exception e) {
-				throw new ServerException("Download Excel: error occured in Excel document streaming", e);
-			}
-		}
-		else {
-			throw new ServerException("Download Excel: error occured in building Excel document");			
-		}
+		}		
 	}
-
 	/**
 	 * ExceptionHandler converts predefined exceptions to an HTTP Status code
 	 */
