@@ -175,7 +175,18 @@
 }
 
 .cdeDownloadButtons li{
-display: inline;
-list-style-type: none;
-padding-right: 10px;
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+}
+
+ul.cdeProgressMessage {
+    padding:20px 10px 10px 5px;
+    color:#1A4660;
+    font-weight:bold;
+    list-style:none;
+}
+ul.cdeProgressMessage li{
+    display:inline;
+    vertical-align:top;
 }
