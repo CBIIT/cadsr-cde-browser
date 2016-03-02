@@ -88,8 +88,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             return;
         }
         var checked = 0, unchecked = 0,
-        total = $scope.records.length;
-        angular.forEach($scope.records, function (item) {
+        total = $scope.searchResults.length;
+        angular.forEach($scope.searchResults, function (item) {
             checked += ($scope.checkboxes.items[item.deIdseq]) || 0;
             unchecked += (!$scope.checkboxes.items[item.deIdseq]) || 0;
 
