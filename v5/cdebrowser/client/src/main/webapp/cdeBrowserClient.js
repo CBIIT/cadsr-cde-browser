@@ -53,10 +53,24 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.checkboxes = {'checked': false, items: {}};
     // watch for check all checkbox
     $scope.$watch('checkboxes.checked', function (value) {
-        angular.forEach($scope.records, function (item) {
+        angular.forEach($scope.searchResults, function (item) {
             if (angular.isDefined(item.deIdseq)) {
                 $scope.checkboxes.items[item.deIdseq] = value;
+            };
+            // creates array of items to send when a user clicks download on any of the download buttons //
+            var indexOfItem = $scope.checkedItemsForDownload.indexOf(item.deIdseq);
+            if ($scope.checkboxes.items[item.deIdseq]==false || $scope.checkboxes.items[item.deIdseq] == undefined) {
+                if (indexOfItem!=-1) {
+                    if ($scope.checkboxes.checked==false) {
+                        $scope.checkedItemsForDownload.splice(indexOfItem,1);
+                    }
+                }
             }
+            else {
+                if ($scope.checkedItemsForDownload.indexOf(item.deIdseq)==-1) {
+                    $scope.checkedItemsForDownload.push(item.deIdseq);
+                }
+            }            
         });
     });
 
