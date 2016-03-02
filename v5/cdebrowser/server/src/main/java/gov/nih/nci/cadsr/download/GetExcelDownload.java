@@ -28,6 +28,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -45,10 +46,11 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 
 	//This value will be provided by the service taken from component properties file
 	//public static final String DEFAULT_RAI = "2.16.840.1.113883.3.26.2";
-
-	//this is parameterized 
-	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" a value provided by service controller
-	private String fileNamePrefix; // a value provided by service controller
+	//these are parameterized from cdeBrowser.server.properties
+	@Value("${downloadDirectory}")
+	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/"
+	@Value("${downloadFileNamePrefix}")
+	String fileNamePrefix;
 
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
@@ -87,7 +89,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		return excelFileSuffix;
 	}
 	public String buildDownloadAbsoluteFileName(String excelFileSuffix) {
-		String excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix + ".xls";
+		String excelFilename = localDownloadDirectory + fileNamePrefix + excelFileSuffix + ".xls";
 		return excelFilename;
 	}
 	protected String buildSqlInCondition(final Collection<String> itemIds) throws Exception {

@@ -8,16 +8,20 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -45,11 +49,29 @@ public class DownloadExcelControllerTest {
 	@Autowired DownloadExcelController downloadExcelController;
 	
 	@Autowired GetExcelDownloadTestImpl getExcelDownload;
+	
+	String fileName;
+	
 	@Before
 	public void resetGetExcelDownload() {
-		downloadExcelController.setGetExcelDownload(getExcelDownload);		
+		downloadExcelController.setGetExcelDownload(getExcelDownload);
+		assignDownloadServiceProperties(downloadExcelController);
+		assignDownloadBeadProperties(getExcelDownload);
 	}
 	
+
+	@After
+	public void cleanUpAfterTest() {
+		if (fileName != null) {
+			File fileReceived = new File(fileName);
+			if (fileReceived.exists());{
+			//clean up the created test file	
+				boolean isDeleted = fileReceived.delete();
+				assertTrue(isDeleted);	
+			}
+			fileName = null;
+		}
+	}
 	@Test(expected=ServerException.class)
 	public void testDownloadExcelServer() throws Exception {
 		GetExcelDownloadInterface getExcelDownloadMock = Mockito.mock(GetExcelDownloadInterface.class);
@@ -59,7 +81,8 @@ public class DownloadExcelControllerTest {
 			.thenThrow(new ServerException("test exception"));
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");
-		URI uri = new URI("http://localhost/downloadExcel");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		downloadExcelController.downloadExcel("deSearch", request);
@@ -67,14 +90,16 @@ public class DownloadExcelControllerTest {
 	@Test(expected=ClientException.class)
 	public void testDownloadExcelEmptyList() throws Exception {
 		List<String> idList = new ArrayList<>();
-		URI uri = new URI("http://localhost/downloadExcel");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		downloadExcelController.downloadExcel("deSearch", request);	
 	}
 	@Test(expected=ClientException.class)
 	public void testDownloadExcelNullList() throws Exception {
-		URI uri = new URI("http://localhost/downloadExcel");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(null, HttpMethod.POST, uri);
 	
 		//MUT
@@ -83,8 +108,8 @@ public class DownloadExcelControllerTest {
 	@Test(expected=ClientException.class)
 	public void testDownloadExcelNullSource() throws Exception {
 		List<String> idList = new ArrayList<>();
-		idList.add("testId1");	
-		URI uri = new URI("http://localhost/downloadExcel");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		downloadExcelController.downloadExcel(null, request);	
@@ -93,13 +118,19 @@ public class DownloadExcelControllerTest {
 	public void testDownloadExcelWrongSource() throws Exception {
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");	
-		URI uri = new URI("http://localhost/downloadExcel");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 
 		//MUT
 		downloadExcelController.downloadExcel("deSearchWrong", request);	
 	}
-	//FIXME fix this test after changes done to controllers
+	@Test(expected=ClientException.class)
+	public void testDownloadExcelWrongFileId() throws Exception {
+		
+		//MUT
+		downloadExcelController.retrieveExcelFile("009");	
+	}
 	@Test
 	public void testDownloadExcel() throws Exception {
 //		request.setQueryString("src=deSearch");
@@ -107,14 +138,14 @@ public class DownloadExcelControllerTest {
 //		request.setMethod("POST");
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");
-		URI uri = new URI("http://localhost/downloadExcel");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
-		String dir = System.getProperty("user.dir");
-		getExcelDownload.setLocalDownloadDirectory(dir + "/src/test/resources/");
-		getExcelDownload.setFileNamePrefix("TestExcelFile");
+
 		
 		//MUT
 		ResponseEntity<byte[]> responseEntity = downloadExcelController.downloadExcel("deSearch", request);
+		
 		//check results
 		assertNotNull(responseEntity);
 		Object resObj = responseEntity.getBody();
@@ -137,22 +168,65 @@ public class DownloadExcelControllerTest {
 		assertEquals(1, locationReceived.size());
 		String locationUrlReceived = locationReceived.get(0);
 		assertTrue(locationUrlReceived.contains(fileIdExpected));
+		assertEquals(testUriStr + '/' + fileIdExpected, locationUrlReceived);
 		
-//		InputStreamResource resStream = (InputStreamResource)resObj;
-//		
-//		InputStream receivedInput = resStream.getInputStream();
-//		byte[] receivedBytes = streamCollector(receivedInput);
-//		InputStream expectedInput = new FileInputStream(getExcelDownload.getExcelFileName());
-//		byte[] expectedBytes = streamCollector(expectedInput);
-//		assertTrue(isByteArraysEqual(expectedBytes, receivedBytes));
-		
-		//clean up the created test file	
-		String fileName = getExcelDownload.buildDownloadAbsoluteFileName(fileIdExpected);
+		fileName = getExcelDownload.buildDownloadAbsoluteFileName(fileIdExpected);
 		File fileReceived = new File(fileName);
 		assertTrue(fileReceived.exists());
-		boolean isDeleted = fileReceived.delete();
-		assertTrue(isDeleted);
+
+	}
+	@Test
+	public void testRetrieveDownloadExcel() throws Exception {
 		
+		List<String> idList = new ArrayList<>();
+		idList.add("testId1");
+		String testUriStr = "http://localhost:8080/downloadExcel";
+		URI uri = buildTestUri(testUriStr);
+		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
+
+		//run creating file with fileName step one of Excel download
+		downloadExcelController.downloadExcel("deSearch", request);
+		fileName = getExcelDownload.buildDownloadAbsoluteFileName(getExcelDownload.getFileId());
+		//read the created file
+		InputStream expectedInput = new FileInputStream(fileName);
+		byte[] expectedBytes = streamCollector(expectedInput);
+		
+		//MUT
+		ResponseEntity<InputStreamResource> responseEntity = downloadExcelController.retrieveExcelFile(getExcelDownload.getFileId());
+		
+		//check
+		Object resObj = responseEntity.getBody();
+		assertNotNull(resObj);
+		assertEquals(InputStreamResource.class, resObj.getClass());
+		InputStreamResource receivedObj = (InputStreamResource)resObj;
+		InputStream receivedInput = receivedObj.getInputStream();
+		byte[] receivedBytes = streamCollector(receivedInput);
+		
+		HttpStatus httpStatusReceived = responseEntity.getStatusCode();
+		assertNotNull(httpStatusReceived);
+		assertEquals(HttpStatus.OK, httpStatusReceived);
+
+		assertTrue(isByteArraysEqual(expectedBytes, receivedBytes));
+		
+		HttpHeaders headersReceived = responseEntity.getHeaders();
+		assertNotNull(headersReceived);
+		List<String> headerReceivedDisp = headersReceived.get("Content-Disposition");
+		assertNotNull(headerReceivedDisp);
+		assertEquals(1, headerReceivedDisp.size());
+		assertEquals("attachment; filename=CDEBrowser_SearchResults.xls", headerReceivedDisp.get(0));
+	}
+	public void assignDownloadBeadProperties(GetExcelDownloadTestImpl getExcelDownload) {
+		String dir = System.getProperty("user.dir");
+		getExcelDownload.setLocalDownloadDirectory(dir + "/src/test/resources/");
+		getExcelDownload.setFileNamePrefix("TestExcelFile");		
+	}
+	public void assignDownloadServiceProperties(DownloadExcelController downloadExcelController) {
+		String dir = System.getProperty("user.dir");
+		downloadExcelController.setDownloadDirectory(dir + "/src/test/resources/");
+		downloadExcelController.setFileNamePrefix("TestExcelFile");		
+	}
+	public static URI buildTestUri(String absoluteUrlString) throws Exception{
+		return (new URL(absoluteUrlString)).toURI();
 	}
 	public static byte[] streamCollector(InputStream istream) throws Exception {
 		byte[] res;

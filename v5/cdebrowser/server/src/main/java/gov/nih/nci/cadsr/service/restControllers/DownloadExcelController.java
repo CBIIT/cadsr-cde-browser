@@ -56,13 +56,19 @@ public class DownloadExcelController {
 	public void setGetExcelDownload(GetExcelDownloadInterface getExcelDownload) {
 		this.getExcelDownload = getExcelDownload;
 	}
+	
+	public void setDownloadDirectory(String downloadDirectory) {
+		this.downloadDirectory = downloadDirectory;
+	}
+
+	public void setFileNamePrefix(String fileNamePrefix) {
+		this.fileNamePrefix = fileNamePrefix;
+	}
 
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<byte[]> downloadExcel(@RequestParam("src") String source,
 			RequestEntity<List<String>> request) throws Exception {
 		logger.debug("Received rest call downloadExcel \"src\": " + source);
-		getExcelDownload.setFileNamePrefix(fileNamePrefix);
-		getExcelDownload.setLocalDownloadDirectory(downloadDirectory);
 		
 		URI url = request.getUrl();
 
@@ -110,14 +116,14 @@ public class DownloadExcelController {
 		try {
 			InputStream inputStream = getExcelFileAsInputStream(excelFileName);
 			InputStreamResource isr = new InputStreamResource(inputStream);
-			logger.debug("Sending excel file:" + excelFileName);
+			logger.debug("Sending Excel file:" + excelFileName);
 			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
 		} catch (Exception e) {
 			throw new ServerException("Download Excel: error occurred in Excel document streaming", e);
 		}
 	
 	}
-	
+
 	protected void validateDownloadParameters(List<String> cdeIds, String source) throws ClientException {
 		if (!ExcelDownloadTypes.isDownloadTypeValid(source)) {
 			throw new ClientException("Unexpected Download to Excel type: " + source);
