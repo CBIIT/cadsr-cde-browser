@@ -188,10 +188,10 @@ a:hover {
     top: 4px;
 }
 
-/*  No line under the text/link "U.S. National Institutes of Health | www.cancer.gov" */
 .top-right-logo a {
-    text-decoration: none;
-    font-size: 9pt;
+    text-decoration: underline;
+    font-size: 13.33px;
+    color:#0645AD;
 }
 
 /* the second top row of logos and links */
