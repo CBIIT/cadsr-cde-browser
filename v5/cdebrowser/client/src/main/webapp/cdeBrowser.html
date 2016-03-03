@@ -207,46 +207,27 @@
          resize
          notifier="notifyServiceOnChange(params)">
 
-        <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
-        <div class="queryTypeRadioButtons">
-            <label data-ng-repeat="qType in searchQueryTypes">
-                <div>
-                    <input
-                            name="selectedQueryType"
-                            type="radio"
-                            value="{{qType.id}}"
-                            data-ng-model="$parent.selectedQueryType"/>
-                    {{qType.name}}
-                </div>
-            </label>
+        <!-- generate tabs for search, advanced search and search preferences -->
+        <div class="cdeSearchTabs">
+            <ul class="cdeTabsUl">
+                <button class="cdeTabsLi" ng-repeat="tab in searchTabs track by $index" data-ng-class="{tabActive: activeSearchTab==$index}" ng-click="changeSearchTab($index)">
+                    {{tab.title}}
+                </button>
+            </ul>
+        </div>    
+        <!-- end generate tabs -->
+        <!-- display proper view based on tab selected -->     
+        <div id="cdeSearchArea" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
+            This is the generic search pane. The default search.
         </div>
-
-
-        <!-- Search field drop down, text input, search & clear button  -->
-        <div class="searchInput">
-            <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
-
-
-            <select class="basicSearchField"
-                    data-ng-model="queryField"
-                    data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
-            </select>
-            <br>
-
-            <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
-                Note: Default settings excludes the Test Context view from the tree.
-            </div>
-
-            <button data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
-                Search
-            </button>
-            <button data-ng-click="basicSearchQuery=''">
-                Clear
-            </button>
-        </div>
-
-
-        <hr>
+        <!--<div id="cdeSearchArea" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==1">
+            This is the advanced search pane.
+        </div>-->
+        <div id="cdeSearchArea" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==1">
+            This is the search preferences pane.
+        </div>                
+        <!-- end display proper view based on tab selected -->
+        <br ng-show="searchResults.length" />
         <!-- start Download Buttons -->
         <span ng-show="searchResults.length">
             <ul class="cdeDownloadButtons">
@@ -271,10 +252,9 @@
                 </li>                
             </ul>
             <!-- end show progress bar -->
-        <hr> 
         </span>
         <!-- end Download Buttons -->
-
+        <br />
         <!-- Search status message -->
         <span data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,

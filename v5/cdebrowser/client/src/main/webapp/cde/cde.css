@@ -190,3 +190,30 @@ ul.cdeProgressMessage li{
     display:inline;
     vertical-align:top;
 }
+
+.cdeSearchTabs {
+    padding-top:20px;
+}
+
+.cdeSearchTabs button{
+    border:1px solid #1a4660;
+}
+#cdeSearchArea {
+    border:1px solid #1a4660;
+    border-radius:0px 3px 3px 3px;
+    margin-top:30px;
+    margin-left:3px;padding-bottom:10px;
+}
+
+.cdeSearchPreferences {
+    padding:5px;
+}
+
+.cdeSearchPreferences ul {
+    list-style:none;
+}
+.cdeSearchPreferences ul li{
+    display:inline-block;
+    vertical-align:top;
+    padding:10px;
+}

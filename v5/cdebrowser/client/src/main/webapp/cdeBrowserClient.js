@@ -23,6 +23,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         {id: 1, name: "All of the words"},
         {id: 2, name: "At least one of the words"}
     ];
+
+    $scope.activeSearchTab = 0;
+    $scope.searchTabs = [{title:"Data Element Search"}, {title:"Search Preferences"}];
     $scope.tabs = [
         {
             title: 'Search Results',
@@ -542,6 +545,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataLoadFromServer();
     $scope.versionData();
     $scope.getToolHosts();
+
+    // change search tab section tabs //
+    $scope.changeSearchTab = function(tabIndex) {
+        $scope.activeSearchTab = tabIndex;
+    };
 
     // downloads selected search results to an excel file //
     $scope.downloadToExcel = function(param) {
