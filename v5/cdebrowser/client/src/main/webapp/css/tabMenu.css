@@ -38,3 +38,12 @@
     margin: 3px 3px 0px 3px;
     padding: 5px 8px 4px 8px;
 }
+
+.topTabSeparator {
+    border:1px solid #1A4660;
+    width:100%;
+    top: 124px;
+    left:7px;
+    position: fixed;
+    
+}
