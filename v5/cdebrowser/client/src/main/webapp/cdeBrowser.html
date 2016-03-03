@@ -210,7 +210,7 @@
         <!-- generate tabs for search, advanced search and search preferences -->
         <div class="cdeSearchTabs">
             <ul class="cdeTabsUl">
-                <button class="cdeTabsLi" ng-repeat="tab in searchTabs track by $index" data-ng-class="{tabActive: activeSearchTab==$index}" ng-click="changeSearchTab($index)">
+                <button class="cdeTabsLi" ng-repeat="tab in searchTabs track by $index" data-ng-class="{tabActive: activeSearchTab==$index}" ng-click="changeSearchTab($index)" ng-disabled="tab.disabled">
                     {{tab.title}}
                 </button>
             </ul>
@@ -220,10 +220,10 @@
         <div id="cdeSearchArea" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
             This is the generic search pane. The default search.
         </div>
-        <!--<div id="cdeSearchArea" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==1">
+        <div id="cdeSearchArea" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==1">
             This is the advanced search pane.
-        </div>-->
-        <div id="cdeSearchArea" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==1">
+        </div>
+        <div id="cdeSearchArea" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==2">
             This is the search preferences pane.
         </div>                
         <!-- end display proper view based on tab selected -->
