@@ -227,7 +227,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             // Have they clicked on a Context
                             if (/cdesByContext$/.test(actionParts[0])) {
                                 scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
-                                "?contextId=" + actionParts[1]);
+                                "?contextId=" + actionParts[1],1);
                             }
 
                             ///////////////////////////////////////////////////////
@@ -237,7 +237,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                 "?classificationSchemeId=" + actionParts[1]);
 
                                 scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
-                                "?classificationSchemeId=" + actionParts[1]);
+                                "?classificationSchemeId=" + actionParts[1],1);
                             }
 
                             ///////////////////////////////////////////////////////
@@ -247,7 +247,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                 "?classificationSchemeItemId=" + actionParts[1] + "]");
 
                                 scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
-                                "?classificationSchemeItemId=" + actionParts[1]);
+                                "?classificationSchemeItemId=" + actionParts[1],1);
                             }
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol
@@ -256,7 +256,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                 "?protocolId=" + actionParts[1] + "]");
 
                                 scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
-                                "?protocolId=" + actionParts[1]);
+                                "?protocolId=" + actionParts[1],1);
                             }
 
                             ///////////////////////////////////////////////////////
@@ -266,7 +266,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                 "?id=" + actionParts[1] + "]");
 
                                 scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port + "/" + actionParts[0] +
-                                "?id=" + actionParts[1]);
+                                "?id=" + actionParts[1],1);
                             }
 
 
@@ -275,6 +275,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             console.log("* * * Setting  scope.showCdeSearchResults = true;");
                             scope.showCdeSearchResults = true;
                             scope.changeView(0,0);
+                            scope.isSearch
                         };
                 }
 

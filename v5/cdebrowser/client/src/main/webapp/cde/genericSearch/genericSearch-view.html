@@ -1,5 +1,5 @@
 <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
-
+<span ng-controller="GenericSearchController">
 <div class="queryTypeRadioButtons">
     <label data-ng-repeat="qType in searchQueryTypes">
         <div>
@@ -13,7 +13,6 @@
     </label>
 </div>
 
-
 <!-- Search field drop down, text input, search & clear button  -->
 <div class="searchInput">
     <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
@@ -24,7 +23,6 @@
             data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
     </select>
     <br>
-
     <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
         Note: Default settings excludes the Test Context view from the tree.
     </div>
@@ -36,3 +34,4 @@
         Clear
     </button>
 </div>
+</span>

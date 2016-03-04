@@ -9,7 +9,8 @@ angular.module("cde", [
     "cdeDataElementConcept",
     "cdeDataElementDerivation",
     "cdeUsage",
-    "cdeValueDomain"
+    "cdeValueDomain",
+    "cdeGenericSearch"
 
 ])
 /**

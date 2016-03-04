@@ -13,7 +13,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.NORMAL = 0;
     $scope.BIG = 1;
     $scope.ERROR = 2;
-
+    $scope.isNode = false;
     $scope.checkedItemsForDownload = [];
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
     window.scope = $scope;
@@ -250,7 +250,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
 
         console.log("onClickBasicSearch:   " + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
-        "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+        "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentCdeTab);
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
@@ -278,7 +278,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // Basic search query to get search results //
-    $scope.basicSearchServerRestCall = function (serverUrl) {
+    $scope.basicSearchServerRestCall = function (serverUrl,isNode) {
+        // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
+        if (isNode) {
+            $scope.isNode  = !$scope.isNode;
+        }
         $scope.tabsDisabled = true;
 
         console.log("basicSearchServerRestCall: " + serverUrl);

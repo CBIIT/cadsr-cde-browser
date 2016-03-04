@@ -16,7 +16,6 @@
 <body>
 <!-- =============================================================================== -->
 
-
 <!-- ************ Top header with NCI logo ************ -->
 <div class="top-left-logo">
     <a href="http://www.cancer.gov/" target="_blank">
@@ -202,6 +201,7 @@
 
     <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
+
     <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" data-ng-show="initComplete"
          data-ng-style="resizeHeight()"
          resize
@@ -214,7 +214,7 @@
                     {{tab.title}}
                 </button>
             </ul>
-        </div>    
+        </div>  
         <!-- end generate tabs -->
         <!-- display proper view based on tab selected -->     
         <div id="cdeSearchArea" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
@@ -406,6 +406,7 @@
 <script src="cde/dataElementDerivation/cde-dataElementDerivation.js"></script>
 <script src="cde/usage/cde-usage.js"></script>
 <script src="cde/valueDomain/cde-valueDomain.js"></script>
+<script src="cde/genericSearch/cde-genericSearch.js"></script>
 
 
 </body>
