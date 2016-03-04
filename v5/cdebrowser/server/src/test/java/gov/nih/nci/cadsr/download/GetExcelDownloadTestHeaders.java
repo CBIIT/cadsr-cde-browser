@@ -7,10 +7,11 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+//
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -37,12 +38,12 @@ public class GetExcelDownloadTestHeaders {
 	@Test
 	public void testdeSearchPrior() throws Exception {	
 		
-		checkHeaders("CDEBrowser_deSearchPrior_headers.xls", "deSearch");
+		checkHeaders("CDEBrowser_deSearchPrior_headers.xls", "deSearchPrior");
 	}
 	@Test
 	public void testcdeCartPrior() throws Exception {	
 		
-		checkHeaders("CDEBrowser_deSearchPrior_headers.xls", "cdeCart");
+		checkHeaders("CDEBrowser_deSearchPrior_headers.xls", "cdeCartPrior");
 	}
 	public void checkHeaders(String strFileName, String exportType) throws Exception {
 		//this file is a prepared Excel file with expected headers for this export which shall stay the same as in CDE Browser 4.0
@@ -66,12 +67,14 @@ public class GetExcelDownloadTestHeaders {
 		
 		//MUT
 		getExcelDownload.generateExcelHeaders(sheethReceived, boldCellStyle, exportType, columnInfo);
-		
+		HSSFRow rowReceived = sheethReceived.getRow(0);
 		//check
-		HSSFRow rowReceived =sheethReceived.getRow(0);
-		assertNotNull(rowReceived);
-		assertEquals(rowExpected, rowReceived);
+		
+		//boolean res = CompareExcelTables.compareSheets(sheetExpected, sheethReceived);
+		boolean res2 = CompareExcelTables.compareRows(rowExpected, rowReceived, 0);
 		wbhReceived.close();
+		assertTrue("Headers rows are the same", res2);
+		//assertTrue("Worksbooks are the same", res);
 	}
 
 }
