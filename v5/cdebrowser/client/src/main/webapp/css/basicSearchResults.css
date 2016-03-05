@@ -153,9 +153,9 @@
 
 /** breadcrumb style **/
 .breadCrumbs {
-    padding: 5px 5px 5px 5px;
+    padding: 10px 5px 10px 5px;
     font-weight: bold;
-    color: #663300;
+    color: #999966;
     font-size:13.3px;
 }
 
@@ -165,7 +165,7 @@
     width: 100%;
     font-size:13.33px;
     font-weight:bold;
-    padding:5px;
+    padding:10px 0px 5px 10px;
 }
 
 .sortOrder.left {
@@ -182,12 +182,16 @@
     width: 20%;
 }
 
+.sortOrder.right a {
+    color:#999966;
+}
+
 #searchResults {
     padding-left: 4px;
 
     /*margin-top:5px;*/
     /* Push down label - Sort Order: etc.*/
-    color: #663300;
+    color: #999966;
 }
 
 
