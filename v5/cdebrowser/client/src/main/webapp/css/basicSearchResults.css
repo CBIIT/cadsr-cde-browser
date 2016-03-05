@@ -166,6 +166,7 @@
     font-size:13.33px;
     font-weight:bold;
     padding:10px 0px 5px 10px;
+    display:inline-block;
 }
 
 .sortOrder.left {
