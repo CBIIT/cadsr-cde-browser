@@ -9,51 +9,51 @@
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription" width="20%">Public ID:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.publicId}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.publicId">{{cdeDetails.dataElement.dataElementDetails.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.formattedVersion}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.formattedVersion">{{cdeDetails.dataElement.dataElementDetails.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.longName}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.longName">{{cdeDetails.dataElement.dataElementDetails.longName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.shortName}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.shortName">{{cdeDetails.dataElement.dataElementDetails.shortName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.preferredQuestionText}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.preferredQuestionText">{{cdeDetails.dataElement.dataElementDetails.preferredQuestionText}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Definition:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.definition}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.definition">{{cdeDetails.dataElement.dataElementDetails.definition}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Value Domain:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.valueDomain}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.valueDomain">{{cdeDetails.dataElement.dataElementDetails.valueDomain}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Data Element Concept:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.dataElementConcept}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.dataElementConcept">{{cdeDetails.dataElement.dataElementDetails.dataElementConcept}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Context:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.context}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.context">{{cdeDetails.dataElement.dataElementDetails.context}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Workflow Status:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.workflowStatus}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.workflowStatus">{{cdeDetails.dataElement.dataElementDetails.workflowStatus}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Origin:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.origin}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.origin">{{cdeDetails.dataElement.dataElementDetails.origin}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Registration Status:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
     </tr>
 </table>
 
@@ -74,11 +74,12 @@
         <td class="dataElementHeading">URL</td>
     </tr>
     <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.referenceDocuments">
-        <td class="dataElementValue">{{refDoc.documentName}}</td>
-        <td class="dataElementValue">{{refDoc.documentType}}</td>
-        <td class="dataElementValue">{{refDoc.documentText}}</td>
-        <td class="dataElementValue">{{refDoc.context}}</td>
-        <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank">{{refDoc.url}}</a></td>
+        <td class="dataElementValue" ng-bind-html="refDoc.documentName">{{refDoc.documentName}}</td>
+        <td class="dataElementValue" ng-bind-html="refDoc.documentType">{{refDoc.documentType}}</td>
+        <td class="dataElementValue" ng-bind-html="refDoc.documentText">{{refDoc.documentText}}</td>
+        <td class="dataElementValue" ng-bind-html="refDoc.context">{{refDoc.context}}</td>
+        <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank" ng-bind-html="refDoc.url">{{refDoc.url}}</a></td>
+
     </tr>
 </table><br/>
 
@@ -114,10 +115,10 @@
             <td class="dataElementHeading">CSI Type</td>
         </tr>
         <tr class="dataElementViewTableTr">
-            <td class="dataElementValue">{{cdeCsi.csLongName}}</td>
-            <td class="dataElementValue">{{cdeCsi.csDefinition}}</td>
-            <td class="dataElementValue">{{cdeCsi.csiName}}</td>
-            <td class="dataElementValue">{{cdeCsi.csiType}}</td>
+            <td class="dataElementValue" ng-bind-html="cdeCsi.csLongName">{{cdeCsi.csLongName}}</td>
+            <td class="dataElementValue" ng-bind-html="cdeCsi.csDefinition">{{cdeCsi.csDefinition}}</td>
+            <td class="dataElementValue" ng-bind-html="cdeCsi.csiName">{{cdeCsi.csiName}}</td>
+            <td class="dataElementValue" ng-bind-html="cdeCsi.csiType">{{cdeCsi.csiType}}</td>
         </tr>
     </table>
 
@@ -137,10 +138,10 @@
             </tr>
             <tr class="dataElementViewTableTr"
                 data-ng-repeat="altName in cdeCsi.alternateNames">
-                <td class="dataElementValue">{{altName.name}}</td>
-                <td class="dataElementValue">{{altName.type}}</td>
-                <td class="dataElementValue">{{altName.context}}</td>
-                <td class="dataElementValue">{{altName.language}}</td>
+                <td class="dataElementValue" ng-bind-html="altName.name">{{altName.name}}</td>
+                <td class="dataElementValue" ng-bind-html="altName.type">{{altName.type}}</td>
+                <td class="dataElementValue" ng-bind-html="altName.context">{{altName.context}}</td>
+                <td class="dataElementValue" ng-bind-html="altName.language">{{altName.language}}</td>
             </tr>
 
             <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.alternateNames.length">
@@ -159,9 +160,9 @@
                 <td class="dataElementHeading">Context</td>
             </tr>
             <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeCsi.alternateDefinitions">
-                <td class="dataElementValue">{{altDef.name}}</td>
-                <td class="dataElementValue">{{altDef.type}}</td>
-                <td class="dataElementValue">{{altDef.context}}</td>
+                <td class="dataElementValue" ng-bind-html="altDef.name">{{altDef.name}}</td>
+                <td class="dataElementValue" ng-bind-html="altDef.type">{{altDef.type}}</td>
+                <td class="dataElementValue" ng-bind-html="altDef.context">{{altDef.context}}</td>
             </tr>
             <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.alternateDefinitions.length">
 
@@ -197,11 +198,11 @@
                 <td class="dataElementHeading">Context</td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementValue">{{other.formattedVersion}}</td>
-                <td class="dataElementValue">{{other.longName}}</td>
-                <td class="dataElementValue">{{other.workFlowStatus}}</td>
-                <td class="dataElementValue">{{other.registrationStatus}}</td>
-                <td class="dataElementValue">{{other.context}}</td>
+                <td class="dataElementValue" ng-bind-html="other.formattedVersion">{{other.formattedVersion}}</td>
+                <td class="dataElementValue" ng-bind-html="other.longName">{{other.longName}}</td>
+                <td class="dataElementValue" ng-bind-html="other.workFlowStatus">{{other.workFlowStatus}}</td>
+                <td class="dataElementValue" ng-bind-html="other.registrationStatus">{{other.registrationStatus}}</td>
+                <td class="dataElementValue" ng-bind-html="other.context">{{other.context}}</td>
             </tr>
 
 
@@ -220,12 +221,16 @@
                             <td class="dataElementHeading">CSI Public ID/Version</td>
                         </tr>
                         <tr class="dataElementViewTableTr" data-ng-repeat="cscsi in other.csCsis">
-                            <td class="dataElementValue">{{cscsi.csLongName}}</td>
-                            <td class="dataElementValue">{{cscsi.csDefinition}}</td>
-                            <td class="dataElementValue">{{cscsi.csId}}v{{cscsi.formattedCsVersion}}</td>
-                            <td class="dataElementValue">{{cscsi.csiName}}</td>
-                            <td class="dataElementValue">{{cscsi.csiType}}</td>
-                            <td class="dataElementValue">{{cscsi.csiId}}v{{cscsi.formattedCsiVersion}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csLongName">{{cscsi.csLongName}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csDefinition">{{cscsi.csDefinition}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.formattedCsVersion">{{cscsi.csId}}v{{cscsi.formattedCsVersion}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csiName">{{cscsi.csiName}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csiType">{{cscsi.csiType}}</td>
+                            <td class="dataElementValue">
+                                <span ng-bind-html="cscsi.csiId">{{cscsi.csiId}}</span>
+                                v
+                                <span ng-bind-html="cscsi.formattedCsiVersion">{{cscsi.formattedCsiVersion}}</span>
+                            </td>
                         </tr>
                     </table>
                 </td>

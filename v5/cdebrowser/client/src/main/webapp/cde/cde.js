@@ -3,6 +3,7 @@
  */
 angular.module("cde", [
     "ngRoute",
+    "ngSanitize",
     "cdeAdminInfo",
     "cdeClassifications",
     "cdeDataElement",

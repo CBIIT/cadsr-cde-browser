@@ -8,38 +8,40 @@
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription" width="20%">Public ID:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.publicId}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.publicId">{{cdeDetails.usage.selectedDataElement.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.formattedVersion}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.formattedVersion">{{cdeDetails.usage.selectedDataElement.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.longName}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.longName">{{cdeDetails.usage.selectedDataElement.longName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.shortName}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.shortName">{{cdeDetails.usage.selectedDataElement.shortName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.preferredQuestionText}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.preferredQuestionText">{{cdeDetails.usage.selectedDataElement.preferredQuestionText}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Definition:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.definition}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.definition">{{cdeDetails.usage.selectedDataElement.definition}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Workflow Status:</td>
-        <td class="dataElementValue">{{cdeDetails.usage.selectedDataElement.workflowStatus}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.usage.selectedDataElement.workflowStatus">{{cdeDetails.usage.selectedDataElement.workflowStatus}}</td>
     </tr>
 </table>
 <br>
 
     <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
         <tr class="cdeDetailsSubHeading">
-            <th colspan="7" align="left" data-ng-show="cdeDetails.usage.formUsages.length > 0">Form Usage - <small>{{cdeDetails.usage.formUsages.length}}</small></th>
+            <th colspan="7" align="left" data-ng-show="cdeDetails.usage.formUsages.length > 0">Form Usage - <small>
+                <span ng-bind-html="cdeDetails.usage.formUsages.length">{{cdeDetails.usage.formUsages.length}}</span>
+            </small></th>
             <th colspan="7" align="left" data-ng-hide="cdeDetails.usage.formUsages.length > 0">Form Usage</th>
         </tr>
     </table>
@@ -57,21 +59,25 @@
                 <td class="dataElementHeading">Version</td>
             </tr>
             <tr class="dataElementViewTableTr" data-ng-show="cdeDetails.usage.formUsages.length > 0" data-ng-repeat="usage in cdeDetails.usage.formUsages">
-                <td class="dataElementValue">{{usage.protocolNumber}}</td>
-                <td class="dataElementValue">{{usage.leadOrg}}</td>
-                <td class="dataElementValue">{{usage.formName}}</td>
-                <td class="dataElementValue">{{usage.questionName}}</td>
-                <td class="dataElementValue">{{usage.formUsageType}}</td>
+                <td class="dataElementValue" ng-bind-html="usage.protocolNumber">{{usage.protocolNumber}}</td>
+                <td class="dataElementValue" ng-bind-html="usage.leadOrg">{{usage.leadOrg}}</td>
+                <td class="dataElementValue" ng-bind-html="usage.formName">{{usage.formName}}</td>
+                <td class="dataElementValue" ng-bind-html="usage.questionName">{{usage.questionName}}</td>
+                <td class="dataElementValue" ng-bind-html="usage.formUsageType">{{usage.formUsageType}}</td>
                 <!--  02_AUG_2015 We don't have the back end Rest service for this yet.
                       When we do want to include the url, uncomment it in the sql in UsageDAOImpl.getUsagesByDeIdseq
 
                       Update - 05_AUG_2015 - Denise Warzel says turn this link on, it will hit the Form builder tool, no need for new service.
                 -->
-                <td class="dataElementValue"><a href="{{usage.url}}" target="_blank">{{usage.publicId}}</a></td>
+                <td class="dataElementValue">
+                    <a href="{{usage.url}}" target="_blank">
+                        <span ng-bind-html="usage.publicId">{{usage.publicId}}</span>
+                    </a>
+                </td>
                 <!--
                 <td class="dataElementValue">{{usage.publicId}}</td>
                 -->
-                <td class="dataElementValue">{{usage.formattedVersion}}</td>
+                <td class="dataElementValue" ng-bind-html="usage.formattedVersion">{{usage.formattedVersion}}</td>
             </tr>
             <tr class="dataElementViewTableTr"
                 data-ng-hide="cdeDetails.usage.formUsages.length > 0">

@@ -9,31 +9,31 @@
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription" width="20%">Public ID:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.publicId}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.publicId">{{cdeDetails.dataElementDerivation.selectedDataElement.publicId}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.formattedVersion}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.formattedVersion">{{cdeDetails.dataElementDerivation.selectedDataElement.formattedVersion}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Long Name:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.longName}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.longName">{{cdeDetails.dataElementDerivation.selectedDataElement.longName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.shortName}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.shortName">{{cdeDetails.dataElementDerivation.selectedDataElement.shortName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.preferredQuestionText}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.preferredQuestionText">{{cdeDetails.dataElementDerivation.selectedDataElement.preferredQuestionText}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Definition:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.definition}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.definition">{{cdeDetails.dataElementDerivation.selectedDataElement.definition}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Workflow Status:</td>
-        <td class="dataElementValue">{{cdeDetails.dataElementDerivation.selectedDataElement.workflowStatus}}</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.selectedDataElement.workflowStatus">{{cdeDetails.dataElementDerivation.selectedDataElement.workflowStatus}}</td>
     </tr>
 </table>
 <br/>
@@ -48,21 +48,21 @@
     <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
         <tr class="dataElementViewTableTr">
             <td class="dataElementDescription" width="20%">Derivation Type:</td>
-            <td class="dataElementValue">
+            <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.dataElementDerivationDetails.derivationType">
                 {{cdeDetails.dataElementDerivation.dataElementDerivationDetails.derivationType}}
             </td>
         </tr>
         <tr class="dataElementViewTableTr">
             <td class="dataElementDescription">Rule:</td>
-            <td class="dataElementValue">{{cdeDetails.dataElementDerivation.dataElementDerivationDetails.rule}}</td>
+            <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.dataElementDerivationDetails.rule">{{cdeDetails.dataElementDerivation.dataElementDerivationDetails.rule}}</td>
         </tr>
         <tr class="dataElementViewTableTr">
             <td class="dataElementDescription">Method:</td>
-            <td class="dataElementValue">{{cdeDetails.dataElementDerivation.dataElementDerivationDetails.method}}</td>
+            <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.dataElementDerivationDetails.method">{{cdeDetails.dataElementDerivation.dataElementDerivationDetails.method}}</td>
         </tr>
         <tr class="dataElementViewTableTr">
             <td class="dataElementDescription">Concatenation Character:</td>
-            <td class="dataElementValue">
+            <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementDerivation.dataElementDerivationDetails.concatenationCharacter">
                 {{cdeDetails.dataElementDerivation.dataElementDerivationDetails.concatenationCharacter}}
             </td>
         </tr>
@@ -86,12 +86,16 @@
         </tr>
         <tr class="dataElementViewTableTr"
             data-ng-repeat="elements in cdeDetails.dataElementDerivation.dataElementDerivationComponentModels">
-            <td class="dataElementValue">{{elements.displayOrder}}</td>
-            <td class="dataElementValue"><a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(elements.deIdseq)">{{elements.longName}}</a></td>
-            <td class="dataElementValue">{{elements.context}}</td>
-            <td class="dataElementValue">{{elements.workflowStatus}}</td>
-            <td class="dataElementValue">{{elements.publicId}}</td>
-            <td class="dataElementValue">{{elements.formattedVersion}}</td>
+            <td class="dataElementValue" ng-bind-html="elements.displayOrder">{{elements.displayOrder}}</td>
+            <td class="dataElementValue">
+                <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(elements.deIdseq)">
+                    <span ng-bind-html="elements.longName">{{elements.longName}}</span>
+                </a>
+            </td>
+            <td class="dataElementValue" ng-bind-html="elements.context">{{elements.context}}</td>
+            <td class="dataElementValue" ng-bind-html="elements.workflowStatus">{{elements.workflowStatus}}</td>
+            <td class="dataElementValue" ng-bind-html="elements.publicId">{{elements.publicId}}</td>
+            <td class="dataElementValue" ng-bind-html="elements.formattedVersion">{{elements.formattedVersion}}</td>
         </tr>
     </table>
 </div>
