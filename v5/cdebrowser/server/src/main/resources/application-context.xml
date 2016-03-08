@@ -179,5 +179,9 @@
 	<bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownload">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
      </bean>
+     
+     <bean id="getXmlDownload" class="gov.nih.nci.cadsr.download.GetXmlDownload">
+        <constructor-arg name="dataSource" index="0" ref="dataSource"/>
+	</bean>
 
 </beans>
