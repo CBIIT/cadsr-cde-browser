@@ -1,0 +1,542 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE DataElementsList SYSTEM "DataElementList.dtd">
+<DataElementsList>
+   <DataElement num="1">
+      <RAI>2.16.840.1.113883.3.26.2</RAI>
+      <PUBLICID>2238438</PUBLICID>
+      <LONGNAME>Cancer Diagnosis Physician Or Health Care Provider Report Cancer Diagnosis Hepatic Involvement Category</LONGNAME>
+      <PREFERREDNAME>GENE_LOCUS_TP</PREFERREDNAME>
+      <PREFERREDDEFINITION>General term for detecting and classifying cancer in patients. (from CSP94)_A doctor; a person who has been educated, trained, and licensed to practice the art and science of medicine; a practitioner of medicine, as contrasted with a surgeon._An article used to connect words, phrases, or clauses representing alternatives; used to connect alternative terms for the same thing; used in correlation; used to correct or rephrase what was previously said; otherwise._Persons who provides health care as part of their job responsibilities, or a person or organization who is licensed to supply health care._Report; a short account._General term for detecting and classifying cancer in patients. (from CSP94)_Refers to the liver._To have a connection by participation or association or use; sharing in an activity or process._Category; used informally to mean a class of things.</PREFERREDDEFINITION>
+      <VERSION>1</VERSION>
+      <WORKFLOWSTATUS>DRAFT MOD</WORKFLOWSTATUS>
+      <CONTEXTNAME>DCP</CONTEXTNAME>
+      <CONTEXTVERSION>1</CONTEXTVERSION>
+      <ORIGIN>Transplant CDE Committee</ORIGIN>
+      <REGISTRATIONSTATUS>Application</REGISTRATIONSTATUS>
+      <DATAELEMENTCONCEPT>
+         <PublicId>3284115</PublicId>
+         <PreferredName>3284112v1.0:3284113v1.0</PreferredName>
+         <PreferredDefinition>A procedure for critical evaluation; a means of determining the presence, quality, or truth of something._General term for detecting and classifying cancer in patients._A doctor; a person who has been educated, trained, and licensed to practice the art and science of medicine; a practitioner of medicine, as contrasted with a surgeon._A short textual account; having provided a short account.</PreferredDefinition>
+         <LongName>Test Cancer Diagnosis Physician Report</LongName>
+         <Version>1</Version>
+         <WorkflowStatus>DRAFT NEW</WorkflowStatus>
+         <ContextName>NCIP</ContextName>
+         <ContextVersion>1</ContextVersion>
+         <ConceptualDomain>
+            <PublicId>2861581</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>ADDRESS</PreferredName>
+            <Version>1</Version>
+            <LongName>Address</LongName>
+         </ConceptualDomain>
+         <ObjectClass>
+            <PublicId>4770771</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C47891:C16213</PreferredName>
+            <Version>1</Version>
+            <LongName>Test Cancer Diagnosis</LongName>
+            <ConceptDetails>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C47891</PREFERRED_NAME>
+                  <LONG_NAME>Test</LONG_NAME>
+                  <CON_ID>2427511</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>No</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>1</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C16213</PREFERRED_NAME>
+                  <LONG_NAME>Cancer Diagnosis</LONG_NAME>
+                  <CON_ID>2923267</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>Yes</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>0</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+            </ConceptDetails>
+         </ObjectClass>
+         <Property>
+            <PublicId>4770772</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C25741:C25375</PreferredName>
+            <Version>1</Version>
+            <LongName>Physician Report</LongName>
+            <ConceptDetails>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C25741</PREFERRED_NAME>
+                  <LONG_NAME>Physician</LONG_NAME>
+                  <CON_ID>2202785</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>No</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>1</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C25375</PREFERRED_NAME>
+                  <LONG_NAME>Report</LONG_NAME>
+                  <CON_ID>2202481</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>Yes</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>0</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+            </ConceptDetails>
+         </Property>
+         <ObjectClassQualifier NULL="TRUE"/>
+         <PropertyQualifier NULL="TRUE"/>
+         <Origin>WAIS-IV:Wechsler Adult Intelligence Scale-Fourth Edition. Pearson, San Antonio, TX, 2008</Origin>
+      </DATAELEMENTCONCEPT>
+      <VALUEDOMAIN>
+         <PublicId>3187601</PublicId>
+         <PreferredName>CA_DX_HEP_INV_CAT</PreferredName>
+         <PreferredDefinition>General term for detecting and classifying cancer in patients. (from CSP94)_Refers to the liver._To have a connection by participation or association or use; sharing in an activity or process._Category; used informally to mean a class of things.</PreferredDefinition>
+         <LongName>Cancer Diagnosis Hepatic Involvement Category</LongName>
+         <Version>1</Version>
+         <WorkflowStatus>RELEASED</WorkflowStatus>
+         <ContextName>NCIP</ContextName>
+         <ContextVersion>1</ContextVersion>
+         <ConceptualDomain>
+            <PublicId>2008549</PublicId>
+            <ContextName>CTEP</ContextName>
+            <ContextVersion>2.31</ContextVersion>
+            <PreferredName>INV_AND_EXT_OF_DZ</PreferredName>
+            <Version>1</Version>
+            <LongName>Involvement and Extent of Disease</LongName>
+         </ConceptualDomain>
+         <Datatype>NUMBER</Datatype>
+         <ValueDomainType>Enumerated</ValueDomainType>
+         <UnitOfMeasure>day</UnitOfMeasure>
+         <DisplayFormat>999.9</DisplayFormat>
+         <MaximumLength>10</MaximumLength>
+         <MinimumLength>1</MinimumLength>
+         <DecimalPlace>2</DecimalPlace>
+         <CharacterSetName NULL="TRUE"/>
+         <MaximumValue>999999</MaximumValue>
+         <MinimumValue>2</MinimumValue>
+         <Origin>Transplant CDE Committee</Origin>
+         <Representation>
+            <PublicId>3187600</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C16213:C13308:C25548:C25372</PreferredName>
+            <Version>1</Version>
+            <LongName>Cancer Diagnosis Hepatic Involvement Category</LongName>
+            <ConceptDetails>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C16213</PREFERRED_NAME>
+                  <LONG_NAME>Cancer Diagnosis</LONG_NAME>
+                  <CON_ID>2923267</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>No</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>3</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C13308</PREFERRED_NAME>
+                  <LONG_NAME>Hepatic</LONG_NAME>
+                  <CON_ID>2202660</CON_ID>
+                  <DEFINITION_SOURCE>NCI-GLOSS</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>No</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>2</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C25548</PREFERRED_NAME>
+                  <LONG_NAME>Involvement</LONG_NAME>
+                  <CON_ID>2203737</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>No</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>1</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C25372</PREFERRED_NAME>
+                  <LONG_NAME>Category</LONG_NAME>
+                  <CON_ID>2203876</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>Yes</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>0</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+            </ConceptDetails>
+         </Representation>
+         <PermissibleValues>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>0-25%</VALIDVALUE>
+               <VALUEMEANING>0 to 25 percent</VALUEMEANING>
+               <MEANINGDESCRIPTION>0 to 25 percent liver involvement</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>1/7/2011 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>3187605</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>Distant Metastasis</VALIDVALUE>
+               <VALUEMEANING>Distant Metastasis</VALUEMEANING>
+               <MEANINGDESCRIPTION>Refers to cancer that has spread from the original (primary) tumor to distant organs or distant lymph nodes.</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS>C18206</MEANINGCONCEPTS>
+               <PVBEGINDATE>7/7/2015 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2558673</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>76-100%</VALIDVALUE>
+               <VALUEMEANING>76 to 100 percent</VALUEMEANING>
+               <MEANINGDESCRIPTION>76 to 100 percent of liver involvement</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>1/27/2011 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>3187602</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>51-75%</VALIDVALUE>
+               <VALUEMEANING>51 to 75 percent</VALUEMEANING>
+               <MEANINGDESCRIPTION>51 to 75 percent liver involvement</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>1/27/2011 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>3187603</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+         </PermissibleValues>
+         <ValueDomainConcepts/>
+      </VALUEDOMAIN>
+      <REFERENCEDOCUMENTSLIST>
+         <REFERENCEDOCUMENTSLIST_ITEM>
+            <Name>Gene</Name>
+            <OrganizationName NULL="TRUE"/>
+            <DocumentType>Preferred Question Text</DocumentType>
+            <DocumentText>Gene</DocumentText>
+            <URL NULL="TRUE"/>
+            <Language>ENGLISH</Language>
+            <DisplayOrder NULL="TRUE"/>
+         </REFERENCEDOCUMENTSLIST_ITEM>
+         <REFERENCEDOCUMENTSLIST_ITEM>
+            <Name>COG CRF Text 1</Name>
+            <OrganizationName NULL="TRUE"/>
+            <DocumentType>Alternate Question Text</DocumentType>
+            <DocumentText>Chromosome Region:</DocumentText>
+            <URL NULL="TRUE"/>
+            <Language>ENGLISH</Language>
+            <DisplayOrder NULL="TRUE"/>
+         </REFERENCEDOCUMENTSLIST_ITEM>
+      </REFERENCEDOCUMENTSLIST>
+      <CLASSIFICATIONSLIST>
+         <CLASSIFICATIONSLIST_ITEM>
+            <ClassificationScheme>
+               <PublicId>2961451</PublicId>
+               <ContextName>COG</ContextName>
+               <ContextVersion>1</ContextVersion>
+               <PreferredName>COG</PreferredName>
+               <Version>1</Version>
+            </ClassificationScheme>
+            <ClassificationSchemeItemName>Statistics and Data Center</ClassificationSchemeItemName>
+            <ClassificationSchemeItemType>GROUP_TYPE</ClassificationSchemeItemType>
+            <CsiPublicId>2961452</CsiPublicId>
+            <CsiVersion>1</CsiVersion>
+         </CLASSIFICATIONSLIST_ITEM>
+         <CLASSIFICATIONSLIST_ITEM>
+            <ClassificationScheme>
+               <PublicId>3599505</PublicId>
+               <ContextName>NCIP</ContextName>
+               <ContextVersion>1</ContextVersion>
+               <PreferredName>AIM FM</PreferredName>
+               <Version>4</Version>
+            </ClassificationScheme>
+            <ClassificationSchemeItemName>edu.northwestern.radiology.AIM</ClassificationSchemeItemName>
+            <ClassificationSchemeItemType>UML_PACKAGE_NAME</ClassificationSchemeItemType>
+            <CsiPublicId>2813012</CsiPublicId>
+            <CsiVersion>1</CsiVersion>
+         </CLASSIFICATIONSLIST_ITEM>
+         <CLASSIFICATIONSLIST_ITEM>
+            <ClassificationScheme>
+               <PublicId>2194255</PublicId>
+               <ContextName>DCP</ContextName>
+               <ContextVersion>1</ContextVersion>
+               <PreferredName>Condition</PreferredName>
+               <Version>1</Version>
+            </ClassificationScheme>
+            <ClassificationSchemeItemName>Barretts Esophagus</ClassificationSchemeItemName>
+            <ClassificationSchemeItemType>DISEASE_TYPE</ClassificationSchemeItemType>
+            <CsiPublicId>2812364</CsiPublicId>
+            <CsiVersion>1</CsiVersion>
+         </CLASSIFICATIONSLIST_ITEM>
+      </CLASSIFICATIONSLIST>
+      <ALTERNATENAMELIST>
+         <ALTERNATENAMELIST_ITEM>
+            <ContextName>COG</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <AlternateName>COG</AlternateName>
+            <AlternateNameType>USED_BY</AlternateNameType>
+            <Language>ENGLISH</Language>
+         </ALTERNATENAMELIST_ITEM>
+      </ALTERNATENAMELIST>
+      <DATAELEMENTDERIVATION>
+         <DerivationType NULL="TRUE"/>
+         <DerivationTypeDescription NULL="TRUE"/>
+         <Methods NULL="TRUE"/>
+         <Rule NULL="TRUE"/>
+         <ConcatenationCharacter NULL="TRUE"/>
+         <ComponentDataElementsList NULL="TRUE"/>
+      </DATAELEMENTDERIVATION>
+   </DataElement>
+   <DataElement num="2">
+      <RAI>2.16.840.1.113883.3.26.2</RAI>
+      <PUBLICID>2502956</PUBLICID>
+      <LONGNAME>Gene Family Symbol Text Type</LONGNAME>
+      <PREFERREDNAME>GENEFAM_SYM_TXT_TP</PREFERREDNAME>
+      <PREFERREDDEFINITION>A variety of number/letter combinations to indicate their phylogenetic relationships e.g. CYP1A1, CYP21A2, CYP51A1 (three members of the cytochrome P450 superfamily) for diverse proteins which, by virtue of their high degree of sequence similarity, are believed to have evolved from a single ancestral gene.</PREFERREDDEFINITION>
+      <VERSION>1</VERSION>
+      <WORKFLOWSTATUS>RELEASED</WORKFLOWSTATUS>
+      <CONTEXTNAME>DCP</CONTEXTNAME>
+      <CONTEXTVERSION>1</CONTEXTVERSION>
+      <ORIGIN NULL="TRUE"/>
+      <REGISTRATIONSTATUS>Qualified</REGISTRATIONSTATUS>
+      <DATAELEMENTCONCEPT>
+         <PublicId>2502953</PublicId>
+         <PreferredName>2502949v1.0:2502951v1.0</PreferredName>
+         <PreferredDefinition>A set of genes coding for diverse proteins which, by virtue of their high degree of sequence similarity, are believed to have evolved from a single ancestral gene.</PreferredDefinition>
+         <LongName>Gene Family Symbol</LongName>
+         <Version>1</Version>
+         <WorkflowStatus>RELEASED</WorkflowStatus>
+         <ContextName>DCP</ContextName>
+         <ContextVersion>1</ContextVersion>
+         <ConceptualDomain>
+            <PublicId>2435028</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C26548</PreferredName>
+            <Version>1</Version>
+            <LongName>Gene Product</LongName>
+         </ConceptualDomain>
+         <ObjectClass>
+            <PublicId>2502949</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C26004</PreferredName>
+            <Version>1</Version>
+            <LongName>Gene Family</LongName>
+            <ConceptDetails>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C26004</PREFERRED_NAME>
+                  <LONG_NAME>Gene Family</LONG_NAME>
+                  <CON_ID>2502948</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>Yes</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>0</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+            </ConceptDetails>
+         </ObjectClass>
+         <Property>
+            <PublicId>2502951</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C54191</PreferredName>
+            <Version>1</Version>
+            <LongName>Symbol</LongName>
+            <ConceptDetails>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C54191</PREFERRED_NAME>
+                  <LONG_NAME>Symbol</LONG_NAME>
+                  <CON_ID>2502950</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>Yes</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>0</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+            </ConceptDetails>
+         </Property>
+         <ObjectClassQualifier NULL="TRUE"/>
+         <PropertyQualifier NULL="TRUE"/>
+         <Origin NULL="TRUE"/>
+      </DATAELEMENTCONCEPT>
+      <VALUEDOMAIN>
+         <PublicId>2502954</PublicId>
+         <PreferredName>GENEFAM_SYM_TXT_TP</PreferredName>
+         <PreferredDefinition>A variety of number/letter combinations to indicate their phylogenetic relationships e.g. CYP1A1, CYP21A2, CYP51A1 (three members of the cytochrome P450 superfamily).</PreferredDefinition>
+         <LongName>Gene Family Symbol Text Type</LongName>
+         <Version>1</Version>
+         <WorkflowStatus>RELEASED</WorkflowStatus>
+         <ContextName>DCP</ContextName>
+         <ContextVersion>1</ContextVersion>
+         <ConceptualDomain>
+            <PublicId>2435028</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C26548</PreferredName>
+            <Version>1</Version>
+            <LongName>Gene Product</LongName>
+         </ConceptualDomain>
+         <Datatype>CHARACTER</Datatype>
+         <ValueDomainType>Enumerated</ValueDomainType>
+         <UnitOfMeasure NULL="TRUE"/>
+         <DisplayFormat NULL="TRUE"/>
+         <MaximumLength>6</MaximumLength>
+         <MinimumLength NULL="TRUE"/>
+         <DecimalPlace NULL="TRUE"/>
+         <CharacterSetName NULL="TRUE"/>
+         <MaximumValue NULL="TRUE"/>
+         <MinimumValue NULL="TRUE"/>
+         <Origin NULL="TRUE"/>
+         <Representation>
+            <PublicId>2207966</PublicId>
+            <ContextName>NCIP</ContextName>
+            <ContextVersion>1</ContextVersion>
+            <PreferredName>C25704:C25284</PreferredName>
+            <Version>1</Version>
+            <LongName>Text Type</LongName>
+            <ConceptDetails>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C25704</PREFERRED_NAME>
+                  <LONG_NAME>Text</LONG_NAME>
+                  <CON_ID>2203863</CON_ID>
+                  <DEFINITION_SOURCE>NCI </DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>No</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>1</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+               <ConceptDetails_ITEM>
+                  <PREFERRED_NAME>C25284</PREFERRED_NAME>
+                  <LONG_NAME>Type</LONG_NAME>
+                  <CON_ID>2202431</CON_ID>
+                  <DEFINITION_SOURCE>NCI</DEFINITION_SOURCE>
+                  <ORIGIN>NCI Thesaurus</ORIGIN>
+                  <EVS_SOURCE>NCI_CONCEPT_CODE</EVS_SOURCE>
+                  <PRIMARY_FLAG_IND>Yes</PRIMARY_FLAG_IND>
+                  <DISPLAY_ORDER>0</DISPLAY_ORDER>
+               </ConceptDetails_ITEM>
+            </ConceptDetails>
+         </Representation>
+         <PermissibleValues>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>CYP1A1</VALIDVALUE>
+               <VALUEMEANING>Cytochrome P450, subfamily I (aromatic compound-inducible), polypeptide 1</VALUEMEANING>
+               <MEANINGDESCRIPTION>Cytochrome P450, subfamily I (aromatic compound-inducible), polypeptide 1</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>8/2/2006 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2580414</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>CYP1A2</VALIDVALUE>
+               <VALUEMEANING>Cytochrome P450, Family 1, Subfamily A, Polypeptide 2</VALUEMEANING>
+               <MEANINGDESCRIPTION>Cytochrome P450, Family 1, Subfamily A, Polypeptide 2</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>8/2/2006 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2580415</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>CYP2B1</VALIDVALUE>
+               <VALUEMEANING>CYP2B; Cytochrome P450, subfamily IIB (phenobarbital-inducible)</VALUEMEANING>
+               <MEANINGDESCRIPTION>CYP2B; Cytochrome P450, subfamily IIB (phenobarbital-inducible)</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>8/2/2006 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2580416</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>CYP3A</VALIDVALUE>
+               <VALUEMEANING>cytochrome P450, family 3, subfamily a</VALUEMEANING>
+               <MEANINGDESCRIPTION>cytochrome P450, family 3, subfamily a</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>8/2/2006 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2580417</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>UGT</VALIDVALUE>
+               <VALUEMEANING>UGT Gene</VALUEMEANING>
+               <MEANINGDESCRIPTION>UGT Gene</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS NULL="TRUE"/>
+               <PVBEGINDATE>4/12/2007 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2626308</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+            <PermissibleValues_ITEM>
+               <VALIDVALUE>COMT</VALIDVALUE>
+               <VALUEMEANING>COMT Gene</VALUEMEANING>
+               <MEANINGDESCRIPTION>This gene is involved in the metabolism of catecholamine drugs and neurotransmitters.</MEANINGDESCRIPTION>
+               <MEANINGCONCEPTS>C18589</MEANINGCONCEPTS>
+               <PVBEGINDATE>4/12/2007 0:0:0</PVBEGINDATE>
+               <PVENDDATE NULL="TRUE"/>
+               <VMPUBLICID>2626310</VMPUBLICID>
+               <VMVERSION>1</VMVERSION>
+            </PermissibleValues_ITEM>
+         </PermissibleValues>
+         <ValueDomainConcepts/>
+      </VALUEDOMAIN>
+      <REFERENCEDOCUMENTSLIST>
+         <REFERENCEDOCUMENTSLIST_ITEM>
+            <Name>Gene</Name>
+            <OrganizationName NULL="TRUE"/>
+            <DocumentType>Preferred Question Text</DocumentType>
+            <DocumentText>Gene</DocumentText>
+            <URL NULL="TRUE"/>
+            <Language>ENGLISH</Language>
+            <DisplayOrder NULL="TRUE"/>
+         </REFERENCEDOCUMENTSLIST_ITEM>
+      </REFERENCEDOCUMENTSLIST>
+      <CLASSIFICATIONSLIST>
+         <CLASSIFICATIONSLIST_ITEM>
+            <ClassificationScheme>
+               <PublicId>2194255</PublicId>
+               <ContextName>DCP</ContextName>
+               <ContextVersion>1</ContextVersion>
+               <PreferredName>Condition</PreferredName>
+               <Version>1</Version>
+            </ClassificationScheme>
+            <ClassificationSchemeItemName>DIM - Prostate Cancer</ClassificationSchemeItemName>
+            <ClassificationSchemeItemType>DISEASE_TYPE</ClassificationSchemeItemType>
+            <CsiPublicId>2812202</CsiPublicId>
+            <CsiVersion>1</CsiVersion>
+         </CLASSIFICATIONSLIST_ITEM>
+         <CLASSIFICATIONSLIST_ITEM>
+            <ClassificationScheme>
+               <PublicId>2194255</PublicId>
+               <ContextName>DCP</ContextName>
+               <ContextVersion>1</ContextVersion>
+               <PreferredName>Condition</PreferredName>
+               <Version>1</Version>
+            </ClassificationScheme>
+            <ClassificationSchemeItemName>Polyphenon E - Bladder Cancer</ClassificationSchemeItemName>
+            <ClassificationSchemeItemType>DISEASE_TYPE</ClassificationSchemeItemType>
+            <CsiPublicId>2812539</CsiPublicId>
+            <CsiVersion>1</CsiVersion>
+         </CLASSIFICATIONSLIST_ITEM>
+      </CLASSIFICATIONSLIST>
+      <ALTERNATENAMELIST/>
+      <DATAELEMENTDERIVATION>
+         <DerivationType NULL="TRUE"/>
+         <DerivationTypeDescription NULL="TRUE"/>
+         <Methods NULL="TRUE"/>
+         <Rule NULL="TRUE"/>
+         <ConcatenationCharacter NULL="TRUE"/>
+         <ComponentDataElementsList NULL="TRUE"/>
+      </DATAELEMENTDERIVATION>
+   </DataElement>
+</DataElementsList>

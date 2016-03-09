@@ -17,6 +17,9 @@
     <bean id="downloadExcelController" class="gov.nih.nci.cadsr.service.restControllers.DownloadExcelController" depends-on="getExcelDownload">
     </bean>
     <bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownloadTestImpl">
-
+    </bean>
+    <bean id="downloadXmlController" class="gov.nih.nci.cadsr.service.restControllers.DownloadXmlController" depends-on="getXmlDownload">
+    </bean>
+    <bean id="getXmlDownload" class="gov.nih.nci.cadsr.download.GetXmlDownloadTestImpl">
     </bean>
 </beans>
