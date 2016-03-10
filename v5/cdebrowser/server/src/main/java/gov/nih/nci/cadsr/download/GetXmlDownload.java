@@ -102,9 +102,17 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 
 			// Get Oracle Native Connection
 			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
-
+			//TODO this is a test code remove it
+			try {
+				Class.forName("oracle.jdbc.driver.OracleConnection");
+			}
+			catch (Exception e) {
+				logger.debug("oracle.jdbc.driver.OracleConnection cannot be loaded: " + e);
+			}
+			
 			Connection oracleConn = cn.getMetaData().getConnection();//get underlying Oracle connection
-
+			logger.debug("...oracleConn class: " + oracleConn.getClass().getName());
+			
 			xmlString = getXMLString(oracleConn, stmt, where, true);
 			
 			fileSuffix = generateXmlFileId();
@@ -142,6 +150,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			}
 
 			OracleXMLQuery xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
+			//xmlQuery.setDateFormat(arg0); https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
 			xmlQuery.setEncoding("UTF-8");
 			xmlQuery.useNullAttributeIndicator(showNull);
 
@@ -152,13 +161,13 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			xmlQuery.setMaxRows(maxRecords);
 
 			xmlString = xmlQuery.getXMLString();
-			logger.debug(xmlString);
+			logger.trace(xmlString);
+			return xmlString;
 		} 
 		catch (Exception e) {
 			logger.error("getXMLString() error: ", e);
 			throw e;
 		} 
-		return xmlString;
 	}
 	
 	public String buildDownloadAbsoluteFileName(String fileSuffix) {
@@ -166,7 +175,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		return excelFilename;
 	}
 	
-	private void writeToFile(String xmlStr, String fn) throws Exception {
+	protected void writeToFile(String xmlStr, String fn) throws Exception {
 		FileOutputStream newFos = null;
 		BufferedOutputStream bos = null;
 
@@ -176,9 +185,17 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			bos.write(xmlStr.getBytes("UTF-8"));
 		} 
 		finally {
+			if (bos != null) {
+				try {
+					bos.flush();
+					bos.close();
+				} 
+				catch (Exception e) {
+					logger.debug("Unable to close underlying stream due to the following error ", e);
+				}
+			}
 			if (newFos != null) {
 				try {
-					newFos.flush();
 					newFos.close();
 				} 
 				catch (Exception e) {

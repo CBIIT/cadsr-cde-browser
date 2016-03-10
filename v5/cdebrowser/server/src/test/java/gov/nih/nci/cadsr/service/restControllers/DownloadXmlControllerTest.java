@@ -218,7 +218,7 @@ public class DownloadXmlControllerTest {
 		String testExistedFileName = ClassLoader.getSystemResource(strTestExistedFileName).getFile();
 		FileInputStream fis = new FileInputStream(testExistedFileName);
 		String preparedFileName = buildDownloadAbsoluteFileName(fileId);
-		System.out.println("preparedFileName: " + preparedFileName);
+		//System.out.println("preparedFileName: " + preparedFileName);
 		byte[] arr = streamCollector(fis);
 		FileOutputStream fos = new FileOutputStream(preparedFileName);
 		fos.write(arr);
