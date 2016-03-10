@@ -4,23 +4,15 @@
 
 package gov.nih.nci.cadsr.download;
 
-import gov.nih.nci.cadsr.service.ClientException;
-import oracle.xml.sql.query.OracleXMLQuery;
-import gov.nih.nci.cadsr.common.util.StringUtils;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
-
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -33,6 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import gov.nih.nci.cadsr.common.util.StringUtils;
+import gov.nih.nci.cadsr.service.ClientException;
+import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
+import oracle.xml.sql.query.OracleXMLQuery;
 
 public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInterface  {
 	private Logger logger = LogManager.getLogger(GetXmlDownload.class.getName());
@@ -102,16 +99,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 
 			// Get Oracle Native Connection
 			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
-			//TODO this is a test code remove it
-			try {
-				Class.forName("oracle.jdbc.driver.OracleConnection");
-			}
-			catch (Exception e) {
-				logger.debug("oracle.jdbc.driver.OracleConnection cannot be loaded: " + e);
-			}
 			
 			Connection oracleConn = cn.getMetaData().getConnection();//get underlying Oracle connection
-			logger.debug("...oracleConn class: " + oracleConn.getClass().getName());
 			
 			xmlString = getXMLString(oracleConn, stmt, where, true);
 			
@@ -138,19 +127,23 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		}
 	}
 
-	public String getXMLString(Connection oracleConn, String stmt, String where, boolean showNull) throws SQLException {
+	public String getXMLString(Connection oracleConn, String stmt, String where, boolean showNull) throws Exception {
 
 		String xmlString = "";
-
+		OracleXMLDataSetExtJdbc dset = null;
+		OracleXMLQuery xmlQuery = null;
 		try {
 			String sqlQuery = stmt + where;
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("Sql Stmt: " + sqlQuery);
+			if (logger.isTraceEnabled()) {
+				logger.trace("Sql Stmt: " + sqlQuery);
 			}
-
-			OracleXMLQuery xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
+			dset = new OracleXMLDataSetExtJdbc(oracleConn, stmt);
+			xmlQuery = new OracleXMLQuery(dset);
+			
+			//We still decide if we want to use default Date format, or to make it custom
 			//xmlQuery.setDateFormat(arg0); https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
+			
 			xmlQuery.setEncoding("UTF-8");
 			xmlQuery.useNullAttributeIndicator(showNull);
 
@@ -162,12 +155,31 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 
 			xmlString = xmlQuery.getXMLString();
 			logger.trace(xmlString);
+
 			return xmlString;
 		} 
 		catch (Exception e) {
 			logger.error("getXMLString() error: ", e);
 			throw e;
 		} 
+		finally {
+			try {
+				if (dset != null) {
+					dset.close();
+				}				
+			}
+			catch (Exception e) {
+				logger.debug("Error when closing OracleXMLDataSetExtJdbc: " + e.getMessage());
+			}
+			try {
+				if (xmlQuery != null) {
+					xmlQuery.close();
+				}				
+			}
+			catch (Exception e) {
+				logger.debug("Error when closing OracleXMLQuery: " + e.getMessage());
+			}
+		}
 	}
 	
 	public String buildDownloadAbsoluteFileName(String fileSuffix) {
