@@ -282,15 +282,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (isNode) {
             $scope.isNode  = !$scope.isNode;
         }
-        $scope.tabsDisabled = true;
+            // $scope.initTableParams();
 
+        $scope.tabsDisabled = true;
         console.log("basicSearchServerRestCall: " + serverUrl);
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
          
         $http.get(serverUrl).success(function (response) {
-
+            $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
 
             if ($scope.searchResults.length > 0) {
