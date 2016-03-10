@@ -16,14 +16,14 @@ public class LookupDataController
 {	
 	private Logger logger = LogManager.getLogger(LookupDataController.class.getName());
 	
-	@RequestMapping(value="/workflowstatus")
+	@RequestMapping(value="/workflowstatus", produces = "application/json")
 	public List<String> getWorkflowStatus()
 	{
 		logger.debug("Received request for Workflow Status information.");
 		return WorkflowStatusEnum.getAsList();
 	}
 	
-	@RequestMapping(value="/registrationstatus")
+	@RequestMapping(value="/registrationstatus", produces = "application/json")
 	public List<String> getRegistrationStatus()
 	{
 		logger.debug("Received request for Registration Status information.");
