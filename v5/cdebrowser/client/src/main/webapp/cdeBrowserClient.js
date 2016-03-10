@@ -258,12 +258,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // sets sort order for columns that should not be alphabetical //
-    $scope.setSortOrder = function () {
-        var registrationSort = ["Standard", "Candidate", "Proposed", "Qualified", "Superseded", "Standardized Elsewhere", "Retired", "Application", "Suspended"];
-        var workflowSort = ["RELEASED", "Approved for Trial Use ", "Draft New ", "Committee Approved ", "Committee Submitted ", "Committee Submitted Used ", "Draft Mod ", "Retired Archived ", "Retired Phased Out ", "Retired Withdrawn ", "Retired Deleted ", "Released-non-compliant"];
+    $scope.setSortOrder = function () {    
         angular.forEach($scope.searchResults, function (item) {
-            var rS = registrationSort.indexOf(item.registrationStatus);
-            var wS = workflowSort.indexOf(item.workflowStatus);
+            var rS = $scope.registrationSort.indexOf(item.registrationStatus);
+            var wS = $scope.workflowSort.indexOf(item.workflowStatus);
             if (rS > -1) {
                 item['registrationSort'] = rS
             } else {
@@ -274,7 +272,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             } else {
                 item['workflowSort'] = 1000
             }
-        });
+        });            
+
     };
 
     // Basic search query to get search results //
@@ -289,6 +288,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
+         
         $http.get(serverUrl).success(function (response) {
 
             $scope.searchResults = response;
@@ -378,6 +378,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataLoadFromServer = function () {
         console.log("$scope.dataLoadFromServer");
         $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/contextData");
+        
+        // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
+        $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').success(function (response) {
+            $scope.registrationSort = response;
+        });  
+        $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').success(function (response) {
+            $scope.workflowSort = response;
+        });  
+
     };
 
     $scope.dataLoad = function (dataSource) {
@@ -499,7 +508,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // start ngTable definition //
     $scope.resetSortOrder = function () {
-        $scope.tableParams.sorting({'registrationSort': 'asc'});
+        $scope.tableParams.sorting({'registrationSort': 'asc','workflowSort':'asc','longName':'asc'});
 
         /*  FIXME still not getting the "view" back after reset sort order  */
         //$scope.changeView(0,$scope.tabs[0]);
@@ -509,13 +518,27 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     };
 
+    // returns array of sort order, ng-repeat sends back keys in the wrong order //
+    $scope.$watch('tableParams.sorting()', function() {
+        var displayOrder = {"asc":"Ascending","desc":"Descending"}
+        var sortOrderObject = {"sortDirection":"asc","items":[]};
+        for (item in $scope.tableParams.sorting()) {
+            sortOrderObject.items.push($scope.sortNames[item]);
+            sortOrderObject.sortDirection = displayOrder[$scope.tableParams.sorting()[item]];
+        };        
+        $scope.sortOrderObject = sortOrderObject;
+    });
+
+    // initialize table params //
     $scope.initTableParams = function () {
         $scope.tableParams = new ngTableParams(
             {
                 page: 1,            // show first page
                 count: 100,           // count per page
                 sorting: {
-                    registrationSort: 'asc'     // initial sorting
+                    registrationSort: 'asc',
+                    workflowSort: 'asc',
+                    longName: 'asc'
                 }
             },
             {

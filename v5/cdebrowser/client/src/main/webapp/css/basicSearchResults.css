@@ -176,6 +176,16 @@
     width: 80%;
 }
 
+.sortOrder .left ul {
+    list-style:none;
+    padding:0px;
+    margin:0px;
+}
+
+.sortOrder .left ul li{
+    display:inline-block;
+}
+
 .sortOrder.right {
     position: absolute;
     right: 0;

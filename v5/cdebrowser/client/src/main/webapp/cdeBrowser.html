@@ -305,9 +305,14 @@
         <!-- The search results tab with Search results table - this is the only tab that is not an data-ng-view ========== -->
         <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
             <div class="sortOrder">
-                <div class="sortOrder left" data-ng-repeat="(key,val) in tableParams.sorting()">Sort Order:
-                    {{sortNames[key]}}
-                    [{{val}}]
+                <div class="sortOrder left">
+                    <ul>
+                        <li>Sort Order:</li>
+                        <li ng-repeat="item in sortOrderObject.items">
+                            {{item}} <span ng-if="!$last">>> </span>
+                        </li>
+                        <li>[{{sortOrderObject.sortDirection}}]
+                    </ul>
                 </div>
 
                 <div class="sortOrder right">
