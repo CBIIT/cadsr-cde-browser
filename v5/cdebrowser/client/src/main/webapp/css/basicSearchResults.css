@@ -229,3 +229,9 @@
 #footer a {
     color: #F7F7E6
 }
+
+#filters select{
+    padding:0px !important;
+    margin:10px 0px 0px 9px;
+    display:inline-block;
+}

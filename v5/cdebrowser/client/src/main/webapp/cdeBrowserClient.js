@@ -377,14 +377,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.dataLoadFromServer = function () {
         console.log("$scope.dataLoadFromServer");
+        $scope.filters = {};        
         $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/contextData");
         
         // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
         $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').success(function (response) {
             $scope.registrationSort = response;
+            $scope.filters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
         });  
         $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').success(function (response) {
             $scope.workflowSort = response;
+            $scope.filters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
         });  
 
     };

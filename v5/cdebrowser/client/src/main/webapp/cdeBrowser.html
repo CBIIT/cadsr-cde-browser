@@ -320,7 +320,12 @@
                 </div>
             </div>
             <br/>
-
+<!--             <div id="filters">
+                <select ng-model="filters.registrationStatus" ng-options="item for item in filters.registrationStatusFilter" ng-init="filters.registrationStatus=''">
+                </select>
+                <select ng-model="filters.workflowStatus" ng-options="item for item in filters.workflowStatusFilter" ng-init="filters.workflowStatus=''">
+                </select>                
+            </div> -->
             <div data-ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
 
             <br/>
