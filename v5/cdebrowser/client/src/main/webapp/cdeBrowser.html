@@ -308,10 +308,10 @@
                 <div class="sortOrder left">
                     <ul>
                         <li>Sort Order:</li>
-                        <li ng-repeat="item in getSortOrderObject().items">
+                        <li ng-repeat="item in sortOrderObject.items">
                             {{item}} <span ng-if="!$last">>> </span>
                         </li>
-                        <li>[{{getSortOrderObject().sortDirection}}]
+                        <li>[{{sortOrderObject.sortDirection}}]
                     </ul>
                 </div>
 

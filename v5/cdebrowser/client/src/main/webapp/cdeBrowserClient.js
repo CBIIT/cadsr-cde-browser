@@ -519,16 +519,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // returns array of sort order, ng-repeat sends back keys in the wrong order //
-    $scope.getSortOrderObject  = function() {
+    $scope.$watch('tableParams.sorting()', function() {
         var displayOrder = {"asc":"Ascending","desc":"Descending"}
         var sortOrderObject = {"sortDirection":"asc","items":[]};
         for (item in $scope.tableParams.sorting()) {
             sortOrderObject.items.push($scope.sortNames[item]);
             sortOrderObject.sortDirection = displayOrder[$scope.tableParams.sorting()[item]];
-        };
-        return sortOrderObject;
-    };
+        };        
+        $scope.sortOrderObject = sortOrderObject;
+    });
 
+    // initialize table params //
     $scope.initTableParams = function () {
         $scope.tableParams = new ngTableParams(
             {
