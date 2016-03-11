@@ -85,7 +85,6 @@ public class CompareExcelTables {
 		System.out.println("...checked rows: " + rowIndex + ", number of different rows: " + count);
 		return (count == 0);
 	}
-	
 	public static boolean compareRows(Row rowOld, Row rowNew, int rowIndex) {
 		if ((rowOld != null) && (rowNew == null)) {
 			System.out.println("old row is null, new is not null: " + rowIndex);
@@ -116,17 +115,21 @@ public class CompareExcelTables {
 	
 	private static boolean compareCells(Cell cellOld, Cell cellNew, int cellIndex) {
 		if	(cellOld == null) {
-			if (cellNew != null) {
+			if ((cellNew != null) && (cellNew.getCellType() == Cell.CELL_TYPE_STRING) && (cellNew.getStringCellValue() != null)){
 				System.out.println("old cell is null, new is not null: " + cellNew + ", cellIndex:" +  cellIndex + ", row number: " + cellNew.getRowIndex());
 				return false;
 			}
 			else 
-				return true;//both null
+				return true;//both null //Null cell and cell with Null value we consider the same
 		}
 
 		if ((cellOld != null) && (cellNew == null)) {
-			System.out.println("old cell is not null " + cellOld + ", new is null, celIndex" + cellIndex + ", row number: " + cellOld.getRowIndex());
-			return false;
+			if ((cellOld.getCellType() == Cell.CELL_TYPE_STRING) && (cellOld.getStringCellValue() != null)) {
+				System.out.println("old cell is not null " + cellOld + ", new is null, celIndex" + cellIndex + ", row number: " + cellOld.getRowIndex());
+				return false;
+			}
+			else 
+				return true;//Null cell and cell with Null value we consider the same
 		}
 		
 		int typeOld = cellOld.getCellType();
@@ -158,7 +161,7 @@ public class CompareExcelTables {
 				return true;
 			}
 			if (!(sold.equals(snew))) {
-				System.out.println("String type cells are different cellIndex: " +  cellIndex + ", row number: " + cellOld.getRowIndex());
+				System.out.println("String type cells are different cellIndex: " +  cellIndex + ", row number: " + cellOld.getRowIndex() + ", sold=" + sold +", snew=" + snew);
 				return false;
 			} 
 		}

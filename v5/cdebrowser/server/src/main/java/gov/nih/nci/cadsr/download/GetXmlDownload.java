@@ -28,7 +28,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import gov.nih.nci.cadsr.common.util.StringUtils;
 import gov.nih.nci.cadsr.service.ClientException;
-import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
+//import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
 import oracle.xml.sql.query.OracleXMLQuery;
 
 public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInterface  {
@@ -106,10 +106,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			
 			fileSuffix = generateXmlFileId();
 
-			if (fileSuffix == null) {
-				throw new Exception("Error generating file suffix");
-			}
-
 			filename = buildDownloadAbsoluteFileName(fileSuffix);
 
 			writeToFile(StringUtils.updateXMLDataForSpecialCharacters(xmlString), filename);
@@ -130,7 +126,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	public String getXMLString(Connection oracleConn, String stmt, String where, boolean showNull) throws Exception {
 
 		String xmlString = "";
-		OracleXMLDataSetExtJdbc dset = null;
+		//OracleXMLDataSetExtJdbc dset = null;
 		OracleXMLQuery xmlQuery = null;
 		try {
 			String sqlQuery = stmt + where;
@@ -138,11 +134,15 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			if (logger.isTraceEnabled()) {
 				logger.trace("Sql Stmt: " + sqlQuery);
 			}
-			dset = new OracleXMLDataSetExtJdbc(oracleConn, stmt);
-			xmlQuery = new OracleXMLQuery(dset);
+			//This is another way of creating OracleXMLQuery object; I keep it here for our information
+			//dset = new OracleXMLDataSetExtJdbc(oracleConn, stmt);
+			//xmlQuery = new OracleXMLQuery(dset);
 			
-			//We still decide if we want to use default Date format, or to make it custom
-			//xmlQuery.setDateFormat(arg0); https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
+			xmlQuery = new OracleXMLQuery(oracleConn, stmt);
+			
+			//We still decide if we want to use default Date format, or to make it custom 
+			//https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
+			//xmlQuery.setDateFormat(arg0);
 			
 			xmlQuery.setEncoding("UTF-8");
 			xmlQuery.useNullAttributeIndicator(showNull);
@@ -163,14 +163,14 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			throw e;
 		} 
 		finally {
-			try {
-				if (dset != null) {
-					dset.close();
-				}				
-			}
-			catch (Exception e) {
-				logger.debug("Error when closing OracleXMLDataSetExtJdbc: " + e.getMessage());
-			}
+//			try {
+//				if (dset != null) {
+//					dset.close();
+//				}				
+//			}
+//			catch (Exception e) {
+//				logger.debug("Error when closing OracleXMLDataSetExtJdbc: " + e.getMessage());
+//			}
 			try {
 				if (xmlQuery != null) {
 					xmlQuery.close();
@@ -217,9 +217,14 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		}
 	}
 
-	protected String generateXmlFileId() {
+	protected String generateXmlFileId() throws Exception {
 		JdbcTemplate jdbcTemplate = getJdbcTemplate();
 		String fileId = jdbcTemplate.queryForObject("SELECT SBREXT.XML_FILE_SEQ.NEXTVAL from dual", new Object[]{}, String.class);
+
+		if ((fileId == null) || (fileId.isEmpty())) {
+			throw new Exception("Error generating file ID");
+		}
+		
 		return fileId;
 	}
 	
