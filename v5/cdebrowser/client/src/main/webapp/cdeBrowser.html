@@ -240,7 +240,12 @@
                     <button data-ng-click="downloadToExcel('prior')" ng-disabled="!checkedItemsForDownload.length">
                         Download to Prior Excel
                     </button>
-                </li>            
+                </li>    
+                <li>
+                    <button data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
+                        Download Data Elements as XML
+                    </button>
+                </li>                            
             </ul>
             <!-- show progress bar -->
             <ul ng-show="progressMessage.status" class="cdeProgressMessage">

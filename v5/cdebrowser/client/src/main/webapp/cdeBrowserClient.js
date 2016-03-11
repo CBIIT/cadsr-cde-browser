@@ -611,6 +611,26 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
         }
 
-    }
+    };
+
+    // downloads selected search results to an excel file //
+    $scope.downloadToXML = function() {
+        if ($scope.checkedItemsForDownload.length>1000) {
+            alert("You are trying to download more than the maximum 1,000 records. Click OK and reduce the number of records and submit the download again.")
+        }
+        else {
+            $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}            
+            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadXml?src=deSearch',data: $scope.checkedItemsForDownload}).
+                success(function(data) {
+                    $scope.progressMessage.status=0;
+                    window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data);
+            }).
+            error(function(data, status, headers, config) {
+                $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
+            });
+
+        };     
+
+    };
 
 });

@@ -179,7 +179,7 @@
 }
 
 ul.cdeProgressMessage {
-    padding:20px 10px 10px 5px;
+    padding:20px 10px 0px 5px;
     color:#1A4660;
     font-weight:bold;
     list-style:none;
