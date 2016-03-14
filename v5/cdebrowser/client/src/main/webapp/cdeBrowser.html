@@ -261,7 +261,7 @@
         <!-- end Download Buttons -->
         <br />
         <!-- Search status message -->
-        <span data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
+        <span ng-show="searchResultsMessage&&searchResultsMessage!=''" data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
              normSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
@@ -331,7 +331,14 @@
                 <select ng-model="filters.workflowStatus" ng-options="item for item in filters.workflowStatusFilter" ng-init="filters.workflowStatus=''">
                 </select>                
             </div> -->
-            <div data-ng-table-pagination="tableParams" template-url="'ng-table/pager.html'"></div>
+            <div class="pager" ng-show="searchResultsCount">
+                <ul data-ng-class="{results:searchResults.length>100,results2:searchResults.length<100}">
+                    <li><span class="normSearchResultsMessage">{{searchResultsCount}}</span></li>
+                </ul>
+                <ul>
+                    <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
+                </ul>
+            </div>
 
             <br/>
             <script type="text/ng-template" id="ng-table/headers/checkbox.html">

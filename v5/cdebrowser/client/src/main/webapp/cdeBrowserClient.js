@@ -168,7 +168,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             window.scope = $scope;
             $scope.cdeDetails = response;
 
-            $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
+            $scope.searchResultsMessage = "";
+            $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
             $scope.bigSearchResultsMessageClass = false;
         });
     };
@@ -315,14 +316,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.setSortOrder();
                     $scope.haveSearchResults = true;
                     $scope.bigSearchResultsMessageClass = false;
-                    $scope.searchResultsMessage = "Results: " + $scope.searchResults.length;
+                    $scope.searchResultsMessage = "";
+                    $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
                     $scope.tableParams.reload();
                 }
                 $scope.haveSearchResults = true;
 
             }
             else {
-                $scope.searchResultsMessage = "No search results";
+                $scope.searchResultsMessage = "";                
+                $scope.searchResultsCount = "No search results";
                 $scope.haveSearchResults = false;
                 $scope.bigSearchResultsMessageClass = true;
 
@@ -530,7 +533,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // returns array of sort order for the sort order breadcrumbs //
     // ng-repeat sends back keys in the wrong order //
-    // defaults sort on single column click to ascending //
+    // defaults sort on single colsearchResultsMessageumn click to ascending //
     $scope.$watch('tableParams.sorting()', function() {
         // because of how ng-table is setup, sorting with multiple columns makes ng table //
         // sort the first single column clck in reverse order. Because the 3 column sort //
