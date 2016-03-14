@@ -17,6 +17,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.checkedItemsForDownload = [];
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
     window.scope = $scope;
+
+    var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
+
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
         {id: 0, name: "Exact phrase"},
@@ -255,6 +258,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
         $scope.changeView(0,0);
+        $scope.resetSortOrder();
+
     };
 
     // sets sort order for columns that should not be alphabetical //
@@ -512,6 +517,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // start ngTable definition //
     $scope.resetSortOrder = function () {
+        isInitialColumnClick = 0;
         $scope.tableParams.sorting({'registrationSort': 'asc','workflowSort':'asc','longName':'asc'});
 
         /*  FIXME still not getting the "view" back after reset sort order  */
@@ -522,8 +528,28 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     };
 
-    // returns array of sort order, ng-repeat sends back keys in the wrong order //
+    // returns array of sort order for the sort order breadcrumbs //
+    // ng-repeat sends back keys in the wrong order //
+    // defaults sort on single column click to ascending //
     $scope.$watch('tableParams.sorting()', function() {
+        // because of how ng-table is setup, sorting with multiple columns makes ng table //
+        // sort the first single column clck in reverse order. Because the 3 column sort //
+        // is ascending, clicking on long name, registration status or workflow status //
+        // sorts those three columns in descending order (unwanted). This will override //
+        if (!isInitialColumnClick) {
+            isInitialColumnClick = 1;
+        }
+        else if (isInitialColumnClick==1) {
+            var newSort = {};
+            for (item in $scope.tableParams.sorting()) {
+                newSort[item]="asc";
+                $scope.tableParams.$params.sorting = newSort;
+                $scope.tableParams.reload();
+            };
+            isInitialColumnClick = 2;
+        }
+        //end override of column sort direction //
+
         var displayOrder = {"asc":"Ascending","desc":"Descending"}
         var sortOrderObject = {"sortDirection":"asc","items":[]};
         for (item in $scope.tableParams.sorting()) {
@@ -547,6 +573,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             },
             {
                 $scope: $scope,
+                defaultSort:"asc",
                 counts: [], // hide page counts control
                 // get data and set total for pagination
                 getData: function ($defer, params) {
