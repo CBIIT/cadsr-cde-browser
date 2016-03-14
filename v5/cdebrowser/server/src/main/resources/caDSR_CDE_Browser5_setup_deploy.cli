@@ -10,7 +10,7 @@ if (outcome != success) of /subsystem=datasources/jdbc-driver=oracle:read-resour
     /subsystem=datasources/jdbc-driver=oracle:add( \
     driver-name=oracle, \
     driver-module-name=com.oracle.jdbc7, \
-    driver-xa-datasource-class-name=oracle.jdbc.driver.OracleDriver \
+    driver-xa-datasource-class-name=oracle.jdbc.OracleDriver \
 	) {allow-resource-service-restart=true}
 end-if
 

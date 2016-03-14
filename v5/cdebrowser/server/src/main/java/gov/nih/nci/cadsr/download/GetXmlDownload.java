@@ -132,17 +132,17 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			String sqlQuery = stmt + where;
 
 			if (logger.isTraceEnabled()) {
-				logger.trace("Sql Stmt: " + sqlQuery);
+				logger.debug("Sql Stmt: " + sqlQuery);
 			}
 			//This is another way of creating OracleXMLQuery object; I keep it here for our information
-			//dset = new OracleXMLDataSetExtJdbc(oracleConn, stmt);
+			//dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
 			//xmlQuery = new OracleXMLQuery(dset);
 			
-			xmlQuery = new OracleXMLQuery(oracleConn, stmt);
+			xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
 			
 			//We still decide if we want to use default Date format, or to make it custom 
 			//https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
-			//xmlQuery.setDateFormat(arg0);
+			xmlQuery.setDateFormat("M/d/yyyy h:m:s");
 			
 			xmlQuery.setEncoding("UTF-8");
 			xmlQuery.useNullAttributeIndicator(showNull);
@@ -150,8 +150,9 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			xmlQuery.setRowsetTag(rowsetTag);
 
 			xmlQuery.setRowTag(rowTag);
-
-			xmlQuery.setMaxRows(maxRecords);
+			
+			//we do not use this restriction
+			//xmlQuery.setMaxRows(maxRecords);
 
 			xmlString = xmlQuery.getXMLString();
 			logger.trace(xmlString);
