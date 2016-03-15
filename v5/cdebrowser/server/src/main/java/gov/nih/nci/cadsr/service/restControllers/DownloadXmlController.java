@@ -75,17 +75,24 @@ public class DownloadXmlController {
 
 		//String path = url.getPath();
 		List<String> cdeIds = request.getBody();
-		logger.debug("Requested list of IDs:" + cdeIds);
+		if (logger.isTraceEnabled())
+			logger.trace("Requested list of IDs:" + cdeIds);
 		
 		validateDownloadParameters(cdeIds, source);
 		// this is an example of Internal CDE ID we expect in here; shall come
 		// from the request body
 		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
 		
+		logger.debug("Received number of IDs downloadXml \"src\": " + cdeIds.size());
+
 		String fileId = null;
 		try {
 			fileId = getXmlDownload.persist(cdeIds, registrationAuthorityIdentifier, source);
-		} catch (Exception e) {
+		} 
+		catch (ClientException e) {
+			throw e;
+		}
+		catch (Exception e) {
 			throw new ServerException("Download XML: error occured in building XML document", e);
 		}
 		
@@ -140,6 +147,15 @@ public class DownloadXmlController {
 		logger.error("Sending XML Download server error: " + e);
 	}
 
+	/**
+	 * ExceptionHandler converts a predefined exception to an HTTP Status code
+	 */
+	@ResponseStatus(value = HttpStatus.PAYLOAD_TOO_LARGE)
+	@ExceptionHandler(OutOfMemoryError.class)
+	public void sendOOMError(Exception e) {
+		logger.error("Sending OOM XML Download server error");
+	}
+	
 	protected BufferedInputStream getFileAsInputStream(String filename) throws Exception {
 		BufferedInputStream bis = null;
 		FileInputStream fis = new FileInputStream(filename);
@@ -155,8 +171,9 @@ public class DownloadXmlController {
 		if ((cdeIds == null) || (cdeIds.isEmpty())) {//null does not happen in Spring MCV - when there is no IDs the framework does not call this service
 			throw new ClientException("Expected Download CDE IDs are not provided");
 		}
-		if (cdeIds.size() > 1000) {//this Exception does not happen in Spring MCV - when the 
-			throw new ClientException("Download XML allowed amount of IDs exceed 1000 limit: " + cdeIds.size());
-		}		
+		//this requirement is deferred
+//		if (cdeIds.size() > 1000) {//this Exception does not happen in Spring MCV - when the 
+//			throw new ClientException("Download XML allowed amount of IDs exceed 1000 limit: " + cdeIds.size());
+//		}
 	}
 }

@@ -10,9 +10,9 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -52,10 +52,33 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	public GetXmlDownload(DataSource dataSource) {
 		setDataSource(dataSource);
 	}
+	private static final String cdeXmlElement="<DataElement num=\"";
+	private static final String closingXmlElement="</DataElementsList>";
 	private static final String rowsetTag = "DataElementsList";
 	private static final String rowTag = "DataElement";
 	private static final int maxRecords = 1000;
-
+	private static String stmtFormat = " SELECT '%s' as \"RAI\"" +
+			// "," + RAI + " as \"Object_Class_RAI\"" +
+			// "," + RAI + " as \"Property_RAI\"" +
+			// "," + RAI + " as \"Value_Domain_RAI\"" +
+			// "," + RAI + " as \"Representation_RAI\"" +
+	", PublicId " + 
+	", LongName " + 
+	",  PreferredName  " + 
+	",  PreferredDefinition  " + 
+	",  Version  "+ 
+	",  WorkflowStatus  " + 
+	",  ContextName  " + 
+	",  ContextVersion  " + 
+	",  Origin  " + 
+	",  RegistrationStatus  " + 
+	",  DataElementConcept  " + 
+	",  ValueDomain  " + 
+	",  ReferenceDocumentsList  " + 
+	",  ClassificationsList  " + 
+	",  AlternateNameList  " + 
+	",  DataElementDerivation  " + 
+	" FROM sbrext.DE_CDE1_XML_GENERATOR_VIEW ";
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -63,52 +86,47 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	 * gov.nih.nci.cadsr.download.GetXMLDownloadInterface#persist(java.util.Collection, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public String persist(Collection<String> itemIds, String RAI, String source) throws Exception {
+	public String persist(final Collection<String> itemIds, String RAI, String source) throws Exception {
 		String xmlString = null;
 		String fileSuffix = "";
 		String filename = "";
-		String where = "";
 		Connection cn = null;
-
+		
+		checkInCondition(itemIds);
+		
 		try {
-
-			where = "where DE_IDSEQ IN (" + buildSqlInCondition(itemIds) + ")";
-
-			String stmt = " SELECT '" + RAI + "' as \"RAI\"" +
-					// "," + RAI + " as \"Object_Class_RAI\"" +
-					// "," + RAI + " as \"Property_RAI\"" +
-					// "," + RAI + " as \"Value_Domain_RAI\"" +
-					// "," + RAI + " as \"Representation_RAI\"" +
-			", PublicId " + 
-			", LongName " + 
-			",  PreferredName  " + 
-			",  PreferredDefinition  " + 
-			",  Version  "+ 
-			",  WorkflowStatus  " + 
-			",  ContextName  " + 
-			",  ContextVersion  " + 
-			",  Origin  " + 
-			",  RegistrationStatus  " + 
-			",  DataElementConcept  " + 
-			",  ValueDomain  " + 
-			",  ReferenceDocumentsList  " + 
-			",  ClassificationsList  " + 
-			",  AlternateNameList  " + 
-			",  DataElementDerivation  " + 
-			" FROM sbrext.DE_CDE1_XML_GENERATOR_VIEW ";
-
+			String fromStmt = String.format(stmtFormat, RAI);
+			
 			// Get Oracle Native Connection
 			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
 			
 			Connection oracleConn = cn.getMetaData().getConnection();//get underlying Oracle connection
 			
-			xmlString = getXMLString(oracleConn, stmt, where, true);
+			filename = buildDownloadAbsoluteFileName(fileSuffix = generateXmlFileId());
 			
-			fileSuffix = generateXmlFileId();
-
-			filename = buildDownloadAbsoluteFileName(fileSuffix);
-
-			writeToFile(StringUtils.updateXMLDataForSpecialCharacters(xmlString), filename);
+			int lastGroupNumber = calcNumberOfGroups(itemIds.size()) - 1 ;
+			
+			Iterator<String> iter = itemIds.iterator();
+			
+			String groupWhereInCond;
+			String stmt;
+			for (int groupId = 0; groupId <= lastGroupNumber; groupId++) {
+				groupWhereInCond = buildSqlInCondition(iter, maxRecords); //"where DE_IDSEQ IN ('1','2','3',   , '1000')";
+				
+				stmt = fromStmt + groupWhereInCond;
+				
+				xmlString = getXMLString(oracleConn, stmt, true);
+				
+				if (groupId != lastGroupNumber) {
+					xmlString = trimClosingXmlElement(xmlString);
+				}
+				
+				if (groupId != 0) {
+					xmlString = extractGroupChildElements(xmlString, groupId);
+				}
+				
+				writeToFile(StringUtils.updateXMLDataForSpecialCharacters(xmlString), filename);
+			}
 
 			return fileSuffix;
 		} 
@@ -122,17 +140,55 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			}
 		}
 	}
+	protected String trimClosingXmlElement(String xmlString) {
+		int firstReplacementPos = xmlString.indexOf(closingXmlElement);
+		
+		xmlString = xmlString.substring(0, firstReplacementPos);
+		return xmlString;
+	}
+	
+	protected String extractGroupChildElements(String xmlString, final int groupId) {
+		int firstReplacementPos = xmlString.indexOf("   " + cdeXmlElement);//Oracle uses 3 spaces for a child element identation
+		if (firstReplacementPos < 0) {
+			firstReplacementPos = xmlString.indexOf(cdeXmlElement);
+		}
+		xmlString = xmlString.substring(firstReplacementPos);
+		
+		xmlString = updateCdeNumAttributes(xmlString, groupId);
+		
+		return xmlString;
+	}
 
-	public String getXMLString(Connection oracleConn, String stmt, String where, boolean showNull) throws Exception {
+	protected String updateCdeNumAttributes(String xmlToUpdate, final int groupId) {
+		String targetPattern;
+		String replacementPattern;
+		int replaceNum;
+		
+		int increaseNum = maxRecords*groupId;
+		String groupStart = cdeXmlElement;
+		
+		for (int curNum = 1; curNum <= maxRecords; curNum++) {
+			targetPattern = groupStart + curNum +"\"";//searching for <DataElement num="1"
+			replaceNum = curNum + increaseNum;
+			replacementPattern = groupStart + replaceNum + "\"";
+			xmlToUpdate = xmlToUpdate.replace(targetPattern, replacementPattern);
+		}
+		return xmlToUpdate;
+	}
+	
+	protected int calcNumberOfGroups(final int lengthOfCollection) {
+		return (lengthOfCollection / maxRecords) + 
+			(((lengthOfCollection % maxRecords) == 0)? 0 : 1);
+	}
+	
+	public String getXMLString(Connection oracleConn, String sqlQuery, boolean showNull) throws Exception {
 
 		String xmlString = "";
 		//OracleXMLDataSetExtJdbc dset = null;
 		OracleXMLQuery xmlQuery = null;
 		try {
-			String sqlQuery = stmt + where;
-
 			if (logger.isTraceEnabled()) {
-				logger.debug("Sql Stmt: " + sqlQuery);
+				logger.trace("Sql Stmt: " + sqlQuery);
 			}
 			//This is another way of creating OracleXMLQuery object; I keep it here for our information
 			//dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
@@ -142,7 +198,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			
 			//We still decide if we want to use default Date format, or to make it custom 
 			//https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
-			xmlQuery.setDateFormat("M/d/yyyy h:m:s");
+			xmlQuery.setDateFormat("M/d/yyyy H:m:s");
 			
 			xmlQuery.setEncoding("UTF-8");
 			xmlQuery.useNullAttributeIndicator(showNull);
@@ -155,6 +211,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			//xmlQuery.setMaxRows(maxRecords);
 
 			xmlString = xmlQuery.getXMLString();
+			
 			logger.trace(xmlString);
 
 			return xmlString;
@@ -189,13 +246,13 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	}
 	
 	protected void writeToFile(String xmlStr, String fn) throws Exception {
-		FileOutputStream newFos = null;
-		BufferedOutputStream bos = null;
+		FileWriter newFos = null;
+		BufferedWriter bos = null;
 
 		try {
-			newFos = new FileOutputStream(fn);
-			bos = new BufferedOutputStream(newFos);
-			bos.write(xmlStr.getBytes("UTF-8"));
+			newFos = new FileWriter(fn, true);
+			bos = new BufferedWriter(newFos);
+			bos.write(xmlStr);
 		} 
 		finally {
 			if (bos != null) {
@@ -229,23 +286,28 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		return fileId;
 	}
 	
-	protected String buildSqlInCondition(final Collection<String> itemIds) throws Exception {
-		if ((itemIds != null) && (!(itemIds.isEmpty())) && (itemIds.size() <= 1000)) {
-			
-			StringBuilder sb = new StringBuilder();
-			for (String item : itemIds) {
-				sb.append("'" + item + "', ");
+	protected String buildSqlInCondition(Iterator <String> iter, int max) {
+
+			StringBuilder sb = new StringBuilder("where DE_IDSEQ IN (");
+			String currVal;
+			for (int indx = 0; indx < max; indx++) {
+				if (iter.hasNext()) {
+					currVal = iter.next();
+					sb.append("'" + currVal + "', ");
+				}
+				else break;
 			}
 			int len = sb.length();
-			return sb.toString().substring(0, len - 2);
-		}
-		else if ((itemIds == null) || (!(itemIds.isEmpty()))) {
+			sb.setCharAt(len - 2, ')');
+			return sb.toString().substring(0, len - 1);		
+	}
+	
+	protected void checkInCondition(final Collection<String> itemIds) throws Exception {
+		if ((itemIds == null) || (itemIds.isEmpty())) {
 			throw new ClientException("No item ID to download");
 		}
-		else {
-			throw new ClientException("XML download is restricted to 1,000 item IDs");
-		}
 	}
+	
 	/*
 	 * ========Legacy code below==============================
 	 * I do not see if there is a requirement to use zip files
@@ -293,7 +355,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	      throw ex;
 	    }
 	  }
-	  @SuppressWarnings("unused")
+
+	@SuppressWarnings("unused")
 	private void createZipFile(
 	    String filename,
 	    String zipFilename) throws Exception {
@@ -328,19 +391,5 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	      ex.printStackTrace();
 	      throw ex;
 	    }
-	  }
-	  @SuppressWarnings("unused")
-	  private PrintWriter getPrintWriter(String newFilename)
-	    throws Exception {
-	    PrintWriter pw = null;
-
-	    try {
-	      pw = new PrintWriter(new BufferedWriter(new FileWriter(newFilename)));
-	    }
-	    catch (Exception ex) {
-	      throw ex;
-	    }
-
-	    return pw;
 	  }
 }
