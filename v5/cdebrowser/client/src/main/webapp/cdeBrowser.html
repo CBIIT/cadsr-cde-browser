@@ -310,37 +310,26 @@
         <!-- The search results tab with Search results table - this is the only tab that is not an data-ng-view ========== -->
         <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
             <div class="sortOrder">
-                <div class="sortOrder left">
-                    <ul>
-                        <li>Sort Order:</li>
-                        <li ng-repeat="item in sortOrderObject.items">
-                            {{item}} <span ng-if="!$last">>> </span>
-                        </li>
-                        <li>[{{sortOrderObject.sortDirection}}]
-                    </ul>
+                <div data-ng-class="{left:searchResultsCount,leftFull:!searchResultsCount}">
+                    <span>
+                        <ul>
+                            <li>Sort Order:</li>
+                            <li ng-repeat="item in sortOrderObject.items">
+                                {{item}} <span ng-if="!$last">>> </span>
+                            </li>
+                            <li>[{{sortOrderObject.sortDirection}}]</li>
+                        </ul>
+                    </span>
+                    <span>Reset Sort Order</span>
                 </div>
-
-                <div class="sortOrder right">
-                    <a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a>
-                </div>
-            </div>
-            <br/>
-<!--             <div id="filters">
-                <select ng-model="filters.registrationStatus" ng-options="item for item in filters.registrationStatusFilter" ng-init="filters.registrationStatus=''">
-                </select>
-                <select ng-model="filters.workflowStatus" ng-options="item for item in filters.workflowStatusFilter" ng-init="filters.workflowStatus=''">
-                </select>                
-            </div> -->
-            <div class="pager" ng-show="searchResultsCount">
-                <ul data-ng-class="{results:searchResults.length>100,results2:searchResults.length<100}">
-                    <li><span class="normSearchResultsMessage">{{searchResultsCount}}</span></li>
-                </ul>
-                <ul>
-                    <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
-                </ul>
+                <div class="right">
+                    <span>{{searchResultsCount}}</span>
+                    <span>
+                        <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
+                    </span>
+                </div>                
             </div>
 
-            <br/>
             <script type="text/ng-template" id="ng-table/headers/checkbox.html">
                 <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
                        value=""/>

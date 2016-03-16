@@ -162,39 +162,37 @@
 /** position reset and sort order text on page **/
 .sortOrder {
     position: relative;
-    width: 100%;
+    width: 100% !important;
     font-size:13.33px;
     font-weight:bold;
-    padding:10px 0px 15px 10px;
+    padding:10px 0px 3px 3px;
+    display:table;
+}
+.sortOrder .left {
+    display: table-cell;
+    width: 55%;
+}
+
+.sortOrder .leftFull{
+    display: table-cell;
+    width: 100%;
+}
+.sortOrder .right {
+    display: table-cell;
+    padding-right:10px;
+    text-align: right;
+}
+.sortOrder span {
+    display:block;padding:3px;
+}
+.sortOrder ul span {
     display:inline-block;
 }
-
-.sortOrder.left {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 80%;
+.sortOrder ul li{
+     display:inline-block;
 }
-
-.sortOrder .left ul {
-    list-style:none;
+.sortOrder .pagination.ng-table-pagination {
     padding:0px;
-    margin:0px;
-}
-
-.sortOrder .left ul li{
-    display:inline-block;
-}
-
-.sortOrder.right {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 20%;
-}
-
-.sortOrder.right a {
-    color:#999966;
 }
 
 #searchResults {
