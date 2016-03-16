@@ -614,31 +614,26 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // downloads selected search results to an excel file //
     $scope.downloadToExcel = function(param) {
-        if ($scope.checkedItemsForDownload.length>1000) {
-            alert("You are trying to download more than the maximum 1,000 records. Click OK and reduce the number of records and submit the download again.")
+        $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}
+        if (param) { // download to prior excel
+          $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
+          success(function(data, status, headers, config) {
+            window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data);
+            $scope.progressMessage.status=0;
+          }).
+          error(function(data, status, headers, config) {
+            $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
+          });             
         }
-        else {
-            $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}
-            if (param) { // download to prior excel
-              $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
-              success(function(data, status, headers, config) {
-                window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data);
-                $scope.progressMessage.status=0;
-              }).
-              error(function(data, status, headers, config) {
-                $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
-              });             
-            }
-            else { // download to excel 
-              $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
-              success(function(data, status, headers, config) {
-                window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data);
-                $scope.progressMessage.status=0;
-              }).
-              error(function(data, status, headers, config) {
-                $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
-              }); 
-            }
+        else { // download to excel 
+          $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
+          success(function(data, status, headers, config) {
+            window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data);
+            $scope.progressMessage.status=0;
+          }).
+          error(function(data, status, headers, config) {
+            $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
+          }); 
         }
 
     };
