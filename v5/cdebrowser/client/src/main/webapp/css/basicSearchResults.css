@@ -168,6 +168,9 @@
     padding:10px 0px 3px 3px;
     display:table;
 }
+.sortOrder a {
+    color:#996;
+}
 .sortOrder .left {
     display: table-cell;
     width: 55%;
@@ -231,23 +234,5 @@
 #filters select{
     padding:0px !important;
     margin:10px 0px 0px 9px;
-    display:inline-block;
-}
-
-.pager {
-    text-align:right;
-}
-
-.pager ul.results {
-    margin-right:20px;
-}
-
-.pager ul.results2 {
-    margin-left:3px;
-    margin-top:7px;
-    float:left;
-}
-
-.pager ul {
     display:inline-block;
 }
