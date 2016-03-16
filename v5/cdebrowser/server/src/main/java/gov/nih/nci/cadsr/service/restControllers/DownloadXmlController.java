@@ -83,7 +83,7 @@ public class DownloadXmlController {
 		// from the request body
 		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
 		
-		logger.debug("Received number of IDs downloadXml \"src\": " + cdeIds.size());
+		logger.debug("Received number of IDs downloadXml: " + cdeIds.size());
 
 		String fileId = null;
 		try {

@@ -6,10 +6,13 @@ package gov.nih.nci.cadsr.download;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.Iterator;
@@ -94,6 +97,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		
 		checkInCondition(itemIds);
 		
+		BufferedWriter bw = null;
+		
 		try {
 			String fromStmt = String.format(stmtFormat, RAI);
 			
@@ -110,6 +115,9 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			
 			String groupWhereInCond;
 			String stmt;
+			
+			bw = new BufferedWriter(new FileWriter(filename));
+			
 			for (int groupId = 0; groupId <= lastGroupNumber; groupId++) {
 				groupWhereInCond = buildSqlInCondition(iter, maxRecords); //"where DE_IDSEQ IN ('1','2','3',   , '1000')";
 				
@@ -121,11 +129,13 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 					xmlString = trimClosingXmlElement(xmlString);
 				}
 				
-				if (groupId != 0) {
-					xmlString = extractGroupChildElements(xmlString, groupId);
+				if (groupId == 0) {
+					bw.write(StringUtils.updateXMLDataForSpecialCharacters(xmlString));
+					bw.flush();
 				}
-				
-				writeToFile(StringUtils.updateXMLDataForSpecialCharacters(xmlString), filename);
+				else {
+					writeGroupChildElements(xmlString, groupId, bw);
+				}
 			}
 
 			return fileSuffix;
@@ -135,30 +145,56 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			throw ex;
 		} 
 		finally {
+			if (bw != null) {
+				bw.flush();
+				bw.close();
+			}
 			if (cn != null) {
 				releaseConnection(cn);
 			}
 		}
 	}
 	protected String trimClosingXmlElement(String xmlString) {
-		int firstReplacementPos = xmlString.indexOf(closingXmlElement);
+		int lastPos = xmlString.indexOf(closingXmlElement);
 		
-		xmlString = xmlString.substring(0, firstReplacementPos);
+		xmlString = xmlString.substring(0, lastPos);
 		return xmlString;
 	}
 	
-	protected String extractGroupChildElements(String xmlString, final int groupId) {
+	protected void writeGroupChildElements(String xmlString, final int groupId, BufferedWriter bw) throws IOException {
 		int firstReplacementPos = xmlString.indexOf("   " + cdeXmlElement);//Oracle uses 3 spaces for a child element identation
 		if (firstReplacementPos < 0) {
 			firstReplacementPos = xmlString.indexOf(cdeXmlElement);
 		}
 		xmlString = xmlString.substring(firstReplacementPos);
 		
-		xmlString = updateCdeNumAttributes(xmlString, groupId);
-		
-		return xmlString;
+		writeGroupToFile(xmlString, groupId, bw);
 	}
-
+	
+	protected void writeGroupToFile(String xmlToUpdate, final int groupId, BufferedWriter bw) throws IOException {
+		int replaceNum = maxRecords*groupId;
+		int curNum = 0;
+		String line;
+		BufferedReader bufReader = new BufferedReader(new StringReader(xmlToUpdate));
+		int endPos;
+		while( (line=bufReader.readLine()) != null )
+		{
+			if ((endPos = line.indexOf("num=\"")) < 0) {
+				bw.write(StringUtils.updateXMLDataForSpecialCharacters(line));
+				bw.newLine();
+			}
+			else {
+				curNum++;
+				bw.write(line, 0, endPos);
+				bw.write("num=\"");
+				bw.write("" + (replaceNum+curNum));
+				bw.write("\">");
+				bw.newLine();
+			}
+		}
+		bw.flush();
+	}
+	//FIXME remove this method
 	protected String updateCdeNumAttributes(String xmlToUpdate, final int groupId) {
 		String targetPattern;
 		String replacementPattern;
@@ -166,7 +202,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		
 		int increaseNum = maxRecords*groupId;
 		String groupStart = cdeXmlElement;
-		
+		//fix
 		for (int curNum = 1; curNum <= maxRecords; curNum++) {
 			targetPattern = groupStart + curNum +"\"";//searching for <DataElement num="1"
 			replaceNum = curNum + increaseNum;
@@ -196,10 +232,13 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			
 			xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
 			
-			//We still decide if we want to use default Date format, or to make it custom 
-			//https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a83730/arx09xsj.htm
-			xmlQuery.setDateFormat("M/d/yyyy H:m:s");
+			//We still decide if we want to use default Date format, or to make it custom
+			//This is a format whioch we have in CDE Browser v4.0.5
+			//xmlQuery.setDateFormat("M/d/yyyy H:m:s");
 			
+			//this is a new CDE Browser v5.1 format; we drop time
+			xmlQuery.setDateFormat("yyyy-MM-dd");//java class SimpleDateFormat
+
 			xmlQuery.setEncoding("UTF-8");
 			xmlQuery.useNullAttributeIndicator(showNull);
 
@@ -304,7 +343,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	
 	protected void checkInCondition(final Collection<String> itemIds) throws Exception {
 		if ((itemIds == null) || (itemIds.isEmpty())) {
-			throw new ClientException("No item ID to download");
+			throw new ClientException("Expected Download CDE IDs are not provided");
 		}
 	}
 	
