@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -51,7 +52,8 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/"
 	@Value("${downloadFileNamePrefix}")
 	String fileNamePrefix;
-
+	private static final int maxRecords = 1000;
+	
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
 	}
@@ -97,24 +99,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		String excelFilename = localDownloadDirectory + fileNamePrefix + excelFileSuffix + ".xls";
 		return excelFilename;
 	}
-	protected String buildSqlInCondition(final Collection<String> itemIds) throws Exception {
-		if ((itemIds != null) && (!(itemIds.isEmpty())) && (itemIds.size() <= 1000)) {
-			
-			StringBuilder sb = new StringBuilder();
-			for (String item : itemIds) {
-				sb.append("'" + item + "', ");
-			}
-			int len = sb.length();
-			return sb.toString().substring(0, len - 2);
-		}
-		else if ((itemIds == null) || (!(itemIds.isEmpty()))) {
-			throw new ClientException("No item ID to download");
-		}
-		else {
-			throw new ClientException("Excel download is restricted to 1,000 item IDs");
-		}
-		
-	}
+
 	/**
 	 * This method generates Excel file with the given file name.
 	 * 
@@ -134,7 +119,6 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 
 		Statement st = null;
 		ResultSet rs = null;
-		String where = "";
 		HSSFWorkbook wb = null;
 		FileOutputStream fileOut = null;
 		
@@ -157,22 +141,38 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 			
 			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
 			st = cn.createStatement();
+						
+			//where = buildSqlInCondition(itemIds);//SQL IN construct
 			
-			where = buildSqlInCondition(itemIds);//SQL IN construct
 			//RAI value is taken not from DB, but from configuration; all the same for different columns
 			
-			String sqlStmt =
-				"SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*, '" + RAI + "' as \"RAI\" FROM DE_CDE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
-				" ( " + where + " )  ";
-
-			//+" ORDER BY PREFERRED_NAME ";
-			rs = st.executeQuery(sqlStmt);
+			int lastGroupNumber = DownloadUtils.calcNumberOfGroups(itemIds.size(), maxRecords) - 1;
 			
-			//this method will populate Excel data while looping though the result set
-			generateWorkbook(rs, sheet, rowNumber, source, colInfo);
+			Iterator<String> iter = itemIds.iterator();
+			
+			String groupWhereInCond;
+			String sqlStmt;
+			
+			for (int groupId = 0; groupId <= lastGroupNumber; groupId++) {
+				groupWhereInCond = DownloadUtils.buildSqlInCondition(iter, maxRecords); //"where DE_IDSEQ IN ('1','2','3',   , '1000')";
+				
+				sqlStmt =
+					"SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*, '" + RAI + "' as \"RAI\" FROM DE_CDE_EXCEL_GENERATOR_VIEW " +
+							groupWhereInCond;
+				//+" ORDER BY PREFERRED_NAME ";
+				logger.debug("group SQL Statement:" + sqlStmt);
+				
+				rs = st.executeQuery(sqlStmt);
+				
+				//this method will populate Excel data while looping though the result set; returns the last rowNumber which was used
+				rowNumber = generateWorkbook(rs, sheet, rowNumber, source, colInfo);
+			}
 			
 			fileOut = new FileOutputStream(filename);
+
 			wb.write(fileOut);
+			
+			fileOut.flush();
 		}
 		catch (Exception ex) {
 			logger.error("Exception caught in Generate Excel File", ex);			
@@ -267,7 +267,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	 * @param colInfo
 	 * @throws Exception
 	 */
-	protected void generateWorkbook(ResultSet rs, 
+	protected int generateWorkbook(ResultSet rs, 
 		HSSFSheet sheet, int rowNumber, 
 		final String source, final List<ColumnInfo> colInfo) throws Exception 
 	{
@@ -392,8 +392,9 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 			if (maxRowNumber > rowNumber)
 				rowNumber = maxRowNumber + 2;
 			else 
-				rowNumber += 2;
+				rowNumber += 2;//we skip one row between CDEs
 		}//end of while
+		return rowNumber;//this will be the next row if we have more CDEs
 	}
 	protected List<ColumnInfo> initColumnInfo(String source) {
 		List<ColumnInfo> columnInfo = new ArrayList<>();

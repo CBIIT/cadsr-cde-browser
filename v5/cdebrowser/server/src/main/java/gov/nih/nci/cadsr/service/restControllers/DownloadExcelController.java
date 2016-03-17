@@ -76,17 +76,23 @@ public class DownloadExcelController {
 
 		//String path = url.getPath();
 		List<String> cdeIds = request.getBody();
-		logger.debug("Requested list of IDs:" + cdeIds);
 		
 		validateDownloadParameters(cdeIds, source);
 		// this is an example of Internal CDE ID we expect in here; shall come
 		// from the request body
 		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
 		
+		if (logger.isTraceEnabled())
+			logger.trace("Requested list of IDs:" + cdeIds);
+
 		String excelFileId = null;
 		try {
 			excelFileId = getExcelDownload.persist(cdeIds, registrationAuthorityIdentifier, source);
-		} catch (Exception e) {
+		} 
+		catch (ClientException e) {
+			throw e;
+		}
+		catch (Exception e) {
 			throw new ServerException("Download Excel: error occured in building Excel document", e);
 		}
 		
@@ -131,9 +137,6 @@ public class DownloadExcelController {
 		if ((cdeIds == null) || (cdeIds.isEmpty())) {//null does not happen in Spring MCV - when there is no IDs the framework does not call this service
 			throw new ClientException("Expected Download CDE IDs are not provided");
 		}
-		if (cdeIds.size() > 1000) {//this Exception does not happen in Spring MCV - when the 
-			throw new ClientException("Download Excel allowed amount of IDs exceed 1000 limit: " + cdeIds.size());
-		}		
 	}
 	/**
 	 * ExceptionHandler converts predefined exceptions to an HTTP Status code

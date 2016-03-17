@@ -95,7 +95,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		String filename = "";
 		Connection cn = null;
 		
-		checkInCondition(itemIds);
+		DownloadUtils.checkInCondition(itemIds);
 		
 		BufferedWriter bw = null;
 		
@@ -109,7 +109,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			
 			filename = buildDownloadAbsoluteFileName(fileSuffix = generateXmlFileId());
 			
-			int lastGroupNumber = calcNumberOfGroups(itemIds.size()) - 1 ;
+			int lastGroupNumber = DownloadUtils.calcNumberOfGroups(itemIds.size(), maxRecords) - 1;
 			
 			Iterator<String> iter = itemIds.iterator();
 			
@@ -119,7 +119,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			bw = new BufferedWriter(new FileWriter(filename));
 			
 			for (int groupId = 0; groupId <= lastGroupNumber; groupId++) {
-				groupWhereInCond = buildSqlInCondition(iter, maxRecords); //"where DE_IDSEQ IN ('1','2','3',   , '1000')";
+				groupWhereInCond = DownloadUtils.buildSqlInCondition(iter, maxRecords); //"where DE_IDSEQ IN ('1','2','3',   , '1000')";
 				
 				stmt = fromStmt + groupWhereInCond;
 				
@@ -212,11 +212,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		return xmlToUpdate;
 	}
 	
-	protected int calcNumberOfGroups(final int lengthOfCollection) {
-		return (lengthOfCollection / maxRecords) + 
-			(((lengthOfCollection % maxRecords) == 0)? 0 : 1);
-	}
-	
 	public String getXMLString(Connection oracleConn, String sqlQuery, boolean showNull) throws Exception {
 
 		String xmlString = "";
@@ -283,36 +278,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		String excelFilename = localDownloadDirectory + fileNamePrefix + fileSuffix + ".xml";
 		return excelFilename;
 	}
-	
-	protected void writeToFile(String xmlStr, String fn) throws Exception {
-		FileWriter newFos = null;
-		BufferedWriter bos = null;
-
-		try {
-			newFos = new FileWriter(fn, true);
-			bos = new BufferedWriter(newFos);
-			bos.write(xmlStr);
-		} 
-		finally {
-			if (bos != null) {
-				try {
-					bos.flush();
-					bos.close();
-				} 
-				catch (Exception e) {
-					logger.debug("Unable to close underlying stream due to the following error ", e);
-				}
-			}
-			if (newFos != null) {
-				try {
-					newFos.close();
-				} 
-				catch (Exception e) {
-					logger.debug("Unable to close temporarily file due to the following error ", e);
-				}
-			}
-		}
-	}
 
 	protected String generateXmlFileId() throws Exception {
 		JdbcTemplate jdbcTemplate = getJdbcTemplate();
@@ -323,28 +288,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		}
 		
 		return fileId;
-	}
-	
-	protected String buildSqlInCondition(Iterator <String> iter, int max) {
-
-			StringBuilder sb = new StringBuilder("where DE_IDSEQ IN (");
-			String currVal;
-			for (int indx = 0; indx < max; indx++) {
-				if (iter.hasNext()) {
-					currVal = iter.next();
-					sb.append("'" + currVal + "', ");
-				}
-				else break;
-			}
-			int len = sb.length();
-			sb.setCharAt(len - 2, ')');
-			return sb.toString().substring(0, len - 1);		
-	}
-	
-	protected void checkInCondition(final Collection<String> itemIds) throws Exception {
-		if ((itemIds == null) || (itemIds.isEmpty())) {
-			throw new ClientException("Expected Download CDE IDs are not provided");
-		}
 	}
 	
 	/*

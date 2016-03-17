@@ -33,41 +33,7 @@ import gov.nih.nci.cadsr.service.ClientException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/test-application-context.xml")
 public class GetExcelDownloadTest {
-	@Test
-	public void testBuildSqlInCondition() throws Exception {
-		DataSource dataSource = Mockito.mock(DataSource.class);
-		GetExcelDownload getExcelDownload = new GetExcelDownload(dataSource);
-		List<String> itemIds = new ArrayList<>();
-		itemIds.add("testId1");
-		itemIds.add("testId2");
-		//MUT
-		String received = getExcelDownload.buildSqlInCondition(itemIds);
-		assertEquals("'testId1', 'testId2'", received);
-	}
-	@Test(expected=ClientException.class)
-	public void testBuildSqlInConditionNull() throws Exception {
-		DataSource dataSource = Mockito.mock(DataSource.class);
-		GetExcelDownload getExcelDownload = new GetExcelDownload(dataSource);
-		//MUT
-		getExcelDownload.buildSqlInCondition(null);
-	}
-	@Test(expected=ClientException.class)
-	public void testBuildSqlInConditionEmpty() throws Exception {
-		DataSource dataSource = Mockito.mock(DataSource.class);
-		GetExcelDownload getExcelDownload = new GetExcelDownload(dataSource);
-		//MUT
-		getExcelDownload.buildSqlInCondition(new ArrayList<String>());
-	}
-	@Test(expected=ClientException.class)
-	public void testBuildSqlInCondition1001() throws Exception {
-		DataSource dataSource = Mockito.mock(DataSource.class);
-		GetExcelDownload getExcelDownload = new GetExcelDownload(dataSource);
-		List<String> itemIds = new ArrayList<>();
-		for(int i = 0; i < 1002; i++)
-			itemIds.add("id"+i);
-		//MUT
-		getExcelDownload.buildSqlInCondition(itemIds);
-	}
+
 	@Test
 	public void testPersistHeaders() throws Exception {
 		DataSource dataSource = Mockito.mock(DataSource.class);
@@ -329,10 +295,10 @@ public class GetExcelDownloadTest {
 		wb.close();
 		
 		//for manual testing and looking into Excel use commented code
-//		FileOutputStream fileOut = new FileOutputStream("testExcel.xls");
-//		wb.write(fileOut);
-//		fileOut.flush();
-//		fileOut.close();	
+		FileOutputStream fileOut = new FileOutputStream("testExcel.xls");
+		wb.write(fileOut);
+		fileOut.flush();
+		fileOut.close();	
 		
 		HSSFSheet receivedSheet = wb.getSheetAt(0);
 		//row # 0
