@@ -160,7 +160,8 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 					"SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*, '" + RAI + "' as \"RAI\" FROM DE_CDE_EXCEL_GENERATOR_VIEW " +
 							groupWhereInCond;
 				//+" ORDER BY PREFERRED_NAME ";
-				logger.debug("group SQL Statement:" + sqlStmt);
+				if (logger.isTraceEnabled())
+					logger.trace("group SQL Statement: " + sqlStmt);
 				
 				rs = st.executeQuery(sqlStmt);
 				

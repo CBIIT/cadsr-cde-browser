@@ -21,7 +21,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,7 +83,7 @@ public class DownloadExcelController {
 		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
 		
 		if (logger.isTraceEnabled())
-			logger.trace("Requested list of IDs:" + cdeIds);
+			logger.trace("Requested list of IDs: " + cdeIds);
 
 		String excelFileId = null;
 		try {
