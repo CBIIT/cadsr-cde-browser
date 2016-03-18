@@ -54,6 +54,9 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	String fileNamePrefix;
 	private static final int maxRecords = 1000;
 	
+	public static final String clientErrorMessageTooManyIDs = "Client error: Exceeded allowed amount of CDE IDs in Excel Download, received amount of CDEs: ";
+	public static final int MAX_ROW_NUMBER = 65535; //(2 ^ 16)
+	
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
 	}
@@ -166,7 +169,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 				rs = st.executeQuery(sqlStmt);
 				
 				//this method will populate Excel data while looping though the result set; returns the last rowNumber which was used
-				rowNumber = generateWorkbook(rs, sheet, rowNumber, source, colInfo);
+				rowNumber = generateWorkbook(rs, sheet, rowNumber, source, colInfo, itemIds.size());
 			}
 			
 			fileOut = new FileOutputStream(filename);
@@ -256,7 +259,11 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 			}
 		}		
 	}
-	
+	protected void checkRowNumber(int projectedRowNumber, int amountOfIds) throws Exception {
+		if (projectedRowNumber > MAX_ROW_NUMBER) {
+			throw new ClientException(clientErrorMessageTooManyIDs + amountOfIds);
+		}
+	}
 	/**
 	 * This method populates provided HSSFSheet.
 	 * It loops through the provided ResultSet, but it does not close it. This is a job of the calling method.
@@ -270,12 +277,14 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	 */
 	protected int generateWorkbook(ResultSet rs, 
 		HSSFSheet sheet, int rowNumber, 
-		final String source, final List<ColumnInfo> colInfo) throws Exception 
+		final String source, final List<ColumnInfo> colInfo, int amountOfIds) throws Exception 
 	{
 		int maxRowNumber = 0;
 		
 		while (rs.next()) {
+			checkRowNumber(rowNumber, amountOfIds);
 			HSSFRow row = sheet.createRow(rowNumber);//NA new main row
+			
 			int col = 0;
 			//in ColumnInfo Array type has column name; nested ColumnInfo has a rs index inside the nested rs
 			for (int i = 0; i < colInfo.size(); i++) {
@@ -301,6 +310,8 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 							row = sheet.getRow(rowNumber + nestedRowNumber);
 
 							if (row == null) {
+								checkRowNumber(rowNumber + nestedRowNumber, amountOfIds);
+								
 								row = sheet.createRow(rowNumber + nestedRowNumber);//NA creating a dependent row
 
 								maxRowNumber = rowNumber + nestedRowNumber;

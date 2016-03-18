@@ -113,7 +113,7 @@ public class GetExcelDownloadTest {
 			.thenReturn(structSqlDe2).thenReturn(structSqlDe2).thenReturn(structSqlDe2);
 		
 		//MUT
-		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo);
+		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo, 2);
 		wb.close();
 		//for manual testing and looking into Excel use commented code
 //		FileOutputStream fileOut = new FileOutputStream("testExcel.xls");
@@ -190,7 +190,7 @@ public class GetExcelDownloadTest {
 		Mockito.when(rs.getArray("CLASSIFICATIONS")).thenReturn(sqlArray0).thenReturn(sqlArray1);
 		
 		//MUT
-		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo);
+		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo, 2);
 		wb.close();
 		//for manual testing and looking into Excel use commented code
 		FileOutputStream fileOut = new FileOutputStream("testExcel.xls");
@@ -291,7 +291,7 @@ public class GetExcelDownloadTest {
 		HSSFSheet sheet = wb.createSheet();
 		
 		//MUT
-		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo);
+		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo, 2);
 		wb.close();
 		
 		//for manual testing and looking into Excel use commented code
