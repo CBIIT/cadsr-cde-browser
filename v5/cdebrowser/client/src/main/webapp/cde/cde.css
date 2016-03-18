@@ -58,14 +58,14 @@
 }
 
 .tabNormal {
-    background-color: #2b5681; /* color: #336699; */
-    color: #ffffff;
+    background-color: #bbb; /* color: #336699; */
+    color: #4A4A4A;
 }
 
 .tabDisabled {
     /*  I can't seem to over ride the ng-disabled background-color */
     background-color: #ffff00;
-    color: #4a4a4a;
+    color: #887f7f;
 }
 
 .tabFocused {

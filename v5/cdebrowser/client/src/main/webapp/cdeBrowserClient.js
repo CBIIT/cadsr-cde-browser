@@ -622,7 +622,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.progressMessage.status=0;
           }).
           error(function(data, status, headers, config) {
-            $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
+            $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};                
           });             
         }
         else { // download to excel 
@@ -632,7 +632,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.progressMessage.status=0;
           }).
           error(function(data, status, headers, config) {
-            $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
+            $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};                
           }); 
         }
 
@@ -647,7 +647,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data);
         }).
         error(function(data, status, headers, config) {
-            $scope.progressMessage = {"status":1,"message":"An error has occured","isErrorMessage":1};                
+            $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};                
         });
     };
 
