@@ -185,8 +185,9 @@
     padding-right:10px;
     text-align: right;
 }
-.sortOrder span {
-    display:block;padding:3px;
+.sortOrder span.row {
+    display:block;
+    padding:10px 5px 5px 4px;    
 }
 .sortOrder ul span {
     display:inline-block;

@@ -311,20 +311,20 @@
         <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
             <div class="sortOrder">
                 <div data-ng-class="{left:searchResultsCount,leftFull:!searchResultsCount}">
-                    <span>
+                    <span class="row">
                         <ul>
                             <li>Sort Order:</li>
                             <li ng-repeat="item in sortOrderObject.items">
-                                {{item}} <span ng-if="!$last">>> </span>
+                                {{item}} <span class="separator" ng-if="!$last">>> </span>
                             </li>
                             <li>[{{sortOrderObject.sortDirection}}]</li>
                         </ul>
                     </span>
-                    <span><a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a></span>
+                    <span class="row"><a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a></span>
                 </div>
                 <div class="right">
-                    <span>{{searchResultsCount}}</span>
-                    <span>
+                    <span class="row">{{searchResultsCount}}</span>
+                    <span class="row">
                         <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
                     </span>
                 </div>                
