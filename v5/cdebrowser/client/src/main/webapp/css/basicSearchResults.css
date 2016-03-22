@@ -75,12 +75,22 @@
     padding: 10px 2px 10px 2px;
 }
 
+.ng-table th.sortable{
+    vertical-align:top;
+}
+
 .ng-table th.sortable.sort-desc,
 .ng-table th.sortable.sort-asc {
     /** change background color of headers, remove text shadow **/
     background-color: #cccc99;
     text-shadow: none;
 }
+
+.ng-table th.sortable.sort-desc .sort-indicator:after,
+.ng-table th.sortable.sort-asc .sort-indicator:after {
+    margin-top: -4px !important;
+}
+
 
 .ng-table th.sortable.sort-desc .sort-indicator:after {
     /** set opacity to full, color to white for desc indicators **/
@@ -109,11 +119,16 @@
     border-color: #fff transparent;
     visibility: visible;
     right: 5px;
-    top: 50%;
+    top:5px !important;
     position: absolute;
     opacity: 1;
     margin-top: -4px;
 }
+
+.ng-table th.sortable .sort-indicator {
+    display:inline-block;
+}
+
 
 .ng-table th.sortable .sort-indicator:before {
     /** set color of indicator to white **/
