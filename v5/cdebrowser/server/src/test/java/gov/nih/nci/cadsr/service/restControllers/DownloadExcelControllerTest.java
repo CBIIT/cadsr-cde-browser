@@ -73,12 +73,13 @@ public class DownloadExcelControllerTest {
 	}
 
 	@Test //client error
-	public void testDownloadExcelServer() throws Exception {
+	public void testDownloadExcelServerError() throws Exception {
 		GetExcelDownloadInterface getExcelDownloadMock = Mockito.mock(GetExcelDownloadInterface.class);
 		downloadExcelController.setGetExcelDownload(getExcelDownloadMock);
+		String exceptionMessage = "test exception";
 		Mockito.when(getExcelDownloadMock.persist(Mockito.anyCollectionOf(String.class), 
 			Mockito.anyString(), Mockito.eq("deSearch")))
-			.thenThrow(new ServerException("test exception"));
+			.thenThrow(new ServerException(exceptionMessage));
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");
 		String testUriStr = "http://localhost:8080/downloadExcel";
@@ -86,9 +87,11 @@ public class DownloadExcelControllerTest {
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		ResponseEntity <String> resp = downloadExcelController.downloadExcel("deSearch", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadExcelController.serverErrorMessage));
+		String expectedError = String.format(DownloadExcelController.serverErrorMessage, exceptionMessage);
+		assertEquals(expectedError, receivedObj);
 	}
 	
 	@Test //client error
@@ -99,9 +102,11 @@ public class DownloadExcelControllerTest {
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		ResponseEntity <String> resp = downloadExcelController.downloadExcel("deSearch", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadExcelController.clientErrorMessageNoIDs));
+		String expectedError = DownloadExcelController.clientErrorMessageNoIDs;
+		assertEquals(expectedError, receivedObj);
 	}
 	@Test //client error
 	public void testDownloadExcelNullList() throws Exception {
@@ -111,9 +116,11 @@ public class DownloadExcelControllerTest {
 	
 		//MUT
 		ResponseEntity <String> resp =  downloadExcelController.downloadExcel("deSearch", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadExcelController.clientErrorMessageNoIDs));
+		String expectedError = DownloadExcelController.clientErrorMessageNoIDs;
+		assertEquals(expectedError, receivedObj);		
 	}
 	@Test //client error
 	public void testDownloadExcelNullSource() throws Exception {
@@ -124,9 +131,13 @@ public class DownloadExcelControllerTest {
 		
 		//MUT
 		ResponseEntity <String> resp =  downloadExcelController.downloadExcel(null, request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadExcelController.clientErrorMessageWrongParam));
+		String srcStr = null;
+		String expectedError = String.format(DownloadExcelController.clientErrorMessageWrongParam, srcStr);
+		
+		assertEquals(expectedError, receivedObj);
 	}
 	@Test //client error
 	public void testDownloadExcelWrongSource() throws Exception {
@@ -138,9 +149,12 @@ public class DownloadExcelControllerTest {
 
 		//MUT
 		ResponseEntity <String> resp = downloadExcelController.downloadExcel("deSearchWrong", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadExcelController.clientErrorMessageWrongParam));
+		String expectedError = String.format(DownloadExcelController.clientErrorMessageWrongParam, "deSearchWrong");
+		
+		assertEquals(expectedError, receivedObj);
 	}
 	@Test //client error
 	public void testDownloadExcelWrongFileId() throws Exception {
@@ -149,7 +163,7 @@ public class DownloadExcelControllerTest {
 		ResponseEntity<InputStreamResource> resp = downloadExcelController.retrieveExcelFile("009");
 		
 		//check result
-		String expectedMessage = (DownloadExcelController.clientErrorMessageFileNotFound + "009");
+		String expectedMessage = (String.format(DownloadExcelController.clientErrorMessageFileNotFound, "009"));
 		InputStreamResource receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
 		byte[] arr = DownloadUtilsTest.streamCollector(receivedObj.getInputStream());

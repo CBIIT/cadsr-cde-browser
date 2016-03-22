@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.nih.nci.cadsr.download.ExcelDownloadTypes;
 import gov.nih.nci.cadsr.download.GetExcelDownloadInterface;
 import gov.nih.nci.cadsr.service.ClientException;
-import gov.nih.nci.cadsr.service.ServerException;
 /**
  * This is a MVC RESTful controller to download data to Excel file based on provided CDE IDs.
  * 
@@ -54,14 +53,14 @@ public class DownloadExcelController {
 	public static final String fileExtension = ".xls";
 	
 	//Client Error Texts
-	public static final String clientErrorMessageFileNotFound = "Client error: Download Excel file is not found on the server: ";
-	public static final String clientErrorMessageWrongParam = "Client error: Unexpected download parameter: ";
-	public static final String clientErrorMessageNoIDs = "Client error: Expected Download CDE IDs are not provided";
+	public static final String clientErrorMessageFileNotFound = "Please contact the support group. Expected Excel file is not found on the server: '%s'.";
+	public static final String clientErrorMessageWrongParam = "The expected ‘src’ parameter value is not correct. Please correct the value and try again. Received: '%s'.";
+	public static final String clientErrorMessageNoIDs = "Please select CDEs in the search results and download again. Expected CDE IDs were not provided.";
 	
 	//Server Error Text
-	public static final String serverErrorMessage = "Server error: Please contact support group. The error occurred is the next: ";
-	public static final String serverErrorMessageStreaming = "Download Excel: error occurred in document streaming";
-	public static final String serverErrorBuildingDocument = "unable to build Excel document file";
+	public static final String serverErrorMessage = "Please contact the support group for the following Java error message: %s.";
+	public static final String serverErrorMessageStreaming = "Please contact the support group. An error occurred in downloaded document streaming '%s'. Java error message: %s.";
+	public static final String serverErrorBuildingDocument = "unable to build Excel document file.";
 	
 
 	public void setGetExcelDownload(GetExcelDownloadInterface getExcelDownload) {
@@ -103,8 +102,9 @@ public class DownloadExcelController {
 				return new ResponseEntity<String>(excelFileId, responseHeaders, HttpStatus.CREATED);
 			}
 			else {
-				logger.error(serverErrorMessage + serverErrorBuildingDocument);
-				return new ResponseEntity<String>(serverErrorMessage + serverErrorBuildingDocument , HttpStatus.INTERNAL_SERVER_ERROR);
+				String str = String.format(serverErrorMessage, serverErrorBuildingDocument);
+				logger.error(str);
+				return new ResponseEntity<String>(str , HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} 
 		catch (ClientException e) {
@@ -112,8 +112,8 @@ public class DownloadExcelController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		catch (Exception e) {
-			logger.error(serverErrorMessage + e);
-			return new ResponseEntity<String>(serverErrorMessage + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error(String.format(serverErrorMessage, e.toString()));
+			return new ResponseEntity<String>(String.format(serverErrorMessage, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -135,16 +135,16 @@ public class DownloadExcelController {
 				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
 			}
 			catch (Exception e) {
-				String strMessage;
-				logger.error(strMessage = (serverErrorMessageStreaming + excelFileName));
+				String strMessage = String.format(serverErrorMessageStreaming, excelFileName, e.getMessage());
+				logger.error(strMessage + ' ' + e);
 				responseHeaders.set("Content-Type", "text/plain");
 				InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
 				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 		else {
-			String strMessage;
-			logger.error(strMessage = (clientErrorMessageFileNotFound + fileId));
+			String strMessage = String.format(clientErrorMessageFileNotFound, fileId);
+			logger.error(strMessage);
 			responseHeaders.set("Content-Type", "text/plain");
 			InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
 			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.BAD_REQUEST);
@@ -153,7 +153,7 @@ public class DownloadExcelController {
 
 	protected void validateDownloadParameters(List<String> cdeIds, String source) throws ClientException {
 		if (!ExcelDownloadTypes.isDownloadTypeValid(source)) {
-			throw new ClientException(clientErrorMessageWrongParam + source);
+			throw new ClientException(String.format(clientErrorMessageWrongParam, source));
 		}
 		if ((cdeIds == null) || (cdeIds.isEmpty())) {//null does not happen in Spring MCV - when there is no IDs the framework does not call this service
 			throw new ClientException(clientErrorMessageNoIDs);

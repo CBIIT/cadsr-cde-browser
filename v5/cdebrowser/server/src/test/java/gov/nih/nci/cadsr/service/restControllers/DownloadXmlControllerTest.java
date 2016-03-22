@@ -78,10 +78,11 @@ public class DownloadXmlControllerTest {
 	}
 	
 	@Test
-	public void testDownloadXmlServer() throws Exception {
+	public void testDownloadXmlServerError() throws Exception {
+		String exceptionMessage = "test exception";
 		Mockito.when(getXmlDownloadMock.persist(Mockito.anyCollectionOf(String.class), 
 			Mockito.anyString(), Mockito.eq("deSearch")))
-			.thenThrow(new ServerException("test exception"));
+			.thenThrow(new ServerException(exceptionMessage));
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");
 		String testUriStr = "http://localhost:8080/downloadXml";
@@ -89,9 +90,11 @@ public class DownloadXmlControllerTest {
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		ResponseEntity <String> resp = downloadXmlController.downloadXml("deSearch", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadXmlController.serverErrorMessage));
+		String expectedError = String.format(DownloadExcelController.serverErrorMessage, exceptionMessage);
+		assertEquals(expectedError, receivedObj);
 	}
 	
 	@Test
@@ -102,9 +105,11 @@ public class DownloadXmlControllerTest {
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		ResponseEntity <String> resp = downloadXmlController.downloadXml("deSearch", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageNoIDs));
+		String expectedError = DownloadExcelController.clientErrorMessageNoIDs;
+		assertEquals(expectedError, receivedObj);
 	}
 	
 	@Test
@@ -128,9 +133,13 @@ public class DownloadXmlControllerTest {
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
 		ResponseEntity <String> resp =  downloadXmlController.downloadXml(null, request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageWrongParam));
+		String srcStr = null;
+		String expectedError = String.format(DownloadExcelController.clientErrorMessageWrongParam, srcStr);
+		
+		assertEquals(expectedError, receivedObj);
 	}
 	
 	@Test
@@ -143,9 +152,12 @@ public class DownloadXmlControllerTest {
 
 		//MUT
 		ResponseEntity <String> resp = downloadXmlController.downloadXml("deSearchWrong", request);
+		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageWrongParam));
+		String expectedError = String.format(DownloadExcelController.clientErrorMessageWrongParam, "deSearchWrong");
+		
+		assertEquals(expectedError, receivedObj);
 	}
 	
 	@Test
@@ -153,7 +165,7 @@ public class DownloadXmlControllerTest {
 		//MUT
 		ResponseEntity<InputStreamResource> resp = downloadXmlController.retrieveXmlFile("009");
 		//check result
-		String expectedMessage = (DownloadXmlController.clientErrorMessageFileNotFound + "009");
+		String expectedMessage = (String.format(DownloadExcelController.clientErrorMessageFileNotFound, "009"));
 		InputStreamResource receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
 		byte[] arr = DownloadUtilsTest.streamCollector(receivedObj.getInputStream());

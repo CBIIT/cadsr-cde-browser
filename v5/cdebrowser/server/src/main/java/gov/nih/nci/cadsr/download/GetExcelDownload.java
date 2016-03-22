@@ -55,7 +55,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	String fileNamePrefix;
 	private static final int maxRecords = 1000;
 	
-	public static final String clientErrorMessageTooManyIDs = "Client error: Exceeded allowed amount of CDE IDs in Excel Download, received amount of CDEs: ";
+	public static final String clientErrorMessageTooManyIDs = "Please select a smaller number of CDEs. Exceeded allowed number of CDE IDs in Excel download. Received number: %d.";
 	public static final int MAX_ROW_NUMBER = 65535; //(2 ^ 16)
 	
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
@@ -262,7 +262,8 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	}
 	protected void checkRowNumber(int projectedRowNumber, int amountOfIds) throws Exception {
 		if (projectedRowNumber > MAX_ROW_NUMBER) {
-			throw new ClientException(clientErrorMessageTooManyIDs + amountOfIds);
+			String str = String.format(clientErrorMessageTooManyIDs, amountOfIds);
+			throw new ClientException(str);
 		}
 	}
 	/**
