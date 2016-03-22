@@ -5,6 +5,9 @@ package gov.nih.nci.cadsr.download;
 
 import static org.junit.Assert.*;
 
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,5 +38,42 @@ public class DownloadUtilsTest {
 		//MUT
 		String received = DownloadUtils.buildSqlInCondition(itemIds);
 		assertEquals("'testId1', 'testId2'", received);
+	}
+	public static URI buildTestUri(String absoluteUrlString) throws Exception{
+		return (new URL(absoluteUrlString)).toURI();
+	}
+	public static byte[] streamCollector(InputStream istream) throws Exception {
+		byte[] res;
+		ArrayList<byte[]> storeArr = new ArrayList<>();
+		ArrayList<Integer> storeLen = new ArrayList<>();
+		byte[] currArr = new byte[4096];
+		int currNum = 0;
+		int readNum = 0;
+		while ((currNum = istream.read(currArr,0, 4096)) > 0) {
+			storeArr.add(currArr);
+			storeLen.add(currNum);
+			readNum += currNum;
+			currArr = new byte[4096];
+		}
+		res = new byte[readNum];
+		int startPos = 0;
+		for (int i = 0; i < storeArr.size(); i++) {
+			currArr = storeArr.get(i);
+			currNum = storeLen.get(i);
+			System.arraycopy(currArr, 0, res, startPos, currNum);
+			startPos += currNum;
+		}
+		istream.close();
+		return res;
+	}
+	public static boolean isByteArraysEqual(byte[] source, byte[] result) {
+		if ((source == null) && (result == null)) return true;
+		else if ((source == null) && (result != null)) return false;
+		else if ((source != null) && (result == null)) return false;
+		if (source.length != result.length) return false;
+		for (int i = 0; i < source.length; i++) {
+			if (source[i] != result[i]) return false;
+		}
+		return true;
 	}
 }

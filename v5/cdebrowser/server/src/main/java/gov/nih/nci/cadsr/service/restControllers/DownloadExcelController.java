@@ -51,6 +51,7 @@ public class DownloadExcelController {
 	String downloadDirectory;
 	@Value("${downloadFileNamePrefix}")
 	String fileNamePrefix;
+	public static final String fileExtension = ".xls";
 	
 	//Client Error Texts
 	public static final String clientErrorMessageFileNotFound = "Client error: Download Excel file is not found on the server: ";
@@ -119,12 +120,12 @@ public class DownloadExcelController {
 	@RequestMapping(value = "/{fileId}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> retrieveExcelFile(@PathVariable("fileId") String fileId) throws Exception {
 		logger.debug("Received RESTful call to retrieve Excel file; fileId: " + fileId);
-		String excelFileName = downloadDirectory + fileNamePrefix + fileId + ".xls";
+		String excelFileName = downloadDirectory + fileNamePrefix + fileId + fileExtension;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
 		File file = new File (excelFileName);
 		if (file.exists()) {
-			responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults.xls");
+			responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + fileExtension);
 			
 			try {
 				InputStream inputStream = getExcelFileAsInputStream(excelFileName);
@@ -162,6 +163,8 @@ public class DownloadExcelController {
 		// "B3445D55-ED6E-2584-E034-0003BA12F5E7"
 		if (logger.isTraceEnabled())
 			logger.trace("Requested list of IDs: " + cdeIds);
+		
+		logger.debug("Received number of IDs downloadXml: " + cdeIds.size());
 	}
 
 	protected BufferedInputStream getExcelFileAsInputStream(String excelFilename) throws Exception {

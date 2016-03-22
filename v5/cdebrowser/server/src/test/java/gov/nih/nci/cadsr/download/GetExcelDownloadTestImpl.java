@@ -13,6 +13,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import gov.nih.nci.cadsr.service.restControllers.DownloadExcelController;
+
 public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" a value provided by service controller
 	private String fileNamePrefix; // a value provided by service controller
@@ -78,7 +80,7 @@ public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 		return fileId;
 	}
 	public String buildDownloadAbsoluteFileName(String excelFileSuffix) {
-		String excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix + ".xls";
+		String excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix  + DownloadExcelController.fileExtension;
 		return excelFilename;
 	}
 }

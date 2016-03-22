@@ -35,6 +35,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import gov.nih.nci.cadsr.common.util.StringUtils;
 import gov.nih.nci.cadsr.service.ClientException;
+import gov.nih.nci.cadsr.service.restControllers.DownloadExcelController;
 
 /**
  * This is an auxiliary class to create Excel file returned by DownloadExcelController.
@@ -99,7 +100,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		return excelFileSuffix;
 	}
 	public String buildDownloadAbsoluteFileName(String excelFileSuffix) {
-		String excelFilename = localDownloadDirectory + fileNamePrefix + excelFileSuffix + ".xls";
+		String excelFilename = localDownloadDirectory + fileNamePrefix + excelFileSuffix + DownloadExcelController.fileExtension;
 		return excelFilename;
 	}
 

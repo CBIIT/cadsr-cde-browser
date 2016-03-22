@@ -34,8 +34,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import gov.nih.nci.cadsr.download.DownloadUtilsTest;
 import gov.nih.nci.cadsr.download.GetXmlDownloadInterface;
-import gov.nih.nci.cadsr.service.ClientException;
 import gov.nih.nci.cadsr.service.ServerException;
 /**
  * This is a MVC RESTful controller Unit Test to download data to XML file based.
@@ -77,7 +77,7 @@ public class DownloadXmlControllerTest {
 		}
 	}
 	
-	@Test(expected=ServerException.class)
+	@Test
 	public void testDownloadXmlServer() throws Exception {
 		Mockito.when(getXmlDownloadMock.persist(Mockito.anyCollectionOf(String.class), 
 			Mockito.anyString(), Mockito.eq("deSearch")))
@@ -88,40 +88,52 @@ public class DownloadXmlControllerTest {
 		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
-		downloadXmlController.downloadXml("deSearch", request);
+		ResponseEntity <String> resp = downloadXmlController.downloadXml("deSearch", request);
+		String receivedObj = resp.getBody();
+		assertNotNull(receivedObj);
+		assertTrue(receivedObj.startsWith(DownloadXmlController.serverErrorMessage));
 	}
 	
-	@Test(expected=ClientException.class)
+	@Test
 	public void testDownloadXmlEmptyList() throws Exception {
 		List<String> idList = new ArrayList<>();
 		String testUriStr = "http://localhost:8080/downloadXml";
 		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
-		downloadXmlController.downloadXml("deSearch", request);	
+		ResponseEntity <String> resp = downloadXmlController.downloadXml("deSearch", request);
+		String receivedObj = resp.getBody();
+		assertNotNull(receivedObj);
+		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageNoIDs));
 	}
 	
-	@Test(expected=ClientException.class)
+	@Test
 	public void testDownloadXmlNullList() throws Exception {
 		String testUriStr = "http://localhost:8080/downloadXml";
 		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(null, HttpMethod.POST, uri);
 	
 		//MUT
-		downloadXmlController.downloadXml("deSearch", request);	
+		ResponseEntity <String> resp =  downloadXmlController.downloadXml("deSearch", request);
+		String receivedObj = resp.getBody();
+		assertNotNull(receivedObj);
+		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageNoIDs));
 	}
 	
-	@Test(expected=ClientException.class)
+	@Test
 	public void testDownloadXmlNullSource() throws Exception {
 		List<String> idList = new ArrayList<>();
 		String testUriStr = "http://localhost:8080/downloadXml";
 		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 		//MUT
-		downloadXmlController.downloadXml(null, request);	
+		ResponseEntity <String> resp =  downloadXmlController.downloadXml(null, request);
+		String receivedObj = resp.getBody();
+		assertNotNull(receivedObj);
+		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageWrongParam));
 	}
 	
-	@Test(expected=ClientException.class)
+	@Test
 	public void testDownloadXmlWrongSource() throws Exception {
 		List<String> idList = new ArrayList<>();
 		idList.add("testId1");	
@@ -130,13 +142,23 @@ public class DownloadXmlControllerTest {
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);
 
 		//MUT
-		downloadXmlController.downloadXml("deSearchWrong", request);	
+		ResponseEntity <String> resp = downloadXmlController.downloadXml("deSearchWrong", request);
+		String receivedObj = resp.getBody();
+		assertNotNull(receivedObj);
+		assertTrue(receivedObj.startsWith(DownloadXmlController.clientErrorMessageWrongParam));
 	}
 	
-	@Test(expected=ClientException.class)
+	@Test
 	public void testDownloadXmlWrongFileId() throws Exception {
 		//MUT
-		downloadXmlController.retrieveXmlFile("009");	
+		ResponseEntity<InputStreamResource> resp = downloadXmlController.retrieveXmlFile("009");
+		//check result
+		String expectedMessage = (DownloadXmlController.clientErrorMessageFileNotFound + "009");
+		InputStreamResource receivedObj = resp.getBody();
+		assertNotNull(receivedObj);
+		byte[] arr = DownloadUtilsTest.streamCollector(receivedObj.getInputStream());
+		
+		assertEquals(expectedMessage, (new String(arr)));
 	}
 	
 	@Test
@@ -155,16 +177,15 @@ public class DownloadXmlControllerTest {
 
 		
 		//MUT
-		ResponseEntity<byte[]> responseEntity = downloadXmlController.downloadXml("deSearch", request);
+		ResponseEntity<String> responseEntity = downloadXmlController.downloadXml("deSearch", request);
 		
 		//check results
 		assertNotNull(responseEntity);
 		Object resObj = responseEntity.getBody();
 		assertNotNull(resObj);
-		assertEquals(byte[].class, resObj.getClass());
-		String fileIdReceivedStr = new String((byte[])resObj);
+		assertEquals(String.class, resObj.getClass());
+		String fileIdReceivedStr = (String)resObj;
 		
-		System.out.println(new String((byte[])resObj));
 		assertEquals(fileIdExpected, fileIdReceivedStr);
 		
 		HttpStatus httpStatusReceived = responseEntity.getStatusCode();
@@ -209,12 +230,12 @@ public class DownloadXmlControllerTest {
 		List<String> headerReceivedDisp = headersReceived.get("Content-Disposition");
 		assertNotNull(headerReceivedDisp);
 		assertEquals(1, headerReceivedDisp.size());
-		assertEquals("attachment; filename=CDEBrowser_SearchResults.xml", headerReceivedDisp.get(0));
+		assertEquals("attachment; filename=CDEBrowser_SearchResults" + DownloadXmlController.fileExtension, headerReceivedDisp.get(0));
 		
 	}
 	
 	protected byte[] buildFileReturnedByDownload(String fileId) throws Exception {
-		String strTestExistedFileName = "CDEBrowser_SearchResult_test.xml";
+		String strTestExistedFileName = "CDEBrowser_SearchResult_test"  + DownloadXmlController.fileExtension;
 		String testExistedFileName = ClassLoader.getSystemResource(strTestExistedFileName).getFile();
 		FileInputStream fis = new FileInputStream(testExistedFileName);
 		String preparedFileName = buildDownloadAbsoluteFileName(fileId);
@@ -228,7 +249,7 @@ public class DownloadXmlControllerTest {
 	}
 	
 	protected String buildDownloadAbsoluteFileName(String fileId) {
-		fileName = localDownloadDirectory + "/" +  fileNamePrefix + fileId+ ".xml";
+		fileName = localDownloadDirectory + "/" +  fileNamePrefix + fileId  + DownloadXmlController.fileExtension;
 		return fileName;
 	}
 
