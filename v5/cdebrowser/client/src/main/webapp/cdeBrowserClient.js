@@ -618,7 +618,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (param) { // download to prior excel
           $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
           success(function(data, status, headers, config) {
-            window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data);
+            window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data, '_self');
             $scope.progressMessage.status=0;
           }).
           error(function(data, status, headers, config) {
@@ -628,7 +628,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else { // download to excel 
           $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
           success(function(data, status, headers, config) {
-            window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data);
+            window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data, '_self');
             $scope.progressMessage.status=0;
           }).
           error(function(data, status, headers, config) {
@@ -644,7 +644,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $http({method: 'POST', url: '/cdebrowserServer/rest/downloadXml?src=deSearch',data: $scope.checkedItemsForDownload}).
             success(function(data) {
                 $scope.progressMessage.status=0;
-                window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data);
+                window.open(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data, '_self');
         }).
         error(function(data, status, headers, config) {
             $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};                

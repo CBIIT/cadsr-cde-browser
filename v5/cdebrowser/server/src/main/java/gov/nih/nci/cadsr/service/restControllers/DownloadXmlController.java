@@ -52,7 +52,7 @@ public class DownloadXmlController {
 	public static final String fileExtension = ".xml";
 	
 	//Client Error Texts
-	public static final String clientErrorMessageFileNotFound = "Please contact the support group. Expected Excel file is not found on the server: '%s'.";
+	public static final String clientErrorMessageFileNotFound = "Please contact the support group. Expected XML file is not found on the server: '%s'.";
 	public static final String clientErrorMessageWrongParam = "The expected ‘src’ parameter value is not correct. Please correct the value and try again. Received: '%s'.";
 	public static final String clientErrorMessageNoIDs = "Please select CDEs in the search results and download again. Expected CDE IDs were not provided.";
 	
