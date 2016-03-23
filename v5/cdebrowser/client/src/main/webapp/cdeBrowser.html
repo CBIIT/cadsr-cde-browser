@@ -138,9 +138,9 @@
 
     <!-- ************ Status message at top ************ -->
     <div data-ng-class="{
-             normMessage: messageClass == NORMAL,
-             bigMessage: messageClass == BIG,
-             errorMessage: messageClass == ERROR
+             normMessage: messageClass == cssClasses['NORMAL'],
+             bigMessage: messageClass == cssClasses['BIG'],
+             errorMessage: messageClass == cssClasses['ERROR']
              }">
         <span data-ng-bind-html-unsafe="waitMessage">{{waitMessage}}</span>
     </div>

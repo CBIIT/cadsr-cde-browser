@@ -10,9 +10,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchResults = [];
     $scope.cdeTabHasFocus = [];
     $scope.tabsDisabled = true;
-    $scope.NORMAL = 0;
-    $scope.BIG = 1;
-    $scope.ERROR = 2;
+    $scope.cssClasses = {"NORMAL":0,"BIG":1,"ERROR":2}
     $scope.isNode = false;
     $scope.checkedItemsForDownload = [];
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
@@ -403,7 +401,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.dataLoad = function (dataSource) {
         $scope.waitMessage = "Please wait, loading Context data\n (" + dataSource + ").....".replace(/(?:\r\n|\r|\n)/g, "\n<br>");
-        $scope.messageClass = $scope.BIG;
+        $scope.messageClass = $scope.cssClasses["BIG"];
 
         $http.get(dataSource).success(function (response) {
 
@@ -414,12 +412,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             if (response[0].status == $scope.ERROR) {
                 console.log("ERROR: " + response[0].text);
                 $scope.waitMessage = response[0].text.replace(/(?:\r\n|\r|\n)/g, "\n<br>");
-                $scope.messageClass = $scope.ERROR;
+                $scope.messageClass = $scope.cssClasses["ERROR"];
             }
             else {
                 $scope.contextListMaster = response;
                 $scope.waitMessage = "";
-                $scope.messageClass = $scope.NORMAL;
+                $scope.messageClass = $scope.cssClasses["NORMAL"];
 
                 //FIXME move this
                 $scope.initComplete = true;
