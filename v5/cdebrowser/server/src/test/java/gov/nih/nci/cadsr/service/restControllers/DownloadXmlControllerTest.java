@@ -165,7 +165,7 @@ public class DownloadXmlControllerTest {
 		//MUT
 		ResponseEntity<InputStreamResource> resp = downloadXmlController.retrieveXmlFile("009");
 		//check result
-		String expectedMessage = (String.format(DownloadExcelController.clientErrorMessageFileNotFound, "009"));
+		String expectedMessage = (String.format(DownloadXmlController.clientErrorMessageFileNotFound, "009"));
 		InputStreamResource receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
 		byte[] arr = DownloadUtilsTest.streamCollector(receivedObj.getInputStream());
