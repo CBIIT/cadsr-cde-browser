@@ -295,11 +295,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
+        $scope.progressMessage.status=0;
          
         $http.get(serverUrl).success(function (response) {
             $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
-
             if ($scope.searchResults.length > 0) {
 
                 // TODO Quick hack, make status message better when time permits.
