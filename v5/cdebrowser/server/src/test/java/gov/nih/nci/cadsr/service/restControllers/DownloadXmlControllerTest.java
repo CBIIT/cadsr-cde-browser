@@ -28,8 +28,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.mock.web.MockHttpServletRequest;
-//import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -93,7 +91,7 @@ public class DownloadXmlControllerTest {
 		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		String expectedError = String.format(DownloadExcelController.serverErrorMessage, exceptionMessage);
+		String expectedError = String.format(DownloadXmlController.serverErrorMessage, exceptionMessage);
 		assertEquals(expectedError, receivedObj);
 	}
 	
@@ -108,7 +106,7 @@ public class DownloadXmlControllerTest {
 		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		String expectedError = DownloadExcelController.clientErrorMessageNoIDs;
+		String expectedError = DownloadXmlController.clientErrorMessageNoIDs;
 		assertEquals(expectedError, receivedObj);
 	}
 	
@@ -137,7 +135,7 @@ public class DownloadXmlControllerTest {
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
 		String srcStr = null;
-		String expectedError = String.format(DownloadExcelController.clientErrorMessageWrongParam, srcStr);
+		String expectedError = String.format(DownloadXmlController.clientErrorMessageWrongParam, srcStr);
 		
 		assertEquals(expectedError, receivedObj);
 	}
@@ -155,7 +153,7 @@ public class DownloadXmlControllerTest {
 		//check
 		String receivedObj = resp.getBody();
 		assertNotNull(receivedObj);
-		String expectedError = String.format(DownloadExcelController.clientErrorMessageWrongParam, "deSearchWrong");
+		String expectedError = String.format(DownloadXmlController.clientErrorMessageWrongParam, "deSearchWrong");
 		
 		assertEquals(expectedError, receivedObj);
 	}
