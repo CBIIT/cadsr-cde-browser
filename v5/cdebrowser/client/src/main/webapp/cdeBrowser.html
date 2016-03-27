@@ -217,13 +217,16 @@
         </div>  
         <!-- end generate tabs -->
         <!-- display proper view based on tab selected -->     
-        <div id="cdeSearchArea" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
-            This is the generic search pane. The default search.
+        <div id="cdeSearchArea" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==0">
+            This is the public id search pane. The default search.
         </div>
-        <div id="cdeSearchArea" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==1">
+        <div id="cdeSearchArea" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==1">
+            This is the generic search pane.
+        </div>        
+        <div id="cdeSearchArea" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==2">
             This is the advanced search pane.
         </div>
-        <div id="cdeSearchArea" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==2">
+        <div id="cdeSearchArea" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==3">
             This is the search preferences pane.
         </div>                
         <!-- end display proper view based on tab selected -->
@@ -419,6 +422,7 @@
 <script src="cde/usage/cde-usage.js"></script>
 <script src="cde/valueDomain/cde-valueDomain.js"></script>
 <script src="cde/genericSearch/cde-genericSearch.js"></script>
+<script src="cde/publicIdSearch/cde-publicIdSearch.js"></script>
 
 
 </body>

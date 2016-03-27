@@ -149,8 +149,18 @@ a:hover {
     margin-top: 16px;
 }
 
+.publicIdSearch {
+    padding-top: 4px;
+    padding-left: 16px;
+    margin-top: 16px;
+}
+
+.publicIdSearch input {
+    width:300px;
+}
+
 .basicSearchQuery {
-    width: 70%;
+    width: 50%;
 }
 
 .searchTips {

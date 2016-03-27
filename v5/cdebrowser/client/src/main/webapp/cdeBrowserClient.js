@@ -26,7 +26,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     ];
 
     $scope.activeSearchTab = 0;
-    $scope.searchTabs = [{title:"Data Element Search",disabled:false}];
+    $scope.searchTabs = [{title:"Public ID Search",disabled:false},{title:"Data Element Search",disabled:false}];
     $scope.tabs = [
         {
             title: 'Search Results',

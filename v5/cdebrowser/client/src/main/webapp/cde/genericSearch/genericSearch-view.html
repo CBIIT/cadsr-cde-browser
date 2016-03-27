@@ -15,23 +15,18 @@
 
 <!-- Search field drop down, text input, search & clear button  -->
 <div class="searchInput">
-    <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery"/>
+    <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery" placeholder="Name" />
 
 
-    <select class="basicSearchField"
-            data-ng-model="queryField"
-            data-ng-options="qField.id as qField.name for qField in searchFieldsBasic">
-    </select>
-    <br>
-    <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
-        Note: Default settings excludes the Test Context view from the tree.
-    </div>
-
-    <button data-ng-click="onClickBasicSearch(basicSearchQuery, queryField, selectedQueryType )">
+    <button data-ng-click="onClickBasicSearch(basicSearchQuery, 0, selectedQueryType )">
         Search
     </button>
     <button data-ng-click="basicSearchQuery=''">
         Clear
     </button>
+    <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
+        Note: Default settings excludes the Test Context view from the tree.
+    </div>
+
 </div>
 </span>

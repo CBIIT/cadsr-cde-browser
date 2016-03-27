@@ -1,0 +1,18 @@
+<!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
+<span ng-controller="PublicIdSearchController">
+
+<!-- Search field drop down, text input, search & clear button  -->
+<div class="publicIdSearch">
+    <input class="basicSearchQuery" type="text" data-ng-model="publicIdSearchQuery" placeholder="Public ID" />
+
+    <button data-ng-click="onClickBasicSearch(publicIdSearchQuery, 1, selectedQueryType )">
+        Search
+    </button>
+    <button data-ng-click="publicIdSearchQuery=''">
+        Clear
+    </button>
+    <div class="searchTips">Tip: To search for partial IDs use the * as a wildcard.<BR>
+        Note: Default settings excludes the Test Context view from the tree.
+    </div>    
+</div>
+</span>

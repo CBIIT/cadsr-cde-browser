@@ -11,7 +11,8 @@ angular.module("cde", [
     "cdeDataElementDerivation",
     "cdeUsage",
     "cdeValueDomain",
-    "cdeGenericSearch"
+    "cdeGenericSearch",
+    "cdePublicIdSearch"
 
 ])
 /**
