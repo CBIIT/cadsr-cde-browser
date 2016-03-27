@@ -2,6 +2,8 @@
 /* Notice to the user towards the top of the Search pane - "Searching", "No results", etc. */
 .bigSearchResultsMessage {
     margin-left: 5px;
+    display:block;
+    padding-top:10px;
     background-color: #fff;
     color: #1A4660;
     font-size: 16pt;
@@ -9,6 +11,8 @@
 
 .normSearchResultsMessage {
     margin-left: 5px;
+    display:block;
+    padding-top:10px;
     background-color: #fff;
     color: #1A4660;
     font-size: 12pt;
