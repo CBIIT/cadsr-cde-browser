@@ -4,7 +4,7 @@
     <title>CDE Browser 5.1</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="plugins/ng-table/ng-table.min.css">
     <link rel="stylesheet" type="text/css" href="css/cdeBrowserClient.css">
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
@@ -92,7 +92,7 @@
         <table Cellpadding=3 Cellspacing=0>
             <tr>
                 <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                    <a href="{{objectcartapiToolHost}}cdeCartAction.do?method=displayCDECart" target="_top">
+                    <a href="cdeBrowser.html#/cdeCart" target="_top">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
                              alt="CDE Cart button"
                                 />
@@ -206,7 +206,6 @@
          data-ng-style="resizeHeight()"
          resize
          notifier="notifyServiceOnChange(params)">
-
         <!-- generate tabs for search, advanced search and search preferences -->
         <div class="cdeSearchTabs">
             <ul class="cdeTabsUl">
@@ -376,7 +375,6 @@
         <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
         <div class="cdeSearchTabsView" data-ng-view></div>
         <!-- =============================================================================== -->
-
         <div id="footer" ng-init="focused=false">
             <table>
                 <tr>
