@@ -1,3 +1,12 @@
 <div id="cdeCart">
+	<button ng-click="addCDE()">Add CDE Test</button>
+	<button ng-click="deleteCDE()">Delete CDE Test</button>
+	<button ng-click="retrieveCart()">Display Cart</button>
 	<button ng-click="goBack()">Done</button>
+	<div style="padding-top:5px">
+		Cart: 
+		<ul style="list-style-type: circle;margin-left:20px;">
+			<li ng-repeat="item in cartData track by $index">{{item}}</li>
+		</ul>
+	</div>
 </div>

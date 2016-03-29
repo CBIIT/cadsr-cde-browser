@@ -1,8 +1,9 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService) {
     $scope.show = [];
+    var cartService = cartService;
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
     $scope.showCdeSearchResults = true;
@@ -598,6 +599,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // change search tab section tabs //
     $scope.changeSearchTab = function(tabIndex) {
         $scope.activeSearchTab = tabIndex;
+    };
+
+    // add items to cart //
+    $scope.addCDE = function() {
+        cartService.addCDE($scope.checkedItemsForDownload,$scope.searchResults);
     };
 
     // downloads selected search results to an excel file //

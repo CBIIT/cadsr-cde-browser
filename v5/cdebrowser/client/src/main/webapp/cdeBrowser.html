@@ -331,7 +331,7 @@
                     </span>
                 </div>                
             </div>
-
+            <button ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length" ng-show="searchResults.length">Add to CDE Cart</button>
             <script type="text/ng-template" id="ng-table/headers/checkbox.html">
                 <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
                        value=""/>
@@ -430,6 +430,7 @@
 <script src="cde/publicIdSearch/cde-publicIdSearch.js"></script>
 <script src="cde/cdeCart/cde-cart.js"></script>
 <script src="services/searchFactory.js"></script>
+<script src="services/cartService.js"></script>
 
 </body>
 </html>
