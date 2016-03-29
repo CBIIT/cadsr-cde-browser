@@ -1,8 +1,7 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $filter, $location, $route, ngTableParams) {
-
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory) {
     $scope.show = [];
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
@@ -14,7 +13,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.isNode = false;
     $scope.checkedItemsForDownload = [];
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
+    $scope.showSearch = true; // important variable used to show and hide search area when changing routes //
+    $scope.searchFactory = searchFactory;
     window.scope = $scope;
+
+    // watch to load empty area for new route. When new route is called ex: cdeCart, cdeCart will set showSearch to false //
+    // this watch makes sure when search is reloaded to load the currect tab as well as re-show the search //
+    $scope.$watch('searchFactory.showSearch',function(){
+        if ($scope.searchFactory.showSearch==true) {
+            $scope.changeView(0,{title: 'Search Results',view: 'search'});
+        };
+    });
 
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
 
@@ -55,6 +64,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }];
     // start checkboxes for table //
     $scope.checkboxes = {'checked': false, items: {}};
+
+
+
     // watch for check all checkbox
     $scope.$watch('checkboxes.checked', function (value) {
         angular.forEach($scope.searchResults, function (item) {
@@ -195,13 +207,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.changeView = function (tabnumber, tab) {
         $location.path(tab.view);
+        $scope.showSearch = true;
         $scope.currentCdeTab = tabnumber;
         console.log("changeView View: " + tab.view);
 
         if (tabnumber == 0) {
-            // $scope.initTableParams();
-            //$scope.tableParams.reload();
-
             $scope.showCdeSearchResults = true;
         }
         else
@@ -209,34 +219,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.showCdeSearchResults = false;
 
         }
-        //////////////////////////////////////////
-/*
-        $scope.tableParams = new ngTableParams(
-            {
-                page: 1,            // show first page
-                count: 20,           // count per page
-                sorting: {
-                    registrationSort: 'asc'     // initial sorting
-                }
-            },
-            {
-                $scope: $scope,
-                counts: [], // hide page counts control
-                // get data and set total for pagination
-                getData: function ($defer, params) {
-                    var data = $scope.searchResults;
-                    params.total(data.length);
-                    // use build-in angular filter
-                    var orderedData = params.sorting() ?
-                        $filter('orderBy')(data, params.orderBy()) : data;
-                    $defer.resolve($scope.records = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            });
-*/
-
-        //////////////////////////////////////////
 
     }
+
+    $scope.changeLocation = function (location) {
+        // $scope.showSearch = false;
+        $location.path(location).replace();
+    }    
 
 
     //Set to first tab - CDE Search tab
@@ -283,6 +272,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // Basic search query to get search results //
     $scope.basicSearchServerRestCall = function (serverUrl,isNode) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
+        $scope.searchFactory.showSearch = true;
         if (isNode) {
             $scope.isNode  = !$scope.isNode;
         }

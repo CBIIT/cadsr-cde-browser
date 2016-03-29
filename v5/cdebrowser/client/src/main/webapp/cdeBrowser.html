@@ -92,7 +92,7 @@
         <table Cellpadding=3 Cellspacing=0>
             <tr>
                 <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                    <a href="cdeBrowser.html#/cdeCart" target="_top">
+                    <a href ng-click="changeLocation('/cdeCart')" target="_top">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
                              alt="CDE Cart button"
                                 />
@@ -201,11 +201,11 @@
 
     <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
-
     <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" data-ng-show="initComplete"
          data-ng-style="resizeHeight()"
          resize
          notifier="notifyServiceOnChange(params)">
+        <div label="search area" ng-show="searchFactory.showSearch">
         <!-- generate tabs for search, advanced search and search preferences -->
         <div class="cdeSearchTabs">
             <ul class="cdeTabsUl">
@@ -370,11 +370,24 @@
                 </tr>
             </table>
         </div>
-
+    </div>
         <!-- =============================================================================== -->
         <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
-        <div class="cdeSearchTabsView" data-ng-view></div>
+<!--         <div ng-show="!searchFactory.showSearch" class="views">
+            <span class="tab">{{title}}</span>
+            <span data-ng-view class="body"></span>
+        </div>
+
+        <div ng-show="searchFactory.showSearch" class="cdeSearchTabsView" data-ng-view></div> -->
+      
+        <!-- <div class="views" data-ng-view></div> -->
+        
         <!-- =============================================================================== -->
+<div class="views">
+    <div class="tab" ng-show="!searchFactory.showSearch">{{title}}</div>
+    <div ng-class="{cdeSearchTabsView:searchFactory.showSearch,body:!searchFactory.showSearch}" data-ng-view></div>
+</div>
+
         <div id="footer" ng-init="focused=false">
             <table>
                 <tr>
@@ -421,7 +434,8 @@
 <script src="cde/valueDomain/cde-valueDomain.js"></script>
 <script src="cde/genericSearch/cde-genericSearch.js"></script>
 <script src="cde/publicIdSearch/cde-publicIdSearch.js"></script>
-
+<script src="cde/cdeCart/cde-cart.js"></script>
+<script src="services/searchFactory.js"></script>
 
 </body>
 </html>

@@ -12,7 +12,8 @@ angular.module("cde", [
     "cdeUsage",
     "cdeValueDomain",
     "cdeGenericSearch",
-    "cdePublicIdSearch"
+    "cdePublicIdSearch",
+    "cdeCart"
 
 ])
 /**
@@ -34,33 +35,45 @@ angular.module("cde", [
 */
         .when("/adminInfo", {
             controller: "AdminInfoCtrl",
-            templateUrl: "cde/adminInfo/adminInfo-view.html"
-        })
+            templateUrl: "cde/adminInfo/adminInfo-view.html",
+            title:"Admin Info"
+        })     
         .when("/classifications", {
             controller: "ClassificationsCtrl",
-            templateUrl: "cde/classifications/classifications-view.html"
+            templateUrl: "cde/classifications/classifications-view.html",
+            title: "Classifications"
         })
         .when("/dataElement", {
             controller: "DataElementCtrl",
-            templateUrl: "cde/dataElement/dataElement-view.html"
+            templateUrl: "cde/dataElement/dataElement-view.html",
+            title: "Data Element"
         })
         .when("/dataElementConcept", {
             controller: "DataElementConceptCtrl",
-            templateUrl: "cde/dataElementConcept/dataElementConcept-view.html"
+            templateUrl: "cde/dataElementConcept/dataElementConcept-view.html",
+            title: "Data Element Concept"
         })
 
         .when("/dataElementDerivation", {
             controller: "DataElementDerivationCtrl",
-            templateUrl: "cde/dataElementDerivation/dataElementDerivation-view.html"
+            templateUrl: "cde/dataElementDerivation/dataElementDerivation-view.html",
+            title: "Data Element Derivation"
         })
         .when("/usage", {
             controller: "UsageCtrl",
-            templateUrl: "cde/usage/usage-view.html"
+            templateUrl: "cde/usage/usage-view.html",
+            title: "Usage"            
         })
         .when("/valueDomain", {
             controller: "ValueDomainCtrl",
-            templateUrl: "cde/valueDomain/valueDomain-view.html"
-        });
+            templateUrl: "cde/valueDomain/valueDomain-view.html",
+            title: "Value Domain"
+        })
+        .when("/cdeCart", {
+            controller: "CartCtrl",
+            templateUrl: "cde/cdeCart/cart-view.html",
+            title: "CDE Cart"
+        });        
 
 
 }]);
