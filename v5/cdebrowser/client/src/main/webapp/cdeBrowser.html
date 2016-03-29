@@ -92,13 +92,17 @@
         <table Cellpadding=3 Cellspacing=0>
             <tr>
                 <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                    <a href ng-click="changeLocation('/cdeCart')" target="_top">
-                        <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
-                             alt="CDE Cart button"
-                                />
-                        <br>
-                        <span> &nbsp;CDE&nbsp;Cart</span>
-                    </a>
+                    <span class="cart">
+                        <span class="cartCount" ng-show="cartData.length">
+                            <span>{{cartData.length}}</span>
+                        </span>
+                        <a href ng-click="changeLocation('/cdeCart')" target="_top">
+                            <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
+                             alt="CDE Cart button" />
+                            <br>
+                            <span> &nbsp;CDE&nbsp;Cart</span>
+                        </a>
+                    </span>
                 </td>
                 <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
                     <a href="cdebrowserClient/cdeBrowser.html" target="_top">

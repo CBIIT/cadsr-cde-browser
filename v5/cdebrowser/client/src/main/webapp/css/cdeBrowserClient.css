@@ -248,3 +248,26 @@ a:hover {
     color: #00aa00;
     background: #ffff00;
 }
+
+.cartCount {
+    display:inline-block;
+    position:relative;
+    border-radius:50%;
+    color:white;
+    left:60px;
+    top:-37px;
+    width:20px;
+    height:20px;
+    background-color:#c90000;
+}
+
+.cartCount span{
+    vertical-align:middle;
+    margin-top:3px;
+    display:inline-block;
+    font-size:80%;
+}
+
+.cart a {
+    display:inline-block;
+}
