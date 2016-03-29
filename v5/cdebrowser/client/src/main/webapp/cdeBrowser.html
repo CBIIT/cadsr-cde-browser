@@ -373,20 +373,14 @@
     </div>
         <!-- =============================================================================== -->
         <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
-<!--         <div ng-show="!searchFactory.showSearch" class="views">
-            <span class="tab">{{title}}</span>
-            <span data-ng-view class="body"></span>
+        
+        <div class="views">
+            <div class="tab" ng-show="!searchFactory.showSearch">{{title}}</div>
+            <div ng-class="{cdeSearchTabsView:searchFactory.showSearch,body:!searchFactory.showSearch}" data-ng-view></div>
         </div>
-
-        <div ng-show="searchFactory.showSearch" class="cdeSearchTabsView" data-ng-view></div> -->
-      
-        <!-- <div class="views" data-ng-view></div> -->
         
         <!-- =============================================================================== -->
-<div class="views">
-    <div class="tab" ng-show="!searchFactory.showSearch">{{title}}</div>
-    <div ng-class="{cdeSearchTabsView:searchFactory.showSearch,body:!searchFactory.showSearch}" data-ng-view></div>
-</div>
+
 
         <div id="footer" ng-init="focused=false">
             <table>
