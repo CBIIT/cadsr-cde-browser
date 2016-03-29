@@ -247,7 +247,12 @@
                     <button data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
                         Download Data Elements as XML
                     </button>
-                </li>                            
+                </li> 
+                <li>
+                    <button ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length">
+                        Add to CDE Cart
+                    </button> 
+                </li>                       
             </ul>
             <!-- show progress bar -->
             <ul ng-show="progressMessage.status" class="cdeProgressMessage">
@@ -331,7 +336,7 @@
                     </span>
                 </div>                
             </div>
-            <button ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length" ng-show="searchResults.length">Add to CDE Cart</button>
+
             <script type="text/ng-template" id="ng-table/headers/checkbox.html">
                 <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
                        value=""/>

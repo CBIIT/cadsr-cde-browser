@@ -60,24 +60,6 @@
     color: #663300;
 }
 
-#searchResults button {
-    background-color: #1a4660;
-    border: none;
-    margin:5px 0px 10px 5px;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius:5px;
-}
-
-#searchResults button:disabled {
-    background-color:#bbb;
-    color:#887F7F;
-}
-
-#searchResults button:focus{
-    outline:0;
-}
-
 .ng-table tr {
     border: 1px solid #000;
     background-color: #f7f7e6;

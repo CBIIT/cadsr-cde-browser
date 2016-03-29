@@ -4,6 +4,7 @@
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService) {
     $scope.show = [];
     var cartService = cartService;
+    $scope.cartData = cartService.cartData;
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
     $scope.showCdeSearchResults = true;
