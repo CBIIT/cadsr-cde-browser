@@ -11,6 +11,7 @@
         <spring.version>4.1.2.RELEASE</spring.version>
         <poi.version>3.12</poi.version>
         <mockito.version>1.10.19</mockito.version>
+        <objectcart.version>1.0.2</objectcart.version>
         <!--<connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>-->
     </properties>
     <parent>
@@ -128,7 +129,17 @@
         	<version>${poi.version}</version>
         </dependency>
         <dependency>
-        <groupId>org.mockito</groupId>
+            <groupId>nih.nci.cadsr</groupId>
+            <artifactId>objectcart-beans</artifactId>
+            <version>${objectcart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nih.nci.cadsr</groupId>
+            <artifactId>extension-client-framework</artifactId>
+            <version>${objectcart.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.mockito</groupId>
         	<artifactId>mockito-all</artifactId>
         	<version>${mockito.version}</version>
         	<scope>test</scope>

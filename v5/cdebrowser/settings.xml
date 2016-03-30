@@ -9,6 +9,11 @@
             <mirrorOf>*</mirrorOf>
             <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>
         </mirror>
+        <mirror>
+            <id>nexus3</id>
+            <mirrorOf>nih.nci.cadsr,com.oracle</mirrorOf>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/repositories/thirdparty</url>
+        </mirror>
     </mirrors>
     <pluginGroups>
         <!-- define the sonatype plugin group, so the nexus plugins will work without typing the groupId -->
