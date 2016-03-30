@@ -3,6 +3,24 @@
 // controller
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService) {
     $scope.show = [];
+
+    window.scope = $scope;
+
+    var loadFilterData = function() {  // remove this//
+        $http.get('/cdebrowserClient/temp_filter_data.json')
+            .success(function(response) {
+                $scope.contexts = [];
+                $scope.programAreas = [];
+                for (var item in response) {
+                    $scope.programAreas.push({text:response[item]['text'],programArea:response[item]['programArea']})
+                };
+                $scope.programArea = $scope.programAreas[0];
+        });
+    };
+
+    loadFilterData();
+    
+
     var cartService = cartService;
     $scope.cartData = cartService.cartData;
     $scope.initComplete = false;
@@ -17,7 +35,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
     $scope.showSearch = true; // important variable used to show and hide search area when changing routes //
     $scope.searchFactory = searchFactory;
-    window.scope = $scope;
 
     // watch to load empty area for new route. When new route is called ex: cdeCart, cdeCart will set showSearch to false //
     // this watch makes sure when search is reloaded to load the currect tab as well as re-show the search //
@@ -26,6 +43,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.changeView(0,{title: 'Search Results',view: 'search'});
         };
     });
+
 
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
 
@@ -145,7 +163,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //When user clicks on a tree element
     $scope.displaySelected = function (node, treePath, text, href, hover) {
-        console.log("displaySelected: [" + text + "]  selNode.action(href): [" + href + "]  selNode.hover: [" + hover + "] [" + treePath + "]");
         $scope.breadCrumbs = treePath;
         $scope.resetSortOrder();
         $location.path("/search").replace();
@@ -163,21 +180,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
-        console.log(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
         $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
 
     };
 
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function (serverUrl) {
-        console.log("IN getCdeDetailRestCall: " + serverUrl);
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
         $http.get(serverUrl).success(function (response) {
             $scope.tabsDisabled = false;
             // Change to "Data Element" tab
             $scope.changeView(1, $scope.tabs[1]);
-            window.scope = $scope;
             $scope.cdeDetails = response;
 
             $scope.searchResultsMessage = "";
@@ -187,31 +201,21 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.isActiveCdeTab = function (cdeTabNumber) {
-        /*
-         console.log("isActiveTab  $scope.currentTab: " + $scope.currentTab);
-         console.log("isActiveTab  tabUrl: " + tabUrl);
-         console.log("tab_" + tabUrl + " == " + $scope.currentTab );
-         */
         return cdeTabNumber == $scope.currentCdeTab;
-        //return true;
     };
 
     $scope.gotFocus = function (tabnumber) {
-        //$scope.changeView(tabnumber);
         $scope.cdeTabHasFocus[tabnumber] = true;
-        console.log("gotFocus: " + tabnumber);
     };
 
     $scope.lostFocus = function (tabnumber) {
         $scope.cdeTabHasFocus[tabnumber] = false;
-        console.log("lostFocus: " + tabnumber);
     };
 
     $scope.changeView = function (tabnumber, tab) {
         $location.path(tab.view);
         $scope.showSearch = true;
         $scope.currentCdeTab = tabnumber;
-        console.log("changeView View: " + tab.view);
 
         if (tabnumber == 0) {
             $scope.showCdeSearchResults = true;
@@ -241,9 +245,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         $scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
         "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
-
-        console.log("onClickBasicSearch:   " + window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
-        "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentCdeTab);
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
@@ -281,7 +282,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             // $scope.initTableParams();
 
         $scope.tabsDisabled = true;
-        console.log("basicSearchServerRestCall: " + serverUrl);
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
@@ -332,13 +332,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.isActiveTab = function (tabUrl) {
-        /*
-         console.log("isActiveTab  $scope.currentTab: " + $scope.currentTab);
-         console.log("isActiveTab  tabUrl: " + tabUrl);
-         console.log("tab_" + tabUrl + " == " + $scope.currentTab );
-         */
         return tabUrl == $scope.currentTab;
-        //return true;
     };
 
 
@@ -375,7 +369,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 
     $scope.dataLoadFromServer = function () {
-        console.log("$scope.dataLoadFromServer");
         $scope.filters = {};        
         $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/contextData");
         
@@ -397,12 +390,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         $http.get(dataSource).success(function (response) {
 
-            //console.log("Back from context_data Service:");
-            //console.log( JSON.stringify( response) );
-            console.log("STATUS [" + response[0].status + "]");
-
             if (response[0].status == $scope.ERROR) {
-                console.log("ERROR: " + response[0].text);
                 $scope.waitMessage = response[0].text.replace(/(?:\r\n|\r|\n)/g, "\n<br>");
                 $scope.messageClass = $scope.cssClasses["ERROR"];
             }
@@ -418,7 +406,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
         });
 
-        console.log("End dataLoad: " + dataSource);
     };
 
     // Get the urls for the tools we link to from this page.  I got all that where in the database, although we do not use them all
@@ -498,7 +485,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         $scope.versionData = function() {
         $http.get("version.json").success(function (response) {
-            console.log("GOOD: " + response);
             $scope.versionPopover = response;
             $scope.versionPopover.templateUrl = 'versionPopoverTemplate.html';
             $scope.versionPopover.title2 = 'CDE Browser';

@@ -200,6 +200,14 @@ ul.cdeProgressMessage li{
     padding-bottom:10px;
 }
 
+#cdeSearchArea div.view {
+    border:1px solid white;
+}
+
+#cdeSearchArea .filters {
+    margin:10px 0px 0px 15px;
+}
+
 .cdeSearchPreferences {
     padding:5px;
 }

@@ -47,7 +47,6 @@
             <img alt="CADSR logo" src="icons/caDSR_logo2_contrast.png">
         </a>
     </div>
-
     <!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
     <div class="top2-center-logo">
     <span>
@@ -220,18 +219,39 @@
         </div>  
         <!-- end generate tabs -->
         <!-- display proper view based on tab selected -->     
-        <div id="cdeSearchArea" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==0">
-            This is the public id search pane. The default search.
-        </div>
-        <div id="cdeSearchArea" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==1">
-            This is the generic search pane.
-        </div>        
-        <div id="cdeSearchArea" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==2">
-            This is the advanced search pane.
-        </div>
-        <div id="cdeSearchArea" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==3">
-            This is the search preferences pane.
-        </div>                
+        <div id="cdeSearchArea">
+
+            <div class="view" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==0">
+                This is the public id search pane. The default search.
+            </div>
+            <div class="view" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==1">
+                This is the generic search pane.
+            </div>        
+            <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==2">
+                This is the advanced search pane.
+            </div>
+            <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==3">
+                This is the search preferences pane.
+            </div> 
+            <div class="filters">
+                <span>
+                <select name="programArea" type="text" ng-model="programArea" ng-options="item as item.text for item in programAreas">
+                </select>   
+                </span>
+                <span>
+                    <select>
+                    </select>
+                </span>
+                <span>
+                    <select>
+                    </select>
+                </span>
+                <span>
+                    <select>
+                    </select>
+                </span>                                                
+            </div>
+        </div>              
         <!-- end display proper view based on tab selected -->
         <br ng-show="searchResults.length" />
         <!-- start Download Buttons -->
@@ -420,6 +440,7 @@
 <script src='libs/angular-animate.min.js'></script>
 <script src='libs/angular-route.min.js'></script>
 <script src='libs/angular-sanitize.min.js'></script>
+<script src='libs/ngStorage.min.js'></script>
 <script src="app.js"></script>
 <script src='cdeBrowserClient.js'></script>
 <script src="cdeBrowserProperties.js"></script>
