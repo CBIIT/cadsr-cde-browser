@@ -1,28 +1,30 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService) {
-    $scope.show = [];
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService, filterService) {
+    var fs = filterService // define service instance //
+    $scope.filterService = fs; // set service to scope. Need to interact with view //
+    fs.getServerData('/cdebrowserClient/temp_filter_data.json'); // load server data //
 
-    window.scope = $scope;
-
-    var loadFilterData = function() {  // remove this//
-        $http.get('/cdebrowserClient/temp_filter_data.json')
-            .success(function(response) {
-                $scope.contexts = [];
-                $scope.programAreas = [];
-                for (var item in response) {
-                    $scope.programAreas.push({text:response[item]['text'],programArea:response[item]['programArea']})
-                };
-                $scope.programArea = $scope.programAreas[0];
-        });
+    // reset filters //
+    $scope.resetFilters = function() {
+        fs.resetFilters();
+    };
+  
+    // get program area number //
+    $scope.getProgramArea = function() {
+        console.log(fs.getProgramAreaValue(fs.selectedProgramArea))
     };
 
-    loadFilterData();
-    
+    // do a search based on selected context //
+    $scope.filterSearch = function() {
+        console.log("SEARCH")
+    };
 
     var cartService = cartService;
-    $scope.cartData = cartService.cartData;
+    $scope.cartService = cartService;
+    
+    $scope.show = [];
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
     $scope.showCdeSearchResults = true;

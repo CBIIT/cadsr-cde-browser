@@ -92,8 +92,8 @@
             <tr>
                 <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
                     <span class="cart">
-                        <span class="cartCount" ng-show="cartData.length">
-                            <span>{{cartData.length}}</span>
+                        <span class="cartCount" ng-show="cartService.cartData.length">
+                            <span>{{cartService.cartData.length}}</span>
                         </span>
                         <a href ng-click="changeLocation('/cdeCart')" target="_top">
                             <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
@@ -235,21 +235,18 @@
             </div> 
             <div class="filters">
                 <span>
-                <select name="programArea" type="text" ng-model="programArea" ng-options="item as item.text for item in programAreas">
-                </select>   
-                </span>
-                <span>
-                    <select>
+                    <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
                     </select>
                 </span>
                 <span>
-                    <select>
+                    <select ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="filterSearch()">
+                        <option style="display:none" value="">--Select a Context--</option>
                     </select>
                 </span>
                 <span>
-                    <select>
-                    </select>
-                </span>                                                
+                    <button ng-click="filterService.resetFilters()">Reset</button>
+                </span>
+                                            
             </div>
         </div>              
         <!-- end display proper view based on tab selected -->
@@ -437,6 +434,7 @@
 
 
 <script src='libs/angular.min.js'></script>
+<script src='libs/angular-resource.min.js'></script>
 <script src='libs/angular-animate.min.js'></script>
 <script src='libs/angular-route.min.js'></script>
 <script src='libs/angular-sanitize.min.js'></script>
@@ -461,6 +459,7 @@
 <script src="cde/cdeCart/cde-cart.js"></script>
 <script src="services/searchFactory.js"></script>
 <script src="services/cartService.js"></script>
+<script src="services/filterService.js"></script>
 
 </body>
 </html>

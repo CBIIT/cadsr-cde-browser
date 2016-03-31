@@ -6,8 +6,9 @@ angular.module("cdeCart", []);
 angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$route","searchFactory","cartService", function ($scope, $location,$route, searchFactory, cartService) {
 	// define cart service //
 	var cartService = cartService;
-	$scope.cartData = cartService.cartData;
+	$scope.cartService = cartService;
 
+	console.log($scope.cartService.cartData);
 	// set title of page to be show on the tab //
 	$scope.$parent.title = "CDE Cart"
 
@@ -28,10 +29,6 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$route",
 
 	// set search area to be invisible //	
 	searchFactory.showSearch = false;
-
-	
-
-
 
 	// go back to search screen, show search area //
 	$scope.goBack = function() {
