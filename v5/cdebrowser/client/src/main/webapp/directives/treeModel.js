@@ -176,17 +176,17 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             //If this a "Classifications" or "ProtocolForms" folder for a Context that has not been pulled yet, this click will trigger that rest call
                             //selectedNode.href is the id of the context on the server, use this to call rest service to get this context tree.
                             // The rest call will be something like - cdebrowserServer/oneContextData?contextId=selectedNode.href
-                            console.log("Click folder Icon: " + selectedNode.href);
+                            // console.log("Click folder Icon: " + selectedNode.href);
                             var parameters = selectedNode.href.split(',');
 
                             if (selectedNode.text == 'Classifications' || selectedNode.text == 'ProtocolForms') {
                                 if (!selectedNode['dataLoaded'] && selectedNode['children'].length) {
 
-                                    console.log("* * * selectAction: [" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +
-                                    "/" + parameters[0] +
-                                    "/?contextId=" + parameters[1] +
-                                    "&programArea=" + parameters[2] +
-                                    "&folderType=" + parameters[3] + "]");
+                                    // console.log("* * * selectAction: [" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +
+                                    // "/" + parameters[0] +
+                                    // "/?contextId=" + parameters[1] +
+                                    // "&programArea=" + parameters[2] +
+                                    // "&folderType=" + parameters[3] + "]");
 
                                     // $http.get("data6.json").success(function (response) {
                                     $http.get(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
@@ -220,8 +220,8 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                     //if user clicks on the text
                     scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function (selectedNode, selectAction) {
                             var actionParts = selectAction.split(',');
-                            console.log("* * * selectAction: [" + selectAction + "]");
-                            console.log("* * * actionParts[0]: [" + actionParts[0] + "]");
+                            // console.log("* * * selectAction: [" + selectAction + "]");
+                            // console.log("* * * actionParts[0]: [" + actionParts[0] + "]");
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Context
                             if (/cdesByContext$/.test(actionParts[0])) {
@@ -254,7 +254,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
                             disp(selectedNode);
 
-                            console.log("* * * Setting  scope.showCdeSearchResults = true;");
+                            // console.log("* * * Setting  scope.showCdeSearchResults = true;");
                             scope.showCdeSearchResults = true;
                             scope.changeView(0,0);
                             scope.isSearch
@@ -275,8 +275,8 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
                 //set highlight to selected node
                 selNode.selected = 'selected';
-                console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
-                scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
+                // console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
+                // scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
 
                 //Update the current node with the one just selected.
                 scope[treeId].currentNode = selNode;
