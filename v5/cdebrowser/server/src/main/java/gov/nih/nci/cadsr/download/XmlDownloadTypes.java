@@ -5,7 +5,7 @@ package gov.nih.nci.cadsr.download;
 
 public enum XmlDownloadTypes {
 	DE_EXCEL("deSearch"),
-	CDR_CART_EXCEL("cdrCart");
+	CDR_CART_EXCEL("cdeCart");
 	
 	private XmlDownloadTypes(final String paramValue) {
 		this.paramValue = paramValue;

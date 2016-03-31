@@ -6,8 +6,8 @@ package gov.nih.nci.cadsr.download;
 public enum ExcelDownloadTypes {
 	DE_EXCEL("deSearch"),
 	DE_EXCEL_PRIOR("deSearchPrior"),
-	CDR_CART_EXCEL("cdrCart"),
-	CDR_CART_EXCEL_PRIOR("cdrCartPrior");
+	CDR_CART_EXCEL("cdeCart"),
+	CDR_CART_EXCEL_PRIOR("cdeCartPrior");
 	
 	private ExcelDownloadTypes(final String paramValue) {
 		this.paramValue = paramValue;
