@@ -1,8 +1,8 @@
 angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	// define variables //
 	this.serverData = []; // initial data from server goes here
-	this.classifications = []; // only displays after selecting a context
-	this.protocolForms = []; // only displays after selecting a context
+	this.selectedClassification = ""; // only displays after selecting a context
+	this.selectedProtocolForm = ""; // only displays after selecting a context
 	this.selectedProgramArea = ""; // selected program area  from drop down //
 	this.selectedContext = ""; // selected context from drop down //
 
@@ -30,4 +30,14 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	this.getProgramAreaValue = function(programArea) {
 		return programArea.programArea;
 	};
+
+	this.selectContextByNode = function(programArea,id) {
+		var contexts = this.selectedProgramArea.children;
+		for (var item in contexts) {
+			if (contexts[item].idSeq == id) {
+				this.selectedContext = contexts[item]; 
+			};
+		};
+	};
+
 });

@@ -9,7 +9,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // reset filters //
     $scope.resetFilters = function() {
         fs.resetFilters();
-        $scope.onClickTab(fs.selectedProgramArea.programArea)
     };
   
     // get program area number //
@@ -18,8 +17,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // do a search based on selected context //
-    $scope.filterSearch = function() {
-        console.log("SEARCH")
+    $scope.contextSearch = function() {
+        $scope.basicSearchServerRestCall("cdebrowserServer/rest/cdesByContext","contextId", fs.selectedContext.idSeq, 1) 
+        $scope.breadCrumbs = fs.selectedContext.treePath;
+    };
+
+    // selects dropdown values based on search left tree click //
+    $scope.selectFiltersByNode = function(searchType,id) {
+        console.log('############' + $scope.currentTab + '##########')
+        if (searchType=='contextId') {
+            fs.selectContextByNode($scope.currentTab,id);
+        };
     };
 
     var cartService = cartService;
@@ -246,9 +254,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.onClickBasicSearch = function (query, field, type) {
         $scope.currentCdeTab = 0;
         $location.path("/search").replace();
-
-        $scope.basicSearchServerRestCall(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
-        "/cdebrowserServer/rest/basicSearchWithProgramArea?query=" + query + "&field=" + field + "&queryType=" + type + "&programArea=" + $scope.currentTab);
+        $scope.basicSearchServerRestCall("".concat("cdebrowserServer/rest/basicSearchWithProgramArea?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
@@ -281,12 +287,21 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // $scope.basicSearchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
+        if (searchType==undefined) { // used when doing keyword search //
+            var url = "".concat("/",serverUrl)
+        }
+
         $scope.searchFactory.showSearch = true;
+            
+        // check if user clicked the left tree. If so clear out the search //    
         if (isNode) {
-            console.log(id, searchType)
+            $scope.selectFiltersByNode(searchType,id);
             $scope.isNode  = !$scope.isNode;
         }
-            // $scope.initTableParams();
+        // reset filters if user searches using the text box //
+        else {
+            $scope.resetFilters();
+        }
 
         $scope.tabsDisabled = true;
         $scope.haveSearchResults = false;

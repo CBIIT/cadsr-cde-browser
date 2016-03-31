@@ -240,7 +240,7 @@
                     </select>
                 </span>
                 <span>
-                    <select ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="filterSearch()">
+                    <select ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="contextSearch()">
                         <option style="display:none" value="">--Select a Context--</option>
                     </select>
                 </span>
@@ -294,7 +294,16 @@
              bigSearchResultsMessage: bigSearchResultsMessageClass,
              normSearchResultsMessage: (! bigSearchResultsMessageClass)
              }">
-            {{searchResultsMessage}}
+            <!-- {{searchResultsMessage}} -->
+
+                        <ul ng-show="searchResultsMessage" class="cdeSearchMessage">
+                <li>
+                    {{searchResultsMessage}}
+                </li>
+                <li>
+                    <img alt="Searching" src="icons/preloader.gif">
+                </li>                
+            </ul>
         </span>
 
         <div data-ng-bind-html-unsafe="statusMessage">
