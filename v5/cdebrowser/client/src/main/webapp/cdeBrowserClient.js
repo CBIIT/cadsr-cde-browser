@@ -9,6 +9,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // reset filters //
     $scope.resetFilters = function() {
         fs.resetFilters();
+        $scope.onClickTab(fs.selectedProgramArea.programArea)
     };
   
     // get program area number //
