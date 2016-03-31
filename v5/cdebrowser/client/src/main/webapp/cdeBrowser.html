@@ -235,7 +235,7 @@
             </div> 
             <div class="filters">
                 <span>
-                    <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
+                    <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea" ng-change="getProgramArea()">
                     </select>
                 </span>
                 <span>

@@ -13,7 +13,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
   
     // get program area number //
     $scope.getProgramArea = function() {
-        console.log(fs.getProgramAreaValue(fs.selectedProgramArea))
+        $scope.onClickTab(fs.selectedProgramArea.programArea)
     };
 
     // do a search based on selected context //
@@ -23,7 +23,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     var cartService = cartService;
     $scope.cartService = cartService;
-    
+
     $scope.show = [];
     $scope.initComplete = false;
     $scope.haveSearchResults = false;
@@ -176,6 +176,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
         $scope.currentTab = tab;
+        fs.selectedProgramArea = fs.serverData[tab]
         $scope.hideContexts();
         $scope.show[tab] = true;
     };
@@ -275,10 +276,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // Basic search query to get search results //
-    $scope.basicSearchServerRestCall = function (serverUrl,isNode) {
+    $scope.basicSearchServerRestCall = function (serverUrl,searchType, id, isNode) {
+    // $scope.basicSearchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
+        var url = "".concat('/',serverUrl,'?',searchType,'=',id);
         $scope.searchFactory.showSearch = true;
         if (isNode) {
+            console.log(id, searchType)
             $scope.isNode  = !$scope.isNode;
         }
             // $scope.initTableParams();
@@ -289,7 +293,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
          
-        $http.get(serverUrl).success(function (response) {
+        $http.get(url).success(function (response) {
             $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
             if ($scope.searchResults.length > 0) {
