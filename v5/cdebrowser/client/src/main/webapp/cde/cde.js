@@ -5,6 +5,7 @@ angular.module("cde", [
     "ngRoute",
     "ngResource",
     "ngSanitize",
+    "ngStorage",
     "cdeAdminInfo",
     "cdeClassifications",
     "cdeDataElement",

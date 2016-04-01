@@ -1,5 +1,5 @@
 <div id="cdeCart">
-	<div style="padding-top:5px">{{itemsForSave}}
+	<div style="padding-top:5px">
 		<span class="headerText">Note: Displays CDEs in the cart. Click Retrieve Saved button to retreive cart elements saved previously. More CDEs can be added to the cart by clicking Add More Data Elements button. Checking the checkbox(es) under Delete column and clicking Delete button will delete the CDE(s) from the cart.</span>
 		<table class="searchResultsTable ng-table" ng-show="cartService.cartData.length">
 			<thead>
@@ -16,7 +16,7 @@
 				</tr>
 			<tbody>
 				<tr class="searchResultsTableTr" ng-repeat="item in cartService.cartData track by $index">
-					<td class="searchResultsTableTd">
+					<td class="searchResultsTableTd selectBox">
 						<input type="checkbox" name="checkedCartItems" ng-change="checkCartItem(item.deIdseq)" ng-model="cartService.checkedCartItems.items[item.deIdseq]">
 							<span ng-show="item['unsavedItem']">
 								Unsaved

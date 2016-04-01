@@ -48,6 +48,10 @@
     padding: 5px;
 }
 
+.searchResultsTableTd.selectBox {
+    text-align:center;
+}
+
 .searchResultsTableTh {
     border: 1px solid #80a3c0;
     padding: 5px;

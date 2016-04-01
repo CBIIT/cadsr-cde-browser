@@ -3,13 +3,14 @@
  */
 angular.module("cdeCart", []);
 
-angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$route","searchFactory","cartService", function ($scope, $location,$route, searchFactory, cartService) {
+angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localStorage","$sessionStorage","$route","searchFactory","cartService", function ($scope, $location,$localStorage, $sessionStorage, $route, searchFactory, cartService) {
 	searchFactory.showSearch = false; // set search area to be invisible //	
 	$scope.$parent.title = "CDE Cart" // set title of page to be show on the tab //
 
 	// define cart service //
 	var cartService = cartService;
-	$scope.cartService = cartService;
+	$scope.$storage = $sessionStorage;
+	$scope.$storage.cartService = cartService;
 
 	// add item to cde cart //
 	$scope.addCDE = function() {

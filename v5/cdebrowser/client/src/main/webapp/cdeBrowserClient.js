@@ -1,7 +1,7 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService, filterService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService, filterService) {
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Need to interact with view //
     fs.getServerData('/cdebrowserClient/temp_filter_data.json'); // load server data //
@@ -29,10 +29,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.selectContextByNode($scope.currentTab,id);
         };
     };
-
+    $scope.$storage = $sessionStorage;
     var cartService = cartService;
+    $scope.$storage.cartService = cartService;
     $scope.cartService = cartService;
-
+    
     $scope.show = [];
     $scope.initComplete = false;
     $scope.haveSearchResults = false;

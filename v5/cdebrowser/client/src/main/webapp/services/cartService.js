@@ -1,8 +1,17 @@
-angular.module("cdeBrowserApp").service('cartService', function() {
+angular.module("cdeBrowserApp").service('cartService', function($sessionStorage) {
 	// service to create and operate a cde cart //
-	this.cartData = []; // all items in the cart //
-	this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
-	this.itemsForSave = [];
+
+	if (!$sessionStorage['cartService']) {
+		this.cartData = []; // all items in the cart //
+		this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
+		this.itemsForSave = [];
+	}
+	else {
+		this.cartData = $sessionStorage.cartService.cartData;
+		this.checkedCartItems = $sessionStorage.cartService.checkedCartItems;
+		this.itemsForSave = $sessionStorage.cartService.itemsForSave;
+	};
+
 	// add cde's to cart. checkedItems is just an array of ids hence the need for searchResults //
 	this.addCDE = function(checkedItems, searchResults) {
 		for (var item in searchResults) {
@@ -65,7 +74,7 @@ angular.module("cdeBrowserApp").service('cartService', function() {
 		this.itemsForSave = [];
 		for (var i in this.cartData) {
 			if (this.cartData[i]['unsavedItem']==true) {
-				this.itemsForSave.append(this.cartdata[i].deIdseq);
+				this.itemsForSave.push(this.cartData[i].deIdseq);
 				this.cartData[i]['unsavedItem'] = false;
 			};
 
