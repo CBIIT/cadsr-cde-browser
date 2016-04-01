@@ -31,6 +31,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		return programArea.programArea;
 	};
 
+	// select context dropdown based on context click in left menu //
 	this.selectContextByNode = function(programArea,id) {
 		var contexts = this.selectedProgramArea.children;
 		for (var item in contexts) {

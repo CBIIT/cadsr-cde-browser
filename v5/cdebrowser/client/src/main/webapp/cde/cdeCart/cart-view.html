@@ -1,12 +1,46 @@
 <div id="cdeCart">
-	<button ng-click="addCDE()">Save Cart</button>
-	<button ng-click="deleteCDE()">Delete </button>
-	<button ng-click="deleteCDE()">Retrieve Saved </button>
-	<button ng-click="goBack()">Return to Search</button>
 	<div style="padding-top:5px">
-		Cart: 
-		<ul style="list-style-type: circle;margin-left:20px;">
-			<li ng-repeat="item in cartService.cartData track by $index">{{item}}</li>
-		</ul>
+		<table class="searchResultsTable ng-table" ng-show="cartService.cartData.length">
+			<thead>
+				<tr>
+					<th class="header"><input type="checkbox" name="extra" ng-disabled="!cartService.cartData.length" ng-model="cartService.checkedCartItems.selected" ng-change="selectAll()"></th>
+					<th class="header">Long Name</th>
+					<th class="header">Preferred Question Text</th>
+					<th class="header">Owned By</th>
+					<th class="header">Used By Context</th>
+					<th class="header">Registration Status</th>
+					<th class="header">Workflow Status</th>
+					<th class="header">Public ID</th>
+					<th class="header">Version</th>
+				</tr>
+			<tbody>
+				<tr class="searchResultsTableTr" ng-repeat="item in cartService.cartData track by $index">
+					<td class="searchResultsTableTd">
+						<input type="checkbox" name="checkedCartItems" ng-change="checkCartItem(item.deIdseq)" ng-model="cartService.checkedCartItems.items[item.deIdseq]">
+							<span ng-show="item['unsavedItem']">
+								Unsaved
+							</span>
+					</td>
+					<td class="searchResultsTableTd">{{item.longName}}</td>
+					<td class="searchResultsTableTd">{{item.preferredQuestionText}}</td>
+					<td class="searchResultsTableTd">{{item.ownedBy}}</td>
+					<td class="searchResultsTableTd">{{item.usedByContext}}</td>
+					<td class="searchResultsTableTd">{{item.registrationStatus}}</td>
+					<td class="searchResultsTableTd">{{item.workflowStatus}}</td>
+					<td class="searchResultsTableTd">{{item.publicId}}</td>
+					<td class="searchResultsTableTd">{{item.version}}</td>
+				</tr>
+			</tbody>
+			</thead>
+		</table>	
+	</div>
+	<div ng-hide="cartService.cartData.length">
+		No Cart Data
+	</div>
+	<div style="padding-top:5px">
+		<button ng-click="saveCart()">Save Cart</button>
+		<button ng-click="deleteCDEs()" ng-show="cartService.cartData.length">Delete</button>
+		<button ng-click="deleteCDE()">Retrieve Saved </button>
+		<button ng-click="goBack()">Return to Search</button>			
 	</div>
 </div>

@@ -24,7 +24,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // selects dropdown values based on search left tree click //
     $scope.selectFiltersByNode = function(searchType,id) {
-        console.log('############' + $scope.currentTab + '##########')
+        console.log(searchType, id)
         if (searchType=='contextId') {
             fs.selectContextByNode($scope.currentTab,id);
         };
