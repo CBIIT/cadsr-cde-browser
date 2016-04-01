@@ -8,7 +8,12 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +28,7 @@ import gov.nih.nci.cadsr.service.search.DESearchQueryBuilder;
 import gov.nih.nci.objectCart.domain.CartObject;
 
 @RestController
+@RequestMapping("/cdeCart")
 public class CdeCartController
 {
 
@@ -39,12 +45,12 @@ public class CdeCartController
     {
     }
 
-    @RequestMapping(value = "/cdeCart")
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public BasicSearchNode[] basicSearchWithProgramArea()
+    public BasicSearchNode[] retrieveObjectCart()
     {
         String query = "3813132 3121734";
-    	logger.debug("basicSearchWithProgramArea   query: " + query);
+    	logger.debug("retrieveObjectCart query: " + query);
 
         BasicSearchNode[] results = null;
         try
@@ -55,13 +61,20 @@ public class CdeCartController
         } catch(Exception e)
         {
 
-            return createErrorNode("Server Error:\nbasicSearchWithProgramArea: " + query + " failed ", e);
+            return createErrorNode("Server Error:\nretrieveObjectCart: " + query + " failed ", e);
         }
         return results;
 
 
     }
-
+    
+	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
+	public ResponseEntity<String> downloadExcel(
+			RequestEntity<List<String>> request) {
+		logger.debug("Received rest call save Object Cart, IDs: " + request);
+		return new ResponseEntity<String>("Done", HttpStatus.OK);
+	}
+	
     /**
      * @param query       The text of the users search input.
      * @param field       0=Name 1=PublicId
