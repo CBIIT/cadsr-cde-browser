@@ -2,7 +2,7 @@ angular.module("cdeBrowserApp").service('cartService', function() {
 	// service to create and operate a cde cart //
 	this.cartData = []; // all items in the cart //
 	this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
-
+	this.itemsForSave = [];
 	// add cde's to cart. checkedItems is just an array of ids hence the need for searchResults //
 	this.addCDE = function(checkedItems, searchResults) {
 		for (var item in searchResults) {
@@ -62,8 +62,13 @@ angular.module("cdeBrowserApp").service('cartService', function() {
 
 	// save the cart //
 	this.saveCart = function() {
+		this.itemsForSave = [];
 		for (var i in this.cartData) {
-			this.cartData[i]['unsavedItem'] = false;
+			if (this.cartData[i]['unsavedItem']==true) {
+				this.itemsForSave.append(this.cartdata[i].deIdseq);
+				this.cartData[i]['unsavedItem'] = false;
+			};
+
 		};
 	};
 

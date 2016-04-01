@@ -1,5 +1,6 @@
 <div id="cdeCart">
-	<div style="padding-top:5px">
+	<div style="padding-top:5px">{{itemsForSave}}
+		<span class="headerText">Note: Displays CDEs in the cart. Click Retrieve Saved button to retreive cart elements saved previously. More CDEs can be added to the cart by clicking Add More Data Elements button. Checking the checkbox(es) under Delete column and clicking Delete button will delete the CDE(s) from the cart.</span>
 		<table class="searchResultsTable ng-table" ng-show="cartService.cartData.length">
 			<thead>
 				<tr>
@@ -34,8 +35,8 @@
 			</thead>
 		</table>	
 	</div>
-	<div ng-hide="cartService.cartData.length">
-		No Cart Data
+	<div ng-hide="cartService.cartData.length" class="emptyCart">
+		CDE Cart is empty.
 	</div>
 	<div style="padding-top:5px">
 		<button ng-click="saveCart()">Save Cart</button>

@@ -248,3 +248,24 @@ ul.cdeSearchMessage li{
     margin-left:3px;
     margin-right:6px;
 }
+
+#cdeCart .headertext {
+    font-size:80%;
+    padding-bottom:10px;
+    display:block;
+    margin-left:3px;
+}
+
+#cdeCart .emptyCart {
+    margin-left:3px;
+    color:#1a4660;   
+    font-weight:bold; 
+}
+
+#cdeCart div {
+    padding-bottom:10px;
+}
+
+#cdeCart .searchResultsTable {
+    margin-left:3px !important;
+}
