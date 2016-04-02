@@ -217,6 +217,9 @@ ul.cdeSearchMessage li{
     margin:10px 0px 0px 15px;
 }
 
+#cdeSearchArea .filters select {
+    width:200px;
+}
 .cdeSearchPreferences {
     padding:5px;
 }
