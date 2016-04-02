@@ -125,7 +125,7 @@
                 </td>
 
                 <td class="roundButton" valign="TOP" align="CENTER" colspan=1>
-                    <a href="https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide"
+                    <a href="https://wiki.nci.nih.gov/x/toFSEg"
                        target="_blank">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_help.png"
                              alt="CDE Browser User Guide button"
@@ -233,9 +233,8 @@
                 This is the search preferences pane.
             </div> 
             <div class="filters" ng-show="activeSearchTab==0">
-
                 <span>
-                    <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea" ng-change="getProgramArea()">
+                    <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
                     </select>
                 </span>
                 <span>
