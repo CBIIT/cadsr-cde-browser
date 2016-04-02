@@ -1,6 +1,6 @@
 angular.module("cdeBrowserApp").service('cartService', function($sessionStorage) {
 	// service to create and operate a cde cart //
-
+	// check session to see if cart service exists, if so set variables to the session values //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
 		this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
