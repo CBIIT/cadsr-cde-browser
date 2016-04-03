@@ -232,16 +232,42 @@
             <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==3">
                 This is the search preferences pane.
             </div> 
-            <div class="filters" ng-show="activeSearchTab==0">
+            <div class="filters" ng-show="activeSearchTab==0">              
                 <span>
                     <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
                     </select>
                 </span>
                 <span>
-                    <select ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="contextSearch()">
+                    <select ng-disabled="filterService.isAChildNodeSearch" ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="contextSearch()">
                         <option style="display:none" value="">--Select a Context--</option>
                     </select>
                 </span>
+                <span 
+                    ng-show="searchResultsMessage==''&&(filterService.selectedProtocolForm==''||filterService.selectedProtocolForm==null)&&filterService.reset==1&&filterService.classifications[0].children.length">
+                    <select 
+                    ng-hide="filterService.isAChildNodeSearch"
+                    ng-options="item.text for item in filterService.classifications[0].children" 
+                    name="filterService.selectedClassification" 
+                    ng-model="filterService.selectedClassification" 
+                    ng-change="resetSelecttoNull('selectedClassification')">
+                        <option value="">All Classifications</option>
+                    </select>
+                    <span class="staticText" ng-show="filterService.isAChildNodeSearch">Classification: {{filterService.selectedClassification.text}}</span>                    
+                </span>
+
+                <span 
+                    ng-show="searchResultsMessage==''&&(filterService.selectedClassification==''||filterService.selectedClassification==null)&&filterService.reset==1&&filterService.protocolForms[0].children.length">
+                    <select 
+                    ng-hide="filterService.isAChildNodeSearch"
+                    ng-options="item.text for item in filterService.protocolForms[0].children" 
+                    name="filterService.selectedProtocolForm" 
+                    ng-model="filterService.selectedProtocolForm" 
+                    ng-change="resetSelecttoNull('selectedClassification')">
+                        <option value="">All ProtocolForms</option>
+                    </select>
+                    <span class="staticText" ng-show="filterService.isAChildNodeSearch">ProtocolForm: {{filterService.selectedProtocolForm.text}}</span>                    
+                </span>
+
                 <span>
                     <button ng-click="resetFilters()">Reset</button>
                 </span>
@@ -370,7 +396,8 @@
                 <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
                        value=""/>
             </script>
-            <table data-ng-table="tableParams" class="searchResultsTable">
+
+            <table data-ng-table="tableParams" show-filter="true" class="searchResultsTable">
                 <tr class="searchResultsTableTr" data-ng-repeat="result in $data">
                     <td header="'ng-table/headers/checkbox.html'">
                         <!--<input type="checkbox" data-ng-model="checkboxes.items[result.publicId]" ng-click="">-->
@@ -378,6 +405,8 @@
                     </td>
 
                     <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
+
+
                         <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
                     </td>
                     <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'"

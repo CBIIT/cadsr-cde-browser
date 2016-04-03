@@ -220,6 +220,13 @@ ul.cdeSearchMessage li{
 #cdeSearchArea .filters select {
     width:200px;
 }
+
+#cdeSearchArea .filters .staticText {
+    font-size:80%;
+    padding-left:14px;
+    padding-right:12px;
+}
+
 .cdeSearchPreferences {
     padding:5px;
 }
