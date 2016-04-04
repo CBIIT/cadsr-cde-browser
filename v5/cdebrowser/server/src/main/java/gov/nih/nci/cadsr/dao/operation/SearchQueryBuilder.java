@@ -61,21 +61,13 @@ FIXME remove this
      * @param clientQuery        The text the user put in the search text field in the UI.
      * @param clientSearchMode   Exact phrase, All of the words, OR At least one of the words.
      * @param clientSearchField  0 if user select Name field, 1 for Public ID.
-     * @param programArea        Empty if All
-     * @param context            If empty, will not be used
-     * @param classification     If empty, will not be used
-     * @param protocol           If empty, will not be used
-     * @param workFlowStatus     sbr.ac_status_lov_view - asl_name
-     *                           TODO use a nonempty workFlowStatus rather than exclude list
-     *                           <p>
-     *                           This exclude list comes from common.WorkflowStatusEnum#getExcludList():
-     *                           If empty, AND asl.asl_name NOT IN ('CMTE APPROVED',
-     *                           'CMTE SUBMTD',
-     *                           'CMTE SUBMTD USED',
-     *                           'RETIRED ARCHIVED',
-     *                           'RETIRED PHASED OUT',
-     *                           'RETIRED WITHDRAWN')
-     * @param registrationStatus sbr.ac_registrations_view - registration_status
+     *
+     * @param programArea        Empty if All  -  Works
+     * @param context            If empty, will not be used   -  Works
+     * @param classification     If empty, will not be used   -  DOes not work right yet
+     * @param protocol           If empty, will not be used  - not implemented yet
+     * @param workFlowStatus     sbr.ac_status_lov_view - asl_name   -  Works   If empty will use the exclude list  from common.WorkflowStatusEnum#getExcludList():
+     * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
      */
     public void initSeqrchQueryBuilder(
             String clientQuery, String clientSearchMode, int clientSearchField,
@@ -133,7 +125,7 @@ FIXME remove this
             return;
         }
 
-        // Make sure we got a valid search fiel name or public ID
+        // Make sure we got a valid search field name or public ID
         if( ( clientSearchField != NAME_FIELD ) && ( clientSearchField != PUBLIC_ID_FIELD ) ) //Unknown Search Field
         {
             logger.error( "Search builder received Unknown Search Field: [" + clientSearchField + "]" );
@@ -145,6 +137,8 @@ FIXME remove this
         clientQuery = StringUtils.sanitizeForSql( clientQuery );
 
 
+
+        // FIXME classification doesn't work right yet - set as empty, to avoid using this incorrect classificationWhere
         // If we are not filtering by classification, we don't need sbr.classification_schemes in the sql.
         if( classification.isEmpty() )
         {

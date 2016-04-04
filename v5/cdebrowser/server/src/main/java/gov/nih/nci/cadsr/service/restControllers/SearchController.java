@@ -203,26 +203,6 @@ public class SearchController
 
 
     /**
-     * @param query       The text of the users search input.
-     * @param field       0=Name 1=PublicId
-     * @param queryType   0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE
-     * @param programArea Constrain a search to the specified Program Area, if programArea is empty, search all.
-     * @return an array of BasicSearchNodes.
-     */
-    private SearchNode[] contextSearch( String query, int field, int queryType, String programArea )
-    {
-        String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        //If programArea an empty string, all program areas will be searched
-        List<SearchModel> results = searchDAO.getAllContexts( query, searchMode, field, programArea, "", "", "", "", "", "", "" );
-
-        return buildSearchResultsNodes( results );
-    }
-
-    /**
      * If index is 0, or too high, return "All"
      *
      * @param index

@@ -47,6 +47,7 @@ public static String wkFlowDbField = "asl.asl_name";
 
     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
     public String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
+    // I don't think classification is working right yet
     public String classificationFrom = ", sbr.classification_schemes cls ";
     public String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
 
