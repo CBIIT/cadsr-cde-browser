@@ -4,16 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import gov.nih.nci.cadsr.common.util.DBUtil;
-import gov.nih.nci.cadsr.dao.model.BasicSearchModel;
-import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.SearchModel;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.service.UnitTestCommon;
-import gov.nih.nci.cadsr.service.model.search.BasicSearchNode;
+import gov.nih.nci.cadsr.service.model.search.SearchNode;
 import junit.framework.TestCase;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,48 +22,63 @@ import java.util.List;
  * The BasicSearchController contains the rest service/entry point
  */
 
-public class BasicSearchControllerTest extends TestCase
+public class SearchControllerTest extends TestCase
 {
-    BasicSearchController basicSearchController;
-    private BasicSearchNode[] searchNodes;
+    SearchController searchController;
+    private SearchNode[] searchNodes;
     private List<ProgramAreaModel> programAreaModelList;
     private UnitTestCommon unitTestCommon;
 
     public void setUp()
     {
         unitTestCommon = new UnitTestCommon();
-        basicSearchController = new BasicSearchController();
-        List<BasicSearchModel> sampleRawQueryResults = initSampleSearchResults();
-        searchNodes = basicSearchController.buildSearchResultsNodes( sampleRawQueryResults );
+        searchController = new SearchController();
         programAreaModelList = unitTestCommon.initSampleProgramAreas(  );
-        basicSearchController.setProgramAreaModelList( programAreaModelList );
+
+        searchController.setProgramAreaModelList( programAreaModelList );
+        List<SearchModel> sampleRawQueryResults = initSampleSearchResults();
+        searchNodes = searchController.buildSearchResultsNodes( sampleRawQueryResults );
+
+    }
+    public static String readFile( String file ) throws IOException {
+        BufferedReader reader = new BufferedReader( new FileReader(file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        while( ( line = reader.readLine() ) != null ) {
+            stringBuilder.append( line );
+            stringBuilder.append( ls );
+        }
+
+        return stringBuilder.toString();
     }
 
 
     public void testProgramAreaPalNameLookUp0()
     {
         // Zero is Program Area "All" which should return an empty (not null) String
-        assertEquals( "", basicSearchController.getProgramAreaPalNameByIndex( 0 ) );
+        assertEquals( "", searchController.getProgramAreaPalNameByIndex( 0 ) );
     }
 
     public void testProgramAreaPalNameLookUp1()
     {
         // One should return the first ProgramArea name, they start at one rather than zero because the client will us zero to indicate all.
-        assertEquals( "CancerCenters", basicSearchController.getProgramAreaPalNameByIndex( 1 ) );
+        assertEquals( "CancerCenters", searchController.getProgramAreaPalNameByIndex( 1 ) );
         //Last one
-        assertEquals( "UNASSIGNED", basicSearchController.getProgramAreaPalNameByIndex( programAreaModelList.size() ) );
+        assertEquals( "UNASSIGNED", searchController.getProgramAreaPalNameByIndex( programAreaModelList.size() ) );
     }
 
     public void testProgramAreaPalNameLookUp2()
     {
         // If index is too high, should warn, and return empty String (All)
-        assertEquals( "", basicSearchController.getProgramAreaPalNameByIndex( programAreaModelList.size() + 1 ) );
+        assertEquals( "", searchController.getProgramAreaPalNameByIndex( programAreaModelList.size() + 1 ) );
     }
 
 
     /**
      * searchNodes is sample query data generated with:
-     * cdebrowserServer/basicSearchWithProgramAreaTest?query=diastolic&field=0&queryType=1&programArea=2
+     * cdebrowserServer/searchWithProgramAreaTest?query=diastolic&field=0&queryType=1&programArea=2
      */
     public void testBuildSearchResultsNodes0()
     {
@@ -156,9 +170,9 @@ public class BasicSearchControllerTest extends TestCase
      * Initialize sample search results.
      * <p/>
      * Raw query data generated with:
-     * cdebrowserServer/basicSearchWithProgramAreaTest?query=diastolic&field=0&queryType=1&programArea=2
+     * cdebrowserServer/searchWithProgramAreaTest?query=diastolic&field=0&queryType=1&programArea=2
      */
-    private ArrayList<BasicSearchModel> initSampleSearchResults()
+    private ArrayList<SearchModel> initSampleSearchResults()
     {
         Gson gson = new GsonBuilder().create();
         String json = null;
@@ -172,7 +186,7 @@ public class BasicSearchControllerTest extends TestCase
         {
             assertTrue( e.getMessage(), false );
         }
-        return gson.fromJson( json, new TypeToken<ArrayList<BasicSearchModel>>()
+        return gson.fromJson( json, new TypeToken<ArrayList<SearchModel>>()
         {
         }.getType() );
     }

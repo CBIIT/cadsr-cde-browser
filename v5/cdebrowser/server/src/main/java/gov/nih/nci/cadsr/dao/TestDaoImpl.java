@@ -48,9 +48,7 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
         final List<String> rowVals = new ArrayList<>();
         String sql = "SELECT * FROM " + tabCol[0] + " WHERE " + tabCol[1] + " LIKE '%C43234%' OR " + tabCol[1] + " LIKE '%C17459%' OR " +
                 tabCol[1] + " LIKE '%C17998%' OR " + tabCol[1] + " LIKE '%C41222%' ";
-        ;
-        //String sql = "select " + tabCol[1] + " from " +  tabCol[0] + " WHERE " +  tabCol[1] +" LIKE '%C43234%'" ;
-        logger.debug( sql + " <<<<<<<" );
+
 
         jdbcTemplate.query( sql, args, new RowCallbackHandler()
                 {
@@ -64,22 +62,8 @@ public class TestDaoImpl extends AbstractDAOOperations implements TestDao
                         {
                             strResults += "[" + tabCol[0] + "] [" + rsmd.getColumnName( f ) + "] [";
                             strResults += rs.getString( f ) + "] | ";
-                            //logger.debug( "RS: " + rs.isLast() );
-                            //logger.debug( "RS: " + rs.getString( 2 ) );
-                            //rowVals.add( rs.getRow() );
                         }
-                        //logger.debug( "RS: " + strResults );
-                        System.out.println( strResults );
-                        /*
-                        if( tableName.compareTo( "SBR.AC_CI_BU,AC_IDSEQ" ) == 0)
-                        {
-                            System.out.println( strResults + " XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-                        }
-                        else
-                        {
-                            System.out.println( strResults );
-                        }
-*/
+
                         rowVals.add( strResults );
                     }
                 }

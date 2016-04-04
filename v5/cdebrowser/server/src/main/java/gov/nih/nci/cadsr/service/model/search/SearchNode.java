@@ -3,13 +3,12 @@ package gov.nih.nci.cadsr.service.model.search;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.service.model.context.BaseNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class BasicSearchNode
+public class SearchNode
 {
-    private Logger logger = LogManager.getLogger( BasicSearchNode.class.getName() );
+    private Logger logger = LogManager.getLogger( SearchNode.class.getName() );
     private String longName;
     private String preferredQuestionText;
     private String ownedBy;
@@ -20,7 +19,7 @@ public class BasicSearchNode
     private String registrationStatus;
     private String href = "";
     private String deIdseq;
-    // Status will tell the client if there was an error, if so message will be in text field.
+    // Status will tell the client if there was an error, if so message will be in text field.- this may no longer be true.
     private int status;
 
     public String getLongName()

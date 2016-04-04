@@ -5,7 +5,7 @@ package gov.nih.nci.cadsr.dao.model;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
-public class BasicSearchModel extends BaseModel
+public class SearchModel extends BaseModel
 {
     String deIdseq;
     String dePreferredName;

@@ -225,30 +225,30 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Context
                             if (/cdesByContext$/.test(actionParts[0])) {
-                                scope.basicSearchServerRestCall(actionParts[0],"contextId",actionParts[1],1,0, selectedNode);
+                                scope.searchServerRestCall(actionParts[0],"contextId",actionParts[1],1);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification
                             if (/cdesByClassificationScheme$/.test(actionParts[0])) {
-                                scope.basicSearchServerRestCall(actionParts[0],"classificationSchemeId",actionParts[1],1,0, selectedNode);                                
+                                scope.searchServerRestCall(actionParts[0],"classificationSchemeId",actionParts[1],1);                                
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification Scheme
                             if (/cdesByClassificationSchemeItem$/.test(actionParts[0])) {
-                                scope.basicSearchServerRestCall(actionParts[0],"classificationSchemeItemId",actionParts[1],1,0, selectedNode);                                
+                                scope.searchServerRestCall(actionParts[0],"classificationSchemeItemId",actionParts[1],1);                                
                             }
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol
                             if (/cdesByProtocol$/.test(actionParts[0])) {
-                                scope.basicSearchServerRestCall(actionParts[0],"protocolId",actionParts[1],1,0, selectedNode);                                
+                                scope.searchServerRestCall(actionParts[0],"protocolId",actionParts[1],1);                                
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol Form
                             if (/cdesByProtocolForm$/.test(actionParts[0])) {
-                                scope.basicSearchServerRestCall(actionParts[0],"id",actionParts[1],1,0, selectedNode);                                
+                                scope.searchServerRestCall(actionParts[0],"id",actionParts[1],1);                                
                             }
 
 
@@ -276,7 +276,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //set highlight to selected node
                 selNode.selected = 'selected';
                 // console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
-                scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
+                // scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
 
                 //Update the current node with the one just selected.
                 scope[treeId].currentNode = selNode;

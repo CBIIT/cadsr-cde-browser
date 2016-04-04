@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<sql:query var="rs" dataSource="jdbc/CDEBrowserDS">
+<sql:clientQuery var="rs" dataSource="jdbc/CDEBrowserDS">
     select id, foo, bar from testdata
-</sql:query>
+</sql:clientQuery>
 
 <html>
 <head>

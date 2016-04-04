@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" 
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:task="http://www.springframework.org/schema/task"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:util="http://www.springframework.org/schema/util"
@@ -13,7 +13,7 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/task
-       http://www.springframework.org/schema/task/spring-task.xsd 
+       http://www.springframework.org/schema/task/spring-task.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util.xsd"
@@ -42,13 +42,13 @@
         <property name="objectClassConceptDAO" ref="objectClassConceptDAO"/>
         <property name="conceptDAO" ref="conceptDAO"/>
         <property name="propertyConceptDAO" ref="propertyConceptDAO"/>
-
     </bean>
 
-    <bean id="basicSearchController" class="gov.nih.nci.cadsr.service.restControllers.BasicSearchController">
-        <property name="basicSearchDAO" ref="basicSearchDAO"/>
+    <bean id="searchController" class="gov.nih.nci.cadsr.service.restControllers.SearchController">
+        <property name="searchDAO" ref="searchDAO"/>
         <property name="dataElementDAO" ref="dataElementDAO"/>
         <property name="restControllerCommon" ref="resControllerCommon"/>
+        <property name="searchQueryBuilder" ref="searchQueryBuilder"/>
     </bean>
 
     <bean id="contextDataController" class="gov.nih.nci.cadsr.service.restControllers.ContextDataController">
@@ -65,11 +65,11 @@
     </bean>
 
     <bean id="cdeCartController" class="gov.nih.nci.cadsr.service.restControllers.CdeCartController">
-        <property name="basicSearchDAO" ref="basicSearchDAO"/>
+        <property name="searchDAO" ref="searchDAO"/>
         <property name="dataElementDAO" ref="dataElementDAO"/>
         <property name="restControllerCommon" ref="resControllerCommon"/>
     </bean>
-    
+
     <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
     </bean>
@@ -80,7 +80,7 @@
 
     <bean id="acRegistrationsDAO" class="gov.nih.nci.cadsr.dao.AcRegistrationsDAOImpl" parent="abstractDao"/>
     <bean id="acAttCsCsiDAO" class="gov.nih.nci.cadsr.dao.AcAttCsCsiDAOImpl" parent="abstractDao"/>
-    <bean id="basicSearchDAO" class="gov.nih.nci.cadsr.dao.BasicSearchDAOImpl" parent="abstractDao"/>
+    <bean id="searchDAO" class="gov.nih.nci.cadsr.dao.SearchDAOImpl" parent="abstractDao"/>
     <bean id="conceptDAO" class="gov.nih.nci.cadsr.dao.ConceptDAOImpl" parent="abstractDao"/>
 
     <bean id="classificationSchemeDAO" class="gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl" parent="abstractDao"/>
@@ -185,9 +185,12 @@
 	<bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownload">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
      </bean>
-     
+
      <bean id="getXmlDownload" class="gov.nih.nci.cadsr.download.GetXmlDownload">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
 	</bean>
 
+    <bean id="searchQueryBuilder" class="gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder">
+
+    </bean>
 </beans>

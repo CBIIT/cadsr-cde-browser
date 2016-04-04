@@ -1,7 +1,4 @@
-package gov.nih.nci.cadsr.service.search;
-/*
- * Copyright 2016 Leidos Biomedical Research, Inc.
- */
+package gov.nih.nci.cadsr.dao.operation;
 
 public abstract class AbstractSearchQueryBuilder
 {
@@ -31,6 +28,11 @@ public abstract class AbstractSearchQueryBuilder
             + "      ,asl.display_order wkflow_order "
             + "      ,de.cde_id cdeid";
 
+////////////////////////////////////
+public static String wkFlowDbField = "asl.asl_name";
+
+////////////////////////////////////
+
 
     //////////////////////////////////////////////////////////////////
     //Will eventually be set as a preference or settings from client.
@@ -39,12 +41,13 @@ public abstract class AbstractSearchQueryBuilder
     protected String[] statusWhere = { "ALL" };
     protected String[] excludeArr = { "Retired" };
     protected String altName = "";
-    public static String[] aslNameExcludeList = { "CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN" };
+    // replaced public static String[] aslNameExcludeList = { "CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN" };
     protected String[] searchIn = { "ALL" };
 
 
     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
     public String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
+    public String classificationFrom = ", sbr.classification_schemes cls ";
     public String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
 
     //jspValueDomain is in advancedSearch_inc.jsp associated with a field labeled “Search for Value Domains”.  It’s an odd hidden field associated with a “LOV” AND with a text field that is disabled.  There’s a DB table for value_domains.  Value Domain (VD), Value Meaning (VM) AND Permissible Values (PV) all contribute to the data about what can be the answers to questions.
