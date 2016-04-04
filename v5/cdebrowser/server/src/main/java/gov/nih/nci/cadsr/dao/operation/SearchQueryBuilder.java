@@ -37,16 +37,17 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     {
 
     }
-/*
-FIXME remove this
-    public SearchQueryBuilder(
-            String clientQuery, String clientSearchMode, int clientSearchField,
-            String programArea )
-    {
-        this( clientQuery, clientSearchMode, clientSearchField, programArea, "", "", "", "", "", "", "" );
-    }
 
-*/
+    /*
+    FIXME remove this
+        public SearchQueryBuilder(
+                String clientQuery, String clientSearchMode, int clientSearchField,
+                String programArea )
+        {
+            this( clientQuery, clientSearchMode, clientSearchField, programArea, "", "", "", "", "", "", "" );
+        }
+
+    */
     public SearchQueryBuilder(
             String clientQuery, String clientSearchMode, int clientSearchField,
             String programArea,
@@ -61,10 +62,9 @@ FIXME remove this
      * @param clientQuery        The text the user put in the search text field in the UI.
      * @param clientSearchMode   Exact phrase, All of the words, OR At least one of the words.
      * @param clientSearchField  0 if user select Name field, 1 for Public ID.
-     *
      * @param programArea        Empty if All  -  Works
      * @param context            If empty, will not be used   -  Works
-     * @param classification     If empty, will not be used   -  DOes not work right yet
+     * @param classification     If empty, will not be used   -  Does not work right yet
      * @param protocol           If empty, will not be used  - not implemented yet
      * @param workFlowStatus     sbr.ac_status_lov_view - asl_name   -  Works   If empty will use the exclude list  from common.WorkflowStatusEnum#getExcludList():
      * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
@@ -135,7 +135,6 @@ FIXME remove this
 
         // AppScan
         clientQuery = StringUtils.sanitizeForSql( clientQuery );
-
 
 
         // FIXME classification doesn't work right yet - set as empty, to avoid using this incorrect classificationWhere
