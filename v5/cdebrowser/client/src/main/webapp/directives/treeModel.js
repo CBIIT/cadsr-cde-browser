@@ -50,12 +50,12 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
             var template =
                 '<ul>' +
 
-                    //Start of the "treeModel forEach" loop
+                //Start of the "treeModel forEach" loop
                 '<li data-ng-repeat="node in ' + treeMenuModel + '">' +
 
-                    //Is a folder with children and is collapsed
+                //Is a folder with children and is collapsed
                 '<i class="closedFolder" cl' +
-                    //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} "' +
+                //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} "' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="node.' + nodeChildren + '.length && ' +
@@ -63,9 +63,9 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
 
-                    //It is a Folder (Not protocol) Has NO children
+                //It is a Folder (Not protocol) Has NO children
                 '<i class="emptyFolder" cl' +
-                    //'title="B {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="B {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="((node.' + nodeChildren + '.length == 0 && ' +
@@ -75,74 +75,74 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 ' ) " ' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
-                    //Is a Protocol folder with children and is collapsed
+                //Is a Protocol folder with children and is collapsed
                 '<i class="protocolFolderClosed" cl' +
-                    //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}  ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}  ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 4"' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
 
-                    //Is a CSI folder with children and is collapsed
+                //Is a CSI folder with children and is collapsed
                 '<i class="csiFolderClosed" cl' +
-                    //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 5"' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
 
-                    //Is a Folder (Has child node(s)) and is expanded
+                //Is a Folder (Has child node(s)) and is expanded
                 '<i class="openFolder" ' +
-                    //'title="D {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="D {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' != 4 && node.' + nodeType + ' != 5"' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
-                    //Is a CSI folder and Has child node(s) and is expanded
+                //Is a CSI folder and Has child node(s) and is expanded
                 '<i class="csiFolderOpen" ' +
-                    //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 5" ' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
-                    //Is a Protocol folder and Has child node(s) and is expanded
+                //Is a Protocol folder and Has child node(s) and is expanded
                 '<i class="protocolFolderOpen" ' +
-                    //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 4" ' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
 
-                    //End leaf (not a folder) that is NOT a Protocol form
+                //End leaf (not a folder) that is NOT a Protocol form
                 '<i class="csi" ' +
-                    //'title="{{node.' + nodeHoverText + '}}  Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="{{node.' + nodeHoverText + '}}  Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 'data-ng-hide="node.' + nodeChildren + '.length || node.' + nodeType + ' != 2   " data-ng-click="' + treeId + '.selectNodeNorm(node, node.' + nodeAction + ' )"></i> ' +
 
-                    //End leaf (not a folder) that IS a Protocol form
+                //End leaf (not a folder) that IS a Protocol form
                 '<i class="protocolForm" ' +
-                    //'title="protocolForm {{node.' + nodeHoverText + '}}  Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="protocolForm {{node.' + nodeHoverText + '}}  Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 'data-ng-hide="node.' + nodeChildren + '.length || node.' + nodeType + ' != 6"' +
                 ' data-ng-click="' + treeId + '.selectNodeNorm(node, node.' + nodeAction + ')"></i> ' +
 
-                    //End leaf (not a folder)
+                //End leaf (not a folder)
                 '<span data-ng-class="node.selected" id="selectedNode" ' +
-                    //'title="G {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                //'title="G {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 'data-ng-click="' + treeId + '.selectNodeLabel(node, node.' + nodeAction + ')">{{node.' + nodeLabel + '}}</span>' +
 
 
                 '<div  data-ng-hide="node.collapsed" ' +
-                    //'title="H {{node.' + nodeHoverText + '}}  *Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}} " ' +
+                //'title="H {{node.' + nodeHoverText + '}}  *Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
                 'data-tree-id=' + treeId + ' ' +
                 'data-tree-model=node.' + nodeChildren + ' ' +
@@ -155,7 +155,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 'data-node-children=' + nodeChildren + ' ' +
                 '></div>' +
 
-                    //End of the "treeModel forEach" loop
+                //End of the "treeModel forEach" loop
                 '</li>' +
                 '</ul>';
 
@@ -190,10 +190,10 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
                                     // $http.get("data6.json").success(function (response) {
                                     $http.get(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
-                                    "/" + parameters[0] +
-                                    "/?contextId=" + parameters[1] +
-                                    "&programArea=" + parameters[2] +
-                                    "&folderType=" + parameters[3]).success(function (response) {
+                                        "/" + parameters[0] +
+                                        "/?contextId=" + parameters[1] +
+                                        "&programArea=" + parameters[2] +
+                                        "&folderType=" + parameters[3]).success(function (response) {
                                         selectedNode['children'] = response[0]['children'];
                                         selectedNode['dataLoaded'] = true;
 
@@ -225,30 +225,30 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Context
                             if (/cdesByContext$/.test(actionParts[0])) {
-                                scope.searchServerRestCall(actionParts[0],"contextId",actionParts[1],1);
+                                scope.searchServerRestCall(actionParts[0],"contextId",actionParts[1],1,0, selectedNode);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification
                             if (/cdesByClassificationScheme$/.test(actionParts[0])) {
-                                scope.searchServerRestCall(actionParts[0],"classificationSchemeId",actionParts[1],1);                                
+                                scope.searchServerRestCall(actionParts[0],"classificationSchemeId",actionParts[1],1,0, selectedNode);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification Scheme
                             if (/cdesByClassificationSchemeItem$/.test(actionParts[0])) {
-                                scope.searchServerRestCall(actionParts[0],"classificationSchemeItemId",actionParts[1],1);                                
+                                scope.searchServerRestCall(actionParts[0],"classificationSchemeItemId",actionParts[1],1,0, selectedNode);
                             }
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol
                             if (/cdesByProtocol$/.test(actionParts[0])) {
-                                scope.searchServerRestCall(actionParts[0],"protocolId",actionParts[1],1);                                
+                                scope.searchServerRestCall(actionParts[0],"protocolId",actionParts[1],1,0, selectedNode);
                             }
 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Protocol Form
                             if (/cdesByProtocolForm$/.test(actionParts[0])) {
-                                scope.searchServerRestCall(actionParts[0],"id",actionParts[1],1);                                
+                                scope.searchServerRestCall(actionParts[0],"id",actionParts[1],1,0, selectedNode);
                             }
 
 
@@ -276,7 +276,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //set highlight to selected node
                 selNode.selected = 'selected';
                 // console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
-                // scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
+                scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
 
                 //Update the current node with the one just selected.
                 scope[treeId].currentNode = selNode;

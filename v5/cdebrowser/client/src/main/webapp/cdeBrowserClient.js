@@ -1,34 +1,58 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService, filterService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService, filterService) {
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Need to interact with view //
-    fs.getServerData('/cdebrowserClient/temp_filter_data.json'); // load server data //
+    $scope.$watch('contextListMaster',function(data) {
+        if (data) {
+            fs.serverData = $scope.contextListMaster;
+            fs.selectedProgramArea = $scope.contextListMaster[0];
+        };
+    });
+    window.scope = $scope;
+    // fs.getServerData('/cdebrowserClient/temp_filter_data.json'); // load server data //
 
     // reset filters //
     $scope.resetFilters = function() {
         fs.resetFilters();
     };
 
-    // get program area number //
-    $scope.getProgramArea = function() {
-        $scope.onClickTab(fs.selectedProgramArea.programArea)
-    };
-
     // do a search based on selected context //
     $scope.contextSearch = function() {
-        $scope.searchServerRestCall("cdebrowserServer/rest/cdesByContext","contextId", fs.selectedContext.idSeq, 1)
+        $scope.searchServerRestCall("cdebrowserServer/rest/cdesByContext","contextId", fs.selectedContext.idSeq, 1,1);
+        fs.isAChildNodeSearch = false;
+        fs.getClassificationsAndProtocolForms();
         $scope.breadCrumbs = fs.selectedContext.treePath;
     };
 
     // selects dropdown values based on search left tree click //
-    $scope.selectFiltersByNode = function(searchType,id) {
-        console.log(searchType, id)
+    $scope.selectFiltersByNode = function(searchType,id, selectedNode) {
+        fs.isAChildNodeSearch = false;
+        fs.selectedClassification = ""; fs.selectedProtocolForm = "";
         if (searchType=='contextId') {
             fs.selectContextByNode($scope.currentTab,id);
+        }
+        else {
+            fs.isAChildNodeSearch = true;
+            var currentContext = fs.getContextByName(selectedNode);
+            if (searchType=='classificationSchemeItemId') {
+
+                fs.selectedClassification = fs.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
+                // delete(fs.selectedClassification['selected'])
+            }
+            else if (searchType=='classificationSchemeId') {
+                fs.selectedClassification = angular.copy(selectedNode);
+                // delete(fs.selectedClassification['selected'])
+            }
+            else {
+                fs.selectedProtocolForm = angular.copy(selectedNode);
+                // delete(fs.selectedProtocolForm['selected'])
+            };
         };
     };
+
+
     $scope.$storage = $sessionStorage;
     var cartService = cartService;
     $scope.$storage.cartService = cartService;
@@ -136,7 +160,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             return;
         }
         var checked = 0, unchecked = 0,
-        total = $scope.searchResults.length;
+            total = $scope.searchResults.length;
         angular.forEach($scope.searchResults, function (item) {
             checked += ($scope.checkboxes.items[item.deIdseq]) || 0;
             unchecked += (!$scope.checkboxes.items[item.deIdseq]) || 0;
@@ -186,7 +210,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //When a top tab is clicked, hide all trees, then show this new current one.
     $scope.onClickTab = function (tab) {
         $scope.currentTab = tab;
-        fs.selectedProgramArea = fs.serverData[tab]
         $scope.hideContexts();
         $scope.show[tab] = true;
     };
@@ -270,7 +293,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
          *  conceptName        If empty, will not be used
          *  conceptCode        If empty, will not be used
          */
-        $scope.searchServerRestCall("".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
+         $scope.searchServerRestCall("".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
@@ -299,19 +322,23 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // Basic search query to get search results //
-    $scope.searchServerRestCall = function (serverUrl, searchType, id, isNode) {
-    // $scope.searchServerRestCall = function (serverUrl,isNode, id, type) {
+    $scope.searchServerRestCall = function (serverUrl, searchType, id, isNode, isDropdown, selectedNode) {
+        // $scope.searchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
+
         if (searchType==undefined) { // used when doing keyword search //
             var url = "".concat("/",serverUrl)
         }
 
         $scope.searchFactory.showSearch = true;
 
-        // check if user clicked the left tree. If so clear out the search //
+        // check if user clicked the left tree or used dropdown to search. If so clear out the search //
         if (isNode) {
-            $scope.selectFiltersByNode(searchType,id);
+            if (!isDropdown) // check if user selected dropdown instead of tree //
+            {
+                $scope.selectFiltersByNode(searchType,id, selectedNode);
+            };
             $scope.isNode  = !$scope.isNode;
         }
         // reset filters if user searches using the text box //
@@ -521,7 +548,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
 
-        $scope.versionData = function() {
+    $scope.versionData = function() {
         $http.get("version.json").success(function (response) {
             $scope.versionPopover = response;
             $scope.versionPopover.templateUrl = 'versionPopoverTemplate.html';
@@ -579,9 +606,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // initialize table params //
     $scope.initTableParams = function () {
         $scope.tableParams = new ngTableParams(
+
             {
                 page: 1,            // show first page
                 count: 100,           // count per page
+
                 sorting: {
                     registrationSort: 'asc',
                     workflowSort: 'asc',
@@ -603,6 +632,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
             });
     };
+
+
 
     $scope.sortNames = {
         'registrationSort': 'Registration Status',
@@ -635,24 +666,24 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.downloadToExcel = function(param) {
         $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}
         if (param) { // download to prior excel
-          $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
-          success(function(data, status, headers, config) {
-            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
-            $scope.progressMessage.status=0;
-          }).
-          error(function(data, status, headers, config) {
-            $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
-          });
+            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
+            success(function(data, status, headers, config) {
+                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
+                $scope.progressMessage.status=0;
+            }).
+            error(function(data, status, headers, config) {
+                $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
+            });
         }
         else { // download to excel
-          $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
-          success(function(data, status, headers, config) {
-            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
-            $scope.progressMessage.status=0;
-          }).
-          error(function(data, status, headers, config) {
-            $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
-          });
+            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
+            success(function(data, status, headers, config) {
+                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
+                $scope.progressMessage.status=0;
+            }).
+            error(function(data, status, headers, config) {
+                $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
+            });
         }
 
     };
@@ -661,9 +692,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.downloadToXML = function() {
         $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}
         $http({method: 'POST', url: '/cdebrowserServer/rest/downloadXml?src=deSearch',data: $scope.checkedItemsForDownload}).
-            success(function(data) {
-                $scope.progressMessage.status=0;
-                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data;
+        success(function(data) {
+            $scope.progressMessage.status=0;
+            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data;
         }).
         error(function(data, status, headers, config) {
             $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
