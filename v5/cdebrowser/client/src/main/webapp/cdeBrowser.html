@@ -385,7 +385,10 @@
                     <span class="row"><a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a></span>
                 </div>
                 <div class="right">
-                    <span class="row">{{searchResultsCount}}</span>
+                    <span class="row">
+                        <span ng-show="filteredData.length">Results: {{filteredData.length}}</span>
+                        <span ng-show="!filteredData.length">No search results</span>
+                    </span>
                     <span class="row">
                         <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
                     </span>
@@ -397,10 +400,9 @@
                        value=""/>
             </script>
 
-            <table data-ng-table="tableParams" show-filter="true" class="searchResultsTable">
-                <tr class="searchResultsTableTr" data-ng-repeat="result in $data">
+            <table data-ng-table="tableParams" show-filter="false" class="searchResultsTable" ng-show="filteredData.length">
+                <tr class="searchResultsTableTr" data-ng-repeat="result in $data track by $index">
                     <td header="'ng-table/headers/checkbox.html'">
-                        <!--<input type="checkbox" data-ng-model="checkboxes.items[result.publicId]" ng-click="">-->
                         <input type="checkbox" data-ng-model="checkboxes.items[result.deIdseq]" ng-click="">
                     </td>
 
@@ -481,6 +483,7 @@
 <script src="cdeBrowserProperties.js"></script>
 <script src="directives/treeModel.js"></script>
 <script src="directives/resize.js"></script>
+<script src="filters/customFilter.js"></script>
 <script src="plugins/ng-table/ng-table.min.js"></script>
 
 <script src="cde/cde.js"></script>

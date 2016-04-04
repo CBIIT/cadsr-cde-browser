@@ -1,7 +1,8 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, ngTableParams, searchFactory, cartService, filterService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService) {
+    window.scope = $scope;
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Need to interact with view //
     $scope.$watch('contextListMaster',function(data) {
@@ -10,7 +11,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.selectedProgramArea = $scope.contextListMaster[0];
         };
     });
-    window.scope = $scope;
     // fs.getServerData('/cdebrowserClient/temp_filter_data.json'); // load server data //
 
     // reset filters //
@@ -80,6 +80,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         };
     });
 
+    // watch for changes to filter. When it changes, refilter data //
+    $scope.$watch('searchFilter', function() {
+      $scope.filteredData = $filter('customFilter')($scope.searchResults,$scope.searchFilter);
+        $scope.tableParams.settings({
+          dataset: $scope.filteredData
+        });
+    },true);
 
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
 
@@ -156,9 +163,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // watch for data checkboxes
     $scope.$watch('checkboxes.items', function (values) {
-        if (!$scope.records) {
-            return;
-        }
+
         var checked = 0, unchecked = 0,
             total = $scope.searchResults.length;
         angular.forEach($scope.searchResults, function (item) {
@@ -353,8 +358,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.progressMessage.status=0;
 
         $http.get(url).success(function (response) {
-            $scope.tableParams.$params.page = 1;
+            // $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
+            $scope.filteredData = $filter('customFilter')(response);
+            $scope.tableParams.settings({ dataset: response });
             if ($scope.searchResults.length > 0) {
 
                 // TODO Quick hack, make status message better when time permits.
@@ -587,7 +594,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             var newSort = {};
             for (item in $scope.tableParams.sorting()) {
                 newSort[item]="asc";
-                $scope.tableParams.$params.sorting = newSort;
+                $scope.tableParams.sorting(newSort);
                 $scope.tableParams.reload();
             };
             isInitialColumnClick = 2;
@@ -604,34 +611,55 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     });
 
     // initialize table params //
+
     $scope.initTableParams = function () {
-        $scope.tableParams = new ngTableParams(
 
-            {
-                page: 1,            // show first page
-                count: 100,           // count per page
+        $scope.tableParams = new NgTableParams(
+          {
+            count:100,
+            page:1,
+            filter: { },
+            sorting: {
+                registrationSort: 'asc',
+                workflowSort: 'asc',
+                longName: 'asc'
+            }      
+          },
+          {
+            defaultSort:"asc",
+            counts:[],
+            dataset:[]
+            
+          });  
+    };        
+    // $scope.initTableParams = function () {
+    //     $scope.tableParams = new ngTableParams(
 
-                sorting: {
-                    registrationSort: 'asc',
-                    workflowSort: 'asc',
-                    longName: 'asc'
-                }
-            },
-            {
-                $scope: $scope,
-                defaultSort:"asc",
-                counts: [], // hide page counts control
-                // get data and set total for pagination
-                getData: function ($defer, params) {
-                    var data = $scope.searchResults;
-                    params.total(data.length);
-                    // use build-in angular filter
-                    var orderedData = params.sorting() ?
-                        $filter('orderBy')(data, params.orderBy()) : data;
-                    $defer.resolve($scope.records = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            });
-    };
+    //         {
+    //             page: 1,            // show first page
+    //             count: 100,           // count per page
+
+    //             sorting: {
+    //                 registrationSort: 'asc',
+    //                 workflowSort: 'asc',
+    //                 longName: 'asc'
+    //             }
+    //         },
+    //         {
+    //             $scope: $scope,
+    //             defaultSort:"asc",
+    //             counts: [], // hide page counts control
+    //             // get data and set total for pagination
+    //             getData: function ($defer, params) {
+    //                 var data = $scope.searchResults;
+    //                 params.total(data.length);
+    //                 // use build-in angular filter
+    //                 var orderedData = params.sorting() ?
+    //                     $filter('orderBy')(data, params.orderBy()) : data;
+    //                 $defer.resolve($scope.records = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+    //             }
+    //         });
+    // };
 
 
 
