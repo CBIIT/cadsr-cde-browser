@@ -6,6 +6,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	this.isAChildNodeSearch = false;
 	this.selectedProgramArea = undefined; // selected program area  from drop down //
 	this.selectedContext = ""; // selected context from drop down //
+	this.searchFilter = {};
 	this.classifications = []; // classification array for context //
 	this.protocolForms = []; // protocol form array for context //	
 	this.currentContext = []; // temp method, delete after rest services are fixec //
@@ -20,6 +21,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		this.protocolForms = [];
 		this.selectedProtocolForm = "";
 		this.selectedClassification	= "";
+		this.searchFilter = {};
 		this.reset = 0; // hide protocol forms and classification dropdowns //
 	};
 

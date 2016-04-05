@@ -8,6 +8,7 @@ angular.module("cdeBrowserApp")
         var includInFilteredItems = true; // Items are true when filtered until proven otherwise. Once a false is returned the item is not included in filtered array //
         for (var k in filterKeys) { // loop through filter and one by one get matches. //
           var key = filterKeys[k];
+          if (searchFilter[key]==null) { searchFilter[key]="" }
           var keyValue = items[r][key]
           // test if filter type is string/number or object //
           if (typeof searchFilter[key]=="object") { // filter is probably array //
@@ -41,10 +42,13 @@ angular.module("cdeBrowserApp")
             // var regex = RegExp(searchFilter[key], "i"); // simple string match //
             if (keyValue==null) { keyValue="" }
             // if (keyValue.search(regex)==-1) { // if regex is -1 not a match //
-            if (keyValue.toLowerCase()!=searchFilter[key].toLowerCase()) { // if regex is -1 not a match //
-              includInFilteredItems = false;
-              break;
-            };
+            if (searchFilter[key]!="") {
+              if (keyValue.toLowerCase()!=searchFilter[key].toLowerCase()) { // if regex is -1 not a match //
+                includInFilteredItems = false;
+                break;
+              };              
+            }
+
           };
         };
         if (includInFilteredItems==true) { // push item if it is to be included in results //

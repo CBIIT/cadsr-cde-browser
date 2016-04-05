@@ -234,17 +234,17 @@
             </div> 
             <div class="filters" ng-show="activeSearchTab==0">              
                 <span>
-                    <select ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
+                    <select label="Program Area Filter" ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
                     </select>
                 </span>
                 <span>
-                    <select ng-disabled="filterService.isAChildNodeSearch" ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="contextSearch()">
+                    <select label="Context Filter" ng-disabled="filterService.isAChildNodeSearch" ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="contextSearch()">
                         <option style="display:none" value="">--Select a Context--</option>
                     </select>
                 </span>
                 <span 
                     ng-show="searchResultsMessage==''&&(filterService.selectedProtocolForm==''||filterService.selectedProtocolForm==null)&&filterService.reset==1&&filterService.classifications[0].children.length">
-                    <select 
+                    <select label="Classification Filter" 
                     ng-hide="filterService.isAChildNodeSearch"
                     ng-options="item.text for item in filterService.classifications[0].children" 
                     name="filterService.selectedClassification" 
@@ -257,7 +257,7 @@
 
                 <span 
                     ng-show="searchResultsMessage==''&&(filterService.selectedClassification==''||filterService.selectedClassification==null)&&filterService.reset==1&&filterService.protocolForms[0].children.length">
-                    <select 
+                    <select label="Protocol Form Filter"
                     ng-hide="filterService.isAChildNodeSearch"
                     ng-options="item.text for item in filterService.protocolForms[0].children" 
                     name="filterService.selectedProtocolForm" 
@@ -267,9 +267,19 @@
                     </select>
                     <span class="staticText" ng-show="filterService.isAChildNodeSearch">ProtocolForm: {{filterService.selectedProtocolForm.text}}</span>                    
                 </span>
+                <span ng-show="searchResults.length">
+                    <select label="Registration Status Filter" ng-model="filterService.searchFilter.registrationStatus" ng-options="item for item in staticFilters.registrationStatusFilter">
+                        <option value="">All Registration Status</option>                        
+                    </select>
+                </span>
+                <span ng-show="searchResults.length">
+                    <select label="Workflow Status Filter" ng-model="filterService.searchFilter.workflowStatus" ng-options="item for item in staticFilters.workflowStatusFilter">
+                        <option value="">All Workflow Status</option>                                                
+                    </select>
+                </span>                
 
                 <span>
-                    <button ng-click="resetFilters()">Reset</button>
+                    <button label="Reset Filters" ng-click="resetFilters()">Reset</button>
                 </span>
                                             
             </div>
@@ -280,22 +290,22 @@
         <span ng-show="searchResults.length">
             <ul class="cdeDownloadButtons">
                 <li>
-                    <button data-ng-click="downloadToExcel()" ng-disabled="!checkedItemsForDownload.length">
+                    <button label="Download To Excel" data-ng-click="downloadToExcel()" ng-disabled="!checkedItemsForDownload.length">
                         Download to Excel
                     </button>
                 </li>
                 <li>
-                    <button data-ng-click="downloadToExcel('prior')" ng-disabled="!checkedItemsForDownload.length">
+                    <button label="Download to Prior Excel" data-ng-click="downloadToExcel('prior')" ng-disabled="!checkedItemsForDownload.length">
                         Download to Prior Excel
                     </button>
                 </li>    
                 <li>
-                    <button data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
+                    <button label="Download Data Elements as XML" data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
                         Download Data Elements as XML
                     </button>
                 </li> 
                 <li>
-                    <button ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length">
+                    <button label="Add to CDE Cart" ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length">
                         Add to CDE Cart
                     </button> 
                 </li>                       

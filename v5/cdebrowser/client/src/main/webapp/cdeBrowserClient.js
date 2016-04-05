@@ -81,11 +81,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     });
 
     // watch for changes to filter. When it changes, refilter data //
-    $scope.$watch('searchFilter', function() {
-      $scope.filteredData = $filter('customFilter')($scope.searchResults,$scope.searchFilter);
+    $scope.$watch('filterService.searchFilter', function() {
+      $scope.filteredData = $filter('customFilter')($scope.searchResults,fs.searchFilter);
         $scope.tableParams.settings({
           dataset: $scope.filteredData
         });
+        $scope.tableParams.reload();
     },true);
 
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
@@ -331,7 +332,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // $scope.searchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
-
+        $scope.filterService.searchFilter = {};
         if (searchType==undefined) { // used when doing keyword search //
             var url = "".concat("/",serverUrl)
         }
@@ -441,17 +442,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 
     $scope.dataLoadFromServer = function () {
-        $scope.filters = {};
+        $scope.staticFilters = {};
         $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/contextData");
 
         // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
         $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').success(function (response) {
             $scope.registrationSort = response;
-            $scope.filters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
+            $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
+            $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
         });
         $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').success(function (response) {
             $scope.workflowSort = response;
-            $scope.filters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
+            $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
         });
 
     };
