@@ -7,7 +7,8 @@ angular.module("cdeBrowserApp")
         var filterKeys = Object.keys(searchFilter); // get keys of filter as array //
         var includInFilteredItems = true; // Items are true when filtered until proven otherwise. Once a false is returned the item is not included in filtered array //
         for (var k in filterKeys) { // loop through filter and one by one get matches. //
-          var key = filterKeys[k]; 
+          var key = filterKeys[k];
+          var keyValue = items[r][key]
           // test if filter type is string/number or object //
           if (typeof searchFilter[key]=="object") { // filter is probably array //
             if (typeof items[r][key] != "object") { // item key being filtered on is probably a string //
@@ -37,8 +38,10 @@ angular.module("cdeBrowserApp")
 
           }
           else { // filter is not an array //
-            var regex = RegExp(searchFilter[key], "i"); // simple string match //
-            if (items[r][key].search(regex)==-1) { // if regex is -1 not a match //
+            // var regex = RegExp(searchFilter[key], "i"); // simple string match //
+            if (keyValue==null) { keyValue="" }
+            // if (keyValue.search(regex)==-1) { // if regex is -1 not a match //
+            if (keyValue.toLowerCase()!=searchFilter[key].toLowerCase()) { // if regex is -1 not a match //
               includInFilteredItems = false;
               break;
             };
