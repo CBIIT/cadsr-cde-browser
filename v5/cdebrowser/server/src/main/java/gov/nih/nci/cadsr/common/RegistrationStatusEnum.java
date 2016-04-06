@@ -9,7 +9,7 @@ public enum RegistrationStatusEnum
 	CANDIDATE("Candidate"),
 	PROPOSED("Proposed"),
 	QUALIFIED("Qualified"),
-	SUPERSEDED("Superseded"),
+	SUPERCEDED("Superceded"),
 	STDELSEWHERE("Standardized Elsewhere"),
 	RETIRED("Retired"),
 	APPLICATION("Application"),

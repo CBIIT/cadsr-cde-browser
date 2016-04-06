@@ -28,9 +28,9 @@ public class LookupDataControllerTest
  
     private MockMvc mockMvc;
     
-    private static final String[] EXPECTED_REG_STATUS = {"Standard", "Candidate", "Proposed", "Qualified", "Superseded", "Standardized Elsewhere", "Retired", "Application", "Suspended", ""};
+    private static final String[] EXPECTED_REG_STATUS = {"Standard", "Candidate", "Proposed", "Qualified", "Superceded", "Standardized Elsewhere", "Retired", "Application", "Suspended", ""};
  
-    private static final String[] EXPECTED_WRK_FLW_STATUS = {"APPRVD FOR TRIAL USE","CMTE APPROVED","CMTE SUBMTD","CMTE SUBMTD USED","DRAFT MOD","DRAFT NEW","RELEASED","RELEASED-NON-CMPLNT","RETIRED ARCHIVED","RETIRED PHASED OUT","RETIRED WITHDRAWN"};
+    private static final String[] EXPECTED_WRK_FLW_STATUS = {"RELEASED", "APPRVD FOR TRIAL USE", "DRAFT NEW", "CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "DRAFT MOD", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN", "RETIRED DELETED", "RELEASED-NON-CMPLNT"};    
     
     @Before
     public void setup() {

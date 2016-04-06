@@ -5,17 +5,18 @@ import java.util.List;
 
 public enum WorkflowStatusEnum
 {
+    Released( "RELEASED" ),
     ApprvdForTrialUse( "APPRVD FOR TRIAL USE" ),
+    DraftNew( "DRAFT NEW" ),
     CmteApproved( "CMTE APPROVED" ),
     CmteSubmtd( "CMTE SUBMTD" ),
     CmteSubmtdUsed( "CMTE SUBMTD USED" ),
     DraftMod( "DRAFT MOD" ),
-    DraftNew( "DRAFT NEW" ),
-    Released( "RELEASED" ),
-    ReleasedNonComlnt( "RELEASED-NON-CMPLNT" ),
     RetiredArchived( "RETIRED ARCHIVED" ),
     RetiredPhasedOut( "RETIRED PHASED OUT" ),
-    RetiredWithdrawn( "RETIRED WITHDRAWN" );
+    RetiredWithdrawn( "RETIRED WITHDRAWN" ),
+    RetiredDeleted( "RETIRED DELETED" ),
+    ReleasedNonComlnt( "RELEASED-NON-CMPLNT" );
 
     private String workflowStatus;
 
