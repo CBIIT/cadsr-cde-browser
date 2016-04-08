@@ -519,7 +519,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     public String getSqlStmt()
     {
     	
-        return "SELECT * from ( " + sqlStmt + ") where rownum <= 500";
+        return sqlStmt;
     }
 
     public void setSqlStmt( String sqlStmt )
