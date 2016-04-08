@@ -5,6 +5,8 @@ package gov.nih.nci.cadsr.dao;
 
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationScheme;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,15 +118,17 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
         return results;
     }
+    
+    @Override
+	public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext()
+	{
+		sql = "SELECT DISTINCT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, csv.cs_idseq csIdSeq, csv.long_name csLongName" +
+                "FROM sbr.classification_schemes_view csv, sbr.contexts c " +
+                " WHERE csv.asl_name = 'RELEASED' AND csv.cstl_name != 'Publishing' AND csv.conte_idseq = c.conte_idseq " +
+                " ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.long_name)";
+
+        List<ClassificationScheme> results = getAll(sql, ClassificationScheme.class);
+        return results;
+	}
 
 }
-/*
-"SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
-                         "preferred_definition, cstl_name,asl_name,conte_idseq " +
-                         " FROM sbr.classification_Schemes_view" +
-                         " WHERE CONTE_IDSEQ = ? " +
-                         " and ASL_NAME = 'RELEASED' " +
-                         " and CSTL_NAME != 'Publishing' " +
-                         "  order by UPPER(long_name)  "
-
-*/

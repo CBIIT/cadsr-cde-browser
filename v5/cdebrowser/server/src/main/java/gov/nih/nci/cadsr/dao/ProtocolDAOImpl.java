@@ -5,6 +5,8 @@ package gov.nih.nci.cadsr.dao;
 
 import gov.nih.nci.cadsr.dao.model.ProtocolModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,17 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
 
         return result;
     }
+    
+    @Override
+	public List<Protocol> getAllProtocolsWithProgramAreaAndContext()
+	{
+		String sql = "SELECT DISTINCT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, pve.proto_idseq protocolIdSeq, pve.long_name protocolLongName " 
+				   + "FROM SBREXT.PROTOCOLS_VIEW_EXT pve, sbr.contexts c WHERE pve.conte_idseq = c.conte_idseq "
+				   + "ORDER BY c.pal_name, c.conte_idseq, pve.long_name";
+        
+		List<Protocol> result = getAll(sql, Protocol.class);
+
+        return result;
+	}
 
 }

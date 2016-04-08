@@ -4,6 +4,7 @@ package gov.nih.nci.cadsr.dao;
  */
 
 import gov.nih.nci.cadsr.dao.model.ClassificationSchemeModel;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationScheme;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface ClassificationSchemeDAO
     public List<ClassificationSchemeModel> getClassificationSchemes( String conteId );
     public List<ClassificationSchemeModel> getChildrenClassificationSchemesByCsId( String csId );
     public ClassificationSchemeModel getClassificationSchemeById( String contextId );
+    
+    public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext();
 }

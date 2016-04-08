@@ -4,6 +4,7 @@ package gov.nih.nci.cadsr.dao;
  */
 
 import gov.nih.nci.cadsr.dao.model.ProtocolModel;
+import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface ProtocolDAO
 {
     public List<ProtocolModel> getAllProtocols();
     public List<ProtocolModel> getProtocolsByContext( String conteId );
+    
+    public List<Protocol> getAllProtocolsWithProgramAreaAndContext();
 }
