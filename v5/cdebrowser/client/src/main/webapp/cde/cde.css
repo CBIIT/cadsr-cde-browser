@@ -208,7 +208,10 @@ ul.cdeSearchMessage li{
     margin-right:6px;
     padding-bottom:10px;
 }
-
+#cdeSearchArea span {
+    display:inline-block;
+    vertical-align:top;    
+}
 #cdeSearchArea div.view {
     border:1px solid white;
 }

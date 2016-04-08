@@ -261,3 +261,21 @@
     margin:10px 0px 0px 9px;
     display:inline-block;
 }
+
+.ui-select-container {
+    width:175px;
+}
+.ui-select-container input {
+    border:1px solid red;
+    width:175px !important;
+}
+
+.ui-select-container .ui-select-match-text {
+    overflow:hidden;
+    width:110px;
+}
+
+.ui-select-choices{
+    border:1px solid red;
+    width:auto !important;
+}

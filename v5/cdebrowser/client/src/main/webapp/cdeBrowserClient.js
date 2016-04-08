@@ -1,17 +1,36 @@
-
+    
 
 // controller
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService) {
     window.scope = $scope;
+    
+    /* Start of filter service */
     var fs = filterService // define service instance //
-    $scope.filterService = fs; // set service to scope. Need to interact with view //
-    $scope.$watch('contextListMaster',function(data) {
+    $scope.filterService = fs; // set service to scope. Used to interact with view //
+
+    $scope.$watch('contextListMaster',function(data) { // gets data for program areas and contexts //
         if (data) {
             fs.serverData = $scope.contextListMaster;
-            fs.selectedProgramArea = $scope.contextListMaster[0];
+            fs.searchFilter.programArea=0;
         };
     });
-    // fs.getServerData('/cdebrowserClient/temp_filter_data.json'); // load server data //
+
+    // watch for changes to dropdowns. When it changes, refilter data //
+    $scope.$watch('filterService.searchFilter', function() {
+        if (fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
+            fs.isLeftTreeClick = false; 
+        }
+        else {
+            if (Object.keys(fs.searchFilter).length) {
+                if (Object.keys(fs.searchFilter).length==1) { // dont do a search because only program area is selected //
+                    console.log("NO SEARCH")
+                }
+                else { // do search because at least one dropdown besides program area is selected //
+                    console.log("DO SEARCH but with timeout so the context gets set back ot empty, disable filters");
+                };
+            };            
+        };
+    },true);
 
     // reset filters //
     $scope.resetFilters = function() {
@@ -19,6 +38,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // do a search based on selected context //
+    // not used? //
     $scope.contextSearch = function() {
         $scope.searchServerRestCall("cdebrowserServer/rest/cdesByContext","contextId", fs.selectedContext.idSeq, 1,1);
         fs.isAChildNodeSearch = false;
@@ -29,7 +49,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // selects dropdown values based on search left tree click //
     $scope.selectFiltersByNode = function(searchType,id, selectedNode) {
         fs.isAChildNodeSearch = false;
-        fs.selectedClassification = ""; fs.selectedProtocolForm = "";
+        fs.isLeftTreeClick = true;
         if (searchType=='contextId') {
             fs.selectContextByNode($scope.currentTab,id);
         }
@@ -37,20 +57,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.isAChildNodeSearch = true;
             var currentContext = fs.getContextByName(selectedNode);
             if (searchType=='classificationSchemeItemId') {
-
                 fs.selectedClassification = fs.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
-                // delete(fs.selectedClassification['selected'])
             }
             else if (searchType=='classificationSchemeId') {
                 fs.selectedClassification = angular.copy(selectedNode);
-                // delete(fs.selectedClassification['selected'])
             }
             else {
                 fs.selectedProtocolForm = angular.copy(selectedNode);
-                // delete(fs.selectedProtocolForm['selected'])
             };
         };
     };
+    /* End of filter service */
 
 
     $scope.$storage = $sessionStorage;
@@ -79,15 +96,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.changeView(0,{title: 'Search Results',view: 'search'});
         };
     });
-
-    // watch for changes to filter. When it changes, refilter data //
-    $scope.$watch('filterService.searchFilter', function() {
-      $scope.filteredData = $filter('customFilter')($scope.searchResults,fs.searchFilter);
-        $scope.tableParams.settings({
-          dataset: $scope.filteredData
-        });
-        $scope.tableParams.reload();
-    },true);
 
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
 

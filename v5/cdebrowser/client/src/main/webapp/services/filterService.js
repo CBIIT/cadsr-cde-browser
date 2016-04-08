@@ -1,28 +1,21 @@
 angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	// define variables //
 	this.serverData = []; // initial data from server goes here
-	this.selectedClassification = ""; // only displays after selecting a context
-	this.selectedProtocolForm = ""; // only displays after selecting a context
-	this.isAChildNodeSearch = false;
-	this.selectedProgramArea = undefined; // selected program area  from drop down //
-	this.selectedContext = ""; // selected context from drop down //
 	this.searchFilter = {};
+	this.isAChildNodeSearch = false;
+	this.isLeftTreeClick = false; // temporarily set to true when left nav is hit so the watch function doesn't search //
 	this.classifications = []; // classification array for context //
 	this.protocolForms = []; // protocol form array for context //	
 	this.currentContext = []; // temp method, delete after rest services are fixec //
-	this.reset = 0; // filters have been reset when 0 //
+	this.showClassificationsProtocolForms = 0; // when 1 show the classification and protocol form dropdowns //
 
 	// resets all important variables
 	this.resetFilters = function() {
-		this.selectedContext = "";
+        this.searchFilter = {programArea:0}
 		this.isAChildNodeSearch = false;	
-		this.selectedProgramArea = this.serverData[0];
 		this.classifications = [];
 		this.protocolForms = [];
-		this.selectedProtocolForm = "";
-		this.selectedClassification	= "";
-		this.searchFilter = {};
-		this.reset = 0; // hide protocol forms and classification dropdowns //
+		this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
 	};
 
 	// gets initial server data //
@@ -37,13 +30,21 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		};		
 	};
 
+	this.resetContext = function() {
+		if (this.searchFilter.programArea!=0) {
+			if (Object.keys(this.searchFilter).indexOf('contextId')>-1) {
+				delete(this.searchFilter.contextId)
+			}
+		}
+	};
+
 	// returns classificiations and protocol forms //
 	this.getClassificationsAndProtocolForms = function() {
 		this.classifications = []; this.protocolForms = [];
-		this.reset=1; // show classifications and protocolforms dropdowns //
+		this.showClassificationsProtocolForms=1; // show classifications and protocolforms dropdowns //
 		var that = this;
-		var classifications = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.selectedContext.idSeq,"&programArea=",this.selectedProgramArea.programArea,"&folderType=0")).query();
-		var protocolForms = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.selectedContext.idSeq,"&programArea=",this.selectedProgramArea.programArea,"&folderType=1")).query();
+		var classifications = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.contextId,"&programArea=",this.searchFilter.programArea,"&folderType=0")).query();
+		var protocolForms = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.contextId,"&programArea=",this.searchFilter.programArea,"&folderType=1")).query();
 		classifications.$promise.then(function(response) {
 			that.classifications = response;
 		});
@@ -54,11 +55,11 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 
 	// select context dropdown based on context click in left menu //
 	this.selectContextByNode = function(programArea,id) {
-		this.selectedProgramArea = this.serverData[programArea]; // user clicked the left menu. set program area //
-		var programAreaContexts = this.selectedProgramArea.children;
+		this.searchFilter.programArea = programArea; // user clicked the left menu. set program area //
+		var programAreaContexts = this.serverData[this.searchFilter.programArea].children;
 		for (var item in programAreaContexts) {
 			if (programAreaContexts[item].idSeq == id) {
-				this.selectedContext = programAreaContexts[item]; 
+				this.searchFilter.contextId = id; 
 				this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
 			};
 		};
@@ -71,7 +72,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		var currentProgramAreaChildren = this.serverData[node.programArea].children;
 		for (var x in currentProgramAreaChildren) {
 			if (currentProgramAreaChildren[x].text==node.treePath[1]) {
-				this.selectContextByNode(node.programArea, currentProgramAreaChildren[x].idSeq)
+				this.selectConte3xtByNode(node.programArea, currentProgramAreaChildren[x].idSeq)
 				this.currentContext = currentProgramAreaChildren[x];
 				break
 			};
@@ -95,14 +96,5 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 			};
 		};
 	};
-
-	// this.findIndexOfNode = function(node) {
-	// 	var children = this.protocolForms[0]['children'];
-	// 	for (var item in children) {
-	// 		if (node.href.split(',')[1]==children[item].href.split(',')[1]) {
-	// 			this.selectedProtocolForm = children[item]
-	// 		};
-	// 	};
-	// };
 
 });

@@ -10,7 +10,10 @@
     <link rel="stylesheet" type="text/css" href="css/treeMenu.css">
     <link rel="stylesheet" type="text/css" href="css/tabMenu.css">
     <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/select2.css">
     <link rel="stylesheet" type="text/css" href="cde/cde.css">
+    <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
 
 </head>
 <body>
@@ -232,9 +235,28 @@
             <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==3">
                 This is the search preferences pane.
             </div> 
-            <div class="filters" ng-show="activeSearchTab==0">              
-                <span>
-                    <select label="Program Area Filter" ng-disabled="filterService.selectedContext" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
+            <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">   
+
+<span>
+<ui-select ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
+    <ui-select-match placeholder="Select a Program Area">{{$select.selected.text}}</ui-select-match>
+    <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
+        <div ng-bind-html="value.text | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>    
+</span>
+<span>
+<ui-select theme="bootstrap" ng-model="filterService.searchFilter.contextId">
+    <ui-select-match allow-clear="true" placeholder="Select a Context">{{$select.selected.text}}</ui-select-match>
+    <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
+        <div ng-bind-html="value.text | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>     
+</span>
+
+<!-- {{filterService.searchFilter}}             -->
+                <!-- <span>
+                    <select label="Program Area Filter" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
                     </select>
                 </span>
                 <span>
@@ -276,7 +298,7 @@
                     <select label="Workflow Status Filter" ng-model="filterService.searchFilter.workflowStatus" ng-options="item for item in staticFilters.workflowStatusFilter">
                         <option value="">All Workflow Status</option>                                                
                     </select>
-                </span>                
+                </span>         -->        
 
                 <span>
                     <button label="Reset Filters" ng-click="resetFilters()">Reset</button>
@@ -495,6 +517,7 @@
 <script src="directives/resize.js"></script>
 <script src="filters/customFilter.js"></script>
 <script src="plugins/ng-table/ng-table.min.js"></script>
+<script src='libs/ui-select/select.js'></script>
 
 <script src="cde/cde.js"></script>
 <script src="cde/adminInfo/cde-adminInfo.js"></script>
