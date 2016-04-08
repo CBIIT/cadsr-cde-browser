@@ -220,6 +220,19 @@ ul.cdeSearchMessage li{
     margin:10px 0px 0px 15px;
 }
 
+#cdeSearchArea .filters * {
+    font-size:12px;
+    height:auto;
+}
+#cdeSearchArea .filters .btn {
+    font-size:12px;
+}
+
+#cdeSearchArea .filters .form-control {
+    font-size:12px;
+    height:29px;
+}
+
 #cdeSearchArea .filters select {
     width:170px;
 }
