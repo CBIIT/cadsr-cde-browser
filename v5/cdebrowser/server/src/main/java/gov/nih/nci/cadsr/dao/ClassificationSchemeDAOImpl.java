@@ -122,8 +122,8 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     @Override
 	public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext()
 	{
-		sql = "SELECT DISTINCT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, csv.cs_idseq csIdSeq, csv.long_name csLongName" +
-                "FROM sbr.classification_schemes_view csv, sbr.contexts c " +
+		sql = "SELECT DISTINCT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, csv.cs_idseq csIdSeq, csv.long_name csLongName " +
+                " FROM sbr.classification_schemes_view csv, sbr.contexts c " +
                 " WHERE csv.asl_name = 'RELEASED' AND csv.cstl_name != 'Publishing' AND csv.conte_idseq = c.conte_idseq " +
                 " ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.long_name)";
 
