@@ -129,6 +129,37 @@
         	<version>${poi.version}</version>
         </dependency>
         <dependency>
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+        <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.6.2.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.castor</groupId>
+			<artifactId>adaptx</artifactId>
+			<version>0.9.14</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.codehaus.castor</groupId>
+			<artifactId>castor</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>adaptx</groupId>
+					<artifactId>adaptx</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>1.0.4</version>
+		</dependency>
+        <dependency>
             <groupId>nih.nci.cadsr</groupId>
             <artifactId>objectcart-beans</artifactId>
             <version>${objectcart.version}</version>
@@ -137,6 +168,11 @@
             <groupId>nih.nci.cadsr</groupId>
             <artifactId>extension-client-framework</artifactId>
             <version>${objectcart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nih.nci.cadsr</groupId>
+            <artifactId>sdk-client-framework</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
         	<groupId>org.mockito</groupId>
@@ -249,6 +285,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>cobertura-maven-plugin</artifactId>
+                        <version>2.7</version>
                     </plugin>
                 </plugins>
             </build>
