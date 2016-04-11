@@ -3,11 +3,11 @@
 <div class="queryTypeRadioButtons">
     <label data-ng-repeat="qType in searchQueryTypes">
         <div>
-            <input
+            <input ng-disabled="fs.isSearching"
                     name="selectedQueryType"
                     type="radio"
                     value="{{qType.id}}"
-                    data-ng-model="$parent.selectedQueryType"/>
+                    data-ng-model="fs.dataElementVariables.selectedQueryType"/>
             {{qType.name}}
         </div>
     </label>
@@ -15,13 +15,13 @@
 
 <!-- Search field drop down, text input, search & clear button  -->
 <div class="searchInput">
-    <input class="basicSearchQuery" type="text" data-ng-model="basicSearchQuery" placeholder="Name" />
+    <input ng-disabled="fs.isSearching" class="basicSearchQuery" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Name" />
 
 
-    <button data-ng-click="onClickBasicSearch(basicSearchQuery, 0, selectedQueryType )">
+    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 0, fs.dataElementVariables.selectedQueryType )">
         Search
     </button>
-    <button data-ng-click="basicSearchQuery=''">
+    <button ng-disabled="fs.isSearching" data-ng-click="fs.dataElementVariables.basicSearchQuery=''">
         Clear
     </button>
     <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>

@@ -238,7 +238,7 @@
             <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">   
 
 <span>
-<ui-select ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
+<ui-select ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
     <ui-select-match placeholder="Select a Program Area">{{$select.selected.text}}</ui-select-match>
     <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
         <div ng-bind-html="value.text | highlight: $select.search"></div>
@@ -246,7 +246,7 @@
 </ui-select>    
 </span>
 <span>
-<ui-select theme="bootstrap" ng-model="filterService.searchFilter.contextId">
+<ui-select ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
     <ui-select-match allow-clear="true" placeholder="Select a Context">{{$select.selected.text}}</ui-select-match>
     <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
         <div ng-bind-html="value.text | highlight: $select.search"></div>
@@ -254,56 +254,29 @@
 </ui-select>     
 </span>
 
-<!-- {{filterService.searchFilter}}             -->
-                <!-- <span>
-                    <select label="Program Area Filter" ng-options="item.text for item in filterService.serverData" name="filterService.selectedProgramArea" ng-model="filterService.selectedProgramArea">
-                    </select>
-                </span>
-                <span>
-                    <select label="Context Filter" ng-disabled="filterService.isAChildNodeSearch" ng-options="item.text for item in filterService.selectedProgramArea.children" name="filterService.selectedContext" ng-model="filterService.selectedContext" ng-change="contextSearch()">
-                        <option style="display:none" value="">--Select a Context--</option>
-                    </select>
-                </span>
-                <span 
-                    ng-show="searchResultsMessage==''&&(filterService.selectedProtocolForm==''||filterService.selectedProtocolForm==null)&&filterService.reset==1&&filterService.classifications[0].children.length">
-                    <select label="Classification Filter" 
-                    ng-hide="filterService.isAChildNodeSearch"
-                    ng-options="item.text for item in filterService.classifications[0].children" 
-                    name="filterService.selectedClassification" 
-                    ng-model="filterService.selectedClassification" 
-                    ng-change="resetSelecttoNull('selectedClassification')">
-                        <option value="">All Classifications</option>
-                    </select>
-                    <span class="staticText" ng-show="filterService.isAChildNodeSearch">Classification: {{filterService.selectedClassification.text}}</span>                    
-                </span>
+<span>
+<ui-select ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
+    <ui-select-match allow-clear="true" placeholder="Select a Registration Status">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
+        <div ng-bind-html="value | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>     
+</span>
 
-                <span 
-                    ng-show="searchResultsMessage==''&&(filterService.selectedClassification==''||filterService.selectedClassification==null)&&filterService.reset==1&&filterService.protocolForms[0].children.length">
-                    <select label="Protocol Form Filter"
-                    ng-hide="filterService.isAChildNodeSearch"
-                    ng-options="item.text for item in filterService.protocolForms[0].children" 
-                    name="filterService.selectedProtocolForm" 
-                    ng-model="filterService.selectedProtocolForm" 
-                    ng-change="resetSelecttoNull('selectedClassification')">
-                        <option value="">All ProtocolForms</option>
-                    </select>
-                    <span class="staticText" ng-show="filterService.isAChildNodeSearch">ProtocolForm: {{filterService.selectedProtocolForm.text}}</span>                    
-                </span>
-                <span ng-show="searchResults.length">
-                    <select label="Registration Status Filter" ng-model="filterService.searchFilter.registrationStatus" ng-options="item for item in staticFilters.registrationStatusFilter">
-                        <option value="">All Registration Status</option>                        
-                    </select>
-                </span>
-                <span ng-show="searchResults.length">
-                    <select label="Workflow Status Filter" ng-model="filterService.searchFilter.workflowStatus" ng-options="item for item in staticFilters.workflowStatusFilter">
-                        <option value="">All Workflow Status</option>                                                
-                    </select>
-                </span>         -->        
+<span>
+<ui-select ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
+    <ui-select-match allow-clear="true" placeholder="Select a Workflow Status">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
+        <div ng-bind-html="value | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>     
+</span>
 
                 <span>
-                    <button label="Reset Filters" ng-click="resetFilters()">Reset</button>
+                    <button ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Reset</button>
                 </span>
-                                            
+                  <!-- {{filterService.searchFilter}}      -->
+                          
             </div>
         </div>              
         <!-- end display proper view based on tab selected -->

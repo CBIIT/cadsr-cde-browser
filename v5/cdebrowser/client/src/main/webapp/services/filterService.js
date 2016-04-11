@@ -1,13 +1,15 @@
 angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	// define variables //
 	this.serverData = []; // initial data from server goes here
+	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:""}
 	this.searchFilter = {};
 	this.isAChildNodeSearch = false;
 	this.isLeftTreeClick = false; // temporarily set to true when left nav is hit so the watch function doesn't search //
 	this.classifications = []; // classification array for context //
 	this.protocolForms = []; // protocol form array for context //	
-	this.currentContext = []; // temp method, delete after rest services are fixec //
+	this.currentContext = []; // current selected context and its children //
 	this.showClassificationsProtocolForms = 0; // when 1 show the classification and protocol form dropdowns //
+	this.isSearching = false; // is true if search is in progress. Disable all input fields //
 
 	// resets all important variables
 	this.resetFilters = function() {
@@ -32,8 +34,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 
 	this.resetContext = function() {
 		if (this.searchFilter.programArea!=0) {
-			if (Object.keys(this.searchFilter).indexOf('contextId')>-1) {
-				delete(this.searchFilter.contextId)
+			if (Object.keys(this.searchFilter).indexOf('context')>-1) {
+				this.searchFilter.context = ''
 			}
 		}
 	};
@@ -43,8 +45,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		this.classifications = []; this.protocolForms = [];
 		this.showClassificationsProtocolForms=1; // show classifications and protocolforms dropdowns //
 		var that = this;
-		var classifications = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.contextId,"&programArea=",this.searchFilter.programArea,"&folderType=0")).query();
-		var protocolForms = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.contextId,"&programArea=",this.searchFilter.programArea,"&folderType=1")).query();
+		var classifications = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.context,"&programArea=",this.searchFilter.programArea,"&folderType=0")).query();
+		var protocolForms = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.context,"&programArea=",this.searchFilter.programArea,"&folderType=1")).query();
 		classifications.$promise.then(function(response) {
 			that.classifications = response;
 		});
@@ -55,24 +57,22 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 
 	// select context dropdown based on context click in left menu //
 	this.selectContextByNode = function(programArea,id) {
-		this.searchFilter.programArea = programArea; // user clicked the left menu. set program area //
+		this.searchFilter = {programArea:programArea}; // user clicked the left menu. set program area //
 		var programAreaContexts = this.serverData[this.searchFilter.programArea].children;
 		for (var item in programAreaContexts) {
 			if (programAreaContexts[item].idSeq == id) {
-				this.searchFilter.contextId = id; 
+				this.searchFilter.context = id; 
 				this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
 			};
 		};
 	};
 
-	// get selected context via tree pruning //
-	// delete me when context is added to items //
-	// temporary method delete after rest services are fixed //
-	this.getContextByName = function(node) {
+	// get selected context by contextId //
+	this.getContextByContextId = function(node) {
 		var currentProgramAreaChildren = this.serverData[node.programArea].children;
 		for (var x in currentProgramAreaChildren) {
-			if (currentProgramAreaChildren[x].text==node.treePath[1]) {
-				this.selectConte3xtByNode(node.programArea, currentProgramAreaChildren[x].idSeq)
+			if (currentProgramAreaChildren[x].idSeq==node.contextId) {
+				this.selectContextByNode(node.programArea, node.contextId)
 				this.currentContext = currentProgramAreaChildren[x];
 				break
 			};
@@ -81,7 +81,6 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	};
 
 	// gets classificationSchemeId when selecting a classificationSchemeItemId //
-	// temporary method delete after rest services are fixed //
 	this.getClassifficationOrProtocolByName = function(currentContext,node) {
 		var parentText = node.treePath[node.treePath.length-2];
 		var children = currentContext.children;

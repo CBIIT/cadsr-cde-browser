@@ -263,11 +263,11 @@
 }
 
 .ui-select-container {
-    width:175px;
+    width:185px;
 }
 .ui-select-container input {
     border:1px solid red;
-    width:175px !important;
+    width:185px !important;
 }
 
 .ui-select-container .ui-select-match-text {

@@ -25,8 +25,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 if (Object.keys(fs.searchFilter).length==1) { // dont do a search because only program area is selected //
                     console.log("NO SEARCH")
                 }
-                else { // do search because at least one dropdown besides program area is selected //
-                    console.log("DO SEARCH but with timeout so the context gets set back ot empty, disable filters");
+                else {
+                     // do search because at least one dropdown besides program area is selected //
+                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "0", fs.dataElementVariables.selectedQueryType)
                 };
             };            
         };
@@ -55,14 +56,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
         else {
             fs.isAChildNodeSearch = true;
-            var currentContext = fs.getContextByName(selectedNode);
+            var currentContext = fs.getContextByContextId(selectedNode);
             if (searchType=='classificationSchemeItemId') {
                 fs.selectedClassification = fs.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
+                console.log(fs.selectedClassification);
             }
             else if (searchType=='classificationSchemeId') {
                 fs.selectedClassification = angular.copy(selectedNode);
+                console.log(fs.selectedClassification);                
             }
             else {
+                console.log(fs.selectedProtocolForm);                
                 fs.selectedProtocolForm = angular.copy(selectedNode);
             };
         };
@@ -307,7 +311,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
          *  conceptName        If empty, will not be used
          *  conceptCode        If empty, will not be used
          */
-         $scope.searchServerRestCall("".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
+        if (query=='') { query = '*'; }
+        var url = "".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type);
+        for (var x in fs.searchFilter) {
+            if (fs.searchFilter[x]) {
+                url+="&"+x+"="+fs.searchFilter[x]
+            }
+        };
+
+         // $scope.searchServerRestCall("".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
+         $scope.searchServerRestCall(url);
 
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
@@ -340,7 +353,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // $scope.searchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
-        $scope.filterService.searchFilter = {};
         if (searchType==undefined) { // used when doing keyword search //
             var url = "".concat("/",serverUrl)
         }
@@ -357,16 +369,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
         // reset filters if user searches using the text box //
         else {
-            $scope.resetFilters();
+            // $scope.resetFilters();
         }
 
         $scope.tabsDisabled = true;
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
+        fs.isSearching = true;       
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
 
         $http.get(url).success(function (response) {
+            fs.isSearching = false;
             // $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
             $scope.filteredData = $filter('customFilter')(response);

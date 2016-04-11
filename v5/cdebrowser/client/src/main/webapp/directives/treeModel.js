@@ -196,8 +196,18 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                         "&folderType=" + parameters[3]).success(function (response) {
                                         selectedNode['children'] = response[0]['children'];
                                         selectedNode['dataLoaded'] = true;
-
-
+                                        var children = selectedNode['children'];
+                                        for (var i in children) {
+                                          children[i]['contextId']=parameters[1];
+                                          var grandChildren = children[i].children;
+                                          for (var child in grandChildren) {
+                                            grandChildren[child]['contextId']=parameters[1]
+                                            var greatGrandChildren = grandChildren[child].children;
+                                            for (var g_child in greatGrandChildren) {
+                                                greatGrandChildren[g_child]['contextId']=parameters[1];
+                                            };
+                                          };
+                                        };
                                     });
                                 }
                             }
