@@ -58,10 +58,10 @@ public class LookupDataController
 		return csList;
 	}
 	
-	@RequestMapping(value="/protocolform", produces = "application/json")
-	public List<Protocol> getProtocolForm() throws RestControllerException
+	@RequestMapping(value="/protocol", produces = "application/json")
+	public List<Protocol> getProtocol() throws RestControllerException
 	{
-		logger.debug("Received request for Protocol Form information.");
+		logger.debug("Received request for Protocol information.");
 		List<Protocol> protocolList = new ArrayList<Protocol>();
 		try {
 			protocolList = protocolService.getProtocolsWithProgramAreaAndContext();

@@ -17,7 +17,7 @@ public class ProtocolServiceImpl implements ProtocolService
 	private Logger logger = LogManager.getLogger(ProtocolServiceImpl.class.getName() );
 	
 	@Autowired
-	ProtocolDAO protocolDAO;
+	private ProtocolDAO protocolDAO;
 
 	@Override
 	public List<Protocol> getProtocolsWithProgramAreaAndContext()

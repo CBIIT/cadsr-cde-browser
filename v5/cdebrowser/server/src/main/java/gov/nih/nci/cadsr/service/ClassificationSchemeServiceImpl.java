@@ -17,7 +17,7 @@ public class ClassificationSchemeServiceImpl implements ClassificationSchemeServ
 	private Logger logger = LogManager.getLogger(ClassificationSchemeServiceImpl.class.getName() );
 	
 	@Autowired
-	ClassificationSchemeDAO classificationSchemeDAO;
+	private ClassificationSchemeDAO classificationSchemeDAO;
 
 	@Override
 	public List<ClassificationScheme> getClassificationSchemesWithProgramAreaAndContext()
