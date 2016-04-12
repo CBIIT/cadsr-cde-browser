@@ -261,13 +261,12 @@
 }
 
 .ui-select-container {
-    width:auto !important;
+    width:185px;
     padding-bottom:10px;
 }
-
-
-.ui-select-placeholder {
-    margin-right:10px;
+.ui-select-container input {
+    border:1px solid red;
+    width:185px !important;
 }
 
 .ui-select-container .ui-select-match-text {
