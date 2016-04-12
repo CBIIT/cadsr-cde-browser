@@ -262,6 +262,7 @@
 
 .ui-select-container {
     width:auto !important;
+    padding-bottom:10px;
 }
 
 
