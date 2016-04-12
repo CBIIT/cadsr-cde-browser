@@ -27,7 +27,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
                 else {
                      // do search because at least one dropdown besides program area is selected //
-                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "0", fs.dataElementVariables.selectedQueryType)
+                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "0", fs.dataElementVariables.selectedQueryType);
+                    console.log("have to figure when context changes in order to reset the classifications, dropdowns")
                 };
             };            
         };
@@ -38,13 +39,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.resetFilters();
     };
 
-    // do a search based on selected context //
-    // not used? //
-    $scope.contextSearch = function() {
-        $scope.searchServerRestCall("cdebrowserServer/rest/cdesByContext","contextId", fs.selectedContext.idSeq, 1,1);
-        fs.isAChildNodeSearch = false;
-        fs.getClassificationsAndProtocolForms();
-        $scope.breadCrumbs = fs.selectedContext.treePath;
+    // When a context is changed, get classifications and protocol forms //
+    $scope.contextSearch = function(contextId) {
+                fs.getClassificationsAndProtocolForms();
     };
 
     // selects dropdown values based on search left tree click //
@@ -59,14 +56,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             var currentContext = fs.getContextByContextId(selectedNode);
             if (searchType=='classificationSchemeItemId') {
                 fs.selectedClassification = fs.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
-                console.log(fs.selectedClassification);
             }
             else if (searchType=='classificationSchemeId') {
                 fs.selectedClassification = angular.copy(selectedNode);
-                console.log(fs.selectedClassification);                
             }
             else {
-                console.log(fs.selectedProtocolForm);                
                 fs.selectedProtocolForm = angular.copy(selectedNode);
             };
         };
@@ -477,6 +471,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.workflowSort = response;
             $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
         });
+
+        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme').success(function(response) {
+            fs.lookupData['classifications'] = response;
+        });
+
+        $http.get('/cdebrowserServer/rest/lookupdata/protocol').success(function(response) {
+            fs.lookupData['protocols'] = response;
+        });        
 
     };
 

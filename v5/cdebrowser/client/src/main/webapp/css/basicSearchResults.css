@@ -256,18 +256,17 @@
     color: #F7F7E6
 }
 
-#filters select{
-    padding:0px !important;
-    margin:10px 0px 0px 9px;
-    display:inline-block;
+.filters button {
+    margin:5px !important;
 }
 
 .ui-select-container {
-    width:185px;
+    width:auto !important;
 }
-.ui-select-container input {
-    border:1px solid red;
-    width:185px !important;
+
+
+.ui-select-placeholder {
+    margin-right:10px;
 }
 
 .ui-select-container .ui-select-match-text {

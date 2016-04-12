@@ -236,46 +236,62 @@
                 This is the search preferences pane.
             </div> 
             <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">   
+                <span>
+                <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
+                    <ui-select-match placeholder="Select a Program Area">{{$select.selected.text}}</ui-select-match>
+                    <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
+                        <div ng-bind-html="value.text | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>    
+                </span>
+                <span>
+                <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
+                    <ui-select-match allow-clear="true" placeholder="Select a Context">{{$select.selected.text}}</ui-select-match>
+                    <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
+                        <div ng-bind-html="value.text | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
 
-<span>
-<ui-select ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
-    <ui-select-match placeholder="Select a Program Area">{{$select.selected.text}}</ui-select-match>
-    <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
-        <div ng-bind-html="value.text | highlight: $select.search"></div>
-    </ui-select-choices>
-</ui-select>    
-</span>
-<span>
-<ui-select ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
-    <ui-select-match allow-clear="true" placeholder="Select a Context">{{$select.selected.text}}</ui-select-match>
-    <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
-        <div ng-bind-html="value.text | highlight: $select.search"></div>
-    </ui-select-choices>
-</ui-select>     
-</span>
+                <span>
+                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
+                    <ui-select-match allow-clear="true" placeholder="Select a Registration Status">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
+                        <div ng-bind-html="value | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
 
-<span>
-<ui-select ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
-    <ui-select-match allow-clear="true" placeholder="Select a Registration Status">{{$select.selected}}</ui-select-match>
-    <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
-        <div ng-bind-html="value | highlight: $select.search"></div>
-    </ui-select-choices>
-</ui-select>     
-</span>
+                <span>
+                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
+                    <ui-select-match allow-clear="true" placeholder="Select a Workflow Status">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
+                        <div ng-bind-html="value | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
 
-<span>
-<ui-select ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
-    <ui-select-match allow-clear="true" placeholder="Select a Workflow Status">{{$select.selected}}</ui-select-match>
-    <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
-        <div ng-bind-html="value | highlight: $select.search"></div>
-    </ui-select-choices>
-</ui-select>     
-</span>
+                <span>
+                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="bootstrap" ng-model="filterService.searchFilter.classification">
+                    <ui-select-match allow-clear="true" placeholder="Select a Classification">{{$select.selected.csLongName}}</ui-select-match>
+                    <ui-select-choices repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
+                        <div ng-bind-html="value.csLongName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
+
+                <span>
+                <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification" theme="bootstrap" ng-model="filterService.searchFilter.protocol">
+                    <ui-select-match allow-clear="true" placeholder="Select a Protocol">{{$select.selected.protocolLongName}}</ui-select-match>
+                    <ui-select-choices repeat="value.protocolIdSeq as value in filterService.protocols | filter: $select.search">
+                        <div ng-bind-html="value.protocolLongName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
 
                 <span>
                     <button ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Reset</button>
                 </span>
-                  <!-- {{filterService.searchFilter}}      -->
                           
             </div>
         </div>              

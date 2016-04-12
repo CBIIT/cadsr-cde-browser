@@ -1,12 +1,13 @@
 angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	// define variables //
-	this.serverData = []; // initial data from server goes here
+	this.serverData = []; // initial data from server goes here //
+	this.lookupData = {}; // stores master list of classifications and protocol forms //
 	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:""}
 	this.searchFilter = {};
 	this.isAChildNodeSearch = false;
 	this.isLeftTreeClick = false; // temporarily set to true when left nav is hit so the watch function doesn't search //
 	this.classifications = []; // classification array for context //
-	this.protocolForms = []; // protocol form array for context //	
+	this.protocols = []; // protocol form array for context //	
 	this.currentContext = []; // current selected context and its children //
 	this.showClassificationsProtocolForms = 0; // when 1 show the classification and protocol form dropdowns //
 	this.isSearching = false; // is true if search is in progress. Disable all input fields //
@@ -16,7 +17,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
         this.searchFilter = {programArea:0}
 		this.isAChildNodeSearch = false;	
 		this.classifications = [];
-		this.protocolForms = [];
+		this.protocols = [];
 		this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
 	};
 
@@ -42,17 +43,21 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 
 	// returns classificiations and protocol forms //
 	this.getClassificationsAndProtocolForms = function() {
-		this.classifications = []; this.protocolForms = [];
-		this.showClassificationsProtocolForms=1; // show classifications and protocolforms dropdowns //
-		var that = this;
-		var classifications = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.context,"&programArea=",this.searchFilter.programArea,"&folderType=0")).query();
-		var protocolForms = $resource('/cdebrowserServer/rest/oneContextData?contextId='.concat(this.searchFilter.context,"&programArea=",this.searchFilter.programArea,"&folderType=1")).query();
-		classifications.$promise.then(function(response) {
-			that.classifications = response;
-		});
-		protocolForms.$promise.then(function(response) {
-			that.protocolForms = response;
-		});
+		this.classifications = []; this.protocols = [];
+		delete(this.searchFilter.classification);  delete(this.searchFilter.protocol);
+		if (this.searchFilter.context) { 
+			for (var classification in this.lookupData.classifications) { // get classifications for context //
+			  if (this.lookupData.classifications[classification].contextIdSeq==this.searchFilter.context) {
+			  	this.classifications.push(this.lookupData.classifications[classification])
+			  };
+			};
+
+			for (var protocol in this.lookupData.protocols) { // get protocols for context //
+			  if (this.lookupData.protocols[protocol].contextIdSeq==this.searchFilter.context) {
+			  	this.protocols.push(this.lookupData.protocols[protocol])
+			  };
+			};			
+		};
 	};	
 
 	// select context dropdown based on context click in left menu //
