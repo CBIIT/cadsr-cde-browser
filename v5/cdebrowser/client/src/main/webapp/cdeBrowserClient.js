@@ -28,7 +28,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 else {
                      // do search because at least one dropdown besides program area is selected //
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "0", fs.dataElementVariables.selectedQueryType);
-                    console.log("have to figure when context changes in order to reset the classifications, dropdowns")
+                    console.log("Search")
                 };
             };            
         };
@@ -44,26 +44,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 fs.getClassificationsAndProtocolForms();
     };
 
-    // selects dropdown values based on search left tree click //
+    // // selects dropdown values based on search left tree click //
     $scope.selectFiltersByNode = function(searchType,id, selectedNode) {
-        fs.isAChildNodeSearch = false;
-        fs.isLeftTreeClick = true;
-        if (searchType=='contextId') {
-            fs.selectContextByNode($scope.currentTab,id);
-        }
-        else {
-            fs.isAChildNodeSearch = true;
-            var currentContext = fs.getContextByContextId(selectedNode);
-            if (searchType=='classificationSchemeItemId') {
-                fs.selectedClassification = fs.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
-            }
-            else if (searchType=='classificationSchemeId') {
-                fs.selectedClassification = angular.copy(selectedNode);
-            }
-            else {
-                fs.selectedProtocolForm = angular.copy(selectedNode);
-            };
-        };
+        fs.selectFiltersByNode(searchType, id, selectedNode);
     };
     /* End of filter service */
 

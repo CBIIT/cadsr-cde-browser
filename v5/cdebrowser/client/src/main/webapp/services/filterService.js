@@ -101,4 +101,26 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		};
 	};
 
+    // selects dropdown values based on search left tree click //
+    this.selectFiltersByNode = function(searchType,id, selectedNode) {
+        this.isAChildNodeSearch = false;
+        this.isLeftTreeClick = true;
+        if (searchType=='contextId') {
+            this.selectContextByNode(this.searchFilter.programArea,id);
+        }
+        else {
+            this.isAChildNodeSearch = true;
+            var currentContext = this.getContextByContextId(selectedNode);
+            if (searchType=='classificationSchemeItemId') {
+                this.selectedClassification = this.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
+            }
+            else if (searchType=='classificationSchemeId') {
+                this.selectedClassification = angular.copy(selectedNode);
+            }
+            else {
+                this.selectedProtocolForm = angular.copy(selectedNode);
+            };
+        };
+    };
+
 });
