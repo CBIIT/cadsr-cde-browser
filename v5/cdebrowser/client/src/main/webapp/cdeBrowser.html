@@ -235,7 +235,7 @@
             <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==3">
                 This is the search preferences pane.
             </div> 
-            <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">   
+            <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
                 <span>
                 <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
                     <ui-select-match placeholder="Select a Program Area">{{$select.selected.text}}</ui-select-match>
@@ -288,7 +288,7 @@
                 </ui-select>     
                 </span>
                 <span>
-                    <button ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Reset</button>
+                    <button ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
                           
             </div>

@@ -16,6 +16,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	this.resetFilters = function() {
         this.searchFilter = {programArea:0} // reset search filter to just having program area selected to all //
 		this.isAChildNodeSearch = false; 
+		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:""}
 		this.classifications = [];
 		this.protocols = [];
 		this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
