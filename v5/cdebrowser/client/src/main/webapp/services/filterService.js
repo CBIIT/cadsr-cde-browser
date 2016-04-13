@@ -14,8 +14,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 
 	// resets all important variables
 	this.resetFilters = function() {
-        this.searchFilter = {programArea:0}
-		this.isAChildNodeSearch = false;	
+        this.searchFilter = {programArea:0} // reset search filter to just having program area selected to all //
+		this.isAChildNodeSearch = false; 
 		this.classifications = [];
 		this.protocols = [];
 		this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
@@ -33,19 +33,11 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		};		
 	};
 
-	this.resetContext = function() {
-		if (this.searchFilter.programArea!=0) {
-			if (Object.keys(this.searchFilter).indexOf('context')>-1) {
-				this.searchFilter.context = ''
-			}
-		}
-	};
-
 	// returns classificiations and protocol forms //
 	this.getClassificationsAndProtocolForms = function() {
-		this.classifications = []; this.protocols = [];
-		delete(this.searchFilter.classification);  delete(this.searchFilter.protocol);
-		if (this.searchFilter.context) { 
+		this.classifications = []; this.protocols = []; // reset classifications and protocol dropdowns //
+		delete(this.searchFilter.classification);  delete(this.searchFilter.protocol); // remove any values from searchFilter //
+		if (this.searchFilter.context) { // get classifications and protocols for selected context //
 			for (var classification in this.lookupData.classifications) { // get classifications for context //
 			  if (this.lookupData.classifications[classification].contextIdSeq==this.searchFilter.context) {
 			  	this.classifications.push(this.lookupData.classifications[classification])

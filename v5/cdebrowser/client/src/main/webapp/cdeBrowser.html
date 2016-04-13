@@ -254,24 +254,6 @@
                 </span>
 
                 <span>
-                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
-                    <ui-select-match allow-clear="true" placeholder="Select a Registration Status">{{$select.selected}}</ui-select-match>
-                    <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
-                        <div ng-bind-html="value | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>     
-                </span>
-
-                <span>
-                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
-                    <ui-select-match allow-clear="true" placeholder="Select a Workflow Status">{{$select.selected}}</ui-select-match>
-                    <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
-                        <div ng-bind-html="value | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>     
-                </span>
-
-                <span>
                 <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="bootstrap" ng-model="filterService.searchFilter.classification">
                     <ui-select-match allow-clear="true" placeholder="Select a Classification">{{$select.selected.csLongName}}</ui-select-match>
                     <ui-select-choices repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
@@ -288,7 +270,23 @@
                     </ui-select-choices>
                 </ui-select>     
                 </span>
+                <span>
+                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
+                    <ui-select-match allow-clear="true" placeholder="Select a Registration Status">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
+                        <div ng-bind-html="value | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
 
+                <span>
+                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
+                    <ui-select-match allow-clear="true" placeholder="Select a Workflow Status">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
+                        <div ng-bind-html="value | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span>
                 <span>
                     <button ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Reset</button>
                 </span>
