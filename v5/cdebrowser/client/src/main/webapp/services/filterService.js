@@ -56,42 +56,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	// select context dropdown based on context click in left menu //
 	this.selectContextByNode = function(programArea,id) {
 		this.searchFilter = {programArea:programArea}; // user clicked the left menu. set program area //
-		var programAreaContexts = this.serverData[this.searchFilter.programArea].children;
-		for (var item in programAreaContexts) {
-			if (programAreaContexts[item].idSeq == id) {
-				this.searchFilter.context = id; 
-				this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
-			};
-		};
-	};
-
-	// get selected context by contextId //
-	this.getContextByContextId = function(node) {
-		var currentProgramAreaChildren = this.serverData[node.programArea].children;
-		for (var x in currentProgramAreaChildren) {
-			if (currentProgramAreaChildren[x].idSeq==node.contextId) {
-				this.selectContextByNode(node.programArea, node.contextId)
-				this.currentContext = currentProgramAreaChildren[x];
-				break
-			};
-		};
-		return this.currentContext;
-	};
-
-	// gets classificationSchemeId when selecting a classificationSchemeItemId //
-	this.getClassifficationOrProtocolByName = function(currentContext,node) {
-		var parentText = node.treePath[node.treePath.length-2];
-		var children = currentContext.children;
-		for (var child in children) {
-			var grandchildren = children[child].children;
-			for (var grandchild in grandchildren) {
-				var currentText = grandchildren[grandchild].text;
-				if (currentText==parentText) {
-					return grandchildren[grandchild];
-					break
-				};
-			};
-		};
+		this.searchFilter.context = id; 
+		this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
 	};
 
     // selects dropdown values based on search left tree click //
@@ -102,16 +68,13 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
             this.selectContextByNode(this.searchFilter.programArea,id);
         }
         else {
+            this.selectContextByNode(this.searchFilter.programArea,selectedNode.contextId);        	
             this.isAChildNodeSearch = true;
-            var currentContext = this.getContextByContextId(selectedNode);
-            if (searchType=='classificationSchemeItemId') {
-                this.selectedClassification = this.getClassifficationOrProtocolByName(currentContext,angular.copy(selectedNode));
+            if (searchType=='protocolId') { // if protocol set protocol for dropdown //
+            	this.searchFilter['protocol']=selectedNode.parentId;
             }
-            else if (searchType=='classificationSchemeId') {
-                this.selectedClassification = angular.copy(selectedNode);
-            }
-            else {
-                this.selectedProtocolForm = angular.copy(selectedNode);
+            else { // if classification scheme item or classification scheme item id set classification for dropdown //
+            	this.searchFilter['classification']=selectedNode.parentId;
             };
         };
     };

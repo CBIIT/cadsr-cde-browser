@@ -136,15 +136,17 @@ a:hover {
 .queryTypeRadioButtons {
     font-size: 11pt;
     color: #18344d;
-    float: left;
-    width: 220px;
-    padding-top: 4px;
-    margin-top: 16px;
+    padding-top: 6px;
+    margin-top: 1px;
 }
 
+.queryTypeRadioButtons label {
+margin-left:15px;
+display:inline-block !important;
+}
 .searchInput {
-    color: #18344d;
-    margin-left: 250px;
+    color: #18344d;width:700px !important;
+    margin-left: 20px;
     padding-top: 4px;
     margin-top: 16px;
 }
@@ -164,9 +166,9 @@ a:hover {
 }
 
 .searchTips {
-    margin-top: 4px;
+    margin-top: 7px;
     margin-bottom: 4px;
-
+    margin-left:20px;
     font-size: 8pt;
 }
 

@@ -1,5 +1,16 @@
 <!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
 <span ng-controller="GenericSearchController">
+<!-- Search field drop down, text input, search & clear button  -->
+<div class="searchInput">
+    <input ng-disabled="fs.isSearching" class="basicSearchQuery" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Name" />
+
+
+    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 0, fs.dataElementVariables.selectedQueryType )">
+        Search
+    </button>
+
+
+</div>
 <div class="queryTypeRadioButtons">
     <label data-ng-repeat="qType in searchQueryTypes">
         <div>
@@ -11,19 +22,10 @@
             {{qType.name}}
         </div>
     </label>
-</div>
-
-<!-- Search field drop down, text input, search & clear button  -->
-<div class="searchInput">
-    <input ng-disabled="fs.isSearching" class="basicSearchQuery" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Name" />
-
-
-    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 0, fs.dataElementVariables.selectedQueryType )">
-        Search
-    </button>
     <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
         Note: Default settings excludes the Test Context view from the tree.
     </div>
-
 </div>
+
+
 </span>

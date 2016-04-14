@@ -41,7 +41,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-                fs.getClassificationsAndProtocolForms();
+        fs.getClassificationsAndProtocolForms();
     };
 
     // // selects dropdown values based on search left tree click //
