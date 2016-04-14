@@ -79,4 +79,36 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
         };
     };
 
+    // creates breadcrumbs when using dropdowns //
+    this.createBreadcrumbs = function() {
+    	var programArea = this.serverData[this.searchFilter.programArea];
+		var breadcrumbs = programArea.treePath;
+		if (this.searchFilter.context) {
+		 var contexts = programArea.children;
+		 for (var context in contexts) {
+		   if (this.searchFilter.context==contexts[context].idSeq) {
+			breadcrumbs = angular.copy(contexts[context].treePath);
+		   };
+		 };
+		};
+
+		if (this.searchFilter.classification) {
+			for (var i in this.classifications) {
+				if (this.classifications[i].csIdSeq==this.searchFilter.classification) {
+					breadcrumbs.push(this.classifications[i].csLongName)
+				};
+			};
+		};
+
+		if (this.searchFilter.protocol) {
+			for (var i in this.protocols) {
+				if (this.protocols[i].protocolIdSeq==this.searchFilter.protocol) {
+					breadcrumbs.push(this.protocols[i].protocolLongName)
+				};
+			};
+		};
+		return breadcrumbs
+    };
+
+
 });

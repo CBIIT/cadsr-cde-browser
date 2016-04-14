@@ -28,7 +28,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 else {
                      // do search because at least one dropdown besides program area is selected //
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "0", fs.dataElementVariables.selectedQueryType);
-                    console.log("Search")
+                    console.log("Search");
+                    $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
             };            
         };
