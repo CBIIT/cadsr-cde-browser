@@ -3,15 +3,17 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.model.DataElementModel;
+import java.util.List;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.util.List;
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
 
 public interface DataElementDAO
 {
     List<DataElementModel> getCdeBySearchString( String DataElementSql );
     DataElementModel getCdeByDeIdseq( String deIdseq ) throws EmptyResultDataAccessException;
+    List<DataElementModel> getCdeByDeIdseqList(List<String> deIdseqSet) throws EmptyResultDataAccessException;
     List<DataElementModel> getAllCdeByCdeId( Integer cdeId );
     DataElementModel geCdeByCdeIdAndVersion( Integer cdeId, Integer version );
 

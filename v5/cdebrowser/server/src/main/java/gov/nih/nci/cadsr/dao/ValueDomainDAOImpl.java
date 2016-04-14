@@ -153,7 +153,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             {
                 // this isn't a problem, just means there's no associated ConceptualDomainModel
             }
-            logger.debug( "valueDomainModel.getRepresentationModel: " + valueDomainModel.getRepresentationModel().toString() );
+            logger.debug( "valueDomainModel.getRepresentationModel: " + valueDomainModel.getRepresentationModel() );
 
             return valueDomainModel;
         }
