@@ -218,7 +218,12 @@ ul.cdeSearchMessage li{
 
 #cdeSearchArea .filters {
     margin:10px 0px 0px 15px;
-    max-width:900px;
+    max-width:780px;
+}
+
+#cdeSearchArea .filters span.clear {
+    float:right;
+    margin-right:20px;
 }
 
 #cdeSearchArea .filters * {
