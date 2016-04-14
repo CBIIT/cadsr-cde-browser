@@ -14,10 +14,10 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage)
 
 	// add cde's to cart. checkedItems is just an array of ids hence the need for searchResults //
 	this.addCDE = function(checkedItems, searchResults) {
-		for (var item in searchResults) {
-			if (checkedItems.indexOf(searchResults[item]['deIdseq'])>=0) {
-				if (this.cartData.indexOf(searchResults[item])<0) {
-					var cartItem = searchResults[item];
+		for (var i=0; i<searchResults.length; i++) {
+			if (checkedItems.indexOf(searchResults[i]['deIdseq'])>=0) {
+				if (this.cartData.indexOf(searchResults[i])<0) {
+					var cartItem = searchResults[i];
 					cartItem['unsavedItem'] = true;
 					this.cartData.push(cartItem); 
 				};
@@ -42,12 +42,12 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage)
 
 	// selects all or de-selects all items in the cart. used for deleting only at this point //
 	this.selectAll = function() {
-		for (var item in this.cartData) {
+		for (var i=0; i<this.cartData.length; i++) {
 			if (this.checkedCartItems.selected) {				
-				this.checkedCartItems.items[this.cartData[item].deIdseq] = true;
+				this.checkedCartItems.items[this.cartData[i].deIdseq] = true;
 			}
 			else {
-				delete(this.checkedCartItems.items[this.cartData[item].deIdseq])
+				delete(this.checkedCartItems.items[this.cartData[i].deIdseq])
 			};
 		};
 
@@ -72,7 +72,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage)
 	// save the cart //
 	this.saveCart = function() {
 		this.itemsForSave = [];
-		for (var i in this.cartData) {
+		for (var i=0; i<this.cartData.length; i++) {
 			if (this.cartData[i]['unsavedItem']==true) {
 				this.itemsForSave.push(this.cartData[i].deIdseq);
 				this.cartData[i]['unsavedItem'] = false;

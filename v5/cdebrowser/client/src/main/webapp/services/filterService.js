@@ -39,13 +39,13 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		this.classifications = []; this.protocols = []; // reset classifications and protocol dropdowns //
 		delete(this.searchFilter.classification);  delete(this.searchFilter.protocol); // remove any values from searchFilter //
 		if (this.searchFilter.context) { // get classifications and protocols for selected context //
-			for (var classification in this.lookupData.classifications) { // get classifications for context //
+			for (var classification=0; classification<this.lookupData.classifications.length; classification++) { // get classifications for context //
 			  if (this.lookupData.classifications[classification].contextIdSeq==this.searchFilter.context) {
 			  	this.classifications.push(this.lookupData.classifications[classification])
 			  };
 			};
 
-			for (var protocol in this.lookupData.protocols) { // get protocols for context //
+			for (var protocol=0; protocol< this.lookupData.protocols.length; protocol++) { // get protocols for context //
 			  if (this.lookupData.protocols[protocol].contextIdSeq==this.searchFilter.context) {
 			  	this.protocols.push(this.lookupData.protocols[protocol])
 			  };
@@ -85,7 +85,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		var breadcrumbs = programArea.treePath;
 		if (this.searchFilter.context) {
 		 var contexts = programArea.children;
-		 for (var context in contexts) {
+		 for (var context=0; context<contexts.length;context++) {
 		   if (this.searchFilter.context==contexts[context].idSeq) {
 			breadcrumbs = angular.copy(contexts[context].treePath);
 		   };
@@ -93,7 +93,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		};
 
 		if (this.searchFilter.classification) {
-			for (var i in this.classifications) {
+			for (var i=0; i<this.classifications.length;i++) {
 				if (this.classifications[i].csIdSeq==this.searchFilter.classification) {
 					breadcrumbs.push(this.classifications[i].csLongName)
 				};
@@ -101,7 +101,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		};
 
 		if (this.searchFilter.protocol) {
-			for (var i in this.protocols) {
+			for (var i=0; i<this.protocols.length;i++) {
 				if (this.protocols[i].protocolIdSeq==this.searchFilter.protocol) {
 					breadcrumbs.push(this.protocols[i].protocolLongName)
 				};
