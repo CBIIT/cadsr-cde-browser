@@ -47,7 +47,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // // selects dropdown values based on search left tree click //
     $scope.selectFiltersByNode = function(searchType,id, selectedNode) {
-        fs.selectFiltersByNode(searchType, id, selectedNode);
+        fs.selectFiltersByNode(searchType, id, selectedNode, $scope.currentTab);
     };
     /* End of filter service */
 
