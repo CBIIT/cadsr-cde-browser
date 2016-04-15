@@ -1,0 +1,72 @@
+package gov.nih.nci.cadsr.service.restControllers;
+
+import java.nio.charset.Charset;
+import java.util.Base64;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.error.AutheticationFailureException;
+import gov.nih.nci.cadsr.service.AuthenticationService;
+
+@RestController
+public class CdeBrowserAuthenticationController 
+{
+	private Logger logger = LogManager.getLogger(CdeBrowserAuthenticationController.class.getName());
+	
+	@Autowired
+	AuthenticationService authenticationService;
+	
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	public Boolean login(@RequestHeader("Authorization") String authorization,
+						 HttpServletRequest request) throws AutheticationFailureException
+	{
+		logger.debug("Recieved request to authenticate user: ");
+		Boolean login = Boolean.TRUE;
+		
+		final String[] credentials = decodeAuthorizationHeader(authorization);
+		
+		if (credentials == null || credentials.length != 2 || StringUtils.isBlank(credentials[0]) || StringUtils.isBlank(credentials[1]))
+			throw new AutheticationFailureException("Authentication failed for user because username or password is null:" + credentials[0]);
+		else
+		{
+			try {
+				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
+				
+				request.getSession().setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
+			} 
+			catch (Exception e) {
+				logger.error("Error in validating user credentials, username: " + credentials[0], e);
+				e.printStackTrace();
+			}
+		}
+		
+		return login;
+	}
+	
+	private String[] decodeAuthorizationHeader(String authorization)
+	{
+		String[] unpwd = new String[2];
+		
+		if (authorization != null && authorization.startsWith("Basic"))
+		{
+			// Authorization: Basic base64credentials
+			String base64Credentials = authorization.substring("Basic".length()).trim();
+			String credentials = new String(Base64.getDecoder().decode(base64Credentials), Charset.forName("UTF-8"));
+			
+			// credentials = username:password
+			unpwd = credentials.split(":",2);
+		}
+		return unpwd;
+	}
+	
+}

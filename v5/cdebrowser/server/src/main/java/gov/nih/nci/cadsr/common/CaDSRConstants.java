@@ -94,5 +94,8 @@ public final class CaDSRConstants
 
     public static final String MODULE_INDEX = "moduleIndex";
     public static final String QUESTION_INDEX = "questionIndex";
+    
+    //Session Constants
+    public static final String LOGGEDIN_USER_NAME = "loggedInUserName";
 
 }

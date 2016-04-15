@@ -13,5 +13,12 @@
 
     <context:component-scan base-package="gov.nih.nci.cadsr"/>
     <mvc:annotation-driven/>
+    
+    <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/cdeCart" />
+			<bean class="gov.nih.nci.cadsr.security.AuthenticationInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>

@@ -132,8 +132,14 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
                 "SELECT * FROM " + table,
                 new BeanPropertyRowMapper( type )
         );
-
+        
         return allRowsAndColumns;
+    }
+    
+    public int getInt(String sql)
+    {
+    	Integer i = (Integer) getJdbcTemplate().queryForObject(sql, Integer.class);
+    	return i.intValue();
     }
 
 }

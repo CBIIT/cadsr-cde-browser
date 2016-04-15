@@ -15,5 +15,14 @@ class ControllerErrorHandler
 	{
 		String errorMessage = ex.getMessage();
 		return errorMessage;
-	}   
+	}  
+	
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseBody String handleException(AutheticationFailureException ex) 
+	{
+		String errorMessage = ex.getMessage();
+		return errorMessage;
+	}
+	
 }
