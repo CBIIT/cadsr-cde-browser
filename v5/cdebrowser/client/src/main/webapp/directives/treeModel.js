@@ -134,6 +134,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 ' data-ng-click="' + treeId + '.selectNodeNorm(node, node.' + nodeAction + ')"></i> ' +
 
                 //End leaf (not a folder)
+
                 '<span data-ng-class="node.selected" id="selectedNode" ' +
                 //'title="G {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
@@ -265,8 +266,9 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                 scope.searchServerRestCall(actionParts[0],"id",actionParts[1],1,0, selectedNode);
                             }
 
-
-                            disp(selectedNode);
+                            if (selectedNode.treePath.length!=3) { // don't highlight clicking of classifications or protocolforms tree element //
+                                disp(selectedNode);
+                            }
 
                             // console.log("* * * Setting  scope.showCdeSearchResults = true;");
                             scope.showCdeSearchResults = true;
