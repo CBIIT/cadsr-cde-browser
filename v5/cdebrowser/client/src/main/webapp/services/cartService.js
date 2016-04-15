@@ -1,10 +1,11 @@
-angular.module("cdeBrowserApp").service('cartService', function($sessionStorage) {
+angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http) {
 	// service to create and operate a cde cart //
 	// check session to see if cart service exists, if so set variables to the session values //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
 		this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
 		this.itemsForSave = [];
+		this.savedData = [];
 	}
 	else {
 		this.cartData = $sessionStorage.cartService.cartData;
@@ -77,13 +78,22 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage)
 				this.itemsForSave.push(this.cartData[i].deIdseq);
 				this.cartData[i]['unsavedItem'] = false;
 			};
-
 		};
+		$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
+			console.log(response);
+		})
+		.error(function(response) {
+			console.log(response);
+		});
 	};
 
 	// retrieve the cart. Will call rest service //
 	this.retrieveCart = function() {
-		return this.cartData;
+		console.log("i am here");
+		console.log("loop through items and add unsaved proprty to false for server items. If item already exists, remove local and replace with server")
+		$http.get('/cdebrowserServer/rest/cdeCart').success(function(response) {
+			console.log(response)
+		});
 	};		
 		
 });
