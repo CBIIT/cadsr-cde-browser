@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--L
+  Copyright SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+
+  Portions of this source file not modified since 2008 are covered by:
+
+  Copyright 2000-2008 Oracle, Inc.
+
+  Distributed under the caBIG Software License.  For details see
+  http://ncip.github.com/cadsr-cde-browser/LICENSE-caBIG.txt
+L-->
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="objectCartServiceInfo" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="APPLICATION_SERVICE_BEAN" value="objectCartApplicationService"/>
+				<entry key="AUTHENTICATION_SERVICE_BEAN" value-ref="objectCartAuthenticationProvider"/>
+				<entry key="APPLICATION_SERVICE_URL"  value="http://cbvapp-d1008.nci.nih.gov:19080/objectCart"/>
+				<entry key="APPLICATION_SERVICE_CONFIG"  value-ref="objectCartApplicationServiceConfig"/>
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="interceptor" class="gov.nih.nci.system.client.proxy.ApplicationServiceProxy">
+		<property name="proxyFactory">
+			<bean class="gov.nih.nci.system.client.proxy.ProxyHelperImpl"/>
+		</property>
+	</bean>
+	
+	<bean id="objectCartApplicationService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+				<property name="serviceUrl" value="http://cbvapp-d1008.nci.nih.gov:19080/objectCart/http/applicationService"/>
+				<property name="serviceInterface" value="gov.nih.nci.objectCart.applicationService.ObjectCartService"/>
+				<property name="httpInvokerRequestExecutor">
+					<bean class="org.acegisecurity.context.httpinvoker.AuthenticationSimpleHttpInvokerRequestExecutor"/>
+				</property>
+			</bean>
+		</property>
+		<property name="interceptorNames" value="interceptor"/>
+		<property name="interfaces" value="gov.nih.nci.objectCart.applicationService.ObjectCartService"/>
+	</bean>	
+	
+	<bean id="objectCartAuthenticationProvider" class="org.acegisecurity.providers.rcp.RemoteAuthenticationProvider">
+		<property name="remoteAuthenticationManager">
+			<bean class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+			    <property name="serviceUrl" value="http://cbvapp-d1008.nci.nih.gov:19080/objectCart/http/remoteAuthenticationManager"/>
+			    <property name="serviceInterface" value="org.acegisecurity.providers.rcp.RemoteAuthenticationManager"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Dont touch this unless you know what you are doing -->
+	<bean id="objectCartApplicationServiceConfig" class="java.lang.String">
+		<constructor-arg>
+			<value>
+				&lt;bean id=&quot;interceptor&quot; class=&quot;gov.nih.nci.system.client.proxy.ApplicationServiceProxy&quot;&gt;
+					&lt;property name=&quot;proxyFactory&quot;&gt;
+						&lt;bean class=&quot;gov.nih.nci.system.client.proxy.ProxyHelperImpl&quot;/&gt;
+					&lt;/property&gt;
+				&lt;/bean&gt;
+				&lt;bean id=&quot;applicationService&quot; class=&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;&gt;
+					&lt;property name=&quot;target&quot;&gt;
+						&lt;bean class=&quot;org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean&quot;&gt;
+							&lt;property name=&quot;serviceUrl&quot; value=&quot;URL_KEY/http/applicationService&quot;/&gt;
+							&lt;property name=&quot;serviceInterface&quot; value=&quot;gov.nih.nci.objectCart.applicationService.ObjectCartService&quot;/&gt;
+							&lt;property name=&quot;httpInvokerRequestExecutor&quot;&gt;
+								&lt;bean class=&quot;org.acegisecurity.context.httpinvoker.AuthenticationSimpleHttpInvokerRequestExecutor&quot;/&gt;
+							&lt;/property&gt;
+						&lt;/bean&gt;
+					&lt;/property&gt;
+					&lt;property name=&quot;interceptorNames&quot; value=&quot;interceptor&quot;/&gt;
+					&lt;property name=&quot;interfaces&quot; value=&quot;gov.nih.nci.objectCart.applicationService.ObjectCartService&quot;/&gt;
+				&lt;/bean&gt;
+				&lt;bean id=&quot;authenticationProvider&quot; class=&quot;org.acegisecurity.providers.rcp.RemoteAuthenticationProvider&quot;&gt;
+					&lt;property name=&quot;remoteAuthenticationManager&quot;&gt;
+							&lt;bean class=&quot;org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean&quot;&gt;
+								&lt;property name=&quot;serviceUrl&quot; value=&quot;URL_KEY/http/remoteAuthenticationManager&quot;/&gt;
+								&lt;property name=&quot;serviceInterface&quot; value=&quot;org.acegisecurity.providers.rcp.RemoteAuthenticationManager&quot;/&gt;
+							&lt;/bean&gt;
+					&lt;/property&gt;
+				&lt;/bean&gt;				
+				&lt;alias alias=&quot;objectCartApplicationService&quot; name=&quot;applicationService&quot;/&gt;
+				&lt;alias alias=&quot;objectCartAuthenticationProvider&quot; name=&quot;authenticationProvider&quot;/&gt;
+			</value>
+		</constructor-arg>
+	</bean>
+
+</beans>

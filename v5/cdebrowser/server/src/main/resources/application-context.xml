@@ -64,12 +64,6 @@
         <property name="toolOptionsDAO" ref="toolOptionsDAO"/>
     </bean>
 
-    <bean id="cdeCartController" class="gov.nih.nci.cadsr.service.restControllers.CdeCartController">
-        <property name="searchDAO" ref="searchDAO"/>
-        <property name="dataElementDAO" ref="dataElementDAO"/>
-        <property name="restControllerCommon" ref="resControllerCommon"/>
-    </bean>
-
     <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
     </bean>
@@ -191,6 +185,8 @@
 	</bean>
 
     <bean id="searchQueryBuilder" class="gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder">
-
+    </bean>
+    
+    <bean id="cdeCartUtil" class="gov.nih.nci.cadsr.cdecart.CdeCartUtil">
     </bean>
 </beans>
