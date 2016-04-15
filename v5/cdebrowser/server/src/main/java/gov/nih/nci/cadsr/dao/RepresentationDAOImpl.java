@@ -39,7 +39,7 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
     public RepresentationModel getRepresentationByIdseq( String representationIdseq )
     {
         String sql = "SELECT * FROM SBREXT.REPRESENTATIONS_EXT WHERE REP_IDSEQ = ?";
-        logger.debug( sql.replace( "?", representationIdseq ) + " << << << <<" );
+        logger.debug( sql.replace( "?", "" + representationIdseq ) + " << << << <<" );
         RepresentationModel representationModel = jdbcTemplate.queryForObject( sql, new Object[]{ representationIdseq }, new RepresentationMapper() );
         logger.debug( "representationModel: " + representationModel );
         return representationModel;

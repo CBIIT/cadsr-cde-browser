@@ -3,21 +3,27 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.model.*;
-import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import gov.nih.nci.cadsr.dao.model.AcRegistrationsModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
+import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 
 
 public class DataElementDAOImpl extends AbstractDAOOperations implements DataElementDAO
@@ -260,7 +266,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             try
             {
                 dataElementModel.setValueDomainModel( getValueDomainDAO().getValueDomainByIdseq( rs.getString( "VD_IDSEQ" ) ) );
-                logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel().toString() );
+                logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel() );
 
             } catch( EmptyResultDataAccessException ex )
             {
@@ -353,11 +359,26 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 logger.warn( "No Classif scheme items found for Reference Docs for Data Element with idseq: " + deIdseq );
             }
 
-            logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel().toString() );
+            logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel() );
             logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
 
             return dataElementModel;
         }
     }
+
+	@Override
+	public List<DataElementModel> getCdeByDeIdseqList(List<String> deIdseqList) throws EmptyResultDataAccessException {
+        if ((deIdseqList != null) && (!(deIdseqList.isEmpty()))) {
+			String sql = "SELECT * FROM data_elements WHERE de_idseq IN (:ids)";
+	        //MapSqlParameterSource parameters = new MapSqlParameterSource();
+	        Map<String, List<String>> param = Collections.singletonMap("ids", deIdseqList);        
+	        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource());
+	        List<DataElementModel> dataElementModel = namedParameterJdbcTemplate.query(sql, param,
+	        		new DataElementMapper(DataElementModel.class));
+	        return dataElementModel;
+        }
+        List<DataElementModel> arr = new ArrayList<>();
+        return arr;
+	}
 
 }
