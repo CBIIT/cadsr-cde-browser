@@ -16,6 +16,7 @@ angular.module("cde", [
     "cdeGenericSearch",
     "cdePublicIdSearch",
     "cdeCart",
+    "cdeLogin",
     "ui.select"
 
 ])
@@ -76,7 +77,12 @@ angular.module("cde", [
             controller: "CartCtrl",
             templateUrl: "cde/cdeCart/cart-view.html",
             title: "CDE Cart"
-        });        
+        })
+        .when("/login", {
+            controller: "LoginCtrl",
+            templateUrl: "cde/authentication/login-view.html",
+            title: "Login"
+        });                
 
 
 }]);
