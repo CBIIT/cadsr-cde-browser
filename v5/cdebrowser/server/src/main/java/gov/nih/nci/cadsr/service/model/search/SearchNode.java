@@ -137,4 +137,13 @@ public class SearchNode
     {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "SearchNode [logger=" + logger + ", longName=" + longName + ", preferredQuestionText="
+				+ preferredQuestionText + ", ownedBy=" + ownedBy + ", publicId=" + publicId + ", workflowStatus="
+				+ workflowStatus + ", version=" + version + ", usedByContext=" + usedByContext + ", registrationStatus="
+				+ registrationStatus + ", href=" + href + ", deIdseq=" + deIdseq + ", status=" + status + "]";
+	}
+
 }

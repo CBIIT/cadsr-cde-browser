@@ -3,13 +3,14 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
+import java.security.Principal;
 import java.util.List;
 
-import gov.nih.nci.cadsr.dao.SearchDAOImpl;
-import gov.nih.nci.cadsr.dao.operation.AbstractSearchQueryBuilder;
-import gov.nih.nci.cadsr.service.model.search.SearchNode;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -19,135 +20,88 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.cadsr.cdecart.CdeCartUtil;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.DataElementDAO;
-import gov.nih.nci.cadsr.dao.model.SearchModel;
-import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
-import gov.nih.nci.objectCart.domain.CartObject;
+import gov.nih.nci.cadsr.service.model.search.SearchNode;
 
 @RestController
 @RequestMapping( "/cdeCart" )
 public class CdeCartController
 {
 
-    private Logger logger = LogManager.getLogger( CdeCartController.class.getName() );
-    private SearchDAOImpl searchDAO;
-    private DataElementDAO dataElementDAO;
-    private RestControllerCommon restControllerCommon;
-    private List<ProgramAreaModel> programAreaModelList = null;
+	private static Logger logger = LogManager.getLogger( CdeCartController.class.getName() );
 
-    @Value( "${cdeDataRestService}" )
-    String cdeDataRestServiceName;
+	@Value("${cdeDataRestService}")
+	String cdeDataRestServiceName;
 
-    public CdeCartController()
-    {
-    }
+	@Autowired
+	CdeCartUtil cdeCartUtil;
+
+	public void setCdeCartUti(CdeCartUtil cdeCartUtil) {
+		this.cdeCartUtil = cdeCartUtil;
+	}
+
+	public CdeCartController() {
+	}
 
     @RequestMapping( method = RequestMethod.GET )
     @ResponseBody
-    public SearchNode[] retrieveObjectCart()
+    public SearchNode[] retrieveObjectCart(HttpSession mySession, Principal principal)
     {
-        String query = "3813132 3121734";
-        logger.debug( "retrieveObjectCart query: " + query );
+		SearchNode[] results = null;
+		String principalName = null;
+		
+		if (principal != null) {
+			logger.warn("In retrieveObjectCart session for: " + principal.getName());
+			principalName = principal.getName();
+		}
+		else{
+			logger.error("........No principal received in retrieveObjectCart");
+			//FIXME clean up this situation to get a user name
+			//principalName = "ASAFIEVAN";
+			principalName = "GUEST";
+		}
+		
+		logger.debug("Received rest call retrieve Object Cart for user: " + principalName);
 
-        SearchNode[] results = null;
-        try
-        {
-            CartObject cartObject = new CartObject();
-            //results = basicSearch(query, field, queryType, getProgramAreaPalNameByIndex(programArea));
-            results = basicSearch( query, AbstractSearchQueryBuilder.PUBLIC_ID_FIELD, 2, "" );
-        } catch( Exception e )
-        {
-
-            return createErrorNode( "Server Error:\nretrieveObjectCart: " + query + " failed ", e );
-        }
-        return results;
-
-
+		try {
+			List<SearchNode> res = cdeCartUtil.findCartNodes(mySession, principalName);
+			results = res.toArray(new SearchNode[res.size()]);
+		} 
+		catch (Exception e) {
+			return createErrorNode("Server Error:\nretrieveObjectCart: " + principalName + " failed ", e);
+		}
+		return results;
     }
 
-    @RequestMapping( produces = "text/plain", consumes = "application/json", method = RequestMethod.POST )
-    public ResponseEntity<String> downloadExcel(
-            RequestEntity<List<String>> request )
-    {
-        logger.debug( "Received rest call save Object Cart, IDs: " + request );
-        return new ResponseEntity<String>( "Done", HttpStatus.OK );
-    }
+	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
+	public ResponseEntity<String> saveCart(HttpSession mySession, Principal principal,
+			RequestEntity<List<String>> request) {
+		List<String> cdeIds = request.getBody();
+		logger.debug("Received rest call save Object Cart, IDs: " + cdeIds);
+		String principalName = null;
 
-    /**
-     * @param query       The text of the users search input.
-     * @param field       0=Name 1=PublicId
-     * @param queryType   0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE
-     * @param programArea Constrain a search to the specified Program Area, if programArea is empty, search all.
-     * @return an array of BasicSearchNodes.
-     */
-    private SearchNode[] basicSearch( String query, int field, int queryType, String programArea )
-    {
-        String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-        List<SearchModel> results = searchDAO.getAllContexts( query, searchMode, field, programArea );
-        return buildSearchResultsNodes( results );
-    }
+		if (principal != null) {
+			logger.warn("In retrieveObjectCart session for: " + principal.getName());
+			principalName = principal.getName();
+		} 
+		else {
+			logger.error("........No principal received in retrieveObjectCart");
+			// FIXME clean up this situation to get a user name
+			//principalName = "ASAFIEVAN";
+			principalName = "GUEST";
+		}
 
-    /**
-     * If index is 0, or too high, return "All"
-     *
-     * @param index
-     * @return
-     */
-    protected String getProgramAreaPalNameByIndex( int index )
-    {
-        // Zero is "All
-        if( index < 1 )
-        {
-            return ""; //All
-        }
-
-        // If the index is too high, the client has sent us an incorrect program area, log a warning, and return "All"
-        if( index > programAreaModelList.size() )
-        {
-            logger.debug( "Client has requested in invalid Program area index [" + index + "] using All." );
-            return ""; //All
-        }
-        return programAreaModelList.get( index - 1 ).getPalName();// -1 because the client uses 0 for all.
-    }
-
-
-    /**
-     * Take search results from database, and build array of search results nodes to send to the client.
-     *
-     * @param results
-     * @return
-     */
-    protected SearchNode[] buildSearchResultsNodes( List<SearchModel> results )
-    {
-        int rowCount = results.size();
-        int i = 0;
-        SearchNode[] searchNodes = new SearchNode[rowCount];
-        for( SearchModel model : results )
-        {
-            searchNodes[i] = new SearchNode();
-            searchNodes[i].setLongName( model.getLongName() );
-            searchNodes[i].setOwnedBy( model.getName() );
-            searchNodes[i].setPreferredQuestionText( model.getDocText() );
-            searchNodes[i].setPublicId( model.getDeCdeid() );
-            searchNodes[i].setWorkflowStatus( model.getAslName() );
-            searchNodes[i].setVersion( model.getDeVersion() );
-            searchNodes[i].setDeIdseq( model.getDeIdseq() );
-
-            searchNodes[i].setHref( cdeDataRestServiceName );
-
-            //This is so in the client side display table, there will be spaces to allow good line wrapping.
-            if( model.getDeUsedby() != null )
-            {
-                searchNodes[i].setUsedByContext( model.getDeUsedby().replace( ",", ", " ) );
-            }
-
-            searchNodes[i].setRegistrationStatus( model.getRegistrationStatus() );
-            i++;
-        }
-        return searchNodes;
-    }
-
+		try {
+			cdeCartUtil.addToCart(mySession, principalName, cdeIds);
+			return new ResponseEntity<String>("Done", HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			logger.error("saveCart error: ", e.getMessage());
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
     public SearchNode[] createErrorNode( String text, Exception e )
     {
@@ -168,34 +122,5 @@ public class CdeCartController
         errorNode[0].setLongName( text );
         return errorNode;
     }
-
-
-    ///////////////////////////////////
-    // Setters & Getters
-    public void setSearchDAO( SearchDAOImpl searchDAO )
-    {
-        this.searchDAO = searchDAO;
-    }
-
-    public void setRestControllerCommon( RestControllerCommon restControllerCommon )
-    {
-        this.restControllerCommon = restControllerCommon;
-    }
-
-    public List<ProgramAreaModel> getProgramAreaModelList()
-    {
-        return programAreaModelList;
-    }
-
-    public void setDataElementDAO( DataElementDAO dataElementDAO )
-    {
-        this.dataElementDAO = dataElementDAO;
-    }
-
-    public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
-    {
-        this.programAreaModelList = programAreaModelList;
-    }
-
 
 }

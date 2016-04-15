@@ -39,7 +39,7 @@ import gov.nih.nci.cadsr.service.ClientException;
 @RestController
 @RequestMapping("/downloadXml")
 public class DownloadXmlController {
-	private Logger logger = LogManager.getLogger(DownloadXmlController.class.getName());
+	private static Logger logger = LogManager.getLogger(DownloadXmlController.class.getName());
 	@Autowired
 	GetXmlDownloadInterface getXmlDownload;
 

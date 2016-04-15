@@ -40,7 +40,7 @@ import gov.nih.nci.cadsr.service.ClientException;
 @RestController
 @RequestMapping("/downloadExcel")
 public class DownloadExcelController {
-	private Logger logger = LogManager.getLogger(DownloadExcelController.class.getName());
+	private static Logger logger = LogManager.getLogger(DownloadExcelController.class.getName());
 	@Autowired
 	GetExcelDownloadInterface getExcelDownload;
 
