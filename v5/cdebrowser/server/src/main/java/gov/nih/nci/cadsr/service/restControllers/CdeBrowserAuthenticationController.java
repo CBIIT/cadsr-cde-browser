@@ -31,7 +31,7 @@ public class CdeBrowserAuthenticationController
 	public Boolean login(@RequestHeader("Authorization") String authorization,
 						 HttpServletRequest request) throws AutheticationFailureException
 	{
-		logger.debug("Recieved request to authenticate user: ");
+		logger.debug("Received request to authenticate user: ");
 		Boolean login = Boolean.TRUE;
 		
 		final String[] credentials = decodeAuthorizationHeader(authorization);
