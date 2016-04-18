@@ -25,6 +25,7 @@ import gov.nih.nci.cadsr.dao.model.RepresentationModel;
 import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.dao.model.VdPvsModel;
+import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
 import gov.nih.nci.ncicb.cadsr.common.dto.ConceptDerivationRuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.DataElementTransferObject;
@@ -71,10 +72,10 @@ public class CdeCartUtil {
 		this.dataElementDAO = dataElementDAO;
 	}
 
-	//We assume this UTL is not changes dynamiccaly as the system is running, so we will read it once
+	//We assume this URL is not changes often as the system is running, so we will read it until it is not found
 	public static transient String ocURL;
 
-	protected CDECart findCdeCart(HttpSession mySession, String principalName) throws ObjectCartException {
+	protected CDECart findCdeCart(final HttpSession mySession, final String principalName) throws ObjectCartException, AutheticationFailureException {
 		CDECart cdeCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
 		String uid = null;
 		if (cdeCart == null) {
@@ -84,38 +85,29 @@ public class CdeCartUtil {
 					ocURL = cdeCartOptionsModel.getValue();
 				}
 				if (ocURL == null) {
-					log.warn("Cannot get a value of ObjectCart URL from the system configuration");
+					log.warn("Cannot get a valid value of ObjectCart URL from the system configuration");
+				}
+				else {
+					log.debug("Found Object Cart URL:" + ocURL);
 				}
 			}
 			
 			ObjectCartClient ocClient = null;
 
-			if (!ocURL.equals(""))
+			if (ocURL != null)
 				ocClient = new ObjectCartClient(ocURL);
 			else
 				ocClient = new ObjectCartClient();
 			
-			//FIXME remove this comment this was the old Login implementation 
-			//NCIUser user = (NCIUser) mySession.getAttribute(CaDSRConstants.USER_KEY);
-//			if(user!= null){
-//				uid = user.getUsername();
-//			}
-			
-			//This is what we shall get with Principal received from Wildfly login module
 			uid = principalName;
-			//FIXME
+
 			//we shall be after login here, and uid is never null
 			if (uid == null) {
-				//TODO Remove comment: We do not use this PublicUser any more was used in 4.0 when we saved these public carts
-				//uid = "PublicUser" + sessionId;
-				//log.debug(" Public User Cart: " + uid);
-				//FIXME this is a placeholder shall be uid from login
-				//uid="ASAFIEVAN";//any existed user for now
-				
-				uid="GUEST";
+				log.error("........No user found in session in findCdeCart");
+				throw new AutheticationFailureException("Authenticated user not found in the session");
 			}
 
-			cdeCart = new CDECartOCImpl(ocClient,uid,CaDSRConstants.CDE_CART);
+			cdeCart = new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
 			//we need to set up this session attribute not to make the remote call again
 			mySession.setAttribute(CaDSRConstants.CDE_CART, cdeCart);
 		}
@@ -131,27 +123,23 @@ public class CdeCartUtil {
 	 * @throws Exception
 	 */
 	public List<SearchNode> findCartNodes(HttpSession mySession, String principalName) throws Exception{
+		String uid = principalName;
+
+		//we shall be after login here, and uid is never null
+		if (uid == null) {
+			log.error("........No user found in session in findCartNodes");
+			throw new AutheticationFailureException("Authenticated user not found in the session");
+		}
+
 		//we want to keep this cart in session not to retrieve it every time
 		CDECart cdeCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
 		List<SearchNode> arr = null;
-		//String sessionId = mySession.getId();
-		String uid = null;
-		
+
 		try{
 			if (cdeCart == null) {
 				cdeCart = findCdeCart(mySession, principalName);
 			}
 			
-			uid = principalName;
-			
-			if (uid == null) {
-				//TODO Remove comment: We do not use this PublicUser any more was used in 4.0 when we saved these public carts
-				//uid = "PublicUser" + sessionId;
-				//log.debug(" Public User Cart: " + uid);
-				//FIXME this is a placeholder shall be uid from login
-				//uid="ASAFIEVAN";//any existed user for now
-				uid="GUEST";
-			}			
 			//We use either retrieved cart or found in the session cart to build the result for the client page
 			@SuppressWarnings("rawtypes")
 			Collection col = cdeCart.getDataElements();
@@ -171,8 +159,9 @@ public class CdeCartUtil {
 	 * @param sessionCart
 	 * @param principalName
 	 * @throws ObjectCartException 
+	 * @throws AutheticationFailureException 
 	 */
-	public void addToCart(HttpSession mySession, String principalName, List<String> cdeIds) throws ObjectCartException {
+	public void addToCart(HttpSession mySession, String principalName, List<String> cdeIds) throws ObjectCartException, AutheticationFailureException {
 		if ((cdeIds == null) || (mySession == null)) {
 			log.debug("Nothing to save");
 			return;
@@ -185,12 +174,11 @@ public class CdeCartUtil {
 		}
 		
 		String userName = principalName;
-		
-		//FIXME this shall ve an exception since we assume login
+
+		//we shall be after login here, and userName is never null
 		if (userName == null) {
-			//FIXME this is a placeholder shall be uid from login
-			//uid="ASAFIEVAN";//any existed user for now
-			userName="GUEST";
+			log.error("........No user found in session in addToCart");
+			throw new AutheticationFailureException("Authenticated user not found in the session");
 		}
 		
 		try {
@@ -212,7 +200,6 @@ public class CdeCartUtil {
 				ocClient = new ObjectCartClient();
 			
 			CDECart userCart = new CDECartOCImpl(ocClient, userName, CaDSRConstants.CDE_CART);
-			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
 	
 			List<DataElementModel> deModelList = dataElementDAO.getCdeByDeIdseqList(cdeIds);
 			

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.cdecart.CdeCartUtil;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
 
 @RestController
@@ -46,26 +47,26 @@ public class CdeCartController
 
     @RequestMapping( method = RequestMethod.GET )
     @ResponseBody
-    public SearchNode[] retrieveObjectCart(HttpSession mySession, Principal principal)
+    public SearchNode[] retrieveObjectCart(HttpSession mySession) throws AutheticationFailureException
     {
 		SearchNode[] results = null;
 		String principalName = null;
 		
-		if (principal != null) {
-			logger.warn("In retrieveObjectCart session for: " + principal.getName());
-			principalName = principal.getName();
+		if (mySession != null) {
+			principalName = (String) mySession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+			logger.warn("In retrieveObjectCart found session for: " + principalName);
 		}
-		else{
-			logger.error("........No principal received in retrieveObjectCart");
-			//FIXME clean up this situation to get a user name
-			//principalName = "ASAFIEVAN";
-			principalName = "GUEST";
+		
+		if (principalName == null) {
+			logger.error("........No user found in session in retrieveObjectCart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation retrieve CDE Cart");
 		}
 		
 		logger.debug("Received rest call retrieve Object Cart for user: " + principalName);
 
 		try {
 			List<SearchNode> res = cdeCartUtil.findCartNodes(mySession, principalName);
+			logger.debug("Sending OK response of rest call retrieve Object Cart; # of CDEs: " + res.size());			
 			results = res.toArray(new SearchNode[res.size()]);
 		} 
 		catch (Exception e) {
@@ -73,37 +74,81 @@ public class CdeCartController
 		}
 		return results;
     }
-
+    /**
+     * This method expects only IDs which are added to the cart.
+     * 
+     * @param mySession
+     * @param principal
+     * @param request
+     * @return ResponseEntity String
+     * @throws AutheticationFailureException 
+     */
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
-	public ResponseEntity<String> saveCart(HttpSession mySession, Principal principal,
-			RequestEntity<List<String>> request) {
+	public ResponseEntity<String> saveCart(HttpSession mySession,
+			RequestEntity<List<String>> request) throws AutheticationFailureException {
 		List<String> cdeIds = request.getBody();
 		logger.debug("Received rest call save Object Cart, IDs: " + cdeIds);
 		String principalName = null;
 
-		if (principal != null) {
-			logger.warn("In retrieveObjectCart session for: " + principal.getName());
-			principalName = principal.getName();
-		} 
-		else {
-			logger.error("........No principal received in retrieveObjectCart");
-			// FIXME clean up this situation to get a user name
-			//principalName = "ASAFIEVAN";
-			principalName = "GUEST";
+		if (mySession != null) {
+			principalName = (String) mySession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);			
+			logger.warn("In saveCart found session for: " + principalName);
+		}
+		
+		if (principalName == null) {
+			logger.error("........No user found in session in saveCart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation save CDE Cart");
 		}
 
 		try {
 			cdeCartUtil.addToCart(mySession, principalName, cdeIds);
+			logger.debug("Returning rest call saveCart: OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			logger.error("saveCart error: ", e.getMessage());
-			e.printStackTrace();
+			logger.error("saveCart error: ", e);
 			return new ResponseEntity<String>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	/**
+	 * This method expects IDs to be deleted from the cart.
+	 * 
+	 * @param mySession
+	 * @param principal
+	 * @param request
+	 * @return ResponseEntity String
+	 * @throws AutheticationFailureException 
+	 */
+	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteFromCart(HttpSession mySession, Principal principal,
+			RequestEntity<List<String>> request) throws AutheticationFailureException {
+		List<String> cdeIds = request.getBody();
+		logger.debug("Received rest call deleteFromCart, IDs: " + cdeIds);
+		String principalName = null;
 
-    public SearchNode[] createErrorNode( String text, Exception e )
+		if (principal != null) {
+			logger.warn("In deleteFromCart session for: " + principal.getName());
+			principalName = principal.getName();
+		} 
+		
+		if (principalName == null) {
+			logger.error("........No user found in session in deleteFromCart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation delete from CDE Cart");
+		}
+
+		try {
+			//FIXME implement cdeCartUtil deleteFromCart
+			//cdeCartUtil.deleteFromCart(mySession, principalName, cdeIds);
+			logger.debug("Returning rest call deleteFromCart OK");
+			return new ResponseEntity<String>("Done", HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			logger.error("Returning rest call deleteFromCart error: ", e);
+			return new ResponseEntity<String>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	public SearchNode[] createErrorNode( String text, Exception e )
     {
         return createErrorNode( text, e.getMessage() );
     }
