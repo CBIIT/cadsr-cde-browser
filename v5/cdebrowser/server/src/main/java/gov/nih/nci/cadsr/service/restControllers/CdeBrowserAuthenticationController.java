@@ -46,15 +46,19 @@ public class CdeBrowserAuthenticationController
 				if (session != null)
 				{
 					String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
-					//do not invalidate if the same user is trying to login again.
+					// do not invalidate if the same user is trying to login again.
 					if (!StringUtils.equals(currUser, credentials[0]))
+					{
+						logger.debug("Invalidating current session since a new user is loggin in.");
 						session.invalidate();
+					}
 				}
 				
 				logger.debug("Setting user in the session after successful login:" + credentials[0]);
 				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
 			} 
-			catch (Exception e) {
+			catch (Exception e)
+			{
 				logger.error("Error in validating user credentials, username: " + credentials[0], e);
 				throw new AutheticationFailureException("Authentication failed for user because of invalid credentials:" + credentials[0]);
 			}
@@ -66,10 +70,12 @@ public class CdeBrowserAuthenticationController
 	@RequestMapping(value="/logout")
 	public void logout(HttpSession session)
 	{
-		String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
-		logger.debug("Received request to logout user: " + currUser);
 		if (session != null)
+		{
+			String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+			logger.debug("Received request to logout user: " + currUser);
 			session.invalidate();
+		}
 		
 	}
 	
