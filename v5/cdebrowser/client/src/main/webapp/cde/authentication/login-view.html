@@ -1,5 +1,11 @@
-<label for="username">Username</label>
-<input type="text" name="username" id="username" ng-model="username">
-<label for="credential">Password</label>
-<input type="password" name="credential" id="credential" ng-model="credential">
-<input type="submit" value="Submit" ng-click="login()">
+<div class="loginPage">
+	<div>
+		Guest users can login using username "guest" and password "Nci_gue5t". If you require an account with curator privileges to a specific context other than Test, please contact NCICB Application Support Email: <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
+	</div>
+	<br />
+	<label for="username">Username</label>
+	<span><input class="cleanInput" type="text" name="username" id="username" ng-model="username"></span>
+	<label for="credential">Password</label>
+	<span><input class="cleanInput" type="password" name="credential" id="credential" ng-model="credential"></span>
+	<input type="submit" value="Submit" ng-click="login()">
+</div>

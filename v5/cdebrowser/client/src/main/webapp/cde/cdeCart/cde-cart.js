@@ -3,14 +3,21 @@
  */
 angular.module("cdeCart", []);
 
-angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localStorage","$sessionStorage","$route","searchFactory","cartService", function ($scope, $location,$localStorage, $sessionStorage, $route, searchFactory, cartService) {
+angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localStorage","$sessionStorage","$route","searchFactory","cartService", "authenticationService", function ($scope, $location,$localStorage, $sessionStorage, $route, searchFactory, cartService, authenticationService) {
 	searchFactory.showSearch = false; // set search area to be invisible //	
 	$scope.$parent.title = "CDE Cart" // set title of page to be show on the tab //
+
+	var authService = authenticationService; // define authentication service //
+	var redirect = angular.copy(authService.cameFrom); // set if coming from cart. Determines what was clicked on //
+	authService.cameFrom = ''; // set came from back to empty string //
 
 	// define cart service //
 	var cartService = cartService;
 	$scope.$storage = $sessionStorage;
 	$scope.$storage.cartService = cartService;
+
+	if (redirect=='retrieve') { cartService.retrieveCart(); } // checks if user has been redirected after logging in //
+	else if(redirect == 'save') { cartService.saveCart(); }	 // checks if user has been redirected after logging in //
 
 	// add item to cde cart //
 	$scope.addCDE = function() {
@@ -27,6 +34,7 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 	// delete item from cde cart //
 	$scope.deleteCDEs = function() {
 		cartService.deleteCDEs();
+		console.log("delete if logged in and check unsaved status to delete locally or from server. If authorized error, ignore the unsaved status and just delete locally.")
 	};
 
 	// save cart to server //

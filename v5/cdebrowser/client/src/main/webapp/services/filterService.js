@@ -71,7 +71,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
         else {
             this.selectContextByNode(this.searchFilter.programArea,selectedNode.contextId);        	
             this.isAChildNodeSearch = true;
-            if (searchType=='protocolId') { // if protocol set protocol for dropdown //
+            if (searchType=='protocolId'||searchType=='id') { // if protocol set protocol for dropdown //
             	this.searchFilter['protocol']=selectedNode.parentId;
             }
             else { // if classification scheme item or classification scheme item id set classification for dropdown //

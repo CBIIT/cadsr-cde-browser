@@ -1,6 +1,8 @@
-angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http) {
+angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http, $location,authenticationService) {
 	// service to create and operate a cde cart //
 	// check session to see if cart service exists, if so set variables to the session values //
+	var authService = authenticationService; // create instance of auth service //
+
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
 		this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
@@ -83,17 +85,39 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			console.log(response);
 		})
 		.error(function(response) {
-			console.log(response);
+			authService.cameFrom = 'save';
+	        $location.path("/login").replace(); // send user to login page //
 		});
 	};
 
 	// retrieve the cart. Will call rest service //
 	this.retrieveCart = function() {
-		console.log("i am here");
-		console.log("loop through items and add unsaved proprty to false for server items. If item already exists, remove local and replace with server")
+		var that = this;
 		$http.get('/cdebrowserServer/rest/cdeCart').success(function(response) {
-			console.log(response)
+			var temporaryIds = []; // array of temp ids to compare with retrieved cart items. Prevent looping through two arrays //
+			for (var i=0; i<that.cartData.length;i++) {
+				temporaryIds.push(that.cartData[i].publicId);
+			};
+
+			if (response.length) {
+				for (var i=0; i<response.length;i++) {
+					var index = temporaryIds.indexOf(response[i].publicId);
+					if (index > -1) {
+						that.cartData[index].unsavedItem=false;
+					}
+					else {
+						response[i].unsavedItem = false;
+						that.cartData.push(response[i])
+					}
+				};				
+			};
+		}).error(function(response) {
+			authService.cameFrom = 'retrieve';
+	        $location.path("/login").replace(); // send user to login page //
+
 		});
+
+	
 	};		
 		
 });

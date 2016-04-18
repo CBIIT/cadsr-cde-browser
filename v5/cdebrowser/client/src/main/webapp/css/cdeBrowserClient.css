@@ -273,3 +273,15 @@ display:inline-block !important;
 .cart a {
     display:inline-block;
 }
+
+.loginPage {
+    font-size:90%;
+}
+
+.loginPage .cleanInput {
+    border:1px solid #bfbfbf;
+}
+
+.loginPage span {
+    padding-right:10px;
+}
