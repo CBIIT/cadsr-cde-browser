@@ -41,8 +41,10 @@ public class CdeBrowserAuthenticationController
 		{
 			try {
 				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
+				request.getSession(false).invalidate();
 				
-				request.getSession().setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
+				logger.debug("Setting user in the session after successful login:" + credentials[0]);
+				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
 			} 
 			catch (Exception e) {
 				logger.error("Error in validating user credentials, username: " + credentials[0], e);

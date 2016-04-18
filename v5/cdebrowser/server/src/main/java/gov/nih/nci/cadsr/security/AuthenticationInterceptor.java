@@ -30,7 +30,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter
 			String username = (String) request.getSession().getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 			if(StringUtils.isBlank(username))
 			{
-				response.sendRedirect("http://localhost:8080/cdebrowserClient/cdeBrowser.html#/login");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "login needed");
 				userLoggedIn = false;
 			}
 		}
