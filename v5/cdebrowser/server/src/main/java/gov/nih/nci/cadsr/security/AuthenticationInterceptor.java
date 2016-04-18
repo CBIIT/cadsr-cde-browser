@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
+@Component("authenticationInterceptor")
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter
 {
 	private Logger logger = LogManager.getLogger(AuthenticationInterceptor.class.getName());
@@ -22,14 +24,15 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter
 		logger.info("Authentication interceptor invoked for request to a secure page: " + request.getRequestURI());
 		 
 		// Avoid a redirect loop for some urls
+		// but not actually necessary here since interceptor is not configured for the login path
 		if  (!request.getRequestURI().contains("login"))
 		{
 			String username = (String) request.getSession().getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 			if(StringUtils.isBlank(username))
 			{
-				response.sendRedirect("https://localhost:8080/cdebrowserClient/cdeBrowser.html#/login");
-				return false;
-			}   
+				response.sendRedirect("http://localhost:8080/cdebrowserClient/cdeBrowser.html#/login");
+				userLoggedIn = false;
+			}
 		}
 		
 		return userLoggedIn;

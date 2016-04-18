@@ -16,4 +16,6 @@ public interface CsCsiDAO
     List<CsCsiModel> getCsCsisByAcIdseq( String acIdseq );
 
     List<CsCsiModel> getAltNamesAndDefsByDataElement( String deIdseq );
+    
+    public List<CsCsiModel> getCsCsisByConteId( String conteId );
 }

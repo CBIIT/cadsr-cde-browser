@@ -3,50 +3,110 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.*;
-import gov.nih.nci.cadsr.dao.model.*;
-import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
-import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.*;
-import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
-import gov.nih.nci.cadsr.service.model.cdeData.adminInfo.AdminInfo;
-import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
-import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
-import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeReferenceDocument;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElement.*;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation.DataElementDerivation;
-import gov.nih.nci.cadsr.service.model.cdeData.usage.FormUsage;
-import gov.nih.nci.cadsr.service.model.cdeData.usage.Usage;
-import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.ConceptDAO;
+import gov.nih.nci.cadsr.dao.DataElementDAO;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
+import gov.nih.nci.cadsr.dao.ObjectClassConceptDAO;
+import gov.nih.nci.cadsr.dao.PermissibleValuesDAO;
+import gov.nih.nci.cadsr.dao.PropertyConceptDAO;
+import gov.nih.nci.cadsr.dao.ReferenceDocDAO;
+import gov.nih.nci.cadsr.dao.RepresentationConceptsDAO;
+import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
+import gov.nih.nci.cadsr.dao.ValueDomainConceptDAO;
+import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
+import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
+import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
+import gov.nih.nci.cadsr.dao.model.ConceptModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
+import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
+import gov.nih.nci.cadsr.dao.model.DesignationModel;
+import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
+import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
+import gov.nih.nci.cadsr.dao.model.PropertyModel;
+import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
+import gov.nih.nci.cadsr.dao.model.RepresentationModel;
+import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
+import gov.nih.nci.cadsr.dao.model.UsageModel;
+import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
+import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConcept;
+import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConceptDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.ObjectClass;
+import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.Property;
+import gov.nih.nci.cadsr.service.model.cdeData.adminInfo.AdminInfo;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeReferenceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateDefinition;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.CsCsi;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.OtherVersion;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation.DataElementDerivation;
+import gov.nih.nci.cadsr.service.model.cdeData.usage.FormUsage;
+import gov.nih.nci.cadsr.service.model.cdeData.usage.Usage;
+import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.Representation;
+import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomain;
+import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
+
 @RestController
 public class CDEDataController
 {
     private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
-    private DataElementDAOImpl dataElementDAO;
-    private ReferenceDocDAOImpl referenceDocDAO;
-    private PermissibleValuesDAOImpl permissibleValuesDAO;
-    private RepresentationConceptsDAOImpl representationConceptsDAO;
-    private DataElementDerivationDAOImpl dataElementDerivationDAO;
-    private ObjectClassConceptDAOImpl objectClassConceptDAO;
-    private PropertyConceptDAOImpl propertyConceptDAO;
-    private ValueDomainConceptDAOImpl valueDomainConceptDAO;
-    private ConceptDAOImpl conceptDAO;
-    private ToolOptionsDAOImpl toolOptionsDAO;
+    
+    @Autowired
+    private DataElementDAO dataElementDAO;
+    
+    @Autowired
+    private ReferenceDocDAO referenceDocDAO;
+
+    @Autowired
+    private PermissibleValuesDAO permissibleValuesDAO;
+
+    @Autowired
+    private RepresentationConceptsDAO representationConceptsDAO;
+
+    @Autowired
+    private DataElementDerivationDAO dataElementDerivationDAO;
+
+    @Autowired
+    private ObjectClassConceptDAO objectClassConceptDAO;
+
+    @Autowired
+    private PropertyConceptDAO propertyConceptDAO;
+
+    @Autowired
+    private ValueDomainConceptDAO valueDomainConceptDAO;
+
+    @Autowired
+    private ConceptDAO conceptDAO;
+
+    @Autowired
+    private ToolOptionsDAO toolOptionsDAO;
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
@@ -631,72 +691,72 @@ public class CDEDataController
     }
 
 
-    public void setDataElementDAO( DataElementDAOImpl dataElementDAO )
+    public void setDataElementDAO( DataElementDAO dataElementDAO )
     {
         this.dataElementDAO = dataElementDAO;
     }
 
-    public void setReferenceDocDAO( ReferenceDocDAOImpl referenceDocDAO )
+    public void setReferenceDocDAO( ReferenceDocDAO referenceDocDAO )
     {
         this.referenceDocDAO = referenceDocDAO;
     }
 
-    public void setPermissibleValuesDAO( PermissibleValuesDAOImpl permissibleValuesDAO )
+    public void setPermissibleValuesDAO( PermissibleValuesDAO permissibleValuesDAO )
     {
         this.permissibleValuesDAO = permissibleValuesDAO;
     }
 
-    public void setRepresentationConceptsDAO( RepresentationConceptsDAOImpl representationConceptsDAO )
+    public void setRepresentationConceptsDAO( RepresentationConceptsDAO representationConceptsDAO )
     {
         this.representationConceptsDAO = representationConceptsDAO;
     }
 
-    public void setDataElementDerivationDAO( DataElementDerivationDAOImpl dataElementDerivationDAO )
+    public void setDataElementDerivationDAO( DataElementDerivationDAO dataElementDerivationDAO )
     {
         this.dataElementDerivationDAO = dataElementDerivationDAO;
     }
 
-    public void setObjectClassConceptDAO( ObjectClassConceptDAOImpl objectClassConceptDAO )
+    public void setObjectClassConceptDAO( ObjectClassConceptDAO objectClassConceptDAO )
     {
         this.objectClassConceptDAO = objectClassConceptDAO;
     }
 
-    public ConceptDAOImpl getConceptDAO()
+    public ConceptDAO getConceptDAO()
     {
         return conceptDAO;
     }
 
-    public void setConceptDAO( ConceptDAOImpl conceptDAO )
+    public void setConceptDAO( ConceptDAO conceptDAO )
     {
         this.conceptDAO = conceptDAO;
     }
 
-    public PropertyConceptDAOImpl getPropertyConceptDAO()
+    public PropertyConceptDAO getPropertyConceptDAO()
     {
         return propertyConceptDAO;
     }
 
-    public void setPropertyConceptDAO( PropertyConceptDAOImpl propertyConceptDAO )
+    public void setPropertyConceptDAO( PropertyConceptDAO propertyConceptDAO )
     {
         this.propertyConceptDAO = propertyConceptDAO;
     }
 
-    public ValueDomainConceptDAOImpl getValueDomainConceptDAO()
+    public ValueDomainConceptDAO getValueDomainConceptDAO()
     {
         return valueDomainConceptDAO;
     }
 
-    public void setValueDomainConceptDAO( ValueDomainConceptDAOImpl valueDomainConceptDAO )
+    public void setValueDomainConceptDAO( ValueDomainConceptDAO valueDomainConceptDAO )
     {
         this.valueDomainConceptDAO = valueDomainConceptDAO;
     }
 
-    public ToolOptionsDAOImpl getToolOptionsDAO()
+    public ToolOptionsDAO getToolOptionsDAO()
     {
         return toolOptionsDAO;
     }
 
-    public void setToolOptionsDAO( ToolOptionsDAOImpl toolOptionsDAO )
+    public void setToolOptionsDAO( ToolOptionsDAO toolOptionsDAO )
     {
         this.toolOptionsDAO = toolOptionsDAO;
     }

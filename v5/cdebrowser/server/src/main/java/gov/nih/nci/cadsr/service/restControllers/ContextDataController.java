@@ -3,16 +3,40 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.*;
-import gov.nih.nci.cadsr.dao.model.*;
-import gov.nih.nci.cadsr.service.model.context.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.ClassificationSchemeDAO;
+import gov.nih.nci.cadsr.dao.ContextDAO;
+import gov.nih.nci.cadsr.dao.CsCsiDAO;
+import gov.nih.nci.cadsr.dao.ProtocolDAO;
+import gov.nih.nci.cadsr.dao.ProtocolFormDAO;
+import gov.nih.nci.cadsr.dao.model.ClassificationSchemeModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
+import gov.nih.nci.cadsr.dao.model.ProtocolFormModel;
+import gov.nih.nci.cadsr.dao.model.ProtocolModel;
+import gov.nih.nci.cadsr.service.model.context.BaseNode;
+import gov.nih.nci.cadsr.service.model.context.ClassificationItemNode;
+import gov.nih.nci.cadsr.service.model.context.ClassificationNode;
+import gov.nih.nci.cadsr.service.model.context.ContextNode;
+import gov.nih.nci.cadsr.service.model.context.ParentNode;
+import gov.nih.nci.cadsr.service.model.context.ProtocolFormNode;
+import gov.nih.nci.cadsr.service.model.context.ProtocolNode;
 
 @RestController
 public class ContextDataController
@@ -20,13 +44,25 @@ public class ContextDataController
 
     private Logger logger = LogManager.getLogger( ContextDataController.class.getName() );
 
-    private ContextDAOImpl contextDAO;
-    private ClassificationSchemeDAOImpl classificationSchemeDAO;
-    private CsCsiDAOImpl csCsiDAO;
-    private ProtocolFormDAOImpl protocolFormDAO;
-    private ProtocolDAOImpl protocolDAO;
+    @Autowired
+    private ContextDAO contextDAO;
+
+    @Autowired
+    private ClassificationSchemeDAO classificationSchemeDAO;
+
+    @Autowired
+    private CsCsiDAO csCsiDAO;
+
+    @Autowired
+    private ProtocolFormDAO protocolFormDAO;
+
+    @Autowired
+    private ProtocolDAO protocolDAO;
+    
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
+    
+    @Autowired
     private RestControllerCommon restControllerCommon;
 
 
@@ -70,7 +106,7 @@ public class ContextDataController
             programAreaModelList = restControllerCommon.getProgramAreaList();
         } catch( Exception e )
         {
-            logger.error( "Server Error:\nCould not retrieve Program Areas from database" );
+            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
             ContextNode[] errorNode = new ContextNode[1];
             errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Program Areas from database", e, ContextNode.class );
             return errorNode;
@@ -83,7 +119,7 @@ public class ContextDataController
             contextNodes = getAllTopLevelTreeData();
         } catch( Exception e )
         {
-            logger.error( "Server Error:\nCould not retrieve Program Areas from database" );
+            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
             ContextNode[] errorNode = new ContextNode[1];
             errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Top Level Context data from database", e, ContextNode.class );
             return errorNode;
@@ -733,7 +769,7 @@ public class ContextDataController
      */
     private <T extends BaseNode> T createErrorNode( String text, Exception e, Class<T> c )
     {
-        logger.error( text + e.getMessage() );
+        logger.error( text + e.getMessage(), e);
         BaseNode errorNode = new ContextNode();
 
         errorNode.setStatus( CaDSRConstants.ERROR );
@@ -749,27 +785,27 @@ public class ContextDataController
         this.restControllerCommon = restControllersCommon;
     }
 
-    public void setProtocolDAO( ProtocolDAOImpl protocolDAO )
+    public void setProtocolDAO( ProtocolDAO protocolDAO )
     {
         this.protocolDAO = protocolDAO;
     }
 
-    public void setProtocolFormDAO( ProtocolFormDAOImpl protocolFormDAO )
+    public void setProtocolFormDAO( ProtocolFormDAO protocolFormDAO )
     {
         this.protocolFormDAO = protocolFormDAO;
     }
 
-    public void setCsCsiDAO( CsCsiDAOImpl csCsiDAO )
+    public void setCsCsiDAO( CsCsiDAO csCsiDAO )
     {
         this.csCsiDAO = csCsiDAO;
     }
 
-    public void setContextDAO( ContextDAOImpl contextDAO )
+    public void setContextDAO( ContextDAO contextDAO )
     {
         this.contextDAO = contextDAO;
     }
 
-    public void setClassificationSchemeDAO( ClassificationSchemeDAOImpl classificationSchemeDAO )
+    public void setClassificationSchemeDAO( ClassificationSchemeDAO classificationSchemeDAO )
     {
         this.classificationSchemeDAO = classificationSchemeDAO;
     }

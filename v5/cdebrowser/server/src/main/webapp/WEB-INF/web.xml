@@ -4,29 +4,30 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+         
         <display-name>CDEBrowser</display-name>
-        <welcome-file-list>
-            <welcome-file>index.html</welcome-file>
-            <welcome-file>index.htm</welcome-file>
-            <welcome-file>index.jsp</welcome-file>
-            <welcome-file>default.html</welcome-file>
-            <welcome-file>default.htm</welcome-file>
-            <welcome-file>default.jsp</welcome-file>
-        </welcome-file-list>
-
-        <display-name>cdeBrowser</display-name>
         <description>cdeBrowser</description>
+        
+		<context-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:application-context.xml</param-value>
+		</context-param>
+		
+		<listener>
+			<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		</listener>
+		
+		<listener>
+        	<listener-class>gov.nih.nci.cadsr.common.UserSessionListener</listener-class>
+  		</listener>
 
         <servlet>
             <servlet-name>rest</servlet-name>
-
-            <servlet-class>
-                org.springframework.web.servlet.DispatcherServlet
-            </servlet-class>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 
             <init-param>
                 <param-name>contextConfigLocation</param-name>
-                <param-value>classpath:application-context.xml</param-value>
+                <param-value>/WEB-INF/rest-servlet.xml</param-value>
             </init-param>
 
             <load-on-startup>1</load-on-startup>
@@ -36,15 +37,14 @@
             <servlet-name>rest</servlet-name>
             <url-pattern>/rest/*</url-pattern>
         </servlet-mapping>
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-
-            classpath:spring-ds.xml
-        </param-value>
-
-    </context-param>
-
+        
+        <welcome-file-list>
+            <welcome-file>index.html</welcome-file>
+            <welcome-file>index.htm</welcome-file>
+            <welcome-file>index.jsp</welcome-file>
+            <welcome-file>default.html</welcome-file>
+            <welcome-file>default.htm</welcome-file>
+            <welcome-file>default.jsp</welcome-file>
+        </welcome-file-list>
 
 </web-app>

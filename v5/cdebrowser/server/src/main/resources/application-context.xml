@@ -2,74 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd
-       http://www.springframework.org/schema/task
-       http://www.springframework.org/schema/task/spring-task.xsd
-       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/context/spring-context-4.1.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd
        http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util.xsd"
-       >
-
-
-    <mvc:annotation-driven/>
-    <context:component-scan base-package="gov.nih.nci.cadsr"/>
-
-    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+       http://www.springframework.org/schema/util/spring-util-4.1.xsd" >
+       
+    <context:annotation-config />
+    
+    <context:component-scan base-package="gov.nih.nci.cadsr">
+    	 <context:exclude-filter type="regex" expression="gov.nih.nci.cadsr.service.restControllers.*" />
+    </context:component-scan>
 
     <context:property-placeholder location="classpath:cdeBrowser.server.properties"/>
 
-    <bean id="testController" class="gov.nih.nci.cadsr.service.restControllers.TestController">
-        <property name="testDao" ref="testDAO"/>
-    </bean>
-
-    <bean id="CDEDataController" class="gov.nih.nci.cadsr.service.restControllers.CDEDataController">
-        <property name="dataElementDAO" ref="dataElementDAO"/>
-        <property name="referenceDocDAO" ref="referenceDocDAO"/>
-        <property name="permissibleValuesDAO" ref="permissibleValuesDAO"/>
-        <property name="representationConceptsDAO" ref="representationConceptsDAO"/>
-        <property name="valueDomainConceptDAO" ref="valueDomainConceptDAO"/>
-        <property name="toolOptionsDAO" ref="toolOptionsDAO"/>
-        <property name="dataElementDerivationDAO" ref="dataElementDerivationDAO"/>
-        <property name="objectClassConceptDAO" ref="objectClassConceptDAO"/>
-        <property name="conceptDAO" ref="conceptDAO"/>
-        <property name="propertyConceptDAO" ref="propertyConceptDAO"/>
-    </bean>
-
-    <bean id="searchController" class="gov.nih.nci.cadsr.service.restControllers.SearchController">
-        <property name="searchDAO" ref="searchDAO"/>
-        <property name="dataElementDAO" ref="dataElementDAO"/>
-        <property name="restControllerCommon" ref="resControllerCommon"/>
-        <property name="searchQueryBuilder" ref="searchQueryBuilder"/>
-    </bean>
-
-    <bean id="contextDataController" class="gov.nih.nci.cadsr.service.restControllers.ContextDataController">
-        <property name="classificationSchemeDAO" ref="classificationSchemeDAO"/>
-        <property name="contextDAO" ref="contextDAO"/>
-        <property name="csCsiDAO" ref="csCsiDAO"/>
-        <property name="protocolFormDAO" ref="protocolFormDAO"/>
-        <property name="protocolDAO" ref="protocolDAO"/>
-        <property name="restControllerCommon" ref="resControllerCommon"/>
-    </bean>
-
-    <bean id="tierHostController" class="gov.nih.nci.cadsr.service.restControllers.TierHostController">
-        <property name="toolOptionsDAO" ref="toolOptionsDAO"/>
-    </bean>
-
     <bean id="abstractDao" abstract="true" class="gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
-    </bean>
-
-    <bean id="resControllerCommon" class="gov.nih.nci.cadsr.service.restControllers.RestControllerCommon">
-        <property name="programAreaDAO" ref="programAreaDAO"/>
     </bean>
 
     <bean id="acRegistrationsDAO" class="gov.nih.nci.cadsr.dao.AcRegistrationsDAOImpl" parent="abstractDao"/>
@@ -168,7 +120,6 @@
     <bean id="objectClassConceptDAO" class="gov.nih.nci.cadsr.dao.ObjectClassConceptDAOImpl" parent="abstractDao">
         <property name="conceptDAO" ref="conceptDAO"/>
     </bean>
-
 
     <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao"/>
     <bean id="permissibleValuesDAO" class="gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl" parent="abstractDao"/>

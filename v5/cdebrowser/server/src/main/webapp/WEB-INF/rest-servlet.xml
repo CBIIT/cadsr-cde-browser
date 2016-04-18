@@ -11,13 +11,13 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 
-    <context:component-scan base-package="gov.nih.nci.cadsr"/>
+	<context:component-scan base-package="gov.nih.nci.cadsr.service.restControllers" />
     <mvc:annotation-driven/>
     
     <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/cdeCart" />
-			<bean class="gov.nih.nci.cadsr.security.AuthenticationInterceptor" />
+			<ref bean="authenticationInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

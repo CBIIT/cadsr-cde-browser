@@ -26,4 +26,6 @@ import java.util.List;
 public interface TestDao
 {
     void getRoewsByTable( int rowCount, final String tableName, final List<String> rowList );
+    
+    public List<String> getRowsByTableCol( final String tableName, final List<String> rowList );
 }

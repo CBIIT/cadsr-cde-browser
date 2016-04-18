@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 	@Override
 	public boolean validateUserCredentials(String loginUsername, String credential) throws Exception 
 	{
-		boolean valid = false;
+		boolean valid = true;
     	try
     	{
     		if (userManagerDAO.getCadsrLockoutProperties() == 2)
@@ -33,14 +33,16 @@ public class AuthenticationServiceImpl implements AuthenticationService
 					if (updCnt == 0)
 						userManagerDAO.insertLock(loginUsername);
 					
+					valid = false;
 					throw e;
 				}
-    			if(valid)
+    			
+    			if (valid)
     			{
     				userManagerDAO.resetLock(loginUsername);
-    				valid = true;
     			}
     		}
+    		
     	}
     	catch(Exception ex)
     	{

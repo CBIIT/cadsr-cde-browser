@@ -46,7 +46,7 @@ public class CdeBrowserAuthenticationController
 			} 
 			catch (Exception e) {
 				logger.error("Error in validating user credentials, username: " + credentials[0], e);
-				e.printStackTrace();
+				throw new AutheticationFailureException("Authentication failed for user because of invalid credentials:" + credentials[0]);
 			}
 		}
 		

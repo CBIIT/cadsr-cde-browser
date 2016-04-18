@@ -3,17 +3,21 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.TestDaoImpl;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import gov.nih.nci.cadsr.dao.TestDao;
 
 @RestController
 public class TestController
 {
-    private TestDaoImpl testDao;
+    @Autowired
+    private TestDao testDao;
+    
     private List<String> tableList = new ArrayList<>();
 
     public TestController()
@@ -47,12 +51,12 @@ public class TestController
         return results;
     }
 
-    public TestDaoImpl getTestDao()
+    public TestDao getTestDao()
     {
         return testDao;
     }
 
-    public void setTestDao( TestDaoImpl testDao )
+    public void setTestDao( TestDao testDao )
     {
         this.testDao = testDao;
     }

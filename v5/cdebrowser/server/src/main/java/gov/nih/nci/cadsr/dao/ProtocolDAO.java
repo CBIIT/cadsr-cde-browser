@@ -14,4 +14,6 @@ public interface ProtocolDAO
     public List<ProtocolModel> getProtocolsByContext( String conteId );
     
     public List<Protocol> getAllProtocolsWithProgramAreaAndContext();
+    
+    public boolean haveProtocolsByContext( String conteId );
 }

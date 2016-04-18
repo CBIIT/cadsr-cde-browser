@@ -3,14 +3,15 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.ToolOptionsDAOImpl;
-import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
+import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 
 /**
  * Get the URL for other tools, from this tier's database
@@ -18,7 +19,8 @@ import java.util.List;
 @RestController
 public class TierHostController
 {
-    private ToolOptionsDAOImpl toolOptionsDAO;
+    @Autowired
+    private ToolOptionsDAO toolOptionsDAO;
 
     @RequestMapping( value = "/getToolHost" )
     @ResponseBody
@@ -37,12 +39,12 @@ public class TierHostController
         return toolOptions;
     }
 
-    public ToolOptionsDAOImpl getToolOptionsDAO()
+    public ToolOptionsDAO getToolOptionsDAO()
     {
         return toolOptionsDAO;
     }
 
-    public void setToolOptionsDAO( ToolOptionsDAOImpl toolOptionsDAO )
+    public void setToolOptionsDAO( ToolOptionsDAO toolOptionsDAO )
     {
         this.toolOptionsDAO = toolOptionsDAO;
     }

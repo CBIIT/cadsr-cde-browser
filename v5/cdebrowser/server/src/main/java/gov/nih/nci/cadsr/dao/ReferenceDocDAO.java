@@ -7,7 +7,7 @@ import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
 
 import java.util.List;
 
-interface ReferenceDocDAO
+public interface ReferenceDocDAO
 {
     List<ReferenceDocModel> getRefDocsByRdIdseq( String rdIdseq );
     List<ReferenceDocModel> getRefDocsByAcIdseq( String acIdseq );

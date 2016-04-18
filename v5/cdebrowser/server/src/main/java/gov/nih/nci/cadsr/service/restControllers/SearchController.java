@@ -3,27 +3,37 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.SearchDAOImpl;
-import gov.nih.nci.cadsr.dao.DataElementDAO;
-import gov.nih.nci.cadsr.dao.model.SearchModel;
-import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
-import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
-import gov.nih.nci.cadsr.service.model.search.SearchNode;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.DataElementDAO;
+import gov.nih.nci.cadsr.dao.SearchDAO;
+import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
+import gov.nih.nci.cadsr.dao.model.SearchModel;
+import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
+import gov.nih.nci.cadsr.service.model.search.SearchNode;
 
 @RestController
 public class SearchController
 {
 
     private Logger logger = LogManager.getLogger( SearchController.class.getName() );
-    private SearchDAOImpl searchDAO;
+
+    @Autowired
+    private SearchDAO searchDAO;
+
+    @Autowired
     private DataElementDAO dataElementDAO;
+    
     private RestControllerCommon restControllerCommon;
     private List<ProgramAreaModel> programAreaModelList = null;
     private SearchQueryBuilder searchQueryBuilder = null;
@@ -323,7 +333,7 @@ public class SearchController
 
     ///////////////////////////////////
     // Setters & Getters
-    public void setSearchDAO( SearchDAOImpl searchDAO )
+    public void setSearchDAO( SearchDAO searchDAO )
     {
         this.searchDAO = searchDAO;
     }
