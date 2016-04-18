@@ -74,12 +74,13 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// save the cart //
 	this.saveCart = function() {
-		this.itemsForSave = [];
+		var that = this;
+		that.itemsForSave = [];
 		$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
-			for (var i=0; i<this.cartData.length; i++) {
-				if (this.cartData[i]['unsavedItem']==true) {
-					this.itemsForSave.push(this.cartData[i].deIdseq);
-					this.cartData[i]['unsavedItem'] = false;
+			for (var i=0; i<that.cartData.length; i++) {
+				if (that.cartData[i]['unsavedItem']==true) {
+					that.itemsForSave.push(that.cartData[i].deIdseq);
+					that.cartData[i]['unsavedItem'] = false;
 				};
 			};
 		})
