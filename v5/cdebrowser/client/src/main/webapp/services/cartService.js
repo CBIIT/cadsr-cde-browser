@@ -75,14 +75,13 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	// save the cart //
 	this.saveCart = function() {
 		this.itemsForSave = [];
-		for (var i=0; i<this.cartData.length; i++) {
-			if (this.cartData[i]['unsavedItem']==true) {
-				this.itemsForSave.push(this.cartData[i].deIdseq);
-				this.cartData[i]['unsavedItem'] = false;
-			};
-		};
 		$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
-			console.log(response);
+			for (var i=0; i<this.cartData.length; i++) {
+				if (this.cartData[i]['unsavedItem']==true) {
+					this.itemsForSave.push(this.cartData[i].deIdseq);
+					this.cartData[i]['unsavedItem'] = false;
+				};
+			};
 		})
 		.error(function(response) {
 			authService.cameFrom = 'save';
