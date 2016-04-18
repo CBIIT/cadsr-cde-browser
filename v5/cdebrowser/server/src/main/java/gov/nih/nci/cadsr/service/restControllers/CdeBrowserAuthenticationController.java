@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -41,7 +42,9 @@ public class CdeBrowserAuthenticationController
 		{
 			try {
 				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
-				request.getSession(false).invalidate();
+				HttpSession session = request.getSession(false);
+				if (session != null)
+					session.invalidate();
 				
 				logger.debug("Setting user in the session after successful login:" + credentials[0]);
 				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
