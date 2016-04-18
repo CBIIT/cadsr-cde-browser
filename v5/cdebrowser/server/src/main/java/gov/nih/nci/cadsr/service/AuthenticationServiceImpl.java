@@ -18,6 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 	@Override
 	public boolean validateUserCredentials(String loginUsername, String credential) throws Exception 
 	{
+		logger.debug("Validating user credentials for: " + loginUsername);
 		boolean valid = true;
     	try
     	{
@@ -42,14 +43,13 @@ public class AuthenticationServiceImpl implements AuthenticationService
     				userManagerDAO.resetLock(loginUsername);
     			}
     		}
-    		
     	}
     	catch(Exception ex)
     	{
     		logger.error("Error in validating user credentials: ", ex);
     		throw ex;
     	}
-    	
+		logger.debug("Successfully validated credentials for: " + loginUsername);
     	return valid;
 	}
 
