@@ -14,8 +14,7 @@ public class UserSessionListener implements HttpSessionListener
 	@Override
 	public void sessionCreated(HttpSessionEvent sessionEvent)
 	{
-		HttpSession session = sessionEvent.getSession();
-		logger.debug("A new user session was created for user:" + session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME));
+		logger.debug("A new session was created.");
 		
 	}
 

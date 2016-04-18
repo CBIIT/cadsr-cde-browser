@@ -44,7 +44,12 @@ public class CdeBrowserAuthenticationController
 				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
 				HttpSession session = request.getSession(false);
 				if (session != null)
-					session.invalidate();
+				{
+					String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+					//do not invalidate if the same user is trying to login again.
+					if (!StringUtils.equals(currUser, credentials[0]))
+						session.invalidate();
+				}
 				
 				logger.debug("Setting user in the session after successful login:" + credentials[0]);
 				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
@@ -58,6 +63,16 @@ public class CdeBrowserAuthenticationController
 		return login;
 	}
 	
+	@RequestMapping(value="/logout")
+	public void logout(HttpSession session)
+	{
+		String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+		logger.debug("Received request to logout user: " + currUser);
+		if (session != null)
+			session.invalidate();
+		
+	}
+	
 	private String[] decodeAuthorizationHeader(String authorization)
 	{
 		String[] unpwd = new String[2];
@@ -69,7 +84,7 @@ public class CdeBrowserAuthenticationController
 			String credentials = new String(Base64.getDecoder().decode(base64Credentials), Charset.forName("UTF-8"));
 			
 			// credentials = username:password
-			unpwd = credentials.split(":",2);
+			unpwd = credentials.split(":", 2);
 		}
 		return unpwd;
 	}
