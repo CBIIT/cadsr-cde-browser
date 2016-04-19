@@ -293,9 +293,15 @@ ul.cdeSearchMessage li{
     padding:5px 5px 5px 5px;
 }
 
+#cdeCart .searchResultsTableTd {
+    vertical-align:top;
+}
+
 #cdeCart .searchResultsTableTd span {
     display:block;
     width:auto;
+    padding:4px 0px 0px 0px;  
+    font-size:85%;
     text-align:center;
 }
 
