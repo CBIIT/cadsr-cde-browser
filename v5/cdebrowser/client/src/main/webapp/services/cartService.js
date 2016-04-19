@@ -30,17 +30,25 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// delete cde's from cart //
 	this.deleteCDEs = function() {
-		var arrayOfKeys = Object.keys(this.checkedCartItems.items);
-		var i = 0;
-		for (var i = this.cartData.length - 1; i >= 0; i--) {
-			if (arrayOfKeys.indexOf(this.cartData[i].deIdseq) > -1) {
-				delete(this.checkedCartItems.items[this.cartData[i].deIdseq])
-				this.cartData.splice(i,1);
-			};
-		};
-		if (!Object.keys(this.checkedCartItems.items).length) {
-			this.checkedCartItems.selected = false;
-		};
+
+		$http({method: 'DELETE',url:'/cdebrowserServer/rest/cdeCart', data:[]})
+		.success(function(response) {
+			console.log("success")
+		})
+		.error(function(response) {
+			console.log("fail")
+		});
+		// var arrayOfKeys = Object.keys(this.checkedCartItems.items);
+		// var i = 0;
+		// for (var i = this.cartData.length - 1; i >= 0; i--) {
+		// 	if (arrayOfKeys.indexOf(this.cartData[i].deIdseq) > -1) {
+		// 		delete(this.checkedCartItems.items[this.cartData[i].deIdseq])
+		// 		this.cartData.splice(i,1);
+		// 	};
+		// };
+		// if (!Object.keys(this.checkedCartItems.items).length) {
+		// 	this.checkedCartItems.selected = false;
+		// };
 	};
 
 	// selects all or de-selects all items in the cart. used for deleting only at this point //
@@ -96,12 +104,12 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		$http.get('/cdebrowserServer/rest/cdeCart').success(function(response) {
 			var temporaryIds = []; // array of temp ids to compare with retrieved cart items. Prevent looping through two arrays //
 			for (var i=0; i<that.cartData.length;i++) {
-				temporaryIds.push(that.cartData[i].publicId);
+				temporaryIds.push(that.cartData[i].deIdseq);
 			};
 
 			if (response.length) {
 				for (var i=0; i<response.length;i++) {
-					var index = temporaryIds.indexOf(response[i].publicId);
+					var index = temporaryIds.indexOf(response[i].deIdseq);
 					if (index > -1) {
 						that.cartData[index].unsavedItem=false;
 					}
