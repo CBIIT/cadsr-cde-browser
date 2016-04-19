@@ -114,15 +114,17 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			};
 		};
 
-		$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
-			for (var i=0; i<that.cartData.length; i++) {
-				that.cartData[i]['unsavedItem'] = false;
-			};
-		})
-		.error(function(response) {
-			authService.cameFrom = 'save';
-	        $location.path("/login").replace(); // send user to login page //
-		});
+		if (this.itemsForSave.length) { //only make call if there are unsaved items //
+			$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
+				for (var i=0; i<that.cartData.length; i++) {
+					that.cartData[i]['unsavedItem'] = false;
+				};
+			})
+			.error(function(response) {
+				authService.cameFrom = 'save';
+		        $location.path("/login").replace(); // send user to login page //
+			});			
+		};
 	};
 
 	// retrieve the cart. Will call rest service //
