@@ -26,15 +26,12 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 
 	// retrieve items and put them in cde cart //
 	$scope.retrieveCart = function() {
-		console.log("????")
-		// make call to server to get cart, add current items to retrieved cart //
 		cartService.retrieveCart(); 
 	};	
 
 	// delete item from cde cart //
 	$scope.deleteCDEs = function() {
 		cartService.deleteCDEs();
-		console.log("delete if logged in and check unsaved status to delete locally or from server. If authorized error, ignore the unsaved status and just delete locally.")
 	};
 
 	// save cart to server //
