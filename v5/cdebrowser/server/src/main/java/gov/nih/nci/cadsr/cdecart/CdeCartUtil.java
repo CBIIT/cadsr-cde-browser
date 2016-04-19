@@ -273,9 +273,24 @@ public class CdeCartUtil {
 	
 			List<DataElementModel> deModelList = dataElementDAO.getCdeByDeIdseqList(cdeIds);
 			
-			buildCartTransferObjects(deModelList, sessionCart);
-	
-			userCart.mergeCart(sessionCart);
+			Collection<DataElementTransferObject> addCandidates = buildCartTransferObjects(deModelList);
+			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
+
+			for (DataElementTransferObject deto : addCandidates) {
+				CDECartItem cartItem = sessionCart.findDataElement(deto.getIdseq());
+				if (cartItem == null) {
+	    			CDECartItem cdeItem = new CDECartItemTransferObject();
+					cdeItem.setPersistedInd(false);//we have IDs only for items to save
+					cdeItem.setItem(deto);
+					items.add(cdeItem);
+				}
+				else {
+					cartItem.setPersistedInd(true);
+					items.add(cartItem);
+				}
+			}
+			
+			userCart.mergeDataElements(items);
 		}
 		catch (ObjectCartException oce){
 			log.error("Exception on cdeCart.getDataElements", oce);
@@ -330,20 +345,24 @@ public class CdeCartUtil {
 		return res;
 	}
 	
-    public void buildCartTransferObjects (List<DataElementModel> deList, CDECart cdeCart) {
-    	if ((deList == null) || (cdeCart == null)) {
+    public Collection<DataElementTransferObject> buildCartTransferObjects (List<DataElementModel> deList) {
+    	ArrayList<DataElementTransferObject> resultModel = new ArrayList<DataElementTransferObject>();
+    	if (deList != null) {
     		log.debug("No data to add to cart");
-    		return;
-    	}
-    	deList.forEach((deModel) -> {
-    		if (deModel != null) {
-    			CDECartItem cdeItem = new CDECartItemTransferObject();
-				cdeItem.setPersistedInd(true);//we have IDs only for items to save
-				DataElementTransferObject deto = toDataElement(deModel);
-				cdeItem.setItem(deto);
-    			cdeCart.setDataElement(cdeItem);
+    		for (DataElementModel deModel : deList) {
+    			if (deModel != null) {
+    				CDECartItem cdeItem = new CDECartItemTransferObject();
+					cdeItem.setPersistedInd(false);//we have IDs only for items to save
+					DataElementTransferObject deto = toDataElement(deModel);
+					cdeItem.setItem(deto);
+					resultModel.add(deto);
+    			}
     		}
-    	});
+    	}
+    	else {
+    		log.debug("No data to add to cart");
+    	}
+    	return resultModel;
     }
     
     public DataElementTransferObject toDataElement(DataElementModel deModel) {
