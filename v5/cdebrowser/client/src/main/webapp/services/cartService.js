@@ -111,11 +111,13 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		for (var i=0; i<this.cartData.length; i++) {
 			if (this.cartData[i]['unsavedItem']==true) {
 				this.itemsForSave.push(this.cartData[i].deIdseq);
-				this.cartData[i]['unsavedItem'] = false;
 			};
 		};
-		$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
 
+		$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
+			for (var i=0; i<that.cartData.length; i++) {
+				that.cartData[i]['unsavedItem'] = false;
+			};
 		})
 		.error(function(response) {
 			authService.cameFrom = 'save';
