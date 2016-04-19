@@ -30,42 +30,40 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// delete cde's from cart //
 	this.deleteCDEs = function() {
-		var that = this;
 		var url = '/cdebrowserServer/rest/cdeCart'; // url for server download //
-		var c = 0; // keep track of index of checked cart items index //
-			for (var i=0; i<this.cartData.length; i++) {
-				if (this.checkedCartItems.items[this.cartData[i].deIdseq]) {
-					if (this.cartData[i].unsavedItem==false) {
-						if (c==0) {
-							url+='?id='+this.cartData[i].deIdseq;
-						}
-						else {
-							url+='&id='+this.cartData[i].deIdseq;
-						};					
-						c++;
-					};
+		var c = 0; // keep track of index of checked cart items index //		
+		var that = this;
+		var deleteItems = function() { // function to delete items from local cart, called on both success and failure of cdeCart service call //
+			for (var i = that.cartData.length - 1; i >= 0; i--) { 
+				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
+					that.cartData.splice(i,1);
 				};
-			};			
+			};
+			that.checkedCartItems.selected=false;
+			that.checkedCartItems.items={};				
+		};
+
+		// create url for delete call //
+		for (var i=0; i<this.cartData.length; i++) {
+			if (this.checkedCartItems.items[this.cartData[i].deIdseq]) {
+				if (this.cartData[i].unsavedItem==false) {
+					if (c==0) {
+						url+='?id='+this.cartData[i].deIdseq;
+					}
+					else {
+						url+='&id='+this.cartData[i].deIdseq;
+					};					
+					c++;
+				};
+			};
+		};	
+				
 		$http({method: 'DELETE',url:url})
-		.success(function(response) { 
-			for (var i = that.cartData.length - 1; i >= 0; i--) { // same function for both success and failure //
-				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
-					that.cartData.splice(i,1);
-				};
-			};
-			that.checkedCartItems.selected=false;
-			that.checkedCartItems.items={};	
-
-		})
-		.error(function(response) { 
-			for (var i = that.cartData.length - 1; i >= 0; i--) { // same function for both success and failure //
-				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
-					that.cartData.splice(i,1);
-				};
-			};
-			that.checkedCartItems.selected=false;
-			that.checkedCartItems.items={};	
-
+			.success(function(response) { 
+				deleteItems();
+			})
+			.error(function(response) { 
+				deleteItems();
 		});
 	};
 
