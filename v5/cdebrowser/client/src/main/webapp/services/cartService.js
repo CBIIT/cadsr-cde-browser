@@ -33,16 +33,13 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		var that = this;
 		var url = '/cdebrowserServer/rest/cdeCart'; // url for server download //
 		var c = 0; // keep track of index of checked cart items index //
-		console.log("yes")
 			for (var i=0; i<this.cartData.length; i++) {
 				if (this.checkedCartItems.items[this.cartData[i].deIdseq]) {
 					if (this.cartData[i].unsavedItem==false) {
 						if (c==0) {
-							console.log("i am here")
 							url+='?id='+this.cartData[i].deIdseq;
 						}
 						else {
-							console.log("i am there")
 							url+='&id='+this.cartData[i].deIdseq;
 						};					
 						c++;
