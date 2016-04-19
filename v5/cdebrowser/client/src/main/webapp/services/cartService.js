@@ -55,7 +55,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			console.log("FAIL")
 
 		});
-		for (var i=0; i<that.cartData.length; i++) { 
+		for (var i = this.cartData.length - 1; i >= 0; i--) { 
 			if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
 				that.cartData.splice(i,1);
 			};
