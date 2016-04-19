@@ -47,32 +47,26 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				};
 			};			
 		$http({method: 'DELETE',url:url})
-		.success(function(response) {
-			console.log("SUCCESS")
+		.success(function(response) { 
+			for (var i = that.cartData.length - 1; i >= 0; i--) { // same function for both success and failure //
+				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
+					that.cartData.splice(i,1);
+				};
+			};
+			that.checkedCartItems.selected=false;
+			that.checkedCartItems.items={};	
 
 		})
-		.error(function(response) {
-			console.log("FAIL")
+		.error(function(response) { 
+			for (var i = that.cartData.length - 1; i >= 0; i--) { // same function for both success and failure //
+				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
+					that.cartData.splice(i,1);
+				};
+			};
+			that.checkedCartItems.selected=false;
+			that.checkedCartItems.items={};	
 
 		});
-		for (var i = this.cartData.length - 1; i >= 0; i--) { 
-			if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
-				that.cartData.splice(i,1);
-			};
-		};
-		that.checkedCartItems.selected=false;
-		that.checkedCartItems.items={};		
-		// var arrayOfKeys = Object.keys(this.checkedCartItems.items);
-		// var i = 0;
-		// for (var i = this.cartData.length - 1; i >= 0; i--) {
-		// 	if (arrayOfKeys.indexOf(this.cartData[i].deIdseq) > -1) {
-		// 		delete(this.checkedCartItems.items[this.cartData[i].deIdseq])
-		// 		this.cartData.splice(i,1);
-		// 	};
-		// };
-		// if (!Object.keys(this.checkedCartItems.items).length) {
-		// 	this.checkedCartItems.selected = false;
-		// };
 	};
 
 	// selects all or de-selects all items in the cart. used for deleting only at this point //
