@@ -51,17 +51,20 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			};			
 		$http({method: 'DELETE',url:url})
 		.success(function(response) {
-			for (var i=0; i<that.cartData.length; i++) { 
-				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
-					that.cartData.splice(i,1);
-				};
-			};
-			that.checkedCartItems.selected=false;
-			that.checkedCartItems.items={};
+			console.log("SUCCESS")
+
 		})
 		.error(function(response) {
-			console.log("fail")
+			console.log("FAIL")
+
 		});
+		for (var i=0; i<that.cartData.length; i++) { 
+			if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
+				that.cartData.splice(i,1);
+			};
+		};
+		that.checkedCartItems.selected=false;
+		that.checkedCartItems.items={};		
 		// var arrayOfKeys = Object.keys(this.checkedCartItems.items);
 		// var i = 0;
 		// for (var i = this.cartData.length - 1; i >= 0; i--) {
