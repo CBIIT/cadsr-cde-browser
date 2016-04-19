@@ -145,7 +145,7 @@ public class CdeCartController
 		
 		try {
 			//call delete from cart implementation
-			cdeCartUtil.deleteFromCart(mySession, principalName, idParams);
+			cdeCartUtil.deleteCartNodes(mySession, principalName, idParams);
 			logger.debug("Returning rest call deleteFromCart OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
