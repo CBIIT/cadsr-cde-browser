@@ -124,8 +124,6 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	        $location.path("/login").replace(); // send user to login page //
 
 		});
-
-	
 	};		
 		
 });

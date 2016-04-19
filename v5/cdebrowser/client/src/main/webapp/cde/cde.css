@@ -288,6 +288,17 @@ ul.cdeSearchMessage li{
     margin-left:3px;
 }
 
+#cdeCart .header {
+    vertical-align:top;
+    padding:5px 5px 5px 5px;
+}
+
+#cdeCart .searchResultsTableTd span {
+    display:block;
+    width:auto;
+    text-align:center;
+}
+
 #cdeCart .emptyCart {
     margin-left:3px;
     color:#1a4660;   
