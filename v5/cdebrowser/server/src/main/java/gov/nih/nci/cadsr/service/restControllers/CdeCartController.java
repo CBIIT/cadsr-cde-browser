@@ -3,7 +3,6 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +16,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,10 +45,10 @@ public class CdeCartController
 	public CdeCartController() {
 	}
 
-    @RequestMapping( method = RequestMethod.GET )
-    @ResponseBody
-    public SearchNode[] retrieveObjectCart(HttpSession mySession) throws AutheticationFailureException
-    {
+	@RequestMapping( method = RequestMethod.GET )
+	@ResponseBody
+	public SearchNode[] retrieveObjectCart(HttpSession mySession) throws AutheticationFailureException
+	{
 		SearchNode[] results = null;
 		String principalName = null;
 		
@@ -73,7 +73,7 @@ public class CdeCartController
 			return createErrorNode("Server Error:\nretrieveObjectCart: " + principalName + " failed ", e);
 		}
 		return results;
-    }
+	}
     /**
      * This method expects only IDs which are added to the cart.
      * 
@@ -119,23 +119,30 @@ public class CdeCartController
 	 * @return ResponseEntity String
 	 * @throws AutheticationFailureException 
 	 */
-	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.DELETE)
-	public ResponseEntity<String> deleteFromCart(HttpSession mySession, Principal principal,
-			RequestEntity<List<String>> request) throws AutheticationFailureException {
-		List<String> cdeIds = request.getBody();
-		logger.debug("Received rest call deleteFromCart, IDs: " + cdeIds);
+	@RequestMapping(produces = "text/plain", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<String> deleteFromCart(HttpSession mySession, 
+			@RequestParam("id") String[] idParams) throws AutheticationFailureException {
 		String principalName = null;
 
-		if (principal != null) {
-			logger.warn("In deleteFromCart session for: " + principal.getName());
-			principalName = principal.getName();
-		} 
-		
+		if (mySession != null) {
+			principalName = (String) mySession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);	
+			logger.warn("In deleteFromCart found session for: " + principalName);
+		}
+		//take the user from session
 		if (principalName == null) {
-			logger.error("........No user found in session in deleteFromCart");
-			throw new AutheticationFailureException("Authenticated user not found in the session operation delete from CDE Cart");
+			logger.error("........No user found in session in saveCart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation save CDE Cart");
 		}
 
+		if ((idParams == null) || (idParams.length == 0)) {
+			logger.debug("No ID received for delete returning rest call OK");
+			return new ResponseEntity<String>("Done", HttpStatus.OK);
+		}
+		else if (logger.isDebugEnabled()) {
+			logger.debug("ID received for delete from Cart: " + arrayToString(idParams));
+		}
+		
 		try {
 			//FIXME implement cdeCartUtil deleteFromCart
 			//cdeCartUtil.deleteFromCart(mySession, principalName, cdeIds);
@@ -148,6 +155,16 @@ public class CdeCartController
 		}
 	}
 	
+	protected String arrayToString(String[] idParams) {
+		StringBuilder sb = new StringBuilder();
+		if ((idParams != null) && (idParams.length != 0)) {
+			for (int i = 0; i < idParams.length; i++)
+				sb.append(idParams[i]).append(", ");
+			String res = sb.toString();
+			return res.substring(0, res.length() - 2);
+		}
+		return "";
+	}
 	public SearchNode[] createErrorNode( String text, Exception e )
     {
         return createErrorNode( text, e.getMessage() );
