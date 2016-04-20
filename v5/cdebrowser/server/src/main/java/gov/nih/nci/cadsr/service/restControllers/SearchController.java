@@ -34,7 +34,9 @@ public class SearchController
     @Autowired
     private DataElementDAO dataElementDAO;
     
+    @Autowired
     private RestControllerCommon restControllerCommon;
+    
     private List<ProgramAreaModel> programAreaModelList = null;
     private SearchQueryBuilder searchQueryBuilder = null;
 

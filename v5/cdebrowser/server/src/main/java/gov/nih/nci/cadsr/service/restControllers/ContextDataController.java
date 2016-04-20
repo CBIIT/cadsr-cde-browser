@@ -65,7 +65,6 @@ public class ContextDataController
     @Autowired
     private RestControllerCommon restControllerCommon;
 
-
     private Map csi = new HashMap();
 
     @Value( "${maxHoverTextLen}" )

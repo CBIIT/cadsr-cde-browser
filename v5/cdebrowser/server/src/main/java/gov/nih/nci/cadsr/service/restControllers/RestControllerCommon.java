@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import gov.nih.nci.cadsr.dao.ProgramAreaDAO;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 
-@Component
+@Component("restControllerCommon")
 public class RestControllerCommon
 {
     private Logger logger = LogManager.getLogger( RestControllerCommon.class.getName() );
