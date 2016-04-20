@@ -2,7 +2,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	// service to create and operate a cde cart //
 	// check session to see if cart service exists, if so set variables to the session values //
 	var authService = authenticationService; // create instance of auth service //
-
+	this.statusMessage = ''; // status message for alerting the user what is happening when user clicks on buttons //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
 		this.checkedCartItems = {"items":{}}; // stores all items that are checked for deletion //
@@ -30,49 +30,44 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// delete cde's from cart //
 	this.deleteCDEs = function() {
-		var that = this;
 		var url = '/cdebrowserServer/rest/cdeCart'; // url for server download //
-		var c = 0; // keep track of index of checked cart items index //
-			for (var i=0; i<this.cartData.length; i++) {
-				if (this.checkedCartItems.items[this.cartData[i].deIdseq]) {
-					if (this.cartData[i].unsavedItem==false) {
-						if (c==0) {
-							url+='?id='+this.cartData[i].deIdseq;
-						}
-						else {
-							url+='&id='+this.cartData[i].deIdseq;
-						};					
-						c++;
-					};
+		var c = 0; // keep track of index of checked cart items index //		
+		var that = this;
+		this.statusMessage = 'Deleting Items';
+		var deleteItems = function() { // function to delete items from local cart, called on both success and failure of cdeCart service call //
+			for (var i = that.cartData.length - 1; i >= 0; i--) { 
+				if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
+					that.cartData.splice(i,1);
 				};
-			};			
-		$http({method: 'DELETE',url:url})
-		.success(function(response) {
-			console.log("SUCCESS")
-
-		})
-		.error(function(response) {
-			console.log("FAIL")
-
-		});
-		for (var i=0; i<that.cartData.length; i++) { 
-			if (that.checkedCartItems.items[that.cartData[i].deIdseq]) {
-				that.cartData.splice(i,1);
 			};
+			that.checkedCartItems.selected=false;
+			that.checkedCartItems.items={};				
 		};
-		that.checkedCartItems.selected=false;
-		that.checkedCartItems.items={};		
-		// var arrayOfKeys = Object.keys(this.checkedCartItems.items);
-		// var i = 0;
-		// for (var i = this.cartData.length - 1; i >= 0; i--) {
-		// 	if (arrayOfKeys.indexOf(this.cartData[i].deIdseq) > -1) {
-		// 		delete(this.checkedCartItems.items[this.cartData[i].deIdseq])
-		// 		this.cartData.splice(i,1);
-		// 	};
-		// };
-		// if (!Object.keys(this.checkedCartItems.items).length) {
-		// 	this.checkedCartItems.selected = false;
-		// };
+
+		// create url for delete call //
+		for (var i=0; i<this.cartData.length; i++) {
+			if (this.checkedCartItems.items[this.cartData[i].deIdseq]) {
+				if (this.cartData[i].unsavedItem==false) {
+					if (c==0) {
+						url+='?id='+this.cartData[i].deIdseq;
+					}
+					else {
+						url+='&id='+this.cartData[i].deIdseq;
+					};					
+					c++;
+				};
+			};
+		};	
+
+		$http({method: 'DELETE',url:url})
+			.success(function(response) { 
+				deleteItems();
+				that.statusMessage = '';
+			})
+			.error(function(response) { 
+				deleteItems();
+				that.statusMessage = '';				
+		});
 	};
 
 	// selects all or de-selects all items in the cart. used for deleting only at this point //
@@ -115,14 +110,17 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		};
 
 		if (this.itemsForSave.length) { //only make call if there are unsaved items //
+			this.statusMessage = 'Saving Cart';
 			$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
 				for (var i=0; i<that.cartData.length; i++) {
 					that.cartData[i]['unsavedItem'] = false;
 				};
+				that.statusMessage = '';
 			})
 			.error(function(response) {
 				authService.cameFrom = 'save';
 		        $location.path("/login").replace(); // send user to login page //
+				that.statusMessage = '';
 			});			
 		};
 	};
@@ -130,7 +128,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	// retrieve the cart. Will call rest service //
 	this.retrieveCart = function() {
 		var that = this;
-		$http.get('/cdebrowserServer/rest/cdeCart').success(function(response) {
+		this.statusMessage = 'Retrieving Cart';
+		$http.get('/cdebrowserServer/rest/cdeCart')
+		.success(function(response) {
 			var temporaryIds = []; // array of temp ids to compare with retrieved cart items. Prevent looping through two arrays //
 			for (var i=0; i<that.cartData.length;i++) {
 				temporaryIds.push(that.cartData[i].deIdseq);
@@ -148,10 +148,11 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 					}
 				};				
 			};
+			that.statusMessage = '';
 		}).error(function(response) {
 			authService.cameFrom = 'retrieve';
 	        $location.path("/login").replace(); // send user to login page //
-
+			that.statusMessage = '';
 		});
 	};		
 		

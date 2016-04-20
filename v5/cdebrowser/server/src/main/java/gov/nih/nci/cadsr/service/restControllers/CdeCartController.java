@@ -144,8 +144,8 @@ public class CdeCartController
 		}
 		
 		try {
-			//FIXME implement cdeCartUtil deleteFromCart
-			//cdeCartUtil.deleteFromCart(mySession, principalName, cdeIds);
+			//call delete from cart implementation
+			cdeCartUtil.deleteCartNodes(mySession, principalName, idParams);
 			logger.debug("Returning rest call deleteFromCart OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 

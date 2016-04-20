@@ -4,6 +4,7 @@
 package gov.nih.nci.cadsr.cdecart;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -110,9 +111,72 @@ public class CdeCartUtil {
 			cdeCart = new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
 			//we need to set up this session attribute not to make the remote call again
 			mySession.setAttribute(CaDSRConstants.CDE_CART, cdeCart);
+			@SuppressWarnings("rawtypes")
+			Collection col = cdeCart.getDataElements();
+			String toPrint = (col != null) ? "" + col.size() : "0";
+			log.debug("Object Cart is retrived from remote site; # of objects: " + toPrint);
 		}
 		
 		return cdeCart;
+	}
+	/**
+	 * This function is called form the controller to delete CDEs from the user object cart.
+	 * 
+	 * @param mySession
+	 * @param principalName
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void deleteCartNodes (final HttpSession mySession, final String principalName, final String[] ids) throws Exception {
+		if ((ids == null) || (ids.length == 0)) {
+			log.warn("Nothing to delete no ID received");
+			return;
+		}
+		
+		if (mySession == null) {
+			//this shall never happen; controller provides the session
+			log.warn("Session is not found");
+			return;
+		}
+
+		//we shall be after login here, and principalName is never null
+		if (principalName == null) {
+			log.error("........No user found in session in findCartNodes");
+			throw new AutheticationFailureException("Authenticated user not found in the session");
+		}
+		try {
+			if (ocURL == null) {//try to get it again for a chance fixed in DB
+				ToolOptionsModel cdeCartOptionsModel = toolOptionsDAO.getToolOptionsByToolNameAndProperty("ObjectCartAPI", "URL");
+				if (cdeCartOptionsModel != null) {
+					ocURL = cdeCartOptionsModel.getValue();
+				}
+				if (ocURL == null) {
+					log.warn("Cannot get a value of ObjectCart URL from the system configuration");
+				}
+			}
+			
+			ObjectCartClient ocClient = null;
+	
+			if (!ocURL.equals(""))
+				ocClient = new ObjectCartClient(ocURL);
+			else
+				ocClient = new ObjectCartClient();
+			
+			//Get the cart in the session
+			CDECart sessionCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
+			
+			CDECart userCart = new CDECartOCImpl(ocClient, principalName, CaDSRConstants.CDE_CART);
+			
+			Collection<String> items = Arrays.asList(ids);
+
+			sessionCart.removeDataElements(items);
+			userCart.removeDataElements(items);	
+		}
+		catch (ObjectCartException oce){
+			log.error("Exception on cdeCart.getDataElements", oce);
+			throw oce;
+		}
+		
 	}
 	/**
 	 * This is a method to support Controller retrieve operation.
@@ -123,6 +187,7 @@ public class CdeCartUtil {
 	 * @throws Exception
 	 */
 	public List<SearchNode> findCartNodes(HttpSession mySession, String principalName) throws Exception{
+		
 		String uid = principalName;
 
 		//we shall be after login here, and uid is never null
@@ -139,7 +204,12 @@ public class CdeCartUtil {
 			if (cdeCart == null) {
 				cdeCart = findCdeCart(mySession, principalName);
 			}
-			
+			else {
+				@SuppressWarnings("rawtypes")
+				Collection col = cdeCart.getDataElements();
+				String toPrint = (col != null) ? "" + col.size() : "0";
+				log.debug("Object Cart is found in session; # of objects: " + toPrint);
+			}
 			//We use either retrieved cart or found in the session cart to build the result for the client page
 			@SuppressWarnings("rawtypes")
 			Collection col = cdeCart.getDataElements();
@@ -203,9 +273,24 @@ public class CdeCartUtil {
 	
 			List<DataElementModel> deModelList = dataElementDAO.getCdeByDeIdseqList(cdeIds);
 			
-			buildCartTransferObjects(deModelList, sessionCart);
-	
-			userCart.mergeCart(sessionCart);
+			Collection<DataElementTransferObject> addCandidates = buildCartTransferObjects(deModelList);
+			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
+
+			for (DataElementTransferObject deto : addCandidates) {
+				CDECartItem cartItem = sessionCart.findDataElement(deto.getIdseq());
+				if (cartItem == null) {
+	    			CDECartItem cdeItem = new CDECartItemTransferObject();
+					cdeItem.setPersistedInd(false);//we have IDs only for items to save
+					cdeItem.setItem(deto);
+					items.add(cdeItem);
+				}
+				else {
+					cartItem.setPersistedInd(true);
+					items.add(cartItem);
+				}
+			}
+			
+			userCart.mergeDataElements(items);
 		}
 		catch (ObjectCartException oce){
 			log.error("Exception on cdeCart.getDataElements", oce);
@@ -260,20 +345,24 @@ public class CdeCartUtil {
 		return res;
 	}
 	
-    public void buildCartTransferObjects (List<DataElementModel> deList, CDECart cdeCart) {
-    	if ((deList == null) || (cdeCart == null)) {
+    public Collection<DataElementTransferObject> buildCartTransferObjects (List<DataElementModel> deList) {
+    	ArrayList<DataElementTransferObject> resultModel = new ArrayList<DataElementTransferObject>();
+    	if (deList != null) {
     		log.debug("No data to add to cart");
-    		return;
-    	}
-    	deList.forEach((deModel) -> {
-    		if (deModel != null) {
-    			CDECartItem cdeItem = new CDECartItemTransferObject();
-				cdeItem.setPersistedInd(true);//we have IDs only for items to save
-				DataElementTransferObject deto = toDataElement(deModel);
-				cdeItem.setItem(deto);
-    			cdeCart.setDataElement(cdeItem);
+    		for (DataElementModel deModel : deList) {
+    			if (deModel != null) {
+    				CDECartItem cdeItem = new CDECartItemTransferObject();
+					cdeItem.setPersistedInd(false);//we have IDs only for items to save
+					DataElementTransferObject deto = toDataElement(deModel);
+					cdeItem.setItem(deto);
+					resultModel.add(deto);
+    			}
     		}
-    	});
+    	}
+    	else {
+    		log.debug("No data to add to cart");
+    	}
+    	return resultModel;
     }
     
     public DataElementTransferObject toDataElement(DataElementModel deModel) {
