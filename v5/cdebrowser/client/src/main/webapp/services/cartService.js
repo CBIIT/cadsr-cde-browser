@@ -30,7 +30,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// delete cde's from cart //
 	this.deleteCDEs = function() {
-		var url = '/cdebrowserServer/rest/cdeCart'; // url for server download //
+		var url = '/cdebrowserServer/rest/cdeCart/delete'; // url for server delete from CDE cart //
 		var c = 0; // keep track of index of checked cart items index //		
 		var that = this;
 		this.statusMessage = 'Deleting Items';
@@ -59,7 +59,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			};
 		};	
 
-		$http({method: 'DELETE',url:url})
+		$http({method: 'POST',url:url})
 			.success(function(response) { 
 				deleteItems();
 				that.statusMessage = '';
