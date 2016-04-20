@@ -8,7 +8,7 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 	$scope.$parent.title = "CDE Cart" // set title of page to be show on the tab //
 
 	var authService = authenticationService; // define authentication service //
-	var downloadService = downloadService; // define download service //
+	var downloadService = angular.copy(downloadService); // define download service //
 	$scope.downloadService = downloadService; // define download service //
 	var redirect = angular.copy(authService.cameFrom); // set if coming from cart. Determines what was clicked on //
 	authService.cameFrom = ''; // set came from back to empty string //
@@ -60,14 +60,12 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 	// downloads excel file with checked cart items //
 	$scope.downloadToExcel = function(param) {
 		var items = downloadService.createDownloadableArray(cartService.checkedCartItems.items); // creates simple array of ids //
-		console.log(items);
 		downloadService.downloadToExcel(param,items);
 	};
 
 	// downloads xml file with checked cart items //
 	$scope.downloadToXML = function() {
 		var items = downloadService.createDownloadableArray(cartService.checkedCartItems.items);  // creates simple array of ids //
-		console.log(items);		
 		downloadService.downloadToXML(items);
 	};		
 

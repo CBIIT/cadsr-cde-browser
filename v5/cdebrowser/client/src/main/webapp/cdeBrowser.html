@@ -322,11 +322,11 @@
                 </li>                       
             </ul>
             <!-- show progress bar -->
-            <ul ng-show="progressMessage.status" class="cdeProgressMessage">
+            <ul ng-show="downloadService.progressMessage.status" class="cdeProgressMessage">
                 <li>
-                    {{progressMessage.message}}
+                    {{downloadService.progressMessage.message}}
                 </li>
-                <li ng-show="!progressMessage.isErrorMessage">
+                <li ng-show="!downloadService.progressMessage.isErrorMessage">
                     <img alt="Exporting File" src="icons/preloader.gif">
                 </li>                
             </ul>
