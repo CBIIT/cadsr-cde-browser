@@ -300,14 +300,23 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         c=0; // index of searchFilter key //
         for (var x in fs.searchFilter) {
-            console.log(x)
+
             if (fs.searchFilter[x]&&field=='name') {
-                console.log(fs.searchFilter[x]+','+c+',*'+query+'*')
                 if (c==0&&query=='') {
-                    url+="?"+x+"="+fs.searchFilter[x];
+                    if (x=='programArea') {
+                        url+="?"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
+                    }
+                    else {
+                        url+="?"+x+"="+fs.searchFilter[x];
+                    };
                 }
                 else {
-                    url+="&"+x+"="+fs.searchFilter[x];
+                    if (x=='programArea') {
+                        url+="&"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
+                    }
+                    else {
+                        url+="&"+x+"="+fs.searchFilter[x];
+                    };                    
                 };
                 c++;
             };
