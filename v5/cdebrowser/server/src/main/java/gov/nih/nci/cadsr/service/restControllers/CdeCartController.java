@@ -119,7 +119,7 @@ public class CdeCartController
 	 * @return ResponseEntity String
 	 * @throws AutheticationFailureException 
 	 */
-	@RequestMapping(produces = "text/plain", method = RequestMethod.DELETE)
+	@RequestMapping(value="/delete", produces = "text/plain", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> deleteFromCart(HttpSession mySession, 
 			@RequestParam("id") String[] idParams) throws AutheticationFailureException {
