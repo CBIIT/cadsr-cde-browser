@@ -286,8 +286,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             var url = "".concat("cdebrowserServer/rest/search");
         };
         /**
-         *  query              The text of the users search input.
-         *  field              0=Name 1=PublicId
+         *  name              The text of the users search input for data element search.
+         *  publicId          The text of the users search input for publicId search.
          *  queryType          0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE - defaults to 2 if left out
          *  programArea        If empty, will not be used
          *
@@ -302,6 +302,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
          */
         c=0; // index of searchFilter key //
         for (var x in fs.searchFilter) {
+            console.log(x)
             if (fs.searchFilter[x]&&field==0) {
                 console.log(fs.searchFilter[x]+','+c+',*'+query+'*')
                 if (c==0&&query=='') {
@@ -310,7 +311,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 else {
                     url+="&"+x+"="+fs.searchFilter[x];
                 };
-            c++;
+                c++;
             };
         };
 
