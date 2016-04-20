@@ -312,7 +312,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
                 else {
                     if (x=='programArea') {
-                    url+="?"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
+                        url+="&"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
                     }
                     else {
                         url+="&"+x+"="+fs.searchFilter[x];
