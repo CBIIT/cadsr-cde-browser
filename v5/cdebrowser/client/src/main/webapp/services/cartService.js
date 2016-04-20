@@ -155,5 +155,12 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			that.statusMessage = '';
 		});
 	};		
+
+	// resets all items in cart to have unsaved status of true, important when login is required //
+	this.resetUnsavedStatus = function() {
+		for (var i=0; i<this.cartData.length;i++) {
+			this.cartData[i].unsavedItem = true;
+		};
+	};
 		
 });
