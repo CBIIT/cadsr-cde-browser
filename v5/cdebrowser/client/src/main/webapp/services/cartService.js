@@ -1,7 +1,8 @@
-angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http, $location,authenticationService) {
+angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http, $location,authenticationService, downloadService) {
 	// service to create and operate a cde cart //
 	// check session to see if cart service exists, if so set variables to the session values //
 	var authService = authenticationService; // create instance of auth service //
+	var downloadService = downloadService; // create instance of download service //
 	this.statusMessage = ''; // status message for alerting the user what is happening when user clicks on buttons //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
@@ -162,5 +163,16 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			this.cartData[i].unsavedItem = true;
 		};
 	};
+
+	// returns length of checked items. Use to disable download buttons //
+	this.checkedCartItemsLength = function() {
+		// return true if the length of checkedCartItems is 0 in order to disable the download buttons //
+		if (Object.keys(this.checkedCartItems.items).length) {
+			return false;
+		}
+		else {
+			return true;
+		};
+	};	
 		
 });
