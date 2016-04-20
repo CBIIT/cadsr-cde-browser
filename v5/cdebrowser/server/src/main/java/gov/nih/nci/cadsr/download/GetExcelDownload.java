@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import gov.nih.nci.cadsr.common.util.StringUtils;
+import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.service.ClientException;
 import gov.nih.nci.cadsr.service.restControllers.DownloadExcelController;
 
@@ -355,7 +355,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 											}
 											else {  
 												String stringCellValue=(String) valueDatum[nestedCol.rsIndex];
-												cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+												cell.setCellValue(StringUtilities.updateDataForSpecialCharacters(stringCellValue));
 											}
 										}
 									}//if (nestedCol.rsSubIndex < 0
@@ -368,7 +368,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 										}
 										else if (nestedCol.type.equalsIgnoreCase("String")) {
 											String stringCellValue=(String) nestedDatum[nestedCol.rsSubIndex];
-											cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+											cell.setCellValue(StringUtilities.updateDataForSpecialCharacters(stringCellValue));
 										}
 										else {
 											logger.info("!!! nestedCol.type unexpected type: " + nestedCol);
@@ -389,7 +389,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 					
 					Object[] valueStruct = struct.getAttributes();
 					HSSFCell cell = row.createCell(col++);
-					cell.setCellValue(StringUtils.updateDataForSpecialCharacters((String) valueStruct[currCol.rsIndex]));
+					cell.setCellValue(StringUtilities.updateDataForSpecialCharacters((String) valueStruct[currCol.rsIndex]));
 				}
 				else {
 					row = sheet.getRow(rowNumber);
@@ -399,7 +399,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 					if(currCol.type.equalsIgnoreCase("Date")){
 						cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
 					}else{
-						cell.setCellValue(StringUtils.updateDataForSpecialCharacters(rs.getString(columnName)));
+						cell.setCellValue(StringUtilities.updateDataForSpecialCharacters(rs.getString(columnName)));
 					}
 				}
 			}

@@ -35,7 +35,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 
     /**
      *
-     * @param clientQuery        The text the user put in the search text field in the UI.
+     * @param clientName        The text the user put in the search text field in the UI.
      * @param clientSearchMode   Exact phrase, All of the words, OR At least one of the words.
      * @param clientSearchField  0 if user select Name field, 1 for Public ID.
      * @param programArea        Empty if All
@@ -54,12 +54,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
      * @return
      */
     public List<SearchModel> getAllContexts(
-            String clientQuery, String clientSearchMode, int clientSearchField,
+            String clientName, String clientSearchMode, String clientPublicId,
             String programArea, String context, String classification, String protocol,
             String workFlowStatus, String registrationStatus,
             String conceptName, String conceptCode )
     {
-        SearchQueryBuilder searchQueryBuilder = new SearchQueryBuilder( clientQuery, clientSearchMode, clientSearchField, programArea,
+        SearchQueryBuilder searchQueryBuilder = new SearchQueryBuilder( clientName, clientSearchMode, clientPublicId, programArea,
                 context, classification, protocol,
                 workFlowStatus, registrationStatus,
                 conceptName, conceptCode );
@@ -73,11 +73,9 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
         return results;
     }
 
-    public List<SearchModel> getAllContexts(
-            String clientQuery, String clientSearchMode, int clientSearchField,
-            String programArea)
+    public List<SearchModel> getAllContexts(String clientQuery, String clientSearchMode, String publicId, String programArea)
     {
-        return getAllContexts(clientQuery, clientSearchMode, clientSearchField, programArea,"","","","","","","" );
+        return getAllContexts(clientQuery, clientSearchMode, publicId, programArea,"","","","","","","" );
     }
 
     public List<SearchModel> getAllContexts( String sql )

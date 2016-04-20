@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class StringUtils
+public class StringUtilities
 {
-    private static Logger logger = LogManager.getLogger( StringUtils.class.getName() );
+    private static Logger logger = LogManager.getLogger( StringUtilities.class.getName() );
 
 
     public static boolean toBoolean( String inString )
@@ -458,7 +458,7 @@ public class StringUtils
         String str = "\"test xxx\\Q\' |AAA & BBB; (CCC) + III <stuff> +  $ddd EEE$ %FFFF% ggg@HHHH zzz 0x0a 0X0a 0x0A JJJJJ \\Q' \"\\";
         String newStr = "\\\"";
         System.out.println( str );
-        String result = StringUtils.sanitizeForSql( str );
+        String result = StringUtilities.sanitizeForSql( str );
         System.out.println( result );
     }
 }

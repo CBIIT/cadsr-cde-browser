@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import gov.nih.nci.cadsr.common.util.StringUtils;
+import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.service.ClientException;
 //import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
 import oracle.xml.sql.query.OracleXMLQuery;
@@ -130,7 +130,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				}
 				
 				if (groupId == 0) {
-					bw.write(StringUtils.updateXMLDataForSpecialCharacters(xmlString));
+					bw.write(StringUtilities.updateXMLDataForSpecialCharacters(xmlString));
 					bw.flush();
 				}
 				else {
@@ -180,7 +180,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		while( (line=bufReader.readLine()) != null )
 		{
 			if ((endPos = line.indexOf("num=\"")) < 0) {
-				bw.write(StringUtils.updateXMLDataForSpecialCharacters(line));
+				bw.write(StringUtilities.updateXMLDataForSpecialCharacters(line));
 				bw.newLine();
 			}
 			else {

@@ -6,8 +6,10 @@ package gov.nih.nci.cadsr.dao.operation;
 
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.StringReplace;
-import gov.nih.nci.cadsr.common.util.StringUtils;
+import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.service.search.ProcessConstants;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,19 +21,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
 
     private String sqlStmt = "";
-
-    private String clientQuery = "";
-    private int clientSearchField = -1;
-    private String clientSearchMode = "";
-    private String programArea = "";
-    private String workFlowStatus = "";
-    private String registrationStatus = "";
-    private String context = "";
-    private String classification = "";
-    private String protocol = "";
-    private String conceptName = "";
-    private String conceptCode = "";
-
 
     public SearchQueryBuilder()
     {
@@ -48,18 +37,27 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
     */
+    
+    public String getSqlStmt() {
+		return sqlStmt;
+	}
+
+	public void setSqlStmt(String sqlStmt) {
+		this.sqlStmt = sqlStmt;
+	}
+    
     public SearchQueryBuilder(
-            String clientQuery, String clientSearchMode, int clientSearchField,
+            String clientName, String clientSearchMode, String clientPublicId,
             String programArea,
             String context, String classification, String protocol,
             String workFlowStatus, String registrationStatus,
             String conceptName, String conceptCode )
     {
-        initSeqrchQueryBuilder( clientQuery, clientSearchMode, clientSearchField, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode );
+        initSeqrchQueryBuilder( clientName, clientSearchMode, clientPublicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode );
     }
 
-    /**
-     * @param clientQuery        The text the user put in the search text field in the UI.
+	/**
+     * @param clientName        The text the user put in the search text field in the UI.
      * @param clientSearchMode   Exact phrase, All of the words, OR At least one of the words.
      * @param clientSearchField  0 if user select Name field, 1 for Public ID.
      * @param programArea        Empty if All  -  Works
@@ -70,34 +68,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
      * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
      */
     public void initSeqrchQueryBuilder(
-            String clientQuery, String clientSearchMode, int clientSearchField,
+            String clientName, String clientSearchMode, String clientPublicId,
             String programArea, String context, String classification, String protocol,
             String workFlowStatus, String registrationStatus,
             String conceptName, String conceptCode )
     {
-        this.clientQuery = clientQuery;
-        this.clientSearchMode = clientSearchMode;
-        this.clientSearchField = clientSearchField;
-        this.programArea = programArea;
-        this.workFlowStatus = workFlowStatus;
-        this.registrationStatus = registrationStatus;
-        this.context = context;
-        this.classification = classification;
-        this.protocol = protocol;
-        this.conceptName = conceptName;
-        this.conceptCode = conceptCode;
-        this.workFlowStatus = workFlowStatus;
-        logger.debug( "initSeqrchQueryBuilder( \"" + clientQuery + "\", \"" + clientSearchMode + "\", " + clientSearchField + ", \"" + programArea + "\", \"" + context + "\", \"" + classification +
+        logger.debug( "initSeqrchQueryBuilder( \"" + clientName + "\", \"" + clientSearchMode + "\", " + clientPublicId + ", \"" + programArea + "\", \"" + context + "\", \"" + classification +
                 "\", \"" + protocol + "\", \"" + workFlowStatus + "\", \"" + registrationStatus + "\", \"" + conceptName + "\", \"" + conceptCode + "\" )" );
-        buildSql();
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected void buildSql()
-    {
+        
         String vdFrom = "";
         String latestWhere = "";
         String fromClause = "";
@@ -116,27 +94,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String classificationWhere = "";
         String regStatus = "";
 
-
-        // This may eventually become okay, when we have enough of the user populated "filters"
-        if( clientQuery.isEmpty() )
-        {
-            logger.warn( "Search builder received no clientQuery." );
-            sqlStmt = null;
-            return;
-        }
-
-        // Make sure we got a valid search field name or public ID
-        if( ( clientSearchField != NAME_FIELD ) && ( clientSearchField != PUBLIC_ID_FIELD ) ) //Unknown Search Field
-        {
-            logger.error( "Search builder received Unknown Search Field: [" + clientSearchField + "]" );
-            sqlStmt = null;
-            return;
-        }
-
-        // AppScan
-        clientQuery = StringUtils.sanitizeForSql( clientQuery );
-
-
         // FIXME classification doesn't work right yet - set as empty, to avoid using this incorrect classificationWhere
         // If we are not filtering by classification, we don't need sbr.classification_schemes in the sql.
         if( classification.isEmpty() )
@@ -153,7 +110,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         // FIXME - Cleanup/implement use selected or excluded Registration Status here
         String registrationExcludeWhere = "";
         //excludeArr will eventually be set as a preference or settings from client, currently set in the abstract class.
-        if( !StringUtils.isArrayWithEmptyStrings( excludeArr ) )
+        if( !StringUtilities.isArrayWithEmptyStrings( excludeArr ) )
         {
             registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
         }
@@ -202,11 +159,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
 
-        if( ( clientSearchField == PUBLIC_ID_FIELD ) && ( !clientQuery.trim().equals( "*" ) ) )
+        if( StringUtils.isNotBlank(clientPublicId) && ( !clientPublicId.trim().equals( "*" ) ) )
         {
-            String newCdeStr = StringReplace.strReplace( clientQuery, "*", "%" );
-            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'",
-                    newCdeStr, clientSearchMode );
+            String newCdeStr = StringReplace.strReplace( clientPublicId, "*", "%" );
+            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, clientSearchMode );
         }
 
         if( !valueDomain.equals( "" ) )
@@ -217,9 +173,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         }
 
-        if( clientSearchField == NAME_FIELD )
+        if(StringUtils.isNotBlank(clientName))
         {
-            docWhere = this.buildSearchTextWhere( clientQuery, searchIn, clientSearchMode );
+        	// AppScan
+            clientName = StringUtilities.sanitizeForSql( clientName );
+            docWhere = this.buildSearchTextWhere( clientName, searchIn, clientSearchMode );
         }
 
         whereBuffer.append( wkFlowWhere );
@@ -297,22 +255,22 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         newSearchStr = StringReplace.strReplace( text, "*", "%" );
         newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "Long Name" ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+                StringUtilities.containsKey( searchDomain, "Long Name" ) )
         {
             longNameWhere = buildSearchString( "UPPER (de1.long_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "Short Name" ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+                StringUtilities.containsKey( searchDomain, "Short Name" ) )
         {
 
             shortNameWhere = buildSearchString( "UPPER (de1.preferred_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "Doc Text" ) ||
-                StringUtils.containsKey( searchDomain, "Hist" ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+                StringUtilities.containsKey( searchDomain, "Doc Text" ) ||
+                StringUtilities.containsKey( searchDomain, "Hist" ) )
         {
 
             docTextSearchWhere =
@@ -341,9 +299,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             searchWhere = " AND (" + searchWhere + ") ";
         }
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                ( StringUtils.containsKey( searchDomain, "Doc Text" ) &&
-                        StringUtils.containsKey( searchDomain, "Hist" ) ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+                ( StringUtilities.containsKey( searchDomain, "Doc Text" ) &&
+                        StringUtilities.containsKey( searchDomain, "Hist" ) ) )
         {
             docWhere = "(SELECT de_idseq "
                     + " FROM sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
@@ -359,11 +317,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
 
         }
-        else if( StringUtils.containsKey( searchDomain, "Doc Text" ) )
+        else if( StringUtilities.containsKey( searchDomain, "Doc Text" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
         }
-        else if( StringUtils.containsKey( searchDomain, "Hist" ) )
+        else if( StringUtilities.containsKey( searchDomain, "Hist" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
@@ -388,8 +346,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
 
-        if( StringUtils.containsKey( searchDomain, "ALL" ) ||
-                StringUtils.containsKey( searchDomain, "UML ALT Name" ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+                StringUtilities.containsKey( searchDomain, "UML ALT Name" ) )
         {
             umlAltNameWhere =
                     " (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "
@@ -481,7 +439,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     protected String buildRegStatusWhereClause( String[] regStatusList )
     {
 
-        if( ( regStatusList == null ) || ( StringUtils.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
+        if( ( regStatusList == null ) || ( StringUtilities.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
         {
             return "";
         }
@@ -511,130 +469,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
         logger.debug( "regStatWhere: " + regStatWhere );
         return regStatWhere;
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    public String getSqlStmt()
-    {
-    	
-        return sqlStmt;
-    }
-
-    public void setSqlStmt( String sqlStmt )
-    {
-        this.sqlStmt = sqlStmt;
-    }
-
-    public String getClientQuery()
-    {
-        return clientQuery;
-    }
-
-    public void setClientQuery( String clientQuery )
-    {
-        this.clientQuery = clientQuery;
-    }
-
-    public int getClientSearchField()
-    {
-        return clientSearchField;
-    }
-
-    public void setClientSearchField( int clientSearchField )
-    {
-        this.clientSearchField = clientSearchField;
-    }
-
-    public String getClientSearchMode()
-    {
-        return clientSearchMode;
-    }
-
-    public void setClientSearchMode( String clientSearchMode )
-    {
-        this.clientSearchMode = clientSearchMode;
-    }
-
-    public String getProgramArea()
-    {
-        return programArea;
-    }
-
-    public void setProgramArea( String programArea )
-    {
-        this.programArea = programArea;
-    }
-
-    public String getWorkFlowStatus()
-    {
-        return workFlowStatus;
-    }
-
-    public void setWorkFlowStatus( String workFlowStatus )
-    {
-        this.workFlowStatus = workFlowStatus;
-    }
-
-    public String getRegistrationStatus()
-    {
-        return registrationStatus;
-    }
-
-    public void setRegistrationStatus( String registrationStatus )
-    {
-        this.registrationStatus = registrationStatus;
-    }
-
-    public String getContext()
-    {
-        return context;
-    }
-
-    public void setContext( String context )
-    {
-        this.context = context;
-    }
-
-    public String getClassification()
-    {
-        return classification;
-    }
-
-    public void setClassification( String classification )
-    {
-        this.classification = classification;
-    }
-
-    public String getProtocol()
-    {
-        return protocol;
-    }
-
-    public void setProtocol( String protocol )
-    {
-        this.protocol = protocol;
-    }
-
-    public String getConceptName()
-    {
-        return conceptName;
-    }
-
-    public void setConceptName( String conceptName )
-    {
-        this.conceptName = conceptName;
-    }
-
-    public String getConceptCode()
-    {
-        return conceptCode;
-    }
-
-    public void setConceptCode( String conceptCode )
-    {
-        this.conceptCode = conceptCode;
     }
 
 }

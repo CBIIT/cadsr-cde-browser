@@ -51,16 +51,16 @@ public class SearchController
     @RequestMapping( value = "/testSearch" )
     @ResponseBody
     public SearchNode[] testSearch(
-            @RequestParam( "query" ) String query, @RequestParam( "field" ) int field, @RequestParam( "queryType" ) int queryType, @RequestParam( "programArea" ) int programArea )
+            @RequestParam( "name" ) String name, @RequestParam( "queryType" ) int queryType, @RequestParam( "publicId" ) String publicId, @RequestParam( "programArea" ) int programArea )
     {
         SearchNode[] results = null;
         try
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-            results = buildSearchResultsNodes( searchDAO.getAllContexts( query, searchMode, field, getProgramAreaPalNameByIndex( programArea ), "", "", "", "", "", "", "" ) );
+            results = buildSearchResultsNodes( searchDAO.getAllContexts( name, searchMode, publicId, getProgramAreaPalNameByIndex( programArea ), "", "", "", "", "", "", "" ) );
         } catch( Exception e )
         {
-            return createErrorNode( "Server Error:\ntestSearch: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
+            return createErrorNode( "Server Error:\ntestSearch: " + name + ", " + queryType + ", " + publicId + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
         }
 
         return results;
@@ -68,7 +68,7 @@ public class SearchController
 
 
     /**
-     * @param query              The text of the users search input.
+     * @param name              The text of the name field.
      * @param field              0=Name 1=PublicId
      * @param queryType          0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE - defaults to 2 if left out
      * @param programArea        If empty, will not be used
@@ -84,8 +84,8 @@ public class SearchController
     @RequestMapping( value = "/search" )
     @ResponseBody
     public SearchNode[] search(
-            @RequestParam( "query" ) String query,
-            @RequestParam( "field" ) int field,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "publicId", required = false) String publicId,
             @RequestParam( value = "queryType", defaultValue = "2", required = false ) int queryType, // 2 = "At least one of the words"
             @RequestParam( value = "programArea", defaultValue = "0", required = false ) int programArea,  // 0 = All (Ignore Program area)
             @RequestParam( value = "context", defaultValue = "", required = false ) String context,
@@ -96,7 +96,7 @@ public class SearchController
             @RequestParam( value = "conceptName", defaultValue = "", required = false ) String conceptName,
             @RequestParam( value = "conceptCode", defaultValue = "", required = false ) String conceptCode )
     {
-        logger.debug( "search  query: " + query + "   field: " + field + "   queryType: " + queryType + "   programArea: " + programArea + "   context: " + context + "   classification: " + classification + ": " +
+        logger.debug( "search  name: " + name + "   queryType: " + queryType + "   publicId: " + publicId + "   programArea: " + programArea + "   context: " + context + "   classification: " + classification + ": " +
                 "   protocol: " + protocol + "   workFlowStatus: " + workFlowStatus + "   registrationStatus: " + registrationStatus + "   conceptName: " + conceptName + "   conceptCode: " + conceptCode );
         SearchNode[] results;
         try
@@ -104,17 +104,17 @@ public class SearchController
             String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
             results = buildSearchResultsNodes(
                     searchDAO.getAllContexts(
-                            query, searchMode, field, getProgramAreaPalNameByIndex( programArea ), context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode
+                    		name, searchMode, publicId, getProgramAreaPalNameByIndex( programArea ), context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode
                     )
             );
         } catch( Exception e )
         {
-            return createErrorNode( "Server Error:\nsearch: " + query + ", " + field + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
+        	logger.error("Error in searching: ", e);
+            return createErrorNode( "Server Error:\nsearch: " + name + ", publicId: " + publicId + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
         }
 
         return results;
     }
-
 
     @RequestMapping( value = "/cdesByContext" )
     @ResponseBody

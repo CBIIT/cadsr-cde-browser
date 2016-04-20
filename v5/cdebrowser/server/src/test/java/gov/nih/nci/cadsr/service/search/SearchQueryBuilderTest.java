@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
 public class SearchQueryBuilderTest
 {
     private SearchQueryBuilder searchQueryBuilder = null;
-    private String queryText="25*";
+    private String queryText="";
+    private String publicId = "25*";
     private String clientSearchMode="0";
-    private int clientSearchField = 1;
     private String programArea="All";
     private String context="Testcontext";
     private String classification="99BA9DC8-84A5-4E69-E034-080020C9C0E0";
@@ -25,10 +25,7 @@ public class SearchQueryBuilderTest
     private String registrationStatus="registrationStatus";
     private String conceptName="conceptName";
     private String conceptCode="conceptCode";
-
-
-
-
+    
     @Before
     public void setUp() throws Exception
     {
@@ -54,10 +51,9 @@ public class SearchQueryBuilderTest
     public void testInitSeqrchQueryBuilder01() throws Exception
     {
         // With workFlow
-        searchQueryBuilder.initSeqrchQueryBuilder( queryText, clientSearchMode, clientSearchField, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode);
-        assertEquals( queryText, searchQueryBuilder.getClientQuery() );
+        searchQueryBuilder.initSeqrchQueryBuilder( queryText, clientSearchMode, publicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode);
+        /*assertEquals( queryText, searchQueryBuilder.getClientQuery() );
         assertEquals( clientSearchMode, searchQueryBuilder.getClientSearchMode() );
-        assertEquals( clientSearchField, searchQueryBuilder.getClientSearchField() );
         assertEquals( programArea, searchQueryBuilder.getProgramArea() );
         assertEquals( context, searchQueryBuilder.getContext() );
         assertEquals( classification, searchQueryBuilder.getClassification() );
@@ -65,17 +61,17 @@ public class SearchQueryBuilderTest
         assertEquals( workFlowStatus, searchQueryBuilder.getWorkFlowStatus() );
         assertEquals( registrationStatus, searchQueryBuilder.getRegistrationStatus() );
         assertEquals( conceptName, searchQueryBuilder.getConceptName() );
-        assertEquals( conceptCode, searchQueryBuilder.getConceptCode() );
+        assertEquals( conceptCode, searchQueryBuilder.getConceptCode() );*/
 
     }
+    
     @Test
     public void testInitSeqrchQueryBuilder02() throws Exception
     {
         // With out workFlow, make sure workflow is empty, and exclude clause is right
-        searchQueryBuilder.initSeqrchQueryBuilder(  queryText, clientSearchMode, clientSearchField, programArea, context, classification, protocol, "", registrationStatus, conceptName, conceptCode);
-        assertEquals( queryText, searchQueryBuilder.getClientQuery() );
+        searchQueryBuilder.initSeqrchQueryBuilder(  queryText, clientSearchMode, publicId, programArea, context, classification, protocol, "", registrationStatus, conceptName, conceptCode);
+        /*assertEquals( queryText, searchQueryBuilder.getClientQuery() );
         assertEquals( clientSearchMode, searchQueryBuilder.getClientSearchMode() );
-        assertEquals( clientSearchField, searchQueryBuilder.getClientSearchField() );
         assertEquals( programArea, searchQueryBuilder.getProgramArea() );
         assertEquals( context, searchQueryBuilder.getContext() );
         assertEquals( classification, searchQueryBuilder.getClassification() );
@@ -83,38 +79,37 @@ public class SearchQueryBuilderTest
         assertEquals( "", searchQueryBuilder.getWorkFlowStatus() );
         assertEquals( registrationStatus, searchQueryBuilder.getRegistrationStatus() );
         assertEquals( conceptName, searchQueryBuilder.getConceptName() );
-        assertEquals( conceptCode, searchQueryBuilder.getConceptCode() );
+        assertEquals( conceptCode, searchQueryBuilder.getConceptCode() );*/
 
         assertEquals( " asl.asl_name NOT IN ( 'CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' ) ", WorkflowStatusEnum.getExcludList() );
-
     }
 
 
     @Test
     public void testWorkFlowStatus00() throws Exception
     {
-        searchQueryBuilder.initSeqrchQueryBuilder( "25*", "Exact phrase", 1, "", "", "", "", "APPRVD FOR TRIAL USE", "", "", "" );
+        searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", publicId, "", "", "", "", "APPRVD FOR TRIAL USE", "", "", "" );
         assertEquals( cleanup( searchQueryBuilder.getSqlStmt()), cleanup( sql00 )   );
     }
 
    @Test
     public void testWorkFlowStatus01() throws Exception
     {
-        searchQueryBuilder.initSeqrchQueryBuilder( "25*", "Exact phrase", 1, "", "", "", "", "", "", "", "" );
+        searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", publicId, "", "", "", "", "", "", "", "" );
         assertEquals( cleanup( searchQueryBuilder.getSqlStmt()), cleanup( sql01 )   );
     }
 
   @Test
     public void testContext00() throws Exception
     {
-        searchQueryBuilder.initSeqrchQueryBuilder( "25*", "Exact phrase", 1, "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", "", "", "" );
+        searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", publicId, "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", "", "", "" );
         assertEquals( cleanup( searchQueryBuilder.getSqlStmt()), cleanup( sql02 )   );
     }
 
     @Test
     public void testClassification00() throws Exception
     {
-        searchQueryBuilder.initSeqrchQueryBuilder( "258*", "Exact phrase", 1, "", "", "EB5D88AB-6077-69CB-E034-0003BA3F9857", "", "", "", "", "" );
+        searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", "258*", "", "", "EB5D88AB-6077-69CB-E034-0003BA3F9857", "", "", "", "", "" );
 System.out.println( cleanup( searchQueryBuilder.getSqlStmt()));
     }
 

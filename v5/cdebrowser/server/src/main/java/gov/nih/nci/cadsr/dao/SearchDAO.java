@@ -12,7 +12,7 @@ public interface SearchDAO
 	public List<SearchModel> cdeOwnedAndUsedByContext( String conteId );
 	
 	public List<SearchModel> getAllContexts(
-            String clientQuery, String clientSearchMode, int clientSearchField,
+            String clientName, String clientSearchMode, String clientPublicId,
             String programArea, String context, String classification, String protocol,
             String workFlowStatus, String registrationStatus,
             String conceptName, String conceptCode );
