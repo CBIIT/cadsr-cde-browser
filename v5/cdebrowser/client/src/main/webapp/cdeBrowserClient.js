@@ -274,6 +274,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.onClickBasicSearch = function (query, field, type) {
         $scope.currentCdeTab = 0;
         $location.path("/search").replace();
+        if (query!='') { // create base url. determine if query is blank //
+            if (field==0) {
+                var url = "".concat("cdebrowserServer/rest/search?name=",query,"&queryType=",type); // search is data element search //              
+            }
+            else {
+                var url = "".concat("cdebrowserServer/rest/search?publicId=",query,"&queryType=",type); // search is a public Id search //            
+            };
+        }
+        else {
+            var url = "".concat("cdebrowserServer/rest/search");
+        };
         /**
          *  query              The text of the users search input.
          *  field              0=Name 1=PublicId
@@ -289,12 +300,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
          *  conceptName        If empty, will not be used
          *  conceptCode        If empty, will not be used
          */
-        if (query=='') { query = '*'; }
-        var url = "".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type);
+        c=0; // index of searchFilter key //
         for (var x in fs.searchFilter) {
-            if (fs.searchFilter[x]) {
-                url+="&"+x+"="+fs.searchFilter[x]
-            }
+            if (fs.searchFilter[x]&&field==0) {
+                console.log(fs.searchFilter[x]+','+c+',*'+query+'*')
+                if (c==0&&query=='') {
+                    url+="?"+x+"="+fs.searchFilter[x];
+                }
+                else {
+                    url+="&"+x+"="+fs.searchFilter[x];
+                };
+            c++;
+            };
         };
 
          // $scope.searchServerRestCall("".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
