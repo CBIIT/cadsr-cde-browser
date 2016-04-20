@@ -27,7 +27,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
                 else {
                      // do search because at least one dropdown besides program area is selected //
-                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "0", fs.dataElementVariables.selectedQueryType);
+                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
                     console.log("Search");
                     $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
@@ -272,19 +272,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type) {
-        $scope.currentCdeTab = 0;
-        $location.path("/search").replace();
-        if (query!='') { // create base url. determine if query is blank //
-            if (field==0) {
-                var url = "".concat("cdebrowserServer/rest/search?name=",query,"&queryType=",type); // search is data element search //              
-            }
-            else {
-                var url = "".concat("cdebrowserServer/rest/search?publicId=",query,"&queryType=",type); // search is a public Id search //            
-            };
-        }
-        else {
-            var url = "".concat("cdebrowserServer/rest/search");
-        };
+        console.log(field)
         /**
          *  name              The text of the users search input for data element search.
          *  publicId          The text of the users search input for publicId search.
@@ -300,10 +288,20 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
          *  conceptName        If empty, will not be used
          *  conceptCode        If empty, will not be used
          */
+
+        $scope.currentCdeTab = 0;
+        $location.path("/search").replace(); // change url to search since we are doing a search //
+        if (query!='') { // create base url. determine if query is blank //
+                var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value // 
+        }
+        else {
+            var url = "".concat("cdebrowserServer/rest/search");
+        };
+
         c=0; // index of searchFilter key //
         for (var x in fs.searchFilter) {
             console.log(x)
-            if (fs.searchFilter[x]&&field==0) {
+            if (fs.searchFilter[x]&&field=='name') {
                 console.log(fs.searchFilter[x]+','+c+',*'+query+'*')
                 if (c==0&&query=='') {
                     url+="?"+x+"="+fs.searchFilter[x];
@@ -315,9 +313,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             };
         };
 
-         // $scope.searchServerRestCall("".concat("cdebrowserServer/rest/search?query=",query,"&field=",field,"&queryType=",type,"&programArea=",$scope.currentTab));
-         $scope.searchServerRestCall(url);
-
+        $scope.searchServerRestCall(url);
         $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
         // Restore the view of search results table
         $scope.changeView(0,0);
