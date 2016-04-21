@@ -318,3 +318,18 @@ ul.cdeSearchMessage li{
 #cdeCart .searchResultsTable {
     margin-left:3px !important;
 }
+
+#cdeCart div.progressMessage {
+    color:#1A4660;
+    font-weight:bold;
+    vertical-align:top;
+    margin:0px;
+    padding:10px 0px 10px 4px;
+}
+
+#cdeCart div.progressMessage div {
+    display:inline-block;
+    margin:0px;
+    padding:0px;
+    vertical-align:top;
+}

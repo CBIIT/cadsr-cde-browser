@@ -19,6 +19,13 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 
 	// logout user //
 	this.logout = function() {
+		$http({method: 'GET', url: '/cdebrowserServer/rest/logout'}).
+			success(function(response) {
+				console.log("success")
+			})
+			.error(function(response) {
+				console.log("fail")
+			});
 	};		
 		
 });

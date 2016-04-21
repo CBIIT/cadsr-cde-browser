@@ -1,9 +1,9 @@
     
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, downloadFactory) {
     window.scope = $scope;
-    
+
     /* Start of filter service */
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
@@ -51,11 +51,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
     /* End of filter service */
 
-
     $scope.$storage = $sessionStorage;
-    var cartService = cartService;
     $scope.$storage.cartService = cartService;
     $scope.cartService = cartService;
+    $scope.downloadFactory = new downloadFactory();  // create download factory //    
 
     $scope.show = [];
     $scope.initComplete = false;
@@ -384,7 +383,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.isSearching = false;
             // $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
-            $scope.filteredData = $filter('customFilter')(response);
             $scope.tableParams.settings({ dataset: response });
             if ($scope.searchResults.length > 0) {
 
@@ -664,37 +662,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             dataset:[]
             
           });  
-    };        
-    // $scope.initTableParams = function () {
-    //     $scope.tableParams = new ngTableParams(
-
-    //         {
-    //             page: 1,            // show first page
-    //             count: 100,           // count per page
-
-    //             sorting: {
-    //                 registrationSort: 'asc',
-    //                 workflowSort: 'asc',
-    //                 longName: 'asc'
-    //             }
-    //         },
-    //         {
-    //             $scope: $scope,
-    //             defaultSort:"asc",
-    //             counts: [], // hide page counts control
-    //             // get data and set total for pagination
-    //             getData: function ($defer, params) {
-    //                 var data = $scope.searchResults;
-    //                 params.total(data.length);
-    //                 // use build-in angular filter
-    //                 var orderedData = params.sorting() ?
-    //                     $filter('orderBy')(data, params.orderBy()) : data;
-    //                 $defer.resolve($scope.records = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-    //             }
-    //         });
-    // };
-
-
+    };
 
     $scope.sortNames = {
         'registrationSort': 'Registration Status',
@@ -707,7 +675,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         'version': 'Version'
     };
 
-    $scope.initTableParams();
+    $scope.initTableParams(); // init table params //
     $scope.hideContexts();
     $scope.dataLoadFromServer();
     $scope.versionData();
@@ -720,46 +688,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // add items to cart //
     $scope.addCDE = function() {
-        cartService.addCDE($scope.checkedItemsForDownload,$scope.searchResults);
+        $scope.cartService.addCDE($scope.checkedItemsForDownload,$scope.searchResults);
     };
 
     // downloads selected search results to an excel file //
     $scope.downloadToExcel = function(param) {
-        $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}
-        if (param) { // download to prior excel
-            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: $scope.checkedItemsForDownload}).
-            success(function(data, status, headers, config) {
-                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
-                $scope.progressMessage.status=0;
-            }).
-            error(function(data, status, headers, config) {
-                $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
-            });
-        }
-        else { // download to excel
-            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: $scope.checkedItemsForDownload}).
-            success(function(data, status, headers, config) {
-                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
-                $scope.progressMessage.status=0;
-            }).
-            error(function(data, status, headers, config) {
-                $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
-            });
-        }
-
+        $scope.downloadFactory.downloadToExcel(param,$scope.checkedItemsForDownload);
     };
 
     // downloads selected search results to an excel file //
     $scope.downloadToXML = function() {
-        $scope.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0}
-        $http({method: 'POST', url: '/cdebrowserServer/rest/downloadXml?src=deSearch',data: $scope.checkedItemsForDownload}).
-        success(function(data) {
-            $scope.progressMessage.status=0;
-            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data;
-        }).
-        error(function(data, status, headers, config) {
-            $scope.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
-        });
+        $scope.downloadFactory.downloadToXML($scope.checkedItemsForDownload);
     };
 
 });

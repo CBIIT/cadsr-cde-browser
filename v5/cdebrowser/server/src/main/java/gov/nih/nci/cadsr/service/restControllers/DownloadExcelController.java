@@ -149,6 +149,7 @@ public class DownloadExcelController {
 		else {
 			String strMessage = String.format(clientErrorMessageFileNotFound, fileId);
 			logger.error(strMessage);
+			logger.error("Excel file is not found: " + excelFileName);
 			responseHeaders.set("Content-Type", "text/plain");
 			InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
 			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.BAD_REQUEST);

@@ -126,9 +126,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	};
 
 	// retrieve the cart. Will call rest service //
-	this.retrieveCart = function() {
+	this.retrieveCart = function(click) {
 		var that = this;
-		this.statusMessage = 'Retrieving Cart';
+		if (click) { this.statusMessage = 'Retrieving Cart'; }; // user has forced retrieve cart //
 		$http.get('/cdebrowserServer/rest/cdeCart')
 		.success(function(response) {
 			var temporaryIds = []; // array of temp ids to compare with retrieved cart items. Prevent looping through two arrays //
@@ -150,8 +150,10 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			};
 			that.statusMessage = '';
 		}).error(function(response) {
-			authService.cameFrom = 'retrieve';
-	        $location.path("/login").replace(); // send user to login page //
+			if (click) { // user has forced retrieve cart //
+				authService.cameFrom = 'retrieve';
+		        $location.path("/login").replace(); // send user to login page //
+			};
 			that.statusMessage = '';
 		});
 	};		
@@ -162,5 +164,16 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			this.cartData[i].unsavedItem = true;
 		};
 	};
+
+	// returns length of checked items. Use to disable download buttons //
+	this.checkedCartItemsLength = function() {
+		// return true if the length of checkedCartItems is 0 in order to disable the download buttons //
+		if (Object.keys(this.checkedCartItems.items).length) {
+			return false;
+		}
+		else {
+			return true;
+		};
+	};	
 		
 });

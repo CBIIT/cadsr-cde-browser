@@ -147,6 +147,7 @@ public class DownloadXmlController {
 		else {
 			String strMessage = String.format(clientErrorMessageFileNotFound, fileId);
 			logger.error(strMessage);
+			logger.error("XML file is not found: " + fileName);
 			responseHeaders.set("Content-Type", "text/plain");
 			InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
 			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.BAD_REQUEST);
