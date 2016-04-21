@@ -388,7 +388,9 @@ public class CdeCartUtil {
         de.setContext(null);
         deModel.getContext();
         
-        de.setLongCDEName(deModel.getPreferredName());
+        //I believe this is the data stored which we need to the Question/Doc Text/Preferred Question Text
+        de.setLongCDEName(deModel.getQuestion());
+        
         de.setAslName(deModel.getAslName());
         de.setVersion(deModel.getVersion());
         de.setContextName(deModel.getContextName());
