@@ -383,7 +383,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.isSearching = false;
             // $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
-            $scope.filteredData = $filter('customFilter')(response);
             $scope.tableParams.settings({ dataset: response });
             if ($scope.searchResults.length > 0) {
 
