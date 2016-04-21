@@ -86,6 +86,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String contextWhere = "";
         String programAreaWhere = "";
         String wkFlowWhere = "";
+        String registrationStatusWhere = "";
         String cdeIdWhere = "";
         String vdWhere = "";
         String decWhere = "";
@@ -96,7 +97,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         // FIXME classification doesn't work right yet - set as empty, to avoid using this incorrect classificationWhere
         // If we are not filtering by classification, we don't need sbr.classification_schemes in the sql.
-        if( classification.isEmpty() )
+        if(StringUtils.isBlank(classification))
         {
             classificationFrom = "";
         }
@@ -117,12 +118,16 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status
         regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
 
-
+        /*if (StringUtils.isNotBlank(registrationStatus))
+        {
+        	registrationStatusWhere = " AND acr.registration_status = '" + registrationStatus + "'";
+        }*/
+        
         ////////////////////////////////////////////////////
         // WorkFlowStatus
         // If it is empty, use the default exclude list in WorkflowStatusEnum
         String workflowWhere;
-        if( workFlowStatus.isEmpty() )
+        if(StringUtils.isBlank(workFlowStatus))
         {
             workflowWhere = " AND " + WorkflowStatusEnum.getExcludList();
         }
@@ -135,7 +140,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         ////////////////////////////////////////////////////
         // This excludes TEST and Training, may become an option later.
         String contextExludeWhere = "";
-        if( !CONTEXT_EXCLUDES.isEmpty() )
+        if(StringUtils.isNotBlank(CONTEXT_EXCLUDES))
         {
             contextExludeWhere = " AND conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
         }
@@ -146,14 +151,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific context
-        if( !context.isEmpty() )
+        if(StringUtils.isNotBlank(context))
         {
             contextWhere = " conte.conte_idseq = '" + context + "' AND ";
         }
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific programArea
-        if( !programArea.isEmpty() )
+        if(StringUtils.isNotBlank(programArea))
         {
             programAreaWhere = " conte.pal_name = '" + programArea + "' AND ";
         }
@@ -165,7 +170,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, clientSearchMode );
         }
 
-        if( !valueDomain.equals( "" ) )
+        if(StringUtils.isNotBlank(valueDomain))
         {
             vdWhere = " AND vd.vd_idseq = '" + valueDomain + "'"
                     + " AND vd.vd_idseq = de.vd_idseq ";
@@ -181,6 +186,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
         whereBuffer.append( wkFlowWhere );
+        whereBuffer.append( registrationStatusWhere );
         whereBuffer.append( classificationWhere );
         whereBuffer.append( regStatus );
         whereBuffer.append( cdeIdWhere );
