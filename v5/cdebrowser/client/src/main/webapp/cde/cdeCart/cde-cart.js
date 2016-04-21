@@ -3,14 +3,12 @@
  */
 angular.module("cdeCart", []);
 
-angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localStorage","$sessionStorage","$route","searchFactory","cartService", "authenticationService", "downloadService", function ($scope, $location,$localStorage, $sessionStorage, $route, searchFactory, cartService, authenticationService, downloadService) {
+angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localStorage","$sessionStorage","$route","searchFactory","cartService", "authenticationService","downloadFactory", function ($scope, $location,$localStorage, $sessionStorage, $route, searchFactory, cartService, authenticationService, downloadFactory) {
 	searchFactory.showSearch = false; // set search area to be invisible //	
 	$scope.$parent.title = "CDE Cart" // set title of page to be show on the tab //
-
-	var authService = authenticationService; // define authentication service //
-	var downloadService = angular.copy(downloadService); // define download service //
-	$scope.downloadService = downloadService; // define download service //
+	$scope.downloadFactory = new downloadFactory(); // define download factory //
 	var redirect = angular.copy(authService.cameFrom); // set if coming from cart. Determines what was clicked on //
+	var authService = authenticationService; // define authentication service //
 	authService.cameFrom = ''; // set came from back to empty string //
 
 	// define cart service //
@@ -20,11 +18,6 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 
 	if (redirect=='retrieve') { cartService.retrieveCart(); } // checks if user has been redirected after logging in //
 	else if(redirect == 'save') { cartService.saveCart(); }	 // checks if user has been redirected after logging in //
-
-	// add item to cde cart //
-	$scope.addCDE = function() {
-		cartService.addCDE('Orange');
-	};
 
 	// retrieve items and put them in cde cart //
 	$scope.retrieveCart = function() {
@@ -59,14 +52,14 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 
 	// downloads excel file with checked cart items //
 	$scope.downloadToExcel = function(param) {
-		var items = downloadService.createDownloadableArray(cartService.checkedCartItems.items); // creates simple array of ids //
-		downloadService.downloadToExcel(param,items);
+		var items = $scope.downloadFactory.createDownloadableArray(cartService.checkedCartItems.items); // creates simple array of ids //
+		$scope.downloadFactory.downloadToExcel(param,items);
 	};
 
 	// downloads xml file with checked cart items //
 	$scope.downloadToXML = function() {
-		var items = downloadService.createDownloadableArray(cartService.checkedCartItems.items);  // creates simple array of ids //
-		downloadService.downloadToXML(items);
+		var items = $scope.downloadFactory.createDownloadableArray(cartService.checkedCartItems.items);  // creates simple array of ids //
+		$scope.downloadFactory.downloadToXML(items);
 	};		
 
 }]);

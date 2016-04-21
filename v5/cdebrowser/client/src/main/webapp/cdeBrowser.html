@@ -322,11 +322,11 @@
                 </li>                       
             </ul>
             <!-- show progress bar -->
-            <ul ng-show="downloadService.progressMessage.status" class="cdeProgressMessage">
+            <ul ng-show="downloadFactory.progressMessage.status" class="cdeProgressMessage">
                 <li>
-                    {{downloadService.progressMessage.message}}
+                    {{downloadFactory.progressMessage.message}}
                 </li>
-                <li ng-show="!downloadService.progressMessage.isErrorMessage">
+                <li ng-show="!downloadFactory.progressMessage.isErrorMessage">
                     <img alt="Exporting File" src="icons/preloader.gif">
                 </li>                
             </ul>
@@ -524,7 +524,7 @@
 <script src="services/cartService.js"></script>
 <script src="services/filterService.js"></script>
 <script src="services/authenticationService.js"></script>
-<script src="services/downloadService.js"></script>
+<script src="services/downloadFactory.js"></script>
 
 </body>
 </html>

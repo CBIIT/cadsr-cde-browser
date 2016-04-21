@@ -4,8 +4,8 @@
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToExcel()">Download to Excel</button>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToExcel('prior')">Download to Prior Excel</button>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToXML()">Download Data Elements as XML</button>
-		<div class="progressMessage" ng-show="downloadService.progressMessage.status">
-			<div>{{downloadService.progressMessage.message}}</div>
+		<div class="progressMessage" ng-show="downloadFactory.progressMessage.status">
+			<div>{{downloadFactory.progressMessage.message}}</div>
 			<div><img alt="Exporting File" src="icons/preloader.gif"></div>
 		</div>
 		<div class="progressMessage" ng-show="cartService.statusMessage!=''">

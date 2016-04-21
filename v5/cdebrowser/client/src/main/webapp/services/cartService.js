@@ -1,8 +1,7 @@
-angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http, $location,authenticationService, downloadService) {
+angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,$http, $location,authenticationService) {
 	// service to create and operate a cde cart //
 	// check session to see if cart service exists, if so set variables to the session values //
 	var authService = authenticationService; // create instance of auth service //
-	var downloadService = downloadService; // create instance of download service //
 	this.statusMessage = ''; // status message for alerting the user what is happening when user clicks on buttons //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //

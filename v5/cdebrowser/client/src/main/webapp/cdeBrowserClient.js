@@ -1,7 +1,7 @@
     
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, downloadService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, downloadFactory) {
     window.scope = $scope;
 
     /* Start of filter service */
@@ -52,10 +52,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     /* End of filter service */
 
     $scope.$storage = $sessionStorage;
-    var cartService = cartService;
     $scope.$storage.cartService = cartService;
     $scope.cartService = cartService;
-    $scope.downloadService = angular.copy(downloadService);  // create download service copy //    
+    $scope.downloadFactory = new downloadFactory();  // create download factory //    
 
     $scope.show = [];
     $scope.initComplete = false;
@@ -690,17 +689,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // add items to cart //
     $scope.addCDE = function() {
-        cartService.addCDE($scope.checkedItemsForDownload,$scope.searchResults);
+        $scope.cartService.addCDE($scope.checkedItemsForDownload,$scope.searchResults);
     };
 
     // downloads selected search results to an excel file //
     $scope.downloadToExcel = function(param) {
-        $scope.downloadService.downloadToExcel(param,$scope.checkedItemsForDownload);
+        $scope.downloadFactory.downloadToExcel(param,$scope.checkedItemsForDownload);
     };
 
     // downloads selected search results to an excel file //
     $scope.downloadToXML = function() {
-        $scope.downloadService.downloadToXML($scope.checkedItemsForDownload);
+        $scope.downloadFactory.downloadToXML($scope.checkedItemsForDownload);
     };
 
 });
