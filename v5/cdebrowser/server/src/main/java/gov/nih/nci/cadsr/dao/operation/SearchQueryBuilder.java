@@ -118,10 +118,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status
         regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
 
-        /*if (StringUtils.isNotBlank(registrationStatus))
+        if (StringUtils.isNotBlank(registrationStatus))
         {
-        	registrationStatusWhere = " AND acr.registration_status = '" + registrationStatus + "'";
-        }*/
+        	registrationStatusWhere = " AND acr.registration_status = '" + registrationStatus + "' ";
+        }
         
         ////////////////////////////////////////////////////
         // WorkFlowStatus
@@ -153,7 +153,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         // Filter for only a specific context
         if(StringUtils.isNotBlank(context))
         {
-            contextWhere = " conte.conte_idseq = '" + context + "' AND ";
+            //contextWhere = " conte.conte_idseq = '" + context + "' AND ";
+        	
+        	contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" +  context + "' " +
+        				   " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + context + "') AND ";
         }
 
         ///////////////////////////////////////////////////////

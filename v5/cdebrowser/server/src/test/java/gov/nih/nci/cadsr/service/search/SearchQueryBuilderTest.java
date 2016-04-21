@@ -232,7 +232,8 @@ System.out.println( cleanup( searchQueryBuilder.getSqlStmt()));
             "     sbr.ac_registrations_view acr,"+
             "     sbr.reg_status_lov_view rsl,"+
             "     sbr.ac_status_lov_view asl"+
-            " WHERE conte.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0'"+
+            " WHERE de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0' " +
+  		    " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0') " +
             "  AND de.de_idseq = rd.ac_idseq (+)"+
             "  AND rd.dctl_name (+) = 'Preferred Question Text'"+
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')"+

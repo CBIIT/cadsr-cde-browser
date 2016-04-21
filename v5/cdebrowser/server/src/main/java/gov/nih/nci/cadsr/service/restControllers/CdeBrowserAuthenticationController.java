@@ -31,10 +31,12 @@ public class CdeBrowserAuthenticationController
 	public Boolean login(@RequestHeader("Authorization") String authorization,
 						 HttpServletRequest request) throws AutheticationFailureException
 	{
-		logger.debug("Received request to authenticate user: ");
+		logger.debug("Received request to authenticate user.");
 		Boolean login = Boolean.TRUE;
 		
 		final String[] credentials = decodeAuthorizationHeader(authorization);
+		
+		logger.debug("Processing login request for user: " + credentials[0]);
 		
 		if (credentials == null || credentials.length != 2 || StringUtils.isBlank(credentials[0]) || StringUtils.isBlank(credentials[1]))
 			throw new AutheticationFailureException("Authentication failed for user because username or password is null:" + credentials[0]);
@@ -54,7 +56,7 @@ public class CdeBrowserAuthenticationController
 					}
 				}
 				
-				logger.debug("Setting user in the session after successful login:" + credentials[0]);
+				logger.debug("Setting user in a new session after successful login:" + credentials[0]);
 				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
 			} 
 			catch (Exception e)
@@ -77,6 +79,14 @@ public class CdeBrowserAuthenticationController
 			session.invalidate();
 		}
 		
+	}
+	
+	@RequestMapping(value="/user", method = RequestMethod.GET)
+	public String getUser(HttpSession session)
+	{
+		String username = (session != null) ? (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME) : "";
+		logger.debug("Request to fetch logged in username.");
+		return username;
 	}
 	
 	private String[] decodeAuthorizationHeader(String authorization)

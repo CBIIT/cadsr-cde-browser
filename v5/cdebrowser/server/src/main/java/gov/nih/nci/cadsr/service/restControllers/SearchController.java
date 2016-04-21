@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.SearchDAO;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.dao.model.SearchModel;
@@ -34,9 +32,6 @@ public class SearchController
     
     @Autowired
     private SearchDAO searchDAO;
-
-    @Autowired
-    private DataElementDAO dataElementDAO;
     
     @Autowired
     private RestControllerCommon restControllerCommon;
@@ -349,11 +344,6 @@ public class SearchController
     public List<ProgramAreaModel> getProgramAreaModelList()
     {
         return programAreaModelList;
-    }
-
-    public void setDataElementDAO( DataElementDAO dataElementDAO )
-    {
-        this.dataElementDAO = dataElementDAO;
     }
 
     public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )

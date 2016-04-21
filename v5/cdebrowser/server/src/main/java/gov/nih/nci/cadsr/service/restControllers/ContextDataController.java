@@ -12,7 +12,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,27 +69,6 @@ public class ContextDataController
     private AppConfig appConfig;
 
     private Map csi = new HashMap();
-
-    /*@Value( "${maxHoverTextLen}" )
-    private String maxHoverTextLenStr;
-
-    @Value( "${oneContextRestService}" )
-    private String oneContextRestServiceName;
-
-    @Value( "${cdesByClassificationSchemeRestService}" )
-    private String cdesByClassificationSchemeRestServiceName;
-
-    @Value( "${cdesByClassificationSchemeItemRestService}" )
-    private String cdesByClassificationSchemeItemRestServiceName;
-
-    @Value( "${cdesByProtocolRestService}" )
-    private String cdesByProtocolRestServiceName;
-
-    @Value( "${cdesByProtocolFormRestService}" )
-    private String cdesByProtocolFormRestServiceName;
-
-    @Value( "${treeRetrievalWaitMessage}" )
-    private String treeRetrievalWaitMessage;*/
 
     private int contextPalNameCount;
 
@@ -828,36 +806,6 @@ public class ContextDataController
         this.csCsiNodelList = csCsiNodelList;
     }
 
-    /*public void setMaxHoverTextLenStr( String maxHoverTextLen )
-    {
-        this.maxHoverTextLenStr = maxHoverTextLen;
-    }
-
-    public String getMaxHoverTextLenStr()
-    {
-        return maxHoverTextLenStr;
-    }
-
-    public String getOneContextRestServiceName()
-    {
-        return oneContextRestServiceName;
-    }
-
-    public void setOneContextRestServiceName( String oneContextRestServiceName )
-    {
-        this.oneContextRestServiceName = oneContextRestServiceName;
-    }
-
-    public String getTreeRetrievalWaitMessage()
-    {
-        return treeRetrievalWaitMessage;
-    }
-
-    public void setTreeRetrievalWaitMessage( String treeRetrievalWaitMessage )
-    {
-        this.treeRetrievalWaitMessage = treeRetrievalWaitMessage;
-    }
-*/
     public int getContextPalNameCount()
     {
         return contextPalNameCount;
@@ -874,28 +822,7 @@ public class ContextDataController
 
 	public void setAppConfig(AppConfig appConfig) {
 		this.appConfig = appConfig;
-	}
-
-    /*public String getCdesByProtocolFormRestServiceName()
-    {
-        return cdesByProtocolFormRestServiceName;
-    }
-
-    public String getCdesByProtocolRestServiceName()
-    {
-        return cdesByProtocolRestServiceName;
-    }
-
-    public String getCdesByClassificationSchemeItemRestServiceName()
-    {
-        return cdesByClassificationSchemeItemRestServiceName;
-    }
-
-    public String getCdesByClassificationSchemeRestServiceName()
-    {
-        return cdesByClassificationSchemeRestServiceName;
-    }*/
-    
+	} 
     
 
 }
