@@ -3,7 +3,7 @@
  */
 angular.module("cdeLogin", []);
 
-angular.module("cdeLogin").controller("LoginCtrl", ["$scope","$location","$route","searchFactory","authenticationService","cartService","$http", function ($scope, $location, $route, searchFactory, authenticationService, cartService, $http) {
+angular.module("cdeLogin").controller("LoginCtrl", ["$scope","authenticationService","searchFactory","cartService", function ($scope, authenticationService, searchFactory, cartService) {
 	searchFactory.showSearch = false; // set search area to be invisible //	
 	$scope.$parent.title = "Login" // set title of page to be show on the tab //
 

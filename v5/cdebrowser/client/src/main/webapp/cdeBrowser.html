@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/select2.css">
     <link rel="stylesheet" type="text/css" href="cde/cde.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
 
@@ -138,7 +137,7 @@
                         &nbsp;Help&nbsp;
                     </a>
                 </td>
-                <td ng-if="checkAuth()" class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                <td ng-if="authenticationService.loggedIn" class="roundButton" valign="TOP" align="CENTER" colspan=1>
                     <a href
                        ng-click="logout()">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_logout.png"

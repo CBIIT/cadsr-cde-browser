@@ -9,6 +9,7 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 		$http({method: 'POST', url: '/cdebrowserServer/rest/login',headers: { 'Authorization':'Basic ' + btoa(username+':'+credential)}}).
 			success(function(response) {
 				that.cameFrom = redirect;
+				that.loggedIn = true;
 				if (redirect!='') { // only redirect if coming from another location //
 					$location.path('/cdeCart').replace();
 				};
@@ -19,19 +20,31 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 
 	// logout user //
 	this.logout = function() {
+		var that = this;
 		$http({method: 'GET', url: '/cdebrowserServer/rest/logout'}).
 			success(function(response) {
-				this.loggedIn = false;
+				that.loggedIn = false;
 			})
 			.error(function(response) {
-				
+				that.loggedIn = false;				
 			});
 	};
 
 	// check user is authenticated //
 	this.checkAuth = function() {
 		var that = this;
-		return this.loggedIn;
+		$http({method: 'GET', url: '/cdebrowserServer/rest/user'})
+			.success(function(response) {
+			  if (response.length>0) {
+			  	that.loggedIn = true;
+			  }
+			  else {
+			  	that.loggedIn=false;
+			  };
+			})
+			.error(function(response) {
+			  	that.loggedIn=false;				
+			});
 	};
 		
 });
