@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -262,8 +263,8 @@ public class DownloadExcelControllerTest {
 	}
 	public void assignDownloadServiceProperties(DownloadExcelController downloadExcelController) {
 		String dir = System.getProperty("user.dir");
-		downloadExcelController.setDownloadDirectory(dir + "/src/test/resources/");
-		downloadExcelController.setFileNamePrefix("TestExcelFile");		
+		downloadExcelController.getAppConfig().setDownloadDirectory(dir + "/src/test/resources/");
+		downloadExcelController.getAppConfig().setFileNamePrefix("TestExcelFile");		
 	}
 
 }

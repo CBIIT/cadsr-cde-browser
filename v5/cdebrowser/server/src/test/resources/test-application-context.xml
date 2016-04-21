@@ -22,4 +22,6 @@
     </bean>
     <bean id="getXmlDownload" class="gov.nih.nci.cadsr.download.GetXmlDownloadTestImpl">
     </bean>
+    <bean id="appConfig" class="gov.nih.nci.cadsr.common.AppConfig">
+    </bean>
 </beans>

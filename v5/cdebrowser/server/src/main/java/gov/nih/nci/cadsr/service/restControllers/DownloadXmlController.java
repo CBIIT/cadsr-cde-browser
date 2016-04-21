@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.download.GetXmlDownloadInterface;
 import gov.nih.nci.cadsr.download.XmlDownloadTypes;
 import gov.nih.nci.cadsr.service.ClientException;
@@ -42,13 +43,16 @@ public class DownloadXmlController {
 	private static Logger logger = LogManager.getLogger(DownloadXmlController.class.getName());
 	@Autowired
 	GetXmlDownloadInterface getXmlDownload;
+	
+	@Autowired
+	private AppConfig appConfig;
 
-	@Value("${downloadDirectory}")
+	/*@Value("${downloadDirectory}")
 	String downloadDirectory;
 	@Value("${downloadFileNamePrefix}")
 	String fileNamePrefix;
 	@Value("${registrationAuthorityIdentifier}")
-	String registrationAuthorityIdentifier;
+	String registrationAuthorityIdentifier;*/
 	public static final String fileExtension = ".xml";
 	
 	//Client Error Texts
@@ -66,14 +70,14 @@ public class DownloadXmlController {
 		this.getXmlDownload = getXmlDownload;
 	}
 	
-	public void setDownloadDirectory(String downloadDirectory) {
+/*	public void setDownloadDirectory(String downloadDirectory) {
 		this.downloadDirectory = downloadDirectory;
 	}
 
 	public void setFileNamePrefix(String fileNamePrefix) {
 		this.fileNamePrefix = fileNamePrefix;
 	}
-
+*/
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<String> downloadXml(@RequestParam("src") String source,
 			RequestEntity<List<String>> request) throws Exception {
@@ -90,7 +94,7 @@ public class DownloadXmlController {
 		try {
 			validateDownloadParameters(cdeIds, source);
 
-			fileId = getXmlDownload.persist(cdeIds, registrationAuthorityIdentifier, source);
+			fileId = getXmlDownload.persist(cdeIds, appConfig.getRegistrationAuthorityIdentifier(), source);
 		
 			if (fileId != null) {
 				HttpHeaders responseHeaders = new HttpHeaders();
@@ -118,7 +122,7 @@ public class DownloadXmlController {
 	@RequestMapping(value = "/{fileId}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> retrieveXmlFile(@PathVariable("fileId") String fileId) throws Exception {
 		logger.debug("Received RESTful call to retrieve XML file; fileId: " + fileId);
-		String fileName = downloadDirectory + fileNamePrefix + fileId + fileExtension;
+		String fileName = appConfig.getDownloadDirectory() + appConfig.getFileNamePrefix() + fileId + fileExtension;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
 		File file = new File (fileName);
@@ -177,4 +181,13 @@ public class DownloadXmlController {
 
 		return bis;
 	}
+
+	public AppConfig getAppConfig() {
+		return appConfig;
+	}
+
+	public void setAppConfig(AppConfig appConfig) {
+		this.appConfig = appConfig;
+	}
+
 }

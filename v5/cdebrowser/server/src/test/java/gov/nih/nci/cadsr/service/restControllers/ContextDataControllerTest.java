@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.service.restControllers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.DBUtil;
 import gov.nih.nci.cadsr.dao.model.*;
@@ -32,10 +34,11 @@ public class ContextDataControllerTest extends TestCase
     {
         unitTestCommon = new UnitTestCommon();
         contextDataController = new ContextDataController();
+        contextDataController.setAppConfig(new AppConfig());
         // TODO set up Spring test @Configuration class with PropertyPlaceholderConfigurer so
         // Spring can resolve the @Value("${maxHoverTextLen}") etc. during Unit tests
-        contextDataController.setMaxHoverTextLenStr( "50" );
-        testMaxHoverTextLen = Integer.parseInt( contextDataController.getMaxHoverTextLenStr() );
+        contextDataController.getAppConfig().setMaxHoverTextLenStr( "50" );
+        testMaxHoverTextLen = Integer.parseInt( contextDataController.getAppConfig().getMaxHoverTextLenStr() );
         contextDataController.setProgramAreaModelList( unitTestCommon.initSampleProgramAreas() );
         contextDataController.setContextPalNameCount( contextDataController.getProgramAreaModelList().size() );
         initTestPreferredDefinition();

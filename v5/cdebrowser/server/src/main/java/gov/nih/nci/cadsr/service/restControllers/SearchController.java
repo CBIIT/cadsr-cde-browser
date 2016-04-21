@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.SearchDAO;
@@ -29,6 +30,9 @@ public class SearchController
     private Logger logger = LogManager.getLogger( SearchController.class.getName() );
 
     @Autowired
+    AppConfig appConfig;
+    
+    @Autowired
     private SearchDAO searchDAO;
 
     @Autowired
@@ -40,9 +44,6 @@ public class SearchController
     private List<ProgramAreaModel> programAreaModelList = null;
     private SearchQueryBuilder searchQueryBuilder = null;
 
-    @Value( "${cdeDataRestService}" )
-    String cdeDataRestServiceName;
-
     public SearchController()
     {
         // programAreaModelList = restControllerCommon.getProgramAreaList();
@@ -53,16 +54,16 @@ public class SearchController
     @RequestMapping( value = "/testSearch" )
     @ResponseBody
     public SearchNode[] testSearch(
-            @RequestParam( "name" ) String name, @RequestParam( "queryType" ) int queryType, @RequestParam( "publicId" ) String publicId, @RequestParam( "programArea" ) int programArea )
+            @RequestParam( "name" ) String name, @RequestParam( "queryType" ) int queryType, @RequestParam( "publicId" ) String publicId, @RequestParam( "programArea" ) String programArea )
     {
         SearchNode[] results = null;
         try
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-            results = buildSearchResultsNodes( searchDAO.getAllContexts( name, searchMode, publicId, getProgramAreaPalNameByIndex( programArea ), "", "", "", "", "", "", "" ) );
+            results = buildSearchResultsNodes( searchDAO.getAllContexts( name, searchMode, publicId, programArea, "", "", "", "", "", "", "" ) );
         } catch( Exception e )
         {
-            return createErrorNode( "Server Error:\ntestSearch: " + name + ", " + queryType + ", " + publicId + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
+            return createErrorNode( "Server Error:\ntestSearch: " + name + ", " + queryType + ", " + publicId + ", " + programArea + " failed ", e );
         }
 
         return results;
@@ -89,7 +90,7 @@ public class SearchController
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "publicId", required = false) String publicId,
             @RequestParam( value = "queryType", defaultValue = "2", required = false ) int queryType, // 2 = "At least one of the words"
-            @RequestParam( value = "programArea", defaultValue = "0", required = false ) int programArea,  // 0 = All (Ignore Program area)
+            @RequestParam( value = "programArea", required = false ) String programArea,  // 0 = All (Ignore Program area)
             @RequestParam( value = "context", defaultValue = "", required = false ) String context,
             @RequestParam( value = "classification", defaultValue = "", required = false ) String classification,
             @RequestParam( value = "protocol", defaultValue = "", required = false ) String protocol,
@@ -106,13 +107,13 @@ public class SearchController
             String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
             results = buildSearchResultsNodes(
                     searchDAO.getAllContexts(
-                    		name, searchMode, publicId, getProgramAreaPalNameByIndex( programArea ), context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode
+                    		name, searchMode, publicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode
                     )
             );
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
-            return createErrorNode( "Server Error:\nsearch: " + name + ", publicId: " + publicId + ", " + queryType + ", " + programArea + "[" + getProgramAreaPalNameByIndex( programArea ) + "] failed ", e );
+            return createErrorNode( "Server Error:\nsearch: " + name + ", publicId: " + publicId + ", " + queryType + ", " + programArea + " failed ", e );
         }
 
         return results;
@@ -264,7 +265,7 @@ public class SearchController
             searchNodes[i].setVersion( model.getDeVersion() );
             searchNodes[i].setDeIdseq( model.getDeIdseq() );
 
-            searchNodes[i].setHref( cdeDataRestServiceName );
+            searchNodes[i].setHref(appConfig.getCdeDataRestServiceName());
 
             //This is so in the client side display table, there will be spaces to allow good line wrapping.
             if( model.getDeUsedby() != null )
@@ -369,4 +370,14 @@ public class SearchController
     {
         this.searchQueryBuilder = searchQueryBuilder;
     }
+
+	public AppConfig getAppConfig() {
+		return appConfig;
+	}
+
+	public void setAppConfig(AppConfig appConfig) {
+		this.appConfig = appConfig;
+	}
+    
+    
 }

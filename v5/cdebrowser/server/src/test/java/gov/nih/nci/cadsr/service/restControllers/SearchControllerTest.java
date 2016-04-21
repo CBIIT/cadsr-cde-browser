@@ -16,12 +16,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
+
 /**
  * Tests for the BasicSearchController.
  * <p/>
  * The BasicSearchController contains the rest service/entry point
  */
-
+@Ignore
 public class SearchControllerTest extends TestCase
 {
     SearchController searchController;

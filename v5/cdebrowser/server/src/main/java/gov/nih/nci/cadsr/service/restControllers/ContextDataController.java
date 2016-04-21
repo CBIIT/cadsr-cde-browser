@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.ClassificationSchemeDAO;
 import gov.nih.nci.cadsr.dao.ContextDAO;
@@ -64,10 +65,13 @@ public class ContextDataController
     
     @Autowired
     private RestControllerCommon restControllerCommon;
+    
+    @Autowired
+    private AppConfig appConfig;
 
     private Map csi = new HashMap();
 
-    @Value( "${maxHoverTextLen}" )
+    /*@Value( "${maxHoverTextLen}" )
     private String maxHoverTextLenStr;
 
     @Value( "${oneContextRestService}" )
@@ -86,7 +90,7 @@ public class ContextDataController
     private String cdesByProtocolFormRestServiceName;
 
     @Value( "${treeRetrievalWaitMessage}" )
-    private String treeRetrievalWaitMessage;
+    private String treeRetrievalWaitMessage;*/
 
     private int contextPalNameCount;
 
@@ -167,7 +171,7 @@ public class ContextDataController
             initClassificationsParentNode( classificationsParentNode, programAreaIndex, true ); //true = collapsed folder
 
             // Add the data for the rest call back to get the complete data tree for this context
-            classificationsParentNode.setHref( oneContextRestServiceName +
+            classificationsParentNode.setHref( appConfig.getOneContextRestServiceName() +
                     "," + model.getConteIdseq() +
                     "," + getProgramAreaByName( model.getPalName() ) +
                     "," + CaDSRConstants.CLASSIFICATIONS_TYPE_FOLDER );
@@ -185,7 +189,7 @@ public class ContextDataController
             initProtocolsFormsParentNode( protocolsParentNode, programAreaIndex, true ); //true = collapsed folder
 
             // Add the data for the rest call back to get the complete data tree for this context - same as the "Classifications"
-            protocolsParentNode.setHref( oneContextRestServiceName +
+            protocolsParentNode.setHref( appConfig.getOneContextRestServiceName() +
                     "," + model.getConteIdseq() +
                     "," + getProgramAreaByName( model.getPalName() ) +
                     "," + CaDSRConstants.PROTOCOLFORMS_TYPE_FOLDER );
@@ -216,7 +220,7 @@ public class ContextDataController
 
 
             contextNodes[0].addTopNode( contextNodeForAll );
-            contextNodes[0].setHover( "All Contexts" );
+            contextNodes[0].setHover(CaDSRConstants.ALL_CONTEXTS_STRING);
         }
 
         // Set bread crumb data
@@ -328,7 +332,7 @@ public class ContextDataController
         {
             // The node for this individual Protocol
             ProtocolNode protocolNode = initProtocolNode( protocolModel, programArea );
-            protocolNode.setHref( cdesByProtocolRestServiceName + "," + protocolModel.getProtoIdseq() );
+            protocolNode.setHref( appConfig.getCdesByProtocolRestServiceName() + "," + protocolModel.getProtoIdseq() );
 
             // Add the ProtocolForms to this Protocol node
             String protoId = protocolModel.getProtoIdseq();
@@ -339,7 +343,7 @@ public class ContextDataController
                 {
                     ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel, programArea );
                     logger.debug( "Setting ProtocolForm href: " + protocolFormModel.getQcIdseq() );
-                    protocolFormNode.setHref( cdesByProtocolFormRestServiceName + "," + protocolFormModel.getQcIdseq() );
+                    protocolFormNode.setHref( appConfig.getCdesByProtocolFormRestServiceName() + "," + protocolFormModel.getQcIdseq() );
 
                     protocolNode.addChildNode( protocolFormNode );
                 }
@@ -506,7 +510,7 @@ public class ContextDataController
                 classificationItemNodeChild.setProgramArea( classificationItemNodeParent.getProgramArea() );
 
                 // TODO  check this - it may not be right
-                classificationItemNodeChild.setHref( cdesByClassificationSchemeItemRestServiceName + "," + csCsiChildModel.getCsCsiIdseq() );
+                classificationItemNodeChild.setHref( appConfig.getCdesByClassificationSchemeItemRestServiceName() + "," + csCsiChildModel.getCsCsiIdseq() );
 
 
                 //Add this child to the Parent
@@ -564,8 +568,8 @@ public class ContextDataController
     protected void insertPlaceHolderNode( ParentNode classificationsParentNode )
     {
         ParentNode placeHolderNode = new ParentNode();
-        placeHolderNode.setText( treeRetrievalWaitMessage );
-        placeHolderNode.setHover( treeRetrievalWaitMessage );
+        placeHolderNode.setText( appConfig.getTreeRetrievalWaitMessage() );
+        placeHolderNode.setHover( appConfig.getTreeRetrievalWaitMessage() );
         placeHolderNode.setCollapsed( true );
         placeHolderNode.setIsParent( true );
         placeHolderNode.setProgramArea( classificationsParentNode.getProgramArea() );
@@ -597,7 +601,7 @@ public class ContextDataController
                 classificationSchemeNode.setIsParent( false );
                 classificationSchemeNode.setIdSeq( classificationSchemeModel.getCsIdseq() );
                 classificationSchemeNode.setProgramArea( programArea );
-                classificationSchemeNode.setHref( cdesByClassificationSchemeRestServiceName + "," + classificationSchemeModel.getCsIdseq() );
+                classificationSchemeNode.setHref( appConfig.getCdesByClassificationSchemeRestServiceName() + "," + classificationSchemeModel.getCsIdseq() );
 
                 //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
 
@@ -612,7 +616,7 @@ public class ContextDataController
                     {
                         //Create the new node, and set as much as we can without knowing if it has children
                         ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
-                        classificationSchemeItemNode.setHref( cdesByClassificationSchemeItemRestServiceName + "," + csCsiModel.getCsCsiIdseq() );
+                        classificationSchemeItemNode.setHref( appConfig.getCdesByClassificationSchemeItemRestServiceName() + "," + csCsiModel.getCsCsiIdseq() );
                         classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
                         //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + contextModel.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
                         classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
@@ -675,7 +679,7 @@ public class ContextDataController
      */
     protected ProtocolNode initProtocolNode( ProtocolModel protocolModel, int programArea )
     {
-        int maxHoverTextLen = Integer.parseInt( maxHoverTextLenStr );
+        int maxHoverTextLen = Integer.parseInt( appConfig.getMaxHoverTextLenStr() );
         ProtocolNode protocolNode = new ProtocolNode();
         protocolNode.setType( CaDSRConstants.PROTOCOL_FORMS_FOLDER );
         protocolNode.setChildType( CaDSRConstants.PROTOCOL );
@@ -707,7 +711,7 @@ public class ContextDataController
      */
     protected ProtocolFormNode initProtocolFormNode( ProtocolFormModel protocolFormModel, int programArea )
     {
-        int maxHoverTextLen = Integer.parseInt( maxHoverTextLenStr );
+        int maxHoverTextLen = Integer.parseInt( appConfig.getMaxHoverTextLenStr() );
         ProtocolFormNode protocolFormNode = new ProtocolFormNode();
         protocolFormNode.setChildType( CaDSRConstants.EMPTY );
         protocolFormNode.setType( CaDSRConstants.PROTOCOL );
@@ -824,7 +828,7 @@ public class ContextDataController
         this.csCsiNodelList = csCsiNodelList;
     }
 
-    public void setMaxHoverTextLenStr( String maxHoverTextLen )
+    /*public void setMaxHoverTextLenStr( String maxHoverTextLen )
     {
         this.maxHoverTextLenStr = maxHoverTextLen;
     }
@@ -853,7 +857,7 @@ public class ContextDataController
     {
         this.treeRetrievalWaitMessage = treeRetrievalWaitMessage;
     }
-
+*/
     public int getContextPalNameCount()
     {
         return contextPalNameCount;
@@ -864,7 +868,15 @@ public class ContextDataController
         this.contextPalNameCount = contextPalNameCount;
     }
 
-    public String getCdesByProtocolFormRestServiceName()
+	public AppConfig getAppConfig() {
+		return appConfig;
+	}
+
+	public void setAppConfig(AppConfig appConfig) {
+		this.appConfig = appConfig;
+	}
+
+    /*public String getCdesByProtocolFormRestServiceName()
     {
         return cdesByProtocolFormRestServiceName;
     }
@@ -882,6 +894,8 @@ public class ContextDataController
     public String getCdesByClassificationSchemeRestServiceName()
     {
         return cdesByClassificationSchemeRestServiceName;
-    }
+    }*/
+    
+    
 
 }

@@ -264,8 +264,8 @@ public class DownloadXmlControllerTest {
 	}
 
 	protected void assignDownloadServiceProperties(DownloadXmlController downloadXmlController) {
-		downloadXmlController.setDownloadDirectory(localDownloadDirectory + "/");
-		downloadXmlController.setFileNamePrefix(fileNamePrefix);		
+		downloadXmlController.getAppConfig().setDownloadDirectory(localDownloadDirectory + "/");
+		downloadXmlController.getAppConfig().setFileNamePrefix(fileNamePrefix);		
 	}
 	
 	public static URI buildTestUri(String absoluteUrlString) throws Exception{

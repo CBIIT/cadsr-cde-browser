@@ -14,7 +14,7 @@ public final class CaDSRConstants
 
     public static final String[] nodeType = { "Empty", "Container", "Csi", "Folder", "ProtocolFormsFolder", "CIS Folder", "Protocol" };
     public static final int EMPTY = 0;
-    public static final String ALL_CONTEXTS_STRING = "All Contexts";
+    public static final String ALL_CONTEXTS_STRING = "All Program Areas";
     public static final int CONTAINER = 1;
     public static final int CSI = 2;
     public static final int FOLDER = 3;

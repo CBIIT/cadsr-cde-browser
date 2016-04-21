@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.download.ExcelDownloadTypes;
 import gov.nih.nci.cadsr.download.GetExcelDownloadInterface;
 import gov.nih.nci.cadsr.service.ClientException;
@@ -43,13 +44,16 @@ public class DownloadExcelController {
 	private static Logger logger = LogManager.getLogger(DownloadExcelController.class.getName());
 	@Autowired
 	GetExcelDownloadInterface getExcelDownload;
+	
+	@Autowired
+	AppConfig appConfig;
 
-	@Value("${registrationAuthorityIdentifier}")
+	/*@Value("${registrationAuthorityIdentifier}")
 	String registrationAuthorityIdentifier;
 	@Value("${downloadDirectory}")
 	String downloadDirectory;
 	@Value("${downloadFileNamePrefix}")
-	String fileNamePrefix;
+	String fileNamePrefix;*/
 	public static final String fileExtension = ".xls";
 	
 	//Client Error Texts
@@ -67,13 +71,13 @@ public class DownloadExcelController {
 		this.getExcelDownload = getExcelDownload;
 	}
 	
-	public void setDownloadDirectory(String downloadDirectory) {
+	/*public void setDownloadDirectory(String downloadDirectory) {
 		this.downloadDirectory = downloadDirectory;
 	}
 
 	public void setFileNamePrefix(String fileNamePrefix) {
 		this.fileNamePrefix = fileNamePrefix;
-	}
+	}*/
 
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<String> downloadExcel(@RequestParam("src") String source,
@@ -91,7 +95,7 @@ public class DownloadExcelController {
 		try {
 			validateDownloadParameters(cdeIds, source);
 			
-			excelFileId = getExcelDownload.persist(cdeIds, registrationAuthorityIdentifier, source);
+			excelFileId = getExcelDownload.persist(cdeIds, appConfig.getRegistrationAuthorityIdentifier(), source);
 		
 			if (excelFileId != null) {
 				HttpHeaders responseHeaders = new HttpHeaders();
@@ -120,7 +124,7 @@ public class DownloadExcelController {
 	@RequestMapping(value = "/{fileId}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> retrieveExcelFile(@PathVariable("fileId") String fileId) throws Exception {
 		logger.debug("Received RESTful call to retrieve Excel file; fileId: " + fileId);
-		String excelFileName = downloadDirectory + fileNamePrefix + fileId + fileExtension;
+		String excelFileName = appConfig.getDownloadDirectory() + appConfig.getFileNamePrefix() + fileId + fileExtension;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
 		File file = new File (excelFileName);
@@ -173,5 +177,15 @@ public class DownloadExcelController {
 		bis = new BufferedInputStream(fis);
 
 		return bis;
-	}	
+	}
+
+	public AppConfig getAppConfig() {
+		return appConfig;
+	}
+
+	public void setAppConfig(AppConfig appConfig) {
+		this.appConfig = appConfig;
+	}
+	
+	
 }
