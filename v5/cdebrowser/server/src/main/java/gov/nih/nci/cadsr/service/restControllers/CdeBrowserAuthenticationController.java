@@ -81,7 +81,7 @@ public class CdeBrowserAuthenticationController
 		
 	}
 	
-	@RequestMapping(value="/user", method = RequestMethod.GET)
+	@RequestMapping(value="/user", method = RequestMethod.GET, produces = "text/plain")
 	public String getUser(HttpSession session)
 	{
 		String username = (session != null) ? (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME) : "";
