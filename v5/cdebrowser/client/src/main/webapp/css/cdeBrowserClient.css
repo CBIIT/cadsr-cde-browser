@@ -216,8 +216,8 @@ display:inline-block !important;
 /* row of links  */
 .top2-center-logo {
     position: absolute;
-    right: 250px;
-    top: 77px;
+    right: 304px;
+    top: 78px;
     font-size: 9pt;
 }
 
@@ -225,6 +225,10 @@ display:inline-block !important;
     position: absolute;
     right: 6px;
     top: 47px;
+}
+
+.top2-right-logo td a {
+    background-color:transparent;
 }
 
 /*  No line under the space between the round buttons */

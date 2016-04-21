@@ -138,6 +138,16 @@
                         &nbsp;Help&nbsp;
                     </a>
                 </td>
+                <td ng-if="checkAuth()" class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                    <a href
+                       ng-click="logout()">
+                        <img src="icons/buttonIconSet/brown/75_percent/circle_logout.png"
+                             alt="Logout button"
+                                />
+                        <br>
+                        &nbsp;Logout&nbsp;
+                    </a>
+                </td>                
             </tr>
         </table>
     </div>

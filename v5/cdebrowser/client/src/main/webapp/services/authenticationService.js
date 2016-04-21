@@ -1,6 +1,7 @@
 angular.module("cdeBrowserApp").service('authenticationService', function($http, $location) {
 	// service to authenticate user and keep track of user's location //
 	this.cameFrom = '';
+	this.loggedIn = false;
 
 	// login user //
 	this.login = function(username, credential, redirect) {
@@ -13,7 +14,6 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 				};
 			}).
 			error(function(response) {
-				console.log(response)
 			});		
 	};	
 
@@ -21,11 +21,17 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 	this.logout = function() {
 		$http({method: 'GET', url: '/cdebrowserServer/rest/logout'}).
 			success(function(response) {
-				console.log("success")
+				this.loggedIn = false;
 			})
 			.error(function(response) {
-				console.log("fail")
+				
 			});
-	};		
+	};
+
+	// check user is authenticated //
+	this.checkAuth = function() {
+		var that = this;
+		return this.loggedIn;
+	};
 		
 });

@@ -1,9 +1,10 @@
-    
+
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, downloadFactory) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
     window.scope = $scope;
-
+    window.route = $route;
+    $scope.location = $location.url();
     /* Start of filter service */
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
@@ -13,6 +14,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.serverData = $scope.contextListMaster;
             fs.searchFilter.programArea=0;
         };
+    });
+
+    // check user authentication status //
+    $scope.$on('$locationChangeStart', function() { 
+        $scope.checkAuth();
     });
 
     // watch for changes to dropdowns. When it changes, refilter data //
@@ -54,6 +60,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.$storage = $sessionStorage;
     $scope.$storage.cartService = cartService;
     $scope.cartService = cartService;
+    $scope.authenticationService = authenticationService;
     $scope.downloadFactory = new downloadFactory();  // create download factory //    
 
     $scope.show = [];
@@ -700,5 +707,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.downloadToXML = function() {
         $scope.downloadFactory.downloadToXML($scope.checkedItemsForDownload);
     };
+
+    // log the user out //
+    $scope.logout = function() {
+        $scope.authenticationService.logout();
+    };
+
+    // check status of user //
+    $scope.checkAuth = function() {
+        return $scope.authenticationService.checkAuth();
+    };    
 
 });

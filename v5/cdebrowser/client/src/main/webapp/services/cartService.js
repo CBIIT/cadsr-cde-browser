@@ -153,6 +153,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			if (click) { // user has forced retrieve cart //
 				authService.cameFrom = 'retrieve';
 		        $location.path("/login").replace(); // send user to login page //
+			}
+			else {
+				that.resetUnsavedStatus();
 			};
 			that.statusMessage = '';
 		});
