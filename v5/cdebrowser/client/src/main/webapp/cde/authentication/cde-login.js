@@ -12,9 +12,16 @@ angular.module("cdeLogin").controller("LoginCtrl", ["$scope","authenticationServ
 	var redirect = angular.copy(authService.cameFrom); // set if coming from cart. Determines what was clicked on //
 	authService.cameFrom = ''; // set came from back to empty string //
 
+	// logs the user in //
 	$scope.login = function() {
 		cartService.resetUnsavedStatus(); // reset all items in cart to have unsaved status of true //
 		authService.login($scope.username,$scope.credential, redirect);
+	};
+
+	// resets username and credential to blank //
+	$scope.resetFields = function() {
+		$scope.username = '';
+		$scope.credential = '';
 	};
 
 }]);

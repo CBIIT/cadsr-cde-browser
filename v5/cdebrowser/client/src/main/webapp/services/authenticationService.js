@@ -2,6 +2,7 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 	// service to authenticate user and keep track of user's location //
 	this.cameFrom = '';
 	this.loggedIn = false;
+	this.userName = '';
 
 	// login user //
 	this.login = function(username, credential, redirect) {
@@ -24,9 +25,11 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 		$http({method: 'GET', url: '/cdebrowserServer/rest/logout'}).
 			success(function(response) {
 				that.loggedIn = false;
+				that.userName = '';
 			})
 			.error(function(response) {
 				that.loggedIn = false;				
+				that.userName = '';
 			});
 	};
 
@@ -37,13 +40,16 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 			.success(function(response) {
 			  if (response.length>0) {
 			  	that.loggedIn = true;
+			  	that.userName = response;
 			  }
 			  else {
 			  	that.loggedIn=false;
+			  	that.userName = '';			  	
 			  };
 			})
 			.error(function(response) {
-			  	that.loggedIn=false;				
+			  	that.loggedIn=false;
+			  	that.userName = '';			  	
 			});
 	};
 		

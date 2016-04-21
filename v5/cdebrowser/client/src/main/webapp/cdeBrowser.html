@@ -480,7 +480,9 @@
         <div id="footer" ng-init="focused=false">
             <table>
                 <tr>
-                    <td>User: <span class="userName">Public User</span></td>
+                    <td ng-if="authenticationService.userName!=''">
+                        User: <span class="userName">{{authenticationService.userName}}</span>
+                    </td>
                     <td>
                         <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
                     </td>
