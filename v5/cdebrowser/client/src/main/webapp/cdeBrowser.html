@@ -331,7 +331,8 @@
                 </li>                       
             </ul>
             <!-- show progress bar -->
-            <ul ng-show="downloadFactory.progressMessage.status" class="cdeProgressMessage">
+            <ul ng-show="downloadFactory.progressMessage.status" 
+                ng-class="{'cdeProgressMessage error': downloadFactory.progressMessage.isErrorMessage,'cdeProgressMessage': !downloadFactory.progressMessage.isErrorMessage}">
                 <li>
                     {{downloadFactory.progressMessage.message}}
                 </li>
