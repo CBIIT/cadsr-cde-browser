@@ -192,6 +192,11 @@ ul.cdeProgressMessage.error{
     color:#A52A2A;
 }
 
+div.cdeProgressMessage.error {
+    padding:0px 0px 20px 0px;
+    color:#A52A2A;
+}
+
 ul.cdeSearchMessage li{
     display:inline;
     vertical-align:top;
