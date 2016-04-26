@@ -289,3 +289,13 @@ display:inline-block !important;
 .loginPage span {
     padding-right:10px;
 }
+
+.loginPage div.text{
+    padding-bottom:15px !important;
+    display:inline-block;
+}
+
+.loginPage div {
+    padding-bottom:10px;
+    display:inline-block;
+}

@@ -173,7 +173,7 @@
 }
 
 ul.cdeProgressMessage {
-    padding:20px 10px 0px 5px;
+    padding:15px 0px 5px 5px;
     color:#1A4660;
     font-weight:bold;
     list-style:none;
@@ -183,10 +183,20 @@ ul.cdeProgressMessage li{
     vertical-align:top;
 }
 
-ul.cdecdeSearchMessage {
-    padding:20px 10px 0px 5px;
+ul.cdeSearchMessage {
+    padding:15px 0px 5px 5px;
     list-style:none;
 }
+
+ul.cdeProgressMessage.error{
+    color:#A52A2A;
+}
+
+div.cdeProgressMessage.error {
+    padding:0px 0px 20px 0px;
+    color:#A52A2A;
+}
+
 ul.cdeSearchMessage li{
     display:inline;
     vertical-align:top;

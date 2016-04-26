@@ -1,11 +1,22 @@
 <div class="loginPage">
-	<div>
+	<div class="text">
 		Guest users can login using username "guest" and password "Nci_gue5t". If you require an account with curator privileges to a specific context other than Test, please contact NCICB Application Support Email: <a href="mailto:ncicbiit@mail.nih.gov">ncicbiit@mail.nih.gov</a>
 	</div>
 	<br />
-	<label for="username">Username</label>
-	<span><input class="cleanInput" type="text" name="username" id="username" ng-model="username"></span>
-	<label for="credential">Password</label>
-	<span><input class="cleanInput" type="password" name="credential" id="credential" ng-model="credential"></span>
-	<input type="submit" value="Submit" ng-click="login()">
+	<div ng-if="authService.errorMessage" class="cdeProgressMessage error">
+		Could not validate the User Name and Password, please try again. You could try up to 6 attempts before being locked out, or visit Password Change Station at 
+		<a href="https://cadsrpasswordchange.nci.nih.gov/cadsrpasswordchange/" target="blank">
+			Password Change Station
+		</a> to reset your password.
+	</div>
+	<div class="inputFields">
+		<label for="username">Username</label>
+		<span><input class="cleanInput" type="text" name="username" id="username" ng-model="username"></span>
+		<label for="credential">Password</label>
+		<span><input class="cleanInput" type="password" name="credential" id="credential" ng-model="credential"></span>
+	</div>
+	<div class="buttons">
+		<input type="submit" value="Logon" ng-click="login()">
+		<input type="submit" value="Clear" ng-click="resetFields()">
+	</div>
 </div>

@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="css/basicSearchResults.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/select2.css">
     <link rel="stylesheet" type="text/css" href="cde/cde.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
 
@@ -33,7 +32,7 @@
 </div>
 
 <div class="top-right-logo">
-    <a href="http://www.cancer.gov/" target="_blank">
+    <a href="https://www.nih.gov/" target="_blank">
         <span>U.S. National Institutes of Health</span>
     </a>
 </div>
@@ -138,7 +137,7 @@
                         &nbsp;Help&nbsp;
                     </a>
                 </td>
-                <td ng-if="checkAuth()" class="roundButton" valign="TOP" align="CENTER" colspan=1>
+                <td ng-if="authenticationService.loggedIn" class="roundButton" valign="TOP" align="CENTER" colspan=1>
                     <a href
                        ng-click="logout()">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_logout.png"
@@ -332,7 +331,8 @@
                 </li>                       
             </ul>
             <!-- show progress bar -->
-            <ul ng-show="downloadFactory.progressMessage.status" class="cdeProgressMessage">
+            <ul ng-show="downloadFactory.progressMessage.status" 
+                ng-class="{'cdeProgressMessage error': downloadFactory.progressMessage.isErrorMessage,'cdeProgressMessage': !downloadFactory.progressMessage.isErrorMessage}">
                 <li>
                     {{downloadFactory.progressMessage.message}}
                 </li>
@@ -481,7 +481,9 @@
         <div id="footer" ng-init="focused=false">
             <table>
                 <tr>
-                    <td>User: <span class="userName">Public User</span></td>
+                    <td ng-if="authenticationService.userName!=''">
+                        User: <span class="userName">{{authenticationService.userName}}</span>
+                    </td>
                     <td>
                         <a href="https://wiki.nci.nih.gov/x/qxEhAQ" target="_blank">Privacy Notice</a>
                     </td>

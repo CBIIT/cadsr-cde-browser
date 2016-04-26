@@ -18,7 +18,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // check user authentication status //
     $scope.$on('$locationChangeStart', function() { 
-        $scope.checkAuth();
+        $scope.authenticationService.checkAuth();
     });
 
     // watch for changes to dropdowns. When it changes, refilter data //
@@ -712,10 +712,5 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.logout = function() {
         $scope.authenticationService.logout();
     };
-
-    // check status of user //
-    $scope.checkAuth = function() {
-        return $scope.authenticationService.checkAuth();
-    };    
 
 });
