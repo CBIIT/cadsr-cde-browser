@@ -1,29 +1,29 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import gov.nih.nci.cadsr.common.util.DBUtil;
-import gov.nih.nci.cadsr.dao.model.SearchModel;
-import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
-import gov.nih.nci.cadsr.service.UnitTestCommon;
-import gov.nih.nci.cadsr.service.model.search.SearchNode;
-import junit.framework.TestCase;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import gov.nih.nci.cadsr.common.AppConfig;
+import gov.nih.nci.cadsr.common.util.DBUtil;
+import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
+import gov.nih.nci.cadsr.dao.model.SearchModel;
+import gov.nih.nci.cadsr.service.UnitTestCommon;
+import gov.nih.nci.cadsr.service.model.search.SearchNode;
+import junit.framework.TestCase;
 
 /**
  * Tests for the BasicSearchController.
  * <p/>
  * The BasicSearchController contains the rest service/entry point
  */
-@Ignore
+
 public class SearchControllerTest extends TestCase
 {
     SearchController searchController;
@@ -35,6 +35,7 @@ public class SearchControllerTest extends TestCase
     {
         unitTestCommon = new UnitTestCommon();
         searchController = new SearchController();
+        searchController.setAppConfig(new AppConfig());
         programAreaModelList = unitTestCommon.initSampleProgramAreas(  );
 
         searchController.setProgramAreaModelList( programAreaModelList );
