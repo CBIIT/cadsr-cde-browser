@@ -436,6 +436,27 @@ public class StringUtilities
         return new String(encoded, Charset.defaultCharset());
     }
 
+    /**
+     *
+     * @param args
+     * @return
+     */
+    public static boolean checkForBadParameters( String... args)
+    {
+        for ( String arg : args )
+        {
+            // It's okay if it's null.
+            if( arg != null)
+            {
+                if( arg.matches( ".*%.*" ) )
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public static String sanitizeForSql( String text)
     {
