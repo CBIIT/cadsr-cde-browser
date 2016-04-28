@@ -44,6 +44,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // reset filters //
     $scope.resetFilters = function() {
         fs.resetFilters();
+        $scope.resetSortOrder();
+        $scope.searchResults = [];
+        $scope.tableParams.settings({ dataset: []});
+        $scope.breadCrumbs = [];
     };
 
     // When a context is changed, get classifications and protocol forms //
