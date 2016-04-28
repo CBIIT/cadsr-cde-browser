@@ -161,6 +161,12 @@ display:inline-block !important;
     width:300px;
 }
 
+.publicIdSearch .searchField label{
+    display:table-cell;
+    width:65px;
+    display:inline-block;
+}
+
 .publicIdSearch .searchTips {
     margin-left:0px !important;
 }
