@@ -97,5 +97,9 @@ public final class CaDSRConstants
     
     //Session Constants
     public static final String LOGGEDIN_USER_NAME = "loggedInUserName";
+    
+    //TOOL_OPTIONS_EXT Constants
+    public static final String TOOL_NAME = "CDEBrowser";
+    public static final String PWCS_PROPERTY = "PCS_URL";
 
 }
