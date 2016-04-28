@@ -145,7 +145,7 @@ margin-left:15px;
 display:inline-block !important;
 }
 .searchInput {
-    color: #18344d;width:700px !important;
+    color: #18344d;width:850px !important;
     margin-left: 20px;
     padding-top: 4px;
     margin-top: 16px;
@@ -158,7 +158,7 @@ display:inline-block !important;
 }
 
 .publicIdSearch input {
-    width:300px;
+    width:425px;
 }
 
 .publicIdSearch .searchField label{
