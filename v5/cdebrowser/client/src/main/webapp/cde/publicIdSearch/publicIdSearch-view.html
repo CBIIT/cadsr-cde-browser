@@ -3,14 +3,22 @@
 
 <!-- Search field drop down, text input, search & clear button  -->
 <div class="publicIdSearch">
-    <input class="basicSearchQuery" type="text" data-ng-model="publicIdSearchQuery" placeholder="Public ID" />
-
-    <button data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', 2)">
-        Search
-    </button>
-    <button data-ng-click="publicIdSearchQuery=''">
-        Clear
-    </button>
+    <span class="searchField">
+    	<label for="publicId">Public ID</label>
+	    <input class="basicSearchQuery" id="publicId" type="text" data-ng-model="publicIdSearchQuery" placeholder="Public ID" />
+	</span>
+    <span class="searchField">
+	    <label for="name">Names and Definitions</label>
+	    <input class="basicSearchQuery" id="name" type="text" data-ng-model="publicIdName" placeholder="Names and Definitions" />
+	</span>
+	<div class="buttons">
+	    <button id="search" ng-disabled="publicIdSearchQuery==''" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', 2, publicIdName)">
+	        Search
+	    </button>
+	    <button id="clear" data-ng-click="clear()">
+	        Clear
+	    </button>
+	</div>
     <div class="searchTips">Tip: A user can search by multiple public ids separated by a space.
     </div>    
 </div>

@@ -281,8 +281,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.currentCdeTab = 0;
 
     // Search button
-    $scope.onClickBasicSearch = function (query, field, type) {
-        console.log(field)
+    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
         /**
          *  name              The text of the users search input for data element search.
          *  publicId          The text of the users search input for publicId search.
@@ -303,10 +302,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $location.path("/search").replace(); // change url to search since we are doing a search //
         if (query!='') { // create base url. determine if query is blank //
                 var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value // 
+                if (publicIdName && publicIdName!='') {
+                    url=url.concat("&name=",publicIdName)
+                };
         }
         else {
             var url = "".concat("cdebrowserServer/rest/search");
         };
+
+
 
         c=0; // index of searchFilter key //
         for (var x in fs.searchFilter) {
@@ -333,7 +337,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         };
 
         $scope.searchServerRestCall(url);
-        $scope.breadCrumbs = [$scope.contextListMaster[$scope.currentTab].text];
+        if (field=='publicId') {
+            $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //
+        }
+        else {
+            $scope.breadCrumbs = [$scope.contextListMaster[fs.searchFilter.programArea].text];
+        }
+
         // Restore the view of search results table
         $scope.changeView(0,0);
         $scope.resetSortOrder();

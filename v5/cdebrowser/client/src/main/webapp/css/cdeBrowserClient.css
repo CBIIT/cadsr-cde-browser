@@ -165,6 +165,12 @@ display:inline-block !important;
     margin-left:0px !important;
 }
 
+.publicIdSearch .searchField {
+    display:block !important;
+    padding-bottom:8px;
+    font-size:85%;
+}
+
 .basicSearchQuery {
     width: 50%;
 }

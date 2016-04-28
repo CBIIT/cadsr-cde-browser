@@ -4,4 +4,11 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
     $scope.$watch('isNode', function () {
 		$scope.publicIdSearchQuery = "";
     });
+
+    // clear search results and fields //
+    $scope.clear = function() {
+		$scope.publicIdSearchQuery='';
+		$scope.publicIdName='';
+		$scope.resetFilters();
+    };
 }]);
