@@ -55,7 +55,7 @@
 	<div style="padding-top:5px">
 		<button ng-click="saveCart()" ng-show="cartService.cartData.length">Save Cart</button>
 		<button ng-click="deleteCDEs()" ng-show="cartService.cartData.length">Delete</button>
-		<button ng-click="retrieveCart()">Retrieve Saved </button>
+		<button ng-if="authenticationService.userName==''" ng-click="retrieveCart()">Retrieve Saved </button>
 		<button ng-click="goBack()">Return to Search</button>			
 	</div>
 </div>
