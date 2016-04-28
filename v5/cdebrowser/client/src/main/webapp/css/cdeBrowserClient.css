@@ -161,6 +161,10 @@ display:inline-block !important;
     width:300px;
 }
 
+.publicIdSearch .searchTips {
+    margin-left:0px !important;
+}
+
 .basicSearchQuery {
     width: 50%;
 }
