@@ -63,6 +63,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
     // selects dropdown values based on search left tree click //
     this.selectFiltersByNode = function(searchType,id, selectedNode, programArea) {
         this.isAChildNodeSearch = false;
+        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:""};
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;
         if (searchType=='contextId') {
