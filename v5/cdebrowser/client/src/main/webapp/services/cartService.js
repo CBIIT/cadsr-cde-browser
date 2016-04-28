@@ -180,5 +180,18 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			return true;
 		};
 	};	
+
+	// function to determine whether to show or hide saved button based on saved itemse in cart //
+	this.showSaveButton = function() {
+		var showSaveButton = false;
+		for (var i=0; i<this.cartData.length; i++) {
+			if (showSaveButton==false && this.cartData[i].unsavedItem==true) {
+				showSaveButton=true;
+				break;
+			};
+		};
+		return showSaveButton;
+
+	};
 		
 });
