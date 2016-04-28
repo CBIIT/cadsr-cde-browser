@@ -4,8 +4,8 @@
 	</div>
 	<br />
 	<div ng-if="authService.errorMessage" class="cdeProgressMessage error">
-		Could not validate the User Name and Password, please try again. You could try up to 6 attempts before being locked out, or visit Password Change Station at 
-		<a href="https://cadsrpasswordchange.nci.nih.gov/cadsrpasswordchange/" target="blank">
+		Could not validate the User Name and Password, please try again. You could try up to 6 attempts before being locked out, or visit 
+		<a ng-href="{{authService.passwordChangeStationLink}}" target="blank">
 			Password Change Station
 		</a> to reset your password.
 	</div>

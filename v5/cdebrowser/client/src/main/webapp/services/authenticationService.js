@@ -1,9 +1,10 @@
-angular.module("cdeBrowserApp").service('authenticationService', function($http, $location) {
+angular.module("cdeBrowserApp").service('authenticationService', function($http, $location, $q) {
 	// service to authenticate user and keep track of user's location //
 	this.cameFrom = ''; // was the user redirected from a particular page ? //
 	this.loggedIn = false;
 	this.userName = ''; // username logged into the system //
 	this.errorMessage = 0; // error message status //
+	this.passwordChangeStationLink = '';
 
 	// login user //
 	this.login = function(username, credential, redirect) {
@@ -54,5 +55,18 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 			  	that.userName = '';			  	
 			});
 	};
+
+	// get password change station link //
+	this.getPasswordChangeStationLink = function() {
+		var that = this;
+		$http({method: 'GET', url: '/cdebrowserServer/rest/getPwcsURL'})
+			.success(function(response) {
+				that.passwordChangeStationLink = response;
+			})
+			.error(function(response) {
+		  	
+			})
+	};
+	
 		
 });
