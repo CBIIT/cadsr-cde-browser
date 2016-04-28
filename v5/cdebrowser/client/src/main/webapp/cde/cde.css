@@ -327,6 +327,7 @@ ul.cdeSearchMessage li{
 
 #cdeCart .searchResultsTable {
     margin-left:3px !important;
+    margin-top:13px;
 }
 
 #cdeCart div.progressMessage {

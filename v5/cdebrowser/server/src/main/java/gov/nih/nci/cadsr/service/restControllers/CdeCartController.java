@@ -128,7 +128,7 @@ public class CdeCartController
 		//take the user from session
 		if (principalName == null) {
 			logger.error("........No user found in session in saveCart");
-			throw new AutheticationFailureException("Authenticated user not found in the session operation save CDE Cart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation delete CDE Cart");
 		}
 
 		if ((idParams == null) || (idParams.length == 0)) {

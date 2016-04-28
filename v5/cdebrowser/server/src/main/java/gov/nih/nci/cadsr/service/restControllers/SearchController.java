@@ -5,6 +5,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.List;
 
+import gov.nih.nci.cadsr.common.util.StringUtilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,13 @@ public class SearchController
 
     @Autowired
     AppConfig appConfig;
-    
+
     @Autowired
     private SearchDAO searchDAO;
-    
+
     @Autowired
     private RestControllerCommon restControllerCommon;
-    
+
     private List<ProgramAreaModel> programAreaModelList = null;
     private SearchQueryBuilder searchQueryBuilder = null;
 
@@ -67,7 +68,6 @@ public class SearchController
 
     /**
      * @param name              The text of the name field.
-     * @param field              0=Name 1=PublicId
      * @param queryType          0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE - defaults to 2 if left out
      * @param programArea        If empty, will not be used
      * @param context            If empty, will not be used
@@ -97,6 +97,14 @@ public class SearchController
         logger.debug( "search  name: " + name + "   queryType: " + queryType + "   publicId: " + publicId + "   programArea: " + programArea + "   context: " + context + "   classification: " + classification + ": " +
                 "   protocol: " + protocol + "   workFlowStatus: " + workFlowStatus + "   registrationStatus: " + registrationStatus + "   conceptName: " + conceptName + "   conceptCode: " + conceptCode );
         SearchNode[] results;
+
+        // AppScan will try to inject %Hex strings to test our parameter sanitizing.
+        if( StringUtilities.checkForBadParameters( name, publicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode ))
+        {
+            logger.warn( "Suspect parameter from client." );
+            return null;
+        }
+
         try
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
@@ -368,6 +376,6 @@ public class SearchController
 	public void setAppConfig(AppConfig appConfig) {
 		this.appConfig = appConfig;
 	}
-    
-    
+
+
 }

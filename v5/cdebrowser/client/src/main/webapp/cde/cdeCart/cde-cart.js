@@ -10,7 +10,6 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 	var authService = authenticationService; // define authentication service //
 	var redirect = angular.copy(authService.cameFrom); // set if coming from cart. Determines what was clicked on //
 	authService.cameFrom = ''; // set came from back to empty string //
-
 	// define cart service //
 	var cartService = cartService;
 	$scope.$storage = $sessionStorage;
@@ -41,6 +40,9 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 
 	// go back to search screen, show search area //
 	$scope.goBack = function() {
+		// this needs to be properly moved into a service along with the entire search //
+			$scope.checkboxes.items={};
+		// end this needs to be properly moved into a service along with the entire search //
 		searchFactory.showSearch = true;
 		$location.path("/search");
 	};
