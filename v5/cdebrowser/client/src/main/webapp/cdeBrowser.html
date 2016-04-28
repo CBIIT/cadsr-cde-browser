@@ -264,7 +264,7 @@
                 </span>
 
                 <span>
-                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="bootstrap" ng-model="filterService.searchFilter.classification">
+                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol||!filterService.searchFilter.context" theme="bootstrap" ng-model="filterService.searchFilter.classification">
                     <ui-select-match allow-clear="true" placeholder="Select a Classification">{{$select.selected.csLongName}}</ui-select-match>
                     <ui-select-choices repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
                         <div ng-bind-html="value.csLongName | highlight: $select.search"></div>
@@ -273,7 +273,7 @@
                 </span>
 
                 <span>
-                <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification" theme="bootstrap" ng-model="filterService.searchFilter.protocol">
+                <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification||!filterService.searchFilter.context" theme="bootstrap" ng-model="filterService.searchFilter.protocol">
                     <ui-select-match allow-clear="true" placeholder="Select a Protocol">{{$select.selected.protocolLongName}}</ui-select-match>
                     <ui-select-choices repeat="value.protocolIdSeq as value in filterService.protocols | filter: $select.search">
                         <div ng-bind-html="value.protocolLongName | highlight: $select.search"></div>
