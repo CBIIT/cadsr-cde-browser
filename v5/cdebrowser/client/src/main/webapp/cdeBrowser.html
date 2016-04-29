@@ -153,7 +153,7 @@
 
 
     <!-- ************ Status message at top ************ -->
-    <div data-ng-class="{
+    <div ng-show="searchFactory.showSearch" data-ng-class="{
              normMessage: messageClass == cssClasses['NORMAL'],
              bigMessage: messageClass == cssClasses['BIG'],
              errorMessage: messageClass == cssClasses['ERROR']
@@ -162,7 +162,7 @@
     </div>
 
     <!-- ************ Program Area The tabs across the top  ************ -->
-    <div class="topTabPos">
+    <div class="topTabPos" ng-show="searchFactory.showSearch">
         <ul>
             <!--
                 Just getting the parent top level nodes for the top tabs, nodeNumber is counter,
@@ -182,12 +182,12 @@
             </div>
         </ul>
     </div>
-    <br>
-    <div class="topTabSeparator" ng-show="waitMessage==''"></div>
+    <br ng-if="searchFactory.showSearch">
+    <div class="topTabSeparator" ng-show="waitMessage==''" ng-if="searchFactory.showSearch"></div>
 
     <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
     <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
-    <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
+    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="searchFactory.showSearch">
 
         <div class="treeMenu" data-ng-show=show[nodeNumber]
              data-ng-style="resizeHeight()"

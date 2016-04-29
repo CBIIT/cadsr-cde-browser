@@ -4,7 +4,6 @@
 angular.module("cdeLogin", []);
 
 angular.module("cdeLogin").controller("LoginCtrl", ["$scope","authenticationService","searchFactory","cartService", function ($scope, authenticationService, searchFactory, cartService) {
-	searchFactory.showSearch = false; // set search area to be invisible //	
 	$scope.$parent.title = "Login" // set title of page to be show on the tab //
 	$scope.authService = authenticationService; // set scope variable to auth service //
 	var cartService = cartService; // define cart service //

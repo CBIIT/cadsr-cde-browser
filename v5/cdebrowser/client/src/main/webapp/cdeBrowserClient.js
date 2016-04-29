@@ -3,7 +3,7 @@
 // controller
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
     window.scope = $scope;
-    window.route = $route;
+    $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -19,6 +19,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // check user authentication status //
     $scope.$on('$locationChangeStart', function() { 
         $scope.authenticationService.checkAuth();
+        if ($location.path()=='/search' || $location.path()=='/') {
+            searchFactory.showSearch = true;
+        }
+        else {
+            searchFactory.showSearch = false;
+        };
     });
 
     // watch for changes to dropdowns. When it changes, refilter data //
@@ -79,7 +85,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.checkedItemsForDownload = [];
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
     $scope.showSearch = true; // important variable used to show and hide search area when changing routes //
-    $scope.searchFactory = searchFactory;
 
     // watch to load empty area for new route. When new route is called ex: cdeCart, cdeCart will set showSearch to false //
     // this watch makes sure when search is reloaded to load the currect tab as well as re-show the search //

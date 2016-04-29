@@ -4,7 +4,6 @@
 angular.module("cdeCart", []);
 
 angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localStorage","$sessionStorage","$route","searchFactory","cartService", "authenticationService","downloadFactory", function ($scope, $location,$localStorage, $sessionStorage, $route, searchFactory, cartService, authenticationService, downloadFactory) {
-	searchFactory.showSearch = false; // set search area to be invisible //	
 	$scope.$parent.title = "CDE Cart" // set title of page to be show on the tab //
 	$scope.downloadFactory = new downloadFactory(); // define download factory //
 	var authService = authenticationService; // define authentication service //
@@ -43,7 +42,6 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 		// this needs to be properly moved into a service along with the entire search //
 			$scope.checkboxes.items={};
 		// end this needs to be properly moved into a service along with the entire search //
-		searchFactory.showSearch = true;
 		$location.path("/search");
 	};
 
