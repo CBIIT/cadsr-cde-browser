@@ -176,7 +176,6 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             pt.proto_idseq = ptfrm.proto_idseq\n" +
                 "AND             frm.qc_idseq = ptfrm.qc_idseq\n" +
-                "AND             frm.latest_version_ind = 'Yes'\n" +
                 "AND             frm.qtl_name = 'CRF'\n" +
                 "AND             qc.dn_crf_idseq = frm.qc_idseq\n" +
                 "AND             qc.qtl_name = 'QUESTION'\n" +

@@ -3,13 +3,14 @@ package gov.nih.nci.cadsr.service.search;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
-import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
+import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
 
 public class SearchQueryBuilderTest
 {

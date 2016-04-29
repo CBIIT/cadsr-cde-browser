@@ -27,17 +27,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
     }
 
-    /*
-    FIXME remove this
-        public SearchQueryBuilder(
-                String clientQuery, String clientSearchMode, int clientSearchField,
-                String programArea )
-        {
-            this( clientQuery, clientSearchMode, clientSearchField, programArea, "", "", "", "", "", "", "" );
-        }
-
-    */
-    
     public String getSqlStmt() {
 		return sqlStmt;
 	}
@@ -77,7 +66,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 "\", \"" + protocol + "\", \"" + workFlowStatus + "\", \"" + registrationStatus + "\", \"" + conceptName + "\", \"" + conceptCode + "\" )" );
         
         String vdFrom = "";
-        String latestWhere = "";
         String fromClause = "";
         String deDerivWhere = "";
         String deDerivFrom = "";
@@ -94,17 +82,28 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String vvWhere = "";
         String classificationWhere = "";
         String regStatus = "";
+        String protocolWhere = "";
 
-        // FIXME classification doesn't work right yet - set as empty, to avoid using this incorrect classificationWhere
-        // If we are not filtering by classification, we don't need sbr.classification_schemes in the sql.
         if(StringUtils.isBlank(classification))
         {
             classificationFrom = "";
         }
         else
         {
-            // CHECKME not sure this is working right, talk to Rui find out what we should be returning
-            classificationWhere = " AND cls.CS_IDSEQ = '" + classification + "'  AND cls.CONTE_IDSEQ = conte.CONTE_IDSEQ ";
+            classificationWhere = " AND de.de_idseq IN (SELECT de_idseq FROM   sbr.data_elements_view de , sbr.ac_csi_view acs, sbr.cs_csi_view csc " + 
+            					  "WHERE  csc.cs_idseq = '" + classification + "' " +
+            					  "AND    csc.cs_csi_idseq = acs.cs_csi_idseq AND    acs.ac_idseq = de_idseq )";
+        }
+        
+        if(StringUtils.isBlank(protocol))
+        {
+            protocolFrom = "";
+        }
+        else
+        {
+            protocolWhere = " AND pt.proto_idseq = ptfrm.proto_idseq AND frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF'" +
+            				" AND qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq" +
+            				" AND pt.proto_idseq = '" + protocol + "' ";
         }
 
         ////////////////////////////////////////////////////
@@ -146,16 +145,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
         ///////////////////////////////////////////////////////
-        // Default to only the latest version, may become an option later.
-        latestWhere = " AND de.latest_version_ind = 'Yes' ";
-
-        ///////////////////////////////////////////////////////
-        // Filter for only a specific context
-        if(StringUtils.isNotBlank(context))
+        // Filter for only a specific context is added only if protocol where is not already added otherwise,
+        //the left context tree search by protocol is not matching up with the drop down search by context and protocol
+        if(StringUtils.isNotBlank(context) && StringUtils.isBlank(protocol))
         {
-            //contextWhere = " conte.conte_idseq = '" + context + "' AND ";
-        	
-        	contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" +  context + "' " +
+            contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" +  context + "' " +
         				   " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + context + "') AND ";
         }
 
@@ -170,7 +164,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         if( StringUtils.isNotBlank(clientPublicId) && ( !clientPublicId.trim().equals( "*" ) ) )
         {
             String newCdeStr = StringReplace.strReplace( clientPublicId, "*", "%" );
-            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, clientSearchMode );
+            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, clientSearchMode )
+            			+ " AND de.latest_version_ind = 'Yes' ";
         }
 
         if(StringUtils.isNotBlank(valueDomain))
@@ -195,10 +190,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( cdeIdWhere );
         whereBuffer.append( decWhere );
         whereBuffer.append( vdWhere );
-        whereBuffer.append( latestWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
-        whereBuffer.append( deDerivWhere );
+        whereBuffer.append( deDerivWhere ).append(protocolWhere);
 
         whereClause = whereBuffer.toString();
 
@@ -210,7 +204,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 registrationFrom +
                 wkFlowFrom +
                 deDerivFrom +
-                classificationFrom +
+                classificationFrom + protocolFrom +
                 " WHERE        " +
                 contextWhere +
                 programAreaWhere +
