@@ -19,11 +19,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // check user authentication status //
     $scope.$on('$locationChangeStart', function() { 
         $scope.authenticationService.checkAuth();
-        if ($location.path()=='/search' || $location.path()=='/') {
-            searchFactory.showSearch = true;
+        if ($location.path()=='/cdeCart' || $location.path()=='/login') {
+            searchFactory.showSearch = false;
         }
         else {
-            searchFactory.showSearch = false;
+            searchFactory.showSearch = true;
         };
     });
 
