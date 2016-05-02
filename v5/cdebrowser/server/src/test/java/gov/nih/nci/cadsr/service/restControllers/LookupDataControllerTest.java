@@ -40,7 +40,7 @@ public class LookupDataControllerTest
 {
 	
 	@Configuration
-	static class AccountServiceTestContextConfiguration
+	static class LookupDataServiceTestContextConfiguration
 	{
 		@Bean
 		public ClassificationSchemeService classificationSchemeService() {
@@ -198,7 +198,7 @@ public class LookupDataControllerTest
 	public void getProtocol() throws Exception
 	{
 		MvcResult result = mockMvc.perform(get("/lookupdata/protocol"))
-				// .andDo(print())
+				//.andDo(print())
 				.andExpect(status().isOk()).andReturn();
 		
 		Object responseObj = result.getModelAndView().getModel().get("protocolList");

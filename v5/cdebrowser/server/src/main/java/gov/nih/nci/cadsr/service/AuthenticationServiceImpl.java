@@ -22,7 +22,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
 		boolean valid = true;
     	try
     	{
-    		if (userManagerDAO.getCadsrLockoutProperties() == 2)
+    		int numOfProperties = userManagerDAO.getCadsrLockoutProperties();
+    		if (numOfProperties == 2)
     		{
     			try {
 					userManagerDAO.getConnection(loginUsername, credential);
@@ -34,7 +35,6 @@ public class AuthenticationServiceImpl implements AuthenticationService
 					if (updCnt == 0)
 						userManagerDAO.insertLock(loginUsername);
 					
-					valid = false;
 					throw e;
 				}
     			
@@ -42,6 +42,11 @@ public class AuthenticationServiceImpl implements AuthenticationService
     			{
     				userManagerDAO.resetLock(loginUsername);
     			}
+    		}
+    		else
+    		{
+    			logger.error("CaDSR Lockout properties are not set.");
+    			throw new Exception("CaDSR Lockout properties are not set.");
     		}
     	}
     	catch(Exception ex)

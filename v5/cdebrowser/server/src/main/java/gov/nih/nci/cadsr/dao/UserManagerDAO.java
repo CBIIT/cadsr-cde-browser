@@ -5,12 +5,9 @@ import java.util.List;
 
 public interface UserManagerDAO
 {
-    public boolean validUser(String s, String s1);
+    public boolean validUser(String userName, String password);
 
-    //TODO: will be implemented if there is a need 
-    //public abstract NCIUser getNCIUser(String s);
-
-    public List<String> getContextsForAllRoles(String s, String s1);
+    public List<String> getContextsForAllRoles(String username, String acType);
     
     public int getCadsrLockoutProperties();
     

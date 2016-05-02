@@ -66,7 +66,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 "\", \"" + protocol + "\", \"" + workFlowStatus + "\", \"" + registrationStatus + "\", \"" + conceptName + "\", \"" + conceptCode + "\" )" );
         
         String vdFrom = "";
-        String fromClause = "";
         String deDerivWhere = "";
         String deDerivFrom = "";
         String whereClause = "";
@@ -199,13 +198,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
-                vdFrom +
-                fromClause +
+                vdFrom + classificationFrom + protocolFrom +
                 registrationFrom +
                 wkFlowFrom +
                 deDerivFrom +
-                classificationFrom + protocolFrom +
-                " WHERE        " +
+                " WHERE " +
                 contextWhere +
                 programAreaWhere +
                 " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text'" +

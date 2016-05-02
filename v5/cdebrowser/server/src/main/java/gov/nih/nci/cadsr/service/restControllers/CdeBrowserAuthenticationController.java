@@ -28,7 +28,7 @@ public class CdeBrowserAuthenticationController
 	AuthenticationService authenticationService;
 	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public Boolean login(@RequestHeader("Authorization") String authorization,
+	public String login(@RequestHeader("Authorization") String authorization,
 						 HttpServletRequest request) throws AutheticationFailureException
 	{
 		logger.debug("Received request to authenticate user.");
@@ -42,7 +42,8 @@ public class CdeBrowserAuthenticationController
 			throw new AutheticationFailureException("Authentication failed for user because username or password is null:" + credentials[0]);
 		else
 		{
-			try {
+			try 
+			{
 				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
 				HttpSession session = request.getSession(false);
 				if (session != null)
@@ -66,7 +67,7 @@ public class CdeBrowserAuthenticationController
 			}
 		}
 		
-		return login;
+		return login.toString();
 	}
 	
 	@RequestMapping(value="/logout")
@@ -77,8 +78,7 @@ public class CdeBrowserAuthenticationController
 			String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 			logger.debug("Received request to logout user: " + currUser);
 			session.invalidate();
-		}
-		
+		}	
 	}
 	
 	@RequestMapping(value="/user", method = RequestMethod.GET, produces = "text/plain")
