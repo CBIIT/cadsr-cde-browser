@@ -299,7 +299,7 @@
                 </span>
                 <!-- <span>{{filterService.searchFilter}}</span> -->
                 <span class="clear">
-                    <button ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
+                    <button class="btn btn-default clearButton" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
                           
             </div>
@@ -328,7 +328,17 @@
                     <button label="Add to CDE Cart" ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length">
                         Add to CDE Cart
                     </button> 
+                </li> 
+                <!-- <li>
+                    <button label="Add to CDE Compare List" ng-click="addToCompare()" ng-disabled="!checkedItemsForDownload.length">
+                        Add to CDE Compare List
+                    </button> 
                 </li>                       
+                <li>
+                    <button label="Compare CDEs" ng-click="compareCDE()" ng-disabled="!checkedItemsForDownload.length">
+                        Compare CDEs
+                    </button> 
+                </li> -->
             </ul>
             <!-- show progress bar -->
             <ul ng-show="downloadFactory.progressMessage.status" 
