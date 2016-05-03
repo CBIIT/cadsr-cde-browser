@@ -12,22 +12,22 @@
     <span class="searchField name">
         <label for="name">Name</label>
         <input class="basicSearchQuery roundInput" id="name" ng-disabled="publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" placeholder="Names and Definitions" />
-        <div class="queryTypeRadioButtons container">
-        <form role="form">
-        <label data-ng-repeat="qType in searchQueryTypes" class="radio-inline">
-        <span>
-        <input ng-disabled="fs.isSearching"
+        <!--
+        <div class="queryTypeRadioButtons">
+        <label data-ng-repeat="qType in searchQueryTypes">
+        <div>
+            <input ng-disabled="fs.isSearching"
                     name="selectedQueryType"
-                    type="radio"
-                    value="{{qType.id}}"
-                    data-ng-model="fs.dataElementVariables.selectedQueryType"/>
-            {{qType.name}}
-        </span>
-        </label>
-        </form>
-        <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
-        Note: Default settings excludes the Test Context view from the tree.
+                     type="radio"
+                     value="{{qType.id}}"
+                     data-ng-model="fs.dataElementVariables.selectedQueryType"/>
+             {{qType.name}}
         </div>
+         </label>
+        -->
+         <div class="searchTips">Tip: To search for partial words or phrases use the * as a wildcard.<BR>
+         Note: Default settings excludes the Test Context view from the tree.
+        <!-- </div> -->
         </div>
     </span>
     <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', 2, publicIdName)">
