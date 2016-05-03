@@ -732,4 +732,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.authenticationService.logout();
     };
 
+    // add items to compare list //
+//    $scope.addToCompare = function() {
+//        $scope.compareService.addToCompare($scope.checkedItemsForDownload,$scope.searchResults);
+//    };
+
+    // compare the items in the compare list along with any checked items //
+//    $scope.compareCDE = function() {
+//        $scope.compareService.compareCDE($scope.checkedItemsForDownload,$scope.searchResults);
+//    };
+
 });
