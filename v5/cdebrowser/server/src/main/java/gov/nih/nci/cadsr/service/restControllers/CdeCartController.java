@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.nih.nci.cadsr.cdecart.CdeCartUtil;
+import gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
@@ -32,9 +32,9 @@ public class CdeCartController
 	private static Logger logger = LogManager.getLogger( CdeCartController.class.getName() );
 
 	@Autowired
-	CdeCartUtil cdeCartUtil;
+	CdeCartUtilInterface cdeCartUtil;
 
-	public void setCdeCartUti(CdeCartUtil cdeCartUtil) {
+	public void setCdeCartUtil(CdeCartUtilInterface cdeCartUtil) {
 		this.cdeCartUtil = cdeCartUtil;
 	}
 
@@ -55,7 +55,7 @@ public class CdeCartController
 		
 		if (principalName == null) {
 			logger.error("........No user found in session in retrieveObjectCart");
-			throw new AutheticationFailureException("Authenticated user not found in the session operation retrieve CDE Cart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation retrieve CDE Object Cart");
 		}
 		
 		logger.debug("Received rest call retrieve Object Cart for user: " + principalName);
@@ -82,8 +82,7 @@ public class CdeCartController
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<String> saveCart(HttpSession mySession,
 			RequestEntity<List<String>> request) throws AutheticationFailureException {
-		List<String> cdeIds = request.getBody();
-		logger.debug("Received rest call save Object Cart, IDs: " + cdeIds);
+		logger.debug("Received rest call save Object Cart");
 		String principalName = null;
 
 		if (mySession != null) {
@@ -93,9 +92,19 @@ public class CdeCartController
 		
 		if (principalName == null) {
 			logger.error("........No user found in session in saveCart");
-			throw new AutheticationFailureException("Authenticated user not found in the session operation save CDE Cart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation save CDE Object Cart");
 		}
+		
+		List<String> cdeIds = request.getBody();
 
+		if ((cdeIds == null) || (cdeIds.size() == 0)) {
+			logger.debug("No ID received to add to Object Cart; returning rest call OK");
+			return new ResponseEntity<String>("Done", HttpStatus.OK);
+		}
+		else if (logger.isDebugEnabled()) {
+			logger.debug("ID received to save in Object Cart: " + cdeIds);
+		}
+		
 		try {
 			cdeCartUtil.addToCart(mySession, principalName, cdeIds);
 			logger.debug("Returning rest call saveCart: OK");
@@ -128,7 +137,7 @@ public class CdeCartController
 		//take the user from session
 		if (principalName == null) {
 			logger.error("........No user found in session in saveCart");
-			throw new AutheticationFailureException("Authenticated user not found in the session operation delete CDE Cart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation delete CDE Object Cart");
 		}
 
 		if ((idParams == null) || (idParams.length == 0)) {

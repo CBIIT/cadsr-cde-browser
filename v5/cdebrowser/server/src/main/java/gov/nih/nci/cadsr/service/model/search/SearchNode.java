@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 public class SearchNode
 {
-    private Logger logger = LogManager.getLogger( SearchNode.class.getName() );
+    private static final Logger logger = LogManager.getLogger( SearchNode.class.getName() );
     private String longName;
     private String preferredQuestionText;
     private String ownedBy;
@@ -144,6 +144,88 @@ public class SearchNode
 				+ preferredQuestionText + ", ownedBy=" + ownedBy + ", publicId=" + publicId + ", workflowStatus="
 				+ workflowStatus + ", version=" + version + ", usedByContext=" + usedByContext + ", registrationStatus="
 				+ registrationStatus + ", href=" + href + ", deIdseq=" + deIdseq + ", status=" + status + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((deIdseq == null) ? 0 : deIdseq.hashCode());
+		result = prime * result + ((href == null) ? 0 : href.hashCode());
+		result = prime * result + ((longName == null) ? 0 : longName.hashCode());
+		result = prime * result + ((ownedBy == null) ? 0 : ownedBy.hashCode());
+		result = prime * result + ((preferredQuestionText == null) ? 0 : preferredQuestionText.hashCode());
+		result = prime * result + ((publicId == null) ? 0 : publicId.hashCode());
+		result = prime * result + ((registrationStatus == null) ? 0 : registrationStatus.hashCode());
+		result = prime * result + status;
+		result = prime * result + ((usedByContext == null) ? 0 : usedByContext.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		result = prime * result + ((workflowStatus == null) ? 0 : workflowStatus.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SearchNode other = (SearchNode) obj;
+		if (deIdseq == null) {
+			if (other.deIdseq != null)
+				return false;
+		} else if (!deIdseq.equals(other.deIdseq))
+			return false;
+		if (href == null) {
+			if (other.href != null)
+				return false;
+		} else if (!href.equals(other.href))
+			return false;
+		if (longName == null) {
+			if (other.longName != null)
+				return false;
+		} else if (!longName.equals(other.longName))
+			return false;
+		if (ownedBy == null) {
+			if (other.ownedBy != null)
+				return false;
+		} else if (!ownedBy.equals(other.ownedBy))
+			return false;
+		if (preferredQuestionText == null) {
+			if (other.preferredQuestionText != null)
+				return false;
+		} else if (!preferredQuestionText.equals(other.preferredQuestionText))
+			return false;
+		if (publicId == null) {
+			if (other.publicId != null)
+				return false;
+		} else if (!publicId.equals(other.publicId))
+			return false;
+		if (registrationStatus == null) {
+			if (other.registrationStatus != null)
+				return false;
+		} else if (!registrationStatus.equals(other.registrationStatus))
+			return false;
+		if (status != other.status)
+			return false;
+		if (usedByContext == null) {
+			if (other.usedByContext != null)
+				return false;
+		} else if (!usedByContext.equals(other.usedByContext))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		if (workflowStatus == null) {
+			if (other.workflowStatus != null)
+				return false;
+		} else if (!workflowStatus.equals(other.workflowStatus))
+			return false;
+		return true;
 	}
 
 }

@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.ContextDAO;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
-import gov.nih.nci.cadsr.dao.ToolOptionsDAOImpl;
+import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
 import gov.nih.nci.cadsr.dao.VdPvsDAO;
 import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
 import gov.nih.nci.cadsr.dao.model.ContextModel;
@@ -46,11 +46,11 @@ import gov.nih.nci.objectCart.client.ObjectCartClient;
 import gov.nih.nci.objectCart.client.ObjectCartException;
 import gov.nih.nci.objectCart.domain.Cart;
 
-public class CdeCartUtil {
+public class CdeCartUtil implements CdeCartUtilInterface {
     private static Logger log = LogManager.getLogger(CdeCartUtil.class.getName());
 
 	@Autowired
-	private ToolOptionsDAOImpl toolOptionsDAO;
+	private ToolOptionsDAO toolOptionsDAO;
 	@Autowired
 	VdPvsDAO vdPvsDAO;
 	@Autowired
@@ -59,7 +59,7 @@ public class CdeCartUtil {
 	@Autowired
 	DataElementDAO dataElementDAO;
 	
-	public void setToolOptionsDAO(ToolOptionsDAOImpl toolOptionsDAO) {
+	public void setToolOptionsDAO(ToolOptionsDAO toolOptionsDAO) {
 		this.toolOptionsDAO = toolOptionsDAO;
 	}
 
@@ -119,14 +119,10 @@ public class CdeCartUtil {
 		
 		return cdeCart;
 	}
-	/**
-	 * This function is called form the controller to delete CDEs from the user object cart.
-	 * 
-	 * @param mySession
-	 * @param principalName
-	 * @param ids
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface#deleteCartNodes(javax.servlet.http.HttpSession, java.lang.String, java.lang.String[])
 	 */
+	@Override
 	public void deleteCartNodes (final HttpSession mySession, final String principalName, final String[] ids) throws Exception {
 		if ((ids == null) || (ids.length == 0)) {
 			log.warn("Nothing to delete no ID received");
@@ -178,14 +174,10 @@ public class CdeCartUtil {
 		}
 		
 	}
-	/**
-	 * This is a method to support Controller retrieve operation.
-	 * 
-	 * @param mySession
-	 * @param principalName
-	 * @return List<SearchNode>
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface#findCartNodes(javax.servlet.http.HttpSession, java.lang.String)
 	 */
+	@Override
 	public List<SearchNode> findCartNodes(HttpSession mySession, String principalName) throws Exception{
 		
 		String uid = principalName;
@@ -222,15 +214,10 @@ public class CdeCartUtil {
 			throw oce;
 		}
 	}
-	/**
-	 * This is a method to support Controller POST operation.
-	 * 
-	 * @param mySession
-	 * @param sessionCart
-	 * @param principalName
-	 * @throws ObjectCartException 
-	 * @throws AutheticationFailureException 
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface#addToCart(javax.servlet.http.HttpSession, java.lang.String, java.util.List)
 	 */
+	@Override
 	public void addToCart(HttpSession mySession, String principalName, List<String> cdeIds) throws ObjectCartException, AutheticationFailureException {
 		if ((cdeIds == null) || (mySession == null)) {
 			log.debug("Nothing to save");

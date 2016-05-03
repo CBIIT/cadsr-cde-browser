@@ -24,4 +24,9 @@
     </bean>
     <bean id="appConfig" class="gov.nih.nci.cadsr.common.AppConfig">
     </bean>
+    <bean id="cdeCartUtil" class="org.mockito.Mockito" factory-method="mock">
+	    <constructor-arg value="gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface" />
+	</bean>
+    <bean id="cdeCartController" class="gov.nih.nci.cadsr.service.restControllers.CdeCartController" depends-on="cdeCartUtil"/>
+
 </beans>
