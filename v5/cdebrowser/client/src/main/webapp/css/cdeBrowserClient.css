@@ -158,12 +158,12 @@ display:inline-block !important;
 }
 
 .publicIdSearch input {
-    width:425px;
+    /*width:425px;*/
 }
 
 .publicIdSearch .searchField label{
     display:table-cell;
-    width:65px;
+    /*width:65px;*/
     display:inline-block;
 }
 
@@ -321,8 +321,24 @@ display:inline-block !important;
     font-size: 12px !important;
 }
 
+/* Rounds the corners of input boxes */
+
 .roundInput{
     border-radius: 2px !important;
     border-width: thin;
+}
+
+/* Fixes the radio buttons on publicID search tab */
+
+.publicIdLabel {
+    width: 65px;
+}
+
+.publicIdInput {
+    width: 425px;
+}
+
+.radioFix {
+    margin: 0px 16px 0px -16px;
 }
 
