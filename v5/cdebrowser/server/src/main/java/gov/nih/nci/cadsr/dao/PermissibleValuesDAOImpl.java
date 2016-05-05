@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PermissibleValuesDAOImpl extends AbstractDAOOperations implements PermissibleValuesDAO
 {
-    private Logger logger = LogManager.getLogger( PermissibleValuesDAOImpl.class.getName() );
+    private static final Logger logger = LogManager.getLogger( PermissibleValuesDAOImpl.class.getName() );
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -41,20 +41,32 @@ public class PermissibleValuesDAOImpl extends AbstractDAOOperations implements P
         does not always have match for Concept Code, so that part is commented out,
         if it where left in we would not get back the records which we failed to get Concept Code
     */
+    	//where  conceptCode comes from?
         String sql =
-                "SELECT DISTINCT  sbr.permissible_values.*, " +
-                        "    sbr.value_meanings.description AS VM_DESCRIPTION," +
-                        "    sbr.value_meanings.vm_id, " +
-                        "    sbr.value_meanings.version AS vm_version, " +
-                        "    sbr.vd_pvs.con_idseq " +
+                "SELECT DISTINCT  sbr.permissible_values.pv_idseq, " +
+                        "sbr.permissible_values.value, " +
+                        "sbr.permissible_values.short_meaning, " +
+                        "sbr.permissible_values.meaning_description, " + 
+                        "sbr.permissible_values.high_value_num, " +
+                        "sbr.permissible_values.low_value_num, " +
+                        "sbr.permissible_values.vm_idseq, " + 
+                        "sbr.vd_pvs.begin_date begin_date, " +
+                        "sbr.vd_pvs.end_date end_date, " +
+                        "sbr.value_meanings.description AS VM_DESCRIPTION, " +
+                        "sbr.value_meanings.vm_id, " +
+                        "sbr.value_meanings.version AS vm_version, " +
+                        "sbr.vd_pvs.con_idseq, " +
+                        "sbrext.CON_DERIVATION_RULES_EXT.name as CONCEPT_CODE " + 
                         "FROM sbr.permissible_values, " +
-                        "    sbr.vd_pvs," +
-                        "    sbr.value_meanings " +
+                        "sbr.vd_pvs," +
+                        "sbr.value_meanings, " +
+                        "sbrext.CON_DERIVATION_RULES_EXT " +
                         "WHERE " +
-                        "   sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
+                        "sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
                         "AND sbr.vd_pvs.vd_idseq = ? " +
-                        "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ORDER BY UPPER(sbr.permissible_values.value)";
-
+                        "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq " +
+                        "AND sbr.value_meanings.condr_idseq = sbrext.CON_DERIVATION_RULES_EXT.CONDR_IDSEQ(+) "
+                        + "ORDER BY UPPER(sbr.permissible_values.value)";
 
         String sqlOLD =
                 "SELECT DISTINCT " +
@@ -79,7 +91,7 @@ public class PermissibleValuesDAOImpl extends AbstractDAOOperations implements P
                         " UPPER(sbr.permissible_values.value)";
 
 
-        logger.debug( ">>>>>" + sql.replace( "?", vdIdseq ) + " <<<<<<<" );
+        logger.debug( ">>>>>" + sql.replace( "?", ((vdIdseq != null) ? vdIdseq : "null")) + " <<<<<<<" );
 
         return getAll( sql, vdIdseq, PermissibleValuesModel.class );
     }
