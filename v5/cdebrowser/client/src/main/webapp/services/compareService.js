@@ -1,7 +1,6 @@
-// ********************* js file related to compare screen for future release *********************
-
-//angular.module("cdeBrowserApp").service('compareService', function() {
-
+angular.module("cdeBrowserApp").service('compareService', function() {
+	// service for compare screen operations //
 
 
-//});
+
+});

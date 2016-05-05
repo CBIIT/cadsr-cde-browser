@@ -732,16 +732,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.authenticationService.logout();
     };
 
-// ********************* js code related to compare screen for future release *********************
-
     // add items to compare list //
-//    $scope.addToCompare = function() {
-//        $scope.compareService.addToCompare($scope.checkedItemsForDownload,$scope.searchResults);
-//    };
+    $scope.addToCompare = function() {
+        $scope.compareService.addToCompare($scope.checkedItemsForDownload,$scope.searchResults);
+    };
 
     // compare the items in the compare list along with any checked items //
-//    $scope.compareCDE = function() {
-//        $scope.compareService.compareCDE($scope.checkedItemsForDownload,$scope.searchResults);
-//    };
+    $scope.compareCDE = function() {
+        $scope.compareService.compareCDE($scope.checkedItemsForDownload,$scope.searchResults);
+    };
+
 
 });
