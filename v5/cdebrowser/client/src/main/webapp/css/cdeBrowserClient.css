@@ -144,6 +144,7 @@ a:hover {
 margin-left:15px;
 display:inline-block !important;
 }
+
 .searchInput {
     color: #18344d;width:850px !important;
     margin-left: 20px;
@@ -157,13 +158,8 @@ display:inline-block !important;
     margin-top: 16px;
 }
 
-.publicIdSearch input {
-    /*width:425px;*/
-}
-
 .publicIdSearch .searchField label{
     display:table-cell;
-    /*width:65px;*/
     display:inline-block;
 }
 
@@ -343,4 +339,36 @@ display:inline-block !important;
 .radioFix {
     margin: 0px 16px 0px -16px;
 }
+
+/* Search Preferences tab */
+
+.searchPreferences {
+    padding-left: 16px;
+    margin-top: 16px;
+    font-size:85%;
+}
+
+.searchPreferencesList {
+    padding: 5px 0px 5px 0px;
+    display: inline-block;
+}
+
+.searchPreferencesList ul {
+    list-style: none;
+    display: inline-block;
+}
+
+.searchPreferencesList ul li{
+    padding: 5px 15px 5px 0px;
+}
+
+.boxWidth {
+    width: 141px; 
+}
+
+.inputPadding {
+    padding-right: 15px;
+    display: inline-block;
+}
+
 

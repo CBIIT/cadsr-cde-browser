@@ -1,55 +1,80 @@
-<div class="cdeSearchPreferences">
-	<B>CDE search preferences for this session</B>
-</div>
-<hr />
-<div class="cdeSearchPreferences">
-	<input type="checkbox">Exclude "Test" Context<br />
-	<input type="checkbox">Exclude "Training" Context
-</div>
-<hr />
-<div class="cdeSearchPreferences">
-	<ul>
-		<li>
-			Exclude Workflow Status(es) 
-		</li>
-		<li>
-			<select name="jspStatus" size="8" multiple="" class="LongLOVField">
-				<option></option>
-				<option value="APPRVD FOR TRIAL USE">APPRVD FOR TRIAL USE</option>
-				<option selected="" value="CMTE APPROVED">CMTE APPROVED</option>
-				<option selected="" value="CMTE SUBMTD">CMTE SUBMTD</option>
-				<option selected="" value="CMTE SUBMTD USED">CMTE SUBMTD USED</option>
-				<option value="DRAFT MOD">DRAFT MOD</option>
-				<option value="DRAFT NEW">DRAFT NEW</option>
-				<option value="RELEASED">RELEASED</option>
-				<option value="RELEASED-NON-CMPLNT">RELEASED-NON-CMPLNT</option>
-				<option selected="" value="RETIRED ARCHIVED">RETIRED ARCHIVED</option>
-				<option selected="" value="RETIRED PHASED OUT">RETIRED PHASED OUT</option>
-				<option selected="" value="RETIRED WITHDRAWN">RETIRED WITHDRAWN</option>
-			</select>
-		</li>
-	</ul>
-</div>
-<div class="cdeSearchPreferences">
-	<ul>
-		<li>
-			Exclude Registration Status(es) 
-		</li>
-		<li>
-			<select name="regStatus" size="8" multiple="" class="LongLOVField">
-				<option></option>
-				<option value="Application">Application</option>
-				<option value="Candidate">Candidate</option>
-				<option value="Proposed">Proposed</option>
-				<option value="Qualified">Qualified</option>
-				<option selected="" value="Retired">Retired</option>
-				<option value="Standard">Standard</option>
-				<option value="Standardized Elsewhere">Standardized Elsewhere</option>
-				<option value="Superceded">Superceded</option>
-				<option value="Suspended">Suspended</option>
-			</select>			
-		</li>
-</div>
-<div class="cdeSearchPreferences">
-	<button ng-click="">Save</button>
+<div ng-controller="SearchPreferencesController">
+	<div class="searchPreferences">
+		<div>
+			<div class="inputPadding">
+			    Exclude Context
+			</div>
+			<div class="inputPadding"><input name="testContext" type="checkbox" class="paddingInput" value="testContext" checked/>
+			Test
+			</div>
+			<div class="inputPadding"><input name="testContext" type="checkbox" class="paddingInput" value="trainingContext" checked/>
+			Training
+			</div>
+		    <div>
+		    	<div class="searchPreferencesList"><div>Workflow Status(es)</div>
+			    	<ul>
+		    			<li>
+		    			Included
+		    			</li>
+						<li>
+							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
+								<option value="APPRVD FOR TRIAL USE">APPRVD FOR TRIAL USE</option>
+								<option value="DRAFT MOD">DRAFT MOD</option>
+								<option value="DRAFT NEW">DRAFT NEW</option>
+								<option value="RELEASED">RELEASED</option>
+								<option value="RELEASED-NON-CMPLNT">RELEASED-NON-CMPLNT</option>
+							</select>
+						</li>
+					</ul>
+		    		<ul>
+		    			<li>
+		    			Excluded
+		    			</li>
+						<li>
+							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
+								<option value="CMTE APPROVED">CMTE APPROVED</option>
+								<option value="CMTE SUBMTD">CMTE SUBMTD</option>
+								<option value="CMTE SUBMTD USED">CMTE SUBMTD USED</option>
+								<option value="RETIRED ARCHIVED">RETIRED ARCHIVED</option>
+								<option value="RETIRED PHASED OUT">RETIRED PHASED OUT</option>
+								<option value="RETIRED WITHDRAWN">RETIRED WITHDRAWN</option>
+							</select>
+						</li>
+					</ul>
+			    </div>
+		    	<div class="searchPreferencesList"><div>Registration Status(es)</div>
+		    		<ul>
+		    			<li>
+		    			Included
+		    			</li>
+						<li>
+							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
+								<option value="Application">Application</option>
+								<option value="Candidate">Candidate</option>
+								<option value="Proposed">Proposed</option>
+								<option value="Qualified">Qualified</option>
+								<option value="Standard">Standard</option>
+								<option value="Standardized Elsewhere">Standardized Elsewhere</option>
+								<option value="Superceded">Superceded</option>
+								<option value="Suspended">Suspended</option>
+							</select>
+						</li>
+					</ul>
+		    		<ul>
+		    			<li>
+		    			Excluded
+		    			</li>
+						<li>
+							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
+								<option value="Retired">Retired</option>
+							</select>
+						</li>
+					</ul>
+			    </div>
+		  	</div>
+		</div>
+	<div>
+		<button ng-click="">Save</button>
+		<button ng-click="">Reset to default</button>
+	</div>
 </div>
