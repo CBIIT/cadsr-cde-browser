@@ -36,38 +36,10 @@ public class PermissibleValuesDAOImpl extends AbstractDAOOperations implements P
     @Override
     public List<PermissibleValuesModel> getPermissibleValuesByVdIdseq( String vdIdseq )
     {
-    /*
-        This is the best I have so far -
-        does not always have match for Concept Code, so that part is commented out,
-        if it where left in we would not get back the records which we failed to get Concept Code
-    */
-    	//where  conceptCode comes from?
-        String sql =
-                "SELECT DISTINCT  sbr.permissible_values.pv_idseq, " +
-                        "sbr.permissible_values.value, " +
-                        "sbr.permissible_values.short_meaning, " +
-                        "sbr.permissible_values.meaning_description, " + 
-                        "sbr.permissible_values.high_value_num, " +
-                        "sbr.permissible_values.low_value_num, " +
-                        "sbr.permissible_values.vm_idseq, " + 
-                        "sbr.vd_pvs.begin_date begin_date, " +
-                        "sbr.vd_pvs.end_date end_date, " +
-                        "sbr.value_meanings.description AS VM_DESCRIPTION, " +
-                        "sbr.value_meanings.vm_id, " +
-                        "sbr.value_meanings.version AS vm_version, " +
-                        "sbr.vd_pvs.con_idseq, " +
-                        "sbrext.CON_DERIVATION_RULES_EXT.name as CONCEPT_CODE " + 
-                        "FROM sbr.permissible_values, " +
-                        "sbr.vd_pvs," +
-                        "sbr.value_meanings, " +
-                        "sbrext.CON_DERIVATION_RULES_EXT " +
-                        "WHERE " +
-                        "sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
-                        "AND sbr.vd_pvs.vd_idseq = ? " +
-                        "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq " +
-                        "AND sbr.value_meanings.condr_idseq = sbrext.CON_DERIVATION_RULES_EXT.CONDR_IDSEQ(+) "
-                        + "ORDER BY UPPER(sbr.permissible_values.value)";
-
+    	//conceptCode comes from sbrext.CON_DERIVATION_RULES_EXT. See comment CDEBROWSER-460 explanations by Rui
+        String sql = buildPermissibleValuesSql();
+        
+        //This SQL is not used, and is kept here for comparison purposes
         String sqlOLD =
                 "SELECT DISTINCT " +
                         " sbr.permissible_values.*," +
@@ -95,5 +67,36 @@ public class PermissibleValuesDAOImpl extends AbstractDAOOperations implements P
 
         return getAll( sql, vdIdseq, PermissibleValuesModel.class );
     }
-
+    protected String buildPermissibleValuesSql() {
+        String sql =
+                "SELECT DISTINCT  sbr.permissible_values.pv_idseq, " +
+                        "sbr.permissible_values.value, " +
+                        "sbr.permissible_values.short_meaning, " +
+                        "sbr.permissible_values.meaning_description, " + 
+                        "sbr.permissible_values.high_value_num, " +
+                        "sbr.permissible_values.low_value_num, " +
+                        "sbr.permissible_values.vm_idseq, " + 
+                        "sbr.vd_pvs.begin_date begin_date, " +
+                        "sbr.vd_pvs.end_date end_date, " +
+                        "sbr.value_meanings.description AS VM_DESCRIPTION, " +
+                        "sbr.value_meanings.vm_id, " +
+                        "sbr.value_meanings.version AS vm_version, " +
+                        "sbr.vd_pvs.con_idseq, " +
+                        "sbr.vd_pvs.created_by, " +
+                        "sbr.vd_pvs.date_created, " +
+                        "sbr.vd_pvs.modified_by, " +
+                        "sbr.vd_pvs.date_modified, " +
+                        "sbrext.CON_DERIVATION_RULES_EXT.name as CONCEPT_CODE " + 
+                        "FROM sbr.permissible_values, " +
+                        "sbr.vd_pvs," +
+                        "sbr.value_meanings, " +
+                        "sbrext.CON_DERIVATION_RULES_EXT " +
+                        "WHERE " +
+                        "sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
+                        "AND sbr.vd_pvs.vd_idseq = ? " +
+                        "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq " +
+                        "AND sbr.value_meanings.condr_idseq = sbrext.CON_DERIVATION_RULES_EXT.CONDR_IDSEQ(+) "
+                        + "ORDER BY UPPER(sbr.permissible_values.value)";
+        return sql;
+    }
 }
