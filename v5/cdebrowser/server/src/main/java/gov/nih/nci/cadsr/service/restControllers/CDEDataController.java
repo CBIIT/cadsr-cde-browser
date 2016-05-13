@@ -77,10 +77,10 @@ import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
 public class CDEDataController
 {
     private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
-    
+
     @Autowired
     private DataElementDAO dataElementDAO;
-    
+
     @Autowired
     private ReferenceDocDAO referenceDocDAO;
 
@@ -376,11 +376,43 @@ public class CDEDataController
 
         objectClass.setPublicId( dataElementModel.getDec().getObjClassPublicId() );
 
+        if( dataElementModel.getDec() == null )
+        {
+            logger.debug( "dataElementModel.getDec() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec() != null" );
+        }
+
+        if( dataElementModel.getDec().getObjClassVersion() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getObjClassVersion() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getObjClassVersion() != null" );
+        }
+
+        if( dataElementModel.getDec().getObjectClassModel() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getObjectClassModel() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getObjectClassModel() != null" );
+        }
+
         if( dataElementModel.getDec().getObjClassVersion() != null )
         {
+            // objectClass.setVersion will choke on null.
             objectClass.setVersion( dataElementModel.getDec().getObjClassVersion() );
         }
-        objectClass.setLongName( dataElementModel.getDec().getObjectClassModel().getLongName() );
+
+        if( dataElementModel.getDec().getObjectClassModel() != null )
+        {
+            objectClass.setLongName( dataElementModel.getDec().getObjectClassModel().getLongName() );
+        }
         objectClass.setShortName( dataElementModel.getDec().getObjClassPrefName() );
         objectClass.setContext( dataElementModel.getDec().getObjClassContextName() );
         objectClass.setQualifier( dataElementModel.getDec().getObjClassQualifier() );
@@ -388,6 +420,15 @@ public class CDEDataController
         /////////////////////////////////////////////////////
         // "Object Class Concepts" of the "Data Element Concept" Tab
         // This is a list of ObjectClassConcept
+        if( dataElementModel.getDec().getDecIdseq() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() != null" );
+        }
+
         List<ConceptModel> objectClassConcepts = objectClassConceptDAO.getObjectClassConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setObjectClassConcepts( objectClassConcepts );
 
@@ -396,17 +437,35 @@ public class CDEDataController
         Property property = new Property();
         dataElementConcept.setProperty( property );
 
-        property.setPublicId( dataElementModel.getDec().getProperty().getPublicId() );
-        property.setVersion( dataElementModel.getDec().getProperty().getVersion() );
-        property.setLongName( dataElementModel.getDec().getProperty().getLongName() );
-        property.setShortName( dataElementModel.getDec().getProperty().getPreferredName() );
-        property.setContext( dataElementModel.getDec().getProperty().getContext().getName() );
-        property.setQualifier( dataElementModel.getDec().getProperty().getQualifier() );
+        if( dataElementModel.getDec().getProperty() != null )
+        {
+            logger.debug( "dataElementModel.getDec().getProperty() != null" );
+            property.setPublicId( dataElementModel.getDec().getProperty().getPublicId() );
+            property.setVersion( dataElementModel.getDec().getProperty().getVersion() );
+            property.setLongName( dataElementModel.getDec().getProperty().getLongName() );
+            property.setShortName( dataElementModel.getDec().getProperty().getPreferredName() );
+            property.setContext( dataElementModel.getDec().getProperty().getContext().getName() );
+            property.setQualifier( dataElementModel.getDec().getProperty().getQualifier() );
+
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getProperty() == null" );
+
+        }
 
 
         /////////////////////////////////////////////////////
         // "Property Concepts" of the "Data Element Concept" Tab
-        // This is a list of PropertyConcept
+        // This is a list of PropertyConcepts
+        if( dataElementModel.getDec().getDecIdseq() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() != null: " + dataElementModel.getDec().getDecIdseq() );
+        }
         List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setPropertyConcepts( propertyConcepts );
 
@@ -478,20 +537,26 @@ public class CDEDataController
         Representation representation = new Representation();
         valueDomain.setRepresentation( representation );
 
-        representation.setPublicId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
-        if( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() != null )
+        List<ConceptModel> representationConcepts = new ArrayList<>();
+        if( dataElementModel.getValueDomainModel().getRepresentationModel() != null )
         {
-            representation.setVersion( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() );
+
+            representation.setPublicId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
+            if( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() != null )
+            {
+                representation.setVersion( dataElementModel.getValueDomainModel().getRepresentationModel().getVersion() );
+            }
+            representation.setLongName( dataElementModel.getValueDomainModel().getRepresentationModel().getLongName() );
+            representation.setShortName( dataElementModel.getValueDomainModel().getRepresentationModel().getPreferredName() );
+            representation.setContext( dataElementModel.getValueDomainModel().getRepresentationModel().getContext().getName() );
+
+
+            /////////////////////////////////////////////////////
+            // "Representation Concepts" of the "value Domain" Tab
+            logger.debug( "Representation Concepts of the value Domain" );
+            representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
         }
-        representation.setLongName( dataElementModel.getValueDomainModel().getRepresentationModel().getLongName() );
-        representation.setShortName( dataElementModel.getValueDomainModel().getRepresentationModel().getPreferredName() );
-        representation.setContext( dataElementModel.getValueDomainModel().getRepresentationModel().getContext().getName() );
 
-
-        /////////////////////////////////////////////////////
-        // "Representation Concepts" of the "value Domain" Tab
-        logger.debug( "Representation Concepts of the value Domain" );
-        List<ConceptModel> representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
         valueDomain.setRepresentationConcepts( representationConcepts );
 
 

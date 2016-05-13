@@ -32,6 +32,7 @@ public class ObjectClass
     {
         this.version = version;
         //this will give us at least one digit to the right of the decimal place
+
         this.formattedVersion = Float.toString( Float.valueOf( version ) );
     }
 

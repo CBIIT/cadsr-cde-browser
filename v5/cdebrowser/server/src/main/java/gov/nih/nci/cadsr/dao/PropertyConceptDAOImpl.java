@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PropertyConceptDAOImpl extends AbstractDAOOperations implements PropertyConceptDAO
@@ -37,6 +38,12 @@ public class PropertyConceptDAOImpl extends AbstractDAOOperations implements Pro
         String sql = "SELECT prop_idseq FROM sbr.data_element_concepts WHERE dec_idseq = ?";
         logger.debug( ">>>>>>> " + sql.replace( "?", decIdseq ) );
         PropertyConceptModel propertyConceptModel = query( sql, decIdseq, PropertyConceptModel.class );
+        if( propertyConceptModel == null ||  propertyConceptModel.getPropIdseq() == null)
+        {
+            //We have nothing to return
+            return new  ArrayList<>();
+        }
+
         logger.debug( ">>>>>>> propIdseq: " + propertyConceptModel.getPropIdseq() );
 
         sql = "SELECT condr_idseq FROM properties_ext WHERE prop_idseq = ?";

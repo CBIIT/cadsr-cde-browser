@@ -39,6 +39,12 @@ public class ObjectClassConceptDAOImpl extends AbstractDAOOperations implements 
         logger.debug( ">>>>>>> ocIdseq: " + objectClassConceptModel.getOcIdseq() );
 
         sql = "SELECT condr_idseq FROM object_classes_ext WHERE oc_idseq = ?";
+        //We have nothing to return
+        if( objectClassConceptModel.getOcIdseq() == null )
+        {
+            return null;
+        }
+
         logger.debug( ">>>>>>> " + sql.replace( "?", objectClassConceptModel.getOcIdseq() ) );
         objectClassConceptModel = query( sql, objectClassConceptModel.getOcIdseq(), ObjectClassConceptModel.class );
         logger.debug( ">>>>>>> condrIdseq: " + objectClassConceptModel.getCondrIdseq() );
