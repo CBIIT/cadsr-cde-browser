@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2>CDE Browser v5.1 tag cdebrowser-v5.1-sprint3-06</h2>
+<h2>CDE Browser v5.2 tag cdebrowser-5.2-sprint04-01</h2>
 </body>
 </html>
