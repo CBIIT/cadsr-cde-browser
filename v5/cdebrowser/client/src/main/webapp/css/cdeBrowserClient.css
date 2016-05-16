@@ -354,19 +354,19 @@ display:inline-block !important;
     width: 800px;
 }
 
-.ListMainHead {
+.searchPreferencesListMainHead {
     display: inline-block;
     padding-right: 255px;
     padding-bottom: 8px;
 }
 
-.ListWorkflowHead {
+.searchPreferencesListWorkflowHead {
     display: inline-block;
     padding-right: 135px;
     padding-bottom: 8px;
 }
 
-.ListRegistrationHead {
+.searchPreferencesListRegistrationHead {
     display: inline-block;
     padding-right: 140px;
     margin-left: -5px;
