@@ -22,24 +22,24 @@
 			    		<label class="searchPreferencesListRegistrationHead">Included</label>
 			    		<label class="searchPreferencesListRegistrationHead">Excluded</label>
 			    	</div>
-				    	<div class="dragDrop searchPreferencesBox roundInput">
-					    	<div ng-repeat="list in models">
-				    			<ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes" dnd-drop="onDrop(list, item, index)">
-								    <li ng-repeat="item in list.items"
-								        dnd-draggable="getSelectedItemsIncluding(list, item)"
-								        dnd-dragstart="onDragstart(list, event)"
-								        dnd-moved="onMoved(list)"
-								        dnd-dragend="list.dragging = false"
-								        dnd-selected="item.selected = !item.selected"
-								        dnd-type="item.type"
-								        ng-class="{'selected': item.selected}"
-								        ng-hide="list.dragging && item.selected"
-								        >
-								        {{item.label}}
-								    </li>
-								</ul>
-							</div>
+			    	<div class="dragDrop searchPreferencesBox roundInput">
+				    	<div ng-repeat="list in models">
+			    			<ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes" dnd-drop="onDrop(list, item, index)">
+							    <li ng-repeat="item in list.items"
+							        dnd-draggable="getSelectedItemsIncluding(list, item)"
+							        dnd-dragstart="onDragstart(list, event)"
+							        dnd-moved="onMoved(list)"
+							        dnd-dragend="list.dragging = false"
+							        dnd-selected="item.selected = !item.selected"
+							        dnd-type="item.type"
+							        ng-class="{'selected': item.selected}"
+							        ng-hide="list.dragging && item.selected"
+							        >
+							        {{item.label}}
+							    </li>
+							</ul>
 						</div>
+					</div>
 			    </div>
 		  	</div>
 		</div>

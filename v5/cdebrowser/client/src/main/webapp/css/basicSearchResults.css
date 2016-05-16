@@ -241,11 +241,7 @@
 }
 
 #footer td {
-    width: 21%;
-}
-
-#footer td.last {
-    width: 37%;
+    width: 10%;
 }
 
 #footer .userName {
