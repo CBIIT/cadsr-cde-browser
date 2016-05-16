@@ -15,6 +15,7 @@ angular.module("cde", [
     "cdeValueDomain",
     "cdeGenericSearch",
     "cdePublicIdSearch",
+    "cdeSearchPreferences",
     "cdeCart",
     "cdeLogin",
     "ui.select"

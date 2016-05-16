@@ -349,26 +349,83 @@ display:inline-block !important;
 }
 
 .searchPreferencesList {
-    padding: 5px 0px 5px 0px;
+    padding: 5px 20px 5px 0px;
+    display: inline-block;
+    width: 800px;
+}
+
+.ListMainHead {
+    display: inline-block;
+    padding-right: 255px;
+    padding-bottom: 8px;
+}
+
+.ListWorkflowHead {
+    display: inline-block;
+    padding-right: 135px;
+    padding-bottom: 8px;
+}
+
+.ListRegistrationHead {
+    display: inline-block;
+    padding-right: 140px;
+    margin-left: -5px;
+    padding-bottom: 8px;
+}
+
+.searchPreferencesInput {
+    padding-right: 66px;
     display: inline-block;
 }
 
-.searchPreferencesList ul {
+.searchPreferencesBorder {
+    border: 1px solid #336699;
+    border-radius: 4px;
+    border-width: thin;
+}
+
+.dragDrop ul[dnd-list],
+.dragDrop ul[dnd-list] > li {
+  position: relative;
+}
+
+.dragDrop ul[dnd-list] {
+    border: 1px solid black;
+    width: 168px;
     list-style: none;
     display: inline-block;
+    min-height: 141px;
+    max-height: 141px;
+    overflow-y: scroll;
+    float: left;
+    margin-right: 20px;
+    border-radius: 2px;
+    border-width: thin;
 }
 
-.searchPreferencesList ul li{
-    padding: 5px 15px 5px 0px;
+.dragDrop ul[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 17px;
 }
 
-.boxWidth {
-    width: 141px; 
+.dragDrop ul[dnd-list] li {
+    padding: 3px 5px 3px 5px;
+    background-color: #fff;
+    font-size: 85%;
+    display: block;
 }
 
-.inputPadding {
-    padding-right: 15px;
-    display: inline-block;
+.dragDrop ul[dnd-list] li.selected {
+    background-color: #dff0d8;
+    color: #3c763d;
 }
+
+.searchPreferencesButton {
+    padding-top: 8px;
+}
+
+
+
 
 

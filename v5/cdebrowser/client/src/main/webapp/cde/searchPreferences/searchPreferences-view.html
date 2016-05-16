@@ -1,79 +1,49 @@
 <div ng-controller="SearchPreferencesController">
 	<div class="searchPreferences">
 		<div>
-			<div class="inputPadding">
-			    Exclude Context
-			</div>
-			<div class="inputPadding"><input name="testContext" type="checkbox" class="paddingInput" value="testContext" checked/>
-			Test
-			</div>
-			<div class="inputPadding"><input name="testContext" type="checkbox" class="paddingInput" value="trainingContext" checked/>
-			Training
-			</div>
-		    <div>
-		    	<div class="searchPreferencesList"><div>Workflow Status(es)</div>
-			    	<ul>
-		    			<li>
-		    			Included
-		    			</li>
-						<li>
-							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
-								<option value="APPRVD FOR TRIAL USE">APPRVD FOR TRIAL USE</option>
-								<option value="DRAFT MOD">DRAFT MOD</option>
-								<option value="DRAFT NEW">DRAFT NEW</option>
-								<option value="RELEASED">RELEASED</option>
-								<option value="RELEASED-NON-CMPLNT">RELEASED-NON-CMPLNT</option>
-							</select>
-						</li>
-					</ul>
-		    		<ul>
-		    			<li>
-		    			Excluded
-		    			</li>
-						<li>
-							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
-								<option value="CMTE APPROVED">CMTE APPROVED</option>
-								<option value="CMTE SUBMTD">CMTE SUBMTD</option>
-								<option value="CMTE SUBMTD USED">CMTE SUBMTD USED</option>
-								<option value="RETIRED ARCHIVED">RETIRED ARCHIVED</option>
-								<option value="RETIRED PHASED OUT">RETIRED PHASED OUT</option>
-								<option value="RETIRED WITHDRAWN">RETIRED WITHDRAWN</option>
-							</select>
-						</li>
-					</ul>
-			    </div>
-		    	<div class="searchPreferencesList"><div>Registration Status(es)</div>
-		    		<ul>
-		    			<li>
-		    			Included
-		    			</li>
-						<li>
-							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
-								<option value="Application">Application</option>
-								<option value="Candidate">Candidate</option>
-								<option value="Proposed">Proposed</option>
-								<option value="Qualified">Qualified</option>
-								<option value="Standard">Standard</option>
-								<option value="Standardized Elsewhere">Standardized Elsewhere</option>
-								<option value="Superceded">Superceded</option>
-								<option value="Suspended">Suspended</option>
-							</select>
-						</li>
-					</ul>
-		    		<ul>
-		    			<li>
-		    			Excluded
-		    			</li>
-						<li>
-							<select name="jspStatus" size="8" multiple="" class="LongLOVField boxWidth roundInput">
-								<option value="Retired">Retired</option>
-							</select>
-						</li>
-					</ul>
+			<!-- <span class="searchPreferencesBorder"> -->
+				<label class="searchPreferencesInput">
+				    Exclude Context
+				</label>
+				<label class="searchPreferencesInput"><input type="checkbox" class="paddingInput" ng-model="searchPreferencesCheckboxModel.test"/>
+				Test
+				</label>
+				<label class="searchPreferencesInput"><input type="checkbox" class="paddingInput" ng-model="searchPreferencesCheckboxModel.training"/>
+				Training
+				</label>
+				<!-- </span> -->
+		     <div>
+		    	<div class="searchPreferencesList">
+		    		<label class="ListMainHead">Workflow Status(es)</label>
+		    		<label class="ListMainHead">Registration Status(es)</label>
+		    		<div>
+		    			<label class="ListWorkflowHead">Included</label>
+			    		<label class="ListWorkflowHead">Excluded</label>
+			    		<label class="ListRegistrationHead">Included</label>
+			    		<label class="ListRegistrationHead">Excluded</label>
+			    	</div>
+				    	<div class="dragDrop searchPreferencesBox roundInput">
+					    	<div ng-repeat="list in models">
+				    			<ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes" dnd-drop="onDrop(list, item, index)">
+								    <li ng-repeat="item in list.items"
+								        dnd-draggable="getSelectedItemsIncluding(list, item)"
+								        dnd-dragstart="onDragstart(list, event)"
+								        dnd-moved="onMoved(list)"
+								        dnd-dragend="list.dragging = false"
+								        dnd-selected="item.selected = !item.selected"
+								        dnd-type="item.type"
+								        ng-class="{'selected': item.selected}"
+								        ng-hide="list.dragging && item.selected"
+								        >
+								        {{item.label}}
+								    </li>
+								</ul>
+							</div>
+						</div>
 			    </div>
 		  	</div>
 		</div>
-	<div>
+	<div class="searchPreferencesButton">
 		<button ng-click="">Save</button>
 		<button ng-click="">Reset to default</button>
 	</div>
