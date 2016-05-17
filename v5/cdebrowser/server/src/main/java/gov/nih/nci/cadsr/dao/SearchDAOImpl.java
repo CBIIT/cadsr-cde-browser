@@ -170,7 +170,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                                          'RETIRED ARCHIVED' ,\n" +
                 "                                                          'RETIRED PHASED OUT' ,\n" +
                 "                                                          'RETIRED WITHDRAWN' )\n" +
-//                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+//                "AND             conte.NAME NOT IN ( 'TEST',\n" +//FIXME will be parameterized
 //                "                                   'Training' )\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
@@ -224,7 +224,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                                          'RETIRED ARCHIVED' ,\n" +
                 "                                                          'RETIRED PHASED OUT' ,\n" +
                 "                                                          'RETIRED WITHDRAWN' )\n" +
-//                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+//                "AND             conte.NAME NOT IN ( 'TEST',\n" +//FIXME will be parameterized
 //                "                                   'Training' )\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
@@ -269,7 +269,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                 'CMTE SUBMTD USED',\n" +
                 "                                 'RETIRED ARCHIVED',\n" +
                 "                                 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN' )\n" +
-                "       AND conte.name NOT IN ( 'TEST', 'Training' )\n" +
+ //               "       AND conte.name NOT IN ( 'TEST', 'Training' )\n" +//FIXME will be parameterized
                 "       AND de.asl_name != 'RETIRED DELETED'\n" +
                 "       AND conte.conte_idseq = de.conte_idseq\n" +
                 "       AND de.de_idseq IN (SELECT ac_idseq\n" +
@@ -325,7 +325,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                                          'RETIRED ARCHIVED' ,\n" +
                 "                                                          'RETIRED PHASED OUT' ,\n" +
                 "                                                          'RETIRED WITHDRAWN' )\n" +
-//                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+//                "AND             conte.NAME NOT IN ( 'TEST',\n" +//FIXME will be parameterized
 //                "                                   'Training' )\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
