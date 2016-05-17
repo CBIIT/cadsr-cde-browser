@@ -97,6 +97,8 @@ public final class CaDSRConstants
     
     //Session Constants
     public static final String LOGGEDIN_USER_NAME = "loggedInUserName";
+    public static final String USER_SEARCH_PREFERENCES = "UserSearchPreferences";
+
     
     //TOOL_OPTIONS_EXT Constants
     public static final String TOOL_NAME = "CDEBrowser";
