@@ -170,8 +170,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                                          'RETIRED ARCHIVED' ,\n" +
                 "                                                          'RETIRED PHASED OUT' ,\n" +
                 "                                                          'RETIRED WITHDRAWN' )\n" +
-                "AND             conte.NAME NOT IN ( 'TEST',\n" +
-                "                                   'Training' )\n" +
+//                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+//                "                                   'Training' )\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             pt.proto_idseq = ptfrm.proto_idseq\n" +
@@ -224,8 +224,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                                          'RETIRED ARCHIVED' ,\n" +
                 "                                                          'RETIRED PHASED OUT' ,\n" +
                 "                                                          'RETIRED WITHDRAWN' )\n" +
-                "AND             conte.NAME NOT IN ( 'TEST',\n" +
-                "                                   'Training' )\n" +
+//                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+//                "                                   'Training' )\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             acs.cs_csi_idseq = '" + classificationSchemeItemId + "'\n" +
@@ -325,8 +325,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                                                          'RETIRED ARCHIVED' ,\n" +
                 "                                                          'RETIRED PHASED OUT' ,\n" +
                 "                                                          'RETIRED WITHDRAWN' )\n" +
-                "AND             conte.NAME NOT IN ( 'TEST',\n" +
-                "                                   'Training' )\n" +
+//                "AND             conte.NAME NOT IN ( 'TEST',\n" +
+//                "                                   'Training' )\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             de.de_idseq = acr.ac_idseq (+)\n" +
