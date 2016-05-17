@@ -7,6 +7,7 @@ package gov.nih.nci.cadsr.dao.operation;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import gov.nih.nci.cadsr.service.search.ProcessConstants;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,29 +21,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
 
-    private String sqlStmt = "";
-
     public SearchQueryBuilder()
     {
 
-    }
-
-    public String getSqlStmt() {
-		return sqlStmt;
-	}
-
-	public void setSqlStmt(String sqlStmt) {
-		this.sqlStmt = sqlStmt;
-	}
-    
-    public SearchQueryBuilder(
-            String clientName, String clientSearchMode, String clientPublicId,
-            String programArea,
-            String context, String classification, String protocol,
-            String workFlowStatus, String registrationStatus,
-            String conceptName, String conceptCode )
-    {
-        initSeqrchQueryBuilder( clientName, clientSearchMode, clientPublicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode );
     }
 
 	/**
@@ -56,14 +37,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
      * @param workFlowStatus     sbr.ac_status_lov_view - asl_name   -  Works   If empty will use the exclude list  from common.WorkflowStatusEnum#getExcludList():
      * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
      */
-    public void initSeqrchQueryBuilder(
-            String clientName, String clientSearchMode, String clientPublicId,
-            String programArea, String context, String classification, String protocol,
-            String workFlowStatus, String registrationStatus,
-            String conceptName, String conceptCode )
+    public String initSeqrchQueryBuilder(SearchCriteria searchCriteria)
     {
-        logger.debug( "initSeqrchQueryBuilder( \"" + clientName + "\", \"" + clientSearchMode + "\", " + clientPublicId + ", \"" + programArea + "\", \"" + context + "\", \"" + classification +
-                "\", \"" + protocol + "\", \"" + workFlowStatus + "\", \"" + registrationStatus + "\", \"" + conceptName + "\", \"" + conceptCode + "\" )" );
+        logger.debug("Initializing Search query builder with Search Criteria : " + searchCriteria);
         
         String vdFrom = "";
         String deDerivWhere = "";
@@ -83,18 +59,18 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String regStatus = "";
         String protocolWhere = "";
 
-        if(StringUtils.isBlank(classification))
+        if(StringUtils.isBlank(searchCriteria.getClassification()))
         {
             classificationFrom = "";
         }
         else
         {
             classificationWhere = " AND de.de_idseq IN (SELECT de_idseq FROM   sbr.data_elements_view de , sbr.ac_csi_view acs, sbr.cs_csi_view csc " + 
-            					  "WHERE  csc.cs_idseq = '" + classification + "' " +
-            					  "AND    csc.cs_csi_idseq = acs.cs_csi_idseq AND    acs.ac_idseq = de_idseq )";
+            					  "WHERE  csc.cs_idseq = '" + searchCriteria.getClassification() + "' " +
+            					  "AND    csc.cs_csi_idseq = acs.cs_csi_idseq AND acs.ac_idseq = de_idseq ) ";
         }
         
-        if(StringUtils.isBlank(protocol))
+        if(StringUtils.isBlank(searchCriteria.getProtocol()))
         {
             protocolFrom = "";
         }
@@ -102,7 +78,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             protocolWhere = " AND pt.proto_idseq = ptfrm.proto_idseq AND frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF'" +
             				" AND qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq" +
-            				" AND pt.proto_idseq = '" + protocol + "' ";
+            				" AND pt.proto_idseq = '" + searchCriteria.getProtocol() + "' ";
         }
 
         ////////////////////////////////////////////////////
@@ -116,22 +92,22 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status
         regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
 
-        if (StringUtils.isNotBlank(registrationStatus))
+        if (StringUtils.isNotBlank(searchCriteria.getRegistrationStatus()))
         {
-        	registrationStatusWhere = " AND acr.registration_status = '" + registrationStatus + "' ";
+        	registrationStatusWhere = " AND acr.registration_status = '" + searchCriteria.getRegistrationStatus() + "' ";
         }
         
         ////////////////////////////////////////////////////
         // WorkFlowStatus
         // If it is empty, use the default exclude list in WorkflowStatusEnum
         String workflowWhere;
-        if(StringUtils.isBlank(workFlowStatus))
+        if(StringUtils.isBlank(searchCriteria.getWorkFlowStatus()))
         {
             workflowWhere = " AND " + WorkflowStatusEnum.getExcludList();
         }
         else
         {
-            workflowWhere = " AND asl.asl_name = '" + workFlowStatus + "'";
+            workflowWhere = " AND asl.asl_name = '" + searchCriteria.getWorkFlowStatus() + "'";
         }
 
 
@@ -146,24 +122,24 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         ///////////////////////////////////////////////////////
         // Filter for only a specific context is added only if protocol where is not already added otherwise,
         //the left context tree search by protocol is not matching up with the drop down search by context and protocol
-        if(StringUtils.isNotBlank(context) && StringUtils.isBlank(protocol))
+        if(StringUtils.isNotBlank(searchCriteria.getContext()) && StringUtils.isBlank(searchCriteria.getProtocol()))
         {
-            contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" +  context + "' " +
-        				   " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + context + "') AND ";
+            contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
+        				   " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
         }
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific programArea
-        if(StringUtils.isNotBlank(programArea))
+        if(StringUtils.isNotBlank(searchCriteria.getProgramArea()))
         {
-            programAreaWhere = " conte.pal_name = '" + programArea + "' AND ";
+            programAreaWhere = " conte.pal_name = '" + searchCriteria.getProgramArea() + "' AND ";
         }
 
 
-        if( StringUtils.isNotBlank(clientPublicId) && ( !clientPublicId.trim().equals( "*" ) ) )
+        if( StringUtils.isNotBlank(searchCriteria.getPublicId()) && ( !searchCriteria.getPublicId().trim().equals( "*" ) ) )
         {
-            String newCdeStr = StringReplace.strReplace( clientPublicId, "*", "%" );
-            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, clientSearchMode )
+            String newCdeStr = StringReplace.strReplace( searchCriteria.getPublicId(), "*", "%" );
+            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, searchCriteria.getSearchMode() )
             			+ " AND de.latest_version_ind = 'Yes' ";
         }
 
@@ -175,11 +151,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         }
 
-        if(StringUtils.isNotBlank(clientName))
+        if(StringUtils.isNotBlank(searchCriteria.getName()))
         {
         	// AppScan
-            clientName = StringUtilities.sanitizeForSql( clientName );
-            docWhere = this.buildSearchTextWhere( clientName, searchIn, clientSearchMode );
+            String clientName = StringUtilities.sanitizeForSql( searchCriteria.getName() );
+            docWhere = this.buildSearchTextWhere( clientName, searchIn, searchCriteria.getSearchMode() );
         }
 
         whereBuffer.append( wkFlowWhere );
@@ -216,7 +192,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( selectClause );
         finalSqlStmt.append( fromWhere );
 
-        sqlStmt = finalSqlStmt.toString();
+        String sqlStmt = finalSqlStmt.toString();
+        return sqlStmt;
     }
 
 

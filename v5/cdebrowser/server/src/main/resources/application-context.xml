@@ -26,7 +26,11 @@
 
     <bean id="acRegistrationsDAO" class="gov.nih.nci.cadsr.dao.AcRegistrationsDAOImpl" parent="abstractDao"/>
     <bean id="acAttCsCsiDAO" class="gov.nih.nci.cadsr.dao.AcAttCsCsiDAOImpl" parent="abstractDao"/>
-    <bean id="searchDAO" class="gov.nih.nci.cadsr.dao.SearchDAOImpl" parent="abstractDao"/>
+    
+    <bean id="searchDAO" class="gov.nih.nci.cadsr.dao.SearchDAOImpl" parent="abstractDao">
+    	<property name="searchQueryBuilder" ref="searchQueryBuilder"/>
+    </bean>
+    
     <bean id="conceptDAO" class="gov.nih.nci.cadsr.dao.ConceptDAOImpl" parent="abstractDao"/>
 
     <bean id="classificationSchemeDAO" class="gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl" parent="abstractDao"/>

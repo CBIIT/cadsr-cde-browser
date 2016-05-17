@@ -11,21 +11,11 @@ import org.junit.Test;
 
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 public class SearchQueryBuilderTest
 {
-	private SearchQueryBuilder searchQueryBuilder = null;
-	private String queryText="";
-	private String publicId = "25*";
-	private String clientSearchMode="0";
-	private String programArea="All";
-	private String context="Testcontext";
-	private String classification="99BA9DC8-84A5-4E69-E034-080020C9C0E0";
-	private String protocol="protocol";
-	private String workFlowStatus="workFlowStatus";
-	private String registrationStatus="registrationStatus";
-	private String conceptName="conceptName";
-	private String conceptCode="conceptCode";
+	private SearchQueryBuilder searchQueryBuilder;
 
 	@Before
 	public void setUp() throws Exception
@@ -43,15 +33,39 @@ public class SearchQueryBuilderTest
 	@Test
 	public void testInitSeqrchQueryBuilder01() throws Exception
 	{
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("25*");
+		searchCriteria.setSearchMode("0");
+		searchCriteria.setProgramArea("All");
+		searchCriteria.setContext("Testcontext");
+		searchCriteria.setClassification("99BA9DC8-84A5-4E69-E034-080020C9C0E0");
+		searchCriteria.setProtocol("protocol");
+		searchCriteria.setWorkFlowStatus("workFlowStatus");
+		searchCriteria.setRegistrationStatus("registrationStatus");
+		searchCriteria.setConceptName("conceptName");
+		searchCriteria.setConceptCode("conceptCode");
 		// With workFlow
-		searchQueryBuilder.initSeqrchQueryBuilder( queryText, clientSearchMode, publicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode);
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
 	}
 
 	@Test
 	public void testInitSeqrchQueryBuilder02() throws Exception
 	{
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("25*");
+		searchCriteria.setSearchMode("0");
+		searchCriteria.setProgramArea("All");
+		searchCriteria.setContext("Testcontext");
+		searchCriteria.setClassification("99BA9DC8-84A5-4E69-E034-080020C9C0E0");
+		searchCriteria.setProtocol("protocol");
+		searchCriteria.setWorkFlowStatus("");
+		searchCriteria.setRegistrationStatus("registrationStatus");
+		searchCriteria.setConceptName("conceptName");
+		searchCriteria.setConceptCode("conceptCode");
 		// With out workFlow, make sure workflow is empty, and exclude clause is right
-		searchQueryBuilder.initSeqrchQueryBuilder(  queryText, clientSearchMode, publicId, programArea, context, classification, protocol, "", registrationStatus, conceptName, conceptCode);
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
 
 		assertEquals( " asl.asl_name NOT IN ( 'CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' ) ", WorkflowStatusEnum.getExcludList() );
 	}
@@ -60,29 +74,81 @@ public class SearchQueryBuilderTest
 	@Test
 	public void testWorkFlowStatus00() throws Exception
 	{
-		searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", publicId, "", "", "", "", "APPRVD FOR TRIAL USE", "", "", "" );
-		assertEquals( cleanup( searchQueryBuilder.getSqlStmt()), cleanup( sql00 )   );
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("25*");
+		searchCriteria.setSearchMode("Exact phrase");
+		searchCriteria.setProgramArea("");
+		searchCriteria.setContext("");
+		searchCriteria.setClassification("");
+		searchCriteria.setProtocol("");
+		searchCriteria.setWorkFlowStatus("APPRVD FOR TRIAL USE");
+		searchCriteria.setRegistrationStatus("");
+		searchCriteria.setConceptName("");
+		searchCriteria.setConceptCode("");
+		
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		assertEquals( cleanup(sqlStmt), cleanup( sql00 ) );
 	}
 
 	@Test
 	public void testWorkFlowStatus01() throws Exception
 	{
-		searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", publicId, "", "", "", "", "", "", "", "" );
-		assertEquals( cleanup( searchQueryBuilder.getSqlStmt()), cleanup( sql01 )   );
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("25*");
+		searchCriteria.setSearchMode("Exact phrase");
+		searchCriteria.setProgramArea("");
+		searchCriteria.setContext("");
+		searchCriteria.setClassification("");
+		searchCriteria.setProtocol("");
+		searchCriteria.setWorkFlowStatus("");
+		searchCriteria.setRegistrationStatus("");
+		searchCriteria.setConceptName("");
+		searchCriteria.setConceptCode("");
+		
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		assertEquals( cleanup(sqlStmt), cleanup( sql01 )   );
 	}
 
 	@Test
 	public void testContext00() throws Exception
 	{
-		searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", publicId, "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", "", "", "" );
-		assertEquals( cleanup( searchQueryBuilder.getSqlStmt()), cleanup( sql02 )   );
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("25*");
+		searchCriteria.setSearchMode("Exact phrase");
+		searchCriteria.setProgramArea("");
+		searchCriteria.setContext("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+		searchCriteria.setClassification("");
+		searchCriteria.setProtocol("");
+		searchCriteria.setWorkFlowStatus("");
+		searchCriteria.setRegistrationStatus("");
+		searchCriteria.setConceptName("");
+		searchCriteria.setConceptCode("");
+		
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		assertEquals( cleanup(sqlStmt), cleanup( sql02 )   );
 	}
 
 	@Test
 	public void testClassification00() throws Exception
 	{
-		searchQueryBuilder.initSeqrchQueryBuilder( "", "Exact phrase", "258*", "", "", "EB5D88AB-6077-69CB-E034-0003BA3F9857", "", "", "", "", "" );
-		System.out.println( cleanup( searchQueryBuilder.getSqlStmt()));
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("258*");
+		searchCriteria.setSearchMode("Exact phrase");
+		searchCriteria.setProgramArea("");
+		searchCriteria.setContext("");
+		searchCriteria.setClassification("EB5D88AB-6077-69CB-E034-0003BA3F9857");
+		searchCriteria.setProtocol("");
+		searchCriteria.setWorkFlowStatus("");
+		searchCriteria.setRegistrationStatus("");
+		searchCriteria.setConceptName("");
+		searchCriteria.setConceptCode("");
+		
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder( searchCriteria);
+		System.out.println( cleanup( sqlStmt));
 	}
 
 	@Test
@@ -100,8 +166,21 @@ public class SearchQueryBuilderTest
 	@Test
 	public void testProtocolSearchQuery()
 	{
-		searchQueryBuilder.initSeqrchQueryBuilder( "", "", "", "", "Test", "", "B40DD2C8-A047-DBE1-E040-BB89AD437202", "", "", "", "" );
-		assertEquals(cleanup(searchQueryBuilder.getSqlStmt()), cleanup(protocolSearchQuery));
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setName("");
+		searchCriteria.setPublicId("");
+		searchCriteria.setSearchMode("");
+		searchCriteria.setProgramArea("");
+		searchCriteria.setContext("Test");
+		searchCriteria.setClassification("");
+		searchCriteria.setProtocol("B40DD2C8-A047-DBE1-E040-BB89AD437202");
+		searchCriteria.setWorkFlowStatus("");
+		searchCriteria.setRegistrationStatus("");
+		searchCriteria.setConceptName("");
+		searchCriteria.setConceptCode("");
+		
+		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		assertEquals(cleanup(sqlStmt), cleanup(protocolSearchQuery));
 	}
 
 	private String cleanup( String s)

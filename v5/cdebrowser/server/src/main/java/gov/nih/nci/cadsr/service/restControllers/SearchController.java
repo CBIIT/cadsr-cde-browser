@@ -5,10 +5,11 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.List;
 
-import gov.nih.nci.cadsr.common.util.StringUtilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.dao.SearchDAO;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.dao.model.SearchModel;
-import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
 
 @RestController
@@ -38,7 +40,6 @@ public class SearchController
     private RestControllerCommon restControllerCommon;
 
     private List<ProgramAreaModel> programAreaModelList = null;
-    private SearchQueryBuilder searchQueryBuilder = null;
 
     public SearchController()
     {
@@ -46,25 +47,23 @@ public class SearchController
 
     }
 
-
     @RequestMapping( value = "/testSearch" )
     @ResponseBody
-    public SearchNode[] testSearch(
-            @RequestParam( "name" ) String name, @RequestParam( "queryType" ) int queryType, @RequestParam( "publicId" ) String publicId, @RequestParam( "programArea" ) String programArea )
+    public SearchNode[] testSearch(@ModelAttribute SearchCriteria searchCriteria)
     {
         SearchNode[] results = null;
         try
         {
-            String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-            results = buildSearchResultsNodes( searchDAO.getAllContexts( name, searchMode, publicId, programArea, "", "", "", "", "", "", "" ) );
+            String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
+            searchCriteria.setSearchMode(searchMode);
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria) );
         } catch( Exception e )
         {
-            return createErrorNode( "Server Error:\ntestSearch: " + name + ", " + queryType + ", " + publicId + ", " + programArea + " failed ", e );
+            return createErrorNode( "Server Error:\ntestSearch: " + searchCriteria.getName() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getPublicId() + ", " + searchCriteria.getProgramArea() + " failed ", e );
         }
 
         return results;
     }
-
 
     /**
      * @param name              The text of the name field.
@@ -81,25 +80,21 @@ public class SearchController
      */
     @RequestMapping( value = "/search" )
     @ResponseBody
-    public SearchNode[] search(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "publicId", required = false) String publicId,
-            @RequestParam( value = "queryType", defaultValue = "2", required = false ) int queryType, // 2 = "At least one of the words"
-            @RequestParam( value = "programArea", required = false ) String programArea,  // 0 = All (Ignore Program area)
-            @RequestParam( value = "context", defaultValue = "", required = false ) String context,
-            @RequestParam( value = "classification", defaultValue = "", required = false ) String classification,
-            @RequestParam( value = "protocol", defaultValue = "", required = false ) String protocol,
-            @RequestParam( value = "workFlowStatus", defaultValue = "", required = false ) String workFlowStatus,
-            @RequestParam( value = "registrationStatus", defaultValue = "", required = false ) String registrationStatus,
-            @RequestParam( value = "conceptName", defaultValue = "", required = false ) String conceptName,
-            @RequestParam( value = "conceptCode", defaultValue = "", required = false ) String conceptCode )
+    public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result)
     {
-        logger.debug( "search  name: " + name + "   queryType: " + queryType + "   publicId: " + publicId + "   programArea: " + programArea + "   context: " + context + "   classification: " + classification + ": " +
-                "   protocol: " + protocol + "   workFlowStatus: " + workFlowStatus + "   registrationStatus: " + registrationStatus + "   conceptName: " + conceptName + "   conceptCode: " + conceptCode );
+        logger.debug("Received a search request with the following search criteria: " + searchCriteria);
         SearchNode[] results;
+        
+        if (result.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean.");
+        	return createErrorNode( "Server Error in binding search criteria to a bean."); 
+        }
 
         // AppScan will try to inject %Hex strings to test our parameter sanitizing.
-        if( StringUtilities.checkForBadParameters( name, publicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode ))
+        if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(), 
+        										searchCriteria.getClassification(), searchCriteria.getProtocol(), searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), 
+        										searchCriteria.getConceptName(), searchCriteria.getConceptCode() ))
         {
             logger.warn( "Suspect parameter from client." );
             return null;
@@ -107,16 +102,13 @@ public class SearchController
 
         try
         {
-            String searchMode = CaDSRConstants.SEARCH_MODE[queryType];
-            results = buildSearchResultsNodes(
-                    searchDAO.getAllContexts(
-                    		name, searchMode, publicId, programArea, context, classification, protocol, workFlowStatus, registrationStatus, conceptName, conceptCode
-                    )
-            );
+            String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
+            searchCriteria.setSearchMode(searchMode);
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria) );
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
-            return createErrorNode( "Server Error:\nsearch: " + name + ", publicId: " + publicId + ", " + queryType + ", " + programArea + " failed ", e );
+            return createErrorNode( "Server Error:\nsearch criteria : " + searchCriteria.getName() + ", publicId: " + searchCriteria.getPublicId() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getProgramArea() + " failed ", e );
         }
 
         return results;
@@ -144,10 +136,9 @@ public class SearchController
         try
         {
             results = getCdeByContext( contexId );
-            Exception e = new Exception();
         } catch( Exception e )
         {
-
+        	logger.error("Error in Searching by context id: " + contexId, e);
             return createErrorNode( "Server Error:\ngetCDEsByContext failed ", e );
         }
         return results;
@@ -359,16 +350,6 @@ public class SearchController
         this.programAreaModelList = programAreaModelList;
     }
 
-    public SearchQueryBuilder getSearchQueryBuilder()
-    {
-        return searchQueryBuilder;
-    }
-
-    public void setSearchQueryBuilder( SearchQueryBuilder searchQueryBuilder )
-    {
-        this.searchQueryBuilder = searchQueryBuilder;
-    }
-
 	public AppConfig getAppConfig() {
 		return appConfig;
 	}
@@ -376,6 +357,5 @@ public class SearchController
 	public void setAppConfig(AppConfig appConfig) {
 		this.appConfig = appConfig;
 	}
-
 
 }

@@ -6,16 +6,13 @@ package gov.nih.nci.cadsr.dao;
 import java.util.List;
 
 import gov.nih.nci.cadsr.dao.model.SearchModel;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 public interface SearchDAO
 {
 	public List<SearchModel> cdeOwnedAndUsedByContext( String conteId );
 	
-	public List<SearchModel> getAllContexts(
-            String clientName, String clientSearchMode, String clientPublicId,
-            String programArea, String context, String classification, String protocol,
-            String workFlowStatus, String registrationStatus,
-            String conceptName, String conceptCode );
+	public List<SearchModel> getAllContexts(SearchCriteria searchCriteria);
 	
 	public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId );
 	
