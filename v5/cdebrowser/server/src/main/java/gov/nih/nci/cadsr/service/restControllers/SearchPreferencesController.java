@@ -53,8 +53,8 @@ public class SearchPreferencesController {
 		return searchPreferences;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = "text/plain", consumes = "application/json")
-	public String saveSearchPreferences(HttpServletRequest request, 
+	@RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	public SearchPreferences saveSearchPreferences(HttpServletRequest request, 
 			@RequestBody(required=false) SearchPreferences searchPreferences) {
 		logger.debug("Received request to save search preferences: " + searchPreferences);
 		HttpSession httpSession = request.getSession(true);
@@ -67,6 +67,6 @@ public class SearchPreferencesController {
 			logger.debug("User search initial preferences assigned to HTTP session: " + searchPreferences);			
 		}
 		httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
-		return "Done!";
+		return searchPreferences;
 	}
 }
