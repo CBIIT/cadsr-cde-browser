@@ -4,6 +4,7 @@
 package gov.nih.nci.cadsr.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
@@ -17,9 +18,15 @@ public class SearchPreferences implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private boolean excludeTest = true;
 	private boolean excludeTraining = true;
-	private List<String> workflowStatusExcluded = WorkflowStatusExcludedInitial.getInitialExcludedList();
-	private List<String> registrationStatusExcluded = RegistrationStatusExcludedInitial.getInitialExcludedList();
+	private List<String> workflowStatusExcluded = new ArrayList<String>();
+	private List<String> registrationStatusExcluded = new ArrayList<String>();
 	
+	public void initPreferences() {
+		excludeTest = true;
+		excludeTraining = true;
+		this.workflowStatusExcluded = WorkflowStatusExcludedInitial.getInitialExcludedList();
+		this.registrationStatusExcluded = RegistrationStatusExcludedInitial.getInitialExcludedList();
+	}
 	public boolean isExcludeTest() {
 		return excludeTest;
 	}
@@ -37,13 +44,20 @@ public class SearchPreferences implements Serializable {
 		return workflowStatusExcluded;
 	}
 	public void setWorkflowStatusExcluded(List<String> workflowStatusExcluded) {
-		this.workflowStatusExcluded = workflowStatusExcluded;
+		if (workflowStatusExcluded != null)
+			this.workflowStatusExcluded = workflowStatusExcluded;
+		else 
+			this.workflowStatusExcluded = new ArrayList<String>();;
 	}
 	public List<String> getRegistrationStatusExcluded() {
 		return registrationStatusExcluded;
 	}
 	public void setRegistrationStatusExcluded(List<String> registrationStatusExcluded) {
-		this.registrationStatusExcluded = registrationStatusExcluded;
+		if (registrationStatusExcluded != null)
+			this.registrationStatusExcluded = registrationStatusExcluded;
+		else 
+			this.registrationStatusExcluded = new ArrayList<String>();
+
 	}
 	
 	@Override
