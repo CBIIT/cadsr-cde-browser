@@ -40,7 +40,10 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
     {
         List<ContextModel> results;
         // FIXME  excludes need to come from a setting
-        String sql = "SELECT * FROM sbr.contexts  WHERE name !=  'TEST' ORDER BY LOWER(name)";
+        String sql = "SELECT * FROM sbr.contexts"
+//        		+ "  WHERE "
+//        		+ "name !=  'TEST' "//FIXME will be parameterized
+        		+ " ORDER BY LOWER(name)";
         results = getAll( sql, ContextModel.class );
 
         return results;
