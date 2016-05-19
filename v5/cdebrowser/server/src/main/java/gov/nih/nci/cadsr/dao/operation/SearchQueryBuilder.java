@@ -22,7 +22,7 @@ import gov.nih.nci.cadsr.service.search.ProcessConstants;
 public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
-
+    
     public SearchQueryBuilder()
     {
 
@@ -61,6 +61,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String classificationWhere = "";
         String regStatus = "";
         String protocolWhere = "";
+        
+     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
+        String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
+        
+        String classificationFrom = ", sbr.classification_schemes cls ";
+        String protocolFrom = ", sbrext.quest_contents_view_ext frm, sbrext.protocol_qc_ext ptfrm, sbrext.protocols_view_ext pt, sbrext.quest_contents_view_ext qc ";
+        String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
+
 
         if(StringUtils.isBlank(searchCriteria.getClassification()))
         {

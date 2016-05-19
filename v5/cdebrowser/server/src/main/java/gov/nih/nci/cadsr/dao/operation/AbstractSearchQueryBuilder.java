@@ -47,15 +47,7 @@ public static String wkFlowDbField = "asl.asl_name";
     
     //Search in the following field(s) in Advanced search
     protected String[] searchIn = { "ALL" };
-
-
-    // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
-    public String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
     
-    public String classificationFrom = ", sbr.classification_schemes cls ";
-    public String protocolFrom = ", sbrext.quest_contents_view_ext frm, sbrext.protocol_qc_ext ptfrm, sbrext.protocols_view_ext pt, sbrext.quest_contents_view_ext qc ";
-    public String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
-
     //jspValueDomain is in advancedSearch_inc.jsp associated with a field labeled “Search for Value Domains”.  It’s an odd hidden field associated with a “LOV” AND with a text field that is disabled.  There’s a DB table for value_domains.  Value Domain (VD), Value Meaning (VM) AND Permissible Values (PV) all contribute to the data about what can be the answers to questions.
     public String valueDomain = "";
 }
