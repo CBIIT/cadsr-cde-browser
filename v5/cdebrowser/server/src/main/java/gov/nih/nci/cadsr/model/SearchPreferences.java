@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 /**
  * This is a class to represent user session search preferences entity.
@@ -20,6 +21,9 @@ public class SearchPreferences implements Serializable {
 	private boolean excludeTraining = true;
 	private List<String> workflowStatusExcluded = new ArrayList<String>();
 	private List<String> registrationStatusExcluded = new ArrayList<String>();
+	public static final String CONTEXT_EXCLUDES = "'TEST', 'Training'";
+	public static final String CONTEXT_EXCLUDES_TEST = "'TEST'";
+	public static final String CONTEXT_EXCLUDES_TRAINING = "'Training'";
 	
 	public void initPreferences() {
 		excludeTest = true;
@@ -59,7 +63,48 @@ public class SearchPreferences implements Serializable {
 			this.registrationStatusExcluded = new ArrayList<String>();
 
 	}
+	/**
+	 * 
+	 * @return SQL-ready String which has a list of string values of excluded statuses as " ('Aa', 'Ba',...,'Xa') ", or null if the list is empty
+	 */
+	public String buildfExcludedWorkflowSql() {
+		return buildfExcludedStatusSql(workflowStatusExcluded);
+	}
 	
+	/**
+	 * 
+	 * @return SQL-ready String which has a list of string values of excluded statuses as " ('Aa', 'Ba',...,'Xa') ", or null if the list is empty
+	 */
+	public String buildfExcludedRegistrationSql() {
+		return buildfExcludedStatusSql(registrationStatusExcluded);
+	}
+	
+	/**
+	 * 
+	 * @return SQL-ready String which has a list of string values of excluded statuses as " ('Aa', 'Ba',...,'Xa') ", or null if the list is empty
+	 */
+	protected String buildfExcludedStatusSql(List<String> statusExcluded) {
+		if ((statusExcluded == null) || (statusExcluded.isEmpty()))
+			return null;
+
+		StringBuilder sb = new StringBuilder(" ('");
+		for (String curr : statusExcluded) {
+			sb.append(curr + "', '");
+		}
+		sb.replace(sb.length() - 3, sb.length(), ") ");
+
+		return sb.toString();
+	}
+	public String buildContextExclided() {
+		String result = null;
+		if (excludeTest && excludeTraining)
+			result = CONTEXT_EXCLUDES;
+		else if (excludeTest)
+			result = CONTEXT_EXCLUDES_TEST;
+		else if (excludeTraining)
+			result = CONTEXT_EXCLUDES_TRAINING;
+		return result;
+	}
 	@Override
 	public String toString() {
 		return "SearchPreferences [excludeTest=" + excludeTest + ", excludeTraining=" + excludeTraining

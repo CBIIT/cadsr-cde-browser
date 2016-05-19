@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
+import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 import gov.nih.nci.cadsr.model.SearchPreferences;
 /**
  * This is a class to handle user session search preferences
@@ -46,10 +48,8 @@ public class SearchPreferencesController {
 			logger.debug("User HTTP sessionis was not found, creating");
 			httpSession = request.getSession(true);
 		}
-		searchPreferences = new SearchPreferences();
-		searchPreferences.initPreferences();
+		ControllerUtils.initSearchPreferencesInSession(httpSession);
 		logger.debug("User search initial preferences assigned to HTTP session, returning : " + searchPreferences);
-		httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
 		return searchPreferences;
 	}
 
@@ -58,15 +58,23 @@ public class SearchPreferencesController {
 			@RequestBody(required=false) SearchPreferences searchPreferences) {
 		logger.debug("Received request to save search preferences: " + searchPreferences);
 		HttpSession httpSession = request.getSession(true);
-		if (searchPreferences != null) {
+		if (searchPreferences != null) {//FIXME validate the values received
+			cleanUpSearchPreferences(searchPreferences);
+			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
 			logger.debug("User session search preferences are updated to: " + searchPreferences);
 		}
 		else {
-			searchPreferences = new SearchPreferences();
-			searchPreferences.initPreferences();
+			ControllerUtils.initSearchPreferencesInSession(httpSession);
 			logger.debug("User search initial preferences assigned to HTTP session: " + searchPreferences);			
 		}
-		httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
 		return searchPreferences;
 	}
+
+	private void cleanUpSearchPreferences(SearchPreferences searchPreferences) {
+		searchPreferences.setWorkflowStatusExcluded(
+			WorkflowStatusExcludedInitial.buildValidStatusList(searchPreferences.getWorkflowStatusExcluded()));
+		searchPreferences.setRegistrationStatusExcluded(
+				RegistrationStatusExcludedInitial.buildValidStatusList(searchPreferences.getRegistrationStatusExcluded()));
+	}
+	
 }

@@ -33,15 +33,19 @@ public static String wkFlowDbField = "asl.asl_name";
 
 ////////////////////////////////////
 
-
+	//FIXME remove excludeArr
     //////////////////////////////////////////////////////////////////
-    //Will eventually be set as a preference or settings from client.
-    public static String CONTEXT_EXCLUDES = "\'TEST\', \'Training\'";
+	//TODO this array is a placeholder to represent a list of registration statuses for Advanced search
     protected String[] regStatusesWhere = { "ALL" };
+	//TODO this array is a placeholder to represent a list of workflow statuses for Advanced search
     protected String[] statusWhere = { "ALL" };
-    protected String[] excludeArr = { "Retired" };
+    
+    //protected String[] excludeArr = { "Retired" };
     protected String altName = "";
+    
     // replaced public static String[] aslNameExcludeList = { "CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "RETIRED ARCHIVED", "RETIRED PHASED OUT", "RETIRED WITHDRAWN" };
+    
+    //Search in the following field(s) in Advanced search
     protected String[] searchIn = { "ALL" };
 
 

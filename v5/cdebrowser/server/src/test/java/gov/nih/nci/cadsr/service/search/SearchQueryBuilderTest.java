@@ -7,21 +7,29 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
+import gov.nih.nci.cadsr.model.SearchPreferences;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 public class SearchQueryBuilderTest
 {
 	private SearchQueryBuilder searchQueryBuilder;
-
+	private static SearchPreferences initilaSearchPreferences;
+	@BeforeClass
+	public static void setUpClass() throws Exception
+	{
+		initilaSearchPreferences = new SearchPreferences();
+		initilaSearchPreferences.initPreferences();
+	}
+	
 	@Before
 	public void setUp() throws Exception
 	{
 		searchQueryBuilder = new SearchQueryBuilder();
-
 	}
 
 	@After
@@ -31,7 +39,7 @@ public class SearchQueryBuilderTest
 	}
 
 	@Test
-	public void testInitSeqrchQueryBuilder01() throws Exception
+	public void testInitSearchQueryBuilder01() throws Exception
 	{
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setName("");
@@ -46,11 +54,11 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("conceptName");
 		searchCriteria.setConceptCode("conceptCode");
 		// With workFlow
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
 	}
 
 	@Test
-	public void testInitSeqrchQueryBuilder02() throws Exception
+	public void testInitSearchQueryBuilder02() throws Exception
 	{
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setName("");
@@ -65,7 +73,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("conceptName");
 		searchCriteria.setConceptCode("conceptCode");
 		// With out workFlow, make sure workflow is empty, and exclude clause is right
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
 
 		assertEquals( " asl.asl_name NOT IN ( 'CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' ) ", WorkflowStatusEnum.getExcludList() );
 	}
@@ -87,7 +95,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("");
 		searchCriteria.setConceptCode("");
 		
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
 		assertEquals( cleanup(sqlStmt), cleanup( sql00 ) );
 	}
 
@@ -107,7 +115,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("");
 		searchCriteria.setConceptCode("");
 		
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
 		assertEquals( cleanup(sqlStmt), cleanup( sql01 )   );
 	}
 
@@ -127,7 +135,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("");
 		searchCriteria.setConceptCode("");
 		
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
 		assertEquals( cleanup(sqlStmt), cleanup( sql02 )   );
 	}
 
@@ -147,7 +155,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("");
 		searchCriteria.setConceptCode("");
 		
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder( searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences);
 		System.out.println( cleanup( sqlStmt));
 	}
 
@@ -179,7 +187,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptName("");
 		searchCriteria.setConceptCode("");
 		
-		String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
 		assertEquals(cleanup(sqlStmt), cleanup(protocolSearchQuery));
 	}
 
@@ -233,6 +241,7 @@ public class SearchQueryBuilderTest
 			" WHERE de.de_idseq = rd.ac_idseq (+)"+
 			"  AND rd.dctl_name (+) = 'Preferred Question Text'"+
 			"  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')"+
+			"  AND asl.asl_name NOT IN ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN') "+
 			"  AND asl.asl_name = 'APPRVD FOR TRIAL USE'"+
 			"  AND conte.name NOT IN ('TEST',"+
 			"                         'Training')"+

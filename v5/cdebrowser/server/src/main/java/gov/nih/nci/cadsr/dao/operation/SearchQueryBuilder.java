@@ -4,18 +4,20 @@ package gov.nih.nci.cadsr.dao.operation;
  */
 
 
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
-import gov.nih.nci.cadsr.common.util.StringReplace;
-import gov.nih.nci.cadsr.common.util.StringUtilities;
-import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
-import gov.nih.nci.cadsr.service.search.ProcessConstants;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
+import gov.nih.nci.cadsr.common.util.StringReplace;
+import gov.nih.nci.cadsr.common.util.StringUtilities;
+import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
+import gov.nih.nci.cadsr.service.search.ProcessConstants;
 
 public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 {
@@ -37,9 +39,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
      * @param workFlowStatus     sbr.ac_status_lov_view - asl_name   -  Works   If empty will use the exclude list  from common.WorkflowStatusEnum#getExcludList():
      * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
      */
-    public String initSeqrchQueryBuilder(SearchCriteria searchCriteria)
+    public String initSearchQueryBuilder(SearchCriteria searchCriteria, SearchPreferences searchPreferences)
     {
         logger.debug("Initializing Search query builder with Search Criteria : " + searchCriteria);
+        logger.debug("Initializing Search query builder with Search Preferences : " + searchPreferences);
         
         String vdFrom = "";
         String deDerivWhere = "";
@@ -82,41 +85,46 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
         ////////////////////////////////////////////////////
-        // FIXME - Cleanup/implement use selected or excluded Registration Status here
+        // we use selected or excluded Registration Status here
         String registrationExcludeWhere = "";
-        //excludeArr will eventually be set as a preference or settings from client, currently set in the abstract class.
-        if( !StringUtilities.isArrayWithEmptyStrings( excludeArr ) )
-        {
-            registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeArr );
-        }
-        //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status
-        regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
 
+        List<String> registrationStatusExcluded = searchPreferences.getRegistrationStatusExcluded();
+        if (! registrationStatusExcluded.isEmpty()) {
+        	String[] excludeRegistrationStatusArr = registrationStatusExcluded.toArray(new String[registrationStatusExcluded.size()]);
+            registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeRegistrationStatusArr );
+        }
+        //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status from Advanced Search
+        regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
+        
+        //This is a criteria which comes from drop down box of the basic search
         if (StringUtils.isNotBlank(searchCriteria.getRegistrationStatus()))
         {
         	registrationStatusWhere = " AND acr.registration_status = '" + searchCriteria.getRegistrationStatus() + "' ";
         }
-        
+
         ////////////////////////////////////////////////////
         // WorkFlowStatus
-        // If it is empty, use the default exclude list in WorkflowStatusEnum
-        String workflowWhere;
-        if(StringUtils.isBlank(searchCriteria.getWorkFlowStatus()))
-        {
-            workflowWhere = " AND " + WorkflowStatusEnum.getExcludList();
+        // If it is empty, use exclude list in search preferences
+        String workflowWhere = "";
+        List<String> workflowStatusExcluded = searchPreferences.getWorkflowStatusExcluded();
+        if (! workflowStatusExcluded.isEmpty()) {
+        	workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
         }
-        else
+        
+        if(! StringUtils.isBlank(searchCriteria.getWorkFlowStatus()))
         {
-            workflowWhere = " AND asl.asl_name = '" + searchCriteria.getWorkFlowStatus() + "'";
+            workflowWhere += " AND asl.asl_name = '" + searchCriteria.getWorkFlowStatus() + "' ";
         }
-
-
+        //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
+        
+        //Context excluded
         ////////////////////////////////////////////////////
-        // This excludes TEST and Training, may become an option later.
+        // This excludes Search Preferences excluded context.
         String contextExludeWhere = "";
-        if(StringUtils.isNotBlank(CONTEXT_EXCLUDES))
+        String excludedContext = searchPreferences.buildContextExclided();
+        if(StringUtils.isNotBlank(excludedContext))
         {
-            contextExludeWhere = " AND conte.name NOT IN (" + CONTEXT_EXCLUDES + " )";
+            contextExludeWhere = " AND conte.name NOT IN (" + excludedContext + " )";
         }
 
         ///////////////////////////////////////////////////////

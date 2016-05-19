@@ -3,18 +3,20 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.model.SearchModel;
-import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
-import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
-import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
+import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
-import java.util.List;
+import gov.nih.nci.cadsr.dao.model.SearchModel;
+import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
+import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 
 public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
@@ -55,9 +57,9 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
      * @param conceptCode
      * @return
      */
-    public List<SearchModel> getAllContexts(SearchCriteria searchCriteria)
+    public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferences searchPreferences)
     {
-        String sqlStmt = searchQueryBuilder.initSeqrchQueryBuilder(searchCriteria);
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
 
         List<SearchModel> results;
 
@@ -68,7 +70,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
         return results;
     }
 
-    public List<SearchModel> getAllContexts( String sql )
+    public List<SearchModel> getAllContexts( String sql)
     {
         List<SearchModel> results;
 
@@ -80,10 +82,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
     }
 
 
-
+    @Override
     public List<SearchModel> cdeByProtocolForm( String id )
     {
-        String sql = "SELECT DISTINCT de.de_idseq ,\n" +
+        //I do not see this query uses search preferences
+    	//FIXME is it right?
+    	String sql = "SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
                 "                de.long_name ,\n" +
                 "                rd.doc_text ,\n" +
@@ -121,8 +125,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
         return getAllContexts( sql );
     }
 
-
-    public List<SearchModel> cdeByProtocol( String protocolId )
+    @Override
+    public List<SearchModel> cdeByProtocol( String protocolId, SearchPreferences searchPreferences )
     {
         String sql = "SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
@@ -178,8 +182,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
         return getAllContexts( sql );
     }
 
-
-    public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId )
+    @Override
+    public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId, SearchPreferences searchPreferences )
     {
         String sql = " SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
@@ -226,8 +230,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 
         return getAllContexts( sql );
     }
-
-    public List<SearchModel> cdeOwnedAndUsedByContext( String conteId )
+    @Override
+    public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferences searchPreferences)
     {
         String sql = " SELECT DISTINCT de.de_idseq,\n" +
                 "                de.preferred_name                        de_preferred_name,\n" +
@@ -280,8 +284,8 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
     }
 
 ///////////////////////////////////////////////////////////////////////
-
-    public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId )
+    @Override
+    public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId, SearchPreferences searchPreferences )
     {
         String sql = " SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +

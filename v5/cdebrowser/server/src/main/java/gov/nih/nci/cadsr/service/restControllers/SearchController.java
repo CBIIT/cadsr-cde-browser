@@ -5,6 +5,9 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,14 +52,14 @@ public class SearchController
 
     @RequestMapping( value = "/testSearch" )
     @ResponseBody
-    public SearchNode[] testSearch(@ModelAttribute SearchCriteria searchCriteria)
+    public SearchNode[] testSearch(@ModelAttribute SearchCriteria searchCriteria, HttpSession httpSession)
     {
         SearchNode[] results = null;
         try
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
-            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria) );
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferences(httpSession)) );
         } catch( Exception e )
         {
             return createErrorNode( "Server Error:\ntestSearch: " + searchCriteria.getName() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getPublicId() + ", " + searchCriteria.getProgramArea() + " failed ", e );
@@ -80,7 +83,7 @@ public class SearchController
      */
     @RequestMapping( value = "/search" )
     @ResponseBody
-    public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result)
+    public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result, HttpSession httpSession)
     {
         logger.debug("Received a search request with the following search criteria: " + searchCriteria);
         SearchNode[] results;
@@ -104,7 +107,7 @@ public class SearchController
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
-            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria) );
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferences(httpSession)));
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
@@ -116,7 +119,7 @@ public class SearchController
 
     @RequestMapping( value = "/cdesByContext" )
     @ResponseBody
-    public SearchNode[] getCDEsByContext( @RequestParam( "contextId" ) String contexId )
+    public SearchNode[] getCDEsByContext( @RequestParam( "contextId" ) String contexId, HttpSession httpSession )
     {
         // Sample contextId   DCC52A25-A107-42D4-E040-BB89AD4346A7
         // Check for bad values of contextId - defend against SQL Injection
@@ -135,7 +138,7 @@ public class SearchController
         SearchNode[] results = null;
         try
         {
-            results = getCdeByContext( contexId );
+            results = getCdeByContext( contexId, httpSession );
         } catch( Exception e )
         {
         	logger.error("Error in Searching by context id: " + contexId, e);
@@ -146,12 +149,12 @@ public class SearchController
 
     @RequestMapping( value = "/cdesByClassificationScheme" )
     @ResponseBody
-    public SearchNode[] getCDEsByClassificationScheme( @RequestParam( "classificationSchemeId" ) String classificationSchemeId )
+    public SearchNode[] getCDEsByClassificationScheme( @RequestParam( "classificationSchemeId" ) String classificationSchemeId, HttpSession httpSession )
     {
         SearchNode[] results = null;
         try
         {
-            results = cdeByContextClassificationScheme( classificationSchemeId );
+            results = cdeByContextClassificationScheme( classificationSchemeId, httpSession );
         } catch( Exception e )
         {
 
@@ -162,12 +165,12 @@ public class SearchController
 
     @RequestMapping( value = "/cdesByClassificationSchemeItem" )
     @ResponseBody
-    public SearchNode[] getCDEsByClassificationSchemeItem( @RequestParam( "classificationSchemeItemId" ) String classificationSchemeItemId )
+    public SearchNode[] getCDEsByClassificationSchemeItem( @RequestParam( "classificationSchemeItemId" ) String classificationSchemeItemId, HttpSession httpSession )
     {
         SearchNode[] results = null;
         try
         {
-            results = cdeByContextClassificationSchemeItem( classificationSchemeItemId );
+            results = cdeByContextClassificationSchemeItem( classificationSchemeItemId, httpSession );
         } catch( Exception e )
         {
 
@@ -178,12 +181,12 @@ public class SearchController
 
     @RequestMapping( value = "/cdesByProtocol" )
     @ResponseBody
-    public SearchNode[] getCDEsByProtocol( @RequestParam( "protocolId" ) String protocolId )
+    public SearchNode[] getCDEsByProtocol( @RequestParam( "protocolId" ) String protocolId, HttpSession httpSession )
     {
         SearchNode[] results = null;
         try
         {
-            results = cdeByProtocol( protocolId );
+            results = cdeByProtocol( protocolId, httpSession );
         } catch( Exception e )
         {
 
@@ -273,27 +276,27 @@ public class SearchController
         return searchNodes;
     }
 
-    protected SearchNode[] getCdeByContext( String contexId )
+    protected SearchNode[] getCdeByContext( String contexId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeOwnedAndUsedByContext( contexId );
+        List<SearchModel> results = searchDAO.cdeOwnedAndUsedByContext( contexId, ControllerUtils.retriveSessionSearchPreferences(httpSession));
         return buildSearchResultsNodes( results );
     }
 
-    protected SearchNode[] cdeByContextClassificationScheme( String classificationSchemeId )
+    protected SearchNode[] cdeByContextClassificationScheme( String classificationSchemeId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeByContextClassificationScheme( classificationSchemeId );
+        List<SearchModel> results = searchDAO.cdeByContextClassificationScheme( classificationSchemeId, ControllerUtils.retriveSessionSearchPreferences(httpSession) );
         return buildSearchResultsNodes( results );
     }
 
-    protected SearchNode[] cdeByContextClassificationSchemeItem( String classificationSchemeItemId )
+    protected SearchNode[] cdeByContextClassificationSchemeItem( String classificationSchemeItemId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeByContextClassificationSchemeItem( classificationSchemeItemId );
+        List<SearchModel> results = searchDAO.cdeByContextClassificationSchemeItem( classificationSchemeItemId, ControllerUtils.retriveSessionSearchPreferences(httpSession) );
         return buildSearchResultsNodes( results );
     }
 
-    protected SearchNode[] cdeByProtocol( String protocolId )
+    protected SearchNode[] cdeByProtocol( String protocolId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeByProtocol( protocolId );
+        List<SearchModel> results = searchDAO.cdeByProtocol( protocolId, ControllerUtils.retriveSessionSearchPreferences(httpSession) );
 
         return buildSearchResultsNodes( results );
 
