@@ -18,7 +18,11 @@ import java.util.List;
  */
 public abstract class BaseNode implements Serializable
 {
-    private Logger logger = LogManager.getLogger( BaseNode.class.getName() );
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger logger = LogManager.getLogger( BaseNode.class.getName() );
     private String text;
     private String hover = "";
     private int childType;
@@ -229,7 +233,7 @@ public abstract class BaseNode implements Serializable
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append( "name=" + this.getText() + "\n" );
+        sb.append( "BaseNode [name=" + this.getText() + "\n" );
         sb.append( "ConteIdSeq=" + this.getIdSeq() + "\n" );
         sb.append( "href=" + this.getHref() + "\n" );
         sb.append( "hover=" + this.getHover() + "\n" );
@@ -238,7 +242,7 @@ public abstract class BaseNode implements Serializable
         sb.append( "isParent=" + this.isIsParent() + "\n" );
         sb.append( "isChild=" + this.isIsChild() + "\n" );
         sb.append( "programArea=" + this.getProgramArea() + "\n" );
-        sb.append( "treePath=" + this.getTreePath() + "\n" );
+        sb.append( "treePath=" + this.getTreePath() + "]\n" );
         return sb.toString();
     }
 

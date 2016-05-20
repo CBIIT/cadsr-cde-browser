@@ -16,7 +16,11 @@ import java.util.ArrayList;
  */
 public class ContextNode extends BaseNode
 {
-    private Logger logger = LogManager.getLogger( ContextNode.class.getName() );
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger logger = LogManager.getLogger( ContextNode.class.getName() );
     private String palName = "";
     private String palNameDescription = "";
 
@@ -167,10 +171,10 @@ public class ContextNode extends BaseNode
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer().append("ContextNode [");
         sb.append( super.toString() );
         sb.append( "palName=" + this.palName + "\n" );
-        sb.append( "palNameDescription=" + this.palNameDescription + "\n" );
+        sb.append( "palNameDescription=" + this.palNameDescription + "]\n" );
         return sb.toString();
     }
 }

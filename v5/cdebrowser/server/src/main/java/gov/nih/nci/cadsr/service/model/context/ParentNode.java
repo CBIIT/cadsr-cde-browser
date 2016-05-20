@@ -8,10 +8,20 @@ import org.apache.logging.log4j.Logger;
 
 public class ParentNode extends BaseNode
 {
-    private Logger logger = LogManager.getLogger( ParentNode.class.getName() );
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger logger = LogManager.getLogger( ParentNode.class.getName() );
 
     public ParentNode()
     {
         super();
     }
+
+	@Override
+	public String toString() {
+		return "ParentNode [" + super.toString() + "]";
+	}
+    
 }

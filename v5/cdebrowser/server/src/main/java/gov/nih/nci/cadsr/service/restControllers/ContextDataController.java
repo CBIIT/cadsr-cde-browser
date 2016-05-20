@@ -106,7 +106,7 @@ public class ContextDataController
             return errorNode;
         }
 
-        logger.debug( "Done rest call" );
+        logger.debug( "Done rest call contextData" );
         return contextNodes;
     }
 
@@ -123,7 +123,7 @@ public class ContextDataController
         logger.debug( "Received rest call \"oneContextData\" [" + contextId + "]   Program Area[" + programArea + "]   FolderType[" + folderType + "]" );
         programAreaModelList = restControllerCommon.getProgramAreaList();
         List<ParentNode> contextTree = getOneTreeByContextId( contextId, programArea, folderType );
-        logger.debug( "Done rest call\n=========================\n" );
+        logger.debug( "Done rest call oneContextData" );
         return contextTree;
     }
 
@@ -265,8 +265,12 @@ public class ContextDataController
 
             // Populate each Protocol with their ProtocolForms
             initProtocolModels( protocolModelList, protocolFormModelList, parentNode, programArea );
-
-            logger.debug( "parentNode " + parentNode.getChildren().get( 0 ).getChildren().get( 0 ).toString() );
+            try {
+            	logger.debug( "parentNode " + parentNode.getChildren().get( 0 ).getChildren().get( 0 ).toString() );
+            }
+            catch (IndexOutOfBoundsException ex) {
+            	logger.debug( "...parentNode has no children after initProtocolModels");
+            }
         }
         // Add Classifications or ProtocolForms to this Context node
         contextNodeParent.addChildNode( parentNode );

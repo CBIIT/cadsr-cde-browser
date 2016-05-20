@@ -8,11 +8,19 @@ import org.apache.logging.log4j.Logger;
 
 public class ProtocolNode extends BaseNode
 {
-    private Logger logger = LogManager.getLogger( ProtocolNode.class.getName() );
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger logger = LogManager.getLogger( ProtocolNode.class.getName() );
 
     public ProtocolNode()
     {
         super();
     }
+	@Override
+	public String toString() {
+		return "ProtocolNode [" + super.toString() + "]";
+	}
 }
 

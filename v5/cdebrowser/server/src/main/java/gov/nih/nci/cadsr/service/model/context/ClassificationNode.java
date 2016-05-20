@@ -8,10 +8,18 @@ import org.apache.logging.log4j.Logger;
 
 public class ClassificationNode extends BaseNode
 {
-    private Logger logger = LogManager.getLogger( ClassificationNode.class.getName() );
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger logger = LogManager.getLogger( ClassificationNode.class.getName() );
 
     public ClassificationNode()
     {
         super();
     }
+	@Override
+	public String toString() {
+		return "ClassificationNode [ " + super.toString() + "]";
+	}
 }
