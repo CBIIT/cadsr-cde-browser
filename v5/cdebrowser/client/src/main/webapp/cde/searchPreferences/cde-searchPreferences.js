@@ -1,54 +1,109 @@
 angular.module("cdeSearchPreferences", ['dndLists']);
 
 angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", function ($scope, $http) {
-    $scope.searchPreferencesCheckboxModel = {
-       test : true,
-       training : true
+    
+    $scope.searchPreferencesCheckboxModel = { };
+
+     
+     
+     
+     $scope.searchPreferencesSaveButton = function () {
+        
+        $scope.treeData = { };
+
+        if ($scope.searchPreferencesCheckboxModel.excludeTest === true) 
+          {
+            $scope.treeData.showIt = false;
+            
+          }
+        if ($scope.searchPreferencesCheckboxModel.excludeTest === false) 
+          {
+            
+          }
+        
      };
+
+
+
+    $scope.searchPreferencesResetButton = function () {
+        $scope.models = $scope.models;
+     };
+
+
+
+  // $scope.Statuses is for rest calls (workflow and registration) and $scope.Status is for variables (workflowIncluded,
+  // workflowExcluded, registrationIncluded and registrationExcluded)
+  
+    $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) { 
+        $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
+        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
+        $scope.searchPreferencesCheckboxModel.excludeTest = response.data.excludeTest;
+        $scope.searchPreferencesCheckboxModel.excludeTraining = response.data.excludeTraining;     
+    }).then(function() { 
+              $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
+                $scope.workflowStatuses = response.data;
+                $scope.workflowStatusIncluded = [];
+                $scope.workflowStatusIncluded = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                angular.forEach($scope.models, function(list) {
+                    switch(list.label) {
+                      case "workflowStatusIncluded":
+                        for (var i = 0; i <= $scope.workflowStatusIncluded.length - 1; i++) {
+                          list.items.push({label: $scope.workflowStatusIncluded[i], type: "workflowStatus"});
+                        }
+                        break;
+                      case "workflowStatusExcluded":
+                        for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
+                          list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
+                        }
+                        break;
+                    }  
+              });
+            });
+    }).then(function() {
+              $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
+                $scope.registrationStatuses = response.data;
+                $scope.registrationStatusIncluded = [];
+                $scope.registrationStatusIncluded = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                angular.forEach($scope.models, function(list) {
+                    switch(list.label) {
+                      case "registrationStatusIncluded":
+                        for (var i = 0; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" since the last object is empty
+                          list.items.push({label: $scope.registrationStatusIncluded[i], type: "registrationStatus"});
+                        }
+                        break;
+                      case "registrationStatusExcluded":
+                        for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
+                          list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
+                        }
+                        break;
+                    }  
+              });
+            });
+    });
 
     $scope.models = [
         {
             label: "workflowStatusIncluded",
             allowedTypes: ['workflowStatus'],
             items: [
-                {label: "APPRVD FOR TRIAL USE", type: "workflowStatus"},
-                {label: "DRAFT MOD", type: "workflowStatus"},
-                {label: "ADRAFT NEW", type: "workflowStatus"},
-                {label: "RELEASED", type: "workflowStatus"},
-                {label: "RELEASED-NON-CMPLNT", type: "workflowStatus"}
             ],dragging: false
         },
         {
             label: "workflowStatusExcluded",
             allowedTypes: ['workflowStatus'],
             items: [
-                {label: "CMTE APPROVED", type: "workflowStatus"},
-                {label: "CMTE SUBMTD", type: "workflowStatus"},
-                {label: "CMTE SUBMTD USED", type: "workflowStatus"},
-                {label: "RETIRED ARCHIVED", type: "workflowStatus"},
-                {label: "RETIRED PHASED OUT", type: "workflowStatus"},
-                {label: "RETIRED WITHDRAWN", type: "workflowStatus"}
             ],dragging: false
         },
         {
             label: "registrationStatusIncluded",
             allowedTypes: ['registrationStatus'],
             items: [
-                {label: "Application", type: "registrationStatus"},
-                {label: "Candidate", type: "registrationStatus"},
-                {label: "Proposed", type: "registrationStatus"},
-                {label: "Qualified", type: "registrationStatus"},
-                {label: "Standard", type: "registrationStatus"},
-                {label: "Standardized Elsewhere", type: "registrationStatus"},
-                {label: "Superceded", type: "registrationStatus"},
-                {label: "Suspended", type: "registrationStatus"}
             ],dragging: false
         },
         {
             label: "registrationStatusExcluded",
             allowedTypes: ['registrationStatus'],
             items: [
-                {label: "Retired", type: "registrationStatus"}
             ],dragging: false
         }];
 
@@ -61,7 +116,7 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
        list.dragging = true;
        if (event.dataTransfer.setDragImage) {
          var img = new Image();
-         img.src = 'framework/vendor/ic_content_copy_black_24dp_2x.png';
+         img.src = '';
          event.dataTransfer.setDragImage(img, 0, 0);
        }
     };
@@ -81,5 +136,11 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
     $scope.$watch('models', function(model) {
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
+
+
+
+    
+
+
 
 }]);

@@ -1,17 +1,17 @@
 <div ng-controller="SearchPreferencesController">
 	<div class="searchPreferences">
 		<div>
-			<!-- <span class="searchPreferencesBorder"> -->
+			
 				<label class="searchPreferencesInput">
 				    Exclude Context
 				</label>
-				<label class="searchPreferencesInput"><input type="checkbox" class="paddingInput" ng-model="searchPreferencesCheckboxModel.test"/>
+				<label class="searchPreferencesInput"><input type="checkbox" class="paddingInput" ng-model="searchPreferencesCheckboxModel.excludeTest"/>
 				Test
 				</label>
-				<label class="searchPreferencesInput"><input type="checkbox" class="paddingInput" ng-model="searchPreferencesCheckboxModel.training"/>
+				<label class="searchPreferencesInput"><input type="checkbox" class="paddingInput" ng-model="searchPreferencesCheckboxModel.excludeTraining"/>
 				Training
 				</label>
-				<!-- </span> -->
+				
 		     <div>
 		    	<div class="searchPreferencesList">
 		    		<label class="searchPreferencesListMainHead">Workflow Status(es)</label>
@@ -23,7 +23,7 @@
 			    		<label class="searchPreferencesListRegistrationHead">Excluded</label>
 			    	</div>
 			    	<div class="dragDrop searchPreferencesBox roundInput">
-				    	<div ng-repeat="list in models">
+				    	<div ng-repeat="list in models"> 
 			    			<ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes" dnd-drop="onDrop(list, item, index)">
 							    <li ng-repeat="item in list.items"
 							        dnd-draggable="getSelectedItemsIncluding(list, item)"
@@ -44,7 +44,7 @@
 		  	</div>
 		</div>
 	<div class="searchPreferencesButton">
-		<button ng-click="">Save</button>
-		<button ng-click="">Reset to default</button>
+		<button ng-click="searchPreferencesSaveButton()">Save</button>
+		<button ng-click="searchPreferencesResetButton()">Reset to default</button>
 	</div>
 </div>
