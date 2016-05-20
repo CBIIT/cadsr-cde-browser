@@ -95,6 +95,10 @@ public class SearchPreferences implements Serializable {
 
 		return sb.toString();
 	}
+	/**
+	 * 
+	 * @return string comma separated excluded contexts names in quotes as "'TEST', 'Training'"
+	 */
 	public String buildContextExclided() {
 		String result = null;
 		if (excludeTest && excludeTraining)

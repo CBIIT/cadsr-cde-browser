@@ -21,7 +21,7 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 {
-	private Logger logger = LogManager.getLogger( SearchDAOImpl.class.getName() );
+	private static Logger logger = LogManager.getLogger( SearchDAOImpl.class.getName() );
 	private JdbcTemplate jdbcTemplate;
 
 	private SearchQueryBuilder searchQueryBuilder;
@@ -157,15 +157,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                sbr.ac_status_lov_view asl\n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
-                "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' )\n" +
-                "AND             asl.asl_name NOT                      IN ( 'CMTE APPROVED' ,\n" +
-                "                                                          'CMTE SUBMTD' ,\n" +
-                "                                                          'CMTE SUBMTD USED' ,\n" +
-                "                                                          'RETIRED ARCHIVED' ,\n" +
-                "                                                          'RETIRED PHASED OUT' ,\n" +
-                "                                                          'RETIRED WITHDRAWN' )\n" +
-//                "AND             conte.NAME NOT IN ( 'TEST',\n" +//FIXME will be parameterized
-//                "                                   'Training' )\n" +
+                //add excluded Registration status
+                buildRegistrationStatusExcludedSql(searchPreferences) +
+                //add excluded Workflow status
+                buildWorkflowStatusExcludedSql(searchPreferences) +
+                //add excluded Contexts
+                buildContextExcludedSql(searchPreferences) + 
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             pt.proto_idseq = ptfrm.proto_idseq\n" +
@@ -211,15 +208,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                sbr.ac_status_lov_view asl\n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
-                "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' )\n" +
-                "AND             asl.asl_name NOT                      IN ( 'CMTE APPROVED' ,\n" +
-                "                                                          'CMTE SUBMTD' ,\n" +
-                "                                                          'CMTE SUBMTD USED' ,\n" +
-                "                                                          'RETIRED ARCHIVED' ,\n" +
-                "                                                          'RETIRED PHASED OUT' ,\n" +
-                "                                                          'RETIRED WITHDRAWN' )\n" +
-//                "AND             conte.NAME NOT IN ( 'TEST',\n" +//FIXME will be parameterized
-//                "                                   'Training' )\n" +
+                //add excluded Registration status
+                buildRegistrationStatusExcludedSql(searchPreferences) +
+                //add excluded Workflow status
+                buildWorkflowStatusExcludedSql(searchPreferences) +
+                //add excluded Contexts
+                buildContextExcludedSql(searchPreferences) + 
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             acs.cs_csi_idseq = '" + classificationSchemeItemId + "'\n" +
@@ -258,12 +252,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "       sbr.ac_status_lov_view asl\n" +
                 "WHERE  de.de_idseq = rd.ac_idseq (+)\n" +
                 "       AND rd.dctl_name (+) = 'Preferred Question Text'\n" +
-                "       AND Nvl(acr.registration_status, '-1') NOT IN ( 'Retired' )\n" +
-                "       AND asl.asl_name NOT IN ( 'CMTE APPROVED', 'CMTE SUBMTD',\n" +
-                "                                 'CMTE SUBMTD USED',\n" +
-                "                                 'RETIRED ARCHIVED',\n" +
-                "                                 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN' )\n" +
- //               "       AND conte.name NOT IN ( 'TEST', 'Training' )\n" +//FIXME will be parameterized
+		                //add excluded Registration status
+		                buildRegistrationStatusExcludedSql(searchPreferences) +
+		                //add excluded Workflow status
+		                buildWorkflowStatusExcludedSql(searchPreferences) +
+		                //add excluded Contexts
+		                buildContextExcludedSql(searchPreferences) + 
                 "       AND de.asl_name != 'RETIRED DELETED'\n" +
                 "       AND conte.conte_idseq = de.conte_idseq\n" +
                 "       AND de.de_idseq IN (SELECT ac_idseq\n" +
@@ -312,15 +306,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                sbr.ac_status_lov_view asl\n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
-                "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' )\n" +
-                "AND             asl.asl_name NOT                      IN ( 'CMTE APPROVED' ,\n" +
-                "                                                          'CMTE SUBMTD' ,\n" +
-                "                                                          'CMTE SUBMTD USED' ,\n" +
-                "                                                          'RETIRED ARCHIVED' ,\n" +
-                "                                                          'RETIRED PHASED OUT' ,\n" +
-                "                                                          'RETIRED WITHDRAWN' )\n" +
-//                "AND             conte.NAME NOT IN ( 'TEST',\n" +//FIXME will be parameterized
-//                "                                   'Training' )\n" +
+                //add excluded Registration status
+                buildRegistrationStatusExcludedSql(searchPreferences) +
+                //add excluded Workflow status
+                buildWorkflowStatusExcludedSql(searchPreferences) +
+                //add excluded Contexts
+                buildContextExcludedSql(searchPreferences) + 
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             de.de_idseq = acr.ac_idseq (+)\n" +
@@ -346,8 +337,25 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 	public void setSearchQueryBuilder(SearchQueryBuilder searchQueryBuilder) {
 		this.searchQueryBuilder = searchQueryBuilder;
 	}
-
-
+	
+	protected String buildWorkflowStatusExcludedSql(SearchPreferences searchPreferences) {
+		String strList;
+		if ((strList = searchPreferences.buildfExcludedWorkflowSql()) != null)
+			return "AND asl.asl_name NOT IN " + strList + "\n";
+		else return "";
+	}
+	protected String buildRegistrationStatusExcludedSql(SearchPreferences searchPreferences) {
+		String strList;
+		if ((strList = searchPreferences.buildfExcludedRegistrationSql()) != null)
+			return "AND nvl(acr.registration_status,'-1') NOT IN " + strList + "\n";
+		else return "";
+	}
+	protected String buildContextExcludedSql(SearchPreferences searchPreferences) {
+		String strList;
+		if ((strList = searchPreferences.buildContextExclided()) != null)
+			return "AND conte.NAME NOT IN ( " + strList + ")\n";
+		else return "";
+	}
     /////////////////////////////////////////////////////////////////////
 
 }
