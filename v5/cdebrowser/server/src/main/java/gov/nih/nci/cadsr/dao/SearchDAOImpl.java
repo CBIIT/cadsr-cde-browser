@@ -128,6 +128,11 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
     @Override
     public List<SearchModel> cdeByProtocol( String protocolId, SearchPreferences searchPreferences )
     {
+    	String sql = buildSqlCdeByProtocol( protocolId, searchPreferences);
+        return getAllContexts( sql );
+    }
+    
+    protected String buildSqlCdeByProtocol(String protocolId, SearchPreferences searchPreferences) {
         String sql = "SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
                 "                de.long_name ,\n" +
@@ -175,13 +180,16 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "AND             de.de_idseq = acr.ac_idseq (+)\n" +
                 "AND             acr.registration_status = rsl.registration_status (+)\n" +
                 "AND             de.asl_name = asl.asl_name (+)";
+        return sql;
+    }
+    @Override
+    public List<SearchModel> cdeByContextClassificationSchemeItem(String classificationSchemeItemId, SearchPreferences searchPreferences)
+    {
+    	String sql = buildCdeByContextClassificationSchemeItem(classificationSchemeItemId, searchPreferences);
 
         return getAllContexts( sql );
     }
-
-    @Override
-    public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId, SearchPreferences searchPreferences )
-    {
+    protected String buildCdeByContextClassificationSchemeItem(String classificationSchemeItemId, SearchPreferences searchPreferences) {
         String sql = " SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
                 "                de.long_name ,\n" +
@@ -221,11 +229,16 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "AND             de.de_idseq = acr.ac_idseq (+)\n" +
                 "AND             acr.registration_status = rsl.registration_status (+)\n" +
                 "AND             de.asl_name = asl.asl_name (+)";
-
-        return getAllContexts( sql );
+        return sql;
     }
     @Override
     public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferences searchPreferences)
+    {
+        String sql = buildCdeOwnedAndUsedByContext(conteId, searchPreferences);
+
+        return getAllContexts( sql );
+    }
+    protected String buildCdeOwnedAndUsedByContext( String conteId, SearchPreferences searchPreferences)
     {
         String sql = " SELECT DISTINCT de.de_idseq,\n" +
                 "                de.preferred_name                        de_preferred_name,\n" +
@@ -273,13 +286,19 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "       AND de.de_idseq = acr.ac_idseq (+)\n" +
                 "       AND acr.registration_status = rsl.registration_status (+)\n" +
                 "       AND de.asl_name = asl.asl_name (+)  ";
+        return sql;
 
-        return getAllContexts( sql );
     }
 
 ///////////////////////////////////////////////////////////////////////
     @Override
     public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId, SearchPreferences searchPreferences )
+    {
+        String sql = buildCdeByContextClassificationScheme(classificationSchemeId, searchPreferences);
+        return getAllContexts( sql );
+    }
+    
+    protected String buildCdeByContextClassificationScheme( String classificationSchemeId, SearchPreferences searchPreferences )
     {
         String sql = " SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
@@ -327,9 +346,9 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                       AND    csc.cs_csi_idseq = acs.cs_csi_idseq\n" +
                 "                       AND    acs.ac_idseq = de_idseq )";
 
-        return getAllContexts( sql );
+        return sql;
     }
-
+    
 	public SearchQueryBuilder getSearchQueryBuilder() {
 		return searchQueryBuilder;
 	}
@@ -340,19 +359,20 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 	
 	protected String buildWorkflowStatusExcludedSql(SearchPreferences searchPreferences) {
 		String strList;
-		if ((strList = searchPreferences.buildfExcludedWorkflowSql()) != null)
+		if ((searchPreferences != null) && ((strList = searchPreferences.buildfExcludedWorkflowSql()) != null)) {
 			return "AND asl.asl_name NOT IN " + strList + "\n";
+		}
 		else return "";
 	}
 	protected String buildRegistrationStatusExcludedSql(SearchPreferences searchPreferences) {
 		String strList;
-		if ((strList = searchPreferences.buildfExcludedRegistrationSql()) != null)
+		if  ((searchPreferences != null) && ((strList = searchPreferences.buildfExcludedRegistrationSql()) != null))
 			return "AND nvl(acr.registration_status,'-1') NOT IN " + strList + "\n";
 		else return "";
 	}
 	protected String buildContextExcludedSql(SearchPreferences searchPreferences) {
 		String strList;
-		if ((strList = searchPreferences.buildContextExclided()) != null)
+		if  ((searchPreferences != null) && ((strList = searchPreferences.buildContextExclided()) != null))
 			return "AND conte.NAME NOT IN ( " + strList + ")\n";
 		else return "";
 	}

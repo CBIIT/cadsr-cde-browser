@@ -18,7 +18,7 @@ public class SearchModel extends BaseModel
     String deUsedby;
     String vdIdseq;
     String decIdseq;
-    String conteIdesq;
+    String conteIdseq;
     String preferredDefinition;
     String registrationStatus;
     String displayOrder;
@@ -137,14 +137,14 @@ public class SearchModel extends BaseModel
         this.decIdseq = decIdseq;
     }
 
-    public String getConteIdesq()
+    public String getConteIdseq()
     {
-        return conteIdesq;
+        return conteIdseq;
     }
 
-    public void setConteIdesq( String conteIdesq )
+    public void setConteIdseq( String conteIdseq )
     {
-        this.conteIdesq = conteIdesq;
+        this.conteIdseq = conteIdseq;
     }
 
     public String getPreferredDefinition()
@@ -213,7 +213,7 @@ public class SearchModel extends BaseModel
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "deUsedby=" + getDeUsedby() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "vdIdseq=" + getVdIdseq() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "decIdseq=" + getDecIdseq() );
-        sb.append( CaDSRConstants.ATTR_SEPARATOR + "conteIdesq=" + getConteIdesq() );
+        sb.append( CaDSRConstants.ATTR_SEPARATOR + "conteIdseq=" + getConteIdseq() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "preferredDefinition=" + getPreferredDefinition() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "registrationStatus=" + getRegistrationStatus() );
         sb.append( CaDSRConstants.ATTR_SEPARATOR + "displayOrder=" + getDisplayOrder() );
