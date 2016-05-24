@@ -7,12 +7,16 @@ import java.sql.Timestamp;
 
 public class VdPvsModel extends BaseModel
 {
-    private String vpIdseq;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String vpIdseq;
     private String vdIdseq;
     private String pvIdseq;
     private String conteIdseq;
     private String origin;
-    private String conIdesq;
+    private String conIdseq;
     private Timestamp beginDate;
     private Timestamp endDate;
 
@@ -66,14 +70,15 @@ public class VdPvsModel extends BaseModel
         this.origin = origin;
     }
 
-    public String getConIdesq()
+    public String getConIdseq()
     {
-        return conIdesq;
+        return conIdseq;
     }
 
-    public void setConIdesq( String conIdesq )
+    public void setConIdseq( String conIdesq )
     {
-        this.conIdesq = conIdesq;
+        this.conIdseq = conIdesq;
+        
     }
 
     public Timestamp getBeginDate()
