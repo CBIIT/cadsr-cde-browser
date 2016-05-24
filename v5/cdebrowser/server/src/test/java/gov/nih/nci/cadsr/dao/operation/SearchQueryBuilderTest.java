@@ -3,8 +3,7 @@
  */
 package gov.nih.nci.cadsr.dao.operation;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
  *
  */
 public class SearchQueryBuilderTest {	
-	//There is another test file located in test package gov.nih.nci.cadsr.service.search
+	//There is another test file SearchQueryBuilderTest located in test package gov.nih.nci.cadsr.service.search
 	private SearchQueryBuilder searchQueryBuilder;
 	private SearchPreferences searchPreferences;
 	private SearchCriteria searchCriteria;
@@ -135,5 +134,50 @@ public class SearchQueryBuilderTest {
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
 		//check
 		assertTrue(sqlStmtReceived.indexOf(workflowWhere) > 0);
+	}
+
+	@Test
+	public void testBuildRegStatusWhereClauseEmpty() {
+		//MUT
+		String received = searchQueryBuilder.buildRegStatusWhereClause(new String[0]);
+		//check
+		assertEquals("", received);
+	}
+	@Test
+	public void testBuildRegStatusWhereClauseNull() {
+		//MUT
+		String received = searchQueryBuilder.buildRegStatusWhereClause(null);
+		//check
+		assertEquals("", received);
+	}
+	@Test
+	public void testBuildRegStatusWhereClauseAll() {
+		//MUT
+		String received = searchQueryBuilder.buildRegStatusWhereClause(searchQueryBuilder.regStatusesWhere);
+		//check
+		assertEquals("", received);
+	}
+	@Test
+	public void testGetExcludeWhereClauseNull() {
+		//MUT
+		String received = searchQueryBuilder.getExcludeWhereClause(null, null);
+		//check
+		assertNull(received);
+	}
+	@Test
+	public void testGetExcludeWhereClauseEmpty() {
+		//MUT
+		String received = searchQueryBuilder.getExcludeWhereClause(null, new String[0]);
+		//check
+		assertNull(received);
+	}
+	@Test
+	public void testGetExcludeWhereClause() {
+		String[] arr = {"TestVal1", "TestVal2"};
+		String expected = " TestCol1 NOT IN ('TestVal1' , 'TestVal2' ) ";
+		//MUT
+		String received = searchQueryBuilder.getExcludeWhereClause("TestCol1", arr);
+		//check
+		assertEquals(expected, received);
 	}
 }

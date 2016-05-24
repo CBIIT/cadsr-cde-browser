@@ -432,7 +432,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     protected String buildRegStatusWhereClause( String[] regStatusList )
     {
 
-        if( ( regStatusList == null ) || ( StringUtilities.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
+        if( ( regStatusList == null ) || ( regStatusList.length == 0 ) ||
+        		( StringUtilities.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
         {
             return "";
         }

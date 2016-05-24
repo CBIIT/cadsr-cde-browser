@@ -125,6 +125,15 @@ public class SearchDAOImplTest {
 		assertEquals(expected, received);
 	}
 	@Test
+	public void testBuildWorkflowStatusExcludedSqlPrefNull() {
+		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
+		String expected = "";
+		//MUT
+		String received = searchDAO.buildWorkflowStatusExcludedSql(null);
+		//check
+		assertEquals(expected, received);
+	}
+	@Test
 	public void testBuildRegistrationStatusExcludedSql() {
 		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
 		String expected = "AND nvl(acr.registration_status,'-1') NOT IN " + " ('" + RegistrationStatusExcludedInitial.RETIRED.getRegStatus() + "', '"+ RegistrationStatusEnum.SUSPENDED.getRegStatus() + "') " + "\n";
@@ -147,6 +156,15 @@ public class SearchDAOImplTest {
 		assertEquals(expected, received);
 	}
 	@Test
+	public void testBuildRegistrationStatusExcludedSqlNullPref() {
+		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
+		String expected = "";
+		//MUT
+		String received = searchDAO.buildRegistrationStatusExcludedSql(null);
+		//check
+		assertEquals(expected, received);
+	}
+	@Test
 	public void testBuildContextExcludedSql() {
 		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
 		String expected = "AND conte.NAME NOT IN ( " + searchPreferences.buildContextExclided() + ")\n";
@@ -165,6 +183,15 @@ public class SearchDAOImplTest {
 		searchPreferences.setExcludeTraining(false);
 		//MUT
 		String received = searchDAO.buildContextExcludedSql(searchPreferences);
+		//check
+		assertEquals(expected, received);
+	}
+	@Test
+	public void testBuildContextExcludedSqlNullPref() {
+		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
+		String expected = "";
+		//MUT
+		String received = searchDAO.buildContextExcludedSql(null);
 		//check
 		assertEquals(expected, received);
 	}
