@@ -48,7 +48,7 @@ public class SearchPreferencesController {
 			logger.debug("User HTTP sessionis was not found, creating");
 			httpSession = request.getSession(true);
 		}
-		ControllerUtils.initSearchPreferencesInSession(httpSession);
+		searchPreferences = ControllerUtils.initSearchPreferencesInSession(httpSession);
 		logger.debug("User search initial preferences assigned to HTTP session, returning : " + searchPreferences);
 		return searchPreferences;
 	}
@@ -58,13 +58,13 @@ public class SearchPreferencesController {
 			@RequestBody(required=false) SearchPreferences searchPreferences) {
 		logger.debug("Received request to save search preferences: " + searchPreferences);
 		HttpSession httpSession = request.getSession(true);
-		if (searchPreferences != null) {//FIXME validate the values received
+		if (searchPreferences != null) {//validate the values received
 			cleanUpSearchPreferences(searchPreferences);
 			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
 			logger.debug("User session search preferences are updated to: " + searchPreferences);
 		}
 		else {
-			ControllerUtils.initSearchPreferencesInSession(httpSession);
+			searchPreferences = ControllerUtils.initSearchPreferencesInSession(httpSession);
 			logger.debug("User search initial preferences assigned to HTTP session: " + searchPreferences);			
 		}
 		return searchPreferences;

@@ -180,4 +180,12 @@ public class SearchQueryBuilderTest {
 		//check
 		assertEquals(expected, received);
 	}
+	@Test
+	public void testGetExcludeWhereClauseEmptyFirst() {
+		String[] arr = {""};
+		//MUT
+		String received = searchQueryBuilder.getExcludeWhereClause("TestCol1", arr);
+		//check
+		assertNull(received);
+	}
 }
