@@ -115,5 +115,21 @@ public class SearchPreferencesTest {
 		searchPreferences.setExcludeTest(false);
 		//MUT
 		assertEquals("'Training'", searchPreferences.buildContextExclided());
-	}	
+	}
+	@Test
+	public void testSetWorkflowStatusExcludedNull() {
+		SearchPreferences searchPreferences = new SearchPreferences();
+		searchPreferences.setWorkflowStatusExcluded(null);
+		List<String> receivedWorkflowStatusExcluded = searchPreferences.getWorkflowStatusExcluded();
+		assertNotNull(receivedWorkflowStatusExcluded);
+		assertEquals(0, receivedWorkflowStatusExcluded.size());
+	}
+	@Test
+	public void testSetRegStatusExcludedNull() {
+		SearchPreferences searchPreferences = new SearchPreferences();
+		searchPreferences.setRegistrationStatusExcluded(null);
+		List<String> receivedStatusExcluded = searchPreferences.getRegistrationStatusExcluded();
+		assertNotNull(receivedStatusExcluded);
+		assertEquals(0, receivedStatusExcluded.size());
+	}
 }
