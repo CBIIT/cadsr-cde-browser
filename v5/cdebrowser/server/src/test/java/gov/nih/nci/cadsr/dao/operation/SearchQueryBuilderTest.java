@@ -181,11 +181,11 @@ public class SearchQueryBuilderTest {
 		assertEquals(expected, received);
 	}
 	@Test
-	public void testGetExcludeWhereClauseEmptyFirst() {
+	public void testbuildRegStatusWhereClauseEmptyFirst() {
 		String[] arr = {""};
 		//MUT
-		String received = searchQueryBuilder.getExcludeWhereClause("TestCol1", arr);
+		String received = searchQueryBuilder.buildRegStatusWhereClause(arr);
 		//check
-		assertNull(received);
+		assertEquals("", received);
 	}
 }
