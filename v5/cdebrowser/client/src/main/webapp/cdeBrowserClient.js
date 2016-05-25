@@ -419,7 +419,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                         $scope.breadCrumbs[f] = "";
                     }
                     $scope.searchResultsMessage = "";
-                    $scope.statusMessage = "<span  style='color: #8b0000; font-weight: bold; font-size: 18pt;'>" + response[0].longName + "</span><br>";
+                    $scope.statusMessage = response[0].longName;
                 }
                 else {
 

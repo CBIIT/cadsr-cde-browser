@@ -4,29 +4,43 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
     
     $scope.searchPreferencesCheckboxModel = { };
 
+     $scope.modifiedModels = { };
      
-     
-     
-     $scope.searchPreferencesSaveButton = function () {
-        
-        $scope.treeData = { };
+     function getCategoryExcludedItems(excludeCategory) {
+       var res_ctgex = [ ];
+       angular.forEach(JSON.parse($scope.modifiedModels),function(obj){
+          if (obj.label === excludeCategory) {
+              angular.forEach(obj.items,function(value){
+                res_ctgex.push(value.label);
+              });
+          }
+       });
+       return res_ctgex;
+     }
 
-        if ($scope.searchPreferencesCheckboxModel.excludeTest === true) 
-          {
-            $scope.treeData.showIt = false;
-            
-          }
-        if ($scope.searchPreferencesCheckboxModel.excludeTest === false) 
-          {
-            
-          }
+     $scope.searchPreferencesSaveButton = function () {
+
+        var requestPayload = { };
+        requestPayload.excludeTest = $scope.searchPreferencesCheckboxModel.excludeTest;
+        requestPayload.excludeTraining = $scope.searchPreferencesCheckboxModel.excludeTraining;
+        requestPayload.workflowStatusExcluded = getCategoryExcludedItems('workflowStatusExcluded');
+        requestPayload.registrationStatusExcluded = getCategoryExcludedItems('registrationStatusExcluded');
+        $http.post('/cdebrowserServer/rest/searchPreferences',requestPayload).then(function(response){
+          console.log(response.statusText);
+        });
+
+
+
         
      };
 
 
 
     $scope.searchPreferencesResetButton = function () {
-        $scope.models = $scope.models;
+        
+        $http.post('/cdebrowserServer/rest/searchPreferences',{}).then(function(response){
+          console.log(response.statusText);
+        });
      };
 
 
@@ -133,13 +147,22 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
       list.items = list.items.filter(function(item) { return !item.selected; });
     };
 
+    $scope.$watch('searchPreferencesCheckboxModel', function(model) {
+        $scope.checkboxModelAsJson = angular.toJson(model, true);
+        $scope.defaultCheckboxModel = angular.copy($scope.checkboxModelAsJson);
+            // console.log($scope.checkboxModelAsJson);
+    }, true);
+
     $scope.$watch('models', function(model) {
-        $scope.modelAsJson = angular.toJson(model, true);
+        $scope.modelsAsJson = angular.toJson(model, true);
+        $scope.modifiedModels = $scope.modelsAsJson;
+        $scope.defaultModels = angular.copy($scope.modelsAsJson);
+            // console.log($scope.modelsAsJson);
     }, true);
 
 
 
-    
+   
 
 
 
