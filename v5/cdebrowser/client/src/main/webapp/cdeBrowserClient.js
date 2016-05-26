@@ -518,7 +518,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                         break;
                                     }  
                               });
-                                //$scope.workflowSort = dataTransferService.getData("workflowStatusIncluded");
                                 $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
                             });
                     }).then(function() {
@@ -540,7 +539,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                         break;
                                     }  
                               });
-                                //$scope.registrationSort = dataTransferService.getData("registrationStatusIncluded");
                                 $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
                             });
@@ -555,6 +553,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });        
 
     };
+
+    $scope.onClickTab(0);
+    $scope.workflowSort = dataTransferService.getData("workflowStatusIncluded");
+    $scope.registrationSort = dataTransferService.getData("registrationStatusIncluded");
+
+
 
     $scope.dataLoad = function (dataSource) {
         $scope.waitMessage = "Please wait, loading Context data\n (" + dataSource + ").....".replace(/(?:\r\n|\r|\n)/g, "\n<br>");

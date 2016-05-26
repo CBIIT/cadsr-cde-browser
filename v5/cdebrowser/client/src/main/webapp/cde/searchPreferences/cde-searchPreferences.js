@@ -1,4 +1,4 @@
-angular.module("cdeSearchPreferences", ['dndLists']);
+angular.module("cdeSearchPreferences", ['dndLists']);//, 'cdeBrowserApp'
 
 angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", "dataTransferService", function ($scope, $http, dataTransferService) {
     
@@ -32,6 +32,16 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
 
 
 
+        dataTransferService.setData("workflowStatusIncluded", $scope.workflowStatusIncluded);
+        dataTransferService.setData("registrationStatusIncluded", $scope.registrationStatusIncluded);
+
+
+        
+
+
+
+
+
 
      };
 
@@ -59,7 +69,6 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 $scope.workflowStatuses = response.data;
                 $scope.workflowStatusIncluded = [];
                 $scope.workflowStatusIncluded = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
-                dataTransferService.setData("workflowStatusIncluded", $scope.workflowStatusIncluded);
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                       case "workflowStatusIncluded":
@@ -80,7 +89,6 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 $scope.registrationStatuses = response.data;
                 $scope.registrationStatusIncluded = [];
                 $scope.registrationStatusIncluded = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
-                dataTransferService.setData("registrationStatusIncluded", $scope.registrationStatusIncluded);
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                       case "registrationStatusIncluded":
