@@ -37,69 +37,7 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
         //dataTransferService.setData("registrationStatusIncluded", $scope.registrationStatusIncluded);
 
 
-        // console.log(angular.element('span#selectedNode').text());
-        // $http.get('/cdebrowserServer/rest/contextData').then(function(response){
-        //   console.log(response);
-        //   $scope.contextData = response.data;
-        // });
-        // $scope.treeData = { };
-
-        // if ($scope.searchPreferencesCheckboxModel.excludeTest === true) 
-        //   {
-        //     $scope.treeData.showIt = false;
-        //     // console.log("Hidden");
-        //   }
-        // if ($scope.searchPreferencesCheckboxModel.excludeTest === false) 
-        //   {
-        //     // var obj = angular.element("div#cssFade ul li span");
-        //     // console.log(obj);
-        //   }
-        // // if ($scope.searchPreferencesCheckboxModel.excludeTraining === true) 
-        // //   {
-        // //     $scope.treeData.showIt = false;
-        // //   }
-        // // if ($scope.searchPreferencesCheckboxModel.excludeTraining === false) 
-        // //   {
-        // //     $scope.treeData.showIt = true;
-        // //   }
-
-
-
-      // $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-      //     $scope.currentCdeTab = 0;
-      //     $location.path("/search").replace(); // change url to search since we are doing a search //
-      //     if (query!='') { // create base url. determine if query is blank //
-      //             var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value // 
-      //             if (publicIdName && publicIdName!='') {
-      //                 url=url.concat("&name=",publicIdName)
-      //             };
-      //     }
-      //     else {
-      //         var url = "".concat("cdebrowserServer/rest/search");
-      //     };
-      //     c=0; // index of searchFilter key //
-      //     for (var x in fs.searchFilter) {
-
-      //         if (fs.searchFilter[x]&&field=='name') {
-      //             if (c==0&&query=='') {
-      //                 if (x=='programArea') {
-      //                     url+="?"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
-      //                 }
-      //                 else {
-      //                     url+="?"+x+"="+fs.searchFilter[x];
-      //                 };
-      //             }
-      //             else {
-      //                 if (x=='programArea') {
-      //                     url+="&"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
-      //                 }
-      //                 else {
-      //                     url+="&"+x+"="+fs.searchFilter[x];
-      //                 };                    
-      //             };
-      //             c++;
-      //         };
-      //     };
+        
 
 
 
@@ -254,65 +192,7 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
 
 
 
-   // $scope.setSortOrder = function () {
-   //      angular.forEach($scope.searchResults, function (item) {
-   //          var rS = $scope.registrationSort.indexOf(item.registrationStatus);
-   //          var wS = $scope.workflowSort.indexOf(item.workflowStatus);
-   //          if (rS > -1) {
-   //              item['registrationSort'] = rS
-   //          } else {
-   //              item['registrationSort'] = 1000
-   //          }
-   //          if (wS > -1) {
-   //              item['workflowSort'] = wS
-   //          } else {
-   //              item['workflowSort'] = 1000
-   //          }
-   //      });
-
-   //  };
-
-   //  $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').success(function (response) {
-   //      $scope.registrationSort = response;
-   //      $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
-   //  });
-   //  $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').success(function (response) {
-   //      $scope.workflowSort = response;
-   //      $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
-   //  });
-
-   //  $scope.resetSortOrder = function () {
-   //      isInitialColumnClick = 0;
-   //      $scope.tableParams.sorting({'registrationSort': 'asc','workflowSort':'asc','longName':'asc'});
-
-   //      /*  FIXME still not getting the "view" back after reset sort order  */
-   //      //$scope.changeView(0,$scope.tabs[0]);
-   //      $scope.currentCdeTab = 0;
-   //      $location.path("/search").replace();
-
-
-   //  };
-
-   //  $scope.initTableParams = function () {
-
-   //      $scope.tableParams = new NgTableParams(
-   //        {
-   //          count:100,
-   //          page:1,
-   //          filter: { },
-   //          sorting: {
-   //              registrationSort: 'asc',
-   //              workflowSort: 'asc',
-   //              longName: 'asc'
-   //          }      
-   //        },
-   //        {
-   //          defaultSort:"asc",
-   //          counts:[],
-   //          dataset:[]
-            
-   //        });  
-   //  };
+   
 
 
 
