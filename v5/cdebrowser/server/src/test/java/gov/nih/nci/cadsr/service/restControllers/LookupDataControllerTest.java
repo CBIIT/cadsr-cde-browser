@@ -95,7 +95,7 @@ public class LookupDataControllerTest
 
 	private static final String[] EXPECTED_WRK_FLW_STATUS = { "RELEASED", "APPRVD FOR TRIAL USE", "DRAFT NEW",
 			"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "DRAFT MOD", "RETIRED ARCHIVED", "RETIRED PHASED OUT",
-			"RETIRED WITHDRAWN", "RETIRED DELETED", "RELEASED-NON-CMPLNT" };
+			"RETIRED WITHDRAWN", "RELEASED-NON-CMPLNT" };
 	
 	List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
 	List<Protocol> protoList = new ArrayList<Protocol>();

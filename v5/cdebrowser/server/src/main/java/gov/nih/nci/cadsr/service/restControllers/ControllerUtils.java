@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 
 /**
  * 
@@ -24,32 +24,32 @@ public class ControllerUtils {
 	 * @throws NullPointerException
 	 * @param httpSession session to add search preferences attribute
 	 */
-	public static SearchPreferences initSearchPreferencesInSession(HttpSession httpSession) {
-		SearchPreferences searchPreferences = new SearchPreferences();
-		searchPreferences.initPreferences();
-		httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
-		logger.debug("SearchPreferences adding default to the user HTTP session: " + searchPreferences);
-		return searchPreferences;
+	public static SearchPreferencesServer initSearchPreferencesServerInSession(HttpSession httpSession) {
+		SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer();
+		searchPreferencesServer.initPreferences();
+		httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferencesServer);
+		logger.debug("SearchPreferencesServer adding default to the user HTTP session: " + searchPreferencesServer);
+		return searchPreferencesServer;
 	}
 	/**
 	 * This method adds initial Search Preferences to HTTP Session if they are not in the session.
 	 * 
 	 * @throws NullPointerException
 	 * @param httpSession session to add search preferences attribute
-	 * @returns SearchPreferences object of the session
+	 * @returns SearchPreferencesServer object of the session
 	 */
-	public static SearchPreferences retriveSessionSearchPreferences(HttpSession httpSession) {
+	public static SearchPreferencesServer retriveSessionSearchPreferencesServer(HttpSession httpSession) {
 		Object obj;
-		if (((obj = httpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)) == null) || (!(obj instanceof SearchPreferences))){
-			SearchPreferences searchPreferences = new SearchPreferences();
-			searchPreferences.initPreferences();
-			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
-			logger.debug("SearchPreferences not found in the user HTTP session, adding default: " + searchPreferences);
-			return searchPreferences;
+		if (((obj = httpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)) == null) || (!(obj instanceof SearchPreferencesServer))){
+			SearchPreferencesServer SearchPreferencesServer = new SearchPreferencesServer();
+			SearchPreferencesServer.initPreferences();//this operation will add all excluded statuses including server exclusion always
+			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, SearchPreferencesServer);
+			logger.debug("SearchPreferencesServer not found in the user HTTP session, adding default: " + SearchPreferencesServer);
+			return SearchPreferencesServer;
 		}
 		else {
-			logger.debug("SearchPreferences found in the user HTTPO session: " + obj);
-			return (SearchPreferences)obj;
+			logger.debug("SearchPreferencesServer found in the user HTTPO session: " + obj);
+			return (SearchPreferencesServer)obj;
 		}
 	}	
 }

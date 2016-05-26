@@ -19,11 +19,11 @@ import org.mockito.Mockito;
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
 import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 
 public class SearchDAOImplTest {
 	DataSource mockDataSource = Mockito.mock(DataSource.class);
-	SearchPreferences searchPreferences = new SearchPreferences();
+	SearchPreferencesServer searchPreferences = new SearchPreferencesServer();
 	
 	String[] expectedFields = {
 			"name", "de_idseq", "de_preferred_name", "long_name", "doc_text", "asl_name", "de_cdeid", "de_version", "de_usedby", "vd_idseq", "dec_idseq", 
@@ -38,7 +38,7 @@ public class SearchDAOImplTest {
 			
 	@Before
 	public void setUp() {
-		searchPreferences = new SearchPreferences();
+		searchPreferences = new SearchPreferencesServer();
 	}
 	
 	@Test 
@@ -118,7 +118,7 @@ public class SearchDAOImplTest {
 	@Test
 	public void testBuildWorkflowStatusExcludedSqlNone() {
 		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
-		String expected = "";
+		String expected = "AND asl.asl_name NOT IN " + " ('" + WorkflowStatusExcludedInitial.RetiredDeleted.getWorkflowStatus() + "') " + "\n";
 		//MUT
 		String received = searchDAO.buildWorkflowStatusExcludedSql(searchPreferences);
 		//check

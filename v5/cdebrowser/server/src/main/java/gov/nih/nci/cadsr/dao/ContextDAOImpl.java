@@ -39,10 +39,10 @@ public class ContextDAOImpl extends AbstractDAOOperations implements ContextDAO
     public List<ContextModel> getAllContexts()
     {
         List<ContextModel> results;
-        // FIXME  excludes need to come from a setting
+        //excludes of TEST context from the tree on the server is removed in the release 5.2.
         String sql = "SELECT * FROM sbr.contexts"
 //        		+ "  WHERE "
-//        		+ "name !=  'TEST' "//FIXME will be parameterized
+//        		+ "name !=  'TEST' "//the server returns all contexts; they are filtered by the client component on creating views
         		+ " ORDER BY LOWER(name)";
         results = getAll( sql, ContextModel.class );
 

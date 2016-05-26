@@ -12,10 +12,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import gov.nih.nci.cadsr.service.search.ProcessConstants;
 
@@ -39,7 +38,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
      * @param workFlowStatus     sbr.ac_status_lov_view - asl_name   -  Works   If empty will use the exclude list  from common.WorkflowStatusEnum#getExcludList():
      * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
      */
-    public String initSearchQueryBuilder(SearchCriteria searchCriteria, SearchPreferences searchPreferences)
+    public String initSearchQueryBuilder(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences)
     {
         logger.debug("Initializing Search query builder with Search Criteria : " + searchCriteria);
         logger.debug("Initializing Search query builder with Search Preferences : " + searchPreferences);
@@ -199,7 +198,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 programAreaWhere +
                 " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text'" +
                 registrationExcludeWhere + workflowWhere + contextExludeWhere +
-                " AND de.asl_name != 'RETIRED DELETED' " +
+                //" AND de.asl_name != 'RETIRED DELETED' " + //removing this condition from SQL statement. This status is controlled by Search Preferences Server as of release 5.2
                 " AND conte.conte_idseq = de.conte_idseq " +
                 whereClause + registrationWhere + workFlowWhere + deDerivWhere;
 

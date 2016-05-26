@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import gov.nih.nci.cadsr.dao.model.SearchModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 
@@ -57,7 +57,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
      * @param conceptCode
      * @return
      */
-    public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferences searchPreferences)
+    public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences)
     {
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
 
@@ -113,7 +113,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                sbr.ac_status_lov_view asl\n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
-                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                //"AND             de.asl_name != 'RETIRED DELETED'\n" + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             qc.dn_crf_idseq = '" + id + "'\n" +
                 "AND             qc.qtl_name = 'QUESTION'\n" +
@@ -126,13 +126,13 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
     }
 
     @Override
-    public List<SearchModel> cdeByProtocol( String protocolId, SearchPreferences searchPreferences )
+    public List<SearchModel> cdeByProtocol( String protocolId, SearchPreferencesServer searchPreferences )
     {
     	String sql = buildSqlCdeByProtocol( protocolId, searchPreferences);
         return getAllContexts( sql );
     }
     
-    protected String buildSqlCdeByProtocol(String protocolId, SearchPreferences searchPreferences) {
+    protected String buildSqlCdeByProtocol(String protocolId, SearchPreferencesServer searchPreferences) {
         String sql = "SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
                 "                de.long_name ,\n" +
@@ -168,7 +168,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 buildWorkflowStatusExcludedSql(searchPreferences) +
                 //add excluded Contexts
                 buildContextExcludedSql(searchPreferences) + 
-                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                //"AND             de.asl_name != 'RETIRED DELETED'\n" + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             pt.proto_idseq = ptfrm.proto_idseq\n" +
                 "AND             frm.qc_idseq = ptfrm.qc_idseq\n" +
@@ -183,13 +183,13 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
         return sql;
     }
     @Override
-    public List<SearchModel> cdeByContextClassificationSchemeItem(String classificationSchemeItemId, SearchPreferences searchPreferences)
+    public List<SearchModel> cdeByContextClassificationSchemeItem(String classificationSchemeItemId, SearchPreferencesServer searchPreferences)
     {
     	String sql = buildCdeByContextClassificationSchemeItem(classificationSchemeItemId, searchPreferences);
 
         return getAllContexts( sql );
     }
-    protected String buildCdeByContextClassificationSchemeItem(String classificationSchemeItemId, SearchPreferences searchPreferences) {
+    protected String buildCdeByContextClassificationSchemeItem(String classificationSchemeItemId, SearchPreferencesServer searchPreferences) {
         String sql = " SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
                 "                de.long_name ,\n" +
@@ -222,7 +222,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 buildWorkflowStatusExcludedSql(searchPreferences) +
                 //add excluded Contexts
                 buildContextExcludedSql(searchPreferences) + 
-                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                //"AND             de.asl_name != 'RETIRED DELETED'\n" + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             acs.cs_csi_idseq = '" + classificationSchemeItemId + "'\n" +
                 "AND             acs.ac_idseq = de.de_idseq\n" +
@@ -232,13 +232,13 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
         return sql;
     }
     @Override
-    public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferences searchPreferences)
+    public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferencesServer searchPreferences)
     {
         String sql = buildCdeOwnedAndUsedByContext(conteId, searchPreferences);
 
         return getAllContexts( sql );
     }
-    protected String buildCdeOwnedAndUsedByContext( String conteId, SearchPreferences searchPreferences)
+    protected String buildCdeOwnedAndUsedByContext( String conteId, SearchPreferencesServer searchPreferences)
     {
         String sql = " SELECT DISTINCT de.de_idseq,\n" +
                 "                de.preferred_name                        de_preferred_name,\n" +
@@ -271,7 +271,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 		                buildWorkflowStatusExcludedSql(searchPreferences) +
 		                //add excluded Contexts
 		                buildContextExcludedSql(searchPreferences) + 
-                "       AND de.asl_name != 'RETIRED DELETED'\n" +
+                //"       AND de.asl_name != 'RETIRED DELETED'\n" + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
                 "       AND conte.conte_idseq = de.conte_idseq\n" +
                 "       AND de.de_idseq IN (SELECT ac_idseq\n" +
                 "                           FROM   sbr.designations_view des\n" +
@@ -292,13 +292,13 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 
 ///////////////////////////////////////////////////////////////////////
     @Override
-    public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId, SearchPreferences searchPreferences )
+    public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId, SearchPreferencesServer searchPreferences )
     {
         String sql = buildCdeByContextClassificationScheme(classificationSchemeId, searchPreferences);
         return getAllContexts( sql );
     }
     
-    protected String buildCdeByContextClassificationScheme( String classificationSchemeId, SearchPreferences searchPreferences )
+    protected String buildCdeByContextClassificationScheme( String classificationSchemeId, SearchPreferencesServer searchPreferences )
     {
         String sql = " SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
@@ -331,7 +331,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 buildWorkflowStatusExcludedSql(searchPreferences) +
                 //add excluded Contexts
                 buildContextExcludedSql(searchPreferences) + 
-                "AND             de.asl_name != 'RETIRED DELETED'\n" +
+                //"AND             de.asl_name != 'RETIRED DELETED'\n" + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             de.de_idseq = acr.ac_idseq (+)\n" +
                 "AND             acr.registration_status = rsl.registration_status (+)\n" +
@@ -357,20 +357,20 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 		this.searchQueryBuilder = searchQueryBuilder;
 	}
 	
-	protected String buildWorkflowStatusExcludedSql(SearchPreferences searchPreferences) {
+	protected String buildWorkflowStatusExcludedSql(SearchPreferencesServer searchPreferences) {
 		String strList;
 		if ((searchPreferences != null) && ((strList = searchPreferences.buildfExcludedWorkflowSql()) != null)) {
 			return "AND asl.asl_name NOT IN " + strList + "\n";
 		}
 		else return "";
 	}
-	protected String buildRegistrationStatusExcludedSql(SearchPreferences searchPreferences) {
+	protected String buildRegistrationStatusExcludedSql(SearchPreferencesServer searchPreferences) {
 		String strList;
 		if  ((searchPreferences != null) && ((strList = searchPreferences.buildfExcludedRegistrationSql()) != null))
 			return "AND nvl(acr.registration_status,'-1') NOT IN " + strList + "\n";
 		else return "";
 	}
-	protected String buildContextExcludedSql(SearchPreferences searchPreferences) {
+	protected String buildContextExcludedSql(SearchPreferencesServer searchPreferences) {
 		String strList;
 		if  ((searchPreferences != null) && ((strList = searchPreferences.buildContextExclided()) != null))
 			return "AND conte.NAME NOT IN ( " + strList + ")\n";

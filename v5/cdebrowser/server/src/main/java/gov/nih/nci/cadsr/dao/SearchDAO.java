@@ -6,20 +6,20 @@ package gov.nih.nci.cadsr.dao;
 import java.util.List;
 
 import gov.nih.nci.cadsr.dao.model.SearchModel;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 public interface SearchDAO
 {
-	public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferences searchPreferences );
+	public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferencesServer searchPreferences );
 	
-	public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferences searchPreferences);
+	public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences);
 	
-	public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId, SearchPreferences searchPreferences );
+	public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId, SearchPreferencesServer searchPreferences );
 	
 	public List<SearchModel> cdeByProtocolForm( String id );
 	
-	public List<SearchModel> cdeByProtocol( String protocolId, SearchPreferences searchPreferences );
+	public List<SearchModel> cdeByProtocol( String protocolId, SearchPreferencesServer searchPreferences );
 	
-	public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId, SearchPreferences searchPreferences );
+	public List<SearchModel> cdeByContextClassificationScheme( String classificationSchemeId, SearchPreferencesServer searchPreferences );
 }

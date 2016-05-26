@@ -3,7 +3,10 @@
  */
 package gov.nih.nci.cadsr.dao.operation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import org.junit.Test;
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 /**
  * 
@@ -24,7 +28,7 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 public class SearchQueryBuilderTest {	
 	//There is another test file SearchQueryBuilderTest located in test package gov.nih.nci.cadsr.service.search
 	private SearchQueryBuilder searchQueryBuilder;
-	private SearchPreferences searchPreferences;
+	private SearchPreferencesServer searchPreferences;
 	private SearchCriteria searchCriteria;
 	@BeforeClass
 	public static void setUpClass() throws Exception
@@ -36,7 +40,7 @@ public class SearchQueryBuilderTest {
 	public void setUp() throws Exception
 	{
 		searchQueryBuilder = new SearchQueryBuilder();
-		searchPreferences = new SearchPreferences();
+		searchPreferences = new SearchPreferencesServer();
 		searchCriteria = new SearchCriteria();
 		searchCriteria.setName("");
 		searchCriteria.setPublicId("62*");
@@ -75,13 +79,13 @@ public class SearchQueryBuilderTest {
 	}
 	//Workflow status tests
 	@Test
-	public void testInitWorkflowNoExcluded() {
-		String workflowWhere = " AND asl.asl_name NOT IN ";
+	public void testInitWorkflowNoClientExcluded() {
+		String workflowWhere = " AND asl.asl_name NOT IN  " + SearchPreferencesServer.buildSqlAlwaysExcluded();
 
 		//MUT
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
 		//check
-		assertFalse(sqlStmtReceived.indexOf(workflowWhere) > 0);
+		assertTrue(sqlStmtReceived.indexOf(workflowWhere) > 0);
 	}
 	@Test
 	public void testInitWorkflowExcluded() {
@@ -98,8 +102,8 @@ public class SearchQueryBuilderTest {
 	}	
 	//Registration Status tests
 	@Test
-	public void testInitRegwNoExcluded() {
-		String workflowWhere = " AND asl.asl_name NOT IN ";
+	public void testInitRegNoExcluded() {
+		String workflowWhere = "nvl(acr.registration_status";
 
 		//MUT
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);

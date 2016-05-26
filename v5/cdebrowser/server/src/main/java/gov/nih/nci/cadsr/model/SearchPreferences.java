@@ -30,7 +30,48 @@ public class SearchPreferences implements Serializable {
 		excludeTraining = true;
 		this.workflowStatusExcluded = WorkflowStatusExcludedInitial.getInitialExcludedList();
 		this.registrationStatusExcluded = RegistrationStatusExcludedInitial.getInitialExcludedList();
+		this.removeServerExcluded();
 	}
+	
+	public SearchPreferences() {
+
+	}
+	/**
+	 * This is a deep copy constructor 
+	 * @param other SearchPreferences
+	 */
+	public SearchPreferences(SearchPreferences other) {
+		this.excludeTest = other.excludeTest;
+		this.excludeTraining = other.excludeTraining;
+		List<String> workflowListOther = other.workflowStatusExcluded;
+		List<String> workflowListSelf = new ArrayList<>();
+		for (String str : workflowListOther) {
+			workflowListSelf.add(str);
+		}
+		this.workflowStatusExcluded = workflowListSelf;
+		
+		List<String> registrationListOther = other.registrationStatusExcluded;
+		List<String> registrationListSelf = new ArrayList<>();
+		for (String str : registrationListOther) {
+			registrationListSelf.add(str);
+		}
+		this.registrationStatusExcluded = registrationListSelf;
+		
+		this.registrationStatusExcluded = other.registrationStatusExcluded;
+	}
+	
+	public static void removeServerExcluded(List<String> workflowStatusList) {
+		for (int i = 0; i < SearchPreferencesServer.excludedWorkflowStatusHiddenFromView.length; i++) {
+			if (workflowStatusList.contains(SearchPreferencesServer.excludedWorkflowStatusHiddenFromView[i])) {
+				workflowStatusList.remove(SearchPreferencesServer.excludedWorkflowStatusHiddenFromView[i]);
+			}
+		}
+	}
+	
+	public void removeServerExcluded() {
+		removeServerExcluded(this.workflowStatusExcluded);
+	}
+	
 	public boolean isExcludeTest() {
 		return excludeTest;
 	}
@@ -96,6 +137,17 @@ public class SearchPreferences implements Serializable {
 		return sb.toString();
 	}
 	/**
+	 * This method removes any statuses which are not part of status lists.
+	 * 
+	 * @param searchPreferences
+	 */
+	public void cleanUpClientSearchPreferences() {
+		this.setWorkflowStatusExcluded(
+			WorkflowStatusExcludedInitial.buildValidStatusList(this.getWorkflowStatusExcluded()));
+		this.setRegistrationStatusExcluded(
+				RegistrationStatusExcludedInitial.buildValidStatusList(this.getRegistrationStatusExcluded()));
+	}
+	/**
 	 * 
 	 * @return string comma separated excluded contexts names in quotes as "'TEST', 'Training'"
 	 */
@@ -125,6 +177,7 @@ public class SearchPreferences implements Serializable {
 		result = prime * result + ((workflowStatusExcluded == null) ? 0 : workflowStatusExcluded.hashCode());
 		return result;
 	}
+	//TODO change to make arrays equals even if the order of string is different, but the set of strings is the same
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

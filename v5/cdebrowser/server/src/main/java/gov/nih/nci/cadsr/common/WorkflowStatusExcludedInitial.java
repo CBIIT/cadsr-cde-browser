@@ -1,8 +1,15 @@
+/**
+ * Copyright (C) 2016 Leidos Biomedical Research, Inc. - All rights reserved.
+ */
 package gov.nih.nci.cadsr.common;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 
+ * @author asafievan
+ *
+ */
 public enum WorkflowStatusExcludedInitial
 {
     CmteApproved( "CMTE APPROVED" ),
@@ -10,7 +17,8 @@ public enum WorkflowStatusExcludedInitial
     CmteSubmtdUsed( "CMTE SUBMTD USED" ),
     RetiredArchived( "RETIRED ARCHIVED" ),
     RetiredPhasedOut( "RETIRED PHASED OUT" ),
-    RetiredWithdrawn( "RETIRED WITHDRAWN" );
+    RetiredWithdrawn( "RETIRED WITHDRAWN" ),
+    RetiredDeleted( "RETIRED DELETED" );//this status is for server preferences only; CDE Browser client does not see this status
 
     private String workflowStatus;
 

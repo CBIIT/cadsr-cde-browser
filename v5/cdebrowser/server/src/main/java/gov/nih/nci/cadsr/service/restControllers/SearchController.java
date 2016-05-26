@@ -5,7 +5,6 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -59,7 +58,7 @@ public class SearchController
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
-            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferences(httpSession)) );
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession)) );
         } catch( Exception e )
         {
             return createErrorNode( "Server Error:\ntestSearch: " + searchCriteria.getName() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getPublicId() + ", " + searchCriteria.getProgramArea() + " failed ", e );
@@ -107,7 +106,7 @@ public class SearchController
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
-            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferences(httpSession)));
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession)));
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
@@ -278,25 +277,25 @@ public class SearchController
 
     protected SearchNode[] getCdeByContext( String contexId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeOwnedAndUsedByContext( contexId, ControllerUtils.retriveSessionSearchPreferences(httpSession));
+        List<SearchModel> results = searchDAO.cdeOwnedAndUsedByContext( contexId, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession));
         return buildSearchResultsNodes( results );
     }
 
     protected SearchNode[] cdeByContextClassificationScheme( String classificationSchemeId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeByContextClassificationScheme( classificationSchemeId, ControllerUtils.retriveSessionSearchPreferences(httpSession) );
+        List<SearchModel> results = searchDAO.cdeByContextClassificationScheme( classificationSchemeId, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession) );
         return buildSearchResultsNodes( results );
     }
 
     protected SearchNode[] cdeByContextClassificationSchemeItem( String classificationSchemeItemId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeByContextClassificationSchemeItem( classificationSchemeItemId, ControllerUtils.retriveSessionSearchPreferences(httpSession) );
+        List<SearchModel> results = searchDAO.cdeByContextClassificationSchemeItem( classificationSchemeItemId, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession) );
         return buildSearchResultsNodes( results );
     }
 
     protected SearchNode[] cdeByProtocol( String protocolId, HttpSession httpSession )
     {
-        List<SearchModel> results = searchDAO.cdeByProtocol( protocolId, ControllerUtils.retriveSessionSearchPreferences(httpSession) );
+        List<SearchModel> results = searchDAO.cdeByProtocol( protocolId, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession) );
 
         return buildSearchResultsNodes( results );
 

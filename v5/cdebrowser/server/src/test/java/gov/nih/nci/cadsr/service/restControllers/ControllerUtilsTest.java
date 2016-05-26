@@ -3,7 +3,7 @@
  */
 package gov.nih.nci.cadsr.service.restControllers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,65 +12,69 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 /**
  * 
  * @author asafievan
  *
  */
 public class ControllerUtilsTest {
-	SearchPreferences testSearcvhPreferences;
+	SearchPreferencesServer testSearchPreferences;
 	@Before
 	public void setUp() {
-		testSearcvhPreferences = new SearchPreferences();
+		testSearchPreferences = new SearchPreferencesServer();
 	}
-	//FIXME these tests fail on Jenkins but not locally. Needed to be investifgated, and fixed.
-	//@Test
+	@Test
 	public void testRetriveSessionSearchPreferencesExisted() {
 		HttpSession mockHttpSession = Mockito.mock(HttpSession.class);
-		Mockito.when(mockHttpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)).thenReturn(testSearcvhPreferences);
-		testSearcvhPreferences.initPreferences();
-		testSearcvhPreferences.setExcludeTest(false);
+		Mockito.when(mockHttpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)).thenReturn(testSearchPreferences);
+		testSearchPreferences.initPreferences();
+		testSearchPreferences.setExcludeTest(false);
 		
 		//MUT
-		SearchPreferences received = ControllerUtils.retriveSessionSearchPreferences(mockHttpSession);
+		SearchPreferencesServer received = ControllerUtils.retriveSessionSearchPreferencesServer(mockHttpSession);
 		//check	
-		assertEquals(testSearcvhPreferences, received);
-		//FIXME fix verify in this class
-		//Mockito.verify(mockHttpSession).getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
+		assertEquals(testSearchPreferences, received);
+		Mockito.verify(mockHttpSession).getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
 	}
-	//@Test
+	@Test
 	public void testRetriveSessionSearchPreferencesNull() {
 		HttpSession mockHttpSession = Mockito.mock(HttpSession.class);
+		testSearchPreferences.initPreferences();
 		Mockito.when(mockHttpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)).thenReturn(null);
-		testSearcvhPreferences.initPreferences();
+		Mockito.doNothing().when(mockHttpSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(testSearchPreferences));
+		testSearchPreferences.initPreferences();
 		
 		//MUT
-		SearchPreferences received = ControllerUtils.retriveSessionSearchPreferences(mockHttpSession);
+		SearchPreferencesServer received = ControllerUtils.retriveSessionSearchPreferencesServer(mockHttpSession);
 		//check		
-		assertEquals(testSearcvhPreferences, received);
-		//Mockito.verify(mockHttpSession).getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
+		assertEquals(testSearchPreferences, received);
+		Mockito.verify(mockHttpSession).getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
+		Mockito.verify(mockHttpSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(testSearchPreferences));
 	}
-	//@Test
+	@Test
 	public void testRetriveSessionSearchPreferencesWrong() {
+		testSearchPreferences.initPreferences();
 		HttpSession mockHttpSession = Mockito.mock(HttpSession.class);
 		Mockito.when(mockHttpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)).thenReturn(new Object());
-		testSearcvhPreferences.initPreferences();
+		Mockito.doNothing().when(mockHttpSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(testSearchPreferences));
 		
 		//MUT
-		SearchPreferences received = ControllerUtils.retriveSessionSearchPreferences(mockHttpSession);
+		SearchPreferencesServer received = ControllerUtils.retriveSessionSearchPreferencesServer(mockHttpSession);
 		//check
-		assertEquals(testSearcvhPreferences, received);
-		//Mockito.verify(mockHttpSession).getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
+		assertEquals(testSearchPreferences, received);
+		Mockito.verify(mockHttpSession).getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
+		Mockito.verify(mockHttpSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(testSearchPreferences));
 	}
-	//@Test
+	@Test
 	public void testInitSessionSearchPreferences() {
 		HttpSession mockHttpSession = Mockito.mock(HttpSession.class);
-		testSearcvhPreferences.initPreferences();
+		testSearchPreferences.initPreferences();
+		Mockito.doNothing().when(mockHttpSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(testSearchPreferences));
 		//MUT
-		SearchPreferences received = ControllerUtils.initSearchPreferencesInSession(mockHttpSession);
+		SearchPreferencesServer received = ControllerUtils.initSearchPreferencesServerInSession(mockHttpSession);
 		//check		
-		assertEquals(testSearcvhPreferences, received);
-		//Mockito.verify(mockHttpSession).setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, received);
+		assertEquals(testSearchPreferences, received);
+		Mockito.verify(mockHttpSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(testSearchPreferences));
 	}
 }

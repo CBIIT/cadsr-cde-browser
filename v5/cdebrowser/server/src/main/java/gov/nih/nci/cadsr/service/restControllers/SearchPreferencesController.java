@@ -10,18 +10,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
-import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 /**
  * This is a class to handle user session search preferences
  * @author asafievan
@@ -35,46 +31,52 @@ public class SearchPreferencesController {
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public SearchPreferences retrieveSearchPreferences(HttpServletRequest request) {
 		logger.debug("Received request to retrieve search preferences");
-		SearchPreferences searchPreferences = null;
 		HttpSession httpSession = request.getSession(false);
+		Object obj = null;
 		if (httpSession != null) {
-			Object obj = httpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
-			if ((obj != null) && (obj instanceof SearchPreferences)) {
+			obj = httpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES);
+			if ((obj != null) && (obj instanceof SearchPreferencesServer)) {
+				SearchPreferencesServer searchPreferencesServer = (SearchPreferencesServer)obj;
+				SearchPreferences searchPreferencesClient = searchPreferencesServer.buildClientSearchPreferences();
 				logger.debug("User search preferences found in HTTP session; returning: " + obj);
-				return (SearchPreferences) obj;
+				return searchPreferencesClient;
 			}
 		}
 		else {
 			logger.debug("User HTTP sessionis was not found, creating");
 			httpSession = request.getSession(true);
 		}
-		searchPreferences = ControllerUtils.initSearchPreferencesInSession(httpSession);
-		logger.debug("User search initial preferences assigned to HTTP session, returning : " + searchPreferences);
-		return searchPreferences;
+		SearchPreferencesServer searchPreferencesServer = ControllerUtils.initSearchPreferencesServerInSession(httpSession);
+		SearchPreferences searchPreferencesToView = searchPreferencesServer.buildClientSearchPreferences();
+		logger.debug("User search initial preferences assigned to HTTP session, returning : " + searchPreferencesToView);
+		return searchPreferencesToView;
 	}
-
+	/**
+	 * This method saves user search preferences for search operations.
+	 * It there is no request body this is considered to be reset to initial request.
+	 * If there is any JSON body even "{}" this is considered as a new search preferences object to use.
+	 * 
+	 * @param request
+	 * @param searchPreferencesClient
+	 * @return SearchPreferences
+	 */
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public SearchPreferences saveSearchPreferences(HttpServletRequest request, 
-			@RequestBody(required=false) SearchPreferences searchPreferences) {
-		logger.debug("Received request to save search preferences: " + searchPreferences);
+			@RequestBody(required=false) SearchPreferences searchPreferencesClient) {
+		logger.debug("Received request to save search preferences: " + searchPreferencesClient);
 		HttpSession httpSession = request.getSession(true);
-		if (searchPreferences != null) {//validate the values received
-			cleanUpSearchPreferences(searchPreferences);
-			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferences);
-			logger.debug("User session search preferences are updated to: " + searchPreferences);
+		if (searchPreferencesClient != null) {//validate the values received
+			searchPreferencesClient.cleanUpClientSearchPreferences();
+			SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer(searchPreferencesClient);
+			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferencesServer);
+			logger.debug("User session search preferences are updated to: " + searchPreferencesClient);
 		}
 		else {
-			searchPreferences = ControllerUtils.initSearchPreferencesInSession(httpSession);
-			logger.debug("User search initial preferences assigned to HTTP session: " + searchPreferences);			
+			SearchPreferencesServer searchPreferencesServer = ControllerUtils.initSearchPreferencesServerInSession(httpSession);
+			searchPreferencesClient = searchPreferencesServer.buildClientSearchPreferences();
+			logger.debug("User search initial preferences sent: " + searchPreferencesClient);	
 		}
-		return searchPreferences;
+		return searchPreferencesClient;
 	}
 
-	private void cleanUpSearchPreferences(SearchPreferences searchPreferences) {
-		searchPreferences.setWorkflowStatusExcluded(
-			WorkflowStatusExcludedInitial.buildValidStatusList(searchPreferences.getWorkflowStatusExcluded()));
-		searchPreferences.setRegistrationStatusExcluded(
-				RegistrationStatusExcludedInitial.buildValidStatusList(searchPreferences.getRegistrationStatusExcluded()));
-	}
-	
 }

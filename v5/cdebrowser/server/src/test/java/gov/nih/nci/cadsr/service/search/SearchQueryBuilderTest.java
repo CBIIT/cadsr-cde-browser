@@ -3,7 +3,7 @@ package gov.nih.nci.cadsr.service.search;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,18 +11,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
+import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
-import gov.nih.nci.cadsr.model.SearchPreferences;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 public class SearchQueryBuilderTest
 {
 	private SearchQueryBuilder searchQueryBuilder;
-	private static SearchPreferences initilaSearchPreferences;
+	private static SearchPreferencesServer initilaSearchPreferences;
 	@BeforeClass
 	public static void setUpClass() throws Exception
 	{
-		initilaSearchPreferences = new SearchPreferences();
+		initilaSearchPreferences = new SearchPreferencesServer();
 		initilaSearchPreferences.initPreferences();
 	}
 	
@@ -55,6 +56,7 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptCode("conceptCode");
 		// With workFlow
 		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
+		assertTrue(sqlStmt.contains("asl.asl_name = 'workFlowStatus'"));
 	}
 
 	@Test
@@ -74,8 +76,8 @@ public class SearchQueryBuilderTest
 		searchCriteria.setConceptCode("conceptCode");
 		// With out workFlow, make sure workflow is empty, and exclude clause is right
 		String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initilaSearchPreferences);
-
-		assertEquals( " asl.asl_name NOT IN ( 'CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' ) ", WorkflowStatusEnum.getExcludList() );
+		assertTrue ( sqlStmt.contains(" asl.asl_name NOT IN  ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED')"));
+		assertFalse(sqlStmt.contains("asl.asl_name ="));
 	}
 
 
@@ -196,6 +198,25 @@ public class SearchQueryBuilderTest
 		return s.replaceAll( "\\s\\s*", " " ).replaceAll( "\\s*,\\s*", ", " ).replaceAll( "\\s*\\)\\s*", ")" ).replaceAll( "\\s*\\(\\s*", "(" ).toUpperCase();
 	}
 
+    /**
+     * This method is to use in unit tests only.
+     * The list of excluded workflow status is defined by Search Preferences, and is not defined by this method.
+     * 
+     * @return The default list of Workflow Status/sbr.ac_status_lov_view.asl_name to be excluded.
+     */
+    public static String getExcludList()
+    {
+        StringBuilder sb = new StringBuilder( " asl.asl_name NOT IN ( '" );
+        sb.append( WorkflowStatusEnum.CmteApproved.getWorkflowStatus() + "' , '" );
+        sb.append( WorkflowStatusEnum.CmteSubmtd.getWorkflowStatus() + "' , '" );
+        sb.append( WorkflowStatusEnum.CmteSubmtdUsed.getWorkflowStatus() + "' , '" );
+        sb.append( WorkflowStatusEnum.RetiredArchived.getWorkflowStatus() + "' , '" );
+        sb.append( WorkflowStatusEnum.RetiredPhasedOut.getWorkflowStatus() + "' , '" );
+        sb.append( WorkflowStatusEnum.RetiredWithdrawn.getWorkflowStatus() + "' , '" );
+        sb.append( WorkflowStatusExcludedInitial.RetiredDeleted.getWorkflowStatus() + "' ) " );
+        return sb.toString();
+    }
+
 	String protocolSearchQuery = "SELECT DISTINCT de.de_idseq, de.preferred_name de_preferred_name, de.long_name , " +
 			"rd.doc_text , conte.NAME ,de.asl_name , To_char(de.cde_id) de_cdeid , de.version de_version , " +
 			"                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,de.vd_idseq , " +
@@ -206,9 +227,9 @@ public class SearchQueryBuilderTest
 			"                sbrext.quest_contents_view_ext qc , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl ,  sbr.ac_status_lov_view asl " +
 			"WHERE           de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' " +
 			"AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' ) " +
-			"AND             asl.asl_name NOT IN ( 'CMTE APPROVED' , 'CMTE SUBMTD' , 'CMTE SUBMTD USED' , 'RETIRED ARCHIVED' , 'RETIRED PHASED OUT' , 'RETIRED WITHDRAWN' ) " +
+			"AND             " + getExcludList() +
 			"AND             conte.NAME NOT IN ( 'TEST', 'Training' ) " +
-			"AND             de.asl_name != 'RETIRED DELETED' " +
+			//"AND             de.asl_name != 'RETIRED DELETED' " + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
 			"AND             conte.conte_idseq = de.conte_idseq AND             pt.proto_idseq = ptfrm.proto_idseq " +
 			"AND             frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF' " +
 			"AND             qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' " +
@@ -240,12 +261,12 @@ public class SearchQueryBuilderTest
 			"     sbr.ac_status_lov_view asl"+
 			" WHERE de.de_idseq = rd.ac_idseq (+)"+
 			"  AND rd.dctl_name (+) = 'Preferred Question Text'"+
-			"  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')"+
-			"  AND asl.asl_name NOT IN ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN') "+
+			"  AND nvl(acr.registration_status,'-1') NOT IN ('Retired') AND "+
+			getExcludList() + 
 			"  AND asl.asl_name = 'APPRVD FOR TRIAL USE'"+
 			"  AND conte.name NOT IN ('TEST',"+
 			"                         'Training')"+
-			"  AND de.asl_name != 'RETIRED DELETED'"+
+			//"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
 			"  AND conte.conte_idseq = de.conte_idseq"+
 			"  AND to_char(de.cde_id) LIKE '25%'"+
 			"  AND de.latest_version_ind = 'Yes'"+
@@ -279,15 +300,10 @@ public class SearchQueryBuilderTest
 			" WHERE de.de_idseq = rd.ac_idseq (+)"+
 			"  AND rd.dctl_name (+) = 'Preferred Question Text'"+
 			"  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')"+
-			"  AND asl.asl_name NOT IN ('CMTE APPROVED',"+
-			"                           'CMTE SUBMTD',"+
-			"                           'CMTE SUBMTD USED',"+
-			"                           'RETIRED ARCHIVED',"+
-			"                           'RETIRED PHASED OUT',"+
-			"                           'RETIRED WITHDRAWN')"+
+			"  AND " + getExcludList() +
 			"  AND conte.name NOT IN ('TEST',"+
 			"                         'Training')"+
-			"  AND de.asl_name != 'RETIRED DELETED'"+
+			//"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
 			"  AND conte.conte_idseq = de.conte_idseq"+
 			"  AND to_char(de.cde_id) LIKE '25%'"+
 			"  AND de.latest_version_ind = 'Yes'"+
@@ -323,15 +339,10 @@ public class SearchQueryBuilderTest
 			"  AND de.de_idseq = rd.ac_idseq (+)"+
 			"  AND rd.dctl_name (+) = 'Preferred Question Text'"+
 			"  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')"+
-			"  AND asl.asl_name NOT IN ('CMTE APPROVED',"+
-			"                           'CMTE SUBMTD',"+
-			"                           'CMTE SUBMTD USED',"+
-			"                           'RETIRED ARCHIVED',"+
-			"                           'RETIRED PHASED OUT',"+
-			"                           'RETIRED WITHDRAWN')"+
+			"  AND " + getExcludList() +
 			"  AND conte.name NOT IN ('TEST',"+
 			"                         'Training')"+
-			"  AND de.asl_name != 'RETIRED DELETED'"+
+			//"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
 			"  AND conte.conte_idseq = de.conte_idseq"+
 			"  AND to_char(de.cde_id) LIKE '25%'"+
 			"  AND de.latest_version_ind = 'Yes'"+
