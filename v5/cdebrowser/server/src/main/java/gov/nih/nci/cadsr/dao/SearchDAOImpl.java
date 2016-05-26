@@ -86,7 +86,6 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
     public List<SearchModel> cdeByProtocolForm( String id )
     {
         //I do not see this query uses search preferences
-    	//FIXME is it right?
     	String sql = "SELECT DISTINCT de.de_idseq ,\n" +
                 "                de.preferred_name de_preferred_name ,\n" +
                 "                de.long_name ,\n" +
@@ -113,7 +112,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                sbr.ac_status_lov_view asl\n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
-                //"AND             de.asl_name != 'RETIRED DELETED'\n" + //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
+                "AND             de.asl_name != 'RETIRED DELETED'\n" +
                 "AND             conte.conte_idseq = de.conte_idseq\n" +
                 "AND             qc.dn_crf_idseq = '" + id + "'\n" +
                 "AND             qc.qtl_name = 'QUESTION'\n" +
