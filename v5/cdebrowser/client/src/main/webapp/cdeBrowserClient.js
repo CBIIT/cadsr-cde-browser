@@ -1,9 +1,10 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, dataTransferService) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
+//    $scope.onClickBasicSearch = onClickBasicSearch;
     $scope.location = $location.url();
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -35,12 +36,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else {
             if (Object.keys(fs.searchFilter).length) {
                 if (Object.keys(fs.searchFilter).length==1) { // dont do a search because only program area is selected //
-                    console.log("NO SEARCH")
                 }
                 else {
                      // do search because at least one dropdown besides program area is selected //
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
-                    console.log("Search");
                     $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
             };            
@@ -287,6 +286,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
+    //$scope.$on('basicSearchEvent', onClickBasicSearch(query, field, type, publicIdName));
+    //function onClickBasicSearch(query, field, type, publicIdName) {
+
         /**
          *  name              The text of the users search input for data element search.
          *  publicId          The text of the users search input for publicId search.
@@ -492,16 +494,57 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.staticFilters = {};
         $scope.dataLoad(window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/contextData");
 
+
         // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
-        $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').success(function (response) {
-            $scope.registrationSort = response;
-            $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
-            $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
-        });
-        $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').success(function (response) {
-            $scope.workflowSort = response;
-            $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
-        });
+        $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) { 
+                        $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
+                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;     
+                    }).then(function() { 
+                              $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
+                                $scope.workflowStatuses = response.data;
+                                $scope.workflowSort = [];
+                                $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                                angular.forEach($scope.models, function(list) {
+                                    switch(list.label) {
+                                      case "workflowStatusIncluded":
+                                        for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
+                                          list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
+                                        }
+                                        break;
+                                      case "workflowStatusExcluded":
+                                        for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
+                                          list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
+                                        }
+                                        break;
+                                    }  
+                              });
+                                //$scope.workflowSort = dataTransferService.getData("workflowStatusIncluded");
+                                $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
+                            });
+                    }).then(function() {
+                              $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
+                                $scope.registrationStatuses = response.data;
+                                $scope.registrationSort = [];
+                                $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                                angular.forEach($scope.models, function(list) {
+                                    switch(list.label) {
+                                      case "registrationStatusIncluded":
+                                        for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
+                                          list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
+                                        }
+                                        break;
+                                      case "registrationStatusExcluded":
+                                        for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
+                                          list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
+                                        }
+                                        break;
+                                    }  
+                              });
+                                //$scope.registrationSort = dataTransferService.getData("registrationStatusIncluded");
+                                $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
+                                $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
+                            });
+                    });
 
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme').success(function(response) {
             fs.lookupData['classifications'] = response;

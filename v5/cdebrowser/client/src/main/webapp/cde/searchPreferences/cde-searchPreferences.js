@@ -1,6 +1,6 @@
 angular.module("cdeSearchPreferences", ['dndLists']);
 
-angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", function ($scope, $http) {
+angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", "dataTransferService", function ($scope, $http, dataTransferService) {
     
     $scope.searchPreferencesCheckboxModel = { };
 
@@ -27,11 +27,12 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
         requestPayload.registrationStatusExcluded = getCategoryExcludedItems('registrationStatusExcluded');
         $http.post('/cdebrowserServer/rest/searchPreferences',requestPayload).then(function(response){
           console.log(response.statusText);
+          // $scope.$emit('basicSearchEvent', query, field, type, publicIdName);
         });
 
 
 
-        
+
      };
 
 
@@ -58,6 +59,7 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 $scope.workflowStatuses = response.data;
                 $scope.workflowStatusIncluded = [];
                 $scope.workflowStatusIncluded = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                dataTransferService.setData("workflowStatusIncluded", $scope.workflowStatusIncluded);
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                       case "workflowStatusIncluded":
@@ -78,6 +80,7 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 $scope.registrationStatuses = response.data;
                 $scope.registrationStatusIncluded = [];
                 $scope.registrationStatusIncluded = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                dataTransferService.setData("registrationStatusIncluded", $scope.registrationStatusIncluded);
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                       case "registrationStatusIncluded":
@@ -150,14 +153,12 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
     $scope.$watch('searchPreferencesCheckboxModel', function(model) {
         $scope.checkboxModelAsJson = angular.toJson(model, true);
         $scope.defaultCheckboxModel = angular.copy($scope.checkboxModelAsJson);
-            // console.log($scope.checkboxModelAsJson);
     }, true);
 
     $scope.$watch('models', function(model) {
         $scope.modelsAsJson = angular.toJson(model, true);
         $scope.modifiedModels = $scope.modelsAsJson;
         $scope.defaultModels = angular.copy($scope.modelsAsJson);
-            // console.log($scope.modelsAsJson);
     }, true);
 
 
