@@ -119,4 +119,19 @@ public class SearchPreferencesControllerTest {
 		SearchPreferences received = searchPreferencesController.retrieveSearchPreferencesDefault();
 		assertEquals(expected, received);
 	}
+	@Test
+	public void testResetSearchPreferencesToDefault() {
+		SearchPreferencesController searchPreferencesController = new SearchPreferencesController();
+		SearchPreferences expected = new SearchPreferences();
+		expected.initPreferences();
+		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(expected);
+		//stub
+		HttpSession mockSession = Mockito.mock(HttpSession.class);
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));
+
+		//MUT
+		SearchPreferences received = searchPreferencesController.resetSearchPreferencesToDefault(mockSession);
+		assertEquals(expected, received);
+		Mockito.verify(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));
+	}
 }

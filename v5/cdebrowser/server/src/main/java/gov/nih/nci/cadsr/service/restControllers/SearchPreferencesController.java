@@ -86,4 +86,12 @@ public class SearchPreferencesController {
 		logger.debug("User search initial preferences assigned to HTTP session, returning : " + searchPreferences);
 		return searchPreferences;
 	}
+	@RequestMapping(value = "/reset", method = RequestMethod.POST, produces = "application/json")
+	public SearchPreferences resetSearchPreferencesToDefault(HttpSession httpSession) {
+		logger.debug("Received request to reset search preferences to default");
+		SearchPreferencesServer searchPreferencesServer = ControllerUtils.initSearchPreferencesServerInSession(httpSession);
+		SearchPreferences searchPreferencesClient = searchPreferencesServer.buildClientSearchPreferences();
+		logger.debug("User search preferences reset to: " + searchPreferencesClient);	
+		return searchPreferencesClient;
+	}
 }
