@@ -110,4 +110,13 @@ public class SearchPreferencesControllerTest {
 		Mockito.verify(mockRequest).getSession(true);
 		Mockito.verify(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));;
 	}
+	@Test
+	public void testRetrieveSearchPreferencesDefault() {
+		SearchPreferencesController searchPreferencesController = new SearchPreferencesController();
+		SearchPreferences expected = new SearchPreferences();
+		expected.initPreferences();
+		//MUT
+		SearchPreferences received = searchPreferencesController.retrieveSearchPreferencesDefault();
+		assertEquals(expected, received);
+	}
 }

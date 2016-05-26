@@ -78,5 +78,12 @@ public class SearchPreferencesController {
 		}
 		return searchPreferencesClient;
 	}
-
+	@RequestMapping(value = "/default", method = RequestMethod.GET, produces = "application/json")
+	public SearchPreferences retrieveSearchPreferencesDefault() {
+		logger.debug("Received request to retrieve default search preferences");
+		SearchPreferences searchPreferences = new SearchPreferences();
+		searchPreferences.initPreferences();
+		logger.debug("User search initial preferences assigned to HTTP session, returning : " + searchPreferences);
+		return searchPreferences;
+	}
 }
