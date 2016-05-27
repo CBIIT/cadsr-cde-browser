@@ -4,7 +4,6 @@
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
-//    $scope.onClickBasicSearch = onClickBasicSearch;
     $scope.location = $location.url();
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -286,8 +285,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-    //$scope.$on('basicSearchEvent', onClickBasicSearch(query, field, type, publicIdName));
-    //function onClickBasicSearch(query, field, type, publicIdName) {
 
         /**
          *  name              The text of the users search input for data element search.

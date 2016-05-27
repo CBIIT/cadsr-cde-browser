@@ -28,12 +28,10 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
         saveRequestPayload.registrationStatusExcluded = getCategoryExcludedItems('registrationStatusExcluded');
         $http.post('/cdebrowserServer/rest/searchPreferences',saveRequestPayload).then(function(response){
           console.log(response.statusText);
-          // $scope.$emit('basicSearchEvent', query, field, type, publicIdName);
         });
+            $scope.tableParams.settings({ dataset: []});
 
 
-
-        
 
 
 
@@ -130,8 +128,8 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
           $http.post('/cdebrowserServer/rest/searchPreferences',resetRequestPayload).then(function(response){
           console.log(response.statusText);
           });
-          // $scope.$emit('basicSearchEvent', query, field, type, publicIdName);
         });
+            $scope.tableParams.settings({ dataset: []});
      };
 
   // $scope.Statuses is for rest calls (workflow and registration) and $scope.Status is for variables (workflowIncluded,
