@@ -12,12 +12,12 @@ import java.util.List;
  */
 public enum WorkflowStatusExcludedInitial
 {
-    CmteApproved( "CMTE APPROVED" ),
-    CmteSubmtd( "CMTE SUBMTD" ),
-    CmteSubmtdUsed( "CMTE SUBMTD USED" ),
-    RetiredArchived( "RETIRED ARCHIVED" ),
-    RetiredPhasedOut( "RETIRED PHASED OUT" ),
-    RetiredWithdrawn( "RETIRED WITHDRAWN" ),
+    CmteApproved( WorkflowStatusEnum.CmteApproved.getWorkflowStatus() ),
+    CmteSubmtd( WorkflowStatusEnum.CmteSubmtd.getWorkflowStatus() ),
+    CmteSubmtdUsed( WorkflowStatusEnum.CmteSubmtdUsed.getWorkflowStatus() ),
+    RetiredArchived( WorkflowStatusEnum.RetiredArchived.getWorkflowStatus() ),
+    RetiredPhasedOut( WorkflowStatusEnum.RetiredPhasedOut.getWorkflowStatus() ),
+    RetiredWithdrawn( WorkflowStatusEnum.RetiredWithdrawn.getWorkflowStatus() ),
     RetiredDeleted( "RETIRED DELETED" );//this status is for server preferences only; CDE Browser client does not see this status
 
     private String workflowStatus;
