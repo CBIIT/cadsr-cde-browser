@@ -378,11 +378,11 @@ display:inline-block !important;
     display: inline-block;
 }
 
-.searchPreferencesBorder {
+/*.searchPreferencesBorder {
     border: 1px solid #336699;
     border-radius: 4px;
     border-width: thin;
-}
+}*/
 
 .dragDrop ul[dnd-list],
 .dragDrop ul[dnd-list] > li {

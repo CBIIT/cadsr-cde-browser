@@ -1,6 +1,6 @@
 angular.module("cdeSearchPreferences", ['dndLists']);//, 'cdeBrowserApp'
 
-angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", "dataTransferService", function ($scope, $http, dataTransferService) {
+angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", function ($scope, $http) {
     
     $scope.searchPreferencesCheckboxModel = { };
     $scope.defaultCheckboxModel = { };
@@ -33,19 +33,14 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
 
 
 
-        //dataTransferService.setData("workflowStatusIncluded", $scope.workflowStatusIncluded);
-        //dataTransferService.setData("registrationStatusIncluded", $scope.registrationStatusIncluded);
-
-
-
         
+
+
 
 
 
      };
     
-
-
     $scope.searchPreferencesResetButton = function () {
 
         $scope.searchPreferencesCheckboxModel.excludeTest = $scope.defaultCheckboxModel.excludeTest;
@@ -127,7 +122,6 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                     });
                   });
           }).then(function(){
-
           var resetRequestPayload = { };
           resetRequestPayload.excludeTest = $scope.defaultCheckboxModel.excludeTest;
           resetRequestPayload.excludeTraining = $scope.defaultCheckboxModel.excludeTraining;
@@ -140,12 +134,10 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
         });
      };
 
-
-
   // $scope.Statuses is for rest calls (workflow and registration) and $scope.Status is for variables (workflowIncluded,
   // workflowExcluded, registrationIncluded and registrationExcluded)
   
-    $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) { // /default
+    $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) {
         $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
         $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
         $scope.searchPreferencesCheckboxModel.excludeTest = response.data.excludeTest;
@@ -165,11 +157,13 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                         for (var i = 0; i <= $scope.workflowStatusIncluded.length - 1; i++) {
                           list.items.push({label: $scope.workflowStatusIncluded[i], type: "workflowStatus"});
                         }
+                        list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                         break;
                       case "workflowStatusExcluded":
                         for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
                           list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
                         }
+                        list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                         break;
                     }  
               });
@@ -182,14 +176,16 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                       case "registrationStatusIncluded":
-                        for (var i = 0; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" since the last object is empty
+                        for (var i = 0; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" to remove the last empty object
                           list.items.push({label: $scope.registrationStatusIncluded[i], type: "registrationStatus"});
                         }
+                        list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                         break;
                       case "registrationStatusExcluded":
                         for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
                           list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
                         }
+                        list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                         break;
                     }  
               });
@@ -243,6 +239,7 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
       list.items = list.items.slice(0, index)
                   .concat(items)
                   .concat(list.items.slice(index));
+      list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
       return true;
     }
 
@@ -258,11 +255,5 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
         $scope.modelsAsJson = angular.toJson(model, true);
         $scope.modifiedModels = $scope.modelsAsJson;   
     }, true);
-
-
-
-   
-
-
 
 }]);
