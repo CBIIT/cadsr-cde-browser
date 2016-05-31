@@ -90,11 +90,13 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                               for (var i = 0; i <= $scope.workflowStatusIncluded.length - 1; i++) {
                                 list.items.push({label: $scope.workflowStatusIncluded[i], type: "workflowStatus"});
                               }
+                              list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                               break;
                             case "workflowStatusExcluded":
                               for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
                                 list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
                               }
+                              list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                               break;
                           }  
                     });
@@ -110,11 +112,13 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                               for (var i = 0; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" since the last object is empty
                                 list.items.push({label: $scope.registrationStatusIncluded[i], type: "registrationStatus"});
                               }
+                              list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                               break;
                             case "registrationStatusExcluded":
                               for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
                                 list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
                               }
+                              list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
                               break;
                           }  
                     });
