@@ -551,6 +551,21 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     };
 
+
+    $scope.$on('updateTree',function(event,data) {
+        var filtered_data = $filter('filter')($scope.contextListMaster[$scope.currentTab].children,function(item,index,array) {
+        var search_text=item.text;
+            if(search_text.indexOf('Test')!=-1) {
+                angular.element(document.getElementById(item.idSeq)).parent().prop('hidden', data.test);
+            }
+            else if(search_text.indexOf('Training') !=-1) {
+                angular.element(document.getElementById(item.idSeq)).parent().prop('hidden', data.training);
+            }
+            return false;
+        });   
+    });
+
+
     $scope.dataLoad = function (dataSource) {
         $scope.waitMessage = "Please wait, loading Context data\n (" + dataSource + ").....".replace(/(?:\r\n|\r|\n)/g, "\n<br>");
         $scope.messageClass = $scope.cssClasses["BIG"];

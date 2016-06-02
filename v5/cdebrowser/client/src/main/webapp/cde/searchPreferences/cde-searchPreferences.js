@@ -1,6 +1,6 @@
-angular.module("cdeSearchPreferences", ['dndLists']);//, 'cdeBrowserApp'
+angular.module("cdeSearchPreferences", ['dndLists']);
 
-angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", function ($scope, $http) {
+angular.module("cdeSearchPreferences").controller("SearchPreferencesController", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {
     
     $scope.searchPreferencesCheckboxModel = { };
     $scope.defaultCheckboxModel = { };
@@ -27,16 +27,13 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
         saveRequestPayload.workflowStatusExcluded = getCategoryExcludedItems('workflowStatusExcluded');
         saveRequestPayload.registrationStatusExcluded = getCategoryExcludedItems('registrationStatusExcluded');
         $http.post('/cdebrowserServer/rest/searchPreferences',saveRequestPayload).then(function(response){
-          console.log(response.statusText);
+          $rootScope.$broadcast('updateTree',
+            {
+              test:$scope.searchPreferencesCheckboxModel.excludeTest,
+              training:$scope.searchPreferencesCheckboxModel.excludeTraining
+            })
         });
             $scope.tableParams.settings({ dataset: []});
-
-
-
-
-
-
-
      };
     
     $scope.searchPreferencesResetButton = function () {
@@ -130,7 +127,11 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
           resetRequestPayload.workflowStatusExcluded = $scope.defaultWorkflowStatusExcluded;
           resetRequestPayload.registrationStatusExcluded = $scope.defaultRegistrationStatusExcluded;
           $http.post('/cdebrowserServer/rest/searchPreferences',resetRequestPayload).then(function(response){
-          console.log(response.statusText);
+          $rootScope.$broadcast('updateTree',
+            {
+              test:$scope.searchPreferencesCheckboxModel.excludeTest,
+              training:$scope.searchPreferencesCheckboxModel.excludeTraining
+            })
           });
         });
             $scope.tableParams.settings({ dataset: []});

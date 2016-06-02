@@ -46,6 +46,8 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
             //children
             var nodeChildren = attrs.nodeChildren;
 
+            // var idSeq = attrs.nodeidSeq;
+
             //tree template
             var template =
                 '<ul>' +
@@ -54,7 +56,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 '<li data-ng-repeat="node in ' + treeMenuModel + '">' +
 
                 //Is a folder with children and is collapsed
-                '<i class="closedFolder" cl' +
+                '<i id="{{node.idSeq}}" class="closedFolder" cl' + 
                 //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} "' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
@@ -231,6 +233,8 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                     scope[treeId].selectNodeNorm = scope[treeId].selectNodeNorm || function (selectedNode) {
                             disp(selectedNode);
                         };
+
+
 
                     //if user clicks on the text
                     scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function (selectedNode, selectAction) {
