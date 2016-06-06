@@ -1,7 +1,7 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $timeout,$filter, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
@@ -495,7 +495,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
         $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) { 
                         $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
-                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;     
+                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
+                        $scope.treeStatus = {
+                            test:response.data.excludeTest,
+                            training:response.data.excludeTraining};
                     }).then(function() { 
                               $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
                                 $scope.workflowStatuses = response.data;
@@ -585,10 +588,26 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.initComplete = true;
                 $scope.onClickTab(0);
 
+                $scope.treeLoad();
+
             }
         });
 
     };
+
+
+    $scope.treeStatus = { };
+
+    $scope.treeLoad = function() {
+        $timeout(function() {
+            $scope.$broadcast('updateTree',
+                {
+                  test:$scope.treeStatus.test,
+                  training:$scope.treeStatus.training
+                })    
+        },100);
+    };
+
 
     // Get the urls for the tools we link to from this page.  I got all that where in the database, although we do not use them all
     $scope.getToolHosts = function () {
