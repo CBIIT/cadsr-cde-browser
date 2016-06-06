@@ -5,8 +5,10 @@ package gov.nih.nci.cadsr.dao;
 
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import gov.nih.nci.cadsr.dao.operation.LookupDataQueryBuilder;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationScheme;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
     private JdbcTemplate jdbcTemplate;
     private String sql;
+    private LookupDataQueryBuilder lookupDataQueryBuilder;
 
 
     @Autowired
@@ -120,15 +123,20 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
     }
     
     @Override
-	public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext()
+	public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext(String contexIdSeq, String csOrCsCsi)
 	{
-		sql = "SELECT DISTINCT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, csv.cs_idseq csIdSeq, csv.long_name csLongName " +
-                " FROM sbr.classification_schemes_view csv, sbr.contexts c " +
-                " WHERE csv.asl_name = 'RELEASED' AND csv.cstl_name != 'Publishing' AND csv.conte_idseq = c.conte_idseq " +
-                " ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.long_name)";
-
+    	String sql = lookupDataQueryBuilder.buildCSLookupQuery(contexIdSeq, csOrCsCsi);
+		
         List<ClassificationScheme> results = getAll(sql, ClassificationScheme.class);
         return results;
+	}
+    
+	public LookupDataQueryBuilder getLookupDataQueryBuilder() {
+		return lookupDataQueryBuilder;
+	}
+
+	public void setLookupDataQueryBuilder(LookupDataQueryBuilder lookupDataQueryBuilder) {
+		this.lookupDataQueryBuilder = lookupDataQueryBuilder;
 	}
 
 }

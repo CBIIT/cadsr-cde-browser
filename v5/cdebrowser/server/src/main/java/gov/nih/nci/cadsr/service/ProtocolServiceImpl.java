@@ -20,10 +20,10 @@ public class ProtocolServiceImpl implements ProtocolService
 	private ProtocolDAO protocolDAO;
 
 	@Override
-	public List<Protocol> getProtocolsWithProgramAreaAndContext()
+	public List<Protocol> getProtocolsWithProgramAreaAndContext(String contexIdSeq, String protocolOrForm)
 	{
-		logger.debug("Fetching the list of all protocols with program area and context iddeq.");
-		List<Protocol> protoList = protocolDAO.getAllProtocolsWithProgramAreaAndContext();
+		logger.debug("Fetching the list of all protocols with program area and context idSeq = " + contexIdSeq + ", protocolOrForm = " + protocolOrForm);
+		List<Protocol> protoList = protocolDAO.getAllProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
 		if (protoList == null || protoList.size() == 0)
 		{
 			protoList = new ArrayList<Protocol>();

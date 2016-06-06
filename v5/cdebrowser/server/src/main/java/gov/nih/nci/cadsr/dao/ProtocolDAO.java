@@ -13,7 +13,7 @@ public interface ProtocolDAO
     public List<ProtocolModel> getAllProtocols();
     public List<ProtocolModel> getProtocolsByContext( String conteId );
     
-    public List<Protocol> getAllProtocolsWithProgramAreaAndContext();
+    public List<Protocol> getAllProtocolsWithProgramAreaAndContext(String contexIdSeq, String protocolOrForm);
     
     public boolean haveProtocolsByContext( String conteId );
 }

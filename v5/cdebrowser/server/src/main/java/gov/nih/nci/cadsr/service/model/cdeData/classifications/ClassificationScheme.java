@@ -8,8 +8,13 @@ public final class ClassificationScheme implements Serializable
 	
 	private String programAreaPalName;
 	private String contextIdSeq;
+	private String contextName;
 	private String csIdSeq;
 	private String csLongName;
+	private String csCsiIdSeq;
+	private String csCsiName;
+	private String parentCsiIdSeq;
+	private int csiLevel;
 	
 	public String getProgramAreaPalName() {
 		return programAreaPalName;
@@ -43,10 +48,52 @@ public final class ClassificationScheme implements Serializable
 		this.csLongName = csLongName;
 	}
 
+	public String getContextName() {
+		return contextName;
+	}
+
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
+	}
+
+	public String getCsCsiIdSeq() {
+		return csCsiIdSeq;
+	}
+
+	public void setCsCsiIdSeq(String csCsiIdSeq) {
+		this.csCsiIdSeq = csCsiIdSeq;
+	}
+
+	public String getCsCsiName() {
+		return csCsiName;
+	}
+
+	public void setCsCsiName(String csCsiName) {
+		this.csCsiName = csCsiName;
+	}
+
+	public String getParentCsiIdSeq() {
+		return parentCsiIdSeq;
+	}
+
+	public void setParentCsiIdSeq(String parentCsiIdSeq) {
+		this.parentCsiIdSeq = parentCsiIdSeq;
+	}
+
+	public int getCsiLevel() {
+		return csiLevel;
+	}
+
+	public void setCsiLevel(int csiLevel) {
+		this.csiLevel = csiLevel;
+	}
+
 	@Override
 	public String toString() {
-		return "ClassificationScheme [programAreaPalName=" + programAreaPalName + ", contextIdSeq=" + contextIdSeq + ", csIdSeq=" + csIdSeq + ", csLongName="
-				+ csLongName + "]";
+		return "ClassificationScheme [programAreaPalName=" + programAreaPalName + ", contextIdSeq=" + contextIdSeq
+				+ ", contextName=" + contextName + ", csIdSeq=" + csIdSeq + ", csLongName=" + csLongName
+				+ ", csCsiIdSeq=" + csCsiIdSeq + ", csCsiName=" + csCsiName + ", parentCsiIdSeq=" + parentCsiIdSeq
+				+ ", csiLevel=" + csiLevel + "]";
 	}
 	
 }

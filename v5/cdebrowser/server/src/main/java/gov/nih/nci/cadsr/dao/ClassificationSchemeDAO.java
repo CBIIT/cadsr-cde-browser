@@ -15,7 +15,7 @@ public interface ClassificationSchemeDAO
     public List<ClassificationSchemeModel> getChildrenClassificationSchemesByCsId( String csId );
     public ClassificationSchemeModel getClassificationSchemeById( String contextId );
     
-    public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext();
+    public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext(String contexIdSeq, String csOrCsCsi);
     
     public boolean haveClassificationSchemes( String conteId );
 }

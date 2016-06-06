@@ -8,8 +8,11 @@ public class Protocol implements Serializable
 
 	public String programAreaPalName;
 	public String contextIdSeq;
+	public String contextName;
 	public String protocolIdSeq;
 	public String protocolLongName;
+	public String formIdSeq;
+	public String formLongName;
 	
 	public String getProgramAreaPalName() {
 		return programAreaPalName;
@@ -43,10 +46,35 @@ public class Protocol implements Serializable
 		this.protocolLongName = protocolLongName;
 	}
 
+	public String getContextName() {
+		return contextName;
+	}
+
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
+	}
+
+	public String getFormIdSeq() {
+		return formIdSeq;
+	}
+
+	public void setFormIdSeq(String formIdSeq) {
+		this.formIdSeq = formIdSeq;
+	}
+
+	public String getFormLongName() {
+		return formLongName;
+	}
+
+	public void setFormLongName(String formLongName) {
+		this.formLongName = formLongName;
+	}
+
 	@Override
 	public String toString() {
 		return "Protocol [programAreaPalName=" + programAreaPalName + ", contextIdSeq=" + contextIdSeq
-				+ ", protocolIdSeq=" + protocolIdSeq + ", protocolLongName=" + protocolLongName + "]";
+				+ ", contextName=" + contextName + ", protocolIdSeq=" + protocolIdSeq + ", protocolLongName="
+				+ protocolLongName + ", formIdSeq=" + formIdSeq + ", formLongName=" + formLongName + "]";
 	}
 	
 }

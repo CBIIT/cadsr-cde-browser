@@ -95,8 +95,8 @@ public class SearchController
 
         // AppScan will try to inject %Hex strings to test our parameter sanitizing.
         if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(), 
-        										searchCriteria.getClassification(), searchCriteria.getProtocol(), searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), 
-        										searchCriteria.getConceptName(), searchCriteria.getConceptCode() ))
+        										searchCriteria.getClassification(), searchCriteria.getCsCsiIdSeq(), searchCriteria.getProtocol(), searchCriteria.getFormIdSeq(),
+        										searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), searchCriteria.getConceptName(), searchCriteria.getConceptCode() ))
         {
             logger.warn( "Suspect parameter from client." );
             return null;

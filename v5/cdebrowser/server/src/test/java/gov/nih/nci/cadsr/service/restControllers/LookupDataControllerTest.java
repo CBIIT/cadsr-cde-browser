@@ -1,12 +1,14 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -18,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
@@ -38,7 +41,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationSch
 @ContextConfiguration
 public class LookupDataControllerTest
 {
-	
+
 	@Configuration
 	static class LookupDataServiceTestContextConfiguration
 	{
@@ -86,7 +89,6 @@ public class LookupDataControllerTest
 	
 	@Autowired
 	private ProtocolDAO protocolDAO;
-	
 
 	private MockMvc mockMvc;
 
@@ -97,68 +99,83 @@ public class LookupDataControllerTest
 			"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "DRAFT MOD", "RETIRED ARCHIVED", "RETIRED PHASED OUT",
 			"RETIRED WITHDRAWN", "RELEASED-NON-CMPLNT" };
 	
-	List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
-	List<Protocol> protoList = new ArrayList<Protocol>();
+	private List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
+	private List<Protocol> protoList = new ArrayList<Protocol>();
+	
+	private String programAreaPalName = "NCI Consortium";
+	private String contextIdSeq = "F6117C06-C689-F9FD-E040-BB89AD432E40";
+	private String contextName = "ABTC";
 
 	@Before
 	public void setup()
 	{	
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();		
 		
 		ClassificationScheme cs1 = new ClassificationSchemeBuilder()
-									.programAreaPalName("Cancer Centers")
-									.contextIdSeq("D8D849BC-68CF-10AA-E040-BB89AD430348")
-									.csIdSeq("D8EC8CDC-6298-6CD0-E040-BB89AD432C99")
-									.csLongName("NCI Standard Template CDEs").build();
+									.programAreaPalName(programAreaPalName)
+									.contextIdSeq(contextIdSeq).contextName(contextName)
+									.csIdSeq("F7BA4EB1-2D70-BA33-E040-BB89AD4355D2").csLongName("CRF CDEs")
+									.csCsiIdSeq("F7BA6033-BAEA-C5EF-E040-BB89AD437201").csCsiName("Dosing")
+									.csiLevel(1)
+									.build();
 		
 		ClassificationScheme cs2 = new ClassificationSchemeBuilder()
-									.programAreaPalName("NCI")
-									.contextIdSeq("99BA9DC8-2095-4E69-E034-080020C9C0E0")
-									.csIdSeq("2AB29302-4615-24BE-E044-0003BA3F9857")
-									.csLongName("Submission and Reporting").build();
+									.programAreaPalName(programAreaPalName)
+									.contextIdSeq(contextIdSeq).contextName(contextName)
+									.csIdSeq("F7BA4EB1-2D70-BA33-E040-BB89AD4355D2").csLongName("CRF CDEs")
+									.csCsiIdSeq("F7BA5589-4430-0BF5-E040-BB89AD435EB8").csCsiName("Lapatinib Dosing")
+									.csiLevel(2).parentCsiIdSeq("F7BA6033-BAEA-C5EF-E040-BB89AD437201")
+									.build();
 		
 		ClassificationScheme cs3 = new ClassificationSchemeBuilder()
-									.programAreaPalName("UNASSIGNED")
-									.contextIdSeq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842")
-									.csIdSeq("27CC431E-E589-0162-E044-0003BA3F9857")
-									.csLongName("My Test Container").build();
+									.programAreaPalName(programAreaPalName)
+									.contextIdSeq(contextIdSeq).contextName(contextName)
+									.csIdSeq("F7BA4EB1-2D70-BA33-E040-BB89AD4355D2").csLongName("CRF CDEs")
+									.csCsiIdSeq("F7BA528D-C7D7-A8CF-E040-BB89AD4371BC").csCsiName("30-Day Follow-Up")
+									.csiLevel(1)
+									.build();
 		
 		ClassificationScheme cs4 = new ClassificationSchemeBuilder()
-									.programAreaPalName("NIH Institutes")
-									.contextIdSeq("EDA90DE9-80D9-1E28-E034-0003BA3F9857")
-									.csIdSeq("1B8A6942-75CA-2403-E044-0003BA3F9857")
-									.csLongName("Potential CDEs for Reuse").build();
+									.programAreaPalName(programAreaPalName)
+									.contextIdSeq(contextIdSeq).contextName(contextName)
+									.csIdSeq("F7BA4EB1-2D70-BA33-E040-BB89AD4355D2").csLongName("CRF CDEs")
+									.csCsiIdSeq("F7BABB40-FBF3-ACC0-E040-BB89AD430920").csCsiName("Enrollment Additional Information")
+									.csiLevel(1)
+									.build();
 		
-		csList.add(cs1);
-		csList.add(cs2);
-		csList.add(cs3);
-		csList.add(cs4);
+		csList.add(cs1); csList.add(cs2);
+		csList.add(cs3); csList.add(cs4);
 		
 		Protocol prot1 = new ProtocolBuilder()
-							.programAreaPalName("NIH Institutes")
-							.contextIdSeq("EDA90DE9-80D9-1E28-E034-0003BA3F9857")
-							.protocolIdSeq("2E50EEA2-C01F-17CF-E044-0003BA3F9857")
-							.protocolLongName("Hepatitis Serology Pre-HSCT Disease Insert (Form 2047)").build();
+							.programAreaPalName(programAreaPalName)
+							.contextIdSeq(contextIdSeq).contextName(contextName)							
+							.protocolIdSeq("B40DD2C8-A047-DBE1-E040-BB89AD437202").protocolLongName("ABTC-0904")
+							.formIdSeq("B2D14B67-725F-9400-E040-BB89AD4314A4").formLongName("ABTC Vital Signs").build();
 		
 		Protocol prot2 = new ProtocolBuilder()
-							.programAreaPalName("NIH Institutes")
-							.contextIdSeq("EDA90DE9-80D9-1E28-E034-0003BA3F9857")
-							.protocolIdSeq("2E51ECCA-ABAE-29FB-E044-0003BA3F9857")
-							.protocolLongName("Human Immunodeficiency Virus Post-HSCT Disease Insert (Form 2148)").build();
+							.programAreaPalName(programAreaPalName)
+							.contextIdSeq(contextIdSeq).contextName(contextName)
+							.protocolIdSeq("B40DD2C8-A047-DBE1-E040-BB89AD437202").protocolLongName("ABTC-0904")
+							.formIdSeq("DAF96B53-07DB-23D6-E040-BB89AD4318A2").formLongName("ABTC TMZ Dosing").build();
 		
 		Protocol prot3 = new ProtocolBuilder()
-							.programAreaPalName("NIH Institutes")
-							.contextIdSeq("F5E94686-5C79-2E5A-E034-0003BA3F9857")
-							.protocolIdSeq("48CD8F6F-538E-54FC-E044-0003BA3F9857")
-							.protocolLongName("PRL0707").build();
+							.programAreaPalName(programAreaPalName)
+							.contextIdSeq(contextIdSeq).contextName(contextName)							
+							.protocolIdSeq("DAA64912-F072-6637-E040-BB89AD434736").protocolLongName("ABTC-1202")
+							.formIdSeq("2D8CD1C6-F647-C967-E050-BB89AD43465C").formLongName("CT Scan Report").build();
 		
-		protoList.add(prot1);
-		protoList.add(prot2);
-		protoList.add(prot3);
+		Protocol prot4 = new ProtocolBuilder()
+							.programAreaPalName(programAreaPalName)
+							.contextIdSeq(contextIdSeq).contextName(contextName)							
+							.protocolIdSeq("DAA64912-F072-6637-E040-BB89AD434736").protocolLongName("ABTC-1202")
+							.formIdSeq("246F2368-5949-47BD-E050-BB89AD4313AA").formLongName("Fresh Tissue").build();
 		
-		Mockito.when(classificationSchemeDAO.getAllClassificationSchemeWithProgramAreaAndContext()).thenReturn(csList);
+		protoList.add(prot1); protoList.add(prot2);
+		protoList.add(prot3); protoList.add(prot4);
 		
-		Mockito.when(protocolDAO.getAllProtocolsWithProgramAreaAndContext()).thenReturn(protoList);
+		Mockito.when(classificationSchemeDAO.getAllClassificationSchemeWithProgramAreaAndContext(contextIdSeq, "")).thenReturn(csList);
+		
+		Mockito.when(protocolDAO.getAllProtocolsWithProgramAreaAndContext(contextIdSeq, "")).thenReturn(protoList);
 	}
 
 	@Test
@@ -173,8 +190,8 @@ public class LookupDataControllerTest
 	
 	@Test
 	public void getClassificationScheme() throws Exception {
-		MvcResult result = mockMvc.perform(get("/lookupdata/classificationscheme"))
-				// .andDo(print())
+		MvcResult result = mockMvc.perform(get("/lookupdata/classificationscheme").param("contextIdSeq", contextIdSeq).param("csOrCsCsi", ""))
+				//.andDo(print());
 				.andExpect(status().isOk()).andReturn();
 		
 		Object responseObj = result.getModelAndView().getModel().get("classificationSchemeList");
@@ -197,7 +214,7 @@ public class LookupDataControllerTest
 	@Test
 	public void getProtocol() throws Exception
 	{
-		MvcResult result = mockMvc.perform(get("/lookupdata/protocol"))
+		MvcResult result = mockMvc.perform(get("/lookupdata/protocol").param("contextIdSeq", contextIdSeq).param("protocolOrForm", ""))
 				//.andDo(print())
 				.andExpect(status().isOk()).andReturn();
 		

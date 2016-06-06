@@ -19,6 +19,11 @@ public class ProtocolBuilder
     	ReflectionTestUtils.setField(model, "contextIdSeq", contextIdSeq);
         return this;
     }
+    
+    public ProtocolBuilder contextName(String contextName) {
+    	ReflectionTestUtils.setField(model, "contextName", contextName);
+        return this;
+    }
 
     public ProtocolBuilder protocolIdSeq(String protocolIdSeq) {
     	ReflectionTestUtils.setField(model, "protocolIdSeq", protocolIdSeq);
@@ -27,6 +32,16 @@ public class ProtocolBuilder
 
     public ProtocolBuilder protocolLongName(String protocolLongName) {
     	ReflectionTestUtils.setField(model, "protocolLongName", protocolLongName);
+        return this;
+    }
+    
+    public ProtocolBuilder formIdSeq(String formIdSeq) {
+    	ReflectionTestUtils.setField(model, "formIdSeq", formIdSeq);
+        return this;
+    }
+    
+    public ProtocolBuilder formLongName(String formLongName) {
+    	ReflectionTestUtils.setField(model, "formLongName", formLongName);
         return this;
     }
 

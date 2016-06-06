@@ -58,16 +58,19 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String docWhere = "";
         String vvWhere = "";
         String classificationWhere = "";
+        String csiWhere = "";
         String regStatus = "";
         String protocolWhere = "";
+        String formWhere = "";
         
      // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
         
         String classificationFrom = ", sbr.classification_schemes cls ";
+        String csiFrom = ", sbr.ac_csi_view acs ";
         String protocolFrom = ", sbrext.quest_contents_view_ext frm, sbrext.protocol_qc_ext ptfrm, sbrext.protocols_view_ext pt, sbrext.quest_contents_view_ext qc ";
+        String formFrom = ", sbrext.quest_contents_view_ext qc ";
         String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
-
 
         if(StringUtils.isBlank(searchCriteria.getClassification()))
         {
@@ -80,6 +83,15 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             					  "AND    csc.cs_csi_idseq = acs.cs_csi_idseq AND acs.ac_idseq = de_idseq ) ";
         }
         
+        if(StringUtils.isBlank(searchCriteria.getCsCsiIdSeq()))
+        {
+            csiFrom = "";
+        }
+        else
+        {
+            csiWhere = " AND acs.cs_csi_idseq = '" + searchCriteria.getCsCsiIdSeq() + "' AND acs.ac_idseq = de.de_idseq";
+        }
+        
         if(StringUtils.isBlank(searchCriteria.getProtocol()))
         {
             protocolFrom = "";
@@ -89,6 +101,15 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             protocolWhere = " AND pt.proto_idseq = ptfrm.proto_idseq AND frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF'" +
             				" AND qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq" +
             				" AND pt.proto_idseq = '" + searchCriteria.getProtocol() + "' ";
+        }
+        
+        if(StringUtils.isBlank(searchCriteria.getFormIdSeq()))
+        {
+            formFrom = "";
+        }
+        else
+        {
+        	formWhere = " AND qc.dn_crf_idseq = '" + searchCriteria.getFormIdSeq() + "' AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq";
         }
 
         ////////////////////////////////////////////////////
@@ -176,20 +197,21 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( wkFlowWhere );
         whereBuffer.append( registrationStatusWhere );
         whereBuffer.append( classificationWhere );
+        whereBuffer.append(csiWhere);
         whereBuffer.append( regStatus );
         whereBuffer.append( cdeIdWhere );
         whereBuffer.append( decWhere );
         whereBuffer.append( vdWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
-        whereBuffer.append( deDerivWhere ).append(protocolWhere);
+        whereBuffer.append( deDerivWhere ).append(protocolWhere).append(formWhere);
 
         whereClause = whereBuffer.toString();
 
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
-                vdFrom + classificationFrom + protocolFrom +
+                vdFrom + classificationFrom + csiFrom + protocolFrom + formFrom +
                 registrationFrom +
                 wkFlowFrom +
                 deDerivFrom +
@@ -354,8 +376,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             }
             else
             {
-                String nameWhere = " AND de.de_idseq IN (" + umlAltNameWhere
-                        + " UNION " + docWhere + ") ";
+                String nameWhere = " AND de.de_idseq IN (" + umlAltNameWhere + " UNION " + docWhere + ") ";
                 return nameWhere;
             }
         }

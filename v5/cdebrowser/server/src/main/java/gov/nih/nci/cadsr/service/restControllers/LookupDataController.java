@@ -3,10 +3,12 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
@@ -44,13 +46,24 @@ public class LookupDataController
 	}
 	
 	@RequestMapping(value="/classificationscheme", produces = "application/json")
-	public List<ClassificationScheme> getClassificationScheme() throws RestControllerException
+	public List<ClassificationScheme> getClassificationScheme(@RequestParam(value="contextIdSeq", required=false) String contexIdSeq,
+															  @RequestParam(value="csOrCsCsi", required=false) String csOrCsCsi) throws RestControllerException
 	{
-		logger.debug("Received request for Classification Scheme information.");
+		logger.debug("Received request for Classification Scheme information for context = " + contexIdSeq + ", csOrCsCsi = " + csOrCsCsi );
+		
 		List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
 		try {
-			csList = classificationSchemeService.getClassificationSchemesWithProgramAreaAndContext();
-		} catch (Exception e) {
+			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(csOrCsCsi))
+				throw new RestControllerException("Either one of context id seq or CS or CSI name should be provided: ");
+			else
+				csList = classificationSchemeService.getClassificationSchemesWithProgramAreaAndContext(contexIdSeq, csOrCsCsi);
+		}
+		catch (RestControllerException re)
+		{
+			logger.error(re.getMessage(), re);
+			throw re;
+		}
+		catch (Exception e) {
 			String errMsg = "Error in fetching Classification Scheme with Program Area and Context: ";
 			logger.error(errMsg, e);
 			throw new RestControllerException(errMsg + e.getMessage());
@@ -59,13 +72,24 @@ public class LookupDataController
 	}
 	
 	@RequestMapping(value="/protocol", produces = "application/json")
-	public List<Protocol> getProtocol() throws RestControllerException
+	public List<Protocol> getProtocol(@RequestParam(value="contextIdSeq", required=false) String contexIdSeq,
+									  @RequestParam(value="protocolOrForm", required=false) String protocolOrForm) throws RestControllerException
 	{
-		logger.debug("Received request for Protocol information.");
+		logger.debug("Received request for Protocol information for context = " + contexIdSeq + ", protocolOrForm = " + protocolOrForm);
+		
 		List<Protocol> protocolList = new ArrayList<Protocol>();
 		try {
-			protocolList = protocolService.getProtocolsWithProgramAreaAndContext();
-		} catch (Exception e) {
+			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(protocolOrForm))
+				throw new RestControllerException("Either one of context id seq or protocol or form name should be provided: ");
+			else
+				protocolList = protocolService.getProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
+		} 
+		catch (RestControllerException re)
+		{
+			logger.error(re.getMessage(), re);
+			throw re;
+		}
+		catch (Exception e) {
 			String errMsg = "Error in fetching Protocols with Program Area and Context: ";
 			logger.error(errMsg, e);
 			throw new RestControllerException(errMsg + e.getMessage());

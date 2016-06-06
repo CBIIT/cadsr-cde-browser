@@ -20,10 +20,12 @@ public class ClassificationSchemeServiceImpl implements ClassificationSchemeServ
 	private ClassificationSchemeDAO classificationSchemeDAO;
 
 	@Override
-	public List<ClassificationScheme> getClassificationSchemesWithProgramAreaAndContext()
+	public List<ClassificationScheme> getClassificationSchemesWithProgramAreaAndContext(String contexIdSeq, String csOrCsCsi)
 	{
-		logger.debug("Fetching the list of all classifications schemes with program area and context iddeq.");
-		List<ClassificationScheme> csList = classificationSchemeDAO.getAllClassificationSchemeWithProgramAreaAndContext();
+		logger.debug("Fetching the list of all classifications schemes with program area and context iddeq for, Context  = " + 
+					 contexIdSeq + ", csOrCsCsi = " + csOrCsCsi);
+		
+		List<ClassificationScheme> csList = classificationSchemeDAO.getAllClassificationSchemeWithProgramAreaAndContext(contexIdSeq, csOrCsCsi);
 		if (csList == null || csList.size() == 0)
 		{
 			csList = new ArrayList<ClassificationScheme>();

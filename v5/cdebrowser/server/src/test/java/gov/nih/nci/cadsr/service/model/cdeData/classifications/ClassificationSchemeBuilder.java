@@ -19,6 +19,11 @@ public class ClassificationSchemeBuilder {
     	ReflectionTestUtils.setField(model, "contextIdSeq", contextIdSeq);
         return this;
     }
+    
+    public ClassificationSchemeBuilder contextName(String contextName) {
+    	ReflectionTestUtils.setField(model, "contextName", contextName);
+        return this;
+    }
 
     public ClassificationSchemeBuilder csIdSeq(String csIdSeq) {
     	ReflectionTestUtils.setField(model, "csIdSeq", csIdSeq);
@@ -27,6 +32,26 @@ public class ClassificationSchemeBuilder {
 
     public ClassificationSchemeBuilder csLongName(String csLongName) {
     	ReflectionTestUtils.setField(model, "csLongName", csLongName);
+        return this;
+    }
+    
+    public ClassificationSchemeBuilder csCsiIdSeq(String csCsiIdSeq) {
+    	ReflectionTestUtils.setField(model, "csCsiIdSeq", csCsiIdSeq);
+        return this;
+    }
+    
+    public ClassificationSchemeBuilder csCsiName(String csCsiName) {
+    	ReflectionTestUtils.setField(model, "csCsiName", csCsiName);
+        return this;
+    }
+    
+    public ClassificationSchemeBuilder parentCsiIdSeq(String parentCsiIdSeq) {
+    	ReflectionTestUtils.setField(model, "parentCsiIdSeq", parentCsiIdSeq);
+        return this;
+    }
+    
+    public ClassificationSchemeBuilder csiLevel(int csiLevel) {
+    	ReflectionTestUtils.setField(model, "csiLevel", csiLevel);
         return this;
     }
 

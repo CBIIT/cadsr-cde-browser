@@ -6,6 +6,6 @@ import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
 
 public interface ProtocolService 
 {
-	public List<Protocol> getProtocolsWithProgramAreaAndContext();
+	public List<Protocol> getProtocolsWithProgramAreaAndContext(String contexIdSeq, String protocolOrForm);
 
 }

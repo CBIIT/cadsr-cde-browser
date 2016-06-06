@@ -6,6 +6,6 @@ import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationSch
 
 public interface ClassificationSchemeService 
 {
-	public List<ClassificationScheme> getClassificationSchemesWithProgramAreaAndContext();
+	public List<ClassificationScheme> getClassificationSchemesWithProgramAreaAndContext(String contexIdSeq, String csOrCsCsi);
 
 }
