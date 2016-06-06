@@ -54,7 +54,7 @@ public class LookupDataController
 		List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
 		try {
 			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(csOrCsCsi))
-				throw new RestControllerException("Either one of context id seq or CS or CSI name should be provided: ");
+				throw new RestControllerException("Either one of context id seq or CS or CSI name should be provided. ");
 			else
 				csList = classificationSchemeService.getClassificationSchemesWithProgramAreaAndContext(contexIdSeq, csOrCsCsi);
 		}
@@ -63,8 +63,9 @@ public class LookupDataController
 			logger.error(re.getMessage(), re);
 			throw re;
 		}
-		catch (Exception e) {
-			String errMsg = "Error in fetching Classification Scheme with Program Area and Context: ";
+		catch (Exception e)
+		{
+			String errMsg = "Error in fetching Classification Scheme with Program Area and Context. ";
 			logger.error(errMsg, e);
 			throw new RestControllerException(errMsg + e.getMessage());
 		}
@@ -80,7 +81,7 @@ public class LookupDataController
 		List<Protocol> protocolList = new ArrayList<Protocol>();
 		try {
 			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(protocolOrForm))
-				throw new RestControllerException("Either one of context id seq or protocol or form name should be provided: ");
+				throw new RestControllerException("Either one of context id seq or protocol or form name should be provided. ");
 			else
 				protocolList = protocolService.getProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
 		} 
@@ -89,8 +90,9 @@ public class LookupDataController
 			logger.error(re.getMessage(), re);
 			throw re;
 		}
-		catch (Exception e) {
-			String errMsg = "Error in fetching Protocols with Program Area and Context: ";
+		catch (Exception e)
+		{
+			String errMsg = "Error in fetching Protocols with Program Area and Context. ";
 			logger.error(errMsg, e);
 			throw new RestControllerException(errMsg + e.getMessage());
 		}
