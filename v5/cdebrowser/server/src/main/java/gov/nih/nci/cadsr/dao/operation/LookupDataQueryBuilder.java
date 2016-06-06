@@ -25,8 +25,8 @@ public class LookupDataQueryBuilder
 		if (StringUtils.isNotBlank(contexIdSeq))
 			sql.append(" AND c.conte_idseq = '" + contexIdSeq + "' ");
 		else if (StringUtils.isNotBlank(protocolOrForm))
-			sql.append(" AND (Upper(ffv.protocol_long_name) like '%" + StringUtils.upperCase(protocolOrForm) + "%' OR  " +
-							   " Upper(ffv.long_name) like '%" + StringUtils.upperCase(protocolOrForm) + "%') ");
+			sql.append(" AND (Upper(ffv.protocol_long_name) like '%" + StringUtils.upperCase(protocolOrForm) + "%' OR " +
+							   "Upper(ffv.long_name) like '%" + StringUtils.upperCase(protocolOrForm) + "%') ");
 		
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(ffv.protocol_long_name), UPPER(ffv.long_name)");
 		
@@ -43,7 +43,7 @@ public class LookupDataQueryBuilder
 			sql.append(" AND c.conte_idseq = '" + contexIdSeq + "' ");
 		else if (StringUtils.isNotBlank(csOrCsCsi))
 			sql.append(" AND (Upper(csv.cs_long_name) like '%" + StringUtils.upperCase(csOrCsCsi) + "%' OR " +
-						" Upper(csv.csi_name) like '%" + StringUtils.upperCase(csOrCsCsi) + "%') ");
+						"Upper(csv.csi_name) like '%" + StringUtils.upperCase(csOrCsCsi) + "%') ");
 		
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.cs_long_name), UPPER(csv.csi_name)");
 		
