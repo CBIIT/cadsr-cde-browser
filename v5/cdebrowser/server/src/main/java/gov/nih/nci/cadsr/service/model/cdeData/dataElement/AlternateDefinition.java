@@ -10,7 +10,8 @@ public class AlternateDefinition
     private String name;
     private String type;
     private String context;
-
+    private String language;
+    
     public AlternateDefinition()
     {
     }
@@ -20,6 +21,7 @@ public class AlternateDefinition
         setName( definitionModel.getDefinition() );
         setContext( definitionModel.getContext().getName() );
         setType( definitionModel.getDeflName() );
+        setLanguage(definitionModel.getLaeName());
     }
 
     public String getName()
@@ -51,4 +53,19 @@ public class AlternateDefinition
     {
         this.context = context;
     }
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	@Override
+	public String toString() {
+		return "AlternateDefinition [name=" + name + ", type=" + type + ", context=" + context + ", language="
+				+ language + "]";
+	}
+    
 }

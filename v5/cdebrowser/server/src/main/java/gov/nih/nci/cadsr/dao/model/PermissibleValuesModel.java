@@ -194,4 +194,16 @@ public class PermissibleValuesModel extends BaseModel
     {
         this.vmIdseq = vmIdseq;
     }
+
+	@Override
+	public String toString() {
+		return "PermissibleValuesModel [pvIdseq=" + pvIdseq + ", value=" + value + ", shortMeaning=" + shortMeaning
+				+ ", meaningDescription=" + meaningDescription + ", beginDate=" + beginDate + ", beginDateString="
+				+ beginDateString + ", endDate=" + endDate + ", endDateString=" + endDateString + ", highValueNum="
+				+ highValueNum + ", lowValueNum=" + lowValueNum + ", vmIdseq=" + vmIdseq + ", conceptCode="
+				+ conceptCode + ", vmDescription=" + vmDescription + ", vmId=" + vmId + ", vmVersion=" + vmVersion
+				+ ", getCreatedBy()=" + getCreatedBy() + ", getDateCreated()=" + getDateCreated() + ", getModifiedBy()="
+				+ getModifiedBy() + ", getDateModified()=" + getDateModified() + "]";
+	}
+    
 }

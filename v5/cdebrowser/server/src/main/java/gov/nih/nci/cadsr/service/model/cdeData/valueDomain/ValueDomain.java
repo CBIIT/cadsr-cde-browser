@@ -18,6 +18,8 @@ public class ValueDomain
 /*
     private List<ValueDomainReferenceDocument> referenceDocuments = null;
 */
+    private List<PermissibleValueExt> permissibleValueExtList;
+    
     private List<ReferenceDocModel> referenceDocuments = null;
 
     public SelectedDataElement getSelectedDataElement()
@@ -89,6 +91,16 @@ public class ValueDomain
     {
         this.referenceDocuments = referenceDocuments;
     }
+
+	public List<PermissibleValueExt> getPermissibleValueExtList() {
+		return permissibleValueExtList;
+	}
+
+	public void setPermissibleValueExtList(List<PermissibleValueExt> permissibleValueExtList) {
+		this.permissibleValueExtList = permissibleValueExtList;
+	}
+
+	
 /*
 
     public List<ValueDomainReferenceDocument> getValueDomainReferenceDocuments()

@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.ConceptDAO;
+import gov.nih.nci.cadsr.dao.CsCsiValueMeaningDAO;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
 import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
+import gov.nih.nci.cadsr.dao.DefinitionDAO;
+import gov.nih.nci.cadsr.dao.DesignationDAO;
 import gov.nih.nci.cadsr.dao.ObjectClassConceptDAO;
 import gov.nih.nci.cadsr.dao.PermissibleValuesDAO;
 import gov.nih.nci.cadsr.dao.PropertyConceptDAO;
@@ -35,11 +38,14 @@ import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
 import gov.nih.nci.cadsr.dao.model.ConceptModel;
 import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModelList;
 import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
 import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
 import gov.nih.nci.cadsr.dao.model.DataElementModel;
+import gov.nih.nci.cadsr.dao.model.DefinitionModel;
 import gov.nih.nci.cadsr.dao.model.DesignationModel;
 import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
 import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
@@ -69,6 +75,8 @@ import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElementDerivation.DataElementDerivation;
 import gov.nih.nci.cadsr.service.model.cdeData.usage.FormUsage;
 import gov.nih.nci.cadsr.service.model.cdeData.usage.Usage;
+import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ClassificationSchemaAlternate;
+import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.PermissibleValueExt;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.Representation;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomain;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
@@ -107,7 +115,18 @@ public class CDEDataController
 
     @Autowired
     private ToolOptionsDAO toolOptionsDAO;
+    
+    @Autowired
+    private CsCsiValueMeaningDAO csCsiValueMeaningDAO;
+    
+    @Autowired 
+    private DefinitionDAO definitionDAO;
 
+    
+    @Autowired 
+    private DesignationDAO designationDAO;
+    
+    
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
     public CdeDetails CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
@@ -571,17 +590,136 @@ public class CDEDataController
             logger.debug( "PermissibleValues: " + permissibleValuesModel.getShortMeaning() );
             logger.debug( "PermissibleValues: " + permissibleValuesModel.getMeaningDescription() );
         }
-
+        
+        //add PV VM designations (AKA alternate names) and definitions CDEBROWSER-457
+        List<PermissibleValueExt> permissibleValueExtList = buildPermissibleValueExtList(permissibleValues);
+        valueDomain.setPermissibleValueExtList(permissibleValueExtList);
+        
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "value Domain" Tab
         List<ReferenceDocModel> valueDomainReferenceDocuments = referenceDocDAO.getRefDocsByAcIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
         logger.debug( "valueDomainReferenceDocuments count: " + valueDomainReferenceDocuments.size() );
         valueDomain.setValueDomainReferenceDocuments( valueDomainReferenceDocuments );
 
-
         return valueDomain;
     }
+    /////////////////////////////////////////////////////
+    // "Permissible Values Ext " of the "Value Domain" Tab
+    protected List<PermissibleValueExt> buildPermissibleValueExtList(List<PermissibleValuesModel> permissibleValues) {
+    	List<PermissibleValueExt> permissibleValueExtList = new ArrayList<PermissibleValueExt>();
+    	for (PermissibleValuesModel permissibleValuesModel : permissibleValues) {
+    		PermissibleValueExt e = buildPermissibleValueExt(permissibleValuesModel);
+    		permissibleValueExtList.add(e);
+    	}
+    	return permissibleValueExtList;
+    }
+    
+    protected PermissibleValueExt buildPermissibleValueExt(PermissibleValuesModel permissibleValueModel) {
+    	PermissibleValueExt permissibleValueExt = new PermissibleValueExt();
+    	//build representation from DB model class
+    	//every PV has one reference to VM
+     	permissibleValueExt.setPvIdseq(permissibleValueModel.getPvIdseq());
+    	permissibleValueExt.setPvMeaning(permissibleValueModel.getMeaningDescription());
+    	permissibleValueExt.setVmPublicId(permissibleValueModel.getVmId());
+    	permissibleValueExt.setVmVersion(permissibleValueModel.getVmVersion());
+    	
+    	//this is ID to get designations and definitions
+       	String vmIdseq = permissibleValueModel.getVmIdseq();
+    	//get classification model
+    	List<CsCsiValueMeaningModel> modelList = csCsiValueMeaningDAO.getCsCsisByVmId(vmIdseq);
+    	logger.debug("vmIdseq: " + vmIdseq);
+    	CsCsiValueMeaningModelList csCsiValueMeaningModelList = new CsCsiValueMeaningModelList(modelList);
+    	List<DefinitionModel> definitionList = definitionDAO.getAllDefinitionsByAcIdseq(vmIdseq);
+    	List<DesignationModel> designationList = designationDAO.getDesignationModelsByAcIdseq(vmIdseq);
+    	
+    	List<ClassificationSchemaAlternate> classificationSchemaAlternateList = buildClassificationSchemaVmList(csCsiValueMeaningModelList, designationList, definitionList);
+    	permissibleValueExt.setClassificationSchemaList(classificationSchemaAlternateList);
+    	return permissibleValueExt;
+    }
+    
+    /**
+     * 
+     * @param csCsiValueMeaningModelList
+     * @param designationList
+     * @param definitionList
+     * @return list of representation classes to send to the client
+     */
+    protected List<ClassificationSchemaAlternate> buildClassificationSchemaVmList(CsCsiValueMeaningModelList csCsiValueMeaningModelList,
+    		List<DesignationModel> designationList, List<DefinitionModel> definitionList) {
+    	List<ClassificationSchemaAlternate> classificationSchemaAlternateList = new ArrayList<>();
+    	ClassificationSchemaAlternate unclassified = prepareUnclassified(csCsiValueMeaningModelList, designationList, definitionList);
+    	//add unclassified section of this PV's VM
+    	if (unclassified != null)
+    		classificationSchemaAlternateList.add(unclassified);
+    	//classified
+    	prepareClassified(classificationSchemaAlternateList, csCsiValueMeaningModelList, designationList, definitionList);
+    	return classificationSchemaAlternateList;
+    }
+    protected void prepareClassified(List<ClassificationSchemaAlternate> classificationSchemaAlternateList, CsCsiValueMeaningModelList csCsiValueMeaningModelList, 
+    		List<DesignationModel> designationList, List<DefinitionModel> definitionList) {
+    	List<CsCsiValueMeaningModel> csCsiAttModelList = csCsiValueMeaningModelList.getModels();
+    	if ((csCsiAttModelList == null) || (csCsiAttModelList.isEmpty()))
+    			return;
+    	
+    	String groupCsIdseq = csCsiAttModelList.get(0).getCsIdseq();
+    	String currCsIdseq = groupCsIdseq;
+    	String groupCsiIdseq = csCsiAttModelList.get(0).getCsiIdseq();
+    	String currCsiIdseq = groupCsiIdseq;
+    	
+    	ClassificationSchemaAlternate currEntity = new ClassificationSchemaAlternate(csCsiAttModelList.get(0));
+    	
+    	for (CsCsiValueMeaningModel csCsiAttModel : csCsiAttModelList) {
+    		currCsIdseq = csCsiAttModel.getCsIdseq();
+    		currCsiIdseq = csCsiAttModel.getCsiIdseq();
+    		
+    		if (!(groupCsIdseq.equals(currCsIdseq)) || (!(groupCsiIdseq.equals(currCsiIdseq)))){
+    			//add previous classification
+    			classificationSchemaAlternateList.add(currEntity);
+    			groupCsIdseq = currCsIdseq;
+    			groupCsiIdseq = currCsiIdseq;
+    			//Start a new Classification group			
+    			currEntity = new ClassificationSchemaAlternate(csCsiAttModel);
+    		}
+    		//an alternative is to compare based on csiIdseqs in DB model classes
+        	for (DesignationModel designationModel : designationList) {
+        		if (csCsiValueMeaningModelList.isAttClassified(designationModel.getDesigIDSeq())) {
+        			if (csCsiAttModel.getAttIdseq().equals(designationModel.getDesigIDSeq())) {
+        				currEntity.addAlternateName(new AlternateName(designationModel));
+        			}
+        		}
+        	}
+        	for (DefinitionModel definitionModel : definitionList) {
+        		if (! csCsiValueMeaningModelList.isAttClassified(definitionModel.getAcIdseq())) {
+        			if (csCsiAttModel.getAttIdseq().equals(definitionModel.getDefinIdseq())) {
+        				currEntity.addDefinition(new AlternateDefinition(definitionModel));
+        			}
+        		}
+        	}
+    	}
+		classificationSchemaAlternateList.add(currEntity);
+    }
+    
+    protected ClassificationSchemaAlternate prepareUnclassified(CsCsiValueMeaningModelList csCsiValueMeaningModelList,
+    		List<DesignationModel> designationList, List<DefinitionModel> definitionList) {
+    	ClassificationSchemaAlternate unclassified = new ClassificationSchemaAlternate();
+    	unclassified.setCsLongName("No Classification");
+    	unclassified.setCsDefinition(CsCsiModel.UNCLASSIFIED);//TODO is this the right field?
 
+    	for (DesignationModel designationModel : designationList) {
+    		if (! csCsiValueMeaningModelList.isAttClassified(designationModel.getDesigIDSeq())) {
+    			unclassified.addAlternateName(new AlternateName(designationModel));
+    		}
+    	}
+    	for (DefinitionModel definitionModel : definitionList) {
+    		if (! csCsiValueMeaningModelList.isAttClassified(definitionModel.getDefinIdseq())) {
+    			unclassified.addDefinition(new AlternateDefinition(definitionModel));
+    		}
+    	}
+    	if ((unclassified.getAlternateNames().isEmpty())&& (unclassified.getDefinitions().isEmpty()))
+    		return null;
+    	else 
+    		return unclassified;
+    }
 
     /**********************************************************************/
     /**********************************************************************/

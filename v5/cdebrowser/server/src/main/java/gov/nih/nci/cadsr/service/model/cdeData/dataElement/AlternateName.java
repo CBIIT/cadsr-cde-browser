@@ -21,7 +21,7 @@ public class AlternateName
         setName( designationModel.getName() );
         setType( designationModel.getType() );
         setContext( designationModel.getContex().getName() );
-        setLanguage( designationModel.getContex().getLanguage() );
+        setLanguage( designationModel.getLang() );
     }
 
     public String getName()
@@ -63,4 +63,11 @@ public class AlternateName
     {
         this.language = language;
     }
+
+	@Override
+	public String toString() {
+		return "AlternateName [name=" + name + ", type=" + type + ", context=" + context + ", language=" + language
+				+ "]";
+	}
+    
 }
