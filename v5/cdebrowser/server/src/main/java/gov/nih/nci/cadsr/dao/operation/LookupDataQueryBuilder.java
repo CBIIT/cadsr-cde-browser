@@ -9,7 +9,7 @@ public class LookupDataQueryBuilder
 						 "c.name contextName, ffv.proto_idseq protocolIdSeq, ffv.protocol_long_name protocolLongName, " +
 						 "ffv.qc_idseq formIdSeq, ffv.long_name formLongName " +
 						 "FROM sbrext.fb_forms_view ffv, sbr.contexts c " +
-						 "WHERE ffv.conte_idseq = c.conte_idseq AND latest_version_ind = 'Yes' ";
+						 "WHERE ffv.conte_idseq = c.conte_idseq AND latest_version_ind = 'Yes' AND ffv.proto_idseq IS NOT NULL ";
 	
 	private static final String csLookupSql = "SELECT DISTINCT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, c.name contextName, " +
 						  "csv.cs_idseq csIdSeq, csv.cs_long_name csLongName, csv.cs_csi_idseq csCsiIdSeq, csv.csi_name csCsiName, " +
