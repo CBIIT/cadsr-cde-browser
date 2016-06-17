@@ -3,6 +3,8 @@
  */
 package gov.nih.nci.cadsr.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
@@ -46,6 +49,7 @@ public class CsCsiValueMeaningDAOImpl extends AbstractDAOOperations implements C
 	private static final Logger logger = LogManager.getLogger(CsCsiValueMeaningDAOImpl.class.getName());
 
 	private JdbcTemplate jdbcTemplate;
+	
 
 	@Autowired
 	CsCsiValueMeaningDAOImpl(DataSource dataSource) {
@@ -57,7 +61,7 @@ public class CsCsiValueMeaningDAOImpl extends AbstractDAOOperations implements C
 	public List<CsCsiValueMeaningModel> getCsCsisByVmId(String vmIdseq) {
 		@SuppressWarnings("unchecked")
 		List<CsCsiValueMeaningModel> models = jdbcTemplate.query(sqlRetrieveCsCsiByVm, 
-			new Object[]{vmIdseq, vmIdseq}, new BeanPropertyRowMapper(CsCsiValueMeaningModel.class));
+			new Object[]{vmIdseq, vmIdseq}, new CsCsiValueMeaningRowMapper());
 		if (models != null) {
 			return models;
 		}
@@ -66,4 +70,26 @@ public class CsCsiValueMeaningDAOImpl extends AbstractDAOOperations implements C
 		}
 	}
 
+	public static class CsCsiValueMeaningRowMapper implements RowMapper<CsCsiValueMeaningModel> {
+		@Override
+		public CsCsiValueMeaningModel mapRow(ResultSet rs, int counts) throws SQLException {
+			CsCsiValueMeaningModel model = new CsCsiValueMeaningModel();
+
+			model.setCsLongName(rs.getString("cs_long_name"));
+			model.setCsDefinition(rs.getString("cs_definition"));
+			model.setCsiName(rs.getString("csi_name"));
+			model.setCsitlName(rs.getString("csitl_name"));
+			model.setCsiId(rs.getInt("csi_id"));
+			model.setCsiIdseq(rs.getString("csi_idseq"));
+			model.setCsiVersion(rs.getFloat("csi_version"));
+			model.setAttIdseq(rs.getString("att_idseq"));
+			model.setAcaIdseq(rs.getString("aca_idseq"));
+			model.setCsIdseq(rs.getString("cs_idseq"));
+			model.setCsiIdseq(rs.getString("csi_idseq"));
+			model.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
+			return model;
+		}
+
+	}
 }
+

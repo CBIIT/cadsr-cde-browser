@@ -4,6 +4,7 @@ package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
  */
 
 import gov.nih.nci.cadsr.dao.model.DefinitionModel;
+import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
 
 public class AlternateDefinition
 {
@@ -15,13 +16,21 @@ public class AlternateDefinition
     public AlternateDefinition()
     {
     }
-
+    
     public AlternateDefinition( DefinitionModel definitionModel )
     {
         setName( definitionModel.getDefinition() );
         setContext( definitionModel.getContext().getName() );
         setType( definitionModel.getDeflName() );
         setLanguage(definitionModel.getLaeName());
+    }
+    
+    public AlternateDefinition( DefinitionModelAlt definitionModel )
+    {
+        setName( definitionModel.getName() );
+        setContext( definitionModel.getContextName() );
+        setType( definitionModel.getType() );
+        setLanguage(definitionModel.getLang());
     }
 
     public String getName()

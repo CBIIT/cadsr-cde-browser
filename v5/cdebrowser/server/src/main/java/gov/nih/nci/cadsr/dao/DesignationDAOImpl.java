@@ -3,23 +3,26 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.model.AcAttCsCsiModel;
-import gov.nih.nci.cadsr.dao.model.CsCsiModel;
-import gov.nih.nci.cadsr.dao.model.DesignationModel;
-import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import gov.nih.nci.cadsr.dao.model.AcAttCsCsiModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.DesignationModel;
+import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
+import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 
 public class DesignationDAOImpl extends AbstractDAOOperations implements DesignationDAO
 {
@@ -44,7 +47,16 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
         List<DesignationModel> designationModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new DesignationMapper( DesignationModel.class ) );
         return designationModels;
     }
+    @Override
+    public List<DesignationModelAlt> getDesignationModelsNoClsssification( String acIdseq )
+    {
 
+        String sql = "SELECT des.NAME des_name, des.DETL_NAME des_type, des.DESIG_IDSEQ, des.LAE_NAME lang, conte.NAME context_name " + 
+        		"FROM designations des inner join sbr.contexts conte  on conte.CONTE_IDSEQ = des.CONTE_IDSEQ WHERE ac_idseq = ?";
+        List<DesignationModelAlt> designationModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new DesignationMapperContext());
+        return designationModels;
+    }
+    
     @Override
     public List<DesignationModel> getUsedByDesignationModels( String acIdseq )
     {
@@ -129,6 +141,26 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
                 designationModel.setCsiIdseqs( new HashSet<String>( 1 ) );
                 designationModel.getCsiIdseqs().add( CsCsiModel.UNCLASSIFIED );
             }
+            return designationModel;
+        }
+    }
+    public final class DesignationMapperContext implements RowMapper<DesignationModelAlt>{
+
+        public DesignationMapperContext( )
+        {
+
+        }
+
+        public DesignationModelAlt mapRow( ResultSet rs, int rowNum ) throws SQLException
+        {
+        	DesignationModelAlt designationModel = new DesignationModelAlt();
+            
+            designationModel.setDesigIdseq(rs.getString("DESIG_IDSEQ"));
+            designationModel.setName(rs.getString("des_name"));
+            designationModel.setType(rs.getString("des_type"));
+            designationModel.setLang(rs.getString("lang"));
+            designationModel.setContextName(rs.getString("context_name"));
+            
             return designationModel;
         }
     }

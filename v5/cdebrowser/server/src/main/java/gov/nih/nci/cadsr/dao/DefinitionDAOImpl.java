@@ -3,24 +3,27 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.model.AcAttCsCsiModel;
-import gov.nih.nci.cadsr.dao.model.ContextModel;
-import gov.nih.nci.cadsr.dao.model.CsCsiModel;
-import gov.nih.nci.cadsr.dao.model.DefinitionModel;
-import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import gov.nih.nci.cadsr.dao.model.AcAttCsCsiModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.DefinitionModel;
+import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
+import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 
 public class DefinitionDAOImpl extends AbstractDAOOperations implements DefinitionDAO
 {
@@ -75,6 +78,14 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
         return definitionModels;
     }
 
+	@Override
+	public List<DefinitionModelAlt> getAllDefinitionsNoClassification(String acIdseq) {
+        String sql = "SELECT de.DEFINITION definition, de.DEFL_NAME def_type, de.DEFIN_IDSEQ, de.LAE_NAME lang, conte.NAME context_name " +
+        		"FROM definitions de inner join sbr.contexts conte  on conte.CONTE_IDSEQ = de.CONTE_IDSEQ WHERE ac_idseq = ?";
+        List<DefinitionModelAlt> definitionModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new DefinitionMapperContext() );
+        return definitionModels;
+	}
+	
     public final class DefinitionMapper extends BeanPropertyRowMapper<DefinitionModel>
     {
         private Logger logger = LogManager.getLogger( DefinitionMapper.class.getName() );
@@ -128,6 +139,27 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
                 definitionModel.getCsiIdseqs().add( CsCsiModel.UNCLASSIFIED );
             }
 
+            return definitionModel;
+        }
+    }
+    
+    public final class DefinitionMapperContext implements RowMapper<DefinitionModelAlt>{
+
+        public DefinitionMapperContext( )
+        {
+
+        }
+
+        public DefinitionModelAlt mapRow( ResultSet rs, int rowNum ) throws SQLException
+        {
+            DefinitionModelAlt definitionModel = new DefinitionModelAlt();
+            
+            definitionModel.setDefinIdseq(rs.getString("DEFIN_IDSEQ"));
+            definitionModel.setName(rs.getString("definition"));
+            definitionModel.setType(rs.getString("def_type"));
+            definitionModel.setLang(rs.getString("lang"));
+            definitionModel.setContextName(rs.getString("context_name"));
+            
             return definitionModel;
         }
     }

@@ -4,6 +4,7 @@ package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
  */
 
 import gov.nih.nci.cadsr.dao.model.DesignationModel;
+import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
 
 public class AlternateName
 {
@@ -15,12 +16,20 @@ public class AlternateName
     public AlternateName()
     {
     }
-
+    
     public AlternateName( DesignationModel designationModel )
     {
         setName( designationModel.getName() );
         setType( designationModel.getType() );
         setContext( designationModel.getContex().getName() );
+        setLanguage( designationModel.getLang() );
+    }
+    
+    public AlternateName( DesignationModelAlt designationModel )
+    {
+        setName( designationModel.getName() );
+        setType( designationModel.getType() );
+        setContext( designationModel.getContextName());
         setLanguage( designationModel.getLang() );
     }
 

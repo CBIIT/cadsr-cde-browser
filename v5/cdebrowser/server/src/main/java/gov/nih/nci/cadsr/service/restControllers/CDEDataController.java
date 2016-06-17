@@ -45,8 +45,9 @@ import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
 import gov.nih.nci.cadsr.dao.model.DataElementModel;
-import gov.nih.nci.cadsr.dao.model.DefinitionModel;
+import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
 import gov.nih.nci.cadsr.dao.model.DesignationModel;
+import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
 import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
 import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
 import gov.nih.nci.cadsr.dao.model.PropertyModel;
@@ -584,16 +585,21 @@ public class CDEDataController
         List<PermissibleValuesModel> permissibleValues = permissibleValuesDAO.getPermissibleValuesByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
         valueDomain.setPermissibleValues( permissibleValues );
         logger.debug( "PermissibleValues count: " + permissibleValues.size() );
-        for( PermissibleValuesModel permissibleValuesModel : permissibleValues )
-        {
-            logger.debug( "PermissibleValues: " + permissibleValuesModel.getValue() );
-            logger.debug( "PermissibleValues: " + permissibleValuesModel.getShortMeaning() );
-            logger.debug( "PermissibleValues: " + permissibleValuesModel.getMeaningDescription() );
+        if (logger.isTraceEnabled()) {
+	        for( PermissibleValuesModel permissibleValuesModel : permissibleValues )
+	        {
+	            logger.trace( "PermissibleValues: " + permissibleValuesModel.getValue() );
+	            logger.trace( "PermissibleValues: " + permissibleValuesModel.getShortMeaning() );
+	            logger.trace( "PermissibleValues: " + permissibleValuesModel.getMeaningDescription() );
+	        }
         }
-        
         //add PV VM designations (AKA alternate names) and definitions CDEBROWSER-457
+        logger.debug( "PermissibleValueExtList section start.......");
+
         List<PermissibleValueExt> permissibleValueExtList = buildPermissibleValueExtList(permissibleValues);
         valueDomain.setPermissibleValueExtList(permissibleValueExtList);
+
+        logger.debug( ".........PermissibleValueExtList section done");
         
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "value Domain" Tab
@@ -627,10 +633,9 @@ public class CDEDataController
        	String vmIdseq = permissibleValueModel.getVmIdseq();
     	//get classification model
     	List<CsCsiValueMeaningModel> modelList = csCsiValueMeaningDAO.getCsCsisByVmId(vmIdseq);
-    	logger.debug("vmIdseq: " + vmIdseq);
     	CsCsiValueMeaningModelList csCsiValueMeaningModelList = new CsCsiValueMeaningModelList(modelList);
-    	List<DefinitionModel> definitionList = definitionDAO.getAllDefinitionsByAcIdseq(vmIdseq);
-    	List<DesignationModel> designationList = designationDAO.getDesignationModelsByAcIdseq(vmIdseq);
+    	List<DesignationModelAlt> designationList = designationDAO.getDesignationModelsNoClsssification(vmIdseq);
+    	List<DefinitionModelAlt> definitionList = definitionDAO.getAllDefinitionsNoClassification(vmIdseq);
     	
     	List<ClassificationSchemaAlternate> classificationSchemaAlternateList = buildClassificationSchemaVmList(csCsiValueMeaningModelList, designationList, definitionList);
     	permissibleValueExt.setClassificationSchemaList(classificationSchemaAlternateList);
@@ -645,7 +650,7 @@ public class CDEDataController
      * @return list of representation classes to send to the client
      */
     protected List<ClassificationSchemaAlternate> buildClassificationSchemaVmList(CsCsiValueMeaningModelList csCsiValueMeaningModelList,
-    		List<DesignationModel> designationList, List<DefinitionModel> definitionList) {
+    		List<DesignationModelAlt> designationList, List<DefinitionModelAlt> definitionList) {
     	List<ClassificationSchemaAlternate> classificationSchemaAlternateList = new ArrayList<>();
     	ClassificationSchemaAlternate unclassified = prepareUnclassified(csCsiValueMeaningModelList, designationList, definitionList);
     	//add unclassified section of this PV's VM
@@ -656,7 +661,7 @@ public class CDEDataController
     	return classificationSchemaAlternateList;
     }
     protected void prepareClassified(List<ClassificationSchemaAlternate> classificationSchemaAlternateList, CsCsiValueMeaningModelList csCsiValueMeaningModelList, 
-    		List<DesignationModel> designationList, List<DefinitionModel> definitionList) {
+    		List<DesignationModelAlt> designationList, List<DefinitionModelAlt> definitionList) {
     	List<CsCsiValueMeaningModel> csCsiAttModelList = csCsiValueMeaningModelList.getModels();
     	if ((csCsiAttModelList == null) || (csCsiAttModelList.isEmpty()))
     			return;
@@ -680,16 +685,16 @@ public class CDEDataController
     			//Start a new Classification group			
     			currEntity = new ClassificationSchemaAlternate(csCsiAttModel);
     		}
-    		//an alternative is to compare based on csiIdseqs in DB model classes
-        	for (DesignationModel designationModel : designationList) {
-        		if (csCsiValueMeaningModelList.isAttClassified(designationModel.getDesigIDSeq())) {
-        			if (csCsiAttModel.getAttIdseq().equals(designationModel.getDesigIDSeq())) {
+
+        	for (DesignationModelAlt designationModel : designationList) {
+        		if (csCsiValueMeaningModelList.isAttClassified(designationModel.getDesigIdseq())) {
+        			if (csCsiAttModel.getAttIdseq().equals(designationModel.getDesigIdseq())) {
         				currEntity.addAlternateName(new AlternateName(designationModel));
         			}
         		}
         	}
-        	for (DefinitionModel definitionModel : definitionList) {
-        		if (! csCsiValueMeaningModelList.isAttClassified(definitionModel.getAcIdseq())) {
+        	for (DefinitionModelAlt definitionModel : definitionList) {
+        		if (csCsiValueMeaningModelList.isAttClassified(definitionModel.getDefinIdseq())) {
         			if (csCsiAttModel.getAttIdseq().equals(definitionModel.getDefinIdseq())) {
         				currEntity.addDefinition(new AlternateDefinition(definitionModel));
         			}
@@ -700,17 +705,17 @@ public class CDEDataController
     }
     
     protected ClassificationSchemaAlternate prepareUnclassified(CsCsiValueMeaningModelList csCsiValueMeaningModelList,
-    		List<DesignationModel> designationList, List<DefinitionModel> definitionList) {
+    		List<DesignationModelAlt> designationList, List<DefinitionModelAlt> definitionList) {
     	ClassificationSchemaAlternate unclassified = new ClassificationSchemaAlternate();
     	unclassified.setCsLongName("No Classification");
-    	unclassified.setCsDefinition(CsCsiModel.UNCLASSIFIED);//TODO is this the right field?
+    	unclassified.setCsDefinition(CsCsiModel.UNCLASSIFIED);
 
-    	for (DesignationModel designationModel : designationList) {
-    		if (! csCsiValueMeaningModelList.isAttClassified(designationModel.getDesigIDSeq())) {
+    	for (DesignationModelAlt designationModel : designationList) {
+    		if (! csCsiValueMeaningModelList.isAttClassified(designationModel.getDesigIdseq())) {
     			unclassified.addAlternateName(new AlternateName(designationModel));
     		}
     	}
-    	for (DefinitionModel definitionModel : definitionList) {
+    	for (DefinitionModelAlt definitionModel : definitionList) {
     		if (! csCsiValueMeaningModelList.isAttClassified(definitionModel.getDefinIdseq())) {
     			unclassified.addDefinition(new AlternateDefinition(definitionModel));
     		}
