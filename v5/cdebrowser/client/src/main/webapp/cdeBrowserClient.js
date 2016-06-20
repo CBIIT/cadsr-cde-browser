@@ -1,7 +1,7 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
@@ -15,6 +15,81 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.searchFilter.programArea=0;
         };
     });
+
+
+
+    $scope.contextCascade = function(selectedInput) {
+        if (selectedInput!==undefined)
+        $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
+        if (selectedInput.length<3) {
+            $scope.filterService.protocols = [];
+            $scope.filterService.classifications = [];
+        }
+    };
+
+    $scope.model={};
+
+    $scope.model.loadProtocols = function(searchInput,evt) {
+        // console.log(searchInput);
+        var k=0;
+        // if (searchInput.length<3) {
+        //     $scope.filterService.protocols = [];
+        // }
+        if(searchInput.length===3) {
+        // if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchInput.length===3 || evt.keyCode===32 && searchInput.length===2) {
+            $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
+            // $scope.filterService.protocols = response;
+            groupFactory.fillProtocols(response);
+            $scope.filterService.protocols = groupFactory.load(0);
+            //$scope.groups = groupFactory.load(0);
+            });  
+            // groupFactory.loadProtocols(searchInput);
+        }
+
+        
+        // **** {"id":1,"title":"Tazzy","size":"57","parent":true}              **** //
+        // **** id --> contextIdSeq --> protocolIdSeq --> formIdSeq;            **** //
+        // **** title --> contextName --> protocolLongName --> formLongName;    **** //
+        // **** parent --> true --> true --> false                              **** //
+    };
+
+
+
+    $scope.model1={};
+
+    $scope.model1.loadClassifications = function(searchInput,evt) {
+        var k=0;
+        if(searchInput.length===3) {
+            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
+            groupFactory1.fillClassifications(response);
+            $scope.filterService.classifications = groupFactory1.load(0);
+            });  
+        }
+
+        $scope.checkChildren1=function(id){
+            return groupFactory1.isChildAvailable(id);
+        }
+        // **** {"id":1,"title":"Tazzy","size":"57","parent":true}                                  **** //
+        // **** id --> contextIdSeq --> csIdSeq --> csCsiIdSeq (parentCsiIdSeq) --> csCsiIdSeq            **** // 
+        // **** title --> contextName --> csLongName --> csCsiName (csiLevel) --> csCsiName   **** //    
+        // **** parent --> true --> true --> false (true) --> false                                 **** //
+    };
+
+    // $scope.loadClassifications = function(searchinput,evt) {
+
+    //     if (searchinput.length<3) {
+    //         $scope.filterService.classifications = [];
+    //     }
+    //     if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchinput.length===3 || evt.keyCode===32 && searchinput.length===2) {
+
+    //     $scope.filterService.classifications =
+    //         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchinput}}).success(function(response) {
+    //         $scope.filterService.classifications = response;
+    //     });  
+    //     }
+    // }
+
+
 
     // check user authentication status //
     $scope.$on('$locationChangeStart', function() { 
@@ -35,13 +110,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else {
             if (Object.keys(fs.searchFilter).length) {
                 if (Object.keys(fs.searchFilter).length==1) { // dont do a search because only program area is selected //
+                    // console.log("NO SEARCH");
                 }
                 else {
                      // do search because at least one dropdown besides program area is selected //
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
+                    // console.log("Search");
                     $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
-            };            
+            };       
         };
     },true);
 
@@ -52,11 +129,22 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.searchResults = [];
         $scope.tableParams.settings({ dataset: []});
         $scope.breadCrumbs = [];
+        groupFactory.clearData();
+        groupFactory1.clearData();   
     };
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-        fs.getClassificationsAndProtocolForms();
+        // fs.getClassificationsAndProtocolForms();
+        $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+            // $scope.filterService.protocols = response;
+            groupFactory.fillProtocols(response);
+            $scope.filterService.protocols = groupFactory.load(0);
+        }); 
+        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+            groupFactory1.fillClassifications(response);
+            $scope.filterService.classifications = groupFactory1.load(0);
+        });  
     };
 
     // // selects dropdown values based on search left tree click //
@@ -454,11 +542,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         return tabUrl == $scope.currentTab;
     };
 
-
     $scope.versionDisplay = function(ver, tag, scmDate, tier) {
         $window.alert('Version: ' + ver + "\n\nSMC Tag: " + tag + "\n\nSMC Date: " + scmDate + "\n\nSystem Tier: " + tier );
     }
-
 
     //Just top three levels of the tree
     $scope.dataLoad1 = function () {
@@ -544,13 +630,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             });
                     });
 
-        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme').success(function(response) {
-            fs.lookupData['classifications'] = response;
-        });
+        // $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme').success(function(response) {
+        //     fs.lookupData['classifications'] = response;
+        // });
 
-        $http.get('/cdebrowserServer/rest/lookupdata/protocol').success(function(response) {
-            fs.lookupData['protocols'] = response;
-        });        
+        // $http.get('/cdebrowserServer/rest/lookupdata/protocol').success(function(response) {
+        //     fs.lookupData['protocols'] = response;
+        // });        
 
     };
 

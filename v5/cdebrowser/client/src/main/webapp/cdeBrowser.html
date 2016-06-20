@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="cde/cde.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
+    <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/style.css">
+    <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css'>
 
 </head>
 <body>
@@ -246,16 +248,18 @@
                 This is the advanced search pane.
             </div> 
             <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
+                
                 <span>
-                <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
+                <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="selectize" ng-model="filterService.searchFilter.programArea">
                     <ui-select-match placeholder="Select a Program Area">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>    
                 </span>
+                
                 <span>
-                <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
+                <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.context">
                     <ui-select-match allow-clear="true" placeholder="Select a Context">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
@@ -263,25 +267,94 @@
                 </ui-select>     
                 </span>
 
-                <span>
-                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol||!filterService.searchFilter.context" theme="bootstrap" ng-model="filterService.searchFilter.classification">
+
+
+                <!-- <span>
+                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="selectize" ng-model="filterService.searchFilter.classification" ng-keyup="loadClassifications($select.search,$event)" ng-change="contextCascade($select.selected)">
+                    <ui-select-match allow-clear="true" placeholder="Select a Classification">{{$select.selected.csLongName}}</ui-select-match>
+                    <ui-select-choices group-by="'csLongName'" repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
+                        <div class="autoDropDown" ng-bind-html="value.csCsiName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>     
+                </span> -->
+
+                <!-- <span>
+                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="selectize" ng-model="filterService.searchFilter.classification" >
                     <ui-select-match allow-clear="true" placeholder="Select a Classification">{{$select.selected.csLongName}}</ui-select-match>
                     <ui-select-choices repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
                         <div ng-bind-html="value.csLongName | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>     
-                </span>
+                </span> -->
 
                 <span>
-                <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification||!filterService.searchFilter.context" theme="bootstrap" ng-model="filterService.searchFilter.protocol">
+                    <ui-tree-select1 model="model1">
+                    </ui-tree-select1>
+                    <script type="text/ng-template" id="/ui-tree-select1.html">
+                        <ui-select id="Classification" 
+                                   ng-model="filterService.searchFilter.classification"
+                                   ng-disabled="filterService.isSearching||filterService.searchFilter.protocol"
+                                   ui-select-focuser1
+                                   theme="selectize"
+                                   ng-change="contextCascade($select.selected)">
+                            <ui-select-match placeholder="Select a Classification" allow-clear="true">
+                                {{ $select.selected.name }}
+                            </ui-select-match>
+                            <ui-select-choices group-by="'contextName'" repeat="group in filterService.classifications | filter: $select.search" refresh="loadClassifications($select.search)">
+                                <div>
+                                    <span class="autoDropDown" ng-bind-html="group.name | highlight: $select.search"></span>
+                                    <a class="goto-child-group" ng-show="checkChildren1(group.id)"
+                                       ng-click="loadChildGroupsOf1(group, $select)">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </script>
+                </span>
+
+
+
+                <span>
+                    <ui-tree-select model="model">
+                    </ui-tree-select>
+                    <script type="text/ng-template" id="/ui-tree-select.html">
+                        <ui-select id="Protocols" 
+                                   ng-model="filterService.searchFilter.protocol"
+                                   ng-disabled="filterService.isSearching||filterService.searchFilter.classification" 
+                                   ui-select-focuser
+                                   theme="selectize"
+                                   ng-change="contextCascade($select.selected)">
+                            <ui-select-match placeholder="Select a Protocol" allow-clear="true">
+                                {{ $select.selected.name }}
+                            </ui-select-match>
+                            <ui-select-choices group-by="'contextName'" repeat="group in filterService.protocols | filter: $select.search" refresh="loadProtocols($select.search)">
+                                <div>
+                                    <span class="autoDropDown" ng-bind-html="group.name | highlight: $select.search"></span>
+                                    <a class="goto-child-group" ng-show="checkChildren(group.id)"
+                                       ng-click="loadChildGroupsOf(group, $select)">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </script>
+                </span>
+
+                  <!-- <span>
+                <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification" theme="selectize" ng-model="filterService.searchFilter.protocol" ng-keyup="loadProtocols($select.search,$event)" ng-blur="temp($select.search)">
                     <ui-select-match allow-clear="true" placeholder="Select a Protocol">{{$select.selected.protocolLongName}}</ui-select-match>
-                    <ui-select-choices repeat="value.protocolIdSeq as value in filterService.protocols | filter: $select.search">
-                        <div ng-bind-html="value.protocolLongName | highlight: $select.search"></div>
+                    <ui-select-choices group-by="'contextName'" repeat="value.protocolIdSeq as value in filterService.protocols | filter: $select.search">
+                        <div style="padding-left:10px;" ng-bind-html="value.protocolLongName | highlight: $select.search"> 
+                        </div>
                     </ui-select-choices>
                 </ui-select>     
-                </span>
+                </span> -->
+
+
+
                 <span>
-                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
+                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.registrationStatus">
                     <ui-select-match allow-clear="true" placeholder="Select a Registration Status">{{$select.selected}}</ui-select-match>
                     <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
                         <div ng-bind-html="value | highlight: $select.search"></div>
@@ -290,7 +363,7 @@
                 </span>
 
                 <span>
-                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
+                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.workFlowStatus">
                     <ui-select-match allow-clear="true" placeholder="Select a Workflow Status">{{$select.selected}}</ui-select-match>
                     <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
                         <div ng-bind-html="value | highlight: $select.search"></div>
@@ -298,6 +371,7 @@
                 </ui-select>     
                 </span>
                 <!-- <span>{{filterService.searchFilter}}</span> -->
+                
                 <span class="clear">
                     <button class="btn btn-default clearButton" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
@@ -529,6 +603,9 @@
 <script src="plugins/ng-table/ng-table.min.js"></script>
 <script src='libs/ui-select/select.js'></script>
 <script src='libs/angular-drag-and-drop-lists.min.js'></script>
+<script src='libs/ui-select-with-tree-navigation/index.js'></script>
+<script src='libs/ui-select-with-tree-navigation/index1.js'></script>
+<script src='libs/ui-select-with-tree-navigation/lodash.min.js'></script>
 
 <script src="cde/cde.js"></script>
 <script src="cde/adminInfo/cde-adminInfo.js"></script>

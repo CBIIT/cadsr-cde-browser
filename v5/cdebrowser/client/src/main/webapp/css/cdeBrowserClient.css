@@ -425,6 +425,13 @@ display:inline-block !important;
     padding-top: 8px;
 }
 
+/* Classification and Protocol autocomplete dropdowns */
+
+
+
+.autoDropDown {
+    padding-left: 10px !important;
+}
 
 
 

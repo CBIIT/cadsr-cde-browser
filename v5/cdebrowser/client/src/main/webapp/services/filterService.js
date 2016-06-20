@@ -35,29 +35,29 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 	};
 
 	// returns classificiations and protocol forms //
-	this.getClassificationsAndProtocolForms = function() {
-		this.classifications = []; this.protocols = []; // reset classifications and protocol dropdowns //
-		delete(this.searchFilter.classification);  delete(this.searchFilter.protocol); // remove any values from searchFilter //
-		if (this.searchFilter.context) { // get classifications and protocols for selected context //
-			for (var classification=0; classification<this.lookupData.classifications.length; classification++) { // get classifications for context //
-			  if (this.lookupData.classifications[classification].contextIdSeq==this.searchFilter.context) {
-			  	this.classifications.push(this.lookupData.classifications[classification])
-			  };
-			};
+	// this.getClassificationsAndProtocolForms = function() {
+	// 	this.classifications = []; this.protocols = []; // reset classifications and protocol dropdowns //
+	// 	delete(this.searchFilter.classification);  delete(this.searchFilter.protocol); // remove any values from searchFilter //
+	// 	if (this.searchFilter.context) { // get classifications and protocols for selected context //
+	// 		for (var classification=0; classification<this.lookupData.classifications.length; classification++) { // get classifications for context //
+	// 		  if (this.lookupData.classifications[classification].contextIdSeq==this.searchFilter.context) {
+	// 		  	this.classifications.push(this.lookupData.classifications[classification])
+	// 		  };
+	// 		};
 
-			for (var protocol=0; protocol< this.lookupData.protocols.length; protocol++) { // get protocols for context //
-			  if (this.lookupData.protocols[protocol].contextIdSeq==this.searchFilter.context) {
-			  	this.protocols.push(this.lookupData.protocols[protocol])
-			  };
-			};			
-		};
-	};	
+	// 		for (var protocol=0; protocol< this.lookupData.protocols.length; protocol++) { // get protocols for context //
+	// 		  if (this.lookupData.protocols[protocol].contextIdSeq==this.searchFilter.context) {
+	// 		  	this.protocols.push(this.lookupData.protocols[protocol])
+	// 		  };
+	// 		};			
+	// 	};
+	// };	
 
 	// select context dropdown based on context click in left menu //
 	this.selectContextByNode = function(programArea,id) {
 		this.searchFilter = {programArea:programArea}; // user clicked the left menu. set program area //
 		this.searchFilter.context = id; 
-		this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
+		// this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
 	};
 
     // selects dropdown values based on search left tree click //
@@ -97,7 +97,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		if (this.searchFilter.classification) {
 			for (var i=0; i<this.classifications.length;i++) {
 				if (this.classifications[i].csIdSeq==this.searchFilter.classification) {
-					breadcrumbs.push(this.classifications[i].csLongName)
+					// breadcrumbs.push(this.classifications[i].csLongName)
 				};
 			};
 		};
@@ -105,7 +105,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		if (this.searchFilter.protocol) {
 			for (var i=0; i<this.protocols.length;i++) {
 				if (this.protocols[i].protocolIdSeq==this.searchFilter.protocol) {
-					breadcrumbs.push(this.protocols[i].protocolLongName)
+					// breadcrumbs.push(this.protocols[i].protocolLongName)
 				};
 			};
 		};
