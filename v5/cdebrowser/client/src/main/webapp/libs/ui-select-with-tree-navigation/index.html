@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>ui-select with tree navigation</title>
+    <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+
+
+    
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css'>
+<link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.13.1/select.min.css'>
+<link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css'>
+<link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+        <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      main {
+  margin: 80px auto;
+  width: 300px;
+}
+.ui-select-choices-row {
+  transition: background 0.1s ease, color 0.1s ease;
+  background: #fff;
+  color: #0099ff;
+}
+.ui-select-choices-row:hover {
+  background: #007acc !important;
+  color: #fff;
+}
+.option.ui-select-choices-row-inner {
+  padding: 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.option.ui-select-choices-row-inner div {
+  padding: 6px 12px;
+  position: relative;
+}
+.selectize-dropdown {
+  margin-top: -3px;
+  overflow: hidden;
+}
+.selectize-dropdown-content {
+  overflow-x: auto;
+}
+.selectize-dropdown.group-tree .goto-child-group {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  line-height: 1;
+  margin: 0;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+  text-shadow: none;
+  top: 0;
+  transition: background .2s;
+}
+.selectize-dropdown.group-tree .goto-child-group:hover {
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  color: #fff;
+}
+.selectize-dropdown.group-tree .ui-select-breadcrumbs {
+  padding: 6px 12px;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.selectize-dropdown.group-tree .ui-breadcrumb {
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+}
+.selectize-dropdown.group-tree .ui-breadcrumb:hover {
+  color: #ff9000;
+}
+.selectize-dropdown.group-tree .ui-breadcrumb:after {
+  content: '>';
+}
+.selectize-dropdown.group-tree .ui-breadcrumb:last-child {
+  color: white;
+  cursor: default;
+}
+.selectize-dropdown.group-tree .ui-breadcrumb:last-child:after {
+  content: ' ';
+}
+
+    </style>
+
+    
+        <script src="js/prefixfree.min.js"></script>
+
+    
+  </head>
+
+  <body>
+
+    <main ng-app="app" ng-init="model = {}">
+  
+  <ui-tree-select model="model">
+  </ui-tree-select>
+  
+  <pre>Model: {{ model | json }}</pre>
+  
+  <script type="text/ng-template" id="/ui-tree-select.html">   
+    <ui-select
+      ng-model="model.$selected"
+      ui-select-focuser
+      theme="selectize">
+      <ui-select-match placeholder="Select a group">
+        {{ $select.selected.title }}
+      </ui-select-match>
+
+      <ui-select-choices repeat="group in groups | filter: $select.search">
+        <div>
+          <span ng-bind-html="group.title | highlight: $select.search"></span>
+          <span ng-bind-html="'('+group.size+' users)'"></span>
+          <a href
+            ng-show="group.parent"
+            class="goto-child-group"
+            ng-click="loadChildGroupsOf(group, $select)">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </div>
+      </ui-select-choices>
+    </ui-select>
+  </script>
+</main>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.20/angular.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.20/angular-sanitize.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.13.1/select.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
+</html>
