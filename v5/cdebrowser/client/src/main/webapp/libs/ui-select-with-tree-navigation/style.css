@@ -144,7 +144,7 @@ main {
         .selectize-dropdown.group-tree .ui-breadcrumb {
             color: white;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 12px;
         }
 
             .selectize-dropdown.group-tree .ui-breadcrumb:hover {

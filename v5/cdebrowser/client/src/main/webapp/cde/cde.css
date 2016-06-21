@@ -237,15 +237,15 @@ ul.cdeSearchMessage li{
 }
 
 #cdeSearchArea .filters * {
-    font-size:11px;
+    font-size:12px;
     height:auto;
 }
 #cdeSearchArea .filters .btn {
-    font-size:11px;
+    font-size:12px;
 }
 
 #cdeSearchArea .filters .form-control {
-    font-size:11px;
+    font-size:12px;
     height:29px;
 }
 
