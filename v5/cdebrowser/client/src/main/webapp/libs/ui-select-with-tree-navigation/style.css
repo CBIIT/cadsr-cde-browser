@@ -1,31 +1,42 @@
-/*main {
+main 
+{
   margin: 80px auto;
   width: 300px;
 }
+
 .ui-select-choices-row {
   transition: background 0.1s ease, color 0.1s ease;
   background: #fff;
-  color: #0099ff;
+  color: #333;
 }
+
 .ui-select-choices-row:hover {
   background: #007acc !important;
   color: #fff;
 }
+
 .option.ui-select-choices-row-inner {
   padding: 0 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .option.ui-select-choices-row-inner div {
   padding: 6px 12px;
   position: relative;
 }
+.selectize-control > .selectize-dropdown{
+  width:100% !important;
+}
+
 .selectize-dropdown {
   margin-top: -3px;
   overflow: hidden;
 }
+
 .selectize-dropdown-content {
   overflow-x: auto;
 }
+
 .selectize-dropdown.group-tree .goto-child-group {
   background: none;
   border: none;
@@ -41,125 +52,40 @@
   top: 0;
   transition: background .2s;
 }
+
 .selectize-dropdown.group-tree .goto-child-group:hover {
   box-shadow: none;
   background: rgba(0, 0, 0, 0.1);
   border: none;
   color: #fff;
 }
+
 .selectize-dropdown.group-tree .ui-select-breadcrumbs {
   padding: 6px 12px;
   margin: 0;
   background: rgba(0, 0, 0, 0.8);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .selectize-dropdown.group-tree .ui-breadcrumb {
   color: white;
   cursor: pointer;
   font-size: 12px;
 }
+
 .selectize-dropdown.group-tree .ui-breadcrumb:hover {
   color: #ff9000;
 }
+
 .selectize-dropdown.group-tree .ui-breadcrumb:after {
-  content: '>';
+  content: '>>';
 }
+
 .selectize-dropdown.group-tree .ui-breadcrumb:last-child {
   color: white;
   cursor: default;
 }
+
 .selectize-dropdown.group-tree .ui-breadcrumb:last-child:after {
   content: ' ';
 }
-*/
-
-main {
-            margin: 80px auto;
-            width: 300px;
-        }
-
-        .ui-select-choices-row {
-            transition: background 0.1s ease, color 0.1s ease;
-            background: #fff;
-            color: #333;
-        }
-
-            .ui-select-choices-row:hover {
-                background: #007acc !important;
-                color: #fff;
-            }
-
-        .option.ui-select-choices-row-inner {
-            padding: 0 !important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-            .option.ui-select-choices-row-inner div {
-                padding: 6px 12px;
-                position: relative;
-            }
-        .selectize-control > .selectize-dropdown{
-            width:100% !important;
-        }
-
-        .selectize-dropdown {
-            margin-top: -3px;
-            overflow: hidden;
-        }
-
-        .selectize-dropdown-content {
-            overflow-x: auto;
-        }
-
-        .selectize-dropdown.group-tree .goto-child-group {
-            background: none;
-            border: none;
-            box-shadow: none;
-            color: rgba(0, 0, 0, 0.5);
-            height: 100%;
-            line-height: 1;
-            margin: 0;
-            padding: 8px;
-            position: absolute;
-            right: 0;
-            text-shadow: none;
-            top: 0;
-            transition: background .2s;
-        }
-
-            .selectize-dropdown.group-tree .goto-child-group:hover {
-                box-shadow: none;
-                background: rgba(0, 0, 0, 0.1);
-                border: none;
-                color: #fff;
-            }
-
-        .selectize-dropdown.group-tree .ui-select-breadcrumbs {
-            padding: 6px 12px;
-            margin: 0;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .selectize-dropdown.group-tree .ui-breadcrumb {
-            color: white;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-            .selectize-dropdown.group-tree .ui-breadcrumb:hover {
-                color: #ff9000;
-            }
-
-            .selectize-dropdown.group-tree .ui-breadcrumb:after {
-                content: '>';
-            }
-
-            .selectize-dropdown.group-tree .ui-breadcrumb:last-child {
-                color: white;
-                cursor: default;
-            }
-
-                .selectize-dropdown.group-tree .ui-breadcrumb:last-child:after {
-                    content: ' ';
-                }

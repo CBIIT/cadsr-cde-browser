@@ -1,16 +1,13 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
     /* Start of filter service */
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
-
-    var cs = compareService;
-    $scope.compareService = cs;
 
     $scope.$watch('contextListMaster',function(data) { // gets data for program areas and contexts //
         if (data) {
@@ -24,59 +21,60 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.contextCascade = function(selectedInput) {
         if (selectedInput!==undefined)
         $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
-        if (selectedInput.length<3) {
-            $scope.filterService.protocols = [];
-            $scope.filterService.classifications = [];
-        }
-    };
-
-    $scope.model={};
-
-    $scope.model.loadProtocols = function(searchInput,evt) {
-        // console.log(searchInput);
-        var k=0;
-        // if (searchInput.length<3) {
+        // console.log(selectedInput);
+        // if (selectedInput.length<3) {
         //     $scope.filterService.protocols = [];
+        //     $scope.filterService.classifications = [];
         // }
-        if(searchInput.length===3) {
-        // if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchInput.length===3 || evt.keyCode===32 && searchInput.length===2) {
-            $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
-            // $scope.filterService.protocols = response;
-            groupFactory.fillProtocols(response);
-            $scope.filterService.protocols = groupFactory.load(0);
-            //$scope.groups = groupFactory.load(0);
-            });
-            // groupFactory.loadProtocols(searchInput);
-        }
-
-
-        // **** {"id":1,"title":"Tazzy","size":"57","parent":true}              **** //
-        // **** id --> contextIdSeq --> protocolIdSeq --> formIdSeq;            **** //
-        // **** title --> contextName --> protocolLongName --> formLongName;    **** //
-        // **** parent --> true --> true --> false                              **** //
     };
 
+    // $scope.model={};
+
+    // $scope.model.loadProtocols = function(searchInput,evt) {
+    //     // console.log(searchInput);
+    //     var k=0;
+    //     // if (searchInput.length<3) {
+    //     //     $scope.filterService.protocols = [];
+    //     // }
+    //     if(searchInput.length===3) {
+    //     // if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchInput.length===3 || evt.keyCode===32 && searchInput.length===2) {
+    //         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
+    //         // $scope.filterService.protocols = response;
+    //         groupFactory.fillProtocols(response);
+    //         $scope.filterService.protocols = groupFactory.load(0);
+    //         //$scope.groups = groupFactory.load(0);
+    //         });  
+    //         // groupFactory.loadProtocols(searchInput);
+    //     }
+
+        
+    //     // **** {"id":1,"title":"Tazzy","size":"57","parent":true}              **** //
+    //     // **** id --> contextIdSeq --> protocolIdSeq --> formIdSeq;            **** //
+    //     // **** title --> contextName --> protocolLongName --> formLongName;    **** //
+    //     // **** parent --> true --> true --> false                              **** //
+    // };
 
 
-    $scope.model1={};
 
-    $scope.model1.loadClassifications = function(searchInput,evt) {
-        var k=0;
-        if(searchInput.length===3) {
-            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
-            groupFactory1.fillClassifications(response);
-            $scope.filterService.classifications = groupFactory1.load(0);
-            });
-        }
+    // $scope.model1={};
 
-        $scope.checkChildren1=function(id){
-            return groupFactory1.isChildAvailable(id);
-        }
-        // **** {"id":1,"title":"Tazzy","size":"57","parent":true}                                  **** //
-        // **** id --> contextIdSeq --> csIdSeq --> csCsiIdSeq (parentCsiIdSeq) --> csCsiIdSeq            **** //
-        // **** title --> contextName --> csLongName --> csCsiName (csiLevel) --> csCsiName   **** //
-        // **** parent --> true --> true --> false (true) --> false                                 **** //
-    };
+    // $scope.model1.loadClassifications = function(searchInput,evt) {
+    //     var k=0;
+    //     if(searchInput.length===3) {
+    //         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
+    //         groupFactory1.fillClassifications(response);
+    //         $scope.filterService.classifications = groupFactory1.load(0);
+    //         });  
+    //     }
+
+    //     $scope.checkChildren1=function(id){
+    //         return groupFactory1.isChildAvailable(id);
+    //     }
+    //     // **** {"id":1,"title":"Tazzy","size":"57","parent":true}                                  **** //
+    //     // **** id --> contextIdSeq --> csIdSeq --> csCsiIdSeq (parentCsiIdSeq) --> csCsiIdSeq            **** // 
+    //     // **** title --> contextName --> csLongName --> csCsiName (csiLevel) --> csCsiName   **** //    
+    //     // **** parent --> true --> true --> false (true) --> false                                 **** //
+    // };
 
     // $scope.loadClassifications = function(searchinput,evt) {
 
@@ -88,14 +86,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //     $scope.filterService.classifications =
     //         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchinput}}).success(function(response) {
     //         $scope.filterService.classifications = response;
-    //     });
+    //     });  
     //     }
     // }
 
 
 
     // check user authentication status //
-    $scope.$on('$locationChangeStart', function() {
+    $scope.$on('$locationChangeStart', function() { 
         $scope.authenticationService.checkAuth();
         if ($location.path()=='/cdeCart' || $location.path()=='/login') {
             searchFactory.showSearch = false;
@@ -108,7 +106,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // watch for changes to dropdowns. When it changes, refilter data //
     $scope.$watch('filterService.searchFilter', function() {
         if (fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
-            fs.isLeftTreeClick = false;
+            fs.isLeftTreeClick = false; 
         }
         else {
             if (Object.keys(fs.searchFilter).length) {
@@ -120,8 +118,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
                     // console.log("Search");
                     $scope.breadCrumbs = fs.createBreadcrumbs();
+                    // console.log(filterService.searchFilter);
                 };
-            };
+            };       
         };
     },true);
 
@@ -134,6 +133,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.breadCrumbs = [];
         groupFactory.clearData();
         groupFactory1.clearData();
+        // console.log($scope.model1);   
     };
 
     // When a context is changed, get classifications and protocol forms //
@@ -143,11 +143,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             // $scope.filterService.protocols = response;
             groupFactory.fillProtocols(response);
             $scope.filterService.protocols = groupFactory.load(0);
-        });
+        }); 
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory1.fillClassifications(response);
             $scope.filterService.classifications = groupFactory1.load(0);
-        });
+        });  
     };
 
     // // selects dropdown values based on search left tree click //
@@ -160,7 +160,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.$storage.cartService = cartService;
     $scope.cartService = cartService;
     $scope.authenticationService = authenticationService;
-    $scope.downloadFactory = new downloadFactory();  // create download factory //
+    $scope.downloadFactory = new downloadFactory();  // create download factory //    
 
     $scope.show = [];
     $scope.initComplete = false;
@@ -320,11 +320,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     };
 
-    //Multiple CDE details - used for compare
-    $scope.multipleCdeDetails = function (deIdseq) {
-        $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/multiCDEData?deIdseq=" + deIdseq);
-    };
-
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function (serverUrl) {
         $scope.searchResultsMessage = "Searching";
@@ -401,7 +396,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
         if (query!='') { // create base url. determine if query is blank //
-                var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value //
+                var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value // 
                 if (publicIdName && publicIdName!='') {
                     url=url.concat("&name=",publicIdName)
                 };
@@ -429,8 +424,20 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                         url+="&"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
                     }
                     else {
-                        url+="&"+x+"="+fs.searchFilter[x];
-                    };
+                        if (x=='protocol') {
+                            url+="&"+x+"="+fs.searchFilter[x].protocolIdSeq;
+                            if (x=='form') {
+                                url+="&"+x+"="+fs.searchFilter[x].formIdSeq; 
+                            }   
+                        }
+                        if (x=='classification') {
+                            url+="&"+x+"="+fs.searchFilter[x].csIdSeq;
+                        }
+                            if (x=='csi') {
+                                url+="&"+x+"="+fs.searchFilter[x].csCsiIdSeq;
+                            }
+                    };    
+                                    console.log(fs.searchFilter);                
                 };
                 c++;
             };
@@ -496,7 +503,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.tabsDisabled = true;
         $scope.haveSearchResults = false;
         $scope.searchResultsMessage = "Searching";
-        fs.isSearching = true;
+        fs.isSearching = true;       
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
 
@@ -587,13 +594,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 
         // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
-        $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) {
+        $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) { 
                         $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
                         $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
                         $scope.treeStatus = {
                             test:response.data.excludeTest,
                             training:response.data.excludeTraining};
-                    }).then(function() {
+                    }).then(function() { 
                               $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
                                 $scope.workflowStatuses = response.data;
                                 $scope.workflowSort = [];
@@ -610,7 +617,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                           list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
                                         }
                                         break;
-                                    }
+                                    }  
                               });
                                 $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
                             });
@@ -631,7 +638,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                           list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
                                         }
                                         break;
-                                    }
+                                    }  
                               });
                                 $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
@@ -644,7 +651,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         // $http.get('/cdebrowserServer/rest/lookupdata/protocol').success(function(response) {
         //     fs.lookupData['protocols'] = response;
-        // });
+        // });        
 
     };
 
@@ -659,7 +666,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 angular.element(document.getElementById(item.idSeq)).parent().prop('hidden', data.training);
             }
             return false;
-        });
+        });   
     });
 
 
@@ -698,7 +705,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 {
                   test:$scope.treeStatus.test,
                   training:$scope.treeStatus.training
-                })
+                })    
         },100);
     };
 
@@ -846,14 +853,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 registrationSort: 'asc',
                 workflowSort: 'asc',
                 longName: 'asc'
-            }
+            }      
           },
           {
             defaultSort:"asc",
             counts:[],
             dataset:[]
-
-          });
+            
+          });  
     };
 
     $scope.sortNames = {
@@ -876,12 +883,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // change search tab section tabs //
     $scope.changeSearchTab = function(tabIndex) {
         $scope.activeSearchTab = tabIndex;
-        if (tabIndex === 0)
+        if (tabIndex === 0) 
           {
-            $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) {
+            $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) { 
                         $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
-                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
-                    }).then(function() {
+                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;     
+                    }).then(function() { 
                               $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
                                 $scope.workflowStatuses = response.data;
                                 $scope.workflowSort = [];
@@ -898,7 +905,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                           list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
                                         }
                                         break;
-                                    }
+                                    }  
                               });
                                 $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
                             });
@@ -919,7 +926,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                           list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
                                         }
                                         break;
-                                    }
+                                    }  
                               });
                                 $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value

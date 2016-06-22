@@ -8,7 +8,7 @@ angular.module('cdeBrowserApp')
   function (groupFactory1, $timeout, $http,filterService) {
       return {
           restrict: 'E',
-          scope: { model1: '=' },
+          scope: { model1: '=' , contextCascade: '&' },
           link: function (scope, el) {
               scope.breadcrumbs = [{ "id": 0, "title": "CS" }];
               scope.filterService=filterService;
@@ -20,35 +20,55 @@ angular.module('cdeBrowserApp')
             scope.filterService.classifications = groupFactory1.load(0);
             });  
         }
-
-       
     };
 
-    scope.checkChildren1=function(id){
-            return groupFactory1.isChildAvailable(id);
+    scope.$watch('filterService.classifications', function(){
+      if(scope.filterService.classifications.length==0) {
+              scope.breadcrumbs = [{ "id": 0, "title": "CS" }];
+      }
+    })
+
+    scope.checkChildren1=function(selectedGroup){
+            return groupFactory1.isChildAvailable(selectedGroup);
         }
 
               scope.loadChildGroupsOf1 = function (group, $select) {
                   $select.search = '';
-                  scope.breadcrumbs.push(group);
-                  scope.filterService.classifications = groupFactory1.load(group.id);
+                  group.title='CSI';
+                  scope.filterService.classifications=_.takeWhile(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
+                  if(scope.filterService.classifications.length==0){
+                    scope.filterService.classifications=_.filter(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel+1});
+                  }
+              scope.breadcrumbs.push(group);
+//scope.filterService.classifications =
+                  
+                  // if(group.parentCsiIdSeq==null){
+                  //   
+                  //   scope.filterService.classifications = _.takeWhile(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
+                  // }
+                  // else
+                  //   scope.filterService.classifications = _.takeWhile(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel});
+
                   scope.$broadcast('uiSelectFocus');
-                  angular.element(document.querySelector("#CS")).css("display","block");
-                  angular.element(document.querySelector("#Protocol")).css("display","none");
+                  
               };
 
               scope.navigateBackTo = function (crumb, $select) {
-                  console.log(crumb);
+                  // console.log(crumb);
                   $select.search = '';
                   var index = _.findIndex(scope.breadcrumbs, { id: crumb.id });
-                  console.log(index);
+                  // console.log(index);
                   scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
-                  scope.filterService.classifications  = groupFactory1.load(_.last(scope.breadcrumbs).id);
+                  scope.filterService.classifications=_.filter(groupFactory1.load(_.last(scope.breadcrumbs).id),{'csiLevel':_.last(scope.breadcrumbs).csiLevel});
+                  console.log(_.last(scope.breadcrumbs).csiLevel)
+                  console.log(scope.filterService.classifications);
+                  if(scope.filterService.classifications.length==0){
+                    scope.filterService.classifications=_.filter(groupFactory1.load(_.last(scope.breadcrumbs).id));
+                  }
+                  
                   $select.open = false;
                   scope.$broadcast('uiSelectFocus');
-                  angular.element(document.querySelector("#CS")).css("display","block");
-                  angular.element(document.querySelector("#Protocol")).css("display","none");
-
+                 
               };
           },
           templateUrl: '/ui-tree-select1.html'
@@ -62,10 +82,9 @@ angular.module('cdeBrowserApp')
         require: '^uiSelect',
         link: function (scope, elem, attrs, uiSelect) {
             scope.$on('uiSelectFocus', function () {
-                angular.element(document.querySelector("#CS")).css("display","block");
-                angular.element(document.querySelector("#Protocol")).css("display","none");
                 $timeout(uiSelect.activate);
-                console.log(uiSelect);
+                console.log(scope.breadcrumbs);
+                // console.log(uiSelect);
             });
         }
     };
@@ -104,18 +123,20 @@ angular.module('cdeBrowserApp')
             });
 
             _.assign(sampledata, classifications);
-            console.log(sampledata);
+            
 
             var sample = sampledata[0];
+            console.log(sampledata);
           },
 
           clearData: function() {
             sampledata = {};
           },
 
-          isChildAvailable: function(id) {
-              if(this.load(id)==undefined)
-                return false;
+          isChildAvailable: function(selectedgroup) {
+          
+              if(this.load(selectedgroup.id)==undefined && selectedgroup.csiLevel==2)
+                  return false;
               return true;
           }
       }
