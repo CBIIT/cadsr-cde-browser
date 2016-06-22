@@ -9,6 +9,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
 
+    var cs = compareService;
+    $scope.compareService = cs;
+
+
     $scope.$watch('contextListMaster',function(data) { // gets data for program areas and contexts //
         if (data) {
             fs.serverData = $scope.contextListMaster;
