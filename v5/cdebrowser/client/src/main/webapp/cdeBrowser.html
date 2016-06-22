@@ -149,7 +149,7 @@
                         <br>
                         &nbsp;Logout&nbsp;
                     </a>
-                </td>                
+                </td>
             </tr>
         </table>
     </div>
@@ -232,40 +232,40 @@
                     {{tab.title}}
                 </button>
             </ul>
-        </div>  
+        </div>
         <!-- end generate tabs -->
-        <!-- display proper view based on tab selected -->     
+        <!-- display proper view based on tab selected -->
         <div id="cdeSearchArea">
             <div class="view" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
                 This is the generic search pane.
-            </div>   
+            </div>
             <div class="view" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==1">
                 This is the public id search pane. The default search.
-            </div>     
+            </div>
             <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==2">
                 This is the search preferences pane.
             </div>
             <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==3">
                 This is the advanced search pane.
-            </div> 
+            </div>
             <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
-                
+
                 <span>
                 <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="selectize" ng-model="filterService.searchFilter.programArea">
                     <ui-select-match placeholder="Program Area">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
                     </ui-select-choices>
-                </ui-select>    
+                </ui-select>
                 </span>
-                
+
                 <span>
                 <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.context">
                     <ui-select-match allow-clear="true" placeholder="Context">{{$select.selected.text}}<a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a></ui-select-match>
                     <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
                     </ui-select-choices>
-                </ui-select>     
+                </ui-select>
                 </span>
 
 
@@ -276,7 +276,7 @@
                     <ui-select-choices group-by="'csLongName'" repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
                         <div class="autoDropDown" ng-bind-html="value.csCsiName | highlight: $select.search"></div>
                     </ui-select-choices>
-                </ui-select>     
+                </ui-select>
                 </span> -->
 
                 <!-- <span>
@@ -285,14 +285,14 @@
                     <ui-select-choices repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
                         <div ng-bind-html="value.csLongName | highlight: $select.search"></div>
                     </ui-select-choices>
-                </ui-select>     
+                </ui-select>
                 </span> -->
 
                 <span>
                     <ui-tree-select1 model="model1" context-cascade="contextCascade(filterService.searchFilter.classification)">
                     </ui-tree-select1>
                     <script type="text/ng-template" id="/ui-tree-select1.html">
-                        <ui-select id="Classifications" 
+                        <ui-select id="Classifications"
                                    ng-model="filterService.searchFilter.classification"
                                    ng-disabled="filterService.isSearching||filterService.searchFilter.protocol"
                                    ui-select-focuser1
@@ -321,9 +321,9 @@
                     <ui-tree-select model="model" context-cascade="contextCascade(filterService.searchFilter.protocol)">
                     </ui-tree-select>
                     <script type="text/ng-template" id="/ui-tree-select.html">
-                        <ui-select id="Protocols" 
+                        <ui-select id="Protocols"
                                    ng-model="filterService.searchFilter.protocol"
-                                   ng-disabled="filterService.isSearching||filterService.searchFilter.classification" 
+                                   ng-disabled="filterService.isSearching||filterService.searchFilter.classification"
                                    ui-select-focuser
                                    theme="selectize"
                                    ng-change="contextCascade($select.selected)">
@@ -348,10 +348,10 @@
                 <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification" theme="selectize" ng-model="filterService.searchFilter.protocol" ng-keyup="loadProtocols($select.search,$event)" ng-blur="temp($select.search)">
                     <ui-select-match allow-clear="true" placeholder="Protocol">{{$select.selected.protocolLongName}}</ui-select-match>
                     <ui-select-choices group-by="'contextName'" repeat="value.protocolIdSeq as value in filterService.protocols | filter: $select.search">
-                        <div style="padding-left:10px;" ng-bind-html="value.protocolLongName | highlight: $select.search"> 
+                        <div style="padding-left:10px;" ng-bind-html="value.protocolLongName | highlight: $select.search">
                         </div>
                     </ui-select-choices>
-                </ui-select>     
+                </ui-select>
                 </span> -->
 
 
@@ -362,7 +362,7 @@
                     <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
                         <div ng-bind-html="value | highlight: $select.search"></div>
                     </ui-select-choices>
-                </ui-select>     
+                </ui-select>
                 </span>
 
                 <span>
@@ -371,16 +371,16 @@
                     <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
                         <div ng-bind-html="value | highlight: $select.search"></div>
                     </ui-select-choices>
-                </ui-select>     
+                </ui-select>
                 </span>
                 <!-- <span>{{filterService.searchFilter}}</span> -->
-                
+
                 <span class="clear">
                     <button class="btn btn-default clearButton" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
-                          
+
             </div>
-        </div>              
+        </div>
         <!-- end display proper view based on tab selected -->
         <br ng-show="searchResults.length" />
         <!-- start Download Buttons -->
@@ -395,37 +395,37 @@
                     <button label="Download to Prior Excel" data-ng-click="downloadToExcel('prior')" ng-disabled="!checkedItemsForDownload.length">
                         Download to Prior Excel
                     </button>
-                </li>    
+                </li>
                 <li>
                     <button label="Download Data Elements as XML" data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
                         Download Data Elements as XML
                     </button>
-                </li> 
+                </li>
                 <li>
                     <button label="Add to CDE Cart" ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length">
                         Add to CDE Cart
-                    </button> 
-                </li> 
+                    </button>
+                </li>
                 <li>
                     <button label="Add to CDE Compare List" ng-click="addToCompare()" ng-disabled="!checkedItemsForDownload.length">
                         Add to CDE Compare List
-                    </button> 
-                </li>                       
+                    </button>
+                </li>
                 <li>
                     <button label="Compare CDEs" ng-click="compareCDE()" ng-disabled="!checkedItemsForDownload.length">
                         Compare CDEs
-                    </button> 
+                    </button>
                 </li>
             </ul>
             <!-- show progress bar -->
-            <ul ng-show="downloadFactory.progressMessage.status" 
+            <ul ng-show="downloadFactory.progressMessage.status"
                 ng-class="{'cdeProgressMessage error': downloadFactory.progressMessage.isErrorMessage,'cdeProgressMessage': !downloadFactory.progressMessage.isErrorMessage}">
                 <li>
                     {{downloadFactory.progressMessage.message}}
                 </li>
                 <li ng-show="!downloadFactory.progressMessage.isErrorMessage">
                     <img alt="Exporting File" src="icons/preloader.gif">
-                </li>                
+                </li>
             </ul>
             <!-- end show progress bar -->
         </span>
@@ -444,7 +444,7 @@
                 </li>
                 <li>
                     <img alt="Searching" src="icons/preloader.gif">
-                </li>                
+                </li>
             </ul>
         </span>
 
@@ -510,7 +510,7 @@
                     <span class="row">
                         <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
                     </span>
-                </div>                
+                </div>
             </div>
 
             <script type="text/ng-template" id="ng-table/headers/checkbox.html">
@@ -556,12 +556,12 @@
     </div>
         <!-- =============================================================================== -->
         <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
-        
+
         <div class="views">
             <div class="tab" ng-show="!searchFactory.showSearch">{{title}}</div>
             <div ng-class="{cdeSearchTabsView:searchFactory.showSearch,body:!searchFactory.showSearch}" data-ng-view></div>
         </div>
-        
+
         <!-- =============================================================================== -->
 
 
@@ -623,6 +623,7 @@
 <script src="cde/searchPreferences/cde-searchPreferences.js"></script>
 <script src="cde/cdeCart/cde-cart.js"></script>
 <script src="cde/authentication/cde-login.js"></script>
+<script src="services/compareService.js"></script>
 <script src="services/searchFactory.js"></script>
 <script src="services/cartService.js"></script>
 <script src="services/filterService.js"></script>

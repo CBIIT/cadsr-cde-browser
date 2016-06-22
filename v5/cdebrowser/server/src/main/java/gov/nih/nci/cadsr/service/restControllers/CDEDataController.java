@@ -116,18 +116,18 @@ public class CDEDataController
 
     @Autowired
     private ToolOptionsDAO toolOptionsDAO;
-    
+
     @Autowired
     private CsCsiValueMeaningDAO csCsiValueMeaningDAO;
-    
-    @Autowired 
+
+    @Autowired
     private DefinitionDAO definitionDAO;
 
-    
-    @Autowired 
+
+    @Autowired
     private DesignationDAO designationDAO;
-    
-    
+
+
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
     public CdeDetails CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
@@ -150,6 +150,31 @@ public class CDEDataController
 
         return cdeDetails;
     }
+
+    /**
+     * Accept a comma separated list of deIdseq values.
+     * @param deIdseq Comma separated list of deIdseqs
+     * @return Array of CdeDetails, to be used by the compare CDE feature.
+     */
+    @RequestMapping( value = "/multiCDEData" )
+    @ResponseBody
+    public CdeDetails[] multiCDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
+    {
+        logger.debug( "multiCDEDataController: " + deIdseq );
+        String[] deIdseqs = deIdseq.split( "," );
+        int i = 0;
+        DataElementModel dataElementModel;
+        CdeDetails[] cdeDetailsArray = new CdeDetails[deIdseqs.length];
+        for(String id: deIdseqs)
+        {
+            dataElementModel = dataElementDAO.getCdeByDeIdseq( id.trim() );
+            logger.debug( dataElementModel.toString() );
+            cdeDetailsArray[i] = buildCdeDetailsForCompare( dataElementModel );
+            i++;
+        }
+        return cdeDetailsArray;
+    }
+
 
     // Build a CdeDetails to send to the client
     private CdeDetails buildCdeDetails( DataElementModel dataElementModel )
@@ -194,6 +219,50 @@ public class CDEDataController
         return cdeDetails;
     }
 
+    /**
+     * Gather data needed for CDE compare
+     * This is a sub set of the data we return for All the tabs in the "CDE Details
+     * @param dataElementModel
+     * @return
+     */
+    private CdeDetails buildCdeDetailsForCompare ( DataElementModel dataElementModel )
+    {
+        CdeDetails cdeDetails = new CdeDetails();
+
+        // For the "Data Element" section
+        DataElement dataElement = initDataElementForCompare( dataElementModel );
+        cdeDetails.setDataElement( dataElement );
+
+        // For the "Data Element Concept" section
+        DataElementConcept dataElementConcept = initDataElementConceptForCompare( dataElementModel );
+        cdeDetails.setDataElementConcept( dataElementConcept );
+
+        // For the "Value Domain" section
+        ValueDomain valueDomain = initValueDomainForCompare( dataElementModel );
+        cdeDetails.setValueDomain( valueDomain );
+
+        // For the "Classifications" section
+        Classifications classifications = initClassificationsForCompare( dataElementModel );
+        cdeDetails.setClassifications( classifications );
+
+        // For the "Data Elements Derivation" tab
+        DataElementDerivation dataElementDerivation = initDataElementDerivationTabData( dataElementModel );
+        cdeDetails.setDataElementDerivation( dataElementDerivation );
+
+        return cdeDetails;
+    }
+
+    private DataElement initDataElementForCompare(DataElementModel dataElementModel)
+    {
+        DataElement dataElement = getDataElementDetails( dataElementModel );
+        /////////////////////////////////////////////////////
+        // "Reference Documents" of the "Data Element" Tab
+
+        // List to populate for client side
+        getDataElementReferenceDocuments( dataElementModel, dataElement );
+        return dataElement;
+    }
+
 
     /**********************************************************************/
     /**********************************************************************/
@@ -205,78 +274,10 @@ public class CDEDataController
      */
     private DataElement initDataElementTabData( DataElementModel dataElementModel )
     {
-        DataElement dataElement = new DataElement();
-
-        /////////////////////////////////////////////////////
-        // "Data Element Details" of the "Data Element" Tab
-        DataElementDetails dataElementDetails = new DataElementDetails();
-        dataElement.setDataElementDetails( dataElementDetails );
-
-        if( dataElementModel.getPublicId() == null )
-        {
-            dataElementDetails.setPublicId( -1 );
-            logger.error( " dataElementModel.getPublicId() == null" );
-        }
-        else
-        {
-            dataElementDetails.setPublicId( dataElementModel.getPublicId() );
-        }
-
-        if( dataElementModel.getVersion() == null )
-        {
-            dataElementDetails.setVersion( -1 );
-            logger.error( " dataElementModel.getVersion() == null" );
-        }
-        else
-        {
-            dataElementDetails.setVersion( dataElementModel.getVersion() );
-        }
-
-        dataElementDetails.setLongName( dataElementModel.getLongName() );
-        dataElementDetails.setShortName( dataElementModel.getPreferredName() );
-        dataElementDetails.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
-        dataElementDetails.setDefinition( dataElementModel.getPreferredDefinition() );
-        dataElementDetails.setValueDomain( dataElementModel.getValueDomainModel().getLongName() );
-        dataElementDetails.setDataElementConcept( dataElementModel.getDec().getLongName() );
-        dataElementDetails.setContext( dataElementModel.getContextName() );
-        dataElementDetails.setWorkflowStatus( dataElementModel.getAslName() );
-        dataElementDetails.setOrigin( dataElementModel.getOrigin() );
-        dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
-        dataElementDetails.setDirectLink( "STILL NEED TO Create rest service and Link" );
-
+        DataElement dataElement = getDataElementDetails( dataElementModel );
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "Data Element" Tab
-
-        // List to populate for client side
-        List<ReferenceDocument> referenceDocuments = new ArrayList<>();
-        dataElement.setReferenceDocuments( referenceDocuments );
-
-        //List from database
-        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
-        if( dataElementModelReferenceDocumentList.size() < 1 )
-        {
-            logger.debug( "No ReferenceDocuments where returned" );
-        }
-        for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
-        {
-            ReferenceDocument referenceDoc = new ReferenceDocument();
-            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
-            //logger.debug( referenceDocModel.getDocName() );
-
-            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
-            //logger.debug( referenceDocModel.getDocType() );
-
-            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
-            //logger.debug( referenceDocModel.getDocText() );
-
-            referenceDoc.setContext( referenceDocModel.getContext().getName() );
-            //logger.debug( referenceDocModel.getContext().getName() );
-
-            referenceDoc.setUrl( referenceDocModel.getUrl() );
-            //logger.debug( referenceDocModel.getUrl() );
-
-            referenceDocuments.add( referenceDoc );
-        }
+        getDataElementReferenceDocuments( dataElementModel, dataElement );
 
 
         /////////////////////////////////////////////////////
@@ -351,6 +352,92 @@ public class CDEDataController
         return dataElement;
     }
 
+    private void getDataElementReferenceDocuments( DataElementModel dataElementModel, DataElement dataElement )
+    {
+        // List to populate for client side
+        List<ReferenceDocument> referenceDocuments = new ArrayList<>();
+        dataElement.setReferenceDocuments( referenceDocuments );
+
+        //List from database
+        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
+        if( dataElementModelReferenceDocumentList.size() < 1 )
+        {
+            logger.debug( "No ReferenceDocuments where returned" );
+        }
+        for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
+        {
+            ReferenceDocument referenceDoc = new ReferenceDocument();
+            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
+            //logger.debug( referenceDocModel.getDocName() );
+
+            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
+            //logger.debug( referenceDocModel.getDocType() );
+
+            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
+            //logger.debug( referenceDocModel.getDocText() );
+
+            referenceDoc.setContext( referenceDocModel.getContext().getName() );
+            //logger.debug( referenceDocModel.getContext().getName() );
+
+            referenceDoc.setUrl( referenceDocModel.getUrl() );
+            //logger.debug( referenceDocModel.getUrl() );
+
+            referenceDocuments.add( referenceDoc );
+        }
+    }
+
+    private DataElement getDataElementDetails( DataElementModel dataElementModel )
+    {
+        DataElement dataElement = new DataElement();
+
+        /////////////////////////////////////////////////////
+        // "Data Element Details" of the "Data Element" Tab
+        DataElementDetails dataElementDetails = new DataElementDetails();
+        dataElement.setDataElementDetails( dataElementDetails );
+        if( dataElementModel != null)
+        {
+            if(  dataElementModel.getPublicId() == null )
+            {
+                dataElementDetails.setPublicId( -1 );
+                logger.error( " dataElementModel.getPublicId() == null" );
+            }
+            else
+            {
+                dataElementDetails.setPublicId( dataElementModel.getPublicId() );
+            }
+
+            if(  dataElementModel.getVersion() == null )
+            {
+                dataElementDetails.setVersion( -1 );
+                logger.error( " dataElementModel.getVersion() == null" );
+            }
+            else
+            {
+                dataElementDetails.setVersion( dataElementModel.getVersion() );
+            }
+
+            dataElementDetails.setLongName( dataElementModel.getLongName() );
+            dataElementDetails.setShortName( dataElementModel.getPreferredName() );
+            dataElementDetails.setPreferredQuestionText( dataElementModel.getPreferredQuestionText() );
+            dataElementDetails.setDefinition( dataElementModel.getPreferredDefinition() );
+            dataElementDetails.setValueDomain( dataElementModel.getValueDomainModel().getLongName() );
+            dataElementDetails.setDataElementConcept( dataElementModel.getDec().getLongName() );
+            dataElementDetails.setContext( dataElementModel.getContextName() );
+            dataElementDetails.setWorkflowStatus( dataElementModel.getAslName() );
+            dataElementDetails.setOrigin( dataElementModel.getOrigin() );
+            dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
+            dataElementDetails.setDirectLink( "STILL NEED TO Create rest service and Link" );
+        }
+        return dataElement;
+    }
+
+    private DataElementConcept initDataElementConceptForCompare( DataElementModel dataElementModel )
+    {
+        DataElementConcept dataElementConcept = new DataElementConcept();
+        DataElementConceptDetails dataElementConceptDetails = getDataElementConceptDetails( dataElementModel );
+        dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
+        return dataElementConcept;
+    }
 
     /**********************************************************************/
     /**********************************************************************/
@@ -369,25 +456,8 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "Data Element Concept Details" of the "Data Element Concept" Tab
-        DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
+        DataElementConceptDetails dataElementConceptDetails = getDataElementConceptDetails( dataElementModel );
         dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
-
-        dataElementConceptDetails.setPublicId( dataElementModel.getDec().getPublicId() );
-        dataElementConceptDetails.setVersion( dataElementModel.getDec().getVersion() );
-        dataElementConceptDetails.setLongName( dataElementModel.getDec().getLongName() );
-        dataElementConceptDetails.setShortName( dataElementModel.getDec().getPreferredName() );
-        dataElementConceptDetails.setDefinition( dataElementModel.getDec().getPreferredDefinition() );
-
-        dataElementConceptDetails.setContext( dataElementModel.getDec().getConteName() );
-        dataElementConceptDetails.setConceptualDomainContextName( dataElementModel.getDec().getCdContextName() );
-        dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
-        dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
-        dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
-
-        //Conceptual Domain Version
-
-        dataElementConceptDetails.setFormattedConceptualDomainVersion( dataElementModel.getDec().getCdVersion().toString() );
-        dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
 
         /////////////////////////////////////////////////////
         // "Object Class" of the "Data Element Concept" Tab
@@ -492,6 +562,37 @@ public class CDEDataController
         return dataElementConcept;
     }
 
+    private DataElementConceptDetails getDataElementConceptDetails( DataElementModel dataElementModel )
+    {
+        DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
+
+
+        dataElementConceptDetails.setPublicId( dataElementModel.getDec().getPublicId() );
+        dataElementConceptDetails.setVersion( dataElementModel.getDec().getVersion() );
+        dataElementConceptDetails.setLongName( dataElementModel.getDec().getLongName() );
+        dataElementConceptDetails.setShortName( dataElementModel.getDec().getPreferredName() );
+        dataElementConceptDetails.setDefinition( dataElementModel.getDec().getPreferredDefinition() );
+
+        dataElementConceptDetails.setContext( dataElementModel.getDec().getConteName() );
+        dataElementConceptDetails.setConceptualDomainContextName( dataElementModel.getDec().getCdContextName() );
+        dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
+        dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
+        dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
+
+        //Conceptual Domain Version
+
+        dataElementConceptDetails.setFormattedConceptualDomainVersion( dataElementModel.getDec().getCdVersion().toString() );
+        dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
+        return dataElementConceptDetails;
+    }
+
+    private ValueDomain initValueDomainForCompare( DataElementModel dataElementModel )
+    {
+        ValueDomain valueDomain = new ValueDomain();
+        ValueDomainDetails valueDomainDetails = getValueDomainDetails( dataElementModel );
+        valueDomain.setValueDomainDetails( valueDomainDetails );
+        return valueDomain;
+    }
 
     /**********************************************************************/
     /**********************************************************************/
@@ -511,37 +612,8 @@ public class CDEDataController
 
         /////////////////////////////////////////////////////
         // "value Domain Details" of the "value Domain" Tab
-        ValueDomainDetails valueDomainDetails = new ValueDomainDetails();
+        ValueDomainDetails valueDomainDetails = getValueDomainDetails( dataElementModel );
         valueDomain.setValueDomainDetails( valueDomainDetails );
-
-        valueDomainDetails.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
-        if( dataElementModel.getValueDomainModel().getVersion() != null )
-        {
-            valueDomainDetails.setVersion( dataElementModel.getValueDomainModel().getVersion() );
-        }
-        valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
-        valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
-
-        // CHECKME - need to see where this is getting the wrong value.
-        //valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
-        valueDomainDetails.setContext( dataElementModel.getContextName() );// CHECKME
-
-        valueDomainDetails.setDefinition( dataElementModel.getValueDomainModel().getPreferredDefinition() );
-        valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
-        valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
-        valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
-        valueDomainDetails.setDisplayFormat( dataElementModel.getValueDomainModel().getDispFormat() );
-        valueDomainDetails.setMaximumLength( dataElementModel.getValueDomainModel().getMaxLength() );
-        valueDomainDetails.setMinimumLength( dataElementModel.getValueDomainModel().getMinLength() );
-        valueDomainDetails.setDecimalPlace( dataElementModel.getValueDomainModel().getDecimalPlace() );
-        valueDomainDetails.setHighValue( dataElementModel.getValueDomainModel().getHighVal() );
-        valueDomainDetails.setLowValue( dataElementModel.getValueDomainModel().getLowVal() );
-        valueDomainDetails.setValueDomainType( dataElementModel.getValueDomainModel().getVdType() );
-        valueDomainDetails.setConceptualDomainPublicId( dataElementModel.getValueDomainModel().getCdPublicId() );
-        valueDomainDetails.setConceptualDomainShortName( dataElementModel.getValueDomainModel().getCdPrefName() );
-        valueDomainDetails.setConceptualDomainContextName( dataElementModel.getValueDomainModel().getCdContextName() );
-        valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
-        valueDomainDetails.setOrigin( dataElementModel.getValueDomainModel().getOrigin() );
 
         /////////////////////////////////////////////////////
         // "value Domain Concepts" of the "value Domain" Tab
@@ -600,7 +672,7 @@ public class CDEDataController
         valueDomain.setPermissibleValueExtList(permissibleValueExtList);
 
         logger.debug( ".........PermissibleValueExtList section done");
-        
+
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "value Domain" Tab
         List<ReferenceDocModel> valueDomainReferenceDocuments = referenceDocDAO.getRefDocsByAcIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
@@ -619,7 +691,7 @@ public class CDEDataController
     	}
     	return permissibleValueExtList;
     }
-    
+
     protected PermissibleValueExt buildPermissibleValueExt(PermissibleValuesModel permissibleValueModel) {
     	PermissibleValueExt permissibleValueExt = new PermissibleValueExt();
     	//build representation from DB model class
@@ -628,7 +700,7 @@ public class CDEDataController
     	permissibleValueExt.setPvMeaning(permissibleValueModel.getMeaningDescription());
     	permissibleValueExt.setVmPublicId(permissibleValueModel.getVmId());
     	permissibleValueExt.setVmVersion(permissibleValueModel.getVmVersion());
-    	
+
     	//this is ID to get designations and definitions
        	String vmIdseq = permissibleValueModel.getVmIdseq();
     	//get classification model
@@ -636,14 +708,14 @@ public class CDEDataController
     	CsCsiValueMeaningModelList csCsiValueMeaningModelList = new CsCsiValueMeaningModelList(modelList);
     	List<DesignationModelAlt> designationList = designationDAO.getDesignationModelsNoClsssification(vmIdseq);
     	List<DefinitionModelAlt> definitionList = definitionDAO.getAllDefinitionsNoClassification(vmIdseq);
-    	
+
     	List<ClassificationSchemaAlternate> classificationSchemaAlternateList = buildClassificationSchemaVmList(csCsiValueMeaningModelList, designationList, definitionList);
     	permissibleValueExt.setClassificationSchemaList(classificationSchemaAlternateList);
     	return permissibleValueExt;
     }
-    
+
     /**
-     * 
+     *
      * @param csCsiValueMeaningModelList
      * @param designationList
      * @param definitionList
@@ -660,29 +732,29 @@ public class CDEDataController
     	prepareClassified(classificationSchemaAlternateList, csCsiValueMeaningModelList, designationList, definitionList);
     	return classificationSchemaAlternateList;
     }
-    protected void prepareClassified(List<ClassificationSchemaAlternate> classificationSchemaAlternateList, CsCsiValueMeaningModelList csCsiValueMeaningModelList, 
+    protected void prepareClassified(List<ClassificationSchemaAlternate> classificationSchemaAlternateList, CsCsiValueMeaningModelList csCsiValueMeaningModelList,
     		List<DesignationModelAlt> designationList, List<DefinitionModelAlt> definitionList) {
     	List<CsCsiValueMeaningModel> csCsiAttModelList = csCsiValueMeaningModelList.getModels();
     	if ((csCsiAttModelList == null) || (csCsiAttModelList.isEmpty()))
     			return;
-    	
+
     	String groupCsIdseq = csCsiAttModelList.get(0).getCsIdseq();
     	String currCsIdseq = groupCsIdseq;
     	String groupCsiIdseq = csCsiAttModelList.get(0).getCsiIdseq();
     	String currCsiIdseq = groupCsiIdseq;
-    	
+
     	ClassificationSchemaAlternate currEntity = new ClassificationSchemaAlternate(csCsiAttModelList.get(0));
-    	
+
     	for (CsCsiValueMeaningModel csCsiAttModel : csCsiAttModelList) {
     		currCsIdseq = csCsiAttModel.getCsIdseq();
     		currCsiIdseq = csCsiAttModel.getCsiIdseq();
-    		
+
     		if (!(groupCsIdseq.equals(currCsIdseq)) || (!(groupCsiIdseq.equals(currCsiIdseq)))){
     			//add previous classification
     			classificationSchemaAlternateList.add(currEntity);
     			groupCsIdseq = currCsIdseq;
     			groupCsiIdseq = currCsiIdseq;
-    			//Start a new Classification group			
+    			//Start a new Classification group
     			currEntity = new ClassificationSchemaAlternate(csCsiAttModel);
     		}
 
@@ -703,7 +775,7 @@ public class CDEDataController
     	}
 		classificationSchemaAlternateList.add(currEntity);
     }
-    
+
     protected ClassificationSchemaAlternate prepareUnclassified(CsCsiValueMeaningModelList csCsiValueMeaningModelList,
     		List<DesignationModelAlt> designationList, List<DefinitionModelAlt> definitionList) {
     	ClassificationSchemaAlternate unclassified = new ClassificationSchemaAlternate();
@@ -722,9 +794,58 @@ public class CDEDataController
     	}
     	if ((unclassified.getAlternateNames().isEmpty())&& (unclassified.getDefinitions().isEmpty()))
     		return null;
-    	else 
+    	else
     		return unclassified;
     }
+
+    private ValueDomainDetails getValueDomainDetails( DataElementModel dataElementModel )
+    {
+        ValueDomainDetails valueDomainDetails = new ValueDomainDetails();
+
+        valueDomainDetails.setPublicId( dataElementModel.getValueDomainModel().getPublicId() );
+        if( dataElementModel.getValueDomainModel().getVersion() != null )
+        {
+            valueDomainDetails.setVersion( dataElementModel.getValueDomainModel().getVersion() );
+        }
+        valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
+        valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
+
+        // CHECKME - need to see where this is getting the wrong value.
+        //valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
+        valueDomainDetails.setContext( dataElementModel.getContextName() );// CHECKME
+
+        valueDomainDetails.setDefinition( dataElementModel.getValueDomainModel().getPreferredDefinition() );
+        valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
+        valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
+        valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
+        valueDomainDetails.setDisplayFormat( dataElementModel.getValueDomainModel().getDispFormat() );
+        valueDomainDetails.setMaximumLength( dataElementModel.getValueDomainModel().getMaxLength() );
+        valueDomainDetails.setMinimumLength( dataElementModel.getValueDomainModel().getMinLength() );
+        valueDomainDetails.setDecimalPlace( dataElementModel.getValueDomainModel().getDecimalPlace() );
+        valueDomainDetails.setHighValue( dataElementModel.getValueDomainModel().getHighVal() );
+        valueDomainDetails.setLowValue( dataElementModel.getValueDomainModel().getLowVal() );
+        valueDomainDetails.setValueDomainType( dataElementModel.getValueDomainModel().getVdType() );
+        valueDomainDetails.setConceptualDomainPublicId( dataElementModel.getValueDomainModel().getCdPublicId() );
+        valueDomainDetails.setConceptualDomainShortName( dataElementModel.getValueDomainModel().getCdPrefName() );
+        valueDomainDetails.setConceptualDomainContextName( dataElementModel.getValueDomainModel().getCdContextName() );
+        valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
+        valueDomainDetails.setOrigin( dataElementModel.getValueDomainModel().getOrigin() );
+        return valueDomainDetails;
+    }
+
+    private Classifications initClassificationsForCompare( DataElementModel dataElementModel )
+    {
+        Classifications classifications = new Classifications();
+        List<CsCsi> classificationList = new ArrayList<>();
+        classifications.setClassificationList( classificationList );
+        for( CsCsiModel csCsiModel : dataElementModel.getClassifications() )
+        {
+            CsCsi csCsi = new CsCsi( csCsiModel );
+            classificationList.add( csCsi );
+        }
+        return classifications;
+    }
+
 
     /**********************************************************************/
     /**********************************************************************/

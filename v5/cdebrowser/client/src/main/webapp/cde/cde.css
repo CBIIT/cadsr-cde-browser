@@ -36,7 +36,7 @@
 
 }
 
-.cdeTabsLi:disabled { 
+.cdeTabsLi:disabled {
     background:#bbb;
 }
 
@@ -112,7 +112,7 @@
 
 .dataElementHeading {
  /*
- FIXMENOW Color contrast fail!  try 2b5681 
+ FIXMENOW Color contrast fail!  try 2b5681
    width: 25%;
 */
     FONT-WEIGHT: bold;
@@ -220,7 +220,7 @@ ul.cdeSearchMessage li{
 }
 #cdeSearchArea span {
     display:inline-block;
-    vertical-align:top;    
+    vertical-align:top;
 }
 #cdeSearchArea div.view {
     border:1px solid white;
@@ -310,15 +310,15 @@ ul.cdeSearchMessage li{
 #cdeCart .searchResultsTableTd span {
     display:block;
     width:auto;
-    padding:4px 0px 0px 0px;  
+    padding:4px 0px 0px 0px;
     font-size:85%;
     text-align:center;
 }
 
 #cdeCart .emptyCart {
     margin-left:3px;
-    color:#1a4660;   
-    font-weight:bold; 
+    color:#1a4660;
+    font-weight:bold;
 }
 
 #cdeCart div {
