@@ -562,30 +562,30 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     }
 
     //Just top three levels of the tree
-    $scope.dataLoad1 = function () {
-        $scope.dataLoad("data1.json");
-    };
+    // $scope.dataLoad1 = function () {
+    //     $scope.dataLoad("data1.json");
+    // };
 
-    //Full Tree
-    $scope.dataLoad2 = function () {
-        $scope.dataLoad("data2.json");
-    };
+    // //Full Tree
+    // $scope.dataLoad2 = function () {
+    //     $scope.dataLoad("data2.json");
+    // };
 
-    $scope.dataLoad3 = function () {
-        $scope.dataLoad("data3.json");
-    };
+    // $scope.dataLoad3 = function () {
+    //     $scope.dataLoad("data3.json");
+    // };
 
-    $scope.dataLoad4 = function () {
-        $scope.dataLoad("data4.json");
-    };
+    // $scope.dataLoad4 = function () {
+    //     $scope.dataLoad("data4.json");
+    // };
 
-    $scope.dataLoad5 = function () {
-        $scope.dataLoad("data5.json");
-    };
+    // $scope.dataLoad5 = function () {
+    //     $scope.dataLoad("data5.json");
+    // };
 
-    $scope.dataLoad6 = function () {
-        $scope.dataLoad("data6.json");
-    };
+    // $scope.dataLoad6 = function () {
+    //     $scope.dataLoad("data6.json");
+    // };
 
 
     $scope.dataLoadFromServer = function () {
