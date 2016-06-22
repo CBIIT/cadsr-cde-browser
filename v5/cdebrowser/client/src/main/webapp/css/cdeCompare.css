@@ -1,0 +1,95 @@
+.compareCDEDataElementDetailsTable {
+    font-size: 10pt;
+    background-color: #999966;
+    color: #000000;
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+}
+
+.compareCDEDataElementDetailsHeading {
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    font-size: 14pt;
+    color: #2b5681;
+    font-weight: bold
+}
+
+#mainDiv {
+    position: absolute;
+    top: 60px;
+}
+
+.testTable {
+    position: absolute;
+    /*
+    right: 300px;
+    */
+    top: 200px;
+    font-size: 9pt;
+}
+
+.testClicker {
+    position: absolute;
+    right: 100px;
+    top: 100px;
+    font-size: 9pt;
+}
+
+.hScrollDiv {
+    width: 30em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.compareDataElementDescription {
+    width: 230px;
+}
+
+.compareDataElementValue {
+    width: 350px;
+}
+
+.compareDataElementColumn0 {
+    /*
+    color: #00aa00;
+    */
+
+}
+
+
+.compareDataElementColumn1 {
+    width: 116px;
+
+}
+
+
+.compareDataElementColumn2 {
+    width: 130px;
+
+}
+
+
+.compareDataElementColumn3 {
+    width: 96px;
+
+}
+
+
+.compareTable {
+    table-layout: auto;
+}
+
+.compareTest1 {
+    color: #0f0;
+    background-color: #e42;
+
+}
+
+.compareTest2 {
+    color: #f0f;
+    background-color: #0F0;
+
+}
+
+.compareTest3 {
+    background-color: #0ff;
+
+}

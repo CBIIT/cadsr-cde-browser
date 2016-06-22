@@ -1,0 +1,37 @@
+[{
+  "dataElementDetails": {
+    "publicId": 2179601,
+    "version": 1.0,
+    "formattedVersion": "1.0",
+    "longName": "Address City Name",
+    "shortName": "ADDR_CITY_NM",
+    "preferredQuestionText": "City",
+    "definition": "A component of an address that specifies a location by identification of a city, town, or village.",
+    "valueDomain": "Address City Name",
+    "dataElementConcept": "Address City",
+    "context": "DCP",
+    "workflowStatus": "RELEASED",
+    "origin": "CSAERS:Chemoprevention Serious Adverse Event System",
+    "registrationStatus": "Standard",
+    "directLink": "STILL NEED TO Create rest service and Link"
+  }
+},
+
+  {
+    "dataElementDetails": {
+      "publicId": 2179601,
+      "version": 1.0,
+      "formattedVersion": "1.0",
+      "longName": "Address City Name",
+      "shortName": "ADDR_CITY_NM",
+      "preferredQuestionText": "City",
+      "definition": "A component of an address that specifies a location by identification of a city, town, or village.",
+      "valueDomain": "Address City Name",
+      "dataElementConcept": "Address City",
+      "context": "DCP",
+      "workflowStatus": "RELEASED",
+      "origin": "CSAERS:Chemoprevention Serious Adverse Event System",
+      "registrationStatus": "Standard",
+      "directLink": "STILL NEED TO Create rest service and Link"
+    }
+  }]

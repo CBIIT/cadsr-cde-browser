@@ -87,11 +87,13 @@
         <tr class="dataElementViewTableTr"
             data-ng-repeat="elements in cdeDetails.dataElementDerivation.dataElementDerivationComponentModels">
             <td class="dataElementValue" ng-bind-html="elements.displayOrder">{{elements.displayOrder}}</td>
+
             <td class="dataElementValue">
                 <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(elements.deIdseq)">
                     <span ng-bind-html="elements.longName">{{elements.longName}}</span>
                 </a>
             </td>
+
             <td class="dataElementValue" ng-bind-html="elements.context">{{elements.context}}</td>
             <td class="dataElementValue" ng-bind-html="elements.workflowStatus">{{elements.workflowStatus}}</td>
             <td class="dataElementValue" ng-bind-html="elements.publicId">{{elements.publicId}}</td>
