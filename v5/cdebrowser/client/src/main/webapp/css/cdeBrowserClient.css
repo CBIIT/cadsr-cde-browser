@@ -427,12 +427,12 @@ display:inline-block !important;
 
 /* Classification and Protocol autocomplete dropdowns */
 
-
-
 .autoDropDown {
     padding-left: 10px !important;
 }
 
-
-
-
+.clearDropDown {
+    /*float: right !important;*/
+    text-align: right !important;
+    text-decoration: none !important;
+}

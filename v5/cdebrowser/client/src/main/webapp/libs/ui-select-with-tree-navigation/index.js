@@ -8,13 +8,13 @@ angular.module('cdeBrowserApp')
   function (groupFactory, $timeout, $http,filterService) {
       return {
           restrict: 'E',
-          scope: { model: '=' },
+          scope: { model: '=' ,  contextCascade: '&' },
           link: function (scope, el) {
             scope.filterService =filterService;
               scope.breadcrumbs = [{ "id": 0, "title": "Protocols" }];
               
-                  angular.element(document.querySelector("#CS")).css("display","none");
-                  angular.element(document.querySelector("#Protocol")).css("display","block");        
+                  // angular.element(document.querySelector("#CS")).css("display","none");
+                  // angular.element(document.querySelector("#Protocol")).css("display","block");        
                   scope.loadProtocols=function(searchInput){
                     if(searchInput.length===3) {
         
@@ -26,20 +26,27 @@ angular.module('cdeBrowserApp')
             }); 
                   };   };
 
+                      scope.$watch('filterService.protocols', function(){
+      if(scope.filterService.protocols.length==0) {
+              scope.breadcrumbs = [{ "id": 0, "title": "Protocols" }];
+      }
+    })
+
               scope.loadChildGroupsOf = function (group, $select) {
                   $select.search = '';
+                  group.title='Forms';
                   scope.breadcrumbs.push(group);
                   scope.filterService.protocols = groupFactory.load(group.id);
                   scope.$broadcast('uiSelectFocus');
-                  angular.element(document.querySelector("#CS")).css("display","none");
-                  angular.element(document.querySelector("#Protocol")).css("display","block");
+                  // angular.element(document.querySelector("#CS")).css("display","none");
+                  // angular.element(document.querySelector("#Protocol")).css("display","block");
               };
 
               scope.navigateBackTo = function (crumb, $select) {
-                  console.log(crumb);
+                  // console.log(crumb);
                   $select.search = '';
                   var index = _.findIndex(scope.breadcrumbs, { id: crumb.id });
-                  console.log(index);
+                  // console.log(index);
                   scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
                   scope.filterService.protocols  = groupFactory.load(_.last(scope.breadcrumbs).id);
                   $select.open = false;
@@ -110,7 +117,7 @@ angular.module('cdeBrowserApp')
 
             //console.log(protocols);
             _.assign(sampledata, protocols);
-            console.log(sampledata);
+            // console.log(sampledata);
 
             var sample = sampledata[0];
           },

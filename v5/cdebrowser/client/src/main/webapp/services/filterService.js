@@ -83,6 +83,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 
     // creates breadcrumbs when using dropdowns //
     this.createBreadcrumbs = function() {
+    	
     	var programArea = this.serverData[this.searchFilter.programArea];
 		var breadcrumbs = programArea.treePath;
 		if (this.searchFilter.context) {
@@ -95,20 +96,38 @@ angular.module("cdeBrowserApp").service('filterService', function($resource) {
 		};
 
 		if (this.searchFilter.classification) {
-			for (var i=0; i<this.classifications.length;i++) {
-				if (this.classifications[i].csIdSeq==this.searchFilter.classification) {
-					// breadcrumbs.push(this.classifications[i].csLongName)
-				};
-			};
+			// for (var i=0; i<this.classifications.length;i++) {
+				// if (this.classifications[i].csIdSeq==this.searchFilter.classification) {
+				// if (this.searchFilter.classification) {
+
+					breadcrumbs.push(this.searchFilter.classification.csLongName)
+
+					// if (this.searchFilter.classification.csLongName) {
+					// 	breadcrumbs.push(this.searchFilter.classification.csLongName.csCsiName)
+					// };
+
+				// };
+			// };
+		}
+
+		// else 
+		if (this.searchFilter.protocol) {
+			// for (var i=0; i<this.protocols.length;i++) {
+				// if (this.protocols[i].protocolIdSeq==this.searchFilter.protocol) {
+					breadcrumbs.push(this.searchFilter.protocol.protocolLongName)
+				// };
+			// };
 		};
 
-		if (this.searchFilter.protocol) {
-			for (var i=0; i<this.protocols.length;i++) {
-				if (this.protocols[i].protocolIdSeq==this.searchFilter.protocol) {
-					// breadcrumbs.push(this.protocols[i].protocolLongName)
-				};
-			};
-		};
+		// if (this.searchFilter.classification.csLongName) {
+		// 			breadcrumbs.push(this.searchFilter.classification.csCsiName)
+		// }
+
+		// else if (this.searchFilter.protocol.protocolLongName) {
+		// 			breadcrumbs.push(this.searchFilter.protocol.formLongName)
+		// };
+
+		// console.log(breadcrumbs);
 		return breadcrumbs
     };
 

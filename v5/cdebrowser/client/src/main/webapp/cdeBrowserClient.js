@@ -21,59 +21,60 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.contextCascade = function(selectedInput) {
         if (selectedInput!==undefined)
         $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
-        if (selectedInput.length<3) {
-            $scope.filterService.protocols = [];
-            $scope.filterService.classifications = [];
-        }
+        // console.log(selectedInput);
+        // if (selectedInput.length<3) {
+        //     $scope.filterService.protocols = [];
+        //     $scope.filterService.classifications = [];
+        // }
     };
 
-    $scope.model={};
+    // $scope.model={};
 
-    $scope.model.loadProtocols = function(searchInput,evt) {
-        // console.log(searchInput);
-        var k=0;
-        // if (searchInput.length<3) {
-        //     $scope.filterService.protocols = [];
-        // }
-        if(searchInput.length===3) {
-        // if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchInput.length===3 || evt.keyCode===32 && searchInput.length===2) {
-            $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
-            // $scope.filterService.protocols = response;
-            groupFactory.fillProtocols(response);
-            $scope.filterService.protocols = groupFactory.load(0);
-            //$scope.groups = groupFactory.load(0);
-            });  
-            // groupFactory.loadProtocols(searchInput);
-        }
+    // $scope.model.loadProtocols = function(searchInput,evt) {
+    //     // console.log(searchInput);
+    //     var k=0;
+    //     // if (searchInput.length<3) {
+    //     //     $scope.filterService.protocols = [];
+    //     // }
+    //     if(searchInput.length===3) {
+    //     // if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchInput.length===3 || evt.keyCode===32 && searchInput.length===2) {
+    //         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
+    //         // $scope.filterService.protocols = response;
+    //         groupFactory.fillProtocols(response);
+    //         $scope.filterService.protocols = groupFactory.load(0);
+    //         //$scope.groups = groupFactory.load(0);
+    //         });  
+    //         // groupFactory.loadProtocols(searchInput);
+    //     }
 
         
-        // **** {"id":1,"title":"Tazzy","size":"57","parent":true}              **** //
-        // **** id --> contextIdSeq --> protocolIdSeq --> formIdSeq;            **** //
-        // **** title --> contextName --> protocolLongName --> formLongName;    **** //
-        // **** parent --> true --> true --> false                              **** //
-    };
+    //     // **** {"id":1,"title":"Tazzy","size":"57","parent":true}              **** //
+    //     // **** id --> contextIdSeq --> protocolIdSeq --> formIdSeq;            **** //
+    //     // **** title --> contextName --> protocolLongName --> formLongName;    **** //
+    //     // **** parent --> true --> true --> false                              **** //
+    // };
 
 
 
-    $scope.model1={};
+    // $scope.model1={};
 
-    $scope.model1.loadClassifications = function(searchInput,evt) {
-        var k=0;
-        if(searchInput.length===3) {
-            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
-            groupFactory1.fillClassifications(response);
-            $scope.filterService.classifications = groupFactory1.load(0);
-            });  
-        }
+    // $scope.model1.loadClassifications = function(searchInput,evt) {
+    //     var k=0;
+    //     if(searchInput.length===3) {
+    //         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
+    //         groupFactory1.fillClassifications(response);
+    //         $scope.filterService.classifications = groupFactory1.load(0);
+    //         });  
+    //     }
 
-        $scope.checkChildren1=function(id){
-            return groupFactory1.isChildAvailable(id);
-        }
-        // **** {"id":1,"title":"Tazzy","size":"57","parent":true}                                  **** //
-        // **** id --> contextIdSeq --> csIdSeq --> csCsiIdSeq (parentCsiIdSeq) --> csCsiIdSeq            **** // 
-        // **** title --> contextName --> csLongName --> csCsiName (csiLevel) --> csCsiName   **** //    
-        // **** parent --> true --> true --> false (true) --> false                                 **** //
-    };
+    //     $scope.checkChildren1=function(id){
+    //         return groupFactory1.isChildAvailable(id);
+    //     }
+    //     // **** {"id":1,"title":"Tazzy","size":"57","parent":true}                                  **** //
+    //     // **** id --> contextIdSeq --> csIdSeq --> csCsiIdSeq (parentCsiIdSeq) --> csCsiIdSeq            **** // 
+    //     // **** title --> contextName --> csLongName --> csCsiName (csiLevel) --> csCsiName   **** //    
+    //     // **** parent --> true --> true --> false (true) --> false                                 **** //
+    // };
 
     // $scope.loadClassifications = function(searchinput,evt) {
 
@@ -117,6 +118,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
                     // console.log("Search");
                     $scope.breadCrumbs = fs.createBreadcrumbs();
+                    // console.log(filterService.searchFilter);
                 };
             };       
         };
@@ -130,7 +132,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.tableParams.settings({ dataset: []});
         $scope.breadCrumbs = [];
         groupFactory.clearData();
-        groupFactory1.clearData();   
+        groupFactory1.clearData();
+        // console.log($scope.model1);   
     };
 
     // When a context is changed, get classifications and protocol forms //
@@ -421,8 +424,20 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                         url+="&"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
                     }
                     else {
-                        url+="&"+x+"="+fs.searchFilter[x];
-                    };                    
+                        if (x=='protocol') {
+                            url+="&"+x+"="+fs.searchFilter[x].protocolIdSeq;
+                            if (x=='form') {
+                                url+="&"+x+"="+fs.searchFilter[x].formIdSeq; 
+                            }   
+                        }
+                        if (x=='classification') {
+                            url+="&"+x+"="+fs.searchFilter[x].csIdSeq;
+                        }
+                            if (x=='csi') {
+                                url+="&"+x+"="+fs.searchFilter[x].csCsiIdSeq;
+                            }
+                    };    
+                                    console.log(fs.searchFilter);                
                 };
                 c++;
             };
