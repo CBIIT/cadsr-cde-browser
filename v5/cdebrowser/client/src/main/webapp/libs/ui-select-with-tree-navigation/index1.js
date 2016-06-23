@@ -40,7 +40,7 @@ angular.module('cdeBrowserApp')
 // 'parentCsiIdSeq':selectedgroup.csCsiIdSeq
 
                   scope.filterService.classifications=_.filter(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
-                  console.log(scope.filterService.classifications);
+                  // console.log(scope.filterService.classifications);
                   if(scope.filterService.classifications.length==0){
                     scope.filterService.classifications=_.filter(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel+1,'parentCsiIdSeq':group.csCsiIdSeq});
                   }
@@ -131,7 +131,7 @@ angular.module('cdeBrowserApp')
             
 
             var sample = sampledata[0];
-            console.log(sampledata);
+            // console.log(sampledata);
           },
 
           clearData: function() {

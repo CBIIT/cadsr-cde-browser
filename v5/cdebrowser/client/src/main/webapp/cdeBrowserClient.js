@@ -151,8 +151,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory1.fillClassifications(response);
-            console.log(response);
-            console.log(groupFactory1.load(0));
+            // console.log(response);
+            // console.log(groupFactory1.load(0));
             $scope.filterService.classifications = groupFactory1.load(0);
             // console.log($scope.filterService.classifications);
         });
