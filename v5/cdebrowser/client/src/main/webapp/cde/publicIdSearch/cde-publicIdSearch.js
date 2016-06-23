@@ -14,5 +14,3 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
 		$scope.resetFilters();
     };
 }]);
-
-4 changes
