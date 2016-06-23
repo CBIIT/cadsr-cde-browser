@@ -118,6 +118,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     // console.log("NO SEARCH");
                 }
                 else {
+                  
                      // do search because at least one dropdown besides program area is selected //
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
                     // console.log("Search");
@@ -150,7 +151,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory1.fillClassifications(response);
+            console.log(response);
+            console.log(groupFactory1.load(0));
             $scope.filterService.classifications = groupFactory1.load(0);
+            // console.log($scope.filterService.classifications);
         });
     };
 
@@ -421,33 +425,40 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         for (var x in fs.searchFilter) {
 
             if (fs.searchFilter[x]&&field=='name') {
-                if (c==0&&query=='') {
+                var connector= c==0?"?":"&";
+                if (query==''&&  typeof fs.searchFilter[x]!='object') {
                     if (x=='programArea') {
-                        url+="?"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
+                        url+=connector+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
                     }
                     else {
-                        url+="?"+x+"="+fs.searchFilter[x];
+                        url+=connector+x+"="+fs.searchFilter[x];
                     };
                 }
                 else {
+                    
                     if (x=='programArea') {
-                        url+="&"+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
+                        url+=connector+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
                     }
                     else {
+                        
                         if (x=='protocol') {
-                            url+="&"+x+"="+fs.searchFilter[x].protocolIdSeq;
-                            if (x=='form') {
-                                url+="&"+x+"="+fs.searchFilter[x].formIdSeq;
+                            // url+="&"+x+"="+fs.searchFilter[x].id;
+                            if(fs.searchFilter[x].id==fs.searchFilter[x].protocolIdSeq){
+                                url+=connector+x+"="+fs.searchFilter[x].id;
+                            }
+                            if(fs.searchFilter[x].id==fs.searchFilter[x].formIdSeq){
+                                url+=connector+"formIdSeq"+"="+fs.searchFilter[x].id;
                             }
                         }
                         if (x=='classification') {
-                            url+="&"+x+"="+fs.searchFilter[x].csIdSeq;
-                        }
-                            if (x=='csi') {
-                                url+="&"+x+"="+fs.searchFilter[x].csCsiIdSeq;
+                            if(fs.searchFilter[x].id==fs.searchFilter[x].csIdSeq){
+                                url+=connector+x+"="+fs.searchFilter[x].id;
                             }
+                            if(fs.searchFilter[x].id==fs.searchFilter[x].csCsiIdSeq){
+                                url+=connector+"csCsiIdSeq"+"="+fs.searchFilter[x].id;
+                            }
+                        }
                     };
-                                    console.log(fs.searchFilter);
                 };
                 c++;
             };

@@ -5,7 +5,8 @@ angular.module('cdeBrowserApp')
   '$timeout',
   '$http',
   'filterService',
-  function (groupFactory1, $timeout, $http,filterService) {
+  '$filter',
+  function (groupFactory1, $timeout, $http,filterService,$filter) {
       return {
           restrict: 'E',
           scope: { model1: '=' , contextCascade: '&' },
@@ -29,15 +30,19 @@ angular.module('cdeBrowserApp')
     })
 
     scope.checkChildren1=function(selectedGroup){
-            return groupFactory1.isChildAvailable(selectedGroup);
+            return groupFactory1.isChildAvailable(selectedGroup,scope.breadcrumbs.length);
         }
 
               scope.loadChildGroupsOf1 = function (group, $select) {
                   $select.search = '';
                   group.title='CSI';
-                  scope.filterService.classifications=_.takeWhile(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
+
+// 'parentCsiIdSeq':selectedgroup.csCsiIdSeq
+
+                  scope.filterService.classifications=_.filter(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
+                  console.log(scope.filterService.classifications);
                   if(scope.filterService.classifications.length==0){
-                    scope.filterService.classifications=_.filter(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel+1});
+                    scope.filterService.classifications=_.filter(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel+1,'parentCsiIdSeq':group.csCsiIdSeq});
                   }
               scope.breadcrumbs.push(group);
 //scope.filterService.classifications =
@@ -60,8 +65,8 @@ angular.module('cdeBrowserApp')
                   // console.log(index);
                   scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
                   scope.filterService.classifications=_.filter(groupFactory1.load(_.last(scope.breadcrumbs).id),{'csiLevel':_.last(scope.breadcrumbs).csiLevel});
-                  console.log(_.last(scope.breadcrumbs).csiLevel)
-                  console.log(scope.filterService.classifications);
+                  // console.log(_.last(scope.breadcrumbs).csiLevel)
+                  // console.log(scope.filterService.classifications);
                   if(scope.filterService.classifications.length==0){
                     scope.filterService.classifications=_.filter(groupFactory1.load(_.last(scope.breadcrumbs).id));
                   }
@@ -83,15 +88,15 @@ angular.module('cdeBrowserApp')
         link: function (scope, elem, attrs, uiSelect) {
             scope.$on('uiSelectFocus', function () {
                 $timeout(uiSelect.activate);
-                console.log(scope.breadcrumbs);
+                // console.log(scope.breadcrumbs);
                 // console.log(uiSelect);
             });
         }
     };
 })
 
-.factory('groupFactory1', ['filterService',
-  function (filterService) {
+.factory('groupFactory1', ['filterService','$filter',
+  function (filterService,$filter) {
     var sampledata = {};
 
 
@@ -133,11 +138,19 @@ angular.module('cdeBrowserApp')
             sampledata = {};
           },
 
-          isChildAvailable: function(selectedgroup) {
-          
+          isChildAvailable: function(selectedgroup,breadcrumb_length) {
+          if(breadcrumb_length==1){
               if(this.load(selectedgroup.id)==undefined && selectedgroup.csiLevel==2)
                   return false;
               return true;
+          }else{
+if(selectedgroup.csiLevel==2)
+  return false;
+              if($filter('filter')(angular.copy(this.load(selectedgroup.csIdSeq)),{'csiLevel':2,'parentCsiIdSeq':selectedgroup.csCsiIdSeq}).length==0){
+                  return false;
+              }
+              return true;
+          }   
           }
       }
   }
