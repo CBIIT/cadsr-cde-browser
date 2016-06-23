@@ -16,7 +16,7 @@
             <label data-ng-repeat="qType in searchQueryTypes">
                 <div class="radioFix">
                     <input  ng-disabled="fs.isSearching"
-                            name="selectedQueryType"
+                            name="selectedQueryType1"
                             type="radio"
                             value="{{qType.id}}"
                             data-ng-model="fs.dataElementVariables.selectedQueryType"/>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </span>
-    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', 2, publicIdName)">
+    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', fs.dataElementVariables.selectedQueryType, publicIdName)">
         Search
     </button>
     <button id="clear" data-ng-click="clear()">

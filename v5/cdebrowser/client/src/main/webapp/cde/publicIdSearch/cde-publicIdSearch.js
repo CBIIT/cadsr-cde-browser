@@ -1,9 +1,11 @@
 angular.module("cdePublicIdSearch", []);
 
-angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$scope", function ($scope) {
+angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$scope", "filterService", function ($scope, filterService) {
     $scope.$watch('isNode', function () {
 		$scope.publicIdSearchQuery = "";
     });
+
+    $scope.fs = filterService;
 
     // clear search results and fields //
     $scope.clear = function() {
@@ -12,3 +14,5 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
 		$scope.resetFilters();
     };
 }]);
+
+4 changes
