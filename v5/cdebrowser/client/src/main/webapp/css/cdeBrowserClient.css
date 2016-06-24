@@ -436,3 +436,9 @@ display:inline-block !important;
     text-align: right !important;
     text-decoration: none !important;
 }
+
+/* Download buttons override CSS */
+
+.buttonsPadding {
+    padding: 10px 5px 10px 5px;
+}

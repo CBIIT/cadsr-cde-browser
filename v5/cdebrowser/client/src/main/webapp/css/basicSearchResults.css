@@ -32,7 +32,7 @@
     border: 2px solid #fff;
     color: #000;
     font-style: normal;
-    font-size: 11pt;
+    font-size: 9pt;
 }
 
 .searchResultsTableHeaderTr {
@@ -176,7 +176,7 @@
 
 /** breadcrumb style **/
 .breadCrumbs {
-    padding: 10px 5px 10px 5px;
+    padding-left: 5px;
     font-weight: bold;
     color: #999966;
     font-size:13.3px;

@@ -383,9 +383,23 @@
         </div>
         <!-- end display proper view based on tab selected -->
         <br ng-show="searchResults.length" />
+
+        <!--  Bread Crumbs  -->
+        <div class="breadCrumbs">
+            <span data-ng-show="breadCrumbs">
+                <span data-ng-repeat="b in breadCrumbs">
+                    {{b}}<span data-ng-show="!$last"> >></span>
+                </span><br/>
+            </span>
+        </div>
+
+        <div data-ng-bind-html-unsafe="statusMessage"><br><span  style='color: #8b0000; font-weight: bold; font-size: 18pt;'>
+            {{statusMessage}}</span><br>
+        </div>
+
         <!-- start Download Buttons -->
         <span ng-show="searchResults.length">
-            <ul class="cdeDownloadButtons">
+            <ul class="cdeDownloadButtons buttonsPadding">
                 <li>
                     <button label="Download To Excel" data-ng-click="downloadToExcel()" ng-disabled="!checkedItemsForDownload.length">
                         Download to Excel
@@ -447,21 +461,6 @@
                 </li>
             </ul>
         </span>
-
-        <div data-ng-bind-html-unsafe="statusMessage"><br><span  style='color: #8b0000; font-weight: bold; font-size: 18pt;'>
-            {{statusMessage}}</span><br>
-        </div>
-
-
-        <!--  Bread Crumbs  -->
-        <div class="breadCrumbs">
-            <span data-ng-show="breadCrumbs">
-                <span data-ng-repeat="b in breadCrumbs">
-                    {{b}}<span data-ng-show="!$last"> >></span>
-                </span><br/>
-            </span>
-        </div>
-
 
         <!-- the search results tabs and content below -->
         <div class="cdeTabs">
