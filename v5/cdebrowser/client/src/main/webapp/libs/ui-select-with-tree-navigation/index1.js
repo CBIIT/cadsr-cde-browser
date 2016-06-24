@@ -137,6 +137,10 @@ angular.module('cdeBrowserApp')
           clearData: function() {
             sampledata = {};
           },
+          getNameFromId:function(id){
+
+            return _.find(sampledata[0],{'csIdSeq':id});
+          },
 
           isChildAvailable: function(selectedgroup,breadcrumb_length) {
           if(breadcrumb_length==1){
