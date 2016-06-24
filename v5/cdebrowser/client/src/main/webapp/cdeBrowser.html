@@ -384,6 +384,23 @@
         <!-- end display proper view based on tab selected -->
         <br ng-show="searchResults.length" />
 
+        <!-- Search status message -->
+        <span ng-show="searchResultsMessage&&searchResultsMessage!=''" data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
+             bigSearchResultsMessage: bigSearchResultsMessageClass,
+             normSearchResultsMessage: (! bigSearchResultsMessageClass)
+             }">
+            <!-- {{searchResultsMessage}} -->
+
+                        <ul ng-show="searchResultsMessage" class="cdeSearchMessage">
+                <li>
+                    {{searchResultsMessage}}
+                </li>
+                <li>
+                    <img alt="Searching" src="icons/preloader.gif">
+                </li>
+            </ul>
+        </span>
+
         <!--  Bread Crumbs  -->
         <div class="breadCrumbs">
             <span data-ng-show="breadCrumbs">
@@ -444,24 +461,9 @@
             <!-- end show progress bar -->
         </span>
         <!-- end Download Buttons -->
+        
         <!-- <br /> -->
-        <!-- Search status message -->
-        <span ng-show="searchResultsMessage&&searchResultsMessage!=''" data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
-             bigSearchResultsMessage: bigSearchResultsMessageClass,
-             normSearchResultsMessage: (! bigSearchResultsMessageClass)
-             }">
-            <!-- {{searchResultsMessage}} -->
-
-                        <ul ng-show="searchResultsMessage" class="cdeSearchMessage">
-                <li>
-                    {{searchResultsMessage}}
-                </li>
-                <li>
-                    <img alt="Searching" src="icons/preloader.gif">
-                </li>
-            </ul>
-        </span>
-
+        
         <!-- the search results tabs and content below -->
         <div class="cdeTabs">
             <ul class="cdeTabsUl">
