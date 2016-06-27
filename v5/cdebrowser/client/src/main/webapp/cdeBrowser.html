@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/style.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/selectize.bootstrap3.min.css">
-    <!-- <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css'> -->
 
 </head>
 <body>
@@ -268,26 +267,6 @@
                 </ui-select>
                 </span>
 
-
-
-                <!-- <span>
-                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="selectize" ng-model="filterService.searchFilter.classification" ng-keyup="loadClassifications($select.search,$event)" ng-change="contextCascade($select.selected)">
-                    <ui-select-match allow-clear="true" placeholder="Classification">{{$select.selected.csLongName}}</ui-select-match>
-                    <ui-select-choices group-by="'csLongName'" repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
-                        <div class="autoDropDown" ng-bind-html="value.csCsiName | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-                </span> -->
-
-                <!-- <span>
-                <ui-select id="classification" ng-disabled="filterService.isSearching||filterService.searchFilter.protocol" theme="selectize" ng-model="filterService.searchFilter.classification" >
-                    <ui-select-match allow-clear="true" placeholder="Classification">{{$select.selected.csLongName}}</ui-select-match>
-                    <ui-select-choices repeat="value.csIdSeq as value in filterService.classifications | filter: $select.search">
-                        <div ng-bind-html="value.csLongName | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-                </span> -->
-
                 <span>
                     <ui-tree-select1 model="model1" context-cascade="contextCascade(filterService.searchFilter.classification)">
                     </ui-tree-select1>
@@ -314,8 +293,6 @@
                         </ui-select>
                     </script>
                 </span>
-
-
 
                 <span>
                     <ui-tree-select model="model" context-cascade="contextCascade(filterService.searchFilter.protocol)">
@@ -344,18 +321,6 @@
                     </script>
                 </span>
 
-                <!-- <span>
-                <ui-select id="protocol" ng-disabled="filterService.isSearching||filterService.searchFilter.classification" theme="selectize" ng-model="filterService.searchFilter.protocol" ng-keyup="loadProtocols($select.search,$event)" ng-blur="temp($select.search)">
-                    <ui-select-match allow-clear="true" placeholder="Protocol">{{$select.selected.protocolLongName}}</ui-select-match>
-                    <ui-select-choices group-by="'contextName'" repeat="value.protocolIdSeq as value in filterService.protocols | filter: $select.search">
-                        <div style="padding-left:10px;" ng-bind-html="value.protocolLongName | highlight: $select.search">
-                        </div>
-                    </ui-select-choices>
-                </ui-select>
-                </span> -->
-
-
-
                 <span>
                 <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.registrationStatus">
                     <ui-select-match allow-clear="true" placeholder="Registration Status">{{$select.selected}}<a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a></ui-select-match>
@@ -379,7 +344,27 @@
                     <button class="btn btn-default clearButton" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
 
+                <!-- Start of Advance Search Options -->
+
+                <br>
+
+                <div ng-show="more">
+                
+
+                ADVANCE SEARCH OPTIONS DISPLAY SECTION (PUT ALL THE ADVANCE SEARCH OPTIONS IN THIS DIV)
+
+
+                </div>
+
+                <div class="advanceSearchCenter">
+                <button class="btn btn-default advanceSearchButton" ng-hide="more" ng-click="advanceSearchShow()">&or;&or; More &or;&or;</button>
+                <button class="btn btn-default advanceSearchButton" ng-show="more" ng-click="advanceSearchShow()">&and;&and; Less &and;&and;</button>
+                </div>
+
+                <!-- End of Advance Search Options -->
+
             </div>
+
         </div>
         <!-- end display proper view based on tab selected -->
         <br ng-show="searchResults.length" />
@@ -410,7 +395,7 @@
             </span>
         </div>
 
-        <div data-ng-bind-html-unsafe="statusMessage"><br><span  style='color: #8b0000; font-weight: bold; font-size: 18pt;'>
+        <div data-ng-bind-html-unsafe="statusMessage" ng-show="statusMessage!=undefined"><br><span style='color: #8b0000; font-weight: bold; font-size: 18pt;'>
             {{statusMessage}}</span><br>
         </div>
 
@@ -623,6 +608,7 @@
 <script src="cde/publicIdSearch/cde-publicIdSearch.js"></script>
 <script src="cde/searchPreferences/cde-searchPreferences.js"></script>
 <script src="cde/cdeCart/cde-cart.js"></script>
+<script src="cde/cdeCompare/cde-compare.js"></script>
 <script src="cde/authentication/cde-login.js"></script>
 <script src="services/compareService.js"></script>
 <script src="services/searchFactory.js"></script>

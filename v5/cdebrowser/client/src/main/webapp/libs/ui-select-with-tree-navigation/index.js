@@ -12,17 +12,12 @@ angular.module('cdeBrowserApp')
           link: function (scope, el) {
             scope.filterService =filterService;
               scope.breadcrumbs = [{ "id": 0, "title": "Protocols" }];
-              
-                  // angular.element(document.querySelector("#CS")).css("display","none");
-                  // angular.element(document.querySelector("#Protocol")).css("display","block");        
                   scope.loadProtocols=function(searchInput){
                     if(searchInput.length===3) {
         
             $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
-            // $scope.filterService.protocols = response;
             groupFactory.fillProtocols(response);
            scope.filterService.protocols = groupFactory.load(0);
-            //$scope.groups = groupFactory.load(0);
             }); 
                   };   };
 
@@ -38,15 +33,11 @@ angular.module('cdeBrowserApp')
                   scope.breadcrumbs.push(group);
                   scope.filterService.protocols = groupFactory.load(group.id);
                   scope.$broadcast('uiSelectFocus');
-                  // angular.element(document.querySelector("#CS")).css("display","none");
-                  // angular.element(document.querySelector("#Protocol")).css("display","block");
               };
 
               scope.navigateBackTo = function (crumb, $select) {
-                  // console.log(crumb);
                   $select.search = '';
                   var index = _.findIndex(scope.breadcrumbs, { id: crumb.id });
-                  // console.log(index);
                   scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
                   scope.filterService.protocols  = groupFactory.load(_.last(scope.breadcrumbs).id);
                   $select.open = false;
@@ -56,10 +47,6 @@ angular.module('cdeBrowserApp')
               scope.checkChildren=function(id){
             return groupFactory.isChildAvailable(id);
         }
-              // }, true);
-              // if(groupFactory.isDataEmpty()) {
-              // }
-              // scope.groups = groupFactory.load(0);                 
           },
           templateUrl: '/ui-tree-select.html'
       };
@@ -91,20 +78,15 @@ angular.module('cdeBrowserApp')
               else {
                   return sampledata[id];
               }
-              // console.log(filterService.protocols);
-              // return filterService.protocols;
           },
 
           fillProtocols: function(proto) {
-            // console.log(proto);
             filterService.protocols = proto;
             sampledata[0] = proto;
-            // console.log(sampledata);
 
              _.forEach(sampledata[0], function (value, index) {
                 sampledata[0][index].id = value.protocolIdSeq;
                 sampledata[0][index].name = value.protocolLongName;
-            // }
             });
 
             var protocols = angular.copy(_.groupBy(sampledata[0], "protocolIdSeq"));
@@ -115,9 +97,7 @@ angular.module('cdeBrowserApp')
                 });
             });
 
-            //console.log(protocols);
             _.assign(sampledata, protocols);
-            // console.log(sampledata);
 
             var sample = sampledata[0];
           },

@@ -37,36 +37,21 @@ angular.module('cdeBrowserApp')
                   $select.search = '';
                   group.title='CSI';
 
-// 'parentCsiIdSeq':selectedgroup.csCsiIdSeq
-
                   scope.filterService.classifications=_.filter(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
-                  // console.log(scope.filterService.classifications);
                   if(scope.filterService.classifications.length==0){
                     scope.filterService.classifications=_.filter(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel+1,'parentCsiIdSeq':group.csCsiIdSeq});
                   }
               scope.breadcrumbs.push(group);
-//scope.filterService.classifications =
-                  
-                  // if(group.parentCsiIdSeq==null){
-                  //   
-                  //   scope.filterService.classifications = _.takeWhile(groupFactory1.load(group.id),{'csiLevel':group.csiLevel});
-                  // }
-                  // else
-                  //   scope.filterService.classifications = _.takeWhile(groupFactory1.load(group.csIdSeq),{'csiLevel':group.csiLevel});
 
                   scope.$broadcast('uiSelectFocus');
                   
               };
 
               scope.navigateBackTo = function (crumb, $select) {
-                  // console.log(crumb);
                   $select.search = '';
                   var index = _.findIndex(scope.breadcrumbs, { id: crumb.id });
-                  // console.log(index);
                   scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
                   scope.filterService.classifications=_.filter(groupFactory1.load(_.last(scope.breadcrumbs).id),{'csiLevel':_.last(scope.breadcrumbs).csiLevel});
-                  // console.log(_.last(scope.breadcrumbs).csiLevel)
-                  // console.log(scope.filterService.classifications);
                   if(scope.filterService.classifications.length==0){
                     scope.filterService.classifications=_.filter(groupFactory1.load(_.last(scope.breadcrumbs).id));
                   }
@@ -88,8 +73,6 @@ angular.module('cdeBrowserApp')
         link: function (scope, elem, attrs, uiSelect) {
             scope.$on('uiSelectFocus', function () {
                 $timeout(uiSelect.activate);
-                // console.log(scope.breadcrumbs);
-                // console.log(uiSelect);
             });
         }
     };
@@ -131,7 +114,6 @@ angular.module('cdeBrowserApp')
             
 
             var sample = sampledata[0];
-            // console.log(sampledata);
           },
 
           clearData: function() {
@@ -159,30 +141,3 @@ if(selectedgroup.csiLevel==2)
       }
   }
 ])
-
-// .run(['$templateCache', function ($templateCache) {
-//     $templateCache.put('selectize/choices.tpl.html', [
-//       '<div ng-show="$select.open"',
-//       '  class="ui-select-choices group-tree selectize-dropdown single">',
-//       '  <div ng-show="breadcrumbs1.length > 1" class="ui-select-breadcrumbs">',
-//       '    <span class="ui-breadcrumb" ng-repeat="crumb in breadcrumbs1"',
-//       '       ng-click="navigateBackTo(crumb, $select)">',
-//       '       {{crumb.title}}',
-//       '    </span>',
-//       '  </div>',
-//       '  <div class="ui-select-choices-content selectize-dropdown-content">',
-//       '    <div class="ui-select-choices-group optgroup">',
-//       '      <div ng-show="$select.isGrouped"',
-//       '        class="ui-select-choices-group-label optgroup-header">',
-//       '        {{$group.name}}',
-//       '      </div>',
-//       '      <div class="ui-select-choices-row">',
-//       '        <div class="option ui-select-choices-row-inner"',
-//       '           data-selectable="">',
-//       '        </div>',
-//       '      </div>',
-//       '    </div>',
-//       '  </div>',
-//       '</div>'
-//     ].join(''));
-// }])

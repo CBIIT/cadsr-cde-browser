@@ -22,6 +22,8 @@ angular.module("cdeBrowserApp").service('compareService', function () {
         };
     };
 
+    this.idList = "";
+
     this.compareCDE = function (checkedItemsForDownload, searchResults) {
 
         
@@ -42,9 +44,11 @@ angular.module("cdeBrowserApp").service('compareService', function () {
                 console.log("cdeListString: " +  cdeListString);
         }
 
-        var usrlString= window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserClient/cdeCompare.html?cde=" + cdeListString;
-        console.log("URL: " +  usrlString);
-        window.open(usrlString);
+        this.idList = cdeListString;
+
+        // var usrlString= window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserClient/cdeCompare.html?cde=" + cdeListString;
+        // console.log("URL: " +  usrlString);
+        // window.open(usrlString);
         
     };
 

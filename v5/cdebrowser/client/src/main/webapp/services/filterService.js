@@ -109,6 +109,10 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 						breadcrumbs.push(this.searchFilter.classification.csLongName);
 						//console.log(_.find(groupFactory1.getNameFromId(this.searchFilter.classification.csIdSeq)));
 						//breadcrumbs.push( _.find(groupfactory1.getNameFromId(this.searchFilter.classification.csIdSeq)) 
+
+						// breadcrumbs.push(this.searchFilter.classification.csCsiName);
+						// breadcrumbs.push(this.searchFilter.classification.parentCsiIdSeq);
+						
 						breadcrumbs.push(this.searchFilter.classification.name);
 
 				}

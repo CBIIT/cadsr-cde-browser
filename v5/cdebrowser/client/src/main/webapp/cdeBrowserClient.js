@@ -21,79 +21,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     });
 
 
-
     $scope.contextCascade = function(selectedInput) {
         if (selectedInput!==undefined)
         $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
-        // console.log(selectedInput);
-        // if (selectedInput.length<3) {
-        //     $scope.filterService.protocols = [];
-        //     $scope.filterService.classifications = [];
-        // }
     };
-
-    // $scope.model={};
-
-    // $scope.model.loadProtocols = function(searchInput,evt) {
-    //     // console.log(searchInput);
-    //     var k=0;
-    //     // if (searchInput.length<3) {
-    //     //     $scope.filterService.protocols = [];
-    //     // }
-    //     if(searchInput.length===3) {
-    //     // if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchInput.length===3 || evt.keyCode===32 && searchInput.length===2) {
-    //         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
-    //         // $scope.filterService.protocols = response;
-    //         groupFactory.fillProtocols(response);
-    //         $scope.filterService.protocols = groupFactory.load(0);
-    //         //$scope.groups = groupFactory.load(0);
-    //         });
-    //         // groupFactory.loadProtocols(searchInput);
-    //     }
-
-
-    //     // **** {"id":1,"title":"Tazzy","size":"57","parent":true}              **** //
-    //     // **** id --> contextIdSeq --> protocolIdSeq --> formIdSeq;            **** //
-    //     // **** title --> contextName --> protocolLongName --> formLongName;    **** //
-    //     // **** parent --> true --> true --> false                              **** //
-    // };
-
-
-
-    // $scope.model1={};
-
-    // $scope.model1.loadClassifications = function(searchInput,evt) {
-    //     var k=0;
-    //     if(searchInput.length===3) {
-    //         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
-    //         groupFactory1.fillClassifications(response);
-    //         $scope.filterService.classifications = groupFactory1.load(0);
-    //         });
-    //     }
-
-    //     $scope.checkChildren1=function(id){
-    //         return groupFactory1.isChildAvailable(id);
-    //     }
-    //     // **** {"id":1,"title":"Tazzy","size":"57","parent":true}                                  **** //
-    //     // **** id --> contextIdSeq --> csIdSeq --> csCsiIdSeq (parentCsiIdSeq) --> csCsiIdSeq            **** //
-    //     // **** title --> contextName --> csLongName --> csCsiName (csiLevel) --> csCsiName   **** //
-    //     // **** parent --> true --> true --> false (true) --> false                                 **** //
-    // };
-
-    // $scope.loadClassifications = function(searchinput,evt) {
-
-    //     if (searchinput.length<3) {
-    //         $scope.filterService.classifications = [];
-    //     }
-    //     if(!(evt.keyCode>=37 && evt.keyCode<=40 || evt.keyCode===8) && searchinput.length===3 || evt.keyCode===32 && searchinput.length===2) {
-
-    //     $scope.filterService.classifications =
-    //         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchinput}}).success(function(response) {
-    //         $scope.filterService.classifications = response;
-    //     });
-    //     }
-    // }
-
 
 
     // check user authentication status //
@@ -123,7 +54,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, "name", fs.dataElementVariables.selectedQueryType);
                     // console.log("Search");
                     $scope.breadCrumbs = fs.createBreadcrumbs();
-                    // console.log(filterService.searchFilter);
                 };
             };
         };
@@ -138,23 +68,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.breadCrumbs = [];
         groupFactory.clearData();
         groupFactory1.clearData();
-        // console.log($scope.model1);
     };
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
         // fs.getClassificationsAndProtocolForms();
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-            // $scope.filterService.protocols = response;
             groupFactory.fillProtocols(response);
             $scope.filterService.protocols = groupFactory.load(0);
         });
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory1.fillClassifications(response);
-            // console.log(response);
-            // console.log(groupFactory1.load(0));
             $scope.filterService.classifications = groupFactory1.load(0);
-            // console.log($scope.filterService.classifications);
         });
     };
 
@@ -442,7 +367,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     else {
                         
                         if (x=='protocol') {
-                            // url+="&"+x+"="+fs.searchFilter[x].id;
                             if(fs.searchFilter[x].id==fs.searchFilter[x].protocolIdSeq){
                                 url+=connector+x+"="+fs.searchFilter[x].id;
                             }
@@ -984,7 +908,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // compare the items in the compare list along with any checked items //
     $scope.compareCDE = function() {
         $scope.compareService.compareCDE($scope.checkedItemsForDownload,$scope.searchResults);
+        $location.path("/cdeCompare").replace();
     };
+
+    // Start of Advance Search Options //
+
+    $scope.more = false;
+
+    $scope.advanceSearchShow = function() {
+        $scope.more = $scope.more ? false : true;
+    };
+
 
 
 });

@@ -17,6 +17,7 @@ angular.module("cde", [
     "cdePublicIdSearch",
     "cdeSearchPreferences",
     "cdeCart",
+    "cdeCompare",
     "cdeLogin",
     "ui.select"
 
@@ -78,6 +79,11 @@ angular.module("cde", [
             controller: "CartCtrl",
             templateUrl: "cde/cdeCart/cart-view.html",
             title: "CDE Cart"
+        })
+        .when("/cdeCompare", {
+            controller: "cdeCompareController",
+            templateUrl: "cde/cdeCompare/compare-view.html",
+            title: "Compare CDEs"
         })
         .when("/login", {
             controller: "LoginCtrl",
