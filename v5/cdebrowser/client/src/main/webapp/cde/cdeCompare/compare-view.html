@@ -3,10 +3,10 @@
 
 
 
-    <div id="mainDiv">
+    <div id="mainDiv" style="position:relative;top:0">
 
         <div class="compareCDEDataElementDetailsHeading" ng-hide="compareDataDoneLoading" align="center">
-            Loading CDE data <img alt="Loading CDE Compare data" src="../../icons/preloader.gif">
+            Loading CDE data <img alt="Loading CDE Compare data" src="icons/preloader.gif">
         </div>
 
 
@@ -568,3 +568,18 @@
     <!-- =============================================================================== -->
 
 </div>
+
+
+
+</div>
+	<div ng-hide="compareService.cartData.length" class="emptyCart">
+ 		CDE Compare List is empty.
+	</div>
+	<div style="padding-top:5px">
+		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="downloadToExcel()">Download to Excel</button>
+		<button ng-click="goBack()">Cancel</button>
+	</div>
+
+
+
+

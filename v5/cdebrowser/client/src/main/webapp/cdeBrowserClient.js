@@ -30,7 +30,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // check user authentication status //
     $scope.$on('$locationChangeStart', function() {
         $scope.authenticationService.checkAuth();
-        if ($location.path()=='/cdeCart' || $location.path()=='/login') {
+        if ($location.path()=='/cdeCart' || $location.path()=='/login' || $location.path()=='/cdeCompare') {
             searchFactory.showSearch = false;
         }
         else {
