@@ -1,6 +1,6 @@
 <div id="cdeCart">
 	<div style="padding-top:5px">
-		<span class="headerText">Note: Displays CDEs in the cart. Click Retrieve Saved button to retreive cart elements saved previously. More CDEs can be added to the cart by clicking Add More Data Elements button. Checking the checkbox(es) under Delete column and clicking Delete button will delete the CDE(s) from the cart.</span>
+		<span class="headerText">Note: Displays CDEs saved in the cart. To load previously saved CDEs, click Retrieve Saved. To remove CDEs from the cart, check the box in the Select column and click Delete. To add CDEs to the cart, click Return to Search. Click Refresh to display newly added CDEs from CDE Browser.</span>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToExcel()">Download to Excel</button>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToExcel('prior')">Download to Prior Excel</button>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToXML()">Download Data Elements as XML</button>
