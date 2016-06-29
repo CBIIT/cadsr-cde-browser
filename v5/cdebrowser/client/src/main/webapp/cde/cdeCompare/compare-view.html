@@ -1,5 +1,5 @@
 <div id="cdeCompare">
-	<div style="padding-top:5px">
+	<div>
 
 
 
@@ -9,9 +9,60 @@
             Loading CDE data <img alt="Loading CDE Compare data" src="icons/preloader.gif">
         </div>
 
+</div>
+	<!-- <div ng-hide="compareService.cartData.length" class="emptyCart">
+ 		CDE Compare List is empty.
+	</div> -->
+	<div style="padding-bottom:5px">
+		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()">Excel Download</button>
+		<button ng-click="goBack()">Cancel</button>
+	</div>
 
+	<div style="padding:5px 0px 10px 0px" class="">
+    <span>
+        <a class="" ng-click="goTo('dataElement')">
+            <u>Data Element</u>
+        </a>&nbsp;
+    </span>
+        <span>
+        <a class="" ng-click="goTo('dataElementConcept')">
+            <u>Data Element Concept</u>
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="" ng-click="goTo('referenceDocuments')">
+            <u>Reference Documents</u>
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="" ng-click="goTo('valueDomain')">
+            <u>Value Domain</u>
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="" ng-click="goTo('permissibleValues')">
+            <u>Permissible Values</u>
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="" ng-click="goTo('classifications')">
+            <u>Classifications</u>
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="" ng-click="goTo('derivationDetails')">
+            <u>Derivation Details</u>
+        </a>&nbsp;
+    </span>
+    <span>
+        <a class="" ng-click="goTo('componentDataElements')">
+            <u>Component Data Elements</u>
+        </a>&nbsp;
+    </span>
+    </div>
 
-        <div class="compareCDEDataElementDetailsHeading">
+    	<!-- <a name="dataElement"></a> -->
+        <div id="dataElement" class="compareCDEDataElementDetailsHeading">
             Data Element
         </div>
         <table  class="compareCDEDataElementDetailsTable">
@@ -95,7 +146,7 @@
         <br>
 
 
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="dataElementConcept" class="compareCDEDataElementDetailsHeading">
             Data Element Concept
         </div>
         <table class="compareCDEDataElementDetailsTable">
@@ -186,7 +237,7 @@
 
 
         <br>
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="referenceDocuments" class="compareCDEDataElementDetailsHeading">
             Reference Documents
         </div>
         <table>
@@ -217,7 +268,7 @@
         <br>
 
 
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="valueDomain" class="compareCDEDataElementDetailsHeading">
             Value Domain
         </div>
         <table class="compareCDEDataElementDetailsTable">
@@ -380,7 +431,7 @@
 
         <!-- Permissible Values -->
         <br>
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="permissibleValues" class="compareCDEDataElementDetailsHeading">
             Permissible Values
         </div>
         <table>
@@ -409,7 +460,7 @@
                             <td class="compareDataElementValue">{{data1.shortMeaning}}</td>
 
                             <td class="compareDataElementValue">
-                                <a class="link" TARGET="_blank"
+                                <a class="link"
                                    href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{data1.conceptCode}}">
                                     {{data1.conceptCode}}</a>
                             </td>
@@ -428,7 +479,7 @@
 
         <!-- Classifications -->
         <br>
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="classifications" class="compareCDEDataElementDetailsHeading">
             Classifications
         </div>
         <table>
@@ -485,7 +536,7 @@
 
         <!-- dataElementDerivation -->
         <br>
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="derivationDetails" class="compareCDEDataElementDetailsHeading">
             Data Element Derivation - Derivation Details
         </div>
         <table class="compareCDEDataElementDetailsTable">
@@ -524,7 +575,7 @@
         </table>
 
         <br>
-        <div class="compareCDEDataElementDetailsHeading">
+        <div id="componentDataElements" class="compareCDEDataElementDetailsHeading">
             Data Element Derivation - Component Data Elements
         </div>
         <table>
@@ -572,11 +623,8 @@
 
 
 </div>
-	<div ng-hide="compareService.cartData.length" class="emptyCart">
- 		CDE Compare List is empty.
-	</div>
 	<div style="padding-top:5px">
-		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="downloadToExcel()">Download to Excel</button>
+		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()">Excel Download</button>
 		<button ng-click="goBack()">Cancel</button>
 	</div>
 

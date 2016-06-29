@@ -7,7 +7,7 @@ angular.module("cdeBrowserApp").service('compareService', function () {
         for (var i = 0; i < searchResults.length; i++) {
             if (checkedItems.indexOf(searchResults[i]['deIdseq']) >= 0) {
 
-                console.log("Item[" + i +"]: " +  searchResults[i]['deIdseq']);
+                // console.log("Item[" + i +"]: " +  searchResults[i]['deIdseq']);
 
                 if (this.checkedItemsForCompare.indexOf(searchResults[i]['deIdseq']) < 0) {
                     this.checkedItemsForCompare.push(searchResults[i]['deIdseq']);
@@ -16,7 +16,7 @@ angular.module("cdeBrowserApp").service('compareService', function () {
                 var arrayLength = this.checkedItemsForCompare.length;
                 for (var f = 0; f < arrayLength; f++) {
 
-                    console.log("Item in list[" + f +"]: " +  this.checkedItemsForCompare[f] );
+                    // console.log("Item in list[" + f +"]: " +  this.checkedItemsForCompare[f] );
                 };
             };
         };
@@ -40,8 +40,8 @@ angular.module("cdeBrowserApp").service('compareService', function () {
                 cdeListString += ",";
             }
             cdeListString += this.checkedItemsForCompare[f];
-                console.log("Item in list[" + f +"]: " +  this.checkedItemsForCompare[f]);
-                console.log("cdeListString: " +  cdeListString);
+                // console.log("Item in list[" + f +"]: " +  this.checkedItemsForCompare[f]);
+                // console.log("cdeListString: " +  cdeListString);
         }
 
         this.idList = cdeListString;

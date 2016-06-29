@@ -1,9 +1,11 @@
 angular.module("cdeCompare", []);
 
-angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", function ( $scope, $http, $window, $location, compareService) {
+angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll", function ($scope, $http, $window, $location, compareService, $anchorScroll) {
     window.scope = $scope;
     $scope.location = $location.url();
     $scope.$parent.title = "CDE Compare"; 
+    $scope.$anchorScroll = $anchorScroll;
+    $scope.dataBaseData;
    // $scope.compareDataDoneLoading = false;
 
     //CDE details
@@ -16,7 +18,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
     //Multiple CDE details
     $scope.multipleCdeDetails = function () {
 
-		console.log(compareService.idList);
+		// console.log(compareService.idList);
         $scope.compareDataDoneLoading = false;
         // var idList = window.location.toString().split('?cde=')[1];
         // console.log("A multipleCdeDetailsTest: " + idList);
@@ -36,7 +38,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
         $http.get(serverUrl).success(function (response) {
             $scope.cdeDetails = response;
             $scope.compareDataDoneLoading = true;
-
+$scope.dataBaseData=angular.copy($scope.cdeDetails);
             // FIXME  Check here for errors
         });
     };
@@ -73,6 +75,11 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
   //   };
 
    // $scope.dataLoad6();
+
+	$scope.goTo=function(id){
+		$location.hash(id);
+		$anchorScroll();
+	}
 
    	// go back to search screen, show search area //
 	$scope.goBack = function() {
