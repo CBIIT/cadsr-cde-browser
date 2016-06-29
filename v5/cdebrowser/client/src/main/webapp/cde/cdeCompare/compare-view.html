@@ -20,43 +20,43 @@
 
 	<div style="padding:5px 0px 10px 0px" class="">
     <span>
-        <a class="" ng-click="goTo('dataElement')">
-            <u>Data Element</u>
+        <a class="" ng-click="goTo('dataElement')" style="text-decoration: underline;cursor:pointer">
+            Data Element
         </a>&nbsp;
     </span>
         <span>
-        <a class="" ng-click="goTo('dataElementConcept')">
-            <u>Data Element Concept</u>
+        <a class="" ng-click="goTo('dataElementConcept')" style="text-decoration: underline;cursor:pointer">
+            Data Element Concept
         </a>&nbsp;
     </span>
     <span>
-        <a class="" ng-click="goTo('referenceDocuments')">
-            <u>Reference Documents</u>
+        <a class="" ng-click="goTo('referenceDocuments')" style="text-decoration: underline;cursor:pointer">
+            Reference Documents
         </a>&nbsp;
     </span>
     <span>
-        <a class="" ng-click="goTo('valueDomain')">
-            <u>Value Domain</u>
+        <a class="" ng-click="goTo('valueDomain')" style="text-decoration: underline;cursor:pointer">
+            Value Domain
         </a>&nbsp;
     </span>
     <span>
-        <a class="" ng-click="goTo('permissibleValues')">
-            <u>Permissible Values</u>
+        <a class="" ng-click="goTo('permissibleValues')" style="text-decoration: underline;cursor:pointer">
+            Permissible Values
         </a>&nbsp;
     </span>
     <span>
-        <a class="" ng-click="goTo('classifications')">
-            <u>Classifications</u>
+        <a class="" ng-click="goTo('classifications')" style="text-decoration: underline;cursor:pointer">
+            Classifications
         </a>&nbsp;
     </span>
     <span>
-        <a class="" ng-click="goTo('derivationDetails')">
-            <u>Derivation Details</u>
+        <a class="" ng-click="goTo('derivationDetails')" style="text-decoration: underline;cursor:pointer">
+            Derivation Details
         </a>&nbsp;
     </span>
     <span>
-        <a class="" ng-click="goTo('componentDataElements')">
-            <u>Component Data Elements</u>
+        <a class="" ng-click="goTo('componentDataElements')" style="text-decoration: underline;cursor:pointer">
+            Component Data Elements
         </a>&nbsp;
     </span>
     </div>
@@ -68,11 +68,11 @@
         <table  class="compareCDEDataElementDetailsTable">
             <tr>
                 <td>CDE:
-                	<img src="icons/delete.png" alt="Smiley face" style="width:18px;height:18px;float:right;padding:0 2px 0">
+                	<img src="icons/delete.png" alt="Delete icon" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer">
                 	<input style="float:right" type="checkbox" name="extra" ng-model="compareService.checkedCompareItems.selected" ng-change="selectAll()">
                 </td>
                 <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}
-                	<img src="icons/delete.png" alt="Smiley face" style="width:18px;height:18px;float:right;padding:0 2px 0">
+                	<img src="icons/delete.png" alt="Delete icon" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer">
                 	<input style="float:right" type="checkbox" name="checkedCompareItems" ng-change="checkCompareItem(item.deIdseq)" ng-model="compareService.checkedCompareItems.items[item.deIdseq]">
                 </td>
             </tr>

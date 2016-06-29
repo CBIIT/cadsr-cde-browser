@@ -76,22 +76,21 @@ $scope.dataBaseData=angular.copy($scope.cdeDetails);
 
    // $scope.dataLoad6();
 
-	$scope.goTo=function(id){
+	$scope.goTo = function(id) {
+		var change = $location.hash();
 		$location.hash(id);
 		$anchorScroll();
+		$location.hash(change);
 	}
 
    	// go back to search screen, show search area //
 	$scope.goBack = function() {
-		// this needs to be properly moved into a service along with the entire search //
 			$scope.checkboxes.items={};
-		// end this needs to be properly moved into a service along with the entire search //
 		$location.path("/search");
 	};
 
     $scope.compareDataDoneLoading = "true";
     $scope.compareDataLoading2 = "true";
-
 
     scope.multipleCdeDetails();
 
