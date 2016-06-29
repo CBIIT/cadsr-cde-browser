@@ -10,7 +10,7 @@
         </div>
 
 </div>
-	<!-- <div ng-hide="compareService.cartData.length" class="emptyCart">
+	<!-- <div ng-hide="compareService.compareData.length" class="emptyCompare">
  		CDE Compare List is empty.
 	</div> -->
 	<div style="padding-bottom:5px">
@@ -67,8 +67,14 @@
         </div>
         <table  class="compareCDEDataElementDetailsTable">
             <tr>
-                <td>CDE:</td>
-                <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}</td>
+                <td>CDE:
+                	<img src="icons/delete.png" alt="Smiley face" style="width:18px;height:18px;float:right;padding:0 2px 0">
+                	<input style="float:right" type="checkbox" name="extra" ng-model="compareService.checkedCompareItems.selected" ng-change="selectAll()">
+                </td>
+                <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}
+                	<img src="icons/delete.png" alt="Smiley face" style="width:18px;height:18px;float:right;padding:0 2px 0">
+                	<input style="float:right" type="checkbox" name="checkedCompareItems" ng-change="checkCompareItem(item.deIdseq)" ng-model="compareService.checkedCompareItems.items[item.deIdseq]">
+                </td>
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Public Id:</td>
@@ -460,7 +466,7 @@
                             <td class="compareDataElementValue">{{data1.shortMeaning}}</td>
 
                             <td class="compareDataElementValue">
-                                <a class="link"
+                                <a class="link" TARGET="_blank"
                                    href="http://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{data1.conceptCode}}">
                                     {{data1.conceptCode}}</a>
                             </td>
