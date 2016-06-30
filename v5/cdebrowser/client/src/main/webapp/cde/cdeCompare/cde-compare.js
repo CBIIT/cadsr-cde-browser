@@ -41,7 +41,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
         $http.get(serverUrl).success(function (response) {
             $scope.cdeDetails = response;
             $scope.compareDataDoneLoading = true;
-			$scope.dataBaseData = angular.copy($scope.cdeDetails); // USAGE?!
+			$scope.dataBaseData = angular.copy($scope.cdeDetails);
             // FIXME  Check here for errors
         });
     };
@@ -80,8 +80,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
    // $scope.dataLoad6();
 
 
-
-   	// TOGGLE COLLAPSABLE - JUST USE NG-HIDE/NG-SHOW?! or BOOTSTRAP HACK?!
 
    	$scope.deleteAllCDEs = function() {
    		$scope.cdeDetails.splice(0);
