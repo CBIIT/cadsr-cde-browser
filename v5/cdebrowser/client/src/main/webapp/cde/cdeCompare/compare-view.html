@@ -63,17 +63,17 @@
 
     	<!-- <a name="dataElement"></a> -->
         <div id="dataElement" class="compareCDEDataElementDetailsHeading">
-            Data Element
+            Data Element{{ompareService.checkedCompareItems}}
         </div>
         <table  class="compareCDEDataElementDetailsTable">
             <tr>
                 <td>CDE:
-                	<img src="icons/delete.png" alt="Delete icon" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer">
+                	<img src="icons/delete.png" alt="Delete icon" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteAllCDEs()">
                 	<input style="float:right" type="checkbox" name="extra" ng-model="compareService.checkedCompareItems.selected" ng-change="selectAll()">
                 </td>
                 <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}
-                	<img src="icons/delete.png" alt="Delete icon" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer">
-                	<input style="float:right" type="checkbox" name="checkedCompareItems" ng-change="checkCompareItem(item.deIdseq)" ng-model="compareService.checkedCompareItems.items[item.deIdseq]">
+                	<img src="icons/delete.png" alt="Delete icon" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE(element)">
+                	<input style="float:right" type="checkbox" name="checkedCompareItems" ng-change="checkCompareItem($index)" ng-model="checkedItems[element]">
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
