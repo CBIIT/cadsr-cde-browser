@@ -70,7 +70,7 @@
             <tr>
                 <td>CDE:
                 	<img src="icons/delete.png" alt="delete all CDEs" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteAllCDEs()">
-                	<input style="float:right" type="checkbox" name="extra" ng-model="compareService.checkedCompareItems.selected" ng-change="llselectA()">
+                	<input style="float:right" type="checkbox" name="extra" ng-model="checkAllItems" ng-change="selectAll()">
                 </td>
                 <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}
                 	<img src="icons/delete.png" alt="delete CDE" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE(element)">

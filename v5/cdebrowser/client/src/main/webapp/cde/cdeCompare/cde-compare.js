@@ -92,6 +92,9 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
    	}
 
    	$scope.selectAll=function(){
+   		for(var i=0;i<$scope.cdeDetails.length;i++){
+   			$scope.checkedItems[i]=$scope.checkAllItems;
+   		}
    		console.log($scope.checkedItems);
    	}
 
@@ -111,6 +114,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 	};
 
 	$scope.excelDownload = function(param) {
+		
 		var items = $scope.downloadFactory.createDownloadableArray(compareService.checkedCompareItems.items); // creates simple array of ids //
 		$scope.downloadFactory.excelDownload(param,items);
 	};
