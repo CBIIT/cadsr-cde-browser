@@ -1,14 +1,14 @@
 angular.module("cdeCompare", []);
 
-angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll",'downloadFactory', function ($scope, $http, $window, $location, compareService, $anchorScroll,downloadFactory) {
+angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll", "downloadFactory", function ($scope, $http, $window, $location, compareService, $anchorScroll, downloadFactory) {
     window.scope = $scope;
     $scope.location = $location.url();
     $scope.$parent.title = "CDE Compare"; 
     $scope.$anchorScroll = $anchorScroll;
     $scope.dataBaseData;
-    $scope.compareService=compareService;
-    $scope.downloadFactory=downloadFactory;
-    $scope.checkedItems=[];
+    $scope.compareService = compareService;
+    $scope.downloadFactory = downloadFactory;
+    $scope.checkedItems = [];
    // $scope.compareDataDoneLoading = false;
 
     //CDE details
@@ -41,7 +41,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
         $http.get(serverUrl).success(function (response) {
             $scope.cdeDetails = response;
             $scope.compareDataDoneLoading = true;
-			$scope.dataBaseData = angular.copy($scope.cdeDetails);
+			$scope.dataBaseData = angular.copy($scope.cdeDetails); // USAGE?!
             // FIXME  Check here for errors
         });
     };
@@ -81,12 +81,18 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
 
 
+   	// TOGGLE COLLAPSABLE - JUST USE NG-HIDE/NG-SHOW?! or BOOTSTRAP HACK?!
+
    	$scope.deleteAllCDEs = function() {
    		$scope.cdeDetails.splice(0);
    	}
    	
    	$scope.deleteCDE = function(ndx) {
    		$scope.cdeDetails.splice(ndx,1);
+   	}
+
+   	$scope.selectAll=function(){
+   		console.log($scope.checkedItems);
    	}
 
 
@@ -104,9 +110,9 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 		$location.path("/search");
 	};
 
-	$scope.downloadToExcel = function(param) {
-		var items = $scope.downloadFactory.createDownloadableArray(cartService.checkedCartItems.items); // creates simple array of ids //
-		$scope.downloadFactory.downloadToExcel(param,items);
+	$scope.excelDownload = function(param) {
+		var items = $scope.downloadFactory.createDownloadableArray(compareService.checkedCompareItems.items); // creates simple array of ids //
+		$scope.downloadFactory.excelDownload(param,items);
 	};
 
     $scope.compareDataDoneLoading = "true";

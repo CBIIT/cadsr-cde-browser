@@ -526,6 +526,16 @@ display:inline-block !important;
     background-color: #0ff;
 }
 
+/*.comparePlus {
+    background-image: url("../icons/plus.png");*/
+    /*background-size: ;*/
+/*}
+
+.compareMinus {
+    background-image: url("../icons/minus.png");*/
+    /*background-size: ;*/
+/*}*/
+
 /* Advance Search Options */
 
 .advanceSearchCenter {
@@ -536,3 +546,5 @@ display:inline-block !important;
     padding: 3px 6px 3px 6px !important;
     font-size: 12px !important;
 }
+
+
