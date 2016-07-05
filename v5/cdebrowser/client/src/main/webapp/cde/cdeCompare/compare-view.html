@@ -74,7 +74,7 @@
                 </td>
                 <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}
                 	<img src="icons/delete.png" alt="delete CDE" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE(element)">
-                	<input style="float:right" type="checkbox" name="checkedCompareItems"  ng-model="checkedItems[element]">
+                	<input style="float:right" type="checkbox" name="checkedCompareItems"  ng-model="checkedItems[element]" ng-change="checkSelection()">
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">

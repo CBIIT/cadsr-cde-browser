@@ -1,13 +1,13 @@
 angular.module("cdeCompare", []);
 
-angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll", "downloadFactory", function ($scope, $http, $window, $location, compareService, $anchorScroll, downloadFactory) {
+angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll", "downloadFactory",'$filter', function ($scope, $http, $window, $location, compareService, $anchorScroll, downloadFactory,$filter) {
     window.scope = $scope;
     $scope.location = $location.url();
     $scope.$parent.title = "CDE Compare"; 
     $scope.$anchorScroll = $anchorScroll;
     $scope.dataBaseData;
     $scope.compareService = compareService;
-    $scope.downloadFactory = downloadFactory;
+    $scope.downloadFactory = new downloadFactory();
     $scope.checkedItems = [];
    // $scope.compareDataDoneLoading = false;
 
@@ -98,6 +98,14 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
    		// console.log($scope.checkedItems);
    	}
 
+   	$scope.checkSelection=function(){
+   		if($filter('filter')($scope.checkedItems,true).length===$scope.cdeDetails.length)
+   			$scope.checkAllItems=true;
+   		else
+   			$scope.checkAllItems=false;
+
+   	}
+
 
 
 	$scope.goTo = function(id) {
@@ -113,10 +121,11 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 		$location.path("/search");
 	};
 
-	$scope.excelDownload = function(param) {
-	
-		// var items = $scope.downloadFactory.createDownloadableArray(compareService.checkedCompareItems.items); // creates simple array of ids //
-		// $scope.downloadFactory.excelDownload(param,items);
+	$scope.excelDownload = function() {
+		console.log(downloadFactory);
+//debugger;
+		var items = $scope.downloadFactory.createDownloadableArray($scope.cdeDetails[0]); // creates simple array of ids //
+		$scope.downloadFactory.excelDownload(false,items);
 	};
 
     $scope.compareDataDoneLoading = "true";

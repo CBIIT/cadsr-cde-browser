@@ -34,20 +34,20 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 
 	    // download to excel from compare screen
-	    // this.excelDownload = function(param, items) {
-	    // 	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
-	    // 	var that = this;
+	     this.excelDownload = function(param, items) {
+	     	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
+	     	var that = this;
 
-	    //         $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: items}).
-	    //         success(function(data, status, headers, config) {
-	    //         	that.progressMessage.status=0;
-	    //             window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
-	    //         }).
-	    //         error(function(data, status, headers, config) {
-	    //         	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
-	    //         });
+	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: items}).
+	            success(function(data, status, headers, config) {
+	           	that.progressMessage.status=0;
+	                 window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
+	             }).
+	             error(function(data, status, headers, config) {
+	             	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
+	             });
 
-	    // };
+	     };
 
 
 
@@ -67,6 +67,8 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 	    // creates array of deIdseq numbers for download as an array //
 	    this.createDownloadableArray = function(items) {
+	    	debugger;
+	    	console.log(items);
 	    	var itemArray = [];
 	    	for (var x in items) {
 	    		itemArray.push(x)
