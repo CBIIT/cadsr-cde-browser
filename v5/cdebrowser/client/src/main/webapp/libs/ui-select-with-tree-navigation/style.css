@@ -20,72 +20,72 @@ main
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.option.ui-select-choices-row-inner div {
+.option.ui-select-choices-row-inner a {
   padding: 6px 12px;
   position: relative;
 }
-.selectize-control > .selectize-dropdown{
+.selectize-control > .ui-select-dropdown{
   width:100% !important;
 }
 
-.selectize-dropdown {
+.ui-select-dropdown {
   margin-top: -3px;
-  overflow: hidden;
+  overflow: auto;
 }
 
-.selectize-dropdown-content {
+.ui-select-dropdown-content {
   overflow-x: auto;
 }
 
-.selectize-dropdown.group-tree .goto-child-group {
-  background: none;
-  border: none;
-  box-shadow: none;
-  color: rgba(0, 0, 0, 0.5);
-  height: 100%;
+.goto-child-group {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+  height: 100% !important;
   line-height: 1;
-  margin: 0;
-  padding: 8px;
-  position: absolute;
+  margin-right: -18px;
+  padding: 4px 16px;
+  float: right;
   right: 0;
   text-shadow: none;
   top: 0;
   transition: background .2s;
 }
 
-.selectize-dropdown.group-tree .goto-child-group:hover {
-  box-shadow: none;
-  background: rgba(0, 0, 0, 0.1);
-  border: none;
-  color: #fff;
+.goto-child-group:hover {
+  box-shadow: none !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  color: #fff !important;
 }
 
-.selectize-dropdown.group-tree .ui-select-breadcrumbs {
+.ui-select-dropdown.dropdown-menu .ui-select-breadcrumbs {
   padding: 6px 12px;
   margin: 0;
   background: rgba(0, 0, 0, 0.8);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.selectize-dropdown.group-tree .ui-breadcrumb {
+.ui-select-dropdown.dropdown-menu .ui-breadcrumb {
   color: white;
   cursor: pointer;
   font-size: 12px;
 }
 
-.selectize-dropdown.group-tree .ui-breadcrumb:hover {
+.ui-select-dropdown.dropdown-menu .ui-breadcrumb:hover {
   color: #ff9000;
 }
 
-.selectize-dropdown.group-tree .ui-breadcrumb:after {
+.ui-select-dropdown.dropdown-menu .ui-breadcrumb:after {
   content: '>>';
 }
 
-.selectize-dropdown.group-tree .ui-breadcrumb:last-child {
+.ui-select-dropdown.dropdown-menu .ui-breadcrumb:last-child {
   color: white;
   cursor: default;
 }
 
-.selectize-dropdown.group-tree .ui-breadcrumb:last-child:after {
+.ui-select-dropdown.dropdown-menu .ui-breadcrumb:last-child:after {
   content: ' ';
 }

@@ -1,6 +1,6 @@
 angular.module("cdeCompare", []);
 
-angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll", "downloadFactory",'$filter', function ($scope, $http, $window, $location, compareService, $anchorScroll, downloadFactory,$filter) {
+angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$http", "$window", "$location", "compareService", "$anchorScroll", "downloadFactory", "$filter", function ($scope, $http, $window, $location, compareService, $anchorScroll, downloadFactory, $filter) {
     window.scope = $scope;
     $scope.location = $location.url();
     $scope.$parent.title = "CDE Compare"; 
@@ -17,14 +17,11 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
     };
 
-
     //Multiple CDE details
     $scope.multipleCdeDetails = function () {
 
-		// console.log(compareService.idList);
         $scope.compareDataDoneLoading = false;
         // var idList = window.location.toString().split('?cde=')[1];
-        // console.log("A multipleCdeDetailsTest: " + idList);
         // $scope.compareDataDoneLoading = false;
         $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/multiCDEData?deIdseq=" + compareService.idList);
     };
@@ -41,7 +38,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
         $http.get(serverUrl).success(function (response) {
             $scope.cdeDetails = response;
             $scope.compareDataDoneLoading = true;
-			$scope.dataBaseData = angular.copy($scope.cdeDetails); // USAGE?!
             // FIXME  Check here for errors
         });
     };
@@ -79,10 +75,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
    // $scope.dataLoad6();
 
-
-
-   	// TOGGLE COLLAPSABLE - JUST USE NG-HIDE/NG-SHOW?! or BOOTSTRAP HACK?!
-
    	$scope.deleteAllCDEs = function() {
    		$scope.cdeDetails.splice(0);
    	}
@@ -95,7 +87,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
    		for(var i=0;i<$scope.cdeDetails.length;i++){
    			$scope.checkedItems[i]=$scope.checkAllItems;
    		}
-   		// console.log($scope.checkedItems);
    	}
 
    	$scope.checkSelection=function(){
@@ -105,8 +96,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
    			$scope.checkAllItems=false;
 
    	}
-
-
 
 	$scope.goTo = function(id) {
 		var change = $location.hash();
@@ -122,10 +111,22 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 	};
 
 	$scope.excelDownload = function() {
-		console.log(downloadFactory);
-//debugger;
-		var items = $scope.downloadFactory.createDownloadableArray($scope.cdeDetails[0]); // creates simple array of ids //
-		$scope.downloadFactory.excelDownload(false,items);
+
+		var items=[];
+
+		for(var i=0;i<$scope.checkedItems.length;i++) {
+			if($scope.checkedItems[i])
+			items.push(compareService.idList.split(',')[i]);
+		}
+
+		//var items = $scope.downloadFactory.createDownloadableArray($scope.cdeDetails[0]); // creates simple array of ids //
+		console.log(items);
+		var param = false;
+
+		// var items = $scope.downloadFactory.createDownloadableArray(compareService.checkedCompareItems.items);
+		$scope.downloadFactory.downloadToExcel(param,items);
+		
+		//$scope.downloadFactory.excelDownload(false,items);
 	};
 
     $scope.compareDataDoneLoading = "true";

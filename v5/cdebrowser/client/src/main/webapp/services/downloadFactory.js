@@ -67,8 +67,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 	    // creates array of deIdseq numbers for download as an array //
 	    this.createDownloadableArray = function(items) {
-	    	debugger;
-	    	console.log(items);
+	    	// console.log(items);
 	    	var itemArray = [];
 	    	for (var x in items) {
 	    		itemArray.push(x)

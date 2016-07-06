@@ -250,7 +250,7 @@
             <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
 
                 <span>
-                <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="selectize" ng-model="filterService.searchFilter.programArea">
+                <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
                     <ui-select-match placeholder="Program Area">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
@@ -259,8 +259,8 @@
                 </span>
 
                 <span>
-                <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.context">
-                    <ui-select-match allow-clear="true" placeholder="Context">{{$select.selected.text}}<a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a></ui-select-match>
+                <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
+                    <ui-select-match allow-clear="true" placeholder="Context">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
                     </ui-select-choices>
@@ -275,21 +275,21 @@
                                    ng-model="filterService.searchFilter.classification"
                                    ng-disabled="filterService.isSearching||filterService.searchFilter.protocol"
                                    ui-select-focuser1
-                                   theme="selectize"
+                                   theme="bootstrap"
                                    ng-change="contextCascade($select.selected)">
                             <ui-select-match placeholder="Classification" allow-clear="true">
                                 {{ $select.selected.name }}
-                                <a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a>
                             </ui-select-match>
-                            <ui-select-choices group-by="'contextName'" repeat="group in filterService.classifications | filter: $select.search" refresh="loadClassifications($select.search)">
+                           <ui-select-choices group-by="'contextName'" repeat="group in filterService.classifications | filter: $select.search" refresh="loadClassifications($select.search)">
                                 <div>
-                                    <span class="autoDropDown" ng-bind-html="group.name | highlight: $select.search"></span>
+                                    <span ng-bind-html="group.name | highlight: $select.search"></span>
                                     <a class="goto-child-group" ng-show="checkChildren1(group)"
                                        ng-click="loadChildGroupsOf1(group, $select)">
                                         <i class="fa fa-angle-right"></i>
                                     </a>
                                 </div>
                             </ui-select-choices>
+
                         </ui-select>
                     </script>
                 </span>
@@ -302,11 +302,10 @@
                                    ng-model="filterService.searchFilter.protocol"
                                    ng-disabled="filterService.isSearching||filterService.searchFilter.classification"
                                    ui-select-focuser
-                                   theme="selectize"
+                                   theme="bootstrap"
                                    ng-change="contextCascade($select.selected)">
                             <ui-select-match placeholder="Protocol or Form" allow-clear="true">
                                 {{ $select.selected.name }}
-                                <a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a>
                             </ui-select-match>
                             <ui-select-choices group-by="'contextName'" repeat="group in filterService.protocols | filter: $select.search" refresh="loadProtocols($select.search)">
                                 <div>
@@ -322,8 +321,8 @@
                 </span>
 
                 <span>
-                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.registrationStatus">
-                    <ui-select-match allow-clear="true" placeholder="Registration Status">{{$select.selected}}<a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a></ui-select-match>
+                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
+                    <ui-select-match allow-clear="true" placeholder="Registration Status">{{$select.selected}}</ui-select-match>
                     <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
                         <div ng-bind-html="value | highlight: $select.search"></div>
                     </ui-select-choices>
@@ -331,8 +330,8 @@
                 </span>
 
                 <span>
-                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="selectize" ng-model="filterService.searchFilter.workFlowStatus">
-                    <ui-select-match allow-clear="true" placeholder="Workflow Status">{{$select.selected}}<a uib-tooltip="Clear" class="fa fa-times clear-button clearDropDown" ng-click="$select.clear($event);"></a></ui-select-match>
+                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
+                    <ui-select-match allow-clear="true" placeholder="Workflow Status">{{$select.selected}}</ui-select-match>
                     <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
                         <div ng-bind-html="value | highlight: $select.search"></div>
                     </ui-select-choices>

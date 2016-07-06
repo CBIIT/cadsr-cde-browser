@@ -466,7 +466,6 @@ display:inline-block !important;
 
 .testTable {
     position: absolute;
-    /*right: 300px;*/
     top: 200px;
     font-size: 9pt;
 }
@@ -491,10 +490,6 @@ display:inline-block !important;
 .compareDataElementValue {
     width: 350px;
 }
-
-/*.compareDataElementColumn0 {
-    color: #00aa00;
-}*/
 
 .compareDataElementColumn1 {
     width: 116px;
@@ -525,16 +520,6 @@ display:inline-block !important;
 .compareTest3 {
     background-color: #0ff;
 }
-
-/*.comparePlus {
-    background-image: url("../icons/plus.png");*/
-    /*background-size: ;*/
-/*}
-
-.compareMinus {
-    background-image: url("../icons/minus.png");*/
-    /*background-size: ;*/
-/*}*/
 
 /* Advance Search Options */
 

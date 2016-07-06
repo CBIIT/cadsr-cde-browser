@@ -116,29 +116,25 @@ angular.module('cdeBrowserApp')
 ])
 
 .run(['$templateCache', function ($templateCache) {
-    $templateCache.put('selectize/choices.tpl.html', [
+    $templateCache.put('bootstrap/choices.tpl.html', [
 
-      '<div ng-show="$select.open"',
-      '  class="ui-select-choices group-tree selectize-dropdown single">',
+      '<div ng-show="$select.open && $select.items.length > 0"',
+      '  class="ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu" role="listbox">',
       '  <div ng-show="breadcrumbs.length > 1" class="ui-select-breadcrumbs">',
       '    <span class="ui-breadcrumb" ng-repeat="crumb in breadcrumbs"',
       '       ng-click="navigateBackTo(crumb, $select)">',
       '       {{crumb.title}}',
       '    </span>',
       '  </div>',
-      '  <div class="ui-select-choices-content selectize-dropdown-content">',
-      '    <div class="ui-select-choices-group optgroup">',
-      '      <div ng-show="$select.isGrouped"',
-      '        class="ui-select-choices-group-label optgroup-header">',
-      '        {{$group.name}}',
-      '      </div>',
-      '      <div class="ui-select-choices-row">',
-      '        <div class="option ui-select-choices-row-inner"',
-      '           data-selectable="">',
-      '        </div>',
-      '      </div>',
-      '    </div>',
-      '  </div>',
+      '<li class="ui-select-choices-group" id="ui-select-choices-{{ $select.generatedId }}" >',
+    '<div class="divider" ng-show="$select.isGrouped && $index > 0"></div>',
+    '<div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header" ng-bind="$group.name"></div>',
+    '<div ng-attr-id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row"',
+    'ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}" role="option">',
+      '<a href="" class="ui-select-choices-row-inner"></a>',
+    '</div>',
+  '</li>',
       '</div>'
+
     ].join(''));
 }])
