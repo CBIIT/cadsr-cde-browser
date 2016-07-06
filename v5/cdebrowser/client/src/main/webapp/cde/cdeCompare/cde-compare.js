@@ -119,14 +119,10 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 			items.push(compareService.idList.split(',')[i]);
 		}
 
-		//var items = $scope.downloadFactory.createDownloadableArray($scope.cdeDetails[0]); // creates simple array of ids //
 		console.log(items);
 		var param = false;
-
-		// var items = $scope.downloadFactory.createDownloadableArray(compareService.checkedCompareItems.items);
 		$scope.downloadFactory.downloadToExcel(param,items);
 		
-		//$scope.downloadFactory.excelDownload(false,items);
 	};
 
     $scope.compareDataDoneLoading = "true";
