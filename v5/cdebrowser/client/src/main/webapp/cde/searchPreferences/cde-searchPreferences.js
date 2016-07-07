@@ -34,6 +34,9 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
             })
         });
             $scope.tableParams.settings({ dataset: []});
+            $rootScope.$broadcast('updateResult',
+            {
+            })
      };
     
     $scope.searchPreferencesResetButton = function () {
@@ -135,6 +138,9 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
           });
         });
             $scope.tableParams.settings({ dataset: []});
+            $rootScope.$broadcast('updateResult',
+            {
+            })
      };
 
   // $scope.Statuses is for rest calls (workflow and registration) and $scope.Status is for variables (workflowIncluded,

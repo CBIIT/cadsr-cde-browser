@@ -1,7 +1,7 @@
 
 
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
@@ -25,6 +25,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (selectedInput!==undefined)
         $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
     };
+
+
+    $rootScope.$on('updateResult',function() {
+        $scope.searchResults = [];
+        $scope.breadCrumbs = [];
+    });
 
 
     // check user authentication status //
