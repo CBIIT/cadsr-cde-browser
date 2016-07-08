@@ -11,9 +11,9 @@
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util-4.1.xsd" >
-       
+
     <context:annotation-config />
-    
+
     <context:component-scan base-package="gov.nih.nci.cadsr">
     	 <context:exclude-filter type="regex" expression="gov.nih.nci.cadsr.service.restControllers.*" />
     </context:component-scan>
@@ -26,17 +26,17 @@
 
     <bean id="acRegistrationsDAO" class="gov.nih.nci.cadsr.dao.AcRegistrationsDAOImpl" parent="abstractDao"/>
     <bean id="acAttCsCsiDAO" class="gov.nih.nci.cadsr.dao.AcAttCsCsiDAOImpl" parent="abstractDao"/>
-    
+
     <bean id="searchDAO" class="gov.nih.nci.cadsr.dao.SearchDAOImpl" parent="abstractDao">
     	<property name="searchQueryBuilder" ref="searchQueryBuilder"/>
     </bean>
-    
+
     <bean id="conceptDAO" class="gov.nih.nci.cadsr.dao.ConceptDAOImpl" parent="abstractDao"/>
 
     <bean id="classificationSchemeDAO" class="gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl" parent="abstractDao">
     	<property name="lookupDataQueryBuilder" ref="lookupDataQueryBuilder" />
     </bean>
-    
+
     <bean id="conceptDerivationRuleDAO" class="gov.nih.nci.cadsr.dao.ConceptDerivationRuleDAOImpl" parent="abstractDao">
         <property name="propertyDAO" ref="propertyDAO"/>
         <property name="objectClassDAO" ref="objectClassDAO"/>
@@ -92,11 +92,11 @@
     <bean id="propertyDAO" class="gov.nih.nci.cadsr.dao.PropertyDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
-    
+
     <bean id="protocolDAO" class="gov.nih.nci.cadsr.dao.ProtocolDAOImpl" parent="abstractDao">
     	<property name="lookupDataQueryBuilder" ref="lookupDataQueryBuilder" />
     </bean>
-    
+
     <bean id="protocolFormDAO" class="gov.nih.nci.cadsr.dao.ProtocolFormDAOImpl" parent="abstractDao"/>
     <bean id="referenceDocDAO" class="gov.nih.nci.cadsr.dao.ReferenceDocDAOImpl" parent="abstractDao">
         <property name="contextDAO" ref="contextDAO"/>
@@ -139,7 +139,7 @@
     </bean>
 
 	<bean id="csCsiValueMeaningDAO" class="gov.nih.nci.cadsr.dao.CsCsiValueMeaningDAOImpl" parent="abstractDao"/>
-	
+
 	<bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownload">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
      </bean>
@@ -149,10 +149,11 @@
 	</bean>
 
     <bean id="searchQueryBuilder" class="gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder">
+        <property name="dataElementConceptDAO" ref="dataElementConceptDAO"/>
     </bean>
-    
+
     <bean id="lookupDataQueryBuilder" class="gov.nih.nci.cadsr.dao.operation.LookupDataQueryBuilder" />
-    
+
     <bean id="cdeCartUtil" class="gov.nih.nci.cadsr.cdecart.CdeCartUtil">
     </bean>
 </beans>

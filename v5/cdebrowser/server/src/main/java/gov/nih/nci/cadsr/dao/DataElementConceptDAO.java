@@ -6,9 +6,12 @@ package gov.nih.nci.cadsr.dao;
 import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import java.util.List;
+
 public interface DataElementConceptDAO
 {
 
     DataElementConceptModel getDecByDecIdseq( String decIdseq ) throws EmptyResultDataAccessException;
+    List<DataElementConceptModel> getDecByLongNameWildCard( String lName ) throws EmptyResultDataAccessException;
 
 }

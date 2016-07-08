@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gov.nih.nci.cadsr.dao.DataElementConceptDAO;
+import gov.nih.nci.cadsr.dao.DataElementConceptDAOImpl;
+import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,32 +20,29 @@ import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import gov.nih.nci.cadsr.service.search.ProcessConstants;
+import org.apache.logging.log4j.core.appender.SyslogAppender;
 
 public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
-    
+
+    private DataElementConceptDAOImpl dataElementConceptDAO;
+
     public SearchQueryBuilder()
     {
 
     }
 
-	/**
-     * @param clientName        The text the user put in the search text field in the UI.
-     * @param clientSearchMode   Exact phrase, All of the words, OR At least one of the words.
-     * @param clientSearchField  0 if user select Name field, 1 for Public ID.
-     * @param programArea        Empty if All  -  Works
-     * @param context            If empty, will not be used   -  Works
-     * @param classification     If empty, will not be used   -  Does not work right yet
-     * @param protocol           If empty, will not be used  - not implemented yet
-     * @param workFlowStatus     sbr.ac_status_lov_view - asl_name   -  Works   If empty will use the exclude list  from common.WorkflowStatusEnum#getExcludList():
-     * @param registrationStatus sbr.ac_registrations_view - registration_status     - not implemented yet
+    /**
+     * @param searchCriteria
+     * @param searchPreferences
+     * @return
      */
-    public String initSearchQueryBuilder(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences)
+    public String initSearchQueryBuilder( SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences )
     {
-        logger.debug("Initializing Search query builder with Search Criteria : " + searchCriteria);
-        logger.debug("Initializing Search query builder with Search Preferences : " + searchPreferences);
-        
+        logger.debug( "Initializing Search query builder with Search Criteria : " + searchCriteria );
+        logger.debug( "Initializing Search query builder with Search Preferences : " + searchPreferences );
+
         String vdFrom = "";
         String deDerivWhere = "";
         String deDerivFrom = "";
@@ -62,28 +62,30 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String regStatus = "";
         String protocolWhere = "";
         String formWhere = "";
-        
-     // This note was in the source could of the previous version: "release 3.0 updated to add display order for registration status"
+        String dataElementConceptWhere = "";
+        String permissibleValueWhere = "";
+
+        // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
-        
+
         String classificationFrom = ", sbr.classification_schemes cls ";
         String csiFrom = ", sbr.ac_csi_view acs ";
         String protocolFrom = ", sbrext.quest_contents_view_ext frm, sbrext.protocol_qc_ext ptfrm, sbrext.protocols_view_ext pt, sbrext.quest_contents_view_ext qc ";
         String formFrom = ", sbrext.quest_contents_view_ext qc ";
         String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
 
-        if(StringUtils.isBlank(searchCriteria.getClassification()))
+        if( StringUtils.isBlank( searchCriteria.getClassification() ) )
         {
             classificationFrom = "";
         }
         else
         {
-            classificationWhere = " AND de.de_idseq IN (SELECT de_idseq FROM   sbr.data_elements_view de , sbr.ac_csi_view acs, sbr.cs_csi_view csc " + 
-            					  "WHERE  csc.cs_idseq = '" + searchCriteria.getClassification() + "' " +
-            					  "AND    csc.cs_csi_idseq = acs.cs_csi_idseq AND acs.ac_idseq = de_idseq ) ";
+            classificationWhere = " AND de.de_idseq IN (SELECT de_idseq FROM   sbr.data_elements_view de , sbr.ac_csi_view acs, sbr.cs_csi_view csc " +
+                    "WHERE  csc.cs_idseq = '" + searchCriteria.getClassification() + "' " +
+                    "AND    csc.cs_csi_idseq = acs.cs_csi_idseq AND acs.ac_idseq = de_idseq ) ";
         }
-        
-        if(StringUtils.isBlank(searchCriteria.getCsCsiIdSeq()))
+
+        if( StringUtils.isBlank( searchCriteria.getCsCsiIdSeq() ) )
         {
             csiFrom = "";
         }
@@ -91,25 +93,74 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             csiWhere = " AND acs.cs_csi_idseq = '" + searchCriteria.getCsCsiIdSeq() + "' AND acs.ac_idseq = de.de_idseq";
         }
-        
-        if(StringUtils.isBlank(searchCriteria.getProtocol()))
+
+        if( StringUtils.isBlank( searchCriteria.getProtocol() ) )
         {
             protocolFrom = "";
         }
         else
         {
             protocolWhere = " AND pt.proto_idseq = ptfrm.proto_idseq AND frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF'" +
-            				" AND qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq" +
-            				" AND pt.proto_idseq = '" + searchCriteria.getProtocol() + "' ";
+                    " AND qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq" +
+                    " AND pt.proto_idseq = '" + searchCriteria.getProtocol() + "' ";
         }
-        
-        if(StringUtils.isBlank(searchCriteria.getFormIdSeq()))
+
+        if( StringUtils.isBlank( searchCriteria.getFormIdSeq() ) )
         {
             formFrom = "";
         }
         else
         {
-        	formWhere = " AND qc.dn_crf_idseq = '" + searchCriteria.getFormIdSeq() + "' AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq";
+            formWhere = " AND qc.dn_crf_idseq = '" + searchCriteria.getFormIdSeq() + "' AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq";
+        }
+
+        if( StringUtils.isBlank( searchCriteria.getPermissibleValue() ) )
+        {
+            permissibleValueWhere = "";
+        }
+        else
+        {
+            permissibleValueWhere = buildPermissibleValueWhere( searchCriteria.getPermissibleValue(), searchCriteria.getPvQueryType() );
+        }
+
+        if( StringUtils.isBlank( searchCriteria.getDataElementConcept() ) )
+        {
+            dataElementConceptWhere = "";
+        }
+        else
+        {
+            // Get the DEC_IDSEQ values of any/all of the Data Element Concepts, that matched wild card input in getDataElementConcept
+            List<DataElementConceptModel> dataElementConceptModels = dataElementConceptDAO.getDecByLongNameWildCard( searchCriteria.getDataElementConcept() );
+            // If there are no matches for the dataElementConcept, than this query can never return results, so we return null right no
+            if( dataElementConceptModels.isEmpty() )
+            {
+                return null;
+            }
+            else
+            {
+                if( dataElementConceptModels.size() == 1 )
+                {
+                    dataElementConceptWhere = " AND dec_idseq = '" + dataElementConceptModels.get( 0 ).getDecIdseq() + "' ";
+                }
+                else
+                {
+                    for( int i = 0; i < dataElementConceptModels.size(); i++ )
+                    {
+                        if( i == 0 )
+                        {
+                            dataElementConceptWhere = " AND (";
+                        }
+
+                        dataElementConceptWhere += " dec_idseq = '" + dataElementConceptModels.get( i ).getDecIdseq() + "' ";
+                        if( i < ( dataElementConceptModels.size() - 1 ) )
+                        {
+                            dataElementConceptWhere += " OR ";
+                        }
+
+                    }
+                    dataElementConceptWhere += " )";
+                }
+            }
         }
 
         ////////////////////////////////////////////////////
@@ -117,17 +168,18 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String registrationExcludeWhere = "";
 
         List<String> registrationStatusExcluded = searchPreferences.getRegistrationStatusExcluded();
-        if (! registrationStatusExcluded.isEmpty()) {
-        	String[] excludeRegistrationStatusArr = registrationStatusExcluded.toArray(new String[registrationStatusExcluded.size()]);
+        if( !registrationStatusExcluded.isEmpty() )
+        {
+            String[] excludeRegistrationStatusArr = registrationStatusExcluded.toArray( new String[registrationStatusExcluded.size()] );
             registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeRegistrationStatusArr );
         }
         //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status from Advanced Search
         regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
-        
+
         //This is a criteria which comes from drop down box of the basic search
-        if (StringUtils.isNotBlank(searchCriteria.getRegistrationStatus()))
+        if( StringUtils.isNotBlank( searchCriteria.getRegistrationStatus() ) )
         {
-        	registrationStatusWhere = " AND acr.registration_status = '" + searchCriteria.getRegistrationStatus() + "' ";
+            registrationStatusWhere = " AND acr.registration_status = '" + searchCriteria.getRegistrationStatus() + "' ";
         }
 
         ////////////////////////////////////////////////////
@@ -135,22 +187,23 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         // If it is empty, use exclude list in search preferences
         String workflowWhere = "";
         List<String> workflowStatusExcluded = searchPreferences.getWorkflowStatusExcluded();
-        if (! workflowStatusExcluded.isEmpty()) {
-        	workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
+        if( !workflowStatusExcluded.isEmpty() )
+        {
+            workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
         }
-        
-        if(! StringUtils.isBlank(searchCriteria.getWorkFlowStatus()))
+
+        if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
             workflowWhere += " AND asl.asl_name = '" + searchCriteria.getWorkFlowStatus() + "' ";
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
-        
+
         //Context excluded
         ////////////////////////////////////////////////////
         // This excludes Search Preferences excluded context.
         String contextExludeWhere = "";
         String excludedContext = searchPreferences.buildContextExclided();
-        if(StringUtils.isNotBlank(excludedContext))
+        if( StringUtils.isNotBlank( excludedContext ) )
         {
             contextExludeWhere = " AND conte.name NOT IN (" + excludedContext + " )";
         }
@@ -158,28 +211,28 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         ///////////////////////////////////////////////////////
         // Filter for only a specific context is added only if protocol where is not already added otherwise,
         //the left context tree search by protocol is not matching up with the drop down search by context and protocol
-        if(StringUtils.isNotBlank(searchCriteria.getContext()) && StringUtils.isBlank(searchCriteria.getProtocol()))
+        if( StringUtils.isNotBlank( searchCriteria.getContext() ) && StringUtils.isBlank( searchCriteria.getProtocol() ) )
         {
             contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
-        				   " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
+                    " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
         }
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific programArea
-        if(StringUtils.isNotBlank(searchCriteria.getProgramArea()))
+        if( StringUtils.isNotBlank( searchCriteria.getProgramArea() ) )
         {
             programAreaWhere = " conte.pal_name = '" + searchCriteria.getProgramArea() + "' AND ";
         }
 
 
-        if( StringUtils.isNotBlank(searchCriteria.getPublicId()) && ( !searchCriteria.getPublicId().trim().equals( "*" ) ) )
+        if( StringUtils.isNotBlank( searchCriteria.getPublicId() ) && ( !searchCriteria.getPublicId().trim().equals( "*" ) ) )
         {
             String newCdeStr = StringReplace.strReplace( searchCriteria.getPublicId(), "*", "%" );
             cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, searchCriteria.getSearchMode() )
-            			+ " AND de.latest_version_ind = 'Yes' ";
+                    + " AND de.latest_version_ind = 'Yes' ";
         }
 
-        if(StringUtils.isNotBlank(valueDomain))
+        if( StringUtils.isNotBlank( valueDomain ) )
         {
             vdWhere = " AND vd.vd_idseq = '" + valueDomain + "'"
                     + " AND vd.vd_idseq = de.vd_idseq ";
@@ -187,9 +240,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         }
 
-        if(StringUtils.isNotBlank(searchCriteria.getName()))
+        if( StringUtils.isNotBlank( searchCriteria.getName() ) )
         {
-        	// AppScan
+            // AppScan
             String clientName = StringUtilities.sanitizeForSql( searchCriteria.getName() );
             docWhere = this.buildSearchTextWhere( clientName, searchIn, searchCriteria.getSearchMode() );
         }
@@ -197,14 +250,16 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( wkFlowWhere );
         whereBuffer.append( registrationStatusWhere );
         whereBuffer.append( classificationWhere );
-        whereBuffer.append(csiWhere);
+        whereBuffer.append( csiWhere );
         whereBuffer.append( regStatus );
         whereBuffer.append( cdeIdWhere );
         whereBuffer.append( decWhere );
         whereBuffer.append( vdWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
-        whereBuffer.append( deDerivWhere ).append(protocolWhere).append(formWhere);
+        whereBuffer.append( dataElementConceptWhere );
+        whereBuffer.append( permissibleValueWhere );
+        whereBuffer.append( deDerivWhere ).append( protocolWhere ).append( formWhere );
 
         whereClause = whereBuffer.toString();
 
@@ -236,6 +291,55 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public String buildPermissibleValueWhere( String query, int queryType )
+    {
+        logger.debug( "IN buildPermissibleValueWhere  query: [" + query + "]  queryType: [" + queryType + "}" );
+         /*
+         {id: 0, name: "Exact phrase"},
+        {id: 1, name: "All of the words"},
+        {id: 2, name: "At least one of the words"}
+          */
+
+        query = query.replaceAll( "\\*", "%" );
+        String where = "and de.vd_idseq \n" +
+                "IN (\n";
+
+        //Exact phrase
+        if( queryType == 0 )
+        {
+            where += "    select vd.vd_idseq \n" +
+                    "    from sbr.value_domains_view vd , sbr.vd_pvs_view vp, sbr.permissible_values_view pv   \n" +
+                    "    where  vd.vd_idseq = vp.vd_idseq  and    pv.pv_idseq = vp.pv_idseq and upper (pv.value) like upper ('" + query + "') \n";
+        }
+
+        else if( ( queryType == 1 ) || ( queryType == 2 ) )
+        {
+            String[] parts = query.split( " " );
+            boolean firstFlag = true;
+            for( String term : parts )
+            {
+                if( firstFlag )
+                {
+                    firstFlag = false;
+                }
+                else if( queryType == 1 )
+                {
+                    where += "INTERSECT\n";
+                }
+                else if( queryType == 2 )
+                {
+                    where += "UNION\n";
+                }
+
+                where += "    select vd.vd_idseq \n" +
+                        "    from sbr.value_domains_view vd , sbr.vd_pvs_view vp, sbr.permissible_values_view pv \n" +
+                        "    where  vd.vd_idseq = vp.vd_idseq and pv.pv_idseq = vp.pv_idseq and (upper (pv.value) " +
+                        "like upper ('% " + term + " %')  or upper (pv.value) like upper ('" + term + " %')  or upper (pv.value) like upper ('" + term + "')  or upper (pv.value) like upper ('% " + term + "') )\n";
+            }
+        }
+        where += ")";
+        return where;
+    }
 
     /**
      * This method returns the clientQuery for whole word matching the input param word
@@ -453,7 +557,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     {
 
         if( ( regStatusList == null ) || ( regStatusList.length == 0 ) ||
-        		( StringUtilities.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
+                ( StringUtilities.containsKey( regStatusList, "ALL" ) || ( regStatusList[0].isEmpty() ) ) )
         {
             return "";
         }
@@ -485,4 +589,13 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         return regStatWhere;
     }
 
+    public void setDataElementConceptDAO( DataElementConceptDAOImpl dataElementConceptDAO )
+    {
+        this.dataElementConceptDAO = dataElementConceptDAO;
+    }
+
+    public DataElementConceptDAOImpl getDataElementConceptDAO()
+    {
+        return dataElementConceptDAO;
+    }
 }

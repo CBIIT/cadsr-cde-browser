@@ -6,7 +6,12 @@
     <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Names and Definitions" />
 
 
+<!--
     <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.selectedQueryType )">
+
+                                                                                 query, field, dec, pv, type, publicIdName
+-->
+    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType  )">
         Search
     </button>
 </div>

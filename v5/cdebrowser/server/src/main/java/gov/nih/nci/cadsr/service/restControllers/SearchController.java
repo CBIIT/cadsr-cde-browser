@@ -86,17 +86,18 @@ public class SearchController
     {
         logger.debug("Received a search request with the following search criteria: " + searchCriteria);
         SearchNode[] results;
-        
+
         if (result.hasErrors())
         {
         	logger.error("Error in binding search criteria to the SearchCriteria bean.");
-        	return createErrorNode( "Server Error in binding search criteria to a bean."); 
+        	return createErrorNode( "Server Error in binding search criteria to a bean. Error count:" +  result.getErrorCount() + "  " + result.getAllErrors().get(0));
         }
 
         // AppScan will try to inject %Hex strings to test our parameter sanitizing.
-        if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(), 
+        if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(),
         										searchCriteria.getClassification(), searchCriteria.getCsCsiIdSeq(), searchCriteria.getProtocol(), searchCriteria.getFormIdSeq(),
-        										searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), searchCriteria.getConceptName(), searchCriteria.getConceptCode() ))
+        										searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), searchCriteria.getConceptName(), searchCriteria.getConceptCode(),
+                                                searchCriteria.getDataElementConcept(), searchCriteria.getPermissibleValue() ))
         {
             logger.warn( "Suspect parameter from client." );
             return null;
@@ -110,6 +111,7 @@ public class SearchController
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
+            //FIXMENOW, this does'nt have the new advanced search fields yet.
             return createErrorNode( "Server Error:\nsearch criteria : " + searchCriteria.getName() + ", publicId: " + searchCriteria.getPublicId() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getProgramArea() + " failed ", e );
         }
 

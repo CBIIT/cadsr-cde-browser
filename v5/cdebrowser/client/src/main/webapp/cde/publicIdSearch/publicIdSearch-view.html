@@ -28,11 +28,13 @@
             </div>
         </div>
     </span>
-    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', fs.dataElementVariables.selectedQueryType, publicIdName)">
+
+    <!-- The third, fourth, and fifth parameters are place holders for values used by advanced search, their emptiness indicates to server that advanced search should not be used -->
+    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', '',' ', 0, fs.dataElementVariables.selectedQueryType, publicIdName)">
         Search
     </button>
     <button id="clear" data-ng-click="clear()">
         Clear
-    </button>    
+    </button>
 </div>
 </span>

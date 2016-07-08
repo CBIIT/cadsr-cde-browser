@@ -265,9 +265,11 @@
             <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==2">
                 This is the search preferences pane.
             </div>
+            <!--
             <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==3">
                 This is the advanced search pane.
             </div>
+            -->
             <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
 
                 <span>
@@ -369,10 +371,10 @@
                 <br>
 
                 <div ng-show="more">
-                
 
-                ADVANCE SEARCH OPTIONS DISPLAY SECTION (PUT ALL THE ADVANCE SEARCH OPTIONS IN THIS DIV)
-
+                 <!-- ADVANCE SEARCH OPTIONS DISPLAY SECTION (PUT ALL THE ADVANCE SEARCH OPTIONS IN THIS DIV) -->
+                 <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'">
+                 </div>
 
                 </div>
 
@@ -466,9 +468,9 @@
             <!-- end show progress bar -->
         </span>
         <!-- end Download Buttons -->
-        
+
         <!-- <br /> -->
-        
+
         <!-- the search results tabs and content below -->
         <div class="cdeTabs">
             <ul class="cdeTabsUl">
@@ -598,7 +600,10 @@
 </div>
 
 
+<!--  FIXME martin, switch this back to min
 <script src='libs/angular.min.js'></script>
+-->
+<script src='libs/angular.js'></script>
 <script src='libs/angular-resource.min.js'></script>
 <script src='libs/angular-animate.min.js'></script>
 <script src='libs/angular-route.min.js'></script>
@@ -626,6 +631,7 @@
 <script src="cde/usage/cde-usage.js"></script>
 <script src="cde/valueDomain/cde-valueDomain.js"></script>
 <script src="cde/genericSearch/cde-genericSearch.js"></script>
+<script src="cde/advancedSearch/cde-adavancedSearch.js"></script>
 <script src="cde/publicIdSearch/cde-publicIdSearch.js"></script>
 <script src="cde/searchPreferences/cde-searchPreferences.js"></script>
 <script src="cde/cdeCart/cde-cart.js"></script>

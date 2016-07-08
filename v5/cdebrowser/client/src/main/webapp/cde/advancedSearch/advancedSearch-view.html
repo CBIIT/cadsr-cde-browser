@@ -1,3 +1,29 @@
-<div>
-	Advanced Search
-</div>
+<!--
+<span ng-controller="AdvancedSearchController">
+-->
+<span ng-controller="GenericSearchController">
+    <div>
+        <label class="advancedSearchLabel">Data Element Concept</label>
+        <input type="text" placeholder="Data Element Concept" id="advancedSearchDEC" name="searchDEC"
+               ng-model="fs.dataElementVariables.searchDEC"/>
+    </div>
+    <div class="permissibleValueGroup">
+        <div>
+        <label class="advancedSearchLabel">Permissible Value</label>
+        <input type="text" placeholder="Permissible Value" id="advancedSearchPV" name="searchPV"
+               ng-model="fs.dataElementVariables.searchPV"/>
+        </div>
+
+        <label data-ng-repeat="queryType in searchQueryTypes">
+            <div class="queryTypeRadioButtons">
+                <input ng-disabled="fs.isSearching"
+                       name="searchPVQueryType"
+                       type="radio"
+                       value="{{queryType.id}}"
+                       data-ng-model="fs.dataElementVariables.searchPVQueryType"/>
+                {{queryType.name}}&nbsp;&nbsp;
+            </div>
+        </label>
+    </div>
+
+</span>
