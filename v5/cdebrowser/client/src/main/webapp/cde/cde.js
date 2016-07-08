@@ -14,6 +14,7 @@ angular.module("cde", [
     "cdeUsage",
     "cdeValueDomain",
     "cdeGenericSearch",
+    "cdeAdvancedSearch",
     "cdePublicIdSearch",
     "cdeSearchPreferences",
     "cdeCart",
@@ -43,7 +44,7 @@ angular.module("cde", [
             controller: "AdminInfoCtrl",
             templateUrl: "cde/adminInfo/adminInfo-view.html",
             title:"Admin Info"
-        })     
+        })
         .when("/classifications", {
             controller: "ClassificationsCtrl",
             templateUrl: "cde/classifications/classifications-view.html",
@@ -68,7 +69,7 @@ angular.module("cde", [
         .when("/usage", {
             controller: "UsageCtrl",
             templateUrl: "cde/usage/usage-view.html",
-            title: "Usage"            
+            title: "Usage"
         })
         .when("/valueDomain", {
             controller: "ValueDomainCtrl",
@@ -89,7 +90,7 @@ angular.module("cde", [
             controller: "LoginCtrl",
             templateUrl: "cde/authentication/login-view.html",
             title: "Login"
-        });                
+        });
 
 
 }]);

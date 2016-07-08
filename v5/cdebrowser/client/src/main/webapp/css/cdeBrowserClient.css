@@ -77,6 +77,13 @@ a:hover {
     height: 90px;
 }
 
+/* Labels for advanced Search inputs.  There is probably a style for these aready, but I can't find it, will search again in future. */
+.advancedSearchLabel{
+    font-size: 14px;
+    background-color: #fff;
+    color: #18344d;
+}
+
 /* The four round buttons - top right */
 .roundButton {
     font-size: 10pt;
@@ -466,6 +473,7 @@ display:inline-block !important;
 
 .testTable {
     position: absolute;
+    /*right: 300px;*/
     top: 200px;
     font-size: 9pt;
 }
@@ -490,6 +498,10 @@ display:inline-block !important;
 .compareDataElementValue {
     width: 350px;
 }
+
+/*.compareDataElementColumn0 {
+    color: #00aa00;
+}*/
 
 .compareDataElementColumn1 {
     width: 116px;
@@ -532,4 +544,13 @@ display:inline-block !important;
     font-size: 12px !important;
 }
 
-
+.permissibleValueGroup
+{
+    border-radius: 4px;
+    border: 1px solid #73AD21;
+    padding: 6px 4px 4px;
+    /*
+    width: 200px;
+    height: 150px;
+    */
+}

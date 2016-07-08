@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DataElementConceptDAOImpl extends AbstractDAOOperations implements DataElementConceptDAO
 {
@@ -43,6 +44,16 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
         DataElementConceptModel dataElementConceptModel = jdbcTemplate.queryForObject( sql, new Object[]{ decIdseq }, new DataElementConceptMapper( DataElementConceptModel.class ) );
         logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
         return dataElementConceptModel;
+    }
+
+   @Override
+    public List<DataElementConceptModel> getDecByLongNameWildCard( String lName ) throws EmptyResultDataAccessException
+    {
+        // Change wildcard *  to Oracle %
+        lName = lName.replaceAll( "\\*", "%" );
+        String sql = "SELECT * FROM sbr.data_element_concepts WHERE long_name like '"+ lName + "'";
+
+        return getAll( sql,  DataElementConceptModel.class );
     }
 
 
