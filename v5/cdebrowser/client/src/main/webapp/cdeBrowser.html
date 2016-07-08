@@ -16,6 +16,27 @@
     <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/style.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/selectize.bootstrap3.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<style>
+.thumbnail {
+            height: 15px;
+            
+            text-align: center;
+            padding-top: 0px;
+            transition: none;
+            -webkit-transition: none;
+            -moz-transition: none;
+            -o-transition: none;
+            cursor: move;
+            
+        }
+
+            .thumbnail[data-drag="false"] {
+                background: green;
+            }
+
+</style>
 
 </head>
 <body>
@@ -594,6 +615,7 @@
 <script src='libs/ui-select-with-tree-navigation/index.js'></script>
 <script src='libs/ui-select-with-tree-navigation/index1.js'></script>
 <script src='libs/ui-select-with-tree-navigation/lodash.min.js'></script>
+<script src='plugins/angular-dragdrop.min.js'></script>
 
 <script src="cde/cde.js"></script>
 <script src="cde/adminInfo/cde-adminInfo.js"></script>

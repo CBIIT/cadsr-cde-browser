@@ -22,7 +22,7 @@ angular.module("cdeBrowserApp").service('compareService', function () {
     this.idList = "";
 
     this.compareCDE = function (checkedItemsForDownload, searchResults) {
-        this.checkedItemsForCompare = [];
+        // this.checkedItemsForCompare = [];
         
         //Add any newly checked CDEs  CHECKME, make sure this is the correct functionality.
         this.addToCompare(checkedItemsForDownload, searchResults);

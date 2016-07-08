@@ -49,6 +49,10 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
     };
 
+  //							//
+  //	FOR TESTING PURPOSE		//
+  //  							//
+
   //   $scope.dataLoad1 = function () {
   //       $scope.dataLoad("data1.json");
   //   };
@@ -73,7 +77,11 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
   //       $scope.dataLoad("data6.json");
   //   };
 
-   // $scope.dataLoad6();
+  // $scope.dataLoad6();
+	
+  //							//
+  //	END TESTING PURPOSE		//
+  //  							//
 
    	$scope.deleteAllCDEs = function() {
    		$scope.cdeDetails.splice(0);
@@ -83,19 +91,19 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
    		$scope.cdeDetails.splice(ndx,1);
    	}
 
-   	$scope.selectAll=function(){
-   		for(var i=0;i<$scope.cdeDetails.length;i++){
-   			$scope.checkedItems[i]=$scope.checkAllItems;
-   		}
-   	}
+   	// $scope.selectAll=function(){
+   	// 	for(var i=0;i<$scope.cdeDetails.length;i++){
+   	// 		$scope.checkedItems[i]=$scope.checkAllItems;
+   	// 	}
+   	// }
 
-   	$scope.checkSelection=function(){
-   		if($filter('filter')($scope.checkedItems,true).length===$scope.cdeDetails.length)
-   			$scope.checkAllItems=true;
-   		else
-   			$scope.checkAllItems=false;
+   	// $scope.checkSelection=function(){
+   	// 	if($filter('filter')($scope.checkedItems,true).length===$scope.cdeDetails.length)
+   	// 		$scope.checkAllItems=true;
+   	// 	else
+   	// 		$scope.checkAllItems=false;
 
-   	}
+   	// }
 
 	$scope.goTo = function(id) {
 		var change = $location.hash();
@@ -114,15 +122,17 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
 		var items=[];
 
-		for(var i=0;i<$scope.checkedItems.length;i++) {
-			if($scope.checkedItems[i])
-			items.push(compareService.idList.split(',')[i]);
-		}
+		// for(var i=0;i<$scope.checkedItems.length;i++) {
+		// 	if($scope.checkedItems[i])
+		// 	items.push(compareService.idList.split(',')[i]);
+		// }
+
+		items=compareService.idList.split(",");
 
 		console.log(items);
 		var param = false;
-		$scope.downloadFactory.downloadToExcel(param,items);
-		
+		$scope.downloadFactory.excelDownload(param,items);
+
 	};
 
     $scope.compareDataDoneLoading = "true";

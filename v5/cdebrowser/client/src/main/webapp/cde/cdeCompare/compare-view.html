@@ -15,7 +15,7 @@
 	</div> -->
 	<div style="padding-bottom:5px">
 		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()">Excel Download</button>
-		<button ng-click="goBack()">Cancel</button>
+		<button ng-click="goBack()">Return to Search</button>
 	</div>
 
 	<div style="padding:5px 0px 10px 0px" class="">
@@ -69,11 +69,17 @@
             <tr>
                 <td>CDE:
                 	<img src="icons/delete.png" alt="delete all CDEs" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteAllCDEs()">
-                	<input style="float:right" type="checkbox" name="extra" ng-model="checkAllItems" ng-change="selectAll()">
+                	<!-- <input style="float:right" type="checkbox" name="extra" ng-model="checkAllItems" ng-change="selectAll()"> -->
                 </td>
-                <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}
-                	<img src="icons/delete.png" alt="delete CDE" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE(element)">
-                	<input style="float:right" type="checkbox" name="checkedCompareItems"  ng-model="checkedItems[element]" ng-change="checkSelection()">
+                <td ng-repeat="item in cdeDetails" data-drop="true" ng-model='cdeDetails' jqyoui-droppable="{index: {{$index}}}">
+                	
+                            <div class="thumbnail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="cdeDetails" jqyoui-draggable="{index: {{$index}},animate:true}">
+                               {{$index + 1}}
+                               <img src="icons/delete.png" alt="delete CDE" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE($index)">
+                            </div>
+                     
+
+                	<!-- <input style="float:right" type="checkbox" name="checkedCompareItems"  ng-model="checkedItems[element]" ng-change="checkSelection()"> -->
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
@@ -631,7 +637,7 @@
 </div>
 	<div style="padding-top:5px">
 		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()">Excel Download</button>
-		<button ng-click="goBack()">Cancel</button>
+		<button ng-click="goBack()">Return to Search</button>
 	</div>
 
 

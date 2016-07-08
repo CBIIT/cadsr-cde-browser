@@ -33,12 +33,12 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 
 
-	    // download to excel from compare screen
+	    // excel download from compare screen
 	     this.excelDownload = function(param, items) {
 	     	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
 	     	var that = this;
 
-	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: items}).
+	            $http({method: 'POST', url: '/cdebrowserServer/rest/excelDownload',data: items}).
 	            success(function(data, status, headers, config) {
 	           	that.progressMessage.status=0;
 	                 window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;

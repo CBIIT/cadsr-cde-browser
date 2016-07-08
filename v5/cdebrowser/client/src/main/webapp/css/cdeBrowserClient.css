@@ -403,6 +403,22 @@ display:inline-block !important;
     border-width: thin;
 }
 
+/* FIX ME */
+
+/*.dragDrop ul:nth-child(1)[dnd-list] {
+    border: 1px solid black;
+    width: 168px;
+    list-style: none;
+    display: inline-block;
+    min-height: 141px;
+    max-height: 141px;
+    overflow-y: scroll;
+    float: left;
+    margin-right: 60px;
+    border-radius: 2px;
+    border-width: thin;
+}*/
+
 .dragDrop ul[dnd-list] .dndPlaceholder {
     display: block;
     background-color: #ddd;
@@ -424,6 +440,10 @@ display:inline-block !important;
 .searchPreferencesButton {
     padding-top: 8px;
 }
+
+/*.searchPreferencesSpace {
+    margin-right: 60px !important;
+}*/
 
 /* Classification and Protocol autocomplete dropdowns */
 
