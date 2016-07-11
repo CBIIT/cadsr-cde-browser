@@ -75,7 +75,7 @@
                 	
                             <div class="thumbnail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="cdeDetails" jqyoui-draggable="{index: {{$index}},animate:true}">
                                {{$index + 1}}
-                               <img src="icons/delete.png" alt="delete CDE" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE($index)">
+                               <img src="icons/delete.png" alt="delete CDE" style="width:18px;height:18px;float:right;padding:0 4px 0;cursor:pointer" ng-click="deleteCDE(item.id,$index)">
                             </div>
                      
 

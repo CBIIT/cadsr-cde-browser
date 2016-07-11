@@ -36,7 +36,12 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function (serverUrl) {
         $http.get(serverUrl).success(function (response) {
-            $scope.cdeDetails = response;
+         var len=compareService.checkedItemsForCompare.length;
+         $scope.cdeDetails = response;
+          for(var i=0;i<len;i++){
+            $scope.cdeDetails[i].id=compareService.checkedItemsForCompare[i];
+          }
+            
             $scope.compareDataDoneLoading = true;
             // FIXME  Check here for errors
         });
@@ -85,10 +90,13 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
    	$scope.deleteAllCDEs = function() {
    		$scope.cdeDetails.splice(0);
+      compareService.deleteCheckedItemsforCompare('',true);
+
    	}
    	
-   	$scope.deleteCDE = function(ndx) {
+   	$scope.deleteCDE = function(id,ndx) {
    		$scope.cdeDetails.splice(ndx,1);
+      compareService.deleteCheckedItemsforCompare(id,false);
    	}
 
    	// $scope.selectAll=function(){
@@ -129,7 +137,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
 		items=compareService.idList.split(",");
 
-		console.log(items);
+		// console.log(items);
 		var param = false;
 		$scope.downloadFactory.excelDownload(param,items);
 

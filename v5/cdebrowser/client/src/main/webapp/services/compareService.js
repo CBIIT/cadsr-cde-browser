@@ -42,7 +42,22 @@ angular.module("cdeBrowserApp").service('compareService', function () {
 
         // var usrlString= window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserClient/cdeCompare.html?cde=" + cdeListString;
         // window.open(usrlString);
+      
+
+     this.deleteCheckedItemsforCompare=function(id,all){
+        if(all){
+           this.checkedItemsForCompare=[]; 
+        }else{
+        var len=this.checkedItemsForCompare.length;
+for(var x=0;x<len;x++){
+if(this.checkedItemsForCompare[x]==id){
+    this.checkedItemsForCompare.splice(x,1);
+    break;
+}
+}    
+        }
         
+     }   
     };
 
 });

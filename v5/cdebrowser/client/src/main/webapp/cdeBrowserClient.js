@@ -433,7 +433,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             };
         };
 
-        console.log("Calling server url: " + url);
+        // console.log("Calling server url: " + url);
         $scope.searchServerRestCall(url);
         if (field=='publicId') {
             $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //

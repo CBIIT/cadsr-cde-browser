@@ -361,21 +361,41 @@ display:inline-block !important;
     width: 800px;
 }
 
-.searchPreferencesListMainHead {
+.searchPreferencesListMainHeadWorkflow {
     display: inline-block;
-    padding-right: 255px;
+    padding-right: 295px;
     padding-bottom: 8px;
 }
 
-.searchPreferencesListWorkflowHead {
+.searchPreferencesListMainHeadRegistration {
+    display: inline-block;
+    padding-right: 0;
+    padding-bottom: 8px;
+}
+
+.searchPreferencesListWorkflowHeadIncluded {
     display: inline-block;
     padding-right: 135px;
     padding-bottom: 8px;
 }
 
-.searchPreferencesListRegistrationHead {
+.searchPreferencesListWorkflowHeadExcluded {
+    display: inline-block;
+    padding-right: 180px;
+    margin-left: -5px;
+    padding-bottom: 8px;
+}
+
+.searchPreferencesListRegistrationHeadIncluded {
     display: inline-block;
     padding-right: 140px;
+    margin-left: -5px;
+    padding-bottom: 8px;
+}
+
+.searchPreferencesListRegistrationHeadExcluded {
+    display: inline-block;
+    padding-right: 0;
     margin-left: -5px;
     padding-bottom: 8px;
 }
@@ -394,6 +414,10 @@ display:inline-block !important;
 .dragDrop ul[dnd-list],
 .dragDrop ul[dnd-list] > li {
   position: relative;
+}
+
+.test-class{
+    margin-right: 60px !important;
 }
 
 .dragDrop ul[dnd-list] {
