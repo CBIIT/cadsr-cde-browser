@@ -369,6 +369,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
 
                 if (publicIdName && publicIdName!='') {
+                    
                     url=url.concat("&name=",publicIdName)
                 };
         }
