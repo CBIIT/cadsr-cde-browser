@@ -360,24 +360,25 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var c=0; // index of searchFilter key //
        if (query!='') { // create base url. determine if query is blank //
                 var url = "".concat("cdebrowserServer/rest/search?", field, "=",query); // search has a query value //
 
                 if(typeof type != 'undefined' )
                 {
                  url += "&queryType="+type;
+                 c++;
                 }
 
                 if (publicIdName && publicIdName!='') {
-                    
                     url=url.concat("&name=",publicIdName)
+                    c++;
                 };
         }
         else {
             var url = "".concat("cdebrowserServer/rest/search");
         };
 
-        var c=0; // index of searchFilter key //
         var  connector="";
 
         if( dec != '') {
@@ -397,6 +398,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             if (fs.searchFilter[x]&&field=='name') {
                 connector= c==0?"?":"&";
+                c++;
                 if (query==''&&  typeof fs.searchFilter[x]!='object') {
                     if (x=='programArea') {
                         url+=connector+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
