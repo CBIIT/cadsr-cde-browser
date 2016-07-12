@@ -58,11 +58,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     // console.log("NO SEARCH");
                 }
                 else {
-
                      // do search because at least one dropdown besides program area is selected //
                     //fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType
                     $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType );  //FIXMENOW this function signature has changed!
                     // console.log("Search");
+
                     $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
             };
@@ -440,7 +440,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //
         }
         else {
-            $scope.breadCrumbs = [$scope.contextListMaster[fs.searchFilter.programArea].text];
+            //$scope.breadCrumbs = [$scope.contextListMaster[fs.searchFilter.programArea].text];
+            $scope.breadCrumbs = fs.createBreadcrumbs();
         }
 
         // Restore the view of search results table
