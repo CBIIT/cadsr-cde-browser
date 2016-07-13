@@ -6,6 +6,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.location = $location.url();
     $scope.permissibleValueHold = "";
     $scope.dataElementConceptHOLD = "";
+    $scope.searchAltNameHOLD = "";
+    var delimiter= ":::";
 
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -21,7 +23,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.searchFilter.programArea=0;
         };
     });
-
 
     $scope.contextCascade = function(selectedInput) {
         if (selectedInput!==undefined)
@@ -58,9 +59,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
                 else {
                     // do search because at least one dropdown besides program area is selected //
-                    //fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType
-                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType );  //FIXMENOW this function signature has changed!
-                    // console.log("Search");
+
+                    $scope.onClickBasicSearch(
+                        fs.dataElementVariables.basicSearchQuery,
+                        'name',
+                        fs.dataElementVariables.searchDEC,
+                        fs.dataElementVariables.searchPV,
+                        fs.dataElementVariables.searchPVQueryType,
+                        fs.dataElementVariables.selectedQueryType,
+                        "",
+                        fs.dataElementVariables.searchAltName,
+                        fs.dataElementVariables.searchAltNameTypes);
 
                     $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
@@ -307,7 +316,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else
         {
             $scope.showCdeSearchResults = false;
-
         }
 
     };
@@ -324,40 +332,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, publicIdName) {
-
-
-        /**
-         *  name              The text of the users search input for data element search.
-         *  publicId          The text of the users search input for publicId search.
-         *  queryType          0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE - defaults to 2 if left out
-         *  programArea        If empty, will not be used
-         *
-         *  Some of these are still not implemented on the Server side, no harm in including them, but they will have no effect.
-         *  context            If empty, will not be used
-         *  classification     If empty, will not be used
-         *  protocol           If empty, will not be used
-         *  workFlowStatus     If empty, will not be used
-         *  registrationStatus If empty, will not be used
-         *  conceptName        If empty, will not be used
-         *  conceptCode        If empty, will not be used
-         */
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, publicIdName, searchAltName, searchAltNameType) {
+        var str = '';
+        for (var p in searchAltNameType) {
+            if (searchAltNameType.hasOwnProperty(p)) {
+                str += searchAltNameType[p].type + delimiter;
+            }
+        }
+        searchAltNameType = str;
 
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
-        /*
 
-         if ((typeof query != 'undefined') && (query!='')) { // create base url. determine if query is blank //
-         var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value //
-         if (publicIdName && publicIdName!='') {
-         url=url.concat("&name=",publicIdName)
-         };
-         }
-         else {
-         var url = "".concat("cdebrowserServer/rest/search");
-         };
-
-         */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var c=0; // index of searchFilter key //
         if (query!='') { // create base url. determine if query is blank //
@@ -391,6 +377,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             c++;
             url += connector + "permissibleValue=" + pv;
             url += "&pvQueryType=" + pvType;
+        }
+
+        if (searchAltName != '') {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "searchAltName=" + searchAltName;
+            url += "&searchAltNameType=" + searchAltNameType;
         }
 
         for (var x in fs.searchFilter) {
@@ -431,11 +424,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                         }
                     };
                 };
-                c++;
             };
         };
 
-        // console.log("Calling server url: " + url);
         $scope.searchServerRestCall(url);
         if (field=='publicId') {
             $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //
@@ -581,6 +572,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
      $scope.dataLoad("data6.json");
      };
      */
+    $scope.getAlternateNameTypesFromServer = function () {
+        var serverUrl = "altNameType.json"
+        $http.get(serverUrl)
+
+            .success(function (response) {
+                $scope.alternateNameTypes = response;
+            })
+            .error(function (error) {
+                console.log("Error [" + serverUrl + "]: " + error.statusText);
+            });
+
+    };
+
 
     $scope.dataLoadFromServer = function () {
         $scope.staticFilters = {};
@@ -870,6 +874,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.initTableParams(); // init table params //
     $scope.hideContexts();
+    $scope.getAlternateNameTypesFromServer();
 
     $scope.dataLoadFromServer();
     /*
@@ -980,13 +985,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchPV = "";
             $scope.dataElementConceptHOLD = fs.dataElementVariables.searchDEC;
             fs.dataElementVariables.searchDEC = "";
-
+            $scope.searchAltNameHOLD = fs.dataElementVariables.searchAltName;
+            fs.dataElementVariables.searchAltName = "";
         }
         else {
             fs.dataElementVariables.searchPV = $scope.permissibleValueHold;
             $scope.permissibleValueHold = "";
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
             $scope.dataElementConceptHOLD = "";
+            fs.dataElementVariables.searchAltName = $scope.searchAltNameHOLD;
+            $scope.searchAltNameHOLD = "";
         }
     };
 

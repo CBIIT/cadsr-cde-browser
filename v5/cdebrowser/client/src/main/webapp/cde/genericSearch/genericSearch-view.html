@@ -5,13 +5,11 @@
     <label for="name">Name</label>
     <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Names and Definitions" />
 
-
 <!--
-    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.selectedQueryType )">
-
-                                                                                 query, field, dec, pv, type, publicIdName
+                                                                                                                                                                             query, field, dec, pv, pvType, type, publicIdName, searchAltName, searchAltNameType
 -->
-    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType  )">
+
+    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType,'',fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType  )">
         Search
     </button>
 </div>

@@ -9,9 +9,7 @@
                ng-model="fs.dataElementVariables.searchDEC"/>
     </div>
 
-
-
-    <div class="valueDomainGroup">        
+    <div class="valueDomainGroup">
         <div>
             <label class="advancedSearchLabel"></label>
             <input type="text" placeholder="Value Domains" id="advancedSearchVD" name="searchVD"
@@ -29,6 +27,7 @@
             </div>
         </label>
     </div>
+ <!--
     <div>
         <label class="advancedSearchLabel">Value Domain Type</label>
         <label data-ng-repeat="queryType in searchQueryTypes">
@@ -42,14 +41,13 @@
             </div>
         </label>
     </div>
-
+-->
 
 
     <div class="permissibleValueGroup">
         <div>
-        <label class="advancedSearchLabel"></label>
-        <input type="text" placeholder="Permissible Value" id="advancedSearchPV" name="searchPV"
-               ng-model="fs.dataElementVariables.searchPV"/>
+            <input type="text" placeholder="Permissible Value" id="advancedSearchPV" name="searchPV"
+                   ng-model="fs.dataElementVariables.searchPV"/>
         </div>
 
         <label data-ng-repeat="queryType in searchQueryTypes">
@@ -64,4 +62,19 @@
         </label>
     </div>
 
+
+    <div>
+        <input type="text" ng-model="fs.dataElementVariables.searchAltName" placeholder="Alternate Name" multiple="true"  />
+<!--
+        {{fs.dataElementVariables.searchAltName}}
+-->
+        <span>
+            <div> <label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
+            <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"  ng-options="type.type for type in alternateNameTypes">
+        </span>
+        </select>
+<!--
+        {{fs.dataElementVariables.searchAltNameType}}
+-->
+    </div>
 </span>
