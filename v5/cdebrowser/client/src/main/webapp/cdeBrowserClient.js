@@ -62,22 +62,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     // console.log("NO SEARCH");
                 }
                 else {
-// <<<<<<< HEAD
 
-                            
-                    
-                    // $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 
-                    // 'name', 
-                    // fs.dataElementVariables.searchDEC, 
-                    // fs.dataElementVariables.searchPV, 
-                    // fs.dataElementVariables.searchPVQueryType, 
-                    // fs.dataElementVariables.selectedQueryType, 
-                    // fs.dataElementVariables.searchVD, 
-                    // fs.dataElementVariables.searchVDTQueryType );  
-
-
-
-// =======
                     // do search because at least one dropdown besides program area is selected //
 
                     $scope.onClickBasicSearch(
@@ -355,15 +340,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-// <<<<<<< HEAD
 
-
-
-    // $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName) {
-
-
-
-// =======
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType) {
         var str = '';
         for (var p in searchAltNameType) {
@@ -377,7 +354,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         var c=0; // index of searchFilter key //
         if (query!='') { // create base url. determine if query is blank //
             var url = "".concat("cdebrowserServer/rest/search?", field, "=",query); // search has a query value //

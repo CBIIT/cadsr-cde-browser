@@ -577,12 +577,12 @@ display:inline-block !important;
 
 .advanceSearchInput {
     width: 185px;
-    margin-left: -2px !important;
+    margin-left: -4px !important;
 }
 
 .advanceSearchInputBordered {
-    width: 183px;
-    margin-left: 0 !important;
+    width: 180px;
+    margin-left: -2px !important;
 }
 
 
