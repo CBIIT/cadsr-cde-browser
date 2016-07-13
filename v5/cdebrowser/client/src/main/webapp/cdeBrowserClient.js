@@ -1,5 +1,4 @@
 
-
 // controller
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope) {
     window.scope = $scope;
@@ -7,7 +6,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.location = $location.url();
     $scope.permissibleValueHold = "";
     $scope.dataElementConceptHOLD = "";
+
     $scope.valueDomainHOLD = "";
+
+    $scope.searchAltNameHOLD = "";
+    var delimiter= ":::";
+
 
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -24,10 +28,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         };
     });
 
-
     $scope.contextCascade = function(selectedInput) {
         if (selectedInput!==undefined)
-        $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
+            $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
     };
 
 
@@ -59,11 +62,37 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     // console.log("NO SEARCH");
                 }
                 else {
-                   // console.log(fs.dataElementVariables)
-                     // do search because at least one dropdown besides program area is selected //
-                    //fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType
-                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD, fs.dataElementVariables.searchVDTQueryType );  //FIXMENOW this function signature has changed!
-                    // console.log("Search");
+// <<<<<<< HEAD
+
+                            
+                    
+                    // $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 
+                    // 'name', 
+                    // fs.dataElementVariables.searchDEC, 
+                    // fs.dataElementVariables.searchPV, 
+                    // fs.dataElementVariables.searchPVQueryType, 
+                    // fs.dataElementVariables.selectedQueryType, 
+                    // fs.dataElementVariables.searchVD, 
+                    // fs.dataElementVariables.searchVDTQueryType );  
+
+
+
+// =======
+                    // do search because at least one dropdown besides program area is selected //
+
+                    $scope.onClickBasicSearch(
+                        fs.dataElementVariables.basicSearchQuery,
+                        'name',
+                        fs.dataElementVariables.searchDEC,
+                        fs.dataElementVariables.searchPV,
+                        fs.dataElementVariables.searchPVQueryType,
+                        fs.dataElementVariables.selectedQueryType,
+                        fs.dataElementVariables.searchVD, 
+                        fs.dataElementVariables.searchVDTQueryType,
+                        "",
+                        fs.dataElementVariables.searchAltName,
+                        fs.dataElementVariables.searchAltNameTypes);
+
 
                     $scope.breadCrumbs = fs.createBreadcrumbs();
                 };
@@ -310,7 +339,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else
         {
             $scope.showCdeSearchResults = false;
-
         }
 
     };
@@ -327,59 +355,48 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName) {
+// <<<<<<< HEAD
 
 
-        /**
-         *  name              The text of the users search input for data element search.
-         *  publicId          The text of the users search input for publicId search.
-         *  queryType          0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE - defaults to 2 if left out
-         *  programArea        If empty, will not be used
-         *
-         *  Some of these are still not implemented on the Server side, no harm in including them, but they will have no effect.
-         *  context            If empty, will not be used
-         *  classification     If empty, will not be used
-         *  protocol           If empty, will not be used
-         *  workFlowStatus     If empty, will not be used
-         *  registrationStatus If empty, will not be used
-         *  conceptName        If empty, will not be used
-         *  conceptCode        If empty, will not be used
-         */
+
+    // $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName) {
+
+
+
+// =======
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType) {
+        var str = '';
+        for (var p in searchAltNameType) {
+            if (searchAltNameType.hasOwnProperty(p)) {
+                str += searchAltNameType[p].type + delimiter;
+            }
+        }
+        searchAltNameType = str;
+
 
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
-/*
 
-        if ((typeof query != 'undefined') && (query!='')) { // create base url. determine if query is blank //
-                var url = "".concat("cdebrowserServer/rest/search?", field, "=",query,"&queryType=",type); // search has a query value //
-                if (publicIdName && publicIdName!='') {
-                    url=url.concat("&name=",publicIdName)
-                };
-        }
-        else {
-            var url = "".concat("cdebrowserServer/rest/search");
-        };
-
-*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       if (query!='') { // create base url. determine if query is blank //
-                var url = "".concat("cdebrowserServer/rest/search?", field, "=",query); // search has a query value //
+        var c=0; // index of searchFilter key //
+        if (query!='') { // create base url. determine if query is blank //
+            var url = "".concat("cdebrowserServer/rest/search?", field, "=",query); // search has a query value //
 
-                if(typeof type != 'undefined' )
-                {
-                 url += "&queryType="+type;
-                }
+            if(typeof type != 'undefined' )
+            {
+                url += "&queryType="+type;
+                c++;
+            }
 
-                if (publicIdName && publicIdName!='') {
-                    
-                    url=url.concat("&name=",publicIdName)
-                };
+            if (publicIdName && publicIdName!='') {
+                url=url.concat("&name=",publicIdName)
+                c++;
+            };
         }
         else {
             var url = "".concat("cdebrowserServer/rest/search");
         };
 
-        var c=0; // index of searchFilter key //
         var  connector="";
 
         if( dec != '') {
@@ -408,10 +425,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             url += "&vdtQueryType=" + vdtType;
         }
 
-         for (var x in fs.searchFilter) {
+        if (searchAltName != '') {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "searchAltName=" + searchAltName;
+            url += "&searchAltNameType=" + searchAltNameType;
+        }
+
+        for (var x in fs.searchFilter) {
+
 
             if (fs.searchFilter[x]&&field=='name') {
                 connector= c==0?"?":"&";
+                c++;
                 if (query==''&&  typeof fs.searchFilter[x]!='object') {
                     if (x=='programArea') {
                         url+=connector+x+"="+$scope.contextListMaster[fs.searchFilter[x]].text;
@@ -445,11 +471,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                         }
                     };
                 };
-                c++;
             };
         };
 
-        // console.log("Calling server url: " + url);
         $scope.searchServerRestCall(url);
         if (field=='publicId') {
             $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //
@@ -591,10 +615,23 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //     $scope.dataLoad("data5.json");
     // };
 
- /*   $scope.dataLoad6 = function () {
-        $scope.dataLoad("data6.json");
+    /*   $scope.dataLoad6 = function () {
+     $scope.dataLoad("data6.json");
+     };
+     */
+    $scope.getAlternateNameTypesFromServer = function () {
+        var serverUrl = "altNameType.json"
+        $http.get(serverUrl)
+
+            .success(function (response) {
+                $scope.alternateNameTypes = response;
+            })
+            .error(function (error) {
+                console.log("Error [" + serverUrl + "]: " + error.statusText);
+            });
+
     };
-*/
+
 
     $scope.dataLoadFromServer = function () {
         $scope.staticFilters = {};
@@ -603,55 +640,55 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         // load registration sort and workflow sort arrays. Will be used for sorting and filters. Put other filters here as well if needed //
         $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) {
-                        $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
-                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
-                        $scope.treeStatus = {
-                            test:response.data.excludeTest,
-                            training:response.data.excludeTraining};
-                    }).then(function() {
-                              $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
-                                $scope.workflowStatuses = response.data;
-                                $scope.workflowSort = [];
-                                $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
-                                angular.forEach($scope.models, function(list) {
-                                    switch(list.label) {
-                                      case "workflowStatusIncluded":
-                                        for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
-                                          list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
-                                        }
-                                        break;
-                                      case "workflowStatusExcluded":
-                                        for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
-                                          list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
-                                        }
-                                        break;
-                                    }
-                              });
-                                $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
-                            });
-                    }).then(function() {
-                              $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
-                                $scope.registrationStatuses = response.data;
-                                $scope.registrationSort = [];
-                                $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
-                                angular.forEach($scope.models, function(list) {
-                                    switch(list.label) {
-                                      case "registrationStatusIncluded":
-                                        for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
-                                          list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
-                                        }
-                                        break;
-                                      case "registrationStatusExcluded":
-                                        for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
-                                          list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
-                                        }
-                                        break;
-                                    }
-                              });
-                                $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
-                                $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
-                            });
-                    });
+            $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
+            $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
+            $scope.treeStatus = {
+                test:response.data.excludeTest,
+                training:response.data.excludeTraining};
+        }).then(function() {
+            $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
+                $scope.workflowStatuses = response.data;
+                $scope.workflowSort = [];
+                $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                angular.forEach($scope.models, function(list) {
+                    switch(list.label) {
+                        case "workflowStatusIncluded":
+                            for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
+                                list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
+                            }
+                            break;
+                        case "workflowStatusExcluded":
+                            for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
+                                list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
+                            }
+                            break;
+                    }
+                });
+                $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
+            });
+        }).then(function() {
+            $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
+                $scope.registrationStatuses = response.data;
+                $scope.registrationSort = [];
+                $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                angular.forEach($scope.models, function(list) {
+                    switch(list.label) {
+                        case "registrationStatusIncluded":
+                            for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
+                                list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
+                            }
+                            break;
+                        case "registrationStatusExcluded":
+                            for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
+                                list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
+                            }
+                            break;
+                    }
+                });
+                $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
+                $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
+            });
+        });
 
         // $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme').success(function(response) {
         //     fs.lookupData['classifications'] = response;
@@ -666,7 +703,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.$on('updateTree',function(event,data) {
         var filtered_data = $filter('filter')($scope.contextListMaster[$scope.currentTab].children,function(item,index,array) {
-        var search_text=item.text;
+            var search_text=item.text;
             if(search_text.indexOf('Test')!=-1) {
                 angular.element(document.getElementById(item.idSeq)).parent().prop('hidden', data.test);
             }
@@ -711,8 +748,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $timeout(function() {
             $scope.$broadcast('updateTree',
                 {
-                  test:$scope.treeStatus.test,
-                  training:$scope.treeStatus.training
+                    test:$scope.treeStatus.test,
+                    training:$scope.treeStatus.training
                 })
         },100);
     };
@@ -853,22 +890,22 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.initTableParams = function () {
 
         $scope.tableParams = new NgTableParams(
-          {
-            count:100,
-            page:1,
-            filter: { },
-            sorting: {
-                registrationSort: 'asc',
-                workflowSort: 'asc',
-                longName: 'asc'
-            }
-          },
-          {
-            defaultSort:"asc",
-            counts:[],
-            dataset:[]
+            {
+                count:100,
+                page:1,
+                filter: { },
+                sorting: {
+                    registrationSort: 'asc',
+                    workflowSort: 'asc',
+                    longName: 'asc'
+                }
+            },
+            {
+                defaultSort:"asc",
+                counts:[],
+                dataset:[]
 
-          });
+            });
     };
 
     $scope.sortNames = {
@@ -884,11 +921,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.initTableParams(); // init table params //
     $scope.hideContexts();
+    $scope.getAlternateNameTypesFromServer();
 
     $scope.dataLoadFromServer();
-/*
-    $scope.dataLoad6();
-*/
+    /*
+     $scope.dataLoad6();
+     */
 
     $scope.versionData();
     $scope.getToolHosts();
@@ -897,55 +935,55 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.changeSearchTab = function(tabIndex) {
         $scope.activeSearchTab = tabIndex;
         if (tabIndex === 0)
-          {
+        {
             $http.get('/cdebrowserServer/rest/searchPreferences').then(function(response) {
-                        $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
-                        $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
-                    }).then(function() {
-                              $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
-                                $scope.workflowStatuses = response.data;
-                                $scope.workflowSort = [];
-                                $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
-                                angular.forEach($scope.models, function(list) {
-                                    switch(list.label) {
-                                      case "workflowStatusIncluded":
-                                        for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
-                                          list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
-                                        }
-                                        break;
-                                      case "workflowStatusExcluded":
-                                        for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
-                                          list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
-                                        }
-                                        break;
-                                    }
-                              });
-                                $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
-                            });
-                    }).then(function() {
-                              $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
-                                $scope.registrationStatuses = response.data;
-                                $scope.registrationSort = [];
-                                $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
-                                angular.forEach($scope.models, function(list) {
-                                    switch(list.label) {
-                                      case "registrationStatusIncluded":
-                                        for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
-                                          list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
-                                        }
-                                        break;
-                                      case "registrationStatusExcluded":
-                                        for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
-                                          list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
-                                        }
-                                        break;
-                                    }
-                              });
-                                $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
-                                $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
-                            });
+                $scope.workflowStatusExcluded = response.data.workflowStatusExcluded;
+                $scope.registrationStatusExcluded = response.data.registrationStatusExcluded;
+            }).then(function() {
+                $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
+                    $scope.workflowStatuses = response.data;
+                    $scope.workflowSort = [];
+                    $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                    angular.forEach($scope.models, function(list) {
+                        switch(list.label) {
+                            case "workflowStatusIncluded":
+                                for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
+                                    list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
+                                }
+                                break;
+                            case "workflowStatusExcluded":
+                                for (var i = 0; i <= $scope.workflowStatusExcluded.length - 1; i++) {
+                                    list.items.push({label: $scope.workflowStatusExcluded[i], type: "workflowStatus"});
+                                }
+                                break;
+                        }
                     });
-          }
+                    $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
+                });
+            }).then(function() {
+                $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
+                    $scope.registrationStatuses = response.data;
+                    $scope.registrationSort = [];
+                    $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                    angular.forEach($scope.models, function(list) {
+                        switch(list.label) {
+                            case "registrationStatusIncluded":
+                                for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
+                                    list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
+                                }
+                                break;
+                            case "registrationStatusExcluded":
+                                for (var i = 0; i <= $scope.registrationStatusExcluded.length - 1; i++) {
+                                    list.items.push({label: $scope.registrationStatusExcluded[i], type: "registrationStatus"});
+                                }
+                                break;
+                        }
+                    });
+                    $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
+                    $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
+                });
+            });
+        }
     };
 
     // add items to cart //
@@ -994,16 +1032,26 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchPV = "";
             $scope.dataElementConceptHOLD = fs.dataElementVariables.searchDEC;
             fs.dataElementVariables.searchDEC = "";
+
             $scope.valueDomainHOLD = fs.dataElementVariables.searchVD;
             fs.dataElementVariables.searchVD = "";
+
+            $scope.searchAltNameHOLD = fs.dataElementVariables.searchAltName;
+            fs.dataElementVariables.searchAltName = "";
+
         }
         else {
             fs.dataElementVariables.searchPV = $scope.permissibleValueHold;
             $scope.permissibleValueHold = "";
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
             $scope.dataElementConceptHOLD = "";
+
             fs.dataElementVariables.searchVD = $scope.valueDomainHOLD;
             $scope.valueDomainHOLD = "";
+
+            fs.dataElementVariables.searchAltName = $scope.searchAltNameHOLD;
+            $scope.searchAltNameHOLD = "";
+
         }
     };
 

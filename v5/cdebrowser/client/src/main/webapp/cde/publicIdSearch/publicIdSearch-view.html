@@ -46,7 +46,7 @@
     </span>
 
     <!-- The third, fourth, and fifth parameters are place holders for values used by advanced search, their emptiness indicates to server that advanced search should not be used -->
-    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', '',' ', 0, fs.dataElementVariables.selectedQueryType, publicIdName)">
+    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', '',' ', 0, fs.dataElementVariables.selectedQueryType, publicIdName, fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType )">
         Search
     </button>
     <button id="clear" data-ng-click="clear()">

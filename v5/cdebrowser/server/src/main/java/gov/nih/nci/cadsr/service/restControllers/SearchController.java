@@ -107,11 +107,12 @@ public class SearchController
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
+
             results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession)));
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
-            //FIXMENOW, this does'nt have the new advanced search fields yet.
+            //FIXME, this doesn't have the newest advanced search fields yet.
             return createErrorNode( "Server Error:\nsearch criteria : " + searchCriteria.getName() + ", publicId: " + searchCriteria.getPublicId() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getProgramArea() + " failed ", e );
         }
 

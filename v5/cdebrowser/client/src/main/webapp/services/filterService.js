@@ -3,7 +3,9 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	// define variables //
 	this.serverData = []; // initial data from server goes here //
 	this.lookupData = {}; // stores master list of classifications and protocol forms //
-	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0"}
+
+	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",searchAltName:"", searchAltNameTypes:"0"}
+
 	this.searchFilter = {};
 	this.isAChildNodeSearch = false;
 	this.isLeftTreeClick = false; // temporarily set to true when left nav is hit so the watch function doesn't search //
@@ -17,7 +19,9 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	this.resetFilters = function() {
         this.searchFilter = {programArea:0} // reset search filter to just having program area selected to all //
 		this.isAChildNodeSearch = false;
-		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0"}
+
+		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",searchAltName:"", searchAltNameTypes:"0"}
+
 		this.classifications = [];
 		this.protocols = [];
 		this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
@@ -64,7 +68,9 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     // selects dropdown values based on search left tree click //
     this.selectFiltersByNode = function(searchType,id, selectedNode, programArea) {
         this.isAChildNodeSearch = false;
-        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0"};
+
+        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",searchAltName:"", searchAltNameTypes:"0"};
+
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;
         if (searchType=='contextId') {
