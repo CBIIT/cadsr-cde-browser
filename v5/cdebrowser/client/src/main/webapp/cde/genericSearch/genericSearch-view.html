@@ -11,9 +11,25 @@
 
                                                                                  query, field, dec, pv, type, publicIdName
 -->
-    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType  )">
+    <button ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD, fs.dataElementVariables.searchVDTQueryType )">
         Search
     </button>
+
+
+
+    <span class="filters searchFieldDropDown" ng-show="activeSearchTab==0" ng-disabled="true">
+        <span>
+            <ui-select id="searchField" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="searchFieldOptions">
+                <ui-select-match placeholder="Search Field">{{searchFieldOptions}}</ui-select-match>
+                <ui-select-choices repeat="option in options">
+                    <div ng-bind-html="option"></div>
+                </ui-select-choices>
+            </ui-select>
+        </span>
+    </span>
+
+
+
 </div>
 <div class="queryTypeRadioButtons">
     <label data-ng-repeat="qType in searchQueryTypes">

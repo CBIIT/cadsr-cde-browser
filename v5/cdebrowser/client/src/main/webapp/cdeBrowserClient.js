@@ -7,6 +7,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.location = $location.url();
     $scope.permissibleValueHold = "";
     $scope.dataElementConceptHOLD = "";
+    $scope.valueDomainHOLD = "";
 
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -58,9 +59,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     // console.log("NO SEARCH");
                 }
                 else {
+                   // console.log(fs.dataElementVariables)
                      // do search because at least one dropdown besides program area is selected //
                     //fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType
-                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType );  //FIXMENOW this function signature has changed!
+                    $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD, fs.dataElementVariables.searchVDTQueryType );  //FIXMENOW this function signature has changed!
                     // console.log("Search");
 
                     $scope.breadCrumbs = fs.createBreadcrumbs();
@@ -325,7 +327,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, publicIdName) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName) {
 
 
         /**
@@ -391,6 +393,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             c++;
             url += connector + "permissibleValue=" + pv;
             url += "&pvQueryType=" + pvType;
+        }
+
+        if( vd != '') {
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "valueDomain=" + vd;
+            // url += "&vdtQueryType=" + vdtType;
+        }
+
+        if( vdtType != '') {
+            connector= c==0?"?":"&";
+            c++;
+            url += "&vdtQueryType=" + vdtType;
         }
 
          for (var x in fs.searchFilter) {
@@ -979,13 +994,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchPV = "";
             $scope.dataElementConceptHOLD = fs.dataElementVariables.searchDEC;
             fs.dataElementVariables.searchDEC = "";
-
+            $scope.valueDomainHOLD = fs.dataElementVariables.searchVD;
+            fs.dataElementVariables.searchVD = "";
         }
         else {
             fs.dataElementVariables.searchPV = $scope.permissibleValueHold;
             $scope.permissibleValueHold = "";
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
             $scope.dataElementConceptHOLD = "";
+            fs.dataElementVariables.searchVD = $scope.valueDomainHOLD;
+            $scope.valueDomainHOLD = "";
         }
     };
 

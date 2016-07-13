@@ -153,7 +153,8 @@ display:inline-block !important;
 }
 
 .searchInput {
-    color: #18344d;width:850px !important;
+    color: #18344d;
+    width: 745px !important;
     margin-left: 20px;
     padding-top: 4px;
     margin-top: 16px;
@@ -181,7 +182,7 @@ display:inline-block !important;
 }
 
 .basicSearchQuery {
-    width: 50%;
+    width: 58%;
 }
 
 .searchTips {
@@ -434,22 +435,6 @@ display:inline-block !important;
     border-width: thin;
 }
 
-/* FIX ME */
-
-/*.dragDrop ul:nth-child(1)[dnd-list] {
-    border: 1px solid black;
-    width: 168px;
-    list-style: none;
-    display: inline-block;
-    min-height: 141px;
-    max-height: 141px;
-    overflow-y: scroll;
-    float: left;
-    margin-right: 60px;
-    border-radius: 2px;
-    border-width: thin;
-}*/
-
 .dragDrop ul[dnd-list] .dndPlaceholder {
     display: block;
     background-color: #ddd;
@@ -472,20 +457,10 @@ display:inline-block !important;
     padding-top: 8px;
 }
 
-/*.searchPreferencesSpace {
-    margin-right: 60px !important;
-}*/
-
 /* Classification and Protocol autocomplete dropdowns */
 
 .autoDropDown {
     padding-left: 10px !important;
-}
-
-.clearDropDown {
-    /*float: right !important;*/
-    text-align: right !important;
-    text-decoration: none !important;
 }
 
 /* Download buttons override CSS */
@@ -588,18 +563,26 @@ display:inline-block !important;
     font-size: 12px !important;
 }
 
-.valueDomainGroup
-{
+.permissibleValueGroup {
     border-radius: 4px;
     border: 1px solid #73AD21;
     padding: 6px 4px 4px;
     margin: 4px 0;
 }
 
-.permissibleValueGroup
-{
-    border-radius: 4px;
-    border: 1px solid #73AD21;
-    padding: 6px 4px 4px;
-    margin: 4px 0;
+.searchFieldDropDown {
+    margin-top: 0 !important;
+    float: right;
 }
+
+.advanceSearchInput {
+    width: 185px;
+    margin-left: -2px !important;
+}
+
+.advanceSearchInputBordered {
+    width: 183px;
+    margin-left: 0 !important;
+}
+
+
