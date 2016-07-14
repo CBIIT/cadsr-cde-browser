@@ -13,7 +13,11 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
     	$scope.fs.dataElementVariables;
     });    
     
+    $scope.searchFieldOptions={};
+    $scope.searchFieldOptions.options=[];
     $scope.options = ["ALL", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
-    $scope.searchFieldOptions = $scope.options[0];
+
+    $scope.searchFieldOptions.options[0] = $scope.options[0];
+
 
 });

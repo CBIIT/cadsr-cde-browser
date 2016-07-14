@@ -64,7 +64,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 else {
 
                     // do search because at least one dropdown besides program area is selected //
-
+debugger;
+console.log(fs.searchFieldOptions);
                     $scope.onClickBasicSearch(
                         fs.dataElementVariables.basicSearchQuery,
                         'name',
@@ -341,7 +342,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // Search button
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
 
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput) {
         var str = '';
         for (var p in searchAltNameType) {
             if (searchAltNameType.hasOwnProperty(p)) {
@@ -393,20 +394,26 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             connector= c==0?"?":"&";
             c++;
             url += connector + "valueDomain=" + vd;
-            // url += "&vdtQueryType=" + vdtType;
-        }
-
-        if( vdtType != '') {
-            connector= c==0?"?":"&";
-            c++;
             url += "&vdtQueryType=" + vdtType;
         }
+
+        // if( vdtType != '') {
+        //     connector= c==0?"?":"&";
+        //     c++;
+        //     url += "&vdtQueryType=" + vdtType;
+        // }
 
         if (searchAltName != '') {
             connector = c == 0 ? "?" : "&";
             c++;
             url += connector + "searchAltName=" + searchAltName;
             url += "&searchAltNameType=" + searchAltNameType;
+        }
+
+        if (filteredinput != '') {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "filteredinput=" + filteredinput;
         }
 
         for (var x in fs.searchFilter) {
