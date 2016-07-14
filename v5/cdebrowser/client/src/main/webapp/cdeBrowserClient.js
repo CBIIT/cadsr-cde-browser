@@ -6,10 +6,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.location = $location.url();
     $scope.permissibleValueHold = "";
     $scope.dataElementConceptHOLD = "";
-
     $scope.valueDomainHOLD = "";
-
     $scope.searchAltNameHOLD = "";
+    $scope.searchVersionsHOLD = 0;
     var delimiter= ":::";
 
 
@@ -73,11 +72,12 @@ console.log(fs.searchFieldOptions);
                         fs.dataElementVariables.searchPV,
                         fs.dataElementVariables.searchPVQueryType,
                         fs.dataElementVariables.selectedQueryType,
-                        fs.dataElementVariables.searchVD, 
+                        fs.dataElementVariables.searchVD,
                         fs.dataElementVariables.searchVDTQueryType,
                         "",
                         fs.dataElementVariables.searchAltName,
-                        fs.dataElementVariables.searchAltNameTypes);
+                        fs.dataElementVariables.searchAltNameTypes,
+                        fs.dataElementVariables.searchVersions);
 
 
                     $scope.breadCrumbs = fs.createBreadcrumbs();
@@ -150,6 +150,12 @@ console.log(fs.searchFieldOptions);
         {id: 0, name: "Exact phrase"},
         {id: 1, name: "All of the words"},
         {id: 2, name: "At least one of the words"}
+    ];
+
+    // Search versions - radio buttons
+   $scope.searchVersions = [
+        {id: 0, name: "Latest Version"},
+        {id: 1, name: "All Versions"},
     ];
 
     $scope.activeSearchTab = 0;
@@ -342,7 +348,9 @@ console.log(fs.searchFieldOptions);
     // Search button
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
 
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput) {
+
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions) {
+
         var str = '';
         for (var p in searchAltNameType) {
             if (searchAltNameType.hasOwnProperty(p)) {
@@ -351,10 +359,8 @@ console.log(fs.searchFieldOptions);
         }
         searchAltNameType = str;
 
-
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
-
 
         var c=0; // index of searchFilter key //
         if (query!='') { // create base url. determine if query is blank //
@@ -416,6 +422,12 @@ console.log(fs.searchFieldOptions);
             url += connector + "filteredinput=" + filteredinput;
         }
 
+        if (searchVersions >= 0) {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "searchVersions=" + searchVersions;
+        }
+
         for (var x in fs.searchFilter) {
 
 
@@ -457,6 +469,9 @@ console.log(fs.searchFieldOptions);
                 };
             };
         };
+
+        console.log("Search url:  " + url);
+
 
         $scope.searchServerRestCall(url);
         if (field=='publicId') {
@@ -1005,6 +1020,12 @@ console.log(fs.searchFieldOptions);
 
     $scope.more = false;
 
+
+    // CHECKME - it may be better to get rid of all these hold values, and just use $scope.more to determine if they should be treated as empty as we build the search url string,
+    // but that might make the URL building code less flexible...
+    
+    // We now have radio button type values which can be used by themselves, we have been indicating that we don't want to use field by making it empty (so no need for it's radio button).
+    // This won't work for radio button type values which can be used by themselves, I am setting values for these radio button types to "-1" to indicate not to use in the search.
     $scope.advanceSearchShow = function() {
         $scope.more = $scope.more ? false : true;
 
@@ -1012,30 +1033,37 @@ console.log(fs.searchFieldOptions);
         // If Advanced Search is hidden, clear the advanced Search fields.
         // If advanced search is shown, restore any fields that where cleared on hide.
         if( ! $scope.more) {
-            $scope.permissibleValueHold = fs.dataElementVariables.searchPV;
-            fs.dataElementVariables.searchPV = "";
+
             $scope.dataElementConceptHOLD = fs.dataElementVariables.searchDEC;
             fs.dataElementVariables.searchDEC = "";
 
             $scope.valueDomainHOLD = fs.dataElementVariables.searchVD;
             fs.dataElementVariables.searchVD = "";
 
+            $scope.permissibleValueHold = fs.dataElementVariables.searchPV;
+            fs.dataElementVariables.searchPV = "";
+
             $scope.searchAltNameHOLD = fs.dataElementVariables.searchAltName;
             fs.dataElementVariables.searchAltName = "";
 
+            $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
+            fs.dataElementVariables.searchVersions = -1;
         }
         else {
-            fs.dataElementVariables.searchPV = $scope.permissibleValueHold;
-            $scope.permissibleValueHold = "";
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
             $scope.dataElementConceptHOLD = "";
 
             fs.dataElementVariables.searchVD = $scope.valueDomainHOLD;
             $scope.valueDomainHOLD = "";
 
+            fs.dataElementVariables.searchPV = $scope.permissibleValueHold;
+            $scope.permissibleValueHold = "";
+
             fs.dataElementVariables.searchAltName = $scope.searchAltNameHOLD;
             $scope.searchAltNameHOLD = "";
 
+            fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
+            $scope.searchVersionsHOLD = -1;
         }
     };
 

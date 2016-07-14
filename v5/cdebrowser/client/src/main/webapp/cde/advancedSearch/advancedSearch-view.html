@@ -5,16 +5,15 @@
 
     <div>
         <label class="advancedSearchLabel"></label>
-        <input class="roundInput advanceSearchInput" type="text" placeholder="Data Element Concept" id="advancedSearchDEC" name="searchDEC"
+        <input class="roundInput advanceSearchInput" type="text" placeholder="Data Element Concept"
+               id="advancedSearchDEC" name="searchDEC"
                ng-model="fs.dataElementVariables.searchDEC"/>
     </div>
 
-
-
-
     <!-- <div>
         <label class="advancedSearchLabel"></label>
-        <input class="roundInput advanceSearchInput" type="text" placeholder="Value Domain" id="advancedSearchVD" name="searchVD"
+        <input class="roundInput advanceSearchInput" type="text" placeholder="Value Domain" id="advancedSearchVD"
+               name="searchVD"
                ng-model="fs.dataElementVariables.searchVD"/>
     </div> -->
 
@@ -51,46 +50,58 @@
         </label>
     </div> -->
 
+        <div class="permissibleValueGroup">
+            <div>
 
+                <label class="advancedSearchLabel"></label>
+                <input class="roundInput advanceSearchInputBordered" type="text" placeholder="Permissible Value"
+                       id="advancedSearchPV" name="searchPV"
+                       ng-model="fs.dataElementVariables.searchPV"/>
 
-    <div class="permissibleValueGroup">
-        <div>
+                <!-- <input type="text" placeholder="Permissible Value" id="advancedSearchPV" name="searchPV"
+                       ng-model="fs.dataElementVariables.searchPV"/> -->
 
-        <label class="advancedSearchLabel"></label>
-        <input class="roundInput advanceSearchInputBordered" type="text" placeholder="Permissible Value" id="advancedSearchPV" name="searchPV"
-               ng-model="fs.dataElementVariables.searchPV"/>
+            </div>
 
-            <!-- <input type="text" placeholder="Permissible Value" id="advancedSearchPV" name="searchPV"
-                   ng-model="fs.dataElementVariables.searchPV"/> -->
-
+            <label data-ng-repeat="queryType in searchQueryTypes">
+                <div class="queryTypeRadioButtons">
+                    <input ng-disabled="fs.isSearching"
+                           name="searchPVQueryType"
+                           type="radio"
+                           value="{{queryType.id}}"
+                           data-ng-model="fs.dataElementVariables.searchPVQueryType"/>
+                    {{queryType.name}}&nbsp;&nbsp;
+                </div>
+            </label>
         </div>
 
-        <label data-ng-repeat="queryType in searchQueryTypes">
+
+        <div>
+            <label class="advancedSearchLabel"></label>
+            <input class="roundInput advanceSearchInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
+                   placeholder="Alternate Name" multiple="true"/>
+            <!--
+                    {{fs.dataElementVariables.searchAltName}}
+            -->
+        <span>
+            <div><label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
+            <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
+                    ng-options="type.type for type in alternateNameTypes"></select>
+        </span>
+            </select>
+            <!--
+                    {{fs.dataElementVariables.searchAltNameType}}
+            -->
+        </div>
+        <hr/>
+        <label data-ng-repeat="versionType in searchVersions">
             <div class="queryTypeRadioButtons">
                 <input ng-disabled="fs.isSearching"
-                       name="searchPVQueryType"
                        type="radio"
-                       value="{{queryType.id}}"
-                       data-ng-model="fs.dataElementVariables.searchPVQueryType"/>
-                {{queryType.name}}&nbsp;&nbsp;
+                       value="{{versionType.id}}"
+                       data-ng-model="fs.dataElementVariables.searchVersions"/>
+                {{versionType.name}}&nbsp;&nbsp;
             </div>
         </label>
-    </div>
-
-
-    <div>
-        <label class="advancedSearchLabel"></label>
-        <input class="roundInput advanceSearchInput" type="text" ng-model="fs.dataElementVariables.searchAltName" placeholder="Alternate Name" multiple="true"  />
-<!--
-        {{fs.dataElementVariables.searchAltName}}
--->
-        <span>
-            <div> <label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
-            <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"  ng-options="type.type for type in alternateNameTypes">
-        </span>
-        </select>
-<!--
-        {{fs.dataElementVariables.searchAltNameType}}
--->
     </div>
 </span>
