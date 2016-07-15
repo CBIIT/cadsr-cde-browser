@@ -33,6 +33,7 @@ public class ValueDomainModel extends BaseModel
     private String vdType;
     private RepresentationModel representationModel;
     private ConceptDerivationRuleModel conceptDerivationRuleModel;
+    private String createdBy;
 
     public ValueDomainModel()
     {
@@ -318,7 +319,16 @@ public class ValueDomainModel extends BaseModel
         this.conceptDerivationRuleModel = conceptDerivationRuleModel;
     }
 
-    @Override
+    public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+
+	@Override
     public String toString()
     {
         return "ValueDomainModel{" +
