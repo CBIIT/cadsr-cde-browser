@@ -11,6 +11,11 @@ public class AdminInfo
     private String dateCreated;
     private String modifiedBy;
     private String dateModified;
+    private String vdCreatedBy;
+    private String vdOwnedBy;    
+    private String decCreatedBy;
+    private String decOwnedBy;
+    private String organization;
 
     public String getCreatedBy()
     {
@@ -51,4 +56,44 @@ public class AdminInfo
     {
         this.dateModified = dateModified;
     }
+
+	public String getVdCreatedBy() {
+		return vdCreatedBy;
+	}
+
+	public void setVdCreatedBy(String vdCreatedBy) {
+		this.vdCreatedBy = vdCreatedBy;
+	}
+
+	public String getVdOwnedBy() {
+		return vdOwnedBy;
+	}
+
+	public void setVdOwnedBy(String vdOwnedBy) {
+		this.vdOwnedBy = vdOwnedBy;
+	}
+
+	public String getDecCreatedBy() {
+		return decCreatedBy;
+	}
+
+	public void setDecCreatedBy(String decCreatedBy) {
+		this.decCreatedBy = decCreatedBy;
+	}
+
+	public String getDecOwnedBy() {
+		return decOwnedBy;
+	}
+
+	public void setDecOwnedBy(String decOwnedBy) {
+		this.decOwnedBy = decOwnedBy;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
 }

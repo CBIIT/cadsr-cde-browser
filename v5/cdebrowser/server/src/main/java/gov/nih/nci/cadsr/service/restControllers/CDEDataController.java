@@ -32,6 +32,7 @@ import gov.nih.nci.cadsr.dao.ReferenceDocDAO;
 import gov.nih.nci.cadsr.dao.RepresentationConceptsDAO;
 import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
 import gov.nih.nci.cadsr.dao.ValueDomainConceptDAO;
+import gov.nih.nci.cadsr.dao.UserManagerDAO;
 import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
 import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
 import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
@@ -126,6 +127,9 @@ public class CDEDataController
 
     @Autowired
     private DesignationDAO designationDAO;
+    
+    @Autowired
+    private UserManagerDAO userManagerDAO;    
 
 
     @RequestMapping( value = "/CDEData" )
@@ -974,6 +978,11 @@ public class CDEDataController
         adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateCreated() ) );
         adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
         adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
+        adminInfo.setVdCreatedBy(dataElementModel.getValueDomainModel().getCreatedBy());
+        adminInfo.setVdOwnedBy(dataElementModel.getValueDomainModel().getCdContextName());
+        adminInfo.setDecCreatedBy(dataElementModel.getDec().getCreatedBy());
+        adminInfo.setDecOwnedBy(dataElementModel.getDec().getCdContextName());
+        adminInfo.setOrganization(userManagerDAO.getOrganization(dataElementModel.getCreatedBy()));
         return adminInfo;
     }
 

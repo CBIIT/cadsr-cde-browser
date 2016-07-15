@@ -104,6 +104,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             valueDomainModel.setCharSet( rs.getString( "CHAR_SET_NAME" ) );
             valueDomainModel.setDecimalPlace( rs.getInt( "DECIMAL_PLACE" ) );
             valueDomainModel.setVdType( rs.getString( "VD_TYPE_FLAG" ) );
+            valueDomainModel.setCreatedBy( rs.getString( "CREATED_BY" ) );
 
             try
             {

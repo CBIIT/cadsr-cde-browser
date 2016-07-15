@@ -19,4 +19,6 @@ public interface UserManagerDAO
     
     public int resetLock(String username);
     
+    public String getOrganization(String username);
+    
 }

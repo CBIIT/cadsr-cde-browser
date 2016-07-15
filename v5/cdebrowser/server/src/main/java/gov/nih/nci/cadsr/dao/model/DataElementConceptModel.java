@@ -36,6 +36,7 @@ public class DataElementConceptModel extends BaseModel
     private int objClassPublicId; // Object Class
     private PropertyModel property;
     private ObjectClassModel objectClassModel; // Object Class
+    private String createdBy;
 
     public DataElementConceptModel()
     {
@@ -352,7 +353,15 @@ public class DataElementConceptModel extends BaseModel
         this.objectClassModel = objectClassModel;
     }
 
-    @Override
+    public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	@Override
     public boolean equals( Object o )
     {
         if( this == o ) return true;

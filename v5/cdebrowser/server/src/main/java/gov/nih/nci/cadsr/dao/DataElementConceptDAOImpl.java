@@ -127,7 +127,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
 //            dataElementConceptModel.setObjClassQualifier(rs.getString("OBJ_CLASS_QUALIFIER"));
 //            dataElementConceptModel.setPropertyQualifier(rs.getString("PROPERTY_QUALIFIER"));
 //            dataElementConceptModel.setChangeNote(rs.getString("CHANGE_NOTE"));
-//            dataElementConceptModel.
+            dataElementConceptModel.setCreatedBy(rs.getString("CREATED_BY"));
 
             try
             {
