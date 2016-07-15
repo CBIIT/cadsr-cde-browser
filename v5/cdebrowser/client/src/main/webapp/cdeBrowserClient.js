@@ -9,6 +9,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
+    $scope.searchContextUseHOLD = 0;
     var delimiter= ":::";
 
 
@@ -77,7 +78,8 @@ console.log(fs.searchFieldOptions);
                         "",
                         fs.dataElementVariables.searchAltName,
                         fs.dataElementVariables.searchAltNameTypes,
-                        fs.dataElementVariables.searchVersions);
+                        fs.dataElementVariables.searchVersions,
+                        fs.dataElementVariables.searchContextUse);
 
 
                     $scope.breadCrumbs = fs.createBreadcrumbs();
@@ -156,6 +158,13 @@ console.log(fs.searchFieldOptions);
    $scope.searchVersions = [
         {id: 0, name: "Latest Version"},
         {id: 1, name: "All Versions"},
+    ];
+
+    // Search Context use options
+   $scope.searchContextUseValues = [
+       "Owned By",
+        "Used By",
+        "Owned By/Used By"
     ];
 
     $scope.activeSearchTab = 0;
@@ -349,15 +358,21 @@ console.log(fs.searchFieldOptions);
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
 
 
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse) {
 
         var str = '';
+        // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
             if (searchAltNameType.hasOwnProperty(p)) {
                 str += searchAltNameType[p].type + delimiter;
             }
         }
         searchAltNameType = str;
+
+        // Convert searchContextUse string to index integer
+        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
+        console.log("[" + searchContextUse + "]");
+
 
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
@@ -427,6 +442,13 @@ console.log(fs.searchFieldOptions);
             c++;
             url += connector + "searchVersions=" + searchVersions;
         }
+
+        if ( searchContextUse >= 0) {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "searchContextUse=" + searchContextUse;
+        }
+
 
         for (var x in fs.searchFilter) {
 
@@ -1023,7 +1045,7 @@ console.log(fs.searchFieldOptions);
 
     // CHECKME - it may be better to get rid of all these hold values, and just use $scope.more to determine if they should be treated as empty as we build the search url string,
     // but that might make the URL building code less flexible...
-    
+
     // We now have radio button type values which can be used by themselves, we have been indicating that we don't want to use field by making it empty (so no need for it's radio button).
     // This won't work for radio button type values which can be used by themselves, I am setting values for these radio button types to "-1" to indicate not to use in the search.
     $scope.advanceSearchShow = function() {
@@ -1048,6 +1070,9 @@ console.log(fs.searchFieldOptions);
 
             $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
             fs.dataElementVariables.searchVersions = -1;
+
+            $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
+            fs.dataElementVariables.searchContextUse = -1;
         }
         else {
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
@@ -1064,6 +1089,9 @@ console.log(fs.searchFieldOptions);
 
             fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
             $scope.searchVersionsHOLD = -1;
+
+            fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
+            $scope.searchContextUseHOLD = -1;
         }
     };
 

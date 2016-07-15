@@ -35,7 +35,7 @@
             </div>
         </label>
     </div>
- 
+
     <!-- <div>
         <label class="advancedSearchLabel">Value Domain Type</label>
         <label data-ng-repeat="queryType in searchQueryTypes">
@@ -87,8 +87,8 @@
             <div><label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
             <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
                     ng-options="type.type for type in alternateNameTypes"></select>
-        </span>
             </select>
+        </span>
             <!--
                     {{fs.dataElementVariables.searchAltNameType}}
             -->
@@ -104,4 +104,13 @@
             </div>
         </label>
     </div>
+    <span>
+        <div><label class="advancedSearchLabel">Context Use</label></div>
+            <select ng-model="fs.dataElementVariables.searchContextUse"  multiple="true"
+                       ng-options="contextUse for contextUse in searchContextUseValues"></select>
+            </select>
+    </span>
+</select>
+
+
 </span>
