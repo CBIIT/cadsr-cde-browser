@@ -5,7 +5,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	this.lookupData = {}; // stores master list of classifications and protocol forms //
 
 	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",
-		searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"0"}
+		searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"0", searchObjectClass:""}
 
 	this.searchFilter = {};
 	this.isAChildNodeSearch = false;
@@ -22,7 +22,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 		this.isAChildNodeSearch = false;
 
 		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",
-			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"0"}
+			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"0", searchObjectClass:""}
 
 		this.classifications = [];
 		this.protocols = [];
@@ -72,7 +72,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.isAChildNodeSearch = false;
 
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",
-			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"0"};
+			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"0", searchObjectClass:""};
 
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;

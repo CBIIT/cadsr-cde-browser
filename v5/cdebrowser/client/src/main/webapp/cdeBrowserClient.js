@@ -10,6 +10,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
     $scope.searchContextUseHOLD = 0;
+    $scope.searchObjectClassHOLD = "";
     var delimiter= ":::";
 
 
@@ -79,7 +80,8 @@ console.log(fs.searchFieldOptions);
                         fs.dataElementVariables.searchAltName,
                         fs.dataElementVariables.searchAltNameTypes,
                         fs.dataElementVariables.searchVersions,
-                        fs.dataElementVariables.searchContextUse);
+                        fs.dataElementVariables.searchContextUse,
+                        fs.dataElementVariables.searchObjectClass);
 
 
                     $scope.breadCrumbs = fs.createBreadcrumbs();
@@ -358,7 +360,7 @@ console.log(fs.searchFieldOptions);
     //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
 
 
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass) {
 
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
@@ -446,7 +448,13 @@ console.log(fs.searchFieldOptions);
         if ( searchContextUse >= 0) {
             connector = c == 0 ? "?" : "&";
             c++;
-            url += connector + "searchContextUse=" + searchContextUse;
+            url += connector + "contextUse=" + searchContextUse;
+        }
+
+        if( searchObjectClass != '') {
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "objectClass=" + searchObjectClass;
         }
 
 
@@ -1073,6 +1081,9 @@ console.log(fs.searchFieldOptions);
 
             $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
             fs.dataElementVariables.searchContextUse = -1;
+
+            $scope.searchObjectClassHOLD = fs.dataElementVariables.searchObjectClass;
+            fs.dataElementVariables.searchObjectClass = "";
         }
         else {
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
@@ -1092,6 +1103,9 @@ console.log(fs.searchFieldOptions);
 
             fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
             $scope.searchContextUseHOLD = -1;
+
+            fs.dataElementVariables.searchObjectClass = $scope.searchObjectClassHOLD;
+            $scope.searchObjectClassHOLD = "";
         }
     };
 
