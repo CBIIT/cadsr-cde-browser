@@ -10,6 +10,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
     $scope.concept=[{id:"0",name:"Name"},{id:"1",name:"Code"}];
+    $scope.searchContextUseHOLD = 0;
+    $scope.searchObjectClassHOLD = "";
     var delimiter= ":::";
 
 
@@ -88,7 +90,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             fs.dataElementVariables.conceptQueryType,
                             fs.dataElementVariables.searchAltName,
                             fs.dataElementVariables.searchAltNameTypes,
-                            fs.dataElementVariables.searchVersions);
+                            fs.dataElementVariables.searchVersions,
+                            fs.dataElementVariables.searchContextUse,
+                            fs.dataElementVariables.searchObjectClass);
 
                         $scope.breadCrumbs = fs.createBreadcrumbs();
                     }
@@ -173,6 +177,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
    $scope.searchVersions = [
         {id: 0, name: "Latest Version"},
         {id: 1, name: "All Versions"},
+    ];
+
+    // Search Context use options
+   $scope.searchContextUseValues = [
+       "Owned By",
+        "Used By",
+        "Owned By/Used By"
     ];
 
     $scope.activeSearchTab = 0;
@@ -363,15 +374,21 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.currentCdeTab = 0;
 
     // Search button
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass)) {
 
         var str = '';
+        // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
             if (searchAltNameType.hasOwnProperty(p)) {
                 str += searchAltNameType[p].type + delimiter;
             }
         }
         searchAltNameType = str;
+
+        // Convert searchContextUse string to index integer
+        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
+        console.log("[" + searchContextUse + "]");
+
 
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
@@ -442,6 +459,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             url += connector + "conceptInput=" + conceptInput;
             url += connector + "conceptQueryType=" + conceptQueryType;
         }
+
+        if ( searchContextUse >= 0) {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "contextUse=" + searchContextUse;
+        }
+
+        if( searchObjectClass != '') {
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "objectClass=" + searchObjectClass;
+        }
+
 
         for (var x in fs.searchFilter) {
 
@@ -1028,7 +1058,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // CHECKME - it may be better to get rid of all these hold values, and just use $scope.more to determine if they should be treated as empty as we build the search url string,
     // but that might make the URL building code less flexible...
-    
+
     // We now have radio button type values which can be used by themselves, we have been indicating that we don't want to use field by making it empty (so no need for it's radio button).
     // This won't work for radio button type values which can be used by themselves, I am setting values for these radio button types to "-1" to indicate not to use in the search.
     $scope.advanceSearchShow = function() {
@@ -1053,6 +1083,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
             fs.dataElementVariables.searchVersions = -1;
+
+            $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
+            fs.dataElementVariables.searchContextUse = -1;
+
+            $scope.searchObjectClassHOLD = fs.dataElementVariables.searchObjectClass;
+            fs.dataElementVariables.searchObjectClass = "";
         }
         else {
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
@@ -1069,6 +1105,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
             $scope.searchVersionsHOLD = -1;
+
+            fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
+            $scope.searchContextUseHOLD = -1;
+
+            fs.dataElementVariables.searchObjectClass = $scope.searchObjectClassHOLD;
+            $scope.searchObjectClassHOLD = "";
         }
     };
 

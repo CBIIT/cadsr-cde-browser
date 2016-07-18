@@ -1,14 +1,13 @@
 angular.module("cdeGenericSearch", []);
 
-angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService,$rootScope) {
-    
+angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService, $rootScope) {
+
     $scope.fs = filterService;
-    
+
     $scope.$watch('isNode', function () {
 		$scope.basicSearchQuery = "";
     });
-    
-    
+
     $scope.$watch('selectedQueryType', function () {
     	$scope.fs.dataElementVariables;
     });    
@@ -25,7 +24,12 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 			fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '', 
 			fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options, 
 			fs.dataElementVariables.searchVersions);
-
  	});
+
+ /*
+    Can't do it this way, sometimes $scope.alternateNameTypes is not yet populated.
+    $scope.fs.dataElementVariables.searchAltNameType = $scope.alternateNameTypes[0];
+*/
+    $scope.fs.dataElementVariables.searchAltNameType = {"type": "ALL"};
 
 });
