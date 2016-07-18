@@ -14,7 +14,8 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
 		$scope.resetFilters();
     };
 
-    $scope.options = ["ALL", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
-    $scope.searchFieldOptions = $scope.options[0];
+   $scope.options = ["ALL", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
+   $scope.fs.dataElementVariables.searchFieldOptions.options = [];
+   $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
 }]);

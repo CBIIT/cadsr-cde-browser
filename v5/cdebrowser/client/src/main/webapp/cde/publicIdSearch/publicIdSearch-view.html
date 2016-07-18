@@ -1,7 +1,4 @@
-<!--  Radio buttons "Exact phrase", "All of the words", "At least one of the words"  -->
 <span ng-controller="PublicIdSearchController">
-
-<!-- Search field drop down, text input, search & clear button  -->
 <div class="publicIdSearch">
     <span class="searchField">
         <label for="publicId" class="publicIdLabel">Public ID</label>
@@ -12,21 +9,13 @@
     <span class="searchField name">
         <label for="name" class="publicIdLabel">Name</label>
         <input class="basicSearchQuery roundInput publicIdInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" placeholder="Names and Definitions" />
-
-
-
-        <div class="filters searchFieldDropDown" ng-show="activeSearchTab==1" ng-disabled="true">
-        <span>
-            <ui-select id="searchField" ng-disabled="filterService.isSearching || publicIdSearchQuery==''" theme="bootstrap" ng-model="searchFieldOptions">
-                <ui-select-match placeholder="Search Field">{{searchFieldOptions}}</ui-select-match>
-                <ui-select-choices repeat="option in options">
-                    <div ng-bind-html="option"></div>
-                </ui-select-choices>
-            </ui-select>
+        <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
+            <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true">
+                        <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
+                    </select>
+            <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
+            </div>
         </span>
-        </div>
-
-
 
         <div class="queryTypeRadioButtons">
             <label data-ng-repeat="qType in searchQueryTypes">
@@ -46,11 +35,12 @@
     </span>
 
     <!-- The third, fourth, and fifth parameters are place holders for values used by advanced search, their emptiness indicates to server that advanced search should not be used -->
-    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', '',' ', 0, fs.dataElementVariables.selectedQueryType, publicIdName, fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType )">
-        Search
-    </button>
+    
     <button id="clear" data-ng-click="clear()">
         Clear
+    </button>
+    <button id="search" ng-disabled="fs.isSearching" data-ng-click="onClickBasicSearch(publicIdSearchQuery, 'publicId', '', ' ', 0, fs.dataElementVariables.selectedQueryType, publicIdName, fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, '', '', '', '', fs.dataElementVariables.searchFieldOptions.options )">
+        Search
     </button>
 </div>
 </span>

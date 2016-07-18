@@ -1,6 +1,6 @@
 angular.module("cdeGenericSearch", []);
 
-angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService) {
+angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService,$rootScope) {
     
     $scope.fs = filterService;
     
@@ -13,11 +13,19 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
     	$scope.fs.dataElementVariables;
     });    
     
-    $scope.searchFieldOptions={};
-    $scope.searchFieldOptions.options=[];
     $scope.options = ["ALL", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
+ 	$scope.fs.dataElementVariables.searchFieldOptions.options = [];
+ 	$scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
+ 	
+ 	$rootScope.$on('genericsearch',function(eve,fs){
+ 		console.log(fs);
+		$scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 
+			'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, 
+			fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD, 
+			fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '', 
+			fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options, 
+			fs.dataElementVariables.searchVersions);
 
-    $scope.searchFieldOptions.options[0] = $scope.options[0];
-
+ 	});
 
 });

@@ -1,10 +1,9 @@
 angular.module("cdeBrowserApp").service('filterService', function($resource,$injector) {
-	//var groupFactory1=$injector.get("groupFactory1");
 	// define variables //
 	this.serverData = []; // initial data from server goes here //
 	this.lookupData = {}; // stores master list of classifications and protocol forms //
 
-	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",
+	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 		searchAltName:"", searchAltNameTypes:"0", searchVersions:"0"}
 
 	this.searchFilter = {};
@@ -21,7 +20,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.searchFilter = {programArea:0} // reset search filter to just having program area selected to all //
 		this.isAChildNodeSearch = false;
 
-		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",
+		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0"}
 
 		this.classifications = [];
@@ -41,25 +40,6 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 		};
 	};
 
-	// returns classificiations and protocol forms //
-	// this.getClassificationsAndProtocolForms = function() {
-	// 	this.classifications = []; this.protocols = []; // reset classifications and protocol dropdowns //
-	// 	delete(this.searchFilter.classification);  delete(this.searchFilter.protocol); // remove any values from searchFilter //
-	// 	if (this.searchFilter.context) { // get classifications and protocols for selected context //
-	// 		for (var classification=0; classification<this.lookupData.classifications.length; classification++) { // get classifications for context //
-	// 		  if (this.lookupData.classifications[classification].contextIdSeq==this.searchFilter.context) {
-	// 		  	this.classifications.push(this.lookupData.classifications[classification])
-	// 		  };
-	// 		};
-
-	// 		for (var protocol=0; protocol< this.lookupData.protocols.length; protocol++) { // get protocols for context //
-	// 		  if (this.lookupData.protocols[protocol].contextIdSeq==this.searchFilter.context) {
-	// 		  	this.protocols.push(this.lookupData.protocols[protocol])
-	// 		  };
-	// 		};
-	// 	};
-	// };
-
 	// select context dropdown based on context click in left menu //
 	this.selectContextByNode = function(programArea,id) {
 		this.searchFilter = {programArea:programArea}; // user clicked the left menu. set program area //
@@ -71,7 +51,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.selectFiltersByNode = function(searchType,id, selectedNode, programArea) {
         this.isAChildNodeSearch = false;
 
-        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0",
+        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0"};
 
         this.searchFilter.programArea = programArea;
@@ -106,9 +86,6 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 		};
 
 		if (this.searchFilter.classification) {
-			// for (var i=0; i<this.classifications.length;i++) {
-				// if (this.classifications[i].csIdSeq==this.searchFilter.classification) {
-				// if (this.searchFilter.classification) {
 					if(this.searchFilter.classification.name==this.searchFilter.classification.csLongName)
 					breadcrumbs.push(this.searchFilter.classification.csLongName);
 				else if(this.searchFilter.classification.name==this.searchFilter.classification.csCsiName){
@@ -116,22 +93,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 					breadcrumbs.push(this.searchFilter.classification.csCsiName);
 				}else if(this.searchFilter.classification.csiLevel==2){
 						breadcrumbs.push(this.searchFilter.classification.csLongName);
-						//console.log(_.find(groupFactory1.getNameFromId(this.searchFilter.classification.csIdSeq)));
-						//breadcrumbs.push( _.find(groupfactory1.getNameFromId(this.searchFilter.classification.csIdSeq))
-
-						// breadcrumbs.push(this.searchFilter.classification.csCsiName);
-						// breadcrumbs.push(this.searchFilter.classification.parentCsiIdSeq);
-
 						breadcrumbs.push(this.searchFilter.classification.name);
-
 				}
-
-					// if (this.searchFilter.classification.csLongName) {
-					// 	breadcrumbs.push(this.searchFilter.classification.csLongName.csCsiName)
-					// };
-
-				// };
-			// };
 		}
 
 		// else
@@ -142,22 +105,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 					breadcrumbs.push(this.searchFilter.protocol.protocolLongName);
 					breadcrumbs.push(this.searchFilter.protocol.name);
 				}
-			// for (var i=0; i<this.protocols.length;i++) {
-				// if (this.protocols[i].protocolIdSeq==this.searchFilter.protocol) {
-					//breadcrumbs.push(this.searchFilter.protocol.protocolLongName)
-				// };
-			// };
 		};
-
-		// if (this.searchFilter.classification.csLongName) {
-		// 			breadcrumbs.push(this.searchFilter.classification.csCsiName)
-		// }
-
-		// else if (this.searchFilter.protocol.protocolLongName) {
-		// 			breadcrumbs.push(this.searchFilter.protocol.formLongName)
-		// };
-
-		// console.log(breadcrumbs);
 		return breadcrumbs
     };
 

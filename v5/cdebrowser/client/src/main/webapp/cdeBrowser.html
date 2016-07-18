@@ -341,32 +341,48 @@
                     </script>
                 </span>
 
-                <span>
-                <ui-select id="registrationStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.registrationStatus">
-                    <ui-select-match allow-clear="true" placeholder="Registration Status">{{$select.selected}}</ui-select-match>
-                    <ui-select-choices repeat="value as value in staticFilters.registrationStatusFilter | filter: $select.search">
-                        <div ng-bind-html="value | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+                <span class="wsAndRs">
+                <select multiple="true" ng-model="filterService.searchFilter.registrationStatus">
+                    <option ng-repeat="r in staticFilters.registrationStatusFilter" value="{{r}}">{{r}}</option>
+                </select>
+                </span>
+
+                <span class="wsAndRs">
+                <select multiple="true" ng-model="filterService.searchFilter.workFlowStatus">
+                    <option ng-repeat="r in staticFilters.workflowStatusFilter" value="{{r}}">{{r}}</option>
+                </select>
                 </span>
 
                 <span>
-                <ui-select id="workflowStatus" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.workFlowStatus">
-                    <ui-select-match allow-clear="true" placeholder="Workflow Status">{{$select.selected}}</ui-select-match>
-                    <ui-select-choices repeat="value as value in  staticFilters.workflowStatusFilter | filter: $select.search">
-                        <div ng-bind-html="value | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+                    <div class="conceptGroup">
+                        <label></label>
+                        <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" placeholder="Concept Name/Code" />
+                        <div class="conceptRadio">
+                            <label data-ng-repeat="c in concept">
+                            <div>
+                                <input ng-disabled="fs.isSearching"
+                                       name="conceptQueryType"
+                                       type="radio"
+                                       value="{{c.id}}"
+                                       data-ng-model="fs.dataElementVariables.conceptQueryType"/>
+                                {{c.name}}
+                            </div>
+                        </label>
+                        </div>
+                    </div>
                 </span>
-                <!-- <span>{{filterService.searchFilter}}</span> -->
 
-                <span class="clear">
-                    <button class="btn btn-default clearButton" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
+                <span class="searchAndClearButton endBtn">
+                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
                 </span>
 
+                <span class="searchAndClearButton">
+                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
+                </span>
+             
                 <!-- Start of Advance Search Options -->
 
-                <br>
+                <br />
 
                 <div ng-show="more">
 

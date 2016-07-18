@@ -37,6 +37,7 @@ a:hover {
 }
 
 /*  Testing */
+
 .OraHeaderSubSub {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 12pt;
@@ -45,6 +46,7 @@ a:hover {
 }
 
 /* The initial loading message or error message  */
+
 .bigMessage {
     font-size: 28px;
     font-weight: bold;
@@ -78,6 +80,7 @@ a:hover {
 }
 
 /* Labels for advanced Search inputs.  There is probably a style for these aready, but I can't find it, will search again in future. */
+
 .advancedSearchLabel{
     font-size: 14px;
     background-color: #fff;
@@ -85,6 +88,7 @@ a:hover {
 }
 
 /* The four round buttons - top right */
+
 .roundButton {
     font-size: 10pt;
 }
@@ -100,6 +104,7 @@ a:hover {
 }
 
 /* Search results pane to the right of the Tree menu pane  */
+
 .resultsDisplay {
     color: #000;
     padding-left: 15px;
@@ -113,6 +118,7 @@ a:hover {
 }
 
 /* The tree for each tab  (within treeWindow class)  */
+
 .treeMenu {
     float: left;
     /* top of tree menu pane  */
@@ -140,6 +146,7 @@ a:hover {
 }
 
 /* The search query input and options */
+
 .queryTypeRadioButtons {
     font-size: 11pt;
     color: #18344d;
@@ -148,7 +155,7 @@ a:hover {
 }
 
 .queryTypeRadioButtons label {
-margin-left:15px;
+margin-left: 15px;
 display:inline-block !important;
 }
 
@@ -182,7 +189,7 @@ display:inline-block !important;
 }
 
 .basicSearchQuery {
-    width: 58%;
+    width: 64%;
 }
 
 .searchTips {
@@ -202,6 +209,7 @@ display:inline-block !important;
 }
 
 /* top row of logos and links */
+
 .top-left-logo {
     position: absolute;
     left: 10px;
@@ -227,6 +235,7 @@ display:inline-block !important;
 }
 
 /* the second top row of logos and links */
+
 .top2-left-logo {
     position: absolute;
     left: 10px;
@@ -234,6 +243,7 @@ display:inline-block !important;
 }
 
 /* row of links  */
+
 .top2-center-logo {
     position: absolute;
     right: 304px;
@@ -252,6 +262,7 @@ display:inline-block !important;
 }
 
 /*  No line under the space between the round buttons */
+
 .top2-right-logo a {
     text-decoration: none;
 }
@@ -322,14 +333,23 @@ display:inline-block !important;
 
 /* Fix to make clear button consistent with other buttons */
 
-.clearButton {
+.searchAndClearButton {
+    float: right;
+    padding-top: 35px;
+}
+
+.searchAndClearButton button {
     padding: 3px 6px 3px 6px !important;
     font-size: 12px !important;
 }
 
+.endBtn {
+    padding-right: 23px;
+}
+
 /* Rounds the corners of input boxes */
 
-.roundInput{
+.roundInput {
     border-radius: 2px !important;
     border-width: thin;
 }
@@ -552,6 +572,30 @@ display:inline-block !important;
     background-color: #0ff;
 }
 
+.compareScreenAnchors {
+    padding:5px 0px 10px 0px;
+}
+
+.compareScreenAnchors span a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.compareScreenExpandCollapse {
+    width: 15px;
+    height: 15px;
+    padding-left: 2px;
+    cursor: pointer; 
+}
+
+.compareScreenDelete {
+    width: 18px;
+    height: 18px;
+    float: right;
+    padding: 0 4px 0;
+    cursor: pointer;
+}
+
 /* Advance Search Options */
 
 .advanceSearchCenter {
@@ -578,11 +622,6 @@ display:inline-block !important;
     margin: 4px 0;
 }
 
-.searchFieldDropDown {
-    margin-top: 0 !important;
-    float: right;
-}
-
 .advanceSearchInput {
     width: 185px;
     margin-left: -4px !important;
@@ -591,6 +630,72 @@ display:inline-block !important;
 .advanceSearchInputBordered {
     width: 180px;
     margin-left: -2px !important;
+}
+
+/* Search Field */ 
+
+.searchFieldDropDown {
+    margin-top: 0 !important;
+    float: right;
+}
+
+.searchFieldDropDown select {
+    width: 210px;
+    height: 58px;
+}
+
+.searchFieldDropDownPublic {
+    margin-top: 0 !important;
+    float: right;
+    padding-left: 7px;
+}
+
+.searchFieldDropDownPublic select {
+    width: 210px;
+    height: 58px;
+}
+
+.searchFieldTip,
+.searchFieldTip strong {
+    padding-top: 4px;
+    font-size: 8pt !important;
+}
+
+/* Concept code and name */
+
+.conceptGroup {
+    border-radius: 4px;
+    border: 1px solid #73AD21;
+    padding: 6px 4px 4px;
+    margin: 0;
+}
+
+.conceptInput {
+    width: 173px;
+    margin-left: -2px !important;
+}
+
+.conceptRadio {
+    font-size: 11pt;
+    color: #18344d;
+    padding-top: 6px;
+    margin-top: 1px;
+}
+
+.conceptRadio label {
+    display: inline-block !important;
+    padding-right: 7px;
+}
+
+/* Workflow and Registration Statues Multi-select */
+
+.wsAndRs {
+    width: 185px;
+}
+
+.wsAndRs select{
+    width: 185px !important;
+    height: 64px;
 }
 
 

@@ -9,12 +9,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
+    $scope.concept=[{id:"0",name:"Name"},{id:"1",name:"Code"}];
     var delimiter= ":::";
 
 
     /* Start of filter service */
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
+    $scope.fs = filterService;
 
     var cs = compareService;
     $scope.compareService = cs;
@@ -51,7 +53,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     });
 
     // watch for changes to dropdowns. When it changes, refilter data //
-    $scope.$watch('filterService.searchFilter', function() {
+    $scope.$watch('filterService.searchFilter', function(updated,previous) {
         if (fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
             fs.isLeftTreeClick = false;
         }
@@ -63,24 +65,33 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 else {
 
                     // do search because at least one dropdown besides program area is selected //
-debugger;
-console.log(fs.searchFieldOptions);
-                    $scope.onClickBasicSearch(
-                        fs.dataElementVariables.basicSearchQuery,
-                        'name',
-                        fs.dataElementVariables.searchDEC,
-                        fs.dataElementVariables.searchPV,
-                        fs.dataElementVariables.searchPVQueryType,
-                        fs.dataElementVariables.selectedQueryType,
-                        fs.dataElementVariables.searchVD,
-                        fs.dataElementVariables.searchVDTQueryType,
-                        "",
-                        fs.dataElementVariables.searchAltName,
-                        fs.dataElementVariables.searchAltNameTypes,
-                        fs.dataElementVariables.searchVersions);
 
+                    var newobj = angular.copy(updated);
+                    var prevobj = angular.copy(previous);
+                    delete newobj.registrationStatus;
+                    delete prevobj.registrationStatus;
+                    delete newobj.workFlowStatus;
+                    delete prevobj.workFlowStatus;
 
-                    $scope.breadCrumbs = fs.createBreadcrumbs();
+                    if(!angular.equals(newobj,prevobj)){
+                        $scope.onClickBasicSearch(
+                            fs.dataElementVariables.basicSearchQuery,
+                            'name',
+                            fs.dataElementVariables.searchDEC,
+                            fs.dataElementVariables.searchPV,
+                            fs.dataElementVariables.searchPVQueryType,
+                            fs.dataElementVariables.selectedQueryType,
+                            fs.dataElementVariables.searchVD,
+                            fs.dataElementVariables.searchVDTQueryType,
+                            "",
+                            fs.dataElementVariables.conceptInput,
+                            fs.dataElementVariables.conceptQueryType,
+                            fs.dataElementVariables.searchAltName,
+                            fs.dataElementVariables.searchAltNameTypes,
+                            fs.dataElementVariables.searchVersions);
+
+                        $scope.breadCrumbs = fs.createBreadcrumbs();
+                    }
                 };
             };
         };
@@ -97,9 +108,15 @@ console.log(fs.searchFieldOptions);
         groupFactory1.clearData();
     };
 
+    $scope.search=function(){
+        console.log($scope.fs);
+
+        $rootScope.$broadcast('genericsearch', $scope.fs);
+
+    }
+
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-        // fs.getClassificationsAndProtocolForms();
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
             $scope.filterService.protocols = groupFactory.load(0);
@@ -346,10 +363,7 @@ console.log(fs.searchFieldOptions);
     $scope.currentCdeTab = 0;
 
     // Search button
-    //    $scope.onClickBasicSearch = function (query, field, type, publicIdName) {
-
-
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions) {
 
         var str = '';
         for (var p in searchAltNameType) {
@@ -403,12 +417,6 @@ console.log(fs.searchFieldOptions);
             url += "&vdtQueryType=" + vdtType;
         }
 
-        // if( vdtType != '') {
-        //     connector= c==0?"?":"&";
-        //     c++;
-        //     url += "&vdtQueryType=" + vdtType;
-        // }
-
         if (searchAltName != '') {
             connector = c == 0 ? "?" : "&";
             c++;
@@ -426,6 +434,13 @@ console.log(fs.searchFieldOptions);
             connector = c == 0 ? "?" : "&";
             c++;
             url += connector + "searchVersions=" + searchVersions;
+        }
+
+        if (conceptInput != '') {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "conceptInput=" + conceptInput;
+            url += connector + "conceptQueryType=" + conceptQueryType;
         }
 
         for (var x in fs.searchFilter) {
@@ -464,14 +479,13 @@ console.log(fs.searchFieldOptions);
                             if(fs.searchFilter[x].id==fs.searchFilter[x].csCsiIdSeq){
                                 url+=connector+"csCsiIdSeq"+"="+fs.searchFilter[x].id;
                             }
+                        }else{
+                            url+=connector+x+"="+fs.searchFilter[x].toString();
                         }
                     };
                 };
             };
         };
-
-        console.log("Search url:  " + url);
-
 
         $scope.searchServerRestCall(url);
         if (field=='publicId') {
@@ -614,10 +628,10 @@ console.log(fs.searchFieldOptions);
     //     $scope.dataLoad("data5.json");
     // };
 
-    /*   $scope.dataLoad6 = function () {
-     $scope.dataLoad("data6.json");
-     };
-     */
+    //   $scope.dataLoad6 = function () {
+    // $scope.dataLoad("data6.json");
+    // };
+     
     $scope.getAlternateNameTypesFromServer = function () {
         var serverUrl = "altNameType.json"
         $http.get(serverUrl)
@@ -626,7 +640,7 @@ console.log(fs.searchFieldOptions);
                 $scope.alternateNameTypes = response;
             })
             .error(function (error) {
-                console.log("Error [" + serverUrl + "]: " + error.statusText);
+                // console.log("Error [" + serverUrl + "]: " + error.statusText);
             });
 
     };
@@ -688,15 +702,6 @@ console.log(fs.searchFieldOptions);
                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
             });
         });
-
-        // $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme').success(function(response) {
-        //     fs.lookupData['classifications'] = response;
-        // });
-
-        // $http.get('/cdebrowserServer/rest/lookupdata/protocol').success(function(response) {
-        //     fs.lookupData['protocols'] = response;
-        // });
-
     };
 
 
@@ -873,7 +878,7 @@ console.log(fs.searchFieldOptions);
             };
             isInitialColumnClick = 2;
         }
-        //end override of column sort direction //
+        // end override of column sort direction //
 
         var displayOrder = {"asc":"Ascending","desc":"Descending"}
         var sortOrderObject = {"sortDirection":"asc","items":[]};
@@ -923,9 +928,9 @@ console.log(fs.searchFieldOptions);
     $scope.getAlternateNameTypesFromServer();
 
     $scope.dataLoadFromServer();
-    /*
-     $scope.dataLoad6();
-     */
+    
+    // $scope.dataLoad6();
+     
 
     $scope.versionData();
     $scope.getToolHosts();
