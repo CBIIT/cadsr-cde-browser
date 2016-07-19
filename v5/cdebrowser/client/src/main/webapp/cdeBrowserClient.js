@@ -732,6 +732,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
             });
+        }).then(function() {
+            $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
+                $scope.alternateNameTypes = response.data;
+            });
         });
     };
 
@@ -957,7 +961,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.initTableParams(); // init table params //
     $scope.hideContexts();
-    $scope.getAlternateNameTypesFromServer();
+    //$scope.getAlternateNameTypesFromServer();
 
     $scope.dataLoadFromServer();
     

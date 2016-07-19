@@ -13,4 +13,5 @@ public interface DesignationDAO
     List<DesignationModel> getDesignationModelsByAcIdseq( String acIdseq );
     List<DesignationModelAlt> getDesignationModelsNoClsssification( String acIdseq );
     List<DesignationModel> getUsedByDesignationModels( String acIdseq );
+    List<String> getAllDesignationModelTypes();
 }

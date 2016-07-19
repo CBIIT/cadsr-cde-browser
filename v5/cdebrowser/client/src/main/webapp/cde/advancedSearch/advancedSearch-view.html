@@ -57,7 +57,7 @@
         <span>
             <div><label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
             <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
-                    ng-options="type.type for type in alternateNameTypes track by type.type"></select>
+                    ng-options="type for type in alternateNameTypes track by type"></select>
             </select>
         </span>
             <!--

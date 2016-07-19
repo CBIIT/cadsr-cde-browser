@@ -5,6 +5,7 @@ package gov.nih.nci.cadsr.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -65,6 +66,21 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
         List<DesignationModel> designationModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new DesignationMapper( DesignationModel.class ) );
         return designationModels;
     }
+    
+    @Override
+    public List<String> getAllDesignationModelTypes()
+    {
+
+        String sql = "SELECT distinct(DETL_NAME) FROM sbr.designations";
+        List<String> dModelTypes = (List<String>) jdbcTemplate.queryForList(sql, String.class);
+        List<String> designationModelTypes = new ArrayList<String>();
+        designationModelTypes.add("ALL");
+        for (String dtype : dModelTypes)
+        {
+        	designationModelTypes.add(dtype);
+        }
+        return designationModelTypes;
+    }    
 
     public ContextDAO getContextDAO()
     {

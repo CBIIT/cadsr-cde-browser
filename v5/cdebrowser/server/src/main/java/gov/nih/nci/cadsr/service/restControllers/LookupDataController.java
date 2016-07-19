@@ -14,22 +14,29 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.error.RestControllerException;
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ProtocolService;
 import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationScheme;
+import gov.nih.nci.cadsr.dao.DesignationDAO;
 
 @RestController
 @RequestMapping("/lookupdata")
 public class LookupDataController
 {	
 	private Logger logger = LogManager.getLogger(LookupDataController.class.getName());
+	//DesignationDAO designationDAO = new DesignationDAOImpl();
 	
 	@Autowired
 	ClassificationSchemeService classificationSchemeService;
 	
 	@Autowired
 	ProtocolService protocolService;
+	
+    @Autowired
+    private DesignationDAO designationDAO;	
+	
 	
 	@RequestMapping(value="/workflowstatus", produces = "application/json")
 	public List<String> getWorkflowStatus()
@@ -44,6 +51,14 @@ public class LookupDataController
 		logger.debug("Received request for Registration Status information.");
 		return RegistrationStatusEnum.getAsList();
 	}
+	
+	@RequestMapping(value="/alternateType", produces = "application/json")	
+	public List<String> getAlternateTypes()
+	{
+		
+		logger.debug("Received request for Alternate Type(s) information.");
+		return designationDAO.getAllDesignationModelTypes();
+	}	
 	
 	@RequestMapping(value="/classificationscheme", produces = "application/json")
 	public List<ClassificationScheme> getClassificationScheme(@RequestParam(value="contextIdSeq", required=false) String contexIdSeq,

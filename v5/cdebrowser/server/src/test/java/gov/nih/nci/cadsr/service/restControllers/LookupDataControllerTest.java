@@ -27,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import gov.nih.nci.cadsr.dao.ClassificationSchemeDAO;
 import gov.nih.nci.cadsr.dao.ProtocolDAO;
+import gov.nih.nci.cadsr.dao.DesignationDAO;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ClassificationSchemeServiceImpl;
 import gov.nih.nci.cadsr.service.ProtocolService;
@@ -54,6 +55,11 @@ public class LookupDataControllerTest
 		public ProtocolService protocolService() {
 			return new ProtocolServiceImpl();
 		}
+		
+		@Bean
+		public DesignationDAO designationDAO() {
+			return Mockito.mock(DesignationDAO.class);
+		}		
 
 		@Bean
 		public LookupDataController lookupDataController() {
