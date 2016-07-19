@@ -64,6 +64,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String formWhere = "";
         String dataElementConceptWhere = "";
         String permissibleValueWhere = "";
+        String objectClassWhere = "";
 
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
@@ -121,6 +122,15 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         else
         {
             permissibleValueWhere = buildPermissibleValueWhere( searchCriteria.getPermissibleValue(), searchCriteria.getPvQueryType() );
+        }
+
+        if( StringUtils.isBlank( searchCriteria.getObjectClass()  ) )
+        {
+            objectClassWhere = "";
+        }
+        else
+        {
+            objectClassWhere =  buildObjectClassWhere(searchCriteria.getObjectClass() );
         }
 
         if( StringUtils.isBlank( searchCriteria.getDataElementConcept() ) )
@@ -211,10 +221,36 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         ///////////////////////////////////////////////////////
         // Filter for only a specific context is added only if protocol where is not already added otherwise,
         //the left context tree search by protocol is not matching up with the drop down search by context and protocol
+        /*
+        // This is the original version, I'm keeping it here for reference as I add Used By, Owned By, or Owned By/Used By
         if( StringUtils.isNotBlank( searchCriteria.getContext() ) && StringUtils.isBlank( searchCriteria.getProtocol() ) )
         {
             contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
                     " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
+        }
+        */
+
+        if( StringUtils.isNotBlank( searchCriteria.getContext() ) && StringUtils.isBlank( searchCriteria.getProtocol() ) )
+        {
+            switch( searchCriteria.getContextUse() )
+            {
+                case 0:
+                    //and conte.conte_idseq = 'A5599257-A08F-41D1-E034-080020C9C0E0'
+                    contextWhere = "conte.conte_idseq = '" + searchCriteria.getContext() + "' AND ";
+                    break;
+                case 1:
+                    //de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = 'A5599257-A08F-41D1-E034-080020C9C0E0' and des.DETL_NAME = 'USED_BY')
+                    contextWhere = "de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = '" + searchCriteria.getContext() + "' and des.DETL_NAME = 'USED_BY') AND ";
+                    break;
+                case 2:
+                case -1: // -1 is the value from the client if "Context Use" selector has not been set.  I stell need to set "Owned By/Used by" as the default in the client (18_JUL_2016)
+                contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
+                        " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
+            }
+
+
+            System.out.println("MHL contextWhere: " + contextWhere);
+            System.out.println("MHL searchCriteria.getContextUse(): " + searchCriteria.getContextUse());
         }
 
         ///////////////////////////////////////////////////////
@@ -254,6 +290,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( regStatus );
         whereBuffer.append( cdeIdWhere );
         whereBuffer.append( decWhere );
+        whereBuffer.append( objectClassWhere );
         whereBuffer.append( vdWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
@@ -285,10 +322,29 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( fromWhere );
 
         String sqlStmt = finalSqlStmt.toString();
+
+        System.out.println("MHL sqlStmt: " + sqlStmt);
         return sqlStmt;
     }
 
 
+    public String buildObjectClassWhere( String objecClass)
+    {
+        String where = "and  de.de_idseq IN " +
+                "(select de_idseq from   sbr.data_elements_view where  " +
+                "    dec_idseq IN " +
+                "    (" +
+                "        select dec.dec_idseq " +
+                "            from" +
+                "                sbr.data_element_concepts_view dec," +
+                "                sbrext.object_classes_view_ext oc  " +
+                "            where" +
+                "                oc.oc_idseq = dec.oc_idseq  " +
+                "                and upper(oc.LONG_NAME) like upper('"+ objecClass + "')" +
+                ")" +
+                "    )";
+        return where;
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String buildPermissibleValueWhere( String query, int queryType )

@@ -196,6 +196,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "" );
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
+        searchCriteria.setContextUse( 2 );
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql02 ) );

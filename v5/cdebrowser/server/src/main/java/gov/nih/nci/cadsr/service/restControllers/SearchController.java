@@ -68,17 +68,11 @@ public class SearchController
     }
 
     /**
-     * @param name              The text of the name field.
-     * @param queryType          0="Exact phrase" 1="All of the words" 2="At least one of the words" defined in CaDSRConstants.SEARCH_MODE - defaults to 2 if left out
-     * @param programArea        If empty, will not be used
-     * @param context            If empty, will not be used
-     * @param classification     If empty, will not be used
-     * @param protocol           If empty, will not be used
-     * @param workFlowStatus     If empty, will not be used
-     * @param registrationStatus If empty, will not be used
-     * @param conceptName        If empty, will not be used
-     * @param conceptCode        If empty, will not be used
-     * @return Search results as an array of SearchNode
+     *
+     * @param searchCriteria
+     * @param result
+     * @param httpSession
+     * @return an array of SearchNode
      */
     @RequestMapping( value = "/search" )
     @ResponseBody
@@ -97,7 +91,7 @@ public class SearchController
         if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(),
         										searchCriteria.getClassification(), searchCriteria.getCsCsiIdSeq(), searchCriteria.getProtocol(), searchCriteria.getFormIdSeq(),
         										searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), searchCriteria.getConceptName(), searchCriteria.getConceptCode(),
-                                                searchCriteria.getDataElementConcept(), searchCriteria.getPermissibleValue() ))
+                                                searchCriteria.getDataElementConcept(), searchCriteria.getPermissibleValue(), searchCriteria.getObjectClass() ))
         {
             logger.warn( "Suspect parameter from client." );
             return null;

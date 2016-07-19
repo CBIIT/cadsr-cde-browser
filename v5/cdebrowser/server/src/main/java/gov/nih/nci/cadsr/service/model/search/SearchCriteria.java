@@ -23,6 +23,8 @@ public class SearchCriteria implements Serializable
 	private String dataElementConcept;
 	private String permissibleValue;
 	private int pvQueryType;
+	private String objectClass;
+	private int contextUse;
 
 	public String getName() {
 		return name;
@@ -166,13 +168,33 @@ public class SearchCriteria implements Serializable
 		this.dataElementConcept = dataElementConcept;
 	}
 
+	public String getObjectClass()
+	{
+		return objectClass;
+	}
+
+	public void setObjectClass( String objectClass )
+	{
+		this.objectClass = objectClass;
+	}
+
+	public int getContextUse()
+	{
+		return contextUse;
+	}
+
+	public void setContextUse( int contextUse )
+	{
+		this.contextUse = contextUse;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType=" + queryType + ", programArea="
 				+ programArea + ", context=" + context + ", classification=" + classification + ", csCsiIdSeq = " + csCsiIdSeq + ", protocol=" + protocol
 				+ ", formIdSeq=" + formIdSeq + ", workFlowStatus=" + workFlowStatus + ", registrationStatus=" + registrationStatus + ", conceptName="
 				+ conceptName + ", conceptCode=" + conceptCode + ", dataElementConcept=" + dataElementConcept + ", permissibleValue=" + permissibleValue
-				+ ", pvQueryType=" + pvQueryType +"]";
+				+ ", pvQueryType=" + pvQueryType  +",objectClass=" + objectClass +"]";
 	}
 
 }
