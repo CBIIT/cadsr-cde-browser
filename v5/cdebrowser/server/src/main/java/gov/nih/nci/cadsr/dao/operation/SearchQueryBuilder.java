@@ -249,8 +249,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             }
 
 
-            System.out.println("MHL contextWhere: " + contextWhere);
-            System.out.println("MHL searchCriteria.getContextUse(): " + searchCriteria.getContextUse());
+            //System.out.println("MHL contextWhere: " + contextWhere);
+            //System.out.println("MHL searchCriteria.getContextUse(): " + searchCriteria.getContextUse());
         }
 
         ///////////////////////////////////////////////////////
@@ -297,6 +297,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( dataElementConceptWhere );
         whereBuffer.append( permissibleValueWhere );
         whereBuffer.append( deDerivWhere ).append( protocolWhere ).append( formWhere );
+        
+        String altNamesWhere = SearchQueryBuilderUtils.buildAltNamesWhere(searchCriteria.getAltName(), searchCriteria.getAltNameType());
+        whereBuffer.append(altNamesWhere);
 
         whereClause = whereBuffer.toString();
 

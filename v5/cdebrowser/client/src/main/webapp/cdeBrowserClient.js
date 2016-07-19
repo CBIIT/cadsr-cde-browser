@@ -379,7 +379,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
             if (searchAltNameType.hasOwnProperty(p)) {
-                str += searchAltNameType[p].type + delimiter;
+                str += searchAltNameType[p] + delimiter;
             }
         }
         searchAltNameType = str;
