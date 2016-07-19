@@ -438,8 +438,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (searchAltName != '') {
             connector = c == 0 ? "?" : "&";
             c++;
-            url += connector + "searchAltName=" + searchAltName;
-            url += "&searchAltNameType=" + searchAltNameType;
+            url += connector + "altName=" + searchAltName;
+            url += "&altNameType=" + searchAltNameType;
         }
 
         if (filteredinput != '') {
@@ -451,7 +451,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (searchVersions >= 0) {
             connector = c == 0 ? "?" : "&";
             c++;
-            url += connector + "searchVersions=" + searchVersions;
+            url += connector + "versionType=" + searchVersions;
         }
 
         if (conceptInput != '') {

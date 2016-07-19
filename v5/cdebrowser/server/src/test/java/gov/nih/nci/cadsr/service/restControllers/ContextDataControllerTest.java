@@ -33,7 +33,7 @@ public class ContextDataControllerTest extends TestCase
     public void setUp()
     {
         unitTestCommon = new UnitTestCommon();
-        contextDataController = new ContextDataController();
+        contextDataController = new ContextDataController(null);
         contextDataController.setAppConfig(new AppConfig());
         // TODO set up Spring test @Configuration class with PropertyPlaceholderConfigurer so
         // Spring can resolve the @Value("${maxHoverTextLen}") etc. during Unit tests

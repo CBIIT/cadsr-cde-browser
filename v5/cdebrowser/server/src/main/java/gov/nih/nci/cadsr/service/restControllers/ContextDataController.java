@@ -62,7 +62,6 @@ public class ContextDataController
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
     
-    @Autowired
     private RestControllerCommon restControllerCommon;
     
     @Autowired
@@ -71,9 +70,20 @@ public class ContextDataController
     private Map csi = new HashMap();
 
     private int contextPalNameCount;
-
-    public ContextDataController()
+    
+    @Autowired
+    public ContextDataController(RestControllerCommon restControllerCommon)
     {
+        this.restControllerCommon = restControllerCommon;
+    	try
+        {
+            programAreaModelList = restControllerCommon.getProgramAreaList();
+            logger.info("Loaded Program Areas from database: ", programAreaModelList.toArray().length);
+        } catch( Exception e )
+        {
+            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
+            programAreaModelList = new ArrayList<>();
+        }    	
     }
 
     @RequestMapping( value = "/contextData" )
@@ -82,14 +92,10 @@ public class ContextDataController
     {
         logger.debug( "Received rest call \"contextData\"" );
         // Get Program Areas
-        try
+        if (programAreaModelList.isEmpty())
         {
-            programAreaModelList = restControllerCommon.getProgramAreaList();
-        } catch( Exception e )
-        {
-            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
             ContextNode[] errorNode = new ContextNode[1];
-            errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Program Areas from database", e, ContextNode.class );
+            errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Program Areas from database", new Exception("Spring configuration related exception"), ContextNode.class );
             return errorNode;
         }
 
