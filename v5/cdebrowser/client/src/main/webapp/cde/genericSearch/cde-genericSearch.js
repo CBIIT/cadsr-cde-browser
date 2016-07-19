@@ -16,14 +16,14 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
  	$scope.fs.dataElementVariables.searchFieldOptions.options = [];
  	$scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
  	
- 	$rootScope.$on('genericsearch',function(eve,fs){
- 		console.log(fs);
+ 	$rootScope.$on('genericsearch',function(eve,fs) {
+ 		// console.log(fs);
 		$scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery, 
 			'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV, 
 			fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD, 
 			fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '', 
 			fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options, 
-			fs.dataElementVariables.searchVersions);
+			fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass);
  	});
 
  /*

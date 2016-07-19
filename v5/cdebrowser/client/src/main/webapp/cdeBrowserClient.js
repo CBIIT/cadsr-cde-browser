@@ -386,7 +386,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         // Convert searchContextUse string to index integer
 
-        // searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
+        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
         
         // console.log("[" + searchContextUse + "]");
 
