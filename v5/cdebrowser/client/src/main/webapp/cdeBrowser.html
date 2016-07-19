@@ -179,7 +179,20 @@
              bigMessage: messageClass == cssClasses['BIG'],
              errorMessage: messageClass == cssClasses['ERROR']
              }">
-        <span data-ng-bind-html-unsafe="waitMessage">{{waitMessage}}</span>
+        <span ng-show="waitMessage&&waitMessage!=''" data-ng-bind-html-unsafe="waitMessage" data-ng-class="{
+             bigSearchResultsMessage: bigSearchResultsMessageClass,
+             normSearchResultsMessage: (! bigSearchResultsMessageClass)
+             }">
+            <ul ng-show="waitMessage" class="cdeSearchMessage">
+                <li>
+                    {{waitMessage}}
+                </li>
+                <li>
+                    <img alt="Loading..." src="icons/preloader.gif">
+                </li>
+            </ul>
+        
+        </span>
     </div>
 
     <!-- ************ Program Area The tabs across the top  ************ -->

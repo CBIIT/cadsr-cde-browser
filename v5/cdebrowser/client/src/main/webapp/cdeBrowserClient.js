@@ -752,7 +752,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 
     $scope.dataLoad = function (dataSource) {
-        $scope.waitMessage = "Please wait, loading Context data\n (" + dataSource + ").....".replace(/(?:\r\n|\r|\n)/g, "\n<br>");
+        $scope.waitMessage = "    Loading";
         $scope.messageClass = $scope.cssClasses["BIG"];
 
         $http.get(dataSource).success(function (response) {
