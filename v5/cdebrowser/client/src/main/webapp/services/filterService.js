@@ -17,16 +17,26 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 
 	// resets all important variables
 	this.resetFilters = function() {
-        this.searchFilter = {programArea:0} // reset search filter to just having program area selected to all //
 		this.isAChildNodeSearch = false;
-
 		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"Owned By/Used By", searchObjectClass:""}
+		this.resetElementsInCommon();
+		// this.classifications = [];
+		// this.protocols = [];
+		// this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
+	};
 
+	this.resetDataElementSearch=function(){
+		this.resetElementsInCommon();
+
+	}
+
+	this.resetElementsInCommon=function(){
+		this.searchFilter = {programArea:0}// reset search filter to just having program area selected to all //
 		this.classifications = [];
 		this.protocols = [];
-		this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
-	};
+		this.showClassificationsProtocolForms = 0; 
+	}
 
 	// gets initial server data //
 	this.getServerData = function(url) {

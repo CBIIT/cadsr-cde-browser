@@ -113,7 +113,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.search=function(){
-        console.log($scope.fs);
+        // console.log($scope.fs);
 
         $rootScope.$broadcast('genericsearch', $scope.fs);
 
@@ -375,7 +375,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass) {
-
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
@@ -386,8 +385,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         searchAltNameType = str;
 
         // Convert searchContextUse string to index integer
-        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
-        console.log("[" + searchContextUse + "]");
+
+        // searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
+        
+        // console.log("[" + searchContextUse + "]");
 
 
         $scope.currentCdeTab = 0;
@@ -746,6 +747,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
             return false;
         });
+        //filterService.serverData[filterService.searchFilter.programArea].children 
     });
 
 

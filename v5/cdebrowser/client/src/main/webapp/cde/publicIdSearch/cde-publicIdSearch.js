@@ -18,4 +18,11 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
    $scope.fs.dataElementVariables.searchFieldOptions.options = [];
    $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
+   $scope.mysearch=function(){
+  filterService.resetDataElementSearch();
+    $scope.onClickBasicSearch($scope.publicIdSearchQuery, 'publicId', '', ' ', 0, $scope.fs.dataElementVariables.selectedQueryType, 
+      $scope.publicIdName, $scope.fs.dataElementVariables.searchAltName, $scope.fs.dataElementVariables.searchAltNameType, '', '', '', '', 
+      $scope.fs.dataElementVariables.searchFieldOptions.options);
+   }
+
 }]);
