@@ -197,23 +197,17 @@
 
     <!-- ************ Program Area The tabs across the top  ************ -->
     <div ng-hide="contextListMaster.length>0">
-
-
-
-        <div class="topTabPos" ng-show="searchFactory.showSearch">
+        <div class="topTabPos">
             <ul>
                 <div data-ng-repeat="tab in programAreaTabs">
-                     <li id="top_tabs">
+                     <li id="top_tabs" class="tabNormal">
                         &nbsp;{{tab}}&nbsp;
                     </li>
                 </div>
             </ul>
         </div>
-
-
-
     </div>
-    <div class="topTabPos" ng-show="searchFactory.showSearch">
+    <div class="topTabPos" ng-show="contextListMaster.length>0">
         <ul>
             <!--
                 Just getting the parent top level nodes for the top tabs, nodeNumber is counter,
@@ -239,7 +233,7 @@
     <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
     <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
     <div style="width:25%;height:600px;" class="treeMenu" ng-hide="contextListMaster.length>0"><img alt="Loading..." src="icons/preloader.gif"></div>
-    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="searchFactory.showSearch"><!-- ng-show="searchFactory.showSearch" -->
+    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="contextListMaster.length>0"><!-- ng-show="searchFactory.showSearch" -->
 
         <div class="treeMenu" data-ng-show="show[nodeNumber]"
              data-ng-style="resizeHeight()"

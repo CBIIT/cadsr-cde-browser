@@ -25,6 +25,10 @@ public class SearchCriteria implements Serializable
 	private int pvQueryType;
 	private String objectClass;
 	private int contextUse;
+	
+	private int versionType;//0 - latest, 1 - All
+	private String altName;
+	private String altNameType;
 
 	public String getName() {
 		return name;
@@ -188,13 +192,40 @@ public class SearchCriteria implements Serializable
 		this.contextUse = contextUse;
 	}
 
+	public int getVersionType() {
+		return versionType;
+	}
+
+	public void setVersionType(int versionType) {
+		this.versionType = versionType;
+	}
+
+	public String getAltName() {
+		return altName;
+	}
+
+	public void setAltName(String altName) {
+		this.altName = altName;
+	}
+
+	public String getAltNameType() {
+		return altNameType;
+	}
+
+	public void setAltNameType(String altNameType) {
+		this.altNameType = altNameType;
+	}
+
 	@Override
 	public String toString() {
-		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType=" + queryType + ", programArea="
-				+ programArea + ", context=" + context + ", classification=" + classification + ", csCsiIdSeq = " + csCsiIdSeq + ", protocol=" + protocol
-				+ ", formIdSeq=" + formIdSeq + ", workFlowStatus=" + workFlowStatus + ", registrationStatus=" + registrationStatus + ", conceptName="
-				+ conceptName + ", conceptCode=" + conceptCode + ", dataElementConcept=" + dataElementConcept + ", permissibleValue=" + permissibleValue
-				+ ", pvQueryType=" + pvQueryType  +",objectClass=" + objectClass +"]";
+		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType="
+				+ queryType + ", programArea=" + programArea + ", context=" + context + ", classification="
+				+ classification + ", csCsiIdSeq=" + csCsiIdSeq + ", protocol=" + protocol + ", formIdSeq=" + formIdSeq
+				+ ", workFlowStatus=" + workFlowStatus + ", registrationStatus=" + registrationStatus + ", conceptName="
+				+ conceptName + ", conceptCode=" + conceptCode + ", dataElementConcept=" + dataElementConcept
+				+ ", permissibleValue=" + permissibleValue + ", pvQueryType=" + pvQueryType + ", objectClass="
+				+ objectClass + ", contextUse=" + contextUse + ", versionType=" + versionType + ", altName=" + altName
+				+ ", altNameType=" + altNameType + "]";
 	}
 
 }

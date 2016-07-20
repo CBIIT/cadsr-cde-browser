@@ -474,6 +474,27 @@ public class StringUtilities
         return cleanString;
     }
 
+
+	public static String[] buildArrayFromParameter(String paramValue) {
+		if (paramValue == null) {
+			return null;
+		}
+
+		return paramValue.split(":::");
+	}
+	
+	public static boolean containsKeyLoop(String[] arr, String targetValue) {
+		if (arr == null)
+			return false;
+		for (String s: arr) {
+			if ((s != null) && (s.equals(targetValue)))
+				return true;
+			else if ((s == null) && (targetValue == null))
+				return true;
+		}
+		return false;
+	}
+
     public static void main( String[] args )
     {
         String str = "\"test xxx\\Q\' |AAA & BBB; (CCC) + III <stuff> +  $ddd EEE$ %FFFF% ggg@HHHH zzz 0x0a 0X0a 0x0A JJJJJ \\Q' \"\\";
