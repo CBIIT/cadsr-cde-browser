@@ -65,6 +65,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String dataElementConceptWhere = "";
         String permissibleValueWhere = "";
         String objectClassWhere = "";
+        String versionIndWhere = "";
 
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
@@ -300,6 +301,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         whereClause = whereBuffer.toString();
 
+        if (searchCriteria.getVersionType() == '0') {
+        	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
+        } else {
+        	versionIndWhere = " AND de.latest_version_ind = 'No' ";
+        }
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
@@ -311,7 +317,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 contextWhere +
                 programAreaWhere +
                 " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text'" +
-                registrationExcludeWhere + workflowWhere + contextExludeWhere +
+                versionIndWhere + registrationExcludeWhere + workflowWhere + contextExludeWhere +
                 //" AND de.asl_name != 'RETIRED DELETED' " + //removing this condition from SQL statement. This status is controlled by Search Preferences Server as of release 5.2
                 " AND conte.conte_idseq = de.conte_idseq " +
                 whereClause + registrationWhere + workFlowWhere + deDerivWhere;
@@ -322,7 +328,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( fromWhere );
 
         String sqlStmt = finalSqlStmt.toString();
-
         //System.out.println("sqlStmt: " + sqlStmt);
         return sqlStmt;
     }
