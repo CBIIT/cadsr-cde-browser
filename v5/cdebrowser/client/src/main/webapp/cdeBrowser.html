@@ -172,29 +172,6 @@
         </table>
     </div>
 
-
-    <!-- ************ Status message at top ************ -->
-    <!-- <div ng-show="searchFactory.showSearch" data-ng-class="{
-             normMessage: messageClass == cssClasses['NORMAL'],
-             bigMessage: messageClass == cssClasses['BIG'],
-             errorMessage: messageClass == cssClasses['ERROR']
-             }">
-        <span ng-show="waitMessage&&waitMessage!=''" data-ng-bind-html-unsafe="waitMessage" data-ng-class="{
-             bigSearchResultsMessage: bigSearchResultsMessageClass,
-             normSearchResultsMessage: (! bigSearchResultsMessageClass)
-             }">
-            <ul ng-show="waitMessage" class="cdeSearchMessage">
-                <li>
-                    {{waitMessage}}
-                </li>
-                <li>
-                    <img alt="Loading..." src="icons/preloader.gif">
-                </li>
-            </ul>
-
-        </span>
-    </div> -->
-
     <!-- ************ Program Area The tabs across the top  ************ -->
     <div ng-hide="contextListMaster.length>0">
         <div class="topTabPos">
@@ -232,7 +209,35 @@
 
     <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
     <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
-    <div style="width:25%;height:600px;" class="treeMenu" ng-hide="contextListMaster.length>0"><img alt="Loading..." src="icons/preloader.gif"></div>
+    <div style="width:25%;height:600px;" class="treeMenu" ng-hide="contextListMaster.length>0">
+        
+
+
+        <div style="background-color: #f7f7e6 !important;" ng-show="searchFactory.showSearch" data-ng-class="{
+             normMessage: messageClass == cssClasses['NORMAL'],
+             bigMessage: messageClass == cssClasses['BIG'],
+             errorMessage: messageClass == cssClasses['ERROR']
+             }">
+            <span style="background-color: #f7f7e6 !important;" ng-show="waitMessage&&waitMessage!=''" data-ng-bind-html-unsafe="waitMessage" data-ng-class="{
+                 bigSearchResultsMessage: bigSearchResultsMessageClass,
+                 normSearchResultsMessage: (! bigSearchResultsMessageClass)
+                 }">
+                <ul ng-show="waitMessage" class="cdeSearchMessage">
+                    <li>
+                        {{waitMessage}}
+                    </li>
+                    <li>
+                        <img alt="Loading..." src="icons/preloader.gif">
+                    </li>
+                </ul>
+
+            </span>
+        </div>
+
+
+
+        <!-- <img alt="Loading..." src="icons/preloader.gif"> -->
+    </div>
     <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="contextListMaster.length>0"><!-- ng-show="searchFactory.showSearch" -->
 
         <div class="treeMenu" data-ng-show="show[nodeNumber]"
