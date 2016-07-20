@@ -71,7 +71,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
     public List<String> getAllDesignationModelTypes()
     {
 
-        String sql = "SELECT distinct(DETL_NAME) FROM sbr.designations";
+        String sql = "SELECT distinct(DETL_NAME) FROM sbr.designations order by upper(DETL_NAME)";
         List<String> dModelTypes = (List<String>) jdbcTemplate.queryForList(sql, String.class);
         List<String> designationModelTypes = new ArrayList<String>();
         designationModelTypes.add("ALL");
