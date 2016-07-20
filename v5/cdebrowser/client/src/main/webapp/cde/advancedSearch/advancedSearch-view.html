@@ -57,7 +57,7 @@
         <span>
             <div><label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
             <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
-                    ng-options="type for type in alternateNameTypes track by type"></select>
+                    ng-options="type for type in alternateNameTypes"></select>
             </select>
         </span>
             <!--
@@ -77,7 +77,7 @@
     <span>
         <div><label class="advancedSearchLabel">Context Use</label></div>
             <select ng-model="fs.dataElementVariables.searchContextUse"  multiple="true"
-                       ng-options="contextUse for contextUse in searchContextUseValues track by contextUse">
+                       ng-options="contextUse for contextUse in searchContextUseValues">
             </select>
     </span>
     <div>

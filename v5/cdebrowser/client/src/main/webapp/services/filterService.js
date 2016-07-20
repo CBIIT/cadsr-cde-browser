@@ -4,7 +4,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	this.lookupData = {}; // stores master list of classifications and protocol forms //
 
 	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-		searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
+		searchAltName:"", searchAltNameTypes:{alternateNameTypes: ["ALL"]}, searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
 
 	this.searchFilter = {};
 	this.isAChildNodeSearch = false;
@@ -19,7 +19,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	this.resetFilters = function() {
 		this.isAChildNodeSearch = false;
 		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
+			searchAltName:"", searchAltNameTypes:{alternateNameTypes: ["ALL"]}, searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
 		this.resetElementsInCommon();
 		// this.classifications = [];
 		// this.protocols = [];
@@ -62,7 +62,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.isAChildNodeSearch = false;
 
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"2", searchObjectClass:""};
+			searchAltName:"", searchAltNameTypes:{alternateNameTypes: ["ALL"]}, searchVersions:"0", searchContextUse:"2", searchObjectClass:""};
 
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;

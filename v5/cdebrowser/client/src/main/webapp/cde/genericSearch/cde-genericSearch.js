@@ -32,8 +32,6 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 */
     $scope.fs.dataElementVariables.searchAltNameType = {"type": "ALL"};
 
-/*
+	// FIXME  This doesn't work - to set initial default value in the UI
 	$scope.fs.dataElementVariables.searchContextUse = $scope.searchContextUseValues[2];
-*/
-	$scope.fs.dataElementVariables.searchContextUse = 2;
 });
