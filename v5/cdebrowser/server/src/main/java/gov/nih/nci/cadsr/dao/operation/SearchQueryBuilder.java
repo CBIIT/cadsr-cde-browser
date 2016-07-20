@@ -301,7 +301,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append(altNamesWhere);
 
         whereClause = whereBuffer.toString();
-        versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
+        if (searchCriteria.getVersionType() == 0) {
+        	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
+        }
+        //we do not check for No for the latest_version_ind because we have no UI for previous versions only
+        
         /*if (versionType == 0) {        	
         	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
         } else {
@@ -329,7 +333,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( fromWhere );
 
         String sqlStmt = finalSqlStmt.toString();
-        //System.out.println("sqlStmt: " + sqlStmt);
+        logger.debug("initSearchQueryBuilder DE search sqlStmt: " + sqlStmt);
         return sqlStmt;
     }
 

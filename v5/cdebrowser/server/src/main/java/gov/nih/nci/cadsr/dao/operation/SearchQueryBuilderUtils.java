@@ -47,7 +47,7 @@ public class SearchQueryBuilderUtils {
 
 		altWhere = " and de.de_idseq IN " + "(select de_idseq "
 				+ " from sbr.designations_view dsn, sbr.data_elements_view de1 "
-				+ " where  de1.de_idseq  = dsn.ac_idseq (+) " + typeWhere + searchWhere + " ) ";
+				+ " where  de1.de_idseq  = dsn.ac_idseq " + typeWhere + searchWhere + " ) ";
 		
 		return altWhere;
 	}

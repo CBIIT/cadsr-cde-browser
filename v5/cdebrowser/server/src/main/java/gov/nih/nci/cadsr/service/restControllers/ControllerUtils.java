@@ -48,7 +48,7 @@ public class ControllerUtils {
 			return SearchPreferencesServer;
 		}
 		else {
-			logger.debug("SearchPreferencesServer found in the user HTTPO session: " + obj);
+			logger.debug("SearchPreferencesServer found in the user HTTP session: " + obj);
 			return (SearchPreferencesServer)obj;
 		}
 	}	

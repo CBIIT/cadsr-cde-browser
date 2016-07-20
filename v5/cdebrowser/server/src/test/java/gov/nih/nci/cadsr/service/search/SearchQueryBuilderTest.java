@@ -156,7 +156,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "" );
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
-        searchCriteria.setVersionType('0');
+        searchCriteria.setVersionType(0);
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql00 ) );
@@ -177,7 +177,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "" );
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
-        searchCriteria.setVersionType('0');
+        searchCriteria.setVersionType(0);
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql01 ) );
@@ -199,7 +199,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
         searchCriteria.setContextUse( 2 );
-        searchCriteria.setVersionType('0');
+        searchCriteria.setVersionType(0);
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql02 ) );
@@ -252,7 +252,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "" );
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
-        searchCriteria.setVersionType('0');
+        searchCriteria.setVersionType(0);
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
