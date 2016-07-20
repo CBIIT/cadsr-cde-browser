@@ -177,7 +177,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "" );
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
-        searchCriteria.setVersionType('1');
+        searchCriteria.setVersionType('0');
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql01 ) );
@@ -199,7 +199,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
         searchCriteria.setContextUse( 2 );
-        searchCriteria.setVersionType('1');
+        searchCriteria.setVersionType('0');
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql02 ) );
@@ -366,7 +366,7 @@ public class SearchQueryBuilderTest
             "     sbr.ac_status_lov_view asl" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
-            " AND de.latest_version_ind = 'No'" +            
+            " AND de.latest_version_ind = 'Yes'" +            
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
             "  AND " + getExcludList() +
             "  AND conte.name NOT IN ('TEST'," +
@@ -406,7 +406,7 @@ public class SearchQueryBuilderTest
             " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0') " +
             "  AND de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
-            " AND de.latest_version_ind = 'No'" +            
+            " AND de.latest_version_ind = 'Yes'" +            
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
             "  AND " + getExcludList() +
             "  AND conte.name NOT IN ('TEST'," +

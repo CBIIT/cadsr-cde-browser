@@ -66,6 +66,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String permissibleValueWhere = "";
         String objectClassWhere = "";
         String versionIndWhere = "";
+        int versionType = searchCriteria.getVersionType();
 
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
@@ -300,12 +301,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append(altNamesWhere);
 
         whereClause = whereBuffer.toString();
-
-        if (searchCriteria.getVersionType() == '0') {
+        versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
+        /*if (versionType == 0) {        	
         	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
         } else {
         	versionIndWhere = " AND de.latest_version_ind = 'No' ";
-        }
+        }*/
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
