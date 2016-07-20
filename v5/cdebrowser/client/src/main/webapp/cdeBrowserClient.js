@@ -375,6 +375,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass) {
+
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
@@ -387,7 +388,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // Convert searchContextUse string to index integer
 
         searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
-        
+
         // console.log("[" + searchContextUse + "]");
 
 
@@ -583,6 +584,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
 
+        console.log("URL:  " + url);
+
         $http.get(url).success(function (response) {
             fs.isSearching = false;
             // $scope.tableParams.$params.page = 1;
@@ -662,18 +665,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //   $scope.dataLoad6 = function () {
     // $scope.dataLoad("data6.json");
     // };
-     
+
     $scope.getAlternateNameTypesFromServer = function () {
-        var serverUrl = "altNameType.json"
+        var serverUrl = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/lookupdata/alternateType";
         $http.get(serverUrl)
 
             .success(function (response) {
                 $scope.alternateNameTypes = response;
             })
             .error(function (error) {
-                // console.log("Error [" + serverUrl + "]: " + error.statusText);
+                console.log("Error [" + serverUrl + "]: " + error.statusText);
             });
-
     };
 
 
@@ -751,7 +753,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
             return false;
         });
-        //filterService.serverData[filterService.searchFilter.programArea].children 
+        //filterService.serverData[filterService.searchFilter.programArea].children
     });
 
 
@@ -964,9 +966,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //$scope.getAlternateNameTypesFromServer();
 
     $scope.dataLoadFromServer();
-    
+
     // $scope.dataLoad6();
-     
+
 
     $scope.versionData();
     $scope.getToolHosts();

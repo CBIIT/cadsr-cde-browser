@@ -130,9 +130,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
         else
         {
-            objectClassWhere =  buildObjectClassWhere(searchCriteria.getObjectClass() );
+            objectClassWhere =  buildObjectClassWhere(searchCriteria.getObjectClass().replace( "*", "%" ) );
         }
-
         if( StringUtils.isBlank( searchCriteria.getDataElementConcept() ) )
         {
             dataElementConceptWhere = "";
@@ -235,15 +234,13 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             switch( searchCriteria.getContextUse() )
             {
                 case 0:
-                    //and conte.conte_idseq = 'A5599257-A08F-41D1-E034-080020C9C0E0'
                     contextWhere = "conte.conte_idseq = '" + searchCriteria.getContext() + "' AND ";
                     break;
                 case 1:
-                    //de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = 'A5599257-A08F-41D1-E034-080020C9C0E0' and des.DETL_NAME = 'USED_BY')
                     contextWhere = "de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = '" + searchCriteria.getContext() + "' and des.DETL_NAME = 'USED_BY') AND ";
                     break;
                 case 2:
-                case -1: // -1 is the value from the client if "Context Use" selector has not been set.  I stell need to set "Owned By/Used by" as the default in the client (18_JUL_2016)
+                case -1: // -1 is the value from the client if "Context Use" selector has not been set.  I still need to set "Owned By/Used by" as the default in the client (18_JUL_2016)
                 contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
                         " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
             }
@@ -297,7 +294,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( dataElementConceptWhere );
         whereBuffer.append( permissibleValueWhere );
         whereBuffer.append( deDerivWhere ).append( protocolWhere ).append( formWhere );
-        
+
         String altNamesWhere = SearchQueryBuilderUtils.buildAltNamesWhere(searchCriteria.getAltName(), searchCriteria.getAltNameType());
         whereBuffer.append(altNamesWhere);
 
@@ -326,7 +323,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         String sqlStmt = finalSqlStmt.toString();
 
-        System.out.println("MHL sqlStmt: " + sqlStmt);
+        //System.out.println("sqlStmt: " + sqlStmt);
         return sqlStmt;
     }
 
@@ -352,13 +349,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
     public String buildPermissibleValueWhere( String query, int queryType )
     {
-        logger.debug( "IN buildPermissibleValueWhere  query: [" + query + "]  queryType: [" + queryType + "}" );
-         /*
-         {id: 0, name: "Exact phrase"},
-        {id: 1, name: "All of the words"},
-        {id: 2, name: "At least one of the words"}
-          */
-
         query = query.replaceAll( "\\*", "%" );
         String where = "and de.vd_idseq \n" +
                 "IN (\n";
