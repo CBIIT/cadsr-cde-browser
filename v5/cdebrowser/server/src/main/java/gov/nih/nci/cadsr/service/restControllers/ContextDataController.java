@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,19 +59,19 @@ public class ContextDataController
 
     @Autowired
     private ProtocolDAO protocolDAO;
-    
+
     private List<CsCsiModel> csCsiNodelList = null;
     private List<ProgramAreaModel> programAreaModelList = null;
-    
+
     private RestControllerCommon restControllerCommon;
-    
+
     @Autowired
     private AppConfig appConfig;
 
     private Map csi = new HashMap();
 
     private int contextPalNameCount;
-    
+
     @Autowired
     public ContextDataController(RestControllerCommon restControllerCommon)
     {
@@ -83,7 +84,7 @@ public class ContextDataController
         {
             logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
             programAreaModelList = new ArrayList<>();
-        }    	
+        }
     }
 
     @RequestMapping( value = "/contextData" )
@@ -133,6 +134,16 @@ public class ContextDataController
         return contextTree;
     }
 
+    @RequestMapping( value = "/programAreaNames" )
+    @ResponseBody
+    public List<String> programAreas()
+    {
+        List<ProgramAreaModel> programAreas = restControllerCommon.getProgramAreaList();
+        List<String> results = new ArrayList<>(  );
+        results.add( new String("All Program Areas") );
+        results.addAll( programAreas.stream().map( ProgramAreaModel::getPalName ).collect( Collectors.toList() ) );
+        return results;
+    }
 
     private ContextNode[] getAllTopLevelTreeData()
     {
@@ -832,7 +843,7 @@ public class ContextDataController
 
 	public void setAppConfig(AppConfig appConfig) {
 		this.appConfig = appConfig;
-	} 
-    
+	}
+
 
 }
