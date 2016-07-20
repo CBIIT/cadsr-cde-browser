@@ -174,7 +174,7 @@
 
 
     <!-- ************ Status message at top ************ -->
-    <div ng-show="searchFactory.showSearch" data-ng-class="{
+    <!-- <div ng-show="searchFactory.showSearch" data-ng-class="{
              normMessage: messageClass == cssClasses['NORMAL'],
              bigMessage: messageClass == cssClasses['BIG'],
              errorMessage: messageClass == cssClasses['ERROR']
@@ -193,9 +193,26 @@
             </ul>
 
         </span>
-    </div>
+    </div> -->
 
     <!-- ************ Program Area The tabs across the top  ************ -->
+    <div ng-hide="contextListMaster.length>0">
+
+
+
+        <div class="topTabPos" ng-show="searchFactory.showSearch">
+            <ul>
+                <div data-ng-repeat="tab in programAreaTabs">
+                     <li id="top_tabs">
+                        &nbsp;{{tab}}&nbsp;
+                    </li>
+                </div>
+            </ul>
+        </div>
+
+
+
+    </div>
     <div class="topTabPos" ng-show="searchFactory.showSearch">
         <ul>
             <!--
@@ -217,24 +234,25 @@
         </ul>
     </div>
     <br ng-if="searchFactory.showSearch">
-    <div class="topTabSeparator" ng-show="waitMessage==''" ng-if="searchFactory.showSearch"></div>
+    <div class="topTabSeparator" ng-if="searchFactory.showSearch"></div><!-- ng-show="waitMessage==''" -->
 
     <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
     <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
-    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="searchFactory.showSearch">
+    <div style="width:25%;height:600px;" class="treeMenu" ng-hide="contextListMaster.length>0"><img alt="Loading..." src="icons/preloader.gif"></div>
+    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="searchFactory.showSearch"><!-- ng-show="searchFactory.showSearch" -->
 
-        <div class="treeMenu" data-ng-show=show[nodeNumber]
+        <div class="treeMenu" data-ng-show="show[nodeNumber]"
              data-ng-style="resizeHeight()"
              resize
              notifier="notifyServiceOnChange(params)">
 
-            <div class="tabCaptionWrapper cssFade" data-ng-show=show[nodeNumber]>
+            <div class="tabCaptionWrapper cssFade" data-ng-show="show[nodeNumber]">
                 <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
-                    <div class="tabCaption" data-ng-show=show[nodeNumber]>{{node.hover}}</div>
+                    <div class="tabCaption" data-ng-show="show[nodeNumber]">{{node.hover}}</div>
                 </div>
             </div>
 
-            <div class="cssFade" data-ng-show=show[nodeNumber]
+            <div class="cssFade" data-ng-show="show[nodeNumber]"
                  data-cdebrowser-treeview="true"
                  data-tree-id="tree"
                  data-tree-model="contextListMaster[nodeNumber].children"
@@ -251,10 +269,10 @@
 
     <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
-    <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" data-ng-show="initComplete"
+    <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" 
          data-ng-style="resizeHeight()"
          resize
-         notifier="notifyServiceOnChange(params)">
+         notifier="notifyServiceOnChange(params)"><!-- data-ng-show="initComplete" -->
         <div label="search area" ng-show="searchFactory.showSearch">
         <!-- generate tabs for search, advanced search and search preferences -->
         <div class="cdeSearchTabs">
@@ -368,8 +386,8 @@
 
                 <span>
                     <div class="conceptGroup">
-                        <label></label>
-                        <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" placeholder="Concept Name/Code" />
+                        <label>Concept</label>
+                        <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" placeholder="Concept Name or Concept Code" />
                         <div class="conceptRadio">
                             <label data-ng-repeat="c in concept">
                             <div>
@@ -385,19 +403,21 @@
                     </div>
                 </span>
 
-                <span class="searchAndClearButton endBtn">
-                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
+                <br />
+
+                <span class="searchAndClearButton leftButton">
+                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
                 </span>
 
                 <span class="searchAndClearButton">
-                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
+                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
 
                 <!-- Start of Advance Search Options -->
 
                 <br />
 
-                <div ng-show="more">
+                <div class="advanceView" ng-show="more">
 
                 <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'">
                 </div>
@@ -405,8 +425,8 @@
                 </div>
 
                 <div class="advanceSearchCenter">
-                <button class="btn btn-default advanceSearchButton" ng-hide="more" ng-click="advanceSearchShow()">Show Additional Search Criteria</button>
-                <button class="btn btn-default advanceSearchButton" ng-show="more" ng-click="advanceSearchShow()">Hide Additional Search Criteria</button>
+                <button class="btn btn-default advanceSearchButton" ng-hide="more" ng-click="advanceSearchShow()">Include Additional Search Criteria</button>
+                <button class="btn btn-default advanceSearchButton" ng-show="more" ng-click="advanceSearchShow()">Exclude Additional Search Criteria</button>
                 </div>
 
                 <!-- End of Advance Search Options -->
@@ -523,7 +543,7 @@
 
         <!-- =============================================================================== -->
         <!-- The search results tab with Search results table - this is the only tab that is not an data-ng-view ========== -->
-        <div id="searchResults" class="cdeSearchTabsView" data-ng-show=showCdeSearchResults>
+        <div id="searchResults" class="cdeSearchTabsView" data-ng-show="showCdeSearchResults">
             <div class="sortOrder">
                 <div data-ng-class="{left:searchResultsCount,leftFull:!searchResultsCount}">
                     <span class="row">

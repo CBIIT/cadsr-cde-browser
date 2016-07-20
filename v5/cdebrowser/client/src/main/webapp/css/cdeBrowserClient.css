@@ -45,7 +45,13 @@ a:hover {
     font-weight: bold
 }
 
-/* The initial loading message or error message  */
+/* Bootstrap Overrides */
+
+.filters label {
+    font-weight: normal !important;
+}
+
+/* The initial loading message or error message */
 
 .bigMessage {
     font-size: 28px;
@@ -188,8 +194,12 @@ display:inline-block !important;
     font-size:85%;
 }
 
+.basicSearchName {
+    font-size: 11pt;
+}
+
 .basicSearchQuery {
-    width: 64%;
+    width: 65%;
 }
 
 .searchTips {
@@ -334,8 +344,8 @@ display:inline-block !important;
 /* Fix to make clear button consistent with other buttons */
 
 .searchAndClearButton {
-    float: right;
-    padding-top: 35px;
+    float: left;
+    padding-top: 5px;
 }
 
 .searchAndClearButton button {
@@ -343,8 +353,8 @@ display:inline-block !important;
     font-size: 12px !important;
 }
 
-.endBtn {
-    padding-right: 23px;
+.leftButton {
+    margin-left: -5px;
 }
 
 /* Rounds the corners of input boxes */
@@ -384,7 +394,7 @@ display:inline-block !important;
 
 .searchPreferencesListMainHeadWorkflow {
     display: inline-block;
-    padding-right: 295px;
+    padding-right: 286px;
     padding-bottom: 8px;
 }
 
@@ -402,14 +412,14 @@ display:inline-block !important;
 
 .searchPreferencesListWorkflowHeadExcluded {
     display: inline-block;
-    padding-right: 175px;
+    padding-right: 176px;
     margin-left: -5px;
     padding-bottom: 8px;
 }
 
 .searchPreferencesListRegistrationHeadIncluded {
     display: inline-block;
-    padding-right: 140px;
+    padding-right: 139px;
     margin-left: -5px;
     padding-bottom: 8px;
 }
@@ -599,7 +609,8 @@ display:inline-block !important;
 /* Advance Search Options */
 
 .advanceSearchCenter {
-    padding-left: 285px;
+    padding-left: 275px;
+    margin-top: -15px;
 }
 
 .advanceSearchButton {
@@ -630,6 +641,10 @@ display:inline-block !important;
 .advanceSearchInputBordered {
     width: 180px;
     margin-left: -2px !important;
+}
+
+.advanceView {
+    padding-top: 30px;
 }
 
 /* Search Field */ 
@@ -671,8 +686,7 @@ display:inline-block !important;
 }
 
 .conceptInput {
-    width: 173px;
-    margin-left: -2px !important;
+    width: 314px;
 }
 
 .conceptRadio {

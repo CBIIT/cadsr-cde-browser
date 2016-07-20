@@ -9,10 +9,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
-    $scope.concept=[{id:"0",name:"Name"},{id:"1",name:"Code"}];
+    $scope.concept=[{id:"0",name:"Concept Name"},{id:"1",name:"Concept Code"}];
     $scope.searchContextUseHOLD = 0;
     $scope.searchObjectClassHOLD = "";
     var delimiter= ":::";
+
+    $http.get('/cdebrowserServer/rest/programAreaNames').success(function(response) {
+        $scope.programAreaTabs = response;
+    });
 
 
     /* Start of filter service */
@@ -171,6 +175,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         {id: 0, name: "Exact phrase"},
         {id: 1, name: "All of the words"},
         {id: 2, name: "At least one of the words"}
+    ];
+
+    $scope.searchVDQueryTypes = [
+        {id: 0, name: "Enumerated"},
+        {id: 1, name: "Non Enumerated"},
+        {id: 2, name: "Both"}
     ];
 
     // Search versions - radio buttons

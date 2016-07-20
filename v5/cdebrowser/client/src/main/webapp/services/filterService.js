@@ -3,7 +3,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	this.serverData = []; // initial data from server goes here //
 	this.lookupData = {}; // stores master list of classifications and protocol forms //
 
-	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
+	this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 		searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"Owned By/Used By", searchObjectClass:""}
 
 	this.searchFilter = {};
@@ -18,7 +18,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 	// resets all important variables
 	this.resetFilters = function() {
 		this.isAChildNodeSearch = false;
-		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
+		this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"Owned By/Used By", searchObjectClass:""}
 		this.resetElementsInCommon();
 		// this.classifications = [];
@@ -61,7 +61,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.selectFiltersByNode = function(searchType,id, selectedNode, programArea) {
         this.isAChildNodeSearch = false;
 
-        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"0", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
+        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
 			searchAltName:"", searchAltNameTypes:"0", searchVersions:"0", searchContextUse:"Owned By/Used By", searchObjectClass:""};
 
         this.searchFilter.programArea = programArea;
