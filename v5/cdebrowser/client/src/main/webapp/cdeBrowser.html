@@ -210,9 +210,6 @@
     <!-- tree menu(s) for each tab.  Each tree is there, but we only show the one for the selected tab -->
     <!--  contextListMaster[nodeNumber].children is entire tree for each parent node.  -->
     <div style="width:25%;height:600px;" class="treeMenu" ng-hide="contextListMaster.length>0">
-        
-
-
         <div style="background-color: #f7f7e6 !important;" ng-show="searchFactory.showSearch" data-ng-class="{
              normMessage: messageClass == cssClasses['NORMAL'],
              bigMessage: messageClass == cssClasses['BIG'],
@@ -233,10 +230,6 @@
 
             </span>
         </div>
-
-
-
-        <!-- <img alt="Loading..." src="icons/preloader.gif"> -->
     </div>
     <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="contextListMaster.length>0"><!-- ng-show="searchFactory.showSearch" -->
 
