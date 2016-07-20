@@ -22,7 +22,7 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
   filterService.resetDataElementSearch();
     $scope.onClickBasicSearch($scope.publicIdSearchQuery, 'publicId', '', ' ', 0, $scope.fs.dataElementVariables.selectedQueryType, 
       $scope.publicIdName, $scope.fs.dataElementVariables.searchAltName, $scope.fs.dataElementVariables.searchAltNameType, '', '', '', '', 
-      $scope.fs.dataElementVariables.searchFieldOptions.options, '', '', '');
+      $scope.fs.dataElementVariables.searchFieldOptions.options, $scope.fs.dataElementVariables.searchVersions, '', '');
    }
 
 }]);
