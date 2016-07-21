@@ -51,4 +51,42 @@ public class SearchQueryBuilderUtils {
 		
 		return altWhere;
 	}
+	
+	public static String buildRegistrationWhere(String paramValue, String tableColumn) {
+		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn);
+		return resultWhere;
+	}
+	
+	public static String buildWorkflowWhere(String paramValue, String tableColumn) {
+		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn);
+		return resultWhere;
+	}
+		
+	public static String buildListStatusWhere(String sourceStr, String separator, String allInclusive, String tableFieldName) {
+		String resultWhere = "";
+		String auxStr = "";
+		
+		if ((sourceStr == null) || (tableFieldName == null))
+			return "";
+		
+		String[] arrvalues = StringUtilities.buildArrayFromParameter(sourceStr, separator);
+		
+		if (arrvalues == null || StringUtilities.containsKeyLoop(arrvalues, allInclusive))
+			resultWhere = "";
+		else if (arrvalues.length == 1) {
+			auxStr = arrvalues[0];
+			resultWhere = " AND " + tableFieldName + " = '" + auxStr + "'";
+		} 
+		else {
+			for (int i = 0; i < arrvalues.length; i++) {
+				if (i == 0)
+					auxStr = "'" + arrvalues[0] + "'";
+				else
+					auxStr = auxStr + "," + "'" + arrvalues[i] + "'";
+			}
+			resultWhere = " AND " + tableFieldName + " IN (" + auxStr + ")";
+		}
+		
+		return resultWhere;
+	}
 }

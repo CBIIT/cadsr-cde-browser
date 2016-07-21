@@ -482,7 +482,13 @@ public class StringUtilities
 
 		return paramValue.split(":::");
 	}
-	
+	public static String[] buildArrayFromParameter(String paramValue, String separator) {
+		if (paramValue == null) {
+			return null;
+		}
+
+		return paramValue.split(separator);
+	}	
 	public static boolean containsKeyLoop(String[] arr, String targetValue) {
 		if (arr == null)
 			return false;

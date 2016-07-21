@@ -20,13 +20,12 @@ import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import gov.nih.nci.cadsr.service.search.ProcessConstants;
-import org.apache.logging.log4j.core.appender.SyslogAppender;
 
 public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 {
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
 
-    private DataElementConceptDAOImpl dataElementConceptDAO;
+    private DataElementConceptDAO dataElementConceptDAO;
 
     public SearchQueryBuilder()
     {
@@ -184,13 +183,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             String[] excludeRegistrationStatusArr = registrationStatusExcluded.toArray( new String[registrationStatusExcluded.size()] );
             registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeRegistrationStatusArr );
         }
-        //FIXME  clean this up - regStatusesWhere is All.  This is where we will plug in a user Registration Status from Advanced Search
-        regStatus = this.buildRegStatusWhereClause( regStatusesWhere );
 
         //This is a criteria which comes from drop down box of the basic search
         if( StringUtils.isNotBlank( searchCriteria.getRegistrationStatus() ) )
         {
-            registrationStatusWhere = " AND acr.registration_status = '" + searchCriteria.getRegistrationStatus() + "' ";
+             registrationStatusWhere =  SearchQueryBuilderUtils.buildRegistrationWhere(searchCriteria.getRegistrationStatus(), "acr.registration_status");
         }
 
         ////////////////////////////////////////////////////
@@ -202,10 +199,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
         }
-
+        
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
-            workflowWhere += " AND asl.asl_name = '" + searchCriteria.getWorkFlowStatus() + "' ";
+        	workflowWhere += SearchQueryBuilderUtils.buildRegistrationWhere(searchCriteria.getWorkFlowStatus(), "asl.asl_name");
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
 
@@ -648,12 +645,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         return regStatWhere;
     }
 
-    public void setDataElementConceptDAO( DataElementConceptDAOImpl dataElementConceptDAO )
+    public void setDataElementConceptDAO( DataElementConceptDAO dataElementConceptDAO )
     {
         this.dataElementConceptDAO = dataElementConceptDAO;
     }
 
-    public DataElementConceptDAOImpl getDataElementConceptDAO()
+    public DataElementConceptDAO getDataElementConceptDAO()
     {
         return dataElementConceptDAO;
     }
