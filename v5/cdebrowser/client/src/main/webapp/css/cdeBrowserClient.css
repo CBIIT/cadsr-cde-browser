@@ -355,7 +355,7 @@ display:inline-block !important;
 
 .advanceSearchAndClearButton {
     float: left;
-    margin-top: -40px;
+    margin-top: -34px;
 }
 
 .advanceSearchAndClearButton button {
@@ -365,10 +365,6 @@ display:inline-block !important;
 
 .leftButton {
     margin-left: -5px;
-}
-
-.rightButton {
-    margin-left: 56px;
 }
 
 /* Rounds the corners of input boxes */
