@@ -1,6 +1,6 @@
 angular.module("cdeGenericSearch", []);
 
-angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService, $rootScope) {
+angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService, $rootScope, $http) {
 
     $scope.fs = filterService;
 
@@ -26,12 +26,21 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 			fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass);
  	});
 
- /*
-    Can't do it this way, sometimes $scope.alternateNameTypes is not yet populated in time.
-    $scope.fs.dataElementVariables.searchAltNameType = $scope.alternateNameTypes[0];
-*/
+
+	// Search Context use options
+	$scope.searchContextUseValues = [
+		"Owned By",
+		"Used By",
+		"Owned By/Used By"
+	];
+
+	$scope.fs.dataElementVariables.searchContextUse =  $scope.searchContextUseValues[2];
+
+
+	/*
+       Can't do it this way, sometimes $scope.alternateNameTypes is not yet populated in time.
+       $scope.fs.dataElementVariables.searchAltNameType = $scope.alternateNameTypes[0];
+   */
     $scope.fs.dataElementVariables.searchAltNameType = {"type": "ALL"};
 
-	// FIXME  This doesn't work - to set initial default value in the UI
-	$scope.fs.dataElementVariables.searchContextUse = $scope.searchContextUseValues[2];
 });
