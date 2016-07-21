@@ -68,6 +68,11 @@
                     {{fs.dataElementVariables.searchAltNameType}}
             -->
         </div>
+        <div>
+            <label class="advancedSearchLabel">Object Class</label>
+            <input class="roundInput advanceSearchOCInput" type="text" placeholder="Object Class"
+                   ng-model="fs.dataElementVariables.searchObjectClass"/>
+        </div>        
         <label data-ng-repeat="versionType in searchVersions">
             <div class="queryTypeRadioButtons">
                 <input ng-disabled="fs.isSearching"
@@ -84,12 +89,6 @@
                        ng-options="contextUse for contextUse in searchContextUseValues">
             </select>
         </span>
-        <div>
-            <label class="advancedSearchLabel">Object Class</label>
-            <input class="roundInput advanceSearchOCInput" type="text" placeholder="Object Class"
-                   ng-model="fs.dataElementVariables.searchObjectClass"/>
-        </div>
     </div>
-
 
 </span>
