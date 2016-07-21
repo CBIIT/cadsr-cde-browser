@@ -1,36 +1,36 @@
-<!--
-<span ng-controller="AdvancedSearchController">
--->
+<!-- ng-controller="AdvancedSearchController" -->
+
 <span ng-controller="GenericSearchController">
 
-    <div>
-        <label class="advancedSearchLabel"></label>
-        <input class="roundInput advanceSearchInput" type="text" placeholder="Data Element Concept"
-               id="advancedSearchDEC" name="searchDEC"
-               ng-model="fs.dataElementVariables.searchDEC"/>
-    </div>
-
-    <div class="valueDomainGroup">
+    <div style="width:48%;float:left;">
         <div>
-            <label class="advancedSearchLabel"></label>
-            <input class="roundInput advanceSearchInputBordered" type="text" placeholder="Value Domains" id="advancedSearchVD" name="searchVD"
-                   ng-model="fs.dataElementVariables.searchVD"/>
+            <label class="advancedSearchLabel">Data Element Concept</label>
+            <input class="roundInput advanceSearchInput" type="text" placeholder="Data Element Concept"
+                   id="advancedSearchDEC" name="searchDEC"
+                   ng-model="fs.dataElementVariables.searchDEC"/>
         </div>
-        <label data-ng-repeat="queryType in searchVDQueryTypes">
-            <div class="queryTypeRadioButtons">
-                <input ng-disabled="fs.isSearching"
-                       name="searchVDTQueryType"
-                       type="radio"
-                       value="{{queryType.id}}"
-                       data-ng-model="fs.dataElementVariables.searchVDTQueryType"/>
-                {{queryType.name}}&nbsp;&nbsp;
+
+        <div class="valueDomainGroup">
+            <div>
+                <label class="advancedSearchLabel">Value Domain</label>
+                <input class="roundInput advanceSearchInputBordered" type="text" placeholder="Value Domains" id="advancedSearchVD" name="searchVD"
+                       ng-model="fs.dataElementVariables.searchVD"/>
             </div>
-        </label>
-    </div>
+            <label data-ng-repeat="queryType in searchVDQueryTypes">
+                <div class="queryTypeRadioButtons">
+                    <input ng-disabled="fs.isSearching"
+                           name="searchVDTQueryType"
+                           type="radio"
+                           value="{{queryType.id}}"
+                           data-ng-model="fs.dataElementVariables.searchVDTQueryType"/>
+                    {{queryType.name}}&nbsp;&nbsp;
+                </div>
+            </label>
+        </div>
 
         <div class="permissibleValueGroup">
             <div>
-                <label class="advancedSearchLabel"></label>
+                <label class="advancedSearchLabel">Permissible Value</label>
                 <input class="roundInput advanceSearchInputBordered" type="text" placeholder="Permissible Value"
                        id="advancedSearchPV" name="searchPV"
                        ng-model="fs.dataElementVariables.searchPV"/>
@@ -46,20 +46,24 @@
                 </div>
             </label>
         </div>
+    </div>
 
+    <div style="width:48%;float:right;margin-right:27px;">
+        <div class="altNameGroup">
         <div>
-            <label class="advancedSearchLabel"></label>
+            <label class="advancedSearchLabel">Alternate Name</label>
             <input class="roundInput advanceSearchInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
                    placeholder="Alternate Name" multiple="true"/>
             <!--
                     {{fs.dataElementVariables.searchAltName}}
             -->
         <span>
-            <div><label class="advancedSearchLabel">Alternate Name Type(s)</label></div>
+            <label class="advancedSearchLabel"></label>
             <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
                     ng-options="type for type in alternateNameTypes"></select>
             </select>
         </span>
+        </div>
             <!--
                     {{fs.dataElementVariables.searchAltNameType}}
             -->
@@ -73,17 +77,18 @@
                 {{versionType.name}}&nbsp;&nbsp;
             </div>
         </label>
-    </div>
-    <span>
-        <div><label class="advancedSearchLabel">Context Use</label></div>
+    
+        <span>
+            <label class="advancedSearchLabel"></label>
             <select ng-model="fs.dataElementVariables.searchContextUse"  multiple="true"
                        ng-options="contextUse for contextUse in searchContextUseValues">
             </select>
-    </span>
-    <div>
-        <label class="advancedSearchLabel"></label>
-        <input class="roundInput advanceSearchInput" type="text" placeholder="Object Class"
-               ng-model="fs.dataElementVariables.searchObjectClass"/>
+        </span>
+        <div>
+            <label class="advancedSearchLabel">Object Class</label>
+            <input class="roundInput advanceSearchInput" type="text" placeholder="Object Class"
+                   ng-model="fs.dataElementVariables.searchObjectClass"/>
+        </div>
     </div>
 
 

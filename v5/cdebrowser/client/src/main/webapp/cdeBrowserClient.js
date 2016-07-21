@@ -191,9 +191,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search Context use options
    $scope.searchContextUseValues = [
-       "Owned By",
-        "Used By",
-        "Owned By/Used By"
+        "Context Use Owned By",
+        "Context Use Used By",
+        "Context Use Owned By/Used By"
     ];
 
     $scope.activeSearchTab = 0;
