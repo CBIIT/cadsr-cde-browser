@@ -353,8 +353,22 @@ display:inline-block !important;
     font-size: 12px !important;
 }
 
+.advanceSearchAndClearButton {
+    float: left;
+    margin-top: -40px;
+}
+
+.advanceSearchAndClearButton button {
+    padding: 3px 6px 3px 6px !important;
+    font-size: 12px !important;
+}
+
 .leftButton {
     margin-left: -5px;
+}
+
+.rightButton {
+    margin-left: 56px;
 }
 
 /* Rounds the corners of input boxes */
@@ -644,7 +658,7 @@ display:inline-block !important;
 }
 
 .advanceView {
-    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 /* Search Field */ 

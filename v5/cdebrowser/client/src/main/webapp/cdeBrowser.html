@@ -398,11 +398,11 @@
                 <br />
 
                 <span class="searchAndClearButton leftButton">
-                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
+                    <button class="btn btn-default" ng-hide="more" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
                 </span>
 
                 <span class="searchAndClearButton">
-                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
+                    <button class="btn btn-default" ng-hide="more" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
 
                 <!-- Start of Advance Search Options -->
@@ -420,6 +420,14 @@
                 <button class="btn btn-default advanceSearchButton" ng-hide="more" ng-click="advanceSearchShow()">Include Additional Search Criteria</button>
                 <button class="btn btn-default advanceSearchButton" ng-show="more" ng-click="advanceSearchShow()">Exclude Additional Search Criteria</button>
                 </div>
+
+                <span ng-show="more" class="advanceSearchAndClearButton leftButton">
+                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
+                </span>
+
+                <span ng-show="more" class="advanceSearchAndClearButton rightButton">
+                    <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
+                </span>
 
                 <!-- End of Advance Search Options -->
 
