@@ -86,8 +86,8 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                       $scope.workflowStatusIncluded = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
                       angular.forEach($scope.models, function(list) {
                           switch(list.label) {
-                            case "workflowStatusIncluded":
-                              for (var i = 0; i <= $scope.workflowStatusIncluded.length - 1; i++) {
+                            case "workflowStatusIncluded"://we skip now the first list element which is ALL
+                              for (var i = 1; i <= $scope.workflowStatusIncluded.length - 1; i++) {
                                 list.items.push({label: $scope.workflowStatusIncluded[i], type: "workflowStatus"});
                               }
                               list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
@@ -108,8 +108,8 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                       $scope.registrationStatusIncluded = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
                       angular.forEach($scope.models, function(list) {
                           switch(list.label) {
-                            case "registrationStatusIncluded":
-                              for (var i = 0; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" since the last object is empty
+                            case "registrationStatusIncluded"://we skip now the first list element which is ALL
+                              for (var i = 1; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" since the last object is empty
                                 list.items.push({label: $scope.registrationStatusIncluded[i], type: "registrationStatus"});
                               }
                               list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
@@ -162,8 +162,8 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 $scope.workflowStatusIncluded = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
-                      case "workflowStatusIncluded":
-                        for (var i = 0; i <= $scope.workflowStatusIncluded.length - 1; i++) {
+                      case "workflowStatusIncluded"://we skip now the first list element which is ALL
+                        for (var i = 1; i <= $scope.workflowStatusIncluded.length - 1; i++) {
                           list.items.push({label: $scope.workflowStatusIncluded[i], type: "workflowStatus"});
                         }
                         list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
@@ -184,8 +184,8 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
                 $scope.registrationStatusIncluded = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
-                      case "registrationStatusIncluded":
-                        for (var i = 0; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" to remove the last empty object
+                      case "registrationStatusIncluded"://we skip now the first list element which is ALL
+                        for (var i = 1; i <= $scope.registrationStatusIncluded.length - 2; i++) { // "length - 2" to remove the last empty object
                           list.items.push({label: $scope.registrationStatusIncluded[i], type: "registrationStatus"});
                         }
                         list.items.sort(function(a,b){if(a.label<b.label){return -1;}if(a.label>b.label){return 1;} return 0;});
