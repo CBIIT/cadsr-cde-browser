@@ -184,7 +184,7 @@
             </ul>
         </div>
     </div>
-    <div class="topTabPos" ng-show="contextListMaster.length>0">
+    <div class="topTabPos" ng-show="contextListMaster.length>0" ng-hide="!searchFactory.showSearch">
         <ul>
             <!--
                 Just getting the parent top level nodes for the top tabs, nodeNumber is counter,
@@ -231,7 +231,7 @@
             </span>
         </div>
     </div>
-    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="contextListMaster.length>0"><!-- ng-show="searchFactory.showSearch" -->
+    <div data-ng-repeat="(nodeNumber, node) in contextListMaster" ng-show="contextListMaster.length>0" ng-hide="!searchFactory.showSearch"><!-- ng-show="searchFactory.showSearch" -->
 
         <div class="treeMenu" data-ng-show="show[nodeNumber]"
              data-ng-style="resizeHeight()"

@@ -14,7 +14,7 @@
  		CDE Compare List is empty.
 	</div> -->
 	<div style="padding-bottom:5px">
-		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()">Excel Download</button>
+		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()" class="ng-hide">Excel Download</button>
 		<button ng-click="goBack()">Return to Search</button>
 	</div>
 
@@ -631,7 +631,7 @@
 
 </div>
 	<div style="padding-top:5px">
-		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()">Excel Download</button>
+		<button ng-disabled="compareService.checkedCompareItemsLength()" ng-click="excelDownload()" class="ng-hide">Excel Download</button>
 		<button ng-click="goBack()">Return to Search</button>
 	</div>
 
