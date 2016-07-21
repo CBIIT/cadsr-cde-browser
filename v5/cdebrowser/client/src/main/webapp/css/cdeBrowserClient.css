@@ -618,6 +618,17 @@ display:inline-block !important;
 
 /* Advance Search Options */
 
+.advanceSearchLeft {
+    width: 48%;
+    float: left;
+}
+
+.advanceSearchRight {
+    width: 48%;
+    float: right;
+    margin-right: 27px;
+}
+
 .advanceSearchCenter {
     padding-left: 275px;
     margin-top: -15px;
@@ -650,14 +661,24 @@ display:inline-block !important;
     margin: 4px 0;
 }
 
-.advanceSearchInput {
-    width: 185px;
-    margin-left: -4px !important;
+.advanceSearchDECInput {
+    width: 248px;
 }
 
-.advanceSearchInputBordered {
-    width: 180px;
-    margin-left: -2px !important;
+.advanceSearchVDInput {
+    width: 286px;
+}
+
+.advanceSearchPVInput {
+    width: 266px;
+}
+
+.advanceSearchANInput {
+    width: 276px;
+}
+
+.advanceSearchOCInput {
+    width: 301px;
 }
 
 .advanceView {

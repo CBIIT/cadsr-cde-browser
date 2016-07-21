@@ -9,7 +9,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
-    $scope.concept=[{id:"0",name:"Concept Name"},{id:"1",name:"Concept Code"}];
     $scope.searchContextUseHOLD = 0;
     $scope.searchObjectClassHOLD = "";
     var delimiter= ":::";
@@ -170,6 +169,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
 
+    // Search concept - radio buttons
+    $scope.concept = [
+        {id:"0",name:"Concept Name"},
+        {id:"1",name:"Concept Code"}
+    ];
+
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
         {id: 0, name: "Exact phrase"},
@@ -177,6 +182,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         {id: 2, name: "At least one of the words"}
     ];
 
+    // Search Value Domian - radio buttons
     $scope.searchVDQueryTypes = [
         {id: 0, name: "Enumerated"},
         {id: 1, name: "Non Enumerated"},
