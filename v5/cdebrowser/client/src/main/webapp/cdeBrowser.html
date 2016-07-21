@@ -365,13 +365,13 @@
                 </span>
 
                 <span class="wsAndRs">
-                <select multiple="true" ng-model="filterService.searchFilter.registrationStatus">
+                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.registrationStatus">
                     <option ng-repeat="r in staticFilters.registrationStatusFilter" value="{{r}}">{{r}}</option>
                 </select>
                 </span>
 
                 <span class="wsAndRs">
-                <select multiple="true" ng-model="filterService.searchFilter.workFlowStatus">
+                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.workFlowStatus">
                     <option ng-repeat="r in staticFilters.workflowStatusFilter" value="{{r}}">{{r}}</option>
                 </select>
                 </span>
@@ -383,7 +383,7 @@
                         <div class="conceptRadio">
                             <label data-ng-repeat="c in concept">
                             <div>
-                                <input ng-disabled="fs.isSearching"
+                                <input ng-disabled="fs.isSearching || fs.dataElementVariables.conceptInput==''"
                                        name="conceptQueryType"
                                        type="radio"
                                        value="{{c.id}}"

@@ -5,7 +5,7 @@
     <div class="advanceSearchLeft">
         <div>
             <label class="advancedSearchLabel">Data Element Concept</label>
-            <input class="roundInput advanceSearchDECInput" type="text" placeholder="Data Element Concept"
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" placeholder="Data Element Concept"
                    id="advancedSearchDEC" name="searchDEC"
                    ng-model="fs.dataElementVariables.searchDEC"/>
         </div>
@@ -13,12 +13,12 @@
         <div class="valueDomainGroup">
             <div>
                 <label class="advancedSearchLabel">Value Domain</label>
-                <input class="roundInput advanceSearchVDInput" type="text" placeholder="Value Domains" id="advancedSearchVD" name="searchVD"
+                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchVDInput" type="text" placeholder="Value Domains" id="advancedSearchVD" name="searchVD"
                        ng-model="fs.dataElementVariables.searchVD"/>
             </div>
             <label data-ng-repeat="queryType in searchVDQueryTypes">
                 <div class="queryTypeRadioButtons">
-                    <input ng-disabled="fs.isSearching"
+                    <input ng-disabled="fs.isSearching || fs.dataElementVariables.searchVD==''"
                            name="searchVDTQueryType"
                            type="radio"
                            value="{{queryType.id}}"
@@ -31,13 +31,13 @@
         <div class="permissibleValueGroup">
             <div>
                 <label class="advancedSearchLabel">Permissible Value</label>
-                <input class="roundInput advanceSearchPVInput" type="text" placeholder="Permissible Value"
+                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchPVInput" type="text" placeholder="Permissible Value"
                        id="advancedSearchPV" name="searchPV"
                        ng-model="fs.dataElementVariables.searchPV"/>
             </div>
             <label data-ng-repeat="queryType in searchQueryTypes">
                 <div class="queryTypeRadioButtons">
-                    <input ng-disabled="fs.isSearching"
+                    <input ng-disabled="fs.isSearching || fs.dataElementVariables.searchPV==''"
                            name="searchPVQueryType"
                            type="radio"
                            value="{{queryType.id}}"
@@ -52,14 +52,14 @@
         <div class="altNameGroup">
         <div>
             <label class="advancedSearchLabel">Alternate Name</label>
-            <input class="roundInput advanceSearchANInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchANInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
                    placeholder="Alternate Name" multiple="true"/>
             <!--
                     {{fs.dataElementVariables.searchAltName}}
             -->
         <span>
             <label class="advancedSearchLabel"></label>
-            <select ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
+            <select ng-disabled="fs.isSearching || fs.dataElementVariables.searchAltName==''" ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
                     ng-options="type for type in alternateNameTypes"></select>
             </select>
         </span>
@@ -70,7 +70,7 @@
         </div>
         <div>
             <label class="advancedSearchLabel">Object Class</label>
-            <input class="roundInput advanceSearchOCInput" type="text" placeholder="Object Class"
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" placeholder="Object Class"
                    ng-model="fs.dataElementVariables.searchObjectClass"/>
         </div>        
         <label data-ng-repeat="versionType in searchVersions">

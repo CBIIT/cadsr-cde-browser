@@ -35,12 +35,15 @@
     </span>
 
     <!-- The third, fourth, and fifth parameters are place holders for values used by advanced search, their emptiness indicates to server that advanced search should not be used -->
-    
+    <span class="searchAndClearButton">
     <button id="search" ng-disabled="fs.isSearching" data-ng-click="publicSearch()">
         Search
     </button>
-    <button id="clear" data-ng-click="clear()">
+    </span>
+    <span class="searchAndClearButton rightButton">
+    <button id="clear" ng-disabled="fs.isSearching" data-ng-click="clear()">
         Clear
     </button>
+    </span>
 </div>
 </span>

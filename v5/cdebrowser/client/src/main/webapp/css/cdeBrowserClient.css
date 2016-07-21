@@ -156,7 +156,7 @@ a:hover {
 .queryTypeRadioButtons {
     font-size: 11pt;
     color: #18344d;
-    padding-top: 6px;
+    padding-top: 4px;
     margin-top: 1px;
 }
 
@@ -341,7 +341,7 @@ display:inline-block !important;
     display:inline-block;
 }
 
-/* Fix to make clear button consistent with other buttons */
+/* Fix to make buttons consistent all over */
 
 .searchAndClearButton {
     float: left;
@@ -365,6 +365,10 @@ display:inline-block !important;
 
 .leftButton {
     margin-left: -5px;
+}
+
+.rightButton {
+    margin-left: 8px;
 }
 
 /* Rounds the corners of input boxes */
@@ -494,7 +498,7 @@ display:inline-block !important;
 }
 
 .searchPreferencesButton {
-    padding-top: 8px;
+    padding-bottom: 24px;
 }
 
 /* Classification and Protocol autocomplete dropdowns */
@@ -695,6 +699,8 @@ display:inline-block !important;
 .searchFieldDropDown select {
     width: 210px;
     height: 58px;
+    border-radius: 2px;
+    border-width: thin;
 }
 
 .searchFieldDropDownPublic {
@@ -706,6 +712,8 @@ display:inline-block !important;
 .searchFieldDropDownPublic select {
     width: 210px;
     height: 58px;
+    border-radius: 2px;
+    border-width: thin;
 }
 
 .searchFieldTip,
@@ -730,7 +738,7 @@ display:inline-block !important;
 .conceptRadio {
     font-size: 11pt;
     color: #18344d;
-    padding-top: 6px;
+    padding-top: 4px;
     margin-top: 1px;
 }
 
@@ -748,6 +756,8 @@ display:inline-block !important;
 .wsAndRs select{
     width: 185px !important;
     height: 64px;
+    border-radius: 2px;
+    border-width: thin;
 }
 
 

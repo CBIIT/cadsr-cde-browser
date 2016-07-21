@@ -251,6 +251,8 @@ ul.cdeSearchMessage li{
 
 #cdeSearchArea .filters select {
     width:357px;
+    border-radius: 2px;
+    border-width: thin;
 }
 
 #cdeSearchArea .filters .staticText {
