@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 /**
  * This is a class to represent user session search preferences entity.

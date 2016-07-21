@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.error.RestControllerException;
-import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ProtocolService;
 import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
@@ -42,14 +41,18 @@ public class LookupDataController
 	public List<String> getWorkflowStatus()
 	{
 		logger.debug("Received request for Workflow Status information.");
-		return WorkflowStatusEnum.getAsList();
+		List<String> resList = WorkflowStatusEnum.getAsList();
+		resList.add(0, "ALL");
+		return resList;
 	}
 	
 	@RequestMapping(value="/registrationstatus", produces = "application/json")
 	public List<String> getRegistrationStatus()
 	{
 		logger.debug("Received request for Registration Status information.");
-		return RegistrationStatusEnum.getAsList();
+		List<String> resList = RegistrationStatusEnum.getAsList();;
+		resList.add(0, "ALL");
+		return resList;
 	}
 	
 	@RequestMapping(value="/alternateType", produces = "application/json")	

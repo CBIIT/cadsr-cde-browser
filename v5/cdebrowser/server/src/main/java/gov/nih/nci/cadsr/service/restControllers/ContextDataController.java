@@ -79,7 +79,7 @@ public class ContextDataController
     	try
         {
             programAreaModelList = restControllerCommon.getProgramAreaList();
-            logger.info("Loaded Program Areas from database: ", programAreaModelList.toArray().length);
+            logger.info("Loaded Program Areas from database in amount: " + programAreaModelList.size() + programAreaModelList);
         } catch( Exception e )
         {
             logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
@@ -136,12 +136,13 @@ public class ContextDataController
 
     @RequestMapping( value = "/programAreaNames" )
     @ResponseBody
-    public List<String> programAreas()
+    public List<String> retrieveProgramAreas()
     {
-        List<ProgramAreaModel> programAreas = restControllerCommon.getProgramAreaList();
         List<String> results = new ArrayList<>(  );
+       
         results.add( new String("All Program Areas") );
-        results.addAll( programAreas.stream().map( ProgramAreaModel::getPalName ).collect( Collectors.toList() ) );
+        results.addAll( programAreaModelList.stream().map( ProgramAreaModel::getPalName ).collect( Collectors.toList() ) );
+        logger.debug("returning Program Areas RESTful call result: " + results);
         return results;
     }
 
