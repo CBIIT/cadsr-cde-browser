@@ -65,7 +65,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String permissibleValueWhere = "";
         String objectClassWhere = "";
         String versionIndWhere = "";
-        int versionType = searchCriteria.getVersionType();
 
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
@@ -264,11 +263,17 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                     + " AND de.latest_version_ind = 'Yes' ";
         }
 
-        if( StringUtils.isNotBlank( valueDomain ) )
+        if( StringUtils.isNotBlank( searchCriteria.getValueDomain() ) )
         {
-            vdWhere = " AND vd.vd_idseq = '" + valueDomain + "'"
-                    + " AND vd.vd_idseq = de.vd_idseq ";
-            vdFrom = " ,sbr.value_domains_view vd ";
+        	if (searchCriteria.getVdTypeFlag()!="") {
+	            vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
+	                    + " AND vd.vd_type_flag = '"+searchCriteria.getVdTypeFlag()+"' AND vd.vd_idseq = de.vd_idseq ";        		
+        	} else {         	
+	            vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
+	                    + " AND vd.vd_idseq = de.vd_idseq ";
+        	}    
+	            vdFrom = " ,sbr.value_domains_view vd "; 
+            
 
         }
 
@@ -303,11 +308,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
         //we do not check for No for the latest_version_ind because we have no UI for previous versions only
         
-        /*if (versionType == 0) {        	
-        	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
-        } else {
-        	versionIndWhere = " AND de.latest_version_ind = 'No' ";
-        }*/
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +

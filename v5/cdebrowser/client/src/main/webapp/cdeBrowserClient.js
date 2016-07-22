@@ -449,7 +449,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             connector= c==0?"?":"&";
             c++;
             url += connector + "valueDomain=" + vd;
-            url += "&vdtQueryType=" + vdtType;
+            url += "&vdTypeFlag=" + vdtType;
         }
 
         if (searchAltName != '') {
@@ -1040,7 +1040,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                     $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
                 });
+            }).then(function() {
+                $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
+                    $scope.alternateNameTypes = response.data;
+                });
             });
+
         }
     };
 
