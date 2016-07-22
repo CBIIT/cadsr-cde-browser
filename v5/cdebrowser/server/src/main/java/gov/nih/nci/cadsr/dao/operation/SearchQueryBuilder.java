@@ -198,7 +198,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
         }
-        
+
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
         	workflowWhere += SearchQueryBuilderUtils.buildRegistrationWhere(searchCriteria.getWorkFlowStatus(), "asl.asl_name");
@@ -267,13 +267,13 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
         	if (searchCriteria.getVdTypeFlag()!="") {
 	            vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
-	                    + " AND vd.vd_type_flag = '"+searchCriteria.getVdTypeFlag()+"' AND vd.vd_idseq = de.vd_idseq ";        		
-        	} else {         	
+	                    + " AND vd.vd_type_flag = '"+searchCriteria.getVdTypeFlag()+"' AND vd.vd_idseq = de.vd_idseq ";
+        	} else {
 	            vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
 	                    + " AND vd.vd_idseq = de.vd_idseq ";
-        	}    
-	            vdFrom = " ,sbr.value_domains_view vd "; 
-            
+        	}
+	            vdFrom = " ,sbr.value_domains_view vd ";
+
 
         }
 
@@ -281,7 +281,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             // AppScan
             String clientName = StringUtilities.sanitizeForSql( searchCriteria.getName() );
+
+/*
             docWhere = this.buildSearchTextWhere( clientName, searchIn, searchCriteria.getSearchMode() );
+*/
+            docWhere = this.buildSearchTextWhere( clientName, searchCriteria.getFilteredinput().split("\\s*,\\s*"), searchCriteria.getSearchMode() );
         }
 
         whereBuffer.append( wkFlowWhere );
@@ -307,7 +311,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
         }
         //we do not check for No for the latest_version_ind because we have no UI for previous versions only
-        
+
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
@@ -429,22 +433,22 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         newSearchStr = StringReplace.strReplace( text, "*", "%" );
         newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
 
-        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
                 StringUtilities.containsKey( searchDomain, "Long Name" ) )
         {
             longNameWhere = buildSearchString( "UPPER (de1.long_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
                 StringUtilities.containsKey( searchDomain, "Short Name" ) )
         {
 
             shortNameWhere = buildSearchString( "UPPER (de1.preferred_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
-                StringUtilities.containsKey( searchDomain, "Doc Text" ) ||
-                StringUtilities.containsKey( searchDomain, "Hist" ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+                StringUtilities.containsKey( searchDomain, "Preferred Question Text" ) ||
+                StringUtilities.containsKey( searchDomain, "Alternate Question Text" ) )
         {
 
             docTextSearchWhere =
@@ -473,9 +477,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             searchWhere = " AND (" + searchWhere + ") ";
         }
 
-        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
-                ( StringUtilities.containsKey( searchDomain, "Doc Text" ) &&
-                        StringUtilities.containsKey( searchDomain, "Hist" ) ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+                ( StringUtilities.containsKey( searchDomain, "Preferred Question Text" ) &&
+                        StringUtilities.containsKey( searchDomain, "Alternate Question Text" ) ) )
         {
             docWhere = "(SELECT de_idseq "
                     + " FROM sbr.reference_documents_view rd1, sbr.data_elements_view de1 "
@@ -491,11 +495,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
 
         }
-        else if( StringUtilities.containsKey( searchDomain, "Doc Text" ) )
+        else if( StringUtilities.containsKey( searchDomain, "Preferred Question Text" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
         }
-        else if( StringUtilities.containsKey( searchDomain, "Hist" ) )
+        else if( StringUtilities.containsKey( searchDomain, "Alternate Question Text" ) )
         {
             docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
         }
@@ -520,8 +524,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
 
-        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
-                StringUtilities.containsKey( searchDomain, "UML ALT Name" ) )
+        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+                StringUtilities.containsKey( searchDomain, "UML Class: UML Attr Alternate Name" ) )
         {
             umlAltNameWhere =
                     " (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "

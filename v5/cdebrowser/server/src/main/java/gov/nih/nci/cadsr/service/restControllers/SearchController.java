@@ -91,7 +91,7 @@ public class SearchController
         if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(),
         										searchCriteria.getClassification(), searchCriteria.getCsCsiIdSeq(), searchCriteria.getProtocol(), searchCriteria.getFormIdSeq(),
         										searchCriteria.getWorkFlowStatus(), searchCriteria.getRegistrationStatus(), searchCriteria.getConceptName(), searchCriteria.getConceptCode(),
-                                                searchCriteria.getDataElementConcept(), searchCriteria.getPermissibleValue(), searchCriteria.getObjectClass() ))
+                                                searchCriteria.getDataElementConcept(), searchCriteria.getPermissibleValue(), searchCriteria.getObjectClass(), searchCriteria.getFilteredinput()))
         {
             logger.warn( "Suspect parameter from client." );
             return null;
