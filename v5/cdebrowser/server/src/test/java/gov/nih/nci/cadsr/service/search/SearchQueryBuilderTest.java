@@ -19,13 +19,13 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 public class SearchQueryBuilderTest
 {
     private SearchQueryBuilder searchQueryBuilder;
-    private static SearchPreferencesServer initilaSearchPreferences;
+    private static SearchPreferencesServer initialSearchPreferences;
 
     @BeforeClass
     public static void setUpClass() throws Exception
     {
-        initilaSearchPreferences = new SearchPreferencesServer();
-        initilaSearchPreferences.initPreferences();
+        initialSearchPreferences = new SearchPreferencesServer();
+        initialSearchPreferences.initPreferences();
     }
 
     @Before
@@ -115,7 +115,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "conceptName" );
         searchCriteria.setConceptCode( "conceptCode" );
         // With workFlow
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertTrue( sqlStmt.contains( "asl.asl_name = 'workFlowStatus'" ) );
     }
 
@@ -135,7 +135,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "conceptName" );
         searchCriteria.setConceptCode( "conceptCode" );
         // With out workFlow, make sure workflow is empty, and exclude clause is right
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertTrue( sqlStmt.contains( " asl.asl_name NOT IN  ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED')" ) );
         assertFalse( sqlStmt.contains( "asl.asl_name =" ) );
     }
@@ -158,7 +158,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql00 ) );
     }
 
@@ -179,7 +179,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql01 ) );
     }
 
@@ -201,7 +201,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setContextUse( 2 );
         searchCriteria.setVersionType(0);
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql02 ) );
     }
 
@@ -221,7 +221,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         System.out.println( cleanup( sqlStmt ) );
     }
 
@@ -254,7 +254,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initilaSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
     }
 
