@@ -715,7 +715,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                         case "workflowStatusIncluded":
-                            for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
+                            for (var i = 1; i <= $scope.workflowSort.length - 1; i++) {
                                 list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
                             }
                             break;
@@ -736,7 +736,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                         case "registrationStatusIncluded":
-                            for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
+                            for (var i = 1; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
                                 list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
                             }
                             break;
@@ -1005,7 +1005,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     angular.forEach($scope.models, function(list) {
                         switch(list.label) {
                             case "workflowStatusIncluded":
-                                for (var i = 0; i <= $scope.workflowSort.length - 1; i++) {
+                                for (var i = 1; i <= $scope.workflowSort.length - 1; i++) {
                                     list.items.push({label: $scope.workflowSort[i], type: "workflowStatus"});
                                 }
                                 break;
@@ -1026,7 +1026,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     angular.forEach($scope.models, function(list) {
                         switch(list.label) {
                             case "registrationStatusIncluded":
-                                for (var i = 0; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
+                                for (var i = 1; i <= $scope.registrationSort.length - 2; i++) { // "length - 2" since the last object is empty
                                     list.items.push({label: $scope.registrationSort[i], type: "registrationStatus"});
                                 }
                                 break;
