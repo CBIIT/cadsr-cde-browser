@@ -50,20 +50,20 @@
 
     <div class="advanceSearchRight">
         <div class="altNameGroup">
-        <div>
-            <label class="advancedSearchLabel">Alternate Name</label>
-            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchANInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
-                   placeholder="Alternate Name" multiple="true"/>
-            <!--
-                    {{fs.dataElementVariables.searchAltName}}
-            -->
+            <div>
+                <label class="advancedSearchLabel">Alternate Name</label>
+                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchANInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
+                       placeholder="Alternate Name" multiple="true"/>
+                <!--
+                        {{fs.dataElementVariables.searchAltName}}
+                -->
         <span>
             <label class="advancedSearchLabel"></label>
             <select ng-disabled="fs.isSearching || fs.dataElementVariables.searchAltName==''" ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
                     ng-options="type for type in alternateNameTypes"></select>
             </select>
         </span>
-        </div>
+            </div>
             <!--
                     {{fs.dataElementVariables.searchAltNameType}}
             -->
@@ -72,7 +72,7 @@
             <label class="advancedSearchLabel">Object Class</label>
             <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" placeholder="Object Class"
                    ng-model="fs.dataElementVariables.searchObjectClass"/>
-        </div>        
+        </div>
         <label data-ng-repeat="versionType in searchVersions">
             <div class="queryTypeRadioButtons">
                 <input ng-disabled="fs.isSearching"
@@ -82,11 +82,11 @@
                 {{versionType.name}}&nbsp;&nbsp;
             </div>
         </label>
-    
+
         <span>
             <label class="advancedSearchLabel"></label>
             <select ng-model="fs.dataElementVariables.searchContextUse"  multiple="true"
-                       ng-options="contextUse for contextUse in searchContextUseValues">
+                    ng-options="contextUse for contextUse in searchContextUseValues">
             </select>
         </span>
     </div>

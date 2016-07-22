@@ -24,12 +24,13 @@ public class SearchCriteria implements Serializable
 	private String permissibleValue;
 	private int pvQueryType;
 	private String objectClass;
-	private int contextUse;	
+	private int contextUse;
 	private int versionType;//0 - latest, 1 - All
 	private String altName;
-	private String altNameType;	
+	private String altNameType;
 	private String vdTypeFlag;
 	private String valueDomain;
+	private String filteredinput;
 
 	public String getName() {
 		return name;
@@ -216,21 +217,31 @@ public class SearchCriteria implements Serializable
 	public void setAltNameType(String altNameType) {
 		this.altNameType = altNameType;
 	}
-	
+
+	public String getFilteredinput()
+	{
+		return filteredinput;
+	}
+
+	public void setFilteredinput( String filteredinput )
+	{
+		this.filteredinput = filteredinput;
+	}
+
 	public String getVdTypeFlag() {
 		return vdTypeFlag;
 	}
 
 	public void setVdTypeFlag(String vdTypeFlag) {
 		if (vdTypeFlag.equals("0")) {
-			this.vdTypeFlag = "E";	
+			this.vdTypeFlag = "E";
 		} else if (vdTypeFlag.equals("1")) {
 			this.vdTypeFlag = "N";
 		} else {
 			this.vdTypeFlag = "";
 		}
-		
-	}	
+
+	}
 
 	public String getValueDomain() {
 		return valueDomain;
@@ -249,7 +260,8 @@ public class SearchCriteria implements Serializable
 				+ conceptName + ", conceptCode=" + conceptCode + ", dataElementConcept=" + dataElementConcept
 				+ ", permissibleValue=" + permissibleValue + ", pvQueryType=" + pvQueryType + ", objectClass="
 				+ objectClass + ", contextUse=" + contextUse + ", versionType=" + versionType + ", altName=" + altName
-				+ ", altNameType=" + altNameType  + ", valueDomain=" + valueDomain + ", vdTypeFlag=" + vdTypeFlag + "]";
+				+ ", altNameType=" + altNameType  + ", valueDomain=" + valueDomain + ", vdTypeFlag=" + vdTypeFlag
+				+ ", filteredinput=" + filteredinput + "]";
 	}
 
 }

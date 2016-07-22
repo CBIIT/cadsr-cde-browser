@@ -16,8 +16,8 @@
     <link rel="stylesheet" type="text/css" href="libs/ui-select/select.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/style.css">
     <link rel="stylesheet" type="text/css" href="libs/ui-select-with-tree-navigation/selectize.bootstrap3.min.css">
-<style>
-.thumbnail {
+    <style>
+        .thumbnail {
             height: 15px;
 
             text-align: center;
@@ -30,11 +30,11 @@
 
         }
 
-            .thumbnail[data-drag="false"] {
-                background: green;
-            }
+        .thumbnail[data-drag="false"] {
+            background: green;
+        }
 
-</style>
+    </style>
 
 </head>
 <body>
@@ -121,7 +121,7 @@
                         </span>
                         <a href ng-click="changeLocation('/cdeCart')" target="_top">
                             <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
-                             alt="CDE Cart button" />
+                                 alt="CDE Cart button" />
                             <br>
                             <span> &nbsp;CDE&nbsp;Cart</span>
                         </a>
@@ -131,7 +131,7 @@
                     <a href="cdeBrowser.html" target="_top">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_home.png"
                              alt="CDE Browser Home button"
-                                />
+                        />
                         <br>
                         &nbsp;Home&nbsp;
                     </a>
@@ -142,7 +142,7 @@
                        target="_blank">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_form.png"
                              alt="Form Builder button"
-                                />
+                        />
                         <br>
                         &nbsp;Form Builder&nbsp;
                     </a>
@@ -153,7 +153,7 @@
                        target="_blank">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_help.png"
                              alt="CDE Browser User Guide button"
-                                />
+                        />
                         <br>
                         &nbsp;Help&nbsp;
                     </a>
@@ -163,7 +163,7 @@
                        ng-click="logout()">
                         <img src="icons/buttonIconSet/brown/75_percent/circle_logout.png"
                              alt="Logout button"
-                                />
+                        />
                         <br>
                         &nbsp;Logout&nbsp;
                     </a>
@@ -177,7 +177,7 @@
         <div class="topTabPos">
             <ul>
                 <div data-ng-repeat="tab in programAreaTabs">
-                     <li id="top_tabs" class="tabNormal">
+                    <li id="top_tabs" class="tabNormal">
                         &nbsp;{{tab}}&nbsp;
                     </li>
                 </div>
@@ -192,7 +192,7 @@
             -->
             <div data-ng-repeat="(nodeNumber, node) in contextListMaster">
 
-                 <li id="top_tabs"
+                <li id="top_tabs"
                     data-ng-class="{
                         tabActive: isActiveTab(nodeNumber),
                         tabNormal: (! isActiveTab(nodeNumber))
@@ -261,37 +261,37 @@
 
     <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
-    <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak" 
+    <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak"
          data-ng-style="resizeHeight()"
          resize
          notifier="notifyServiceOnChange(params)"><!-- data-ng-show="initComplete" -->
         <div label="search area" ng-show="searchFactory.showSearch">
-        <!-- generate tabs for search, advanced search and search preferences -->
-        <div class="cdeSearchTabs">
-            <ul class="cdeTabsUl">
-                <button class="cdeTabsLi" ng-repeat="tab in searchTabs track by $index" data-ng-class="{tabActive: activeSearchTab==$index}" ng-click="changeSearchTab($index)" ng-disabled="tab.disabled">
-                    {{tab.title}}
-                </button>
-            </ul>
-        </div>
-        <!-- end generate tabs -->
-        <!-- display proper view based on tab selected -->
-        <div id="cdeSearchArea">
-            <div class="view" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
-                This is the generic search pane.
+            <!-- generate tabs for search, advanced search and search preferences -->
+            <div class="cdeSearchTabs">
+                <ul class="cdeTabsUl">
+                    <button class="cdeTabsLi" ng-repeat="tab in searchTabs track by $index" data-ng-class="{tabActive: activeSearchTab==$index}" ng-click="changeSearchTab($index)" ng-disabled="tab.disabled">
+                        {{tab.title}}
+                    </button>
+                </ul>
             </div>
-            <div class="view" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==1">
-                This is the public id search pane. The default search.
-            </div>
-            <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==2">
-                This is the search preferences pane.
-            </div>
-            <!--
-            <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==3">
-                This is the advanced search pane.
-            </div>
-            -->
-            <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
+            <!-- end generate tabs -->
+            <!-- display proper view based on tab selected -->
+            <div id="cdeSearchArea">
+                <div class="view" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
+                    This is the generic search pane.
+                </div>
+                <div class="view" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==1">
+                    This is the public id search pane. The default search.
+                </div>
+                <div class="view" ng-include="'cde/searchPreferences/searchPreferences-view.html'" ng-show="activeSearchTab==2">
+                    This is the search preferences pane.
+                </div>
+                <!--
+                <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'" ng-show="activeSearchTab==3">
+                    This is the advanced search pane.
+                </div>
+                -->
+                <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
 
                 <span>
                 <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
@@ -324,7 +324,7 @@
                             <ui-select-match placeholder="Classification" allow-clear="true">
                                 {{ $select.selected.name }}
                             </ui-select-match>
-                           <ui-select-choices group-by="'contextName'" repeat="group in filterService.classifications | filter: $select.search" refresh="loadClassifications($select.search)">
+                            <ui-select-choices group-by="'contextName'" repeat="group in filterService.classifications | filter: $select.search" refresh="loadClassifications($select.search)">
                                 <div>
                                     <span ng-bind-html="group.name | highlight: $select.search"></span>
                                     <a class="goto-child-group" ng-show="checkChildren1(group)"
@@ -382,20 +382,20 @@
                         <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" placeholder="Concept Name or Concept Code" />
                         <div class="conceptRadio">
                             <label data-ng-repeat="c in concept">
-                            <div>
-                                <input ng-disabled="fs.isSearching || fs.dataElementVariables.conceptInput==''"
-                                       name="conceptQueryType"
-                                       type="radio"
-                                       value="{{c.id}}"
-                                       data-ng-model="fs.dataElementVariables.conceptQueryType"/>
-                                {{c.name}}
-                            </div>
-                        </label>
+                                <div>
+                                    <input ng-disabled="fs.isSearching || fs.dataElementVariables.conceptInput==''"
+                                           name="conceptQueryType"
+                                           type="radio"
+                                           value="{{c.id}}"
+                                           data-ng-model="fs.dataElementVariables.conceptQueryType"/>
+                                    {{c.name}}
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </span>
 
-                <br />
+                    <br />
 
                 <span class="searchAndClearButton leftButton">
                     <button class="btn btn-default" ng-hide="more" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
@@ -405,21 +405,21 @@
                     <button class="btn btn-default" ng-hide="more" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
 
-                <!-- Start of Advance Search Options -->
+                    <!-- Start of Advance Search Options -->
 
-                <br />
+                    <br />
 
-                <div class="advanceView" ng-show="more">
+                    <div class="advanceView" ng-show="more">
 
-                <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'">
-                </div>
+                        <div class="view" ng-include="'cde/advancedSearch/advancedSearch-view.html'">
+                        </div>
 
-                </div>
+                    </div>
 
-                <div class="advanceSearchCenter">
-                <button class="btn btn-default advanceSearchButton" ng-hide="more" ng-click="advanceSearchShow()">Include Additional Search Criteria</button>
-                <button class="btn btn-default advanceSearchButton" ng-show="more" ng-click="advanceSearchShow()">Exclude Additional Search Criteria</button>
-                </div>
+                    <div class="advanceSearchCenter">
+                        <button class="btn btn-default advanceSearchButton" ng-hide="more" ng-click="advanceSearchShow()">Include Additional Search Criteria</button>
+                        <button class="btn btn-default advanceSearchButton" ng-show="more" ng-click="advanceSearchShow()">Exclude Additional Search Criteria</button>
+                    </div>
 
                 <span ng-show="more" class="advanceSearchAndClearButton leftButton">
                     <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="search()">Search</button>
@@ -429,16 +429,16 @@
                     <button class="btn btn-default" ng-disabled="filterService.isSearching" label="Reset Filters" ng-click="resetFilters()">Clear</button>
                 </span>
 
-                <!-- End of Advance Search Options -->
+                    <!-- End of Advance Search Options -->
+
+                </div>
 
             </div>
 
-        </div>
-
             <!-- end display proper view based on tab selected -->
-        <br ng-show="searchResults.length" />
+            <br ng-show="searchResults.length" />
 
-        <!-- Search status message -->
+            <!-- Search status message -->
         <span ng-show="searchResultsMessage&&searchResultsMessage!=''" data-ng-bind-html-unsafe="searchResultsMessage" data-ng-class="{
              bigSearchResultsMessage: bigSearchResultsMessageClass,
              normSearchResultsMessage: (! bigSearchResultsMessageClass)
@@ -446,29 +446,29 @@
             <!-- {{searchResultsMessage}} -->
 
                         <ul ng-show="searchResultsMessage" class="cdeSearchMessage">
-                <li>
-                    {{searchResultsMessage}}
-                </li>
-                <li>
-                    <img alt="Searching" src="icons/preloader.gif">
-                </li>
-            </ul>
+                            <li>
+                                {{searchResultsMessage}}
+                            </li>
+                            <li>
+                                <img alt="Searching" src="icons/preloader.gif">
+                            </li>
+                        </ul>
         </span>
 
-        <!--  Bread Crumbs  -->
-        <div class="breadCrumbs">
+            <!--  Bread Crumbs  -->
+            <div class="breadCrumbs">
             <span data-ng-show="breadCrumbs">
                 <span data-ng-repeat="b in breadCrumbs">
                     {{b}}<span data-ng-show="!$last"> >></span>
                 </span><br/>
             </span>
-        </div>
+            </div>
 
-        <div data-ng-bind-html-unsafe="statusMessage" ng-show="statusMessage!=undefined"><br><span style='color: #8b0000; font-weight: bold; font-size: 18pt;'>
+            <div data-ng-bind-html-unsafe="statusMessage" ng-show="statusMessage!=undefined"><br><span style='color: #8b0000; font-weight: bold; font-size: 18pt;'>
             {{statusMessage}}</span><br>
-        </div>
+            </div>
 
-        <!-- start Download Buttons -->
+            <!-- start Download Buttons -->
         <span ng-show="searchResults.length">
             <ul class="cdeDownloadButtons buttonsPadding">
                 <li>
@@ -514,38 +514,38 @@
             </ul>
             <!-- end show progress bar -->
         </span>
-        <!-- end Download Buttons -->
+            <!-- end Download Buttons -->
 
-        <!-- <br /> -->
+            <!-- <br /> -->
 
-        <!-- the search results tabs and content below -->
-        <div class="cdeTabs">
-            <ul class="cdeTabsUl">
+            <!-- the search results tabs and content below -->
+            <div class="cdeTabs">
+                <ul class="cdeTabsUl">
 
-                <button class="cdeTabsLi"
-                        data-ng-disabled="tabsDisabled && tabNumber"
-                        id="tab_" + tabNumber
-                        data-ng-repeat="(tabNumber,tab) in tabs"
-                        data-ng-class="{
+                    <button class="cdeTabsLi"
+                            data-ng-disabled="tabsDisabled && tabNumber"
+                            id="tab_" + tabNumber
+                            data-ng-repeat="(tabNumber,tab) in tabs"
+                            data-ng-class="{
                         tabActive:   isActiveCdeTab(tabNumber),
                         tabNormal:   ( ( ! cdeTabHasFocus[tabNumber] ) && ( ! isActiveCdeTab( tabNumber ) ) ),
                         tabDisabled: ( tabsDisabled && tabNumber) ,
                         tabFocused:  ( ( cdeTabHasFocus[tabNumber] ) && ( ! isActiveCdeTab( tabNumber ) ) )
                         }"
-                        data-ng-blur="lostFocus(tabNumber)"
-                        data-ng-focus="gotFocus(tabNumber)"
-                        data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
-                </button>
+                            data-ng-blur="lostFocus(tabNumber)"
+                            data-ng-focus="gotFocus(tabNumber)"
+                            data-ng-click="changeView(tabNumber,tab)">{{tab.title}}
+                    </button>
 
 
-            </ul>
-        </div>
+                </ul>
+            </div>
 
-        <!-- =============================================================================== -->
-        <!-- The search results tab with Search results table - this is the only tab that is not an data-ng-view ========== -->
-        <div id="searchResults" class="cdeSearchTabsView" data-ng-show="showCdeSearchResults">
-            <div class="sortOrder">
-                <div data-ng-class="{left:searchResultsCount,leftFull:!searchResultsCount}">
+            <!-- =============================================================================== -->
+            <!-- The search results tab with Search results table - this is the only tab that is not an data-ng-view ========== -->
+            <div id="searchResults" class="cdeSearchTabsView" data-ng-show="showCdeSearchResults">
+                <div class="sortOrder">
+                    <div data-ng-class="{left:searchResultsCount,leftFull:!searchResultsCount}">
                     <span class="row">
                         <ul>
                             <li>Sort Order:</li>
@@ -555,9 +555,9 @@
                             <li>[{{sortOrderObject.sortDirection}}]</li>
                         </ul>
                     </span>
-                    <span class="row"><a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a></span>
-                </div>
-                <div class="right">
+                        <span class="row"><a href="#" data-ng-click="resetSortOrder()">Reset Sort Order</a></span>
+                    </div>
+                    <div class="right">
                     <span class="row">
                         <span ng-show="searchResults.length">Results: {{searchResults.length}}</span>
                         <span ng-show="!searchResults.length">No search results</span>
@@ -565,50 +565,50 @@
                     <span class="row">
                         <div data-ng-table-pagination="tableParams" template-url="'plugins/ng-table/pager.html'"></div>
                     </span>
+                    </div>
                 </div>
+
+                <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+                    <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
+                           value=""/>
+                </script>
+
+                <table data-ng-table="tableParams" show-filter="false" class="searchResultsTable" ng-show="searchResults.length">
+                    <tr class="searchResultsTableTr" data-ng-repeat="result in $data track by $index">
+                        <td header="'ng-table/headers/checkbox.html'">
+                            <input type="checkbox" data-ng-model="checkboxes.items[result.deIdseq]" ng-click="">
+                        </td>
+
+                        <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
+
+
+                            <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
+                        </td>
+                        <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'"
+                            class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}
+                        </td>
+                        <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">
+                            {{result.ownedBy}}
+                        </td>
+                        <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd"
+                            width="14%">{{result.usedByContext}}
+                        </td>
+                        <td data-title="'Registration Status'" sortable="'registrationSort'" class="searchResultsTableTd"
+                            width="14%">{{result.registrationStatus}}
+                        </td>
+                        <td data-title="'Workflow Status'" sortable="'workflowSort'" class="searchResultsTableTd"
+                            width="14%">{{result.workflowStatus}}
+                        </td>
+                        <td data-title="'Public ID'" sortable="'publicId'" class="searchResultsTableTd" width="10%">
+                            {{result.publicId}}
+                        </td>
+                        <td data-title="'Version'" sortable="'version'" class="searchResultsTableTd" width="7%">
+                            {{result.version}}
+                        </td>
+                    </tr>
+                </table>
             </div>
-
-            <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-                <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
-                       value=""/>
-            </script>
-
-            <table data-ng-table="tableParams" show-filter="false" class="searchResultsTable" ng-show="searchResults.length">
-                <tr class="searchResultsTableTr" data-ng-repeat="result in $data track by $index">
-                    <td header="'ng-table/headers/checkbox.html'">
-                        <input type="checkbox" data-ng-model="checkboxes.items[result.deIdseq]" ng-click="">
-                    </td>
-
-                    <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">
-
-
-                        <a class="searchResultsLink" href="" data-ng-click="onClickCdeDetails(result.deIdseq)">{{result.longName}} </a>
-                    </td>
-                    <td data-title="'Preferred Question Text'" sortable="'preferredQuestionText'"
-                        class="searchResultsTableTd" width="17%">{{result.preferredQuestionText}}
-                    </td>
-                    <td data-title="'Owned By'" sortable="'ownedBy'" class="searchResultsTableTd" width="10%">
-                        {{result.ownedBy}}
-                    </td>
-                    <td data-title="'Used By Context'" sortable="'usedByContext'" class="searchResultsTableTd"
-                        width="14%">{{result.usedByContext}}
-                    </td>
-                    <td data-title="'Registration Status'" sortable="'registrationSort'" class="searchResultsTableTd"
-                        width="14%">{{result.registrationStatus}}
-                    </td>
-                    <td data-title="'Workflow Status'" sortable="'workflowSort'" class="searchResultsTableTd"
-                        width="14%">{{result.workflowStatus}}
-                    </td>
-                    <td data-title="'Public ID'" sortable="'publicId'" class="searchResultsTableTd" width="10%">
-                        {{result.publicId}}
-                    </td>
-                    <td data-title="'Version'" sortable="'version'" class="searchResultsTableTd" width="7%">
-                        {{result.version}}
-                    </td>
-                </tr>
-            </table>
         </div>
-    </div>
         <!-- =============================================================================== -->
         <!-- The search tab views - this handled by the cde module and its sub-modules. ==== -->
 

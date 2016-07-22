@@ -1,4 +1,3 @@
-
 // controller
 angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope) {
     window.scope = $scope;
@@ -190,13 +189,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     ];
 
     // Search versions - radio buttons
-   $scope.searchVersions = [
+    $scope.searchVersions = [
         {id: 0, name: "Latest Version"},
         {id: 1, name: "All Versions"},
     ];
 
     // Search Context use options
-   $scope.searchContextUseValues = [
+    $scope.searchContextUseValues = [
         "Context Use Owned By",
         "Context Use Used By",
         "Context Use Owned By/Used By"
