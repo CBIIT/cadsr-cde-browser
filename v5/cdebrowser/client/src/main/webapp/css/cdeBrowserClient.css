@@ -351,6 +351,7 @@ display:inline-block !important;
 .searchAndClearButton button {
     padding: 3px 6px 3px 6px !important;
     font-size: 12px !important;
+    -webkit-appearance: none !important; /* FIX ME */
 }
 
 .advanceSearchAndClearButton {
@@ -498,7 +499,7 @@ display:inline-block !important;
 }
 
 .searchPreferencesButton {
-    padding-bottom: 26px;
+    padding-bottom: 30px;
 }
 
 /* Classification and Protocol autocomplete dropdowns */
