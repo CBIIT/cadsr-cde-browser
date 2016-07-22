@@ -18,8 +18,11 @@ public class SearchCriteria implements Serializable
 	private String formIdSeq;
 	private String workFlowStatus;
 	private String registrationStatus;
+	//FIXME we do not use in 5.2 conceptName and conceptCode. If this version stay consider to remove these two fields.
 	private String conceptName;
 	private String conceptCode;
+	private String conceptInput;
+	private String conceptQueryType;
 	private String dataElementConcept;
 	private String permissibleValue;
 	private int pvQueryType;
@@ -251,6 +254,22 @@ public class SearchCriteria implements Serializable
 		this.valueDomain = valueDomain;
 	}
 
+	public String getConceptInput() {
+		return conceptInput;
+	}
+
+	public void setConceptInput(String conceptInput) {
+		this.conceptInput = conceptInput;
+	}
+
+	public String getConceptQueryType() {
+		return conceptQueryType;
+	}
+
+	public void setConceptQueryType(String conceptQueryType) {
+		this.conceptQueryType = conceptQueryType;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType="
@@ -260,8 +279,9 @@ public class SearchCriteria implements Serializable
 				+ conceptName + ", conceptCode=" + conceptCode + ", dataElementConcept=" + dataElementConcept
 				+ ", permissibleValue=" + permissibleValue + ", pvQueryType=" + pvQueryType + ", objectClass="
 				+ objectClass + ", contextUse=" + contextUse + ", versionType=" + versionType + ", altName=" + altName
-				+ ", altNameType=" + altNameType  + ", valueDomain=" + valueDomain + ", vdTypeFlag=" + vdTypeFlag
-				+ ", filteredinput=" + filteredinput + "]";
+				+ ", altNameType=" + altNameType + ", vdTypeFlag=" + vdTypeFlag + ", valueDomain=" + valueDomain
+				+ ", filteredinput=" + filteredinput + ", conceptInput=" + conceptInput + ", conceptType=" + conceptQueryType
+				+ "]";
 	}
 
 }

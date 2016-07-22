@@ -171,7 +171,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 }
             }
         }
-
+        //this is for search Concept Name and Concept type
+        String conceptInputWhere = SearchQueryBuilderUtils.buildConceptWhere(searchCriteria);
         ////////////////////////////////////////////////////
         // we use selected or excluded Registration Status here
         String registrationExcludeWhere = "";
@@ -300,6 +301,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
         whereBuffer.append( dataElementConceptWhere );
+        whereBuffer.append( conceptInputWhere);
         whereBuffer.append( permissibleValueWhere );
         whereBuffer.append( deDerivWhere ).append( protocolWhere ).append( formWhere );
 
