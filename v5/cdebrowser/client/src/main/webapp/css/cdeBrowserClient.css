@@ -351,7 +351,7 @@ display:inline-block !important;
 .searchAndClearButton button {
     padding: 3px 6px 3px 6px !important;
     font-size: 12px !important;
-    -webkit-appearance: none !important; /* FIX ME */
+    /*-webkit-appearance: none !important;*/
 }
 
 .advanceSearchAndClearButton {
@@ -687,7 +687,7 @@ display:inline-block !important;
 }
 
 .advanceView {
-    padding-bottom: 30px;
+    padding-bottom: 15px;
 }
 
 /* Search Field */ 
@@ -739,7 +739,7 @@ display:inline-block !important;
 .conceptRadio {
     font-size: 11pt;
     color: #18344d;
-    padding-top: 2px;
+    padding-top: 1px;
     margin-top: 1px;
 }
 

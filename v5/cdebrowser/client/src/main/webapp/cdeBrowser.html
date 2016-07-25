@@ -33,6 +33,12 @@
         .thumbnail[data-drag="false"] {
             background: green;
         }
+        .showelement{
+            display:block;
+        }
+        .hideelement{
+            display:none;
+        }
 
     </style>
 
@@ -305,7 +311,9 @@
                 <span>
                 <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
                     <ui-select-match allow-clear="true" placeholder="Context">{{$select.selected.text}}</ui-select-match>
-                    <ui-select-choices repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search">
+                    <ui-select-choices 
+                    repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search | filter:manageOptions"
+                    >
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
@@ -363,6 +371,8 @@
                         </ui-select>
                     </script>
                 </span>
+
+{{filterService.searchFilter.workFlowStatus}}
 
                 <span class="wsAndRs">
                 <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.workFlowStatus">
@@ -457,7 +467,7 @@
 
             <!--  Bread Crumbs  -->
             <div class="breadCrumbs">
-            <span data-ng-show="breadCrumbs">
+            <span>
                 <span data-ng-repeat="b in breadCrumbs">
                     {{b}}<span data-ng-show="!$last"> >></span>
                 </span><br/>

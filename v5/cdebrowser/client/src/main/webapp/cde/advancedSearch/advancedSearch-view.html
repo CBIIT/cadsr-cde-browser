@@ -16,7 +16,7 @@
                 <input ng-disabled="fs.isSearching" class="roundInput advanceSearchVDInput" type="text" placeholder="Value Domains" id="advancedSearchVD" name="searchVD"
                        ng-model="fs.dataElementVariables.searchVD"/>
             </div>
-            <label data-ng-repeat="queryType in searchVDQueryTypes">
+            <label data-ng-repeat="queryType in searchVDTQueryTypes">
                 <div class="queryTypeRadioButtons">
                     <input ng-disabled="fs.isSearching || fs.dataElementVariables.searchVD==''"
                            name="searchVDTQueryType"
@@ -46,6 +46,18 @@
                 </div>
             </label>
         </div>
+
+        <div>
+        <label data-ng-repeat="versionType in searchVersions">
+            <div class="queryTypeRadioButtons">
+                <input ng-disabled="fs.isSearching"
+                       type="radio"
+                       value="{{versionType.id}}"
+                       data-ng-model="fs.dataElementVariables.searchVersions"/>
+                {{versionType.name}}&nbsp;&nbsp;
+            </div>
+        </label>
+        </div>
     </div>
 
     <div class="advanceSearchRight">
@@ -68,27 +80,33 @@
                     {{fs.dataElementVariables.searchAltNameType}}
             -->
         </div>
+
         <div>
             <label class="advancedSearchLabel">Object Class</label>
             <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" placeholder="Object Class"
                    ng-model="fs.dataElementVariables.searchObjectClass"/>
         </div>
-        <label data-ng-repeat="versionType in searchVersions">
+
+        <div>
+        <label data-ng-repeat="queryType in searchContextUseValues">
             <div class="queryTypeRadioButtons">
                 <input ng-disabled="fs.isSearching"
+                       name="searchContextUse"
                        type="radio"
-                       value="{{versionType.id}}"
-                       data-ng-model="fs.dataElementVariables.searchVersions"/>
-                {{versionType.name}}&nbsp;&nbsp;
+                       value="{{queryType.id}}"
+                       data-ng-model="fs.dataElementVariables.searchContextUse"/>
+                {{queryType.name}}&nbsp;&nbsp;
             </div>
         </label>
+        </div>
 
-        <span>
+        <!-- <span>
             <label class="advancedSearchLabel"></label>
             <select ng-model="fs.dataElementVariables.searchContextUse"  multiple="true"
-                    ng-options="contextUse for contextUse in searchContextUseValues">
+                    ng-options="contextUse for contextUse in searchContextUse">
             </select>
-        </span>
+        </span> -->
+
     </div>
 
 </span>

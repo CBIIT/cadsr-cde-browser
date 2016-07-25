@@ -10,7 +10,7 @@
         <label for="name" class="publicIdLabel">Name</label>
         <input class="basicSearchQuery roundInput publicIdInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" placeholder="Names and Definitions" />
         <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
-            <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true">
+            <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
                         <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
                     </select>
             <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
