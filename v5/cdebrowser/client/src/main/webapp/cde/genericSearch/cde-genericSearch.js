@@ -17,7 +17,6 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
  	$scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
  	$rootScope.$on('genericsearch',function(eve,fs) {
- 		// console.log(fs);
 		$scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery,
 			'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV,
 			fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
@@ -26,35 +25,30 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 			fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass);
  	});
 
- 	$scope.setSelected=function() {
-    var selectedlen=$scope.fs.dataElementVariables.searchFieldOptions.options;
-    if(selectedlen.length>0) {
-      if(selectedlen[0]=="ALL" && selectedlen.length==2) {
-        $scope.fs.dataElementVariables.searchFieldOptions.options.splice(0,1);
-      }else if(selectedlen.length>2 && selectedlen[0]=="ALL"){
-        $scope.fs.dataElementVariables.searchFieldOptions.options = [];
-        $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
-      }
+ 	$scope.setSelectedField = function() {
+    var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
+        if(selectedlen.length>0) {
+            if(selectedlen[0]=="ALL" && selectedlen.length==2) {
+                $scope.fs.dataElementVariables.searchFieldOptions.options.splice(0,1);
+            }   
+            else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
+                $scope.fs.dataElementVariables.searchFieldOptions.options = [];
+                $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
+            }
+        }
     }
-  }
 
-
-	// Search Context use options
-	// $scope.searchContextUseValues = [
-	// 	"Owned By",
-	// 	"Used By",
-	// 	"Owned By/Used By"
-	// ];
-
-	// $scope.fs.dataElementVariables.searchContextUse =  $scope.searchContextUseValues[2];
-
-
-	/*
-       Can't do it this way, sometimes $scope.alternateNameTypes is not yet populated in time.
-       $scope.fs.dataElementVariables.searchAltNameType = $scope.alternateNameTypes[0];
-   */
-
-
-  $scope.fs.dataElementVariables.searchAltNameType = {"type": "ALL"}; // FIX ME
+    $scope.setSelectedAlt = function() {
+    var selectedlen = $scope.fs.dataElementVariables.searchAltNameType;
+        if(selectedlen.length>0) {
+            if(selectedlen[0]=="ALL" && selectedlen.length==2) {
+                $scope.fs.dataElementVariables.searchAltNameType.splice(0,1);
+            }   
+            else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
+                $scope.fs.dataElementVariables.searchAltNameType = [];
+                $scope.fs.dataElementVariables.searchAltNameType[0] = $scope.options[0];
+            }
+        }
+    }
 
 });

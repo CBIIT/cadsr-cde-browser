@@ -372,16 +372,14 @@
                     </script>
                 </span>
 
-{{filterService.searchFilter.workFlowStatus}}
-
                 <span class="wsAndRs">
-                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.workFlowStatus">
+                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.workFlowStatus" ng-change="setSelectedWs()">
                     <option ng-repeat="r in staticFilters.workflowStatusFilter" value="{{r}}">{{r}}</option>
                 </select>
                 </span>
 
                 <span class="wsAndRs">
-                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.registrationStatus">
+                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.registrationStatus" ng-change="setSelectedRs()">
                     <option ng-repeat="r in staticFilters.registrationStatusFilter" value="{{r}}">{{r}}</option>
                 </select>
                 </span>
@@ -468,7 +466,7 @@
             <!--  Bread Crumbs  -->
             <div class="breadCrumbs">
             <span>
-                <span data-ng-repeat="b in breadCrumbs">
+                <span data-ng-repeat="b in breadCrumbs" data-ng-show="breadCrumbs.length>1">
                     {{b}}<span data-ng-show="!$last"> >></span>
                 </span><br/>
             </span>

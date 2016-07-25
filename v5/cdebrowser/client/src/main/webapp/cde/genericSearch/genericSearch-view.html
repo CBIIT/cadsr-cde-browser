@@ -5,7 +5,7 @@
         <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Names and Definitions" />
 
         <span class="searchFieldDropDown" ng-show="activeSearchTab==0" ng-disabled="true">
-            <select ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
+            <select ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelectedField()">
                 <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
             </select>
             <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.

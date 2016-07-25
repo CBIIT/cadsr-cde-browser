@@ -66,19 +66,13 @@
                 <label class="advancedSearchLabel">Alternate Name</label>
                 <input ng-disabled="fs.isSearching" class="roundInput advanceSearchANInput" type="text" ng-model="fs.dataElementVariables.searchAltName"
                        placeholder="Alternate Name" multiple="true"/>
-                <!--
-                        {{fs.dataElementVariables.searchAltName}}
-                -->
-        <span>
-            <label class="advancedSearchLabel"></label>
-            <select ng-disabled="fs.isSearching || fs.dataElementVariables.searchAltName==''" ng-model="fs.dataElementVariables.searchAltNameType" multiple="true"
-                    ng-options="type for type in alternateNameTypes"></select>
-            </select>
-        </span>
+                <span>
+                    <label class="advancedSearchLabel"></label>
+                    <select ng-disabled="fs.isSearching || fs.dataElementVariables.searchAltName==''" ng-model="fs.dataElementVariables.searchAltNameType" multiple="true" ng-change="setSelectedAlt()">
+                    <option ng-repeat="option in alternateNameTypes" value="{{option}}">{{option}}</option>
+                    </select>
+                </span>
             </div>
-            <!--
-                    {{fs.dataElementVariables.searchAltNameType}}
-            -->
         </div>
 
         <div>
@@ -99,14 +93,6 @@
             </div>
         </label>
         </div>
-
-        <!-- <span>
-            <label class="advancedSearchLabel"></label>
-            <select ng-model="fs.dataElementVariables.searchContextUse"  multiple="true"
-                    ng-options="contextUse for contextUse in searchContextUse">
-            </select>
-        </span> -->
-
     </div>
 
 </span>

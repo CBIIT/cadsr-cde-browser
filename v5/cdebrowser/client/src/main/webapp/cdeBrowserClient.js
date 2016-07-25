@@ -8,7 +8,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
     $scope.searchVersionsHOLD = 0;
-    // $scope.searchContextUseHOLD = 0;
+    $scope.searchContextUseHOLD = 2;
     $scope.searchObjectClassHOLD = "";
     var delimiter= ":::";
 
@@ -21,6 +21,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
     $scope.fs = filterService;
+    // console.log($scope.fs);
 
     var cs = compareService;
     $scope.compareService = cs;
@@ -29,7 +30,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.$watch('contextListMaster',function(data) { // gets data for program areas and contexts //
         if (data) {
             fs.serverData = $scope.contextListMaster;
-            fs.searchFilter.programArea=0;
+            fs.searchFilter.programArea = 0;
         };
     });
 
@@ -91,7 +92,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             fs.dataElementVariables.conceptInput,
                             fs.dataElementVariables.conceptQueryType,
                             fs.dataElementVariables.searchAltName,
-                            fs.dataElementVariables.searchAltNameTypes,
+                            fs.dataElementVariables.searchAltNameType,
                             fs.dataElementVariables.searchVersions,
                             fs.dataElementVariables.searchContextUse,
                             fs.dataElementVariables.searchObjectClass);
@@ -114,7 +115,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         groupFactory1.clearData();
     };
 
-    $scope.search=function(){
+    $scope.search = function(){
         // console.log($scope.fs);
 
         $rootScope.$broadcast('genericsearch', $scope.fs);
@@ -231,7 +232,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }];
     // start checkboxes for table //
     $scope.checkboxes = {'checked': false, items: {}};
-
 
 
     // watch for check all checkbox
@@ -405,7 +405,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         // Convert searchContextUse string to index integer
 
-        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString());
+        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString()); // FIX ME
 
         // console.log("[" + searchContextUse + "]");
 
@@ -684,17 +684,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // $scope.dataLoad("data6.json");
     // };
 
-    $scope.getAlternateNameTypesFromServer = function () {
-        var serverUrl = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/lookupdata/alternateType";
-        $http.get(serverUrl)
+    // $scope.getAlternateNameTypesFromServer = function () {
+    //     var serverUrl = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/lookupdata/alternateType";
+    //     $http.get(serverUrl)
 
-            .success(function (response) {
-                $scope.alternateNameTypes = response;
-            })
-            .error(function (error) {
-                console.log("Error [" + serverUrl + "]: " + error.statusText);
-            });
-    };
+    //         .success(function (response) {
+    //             $scope.alternateNameTypes = response;
+    //         })
+    //         .error(function (error) {
+    //             console.log("Error [" + serverUrl + "]: " + error.statusText);
+    //         });
+    // };
 
 
     $scope.dataLoadFromServer = function () {
@@ -728,10 +728,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             break;
                     }
                 });
-                // debugger;
                 $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
-                // $scope.filterService.searchFilter.workFlowStatus = [];
-                // $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
+                $timeout(function() {
+                    $scope.filterService.searchFilter.workFlowStatus = [];
+                    $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
+                },100);            
             });
         }).then(function() {
             $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
@@ -754,13 +755,48 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 });
                 $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
+                $timeout(function() {
+                    $scope.filterService.searchFilter.registrationStatus = [];
+                    $scope.filterService.searchFilter.registrationStatus[0] = "ALL";
+                },100); 
             });
         }).then(function() {
             $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
                 $scope.alternateNameTypes = response.data;
+                $timeout(function() {
+                    $scope.fs.dataElementVariables.searchAltNameType = [];
+                    $scope.fs.dataElementVariables.searchAltNameType[0] = "ALL";
+                },100);
             });
         });
     };
+
+
+    $scope.setSelectedWs = function() {
+    var selectedlen = $scope.filterService.searchFilter.workFlowStatus;
+        if(selectedlen.length>0) {
+            if(selectedlen[0]=="ALL" && selectedlen.length==2) {
+                $scope.filterService.searchFilter.workFlowStatus.splice(0,1);
+            }   
+            else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
+                $scope.filterService.searchFilter.workFlowStatus = [];
+                $scope.filterService.searchFilter.workFlowStatus[0] = $scope.options[0];
+            }
+        }
+    }
+
+    $scope.setSelectedRs = function() {
+    var selectedlen = $scope.filterService.searchFilter.registrationStatus;
+        if(selectedlen.length>0) {
+            if(selectedlen[0]=="ALL" && selectedlen.length==2) {
+                $scope.filterService.searchFilter.registrationStatus.splice(0,1);
+            }   
+            else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
+                $scope.filterService.searchFilter.registrationStatus = [];
+                $scope.filterService.searchFilter.registrationStatus[0] = $scope.options[0];
+            }
+        }
+    }
 
 
     // $scope.$on('updateTree',function(event,data) {
@@ -800,7 +836,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
             return false;
         });
-        //filterService.serverData[filterService.searchFilter.programArea].children
     });
 
 
@@ -1061,10 +1096,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                 break;
                         }
                     });
-                    // debugger;
                     $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
-                    // $scope.filterService.searchFilter.workFlowStatus = [];
-                    // $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
+                    $timeout(function() {
+                        $scope.filterService.searchFilter.workFlowStatus = [];
+                        $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
+                    },100);            
                 });
             }).then(function() {
                 $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
@@ -1087,11 +1123,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     });
                     $scope.staticFilters.registrationStatusFilter = angular.copy($scope.registrationSort).sort();
                     $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
+                    $timeout(function() {
+                        $scope.filterService.searchFilter.registrationStatus = [];
+                        $scope.filterService.searchFilter.registrationStatus[0] = "ALL";
+                    },100); 
                 });
-            }).then(function() {
-                $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
-                    $scope.alternateNameTypes = response.data;
-                });
+            // }).then(function() {
+            //     $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
+            //         $scope.alternateNameTypes = response.data;
+            //         $timeout(function() {
+            //             $scope.fs.dataElementVariables.searchAltNameType = [];
+            //             $scope.fs.dataElementVariables.searchAltNameType[0] = "ALL";
+            //         },100);    
+            //     });
             });
 
         }
@@ -1161,8 +1205,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
             fs.dataElementVariables.searchVersions = -1;
 
-            // $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
-            // fs.dataElementVariables.searchContextUse = -1;
+            $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
+            fs.dataElementVariables.searchContextUse = -1;
 
             $scope.searchObjectClassHOLD = fs.dataElementVariables.searchObjectClass;
             fs.dataElementVariables.searchObjectClass = "";
@@ -1183,8 +1227,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
             $scope.searchVersionsHOLD = -1;
 
-            // fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
-            // $scope.searchContextUseHOLD = -1;
+            fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
+            $scope.searchContextUseHOLD = -1;
 
             fs.dataElementVariables.searchObjectClass = $scope.searchObjectClassHOLD;
             $scope.searchObjectClassHOLD = "";

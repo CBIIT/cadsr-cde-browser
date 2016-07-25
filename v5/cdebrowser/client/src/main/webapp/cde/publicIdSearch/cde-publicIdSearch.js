@@ -19,12 +19,12 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
    $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 var previous=$scope.fs.dataElementVariables.searchFieldOptions.options;
 
-$scope.setSelected=function() {
-  var selectedlen=$scope.fs.dataElementVariables.searchFieldOptions.options;
+$scope.setSelected = function() {
+  var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
   if(selectedlen.length>0) {
     if(selectedlen[0]=="ALL" && selectedlen.length==2) {
       $scope.fs.dataElementVariables.searchFieldOptions.options.splice(0,1);
-    }else if(selectedlen.length>2 && selectedlen[0]=="ALL"){
+    } else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
       $scope.fs.dataElementVariables.searchFieldOptions.options = [];
       $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
     }

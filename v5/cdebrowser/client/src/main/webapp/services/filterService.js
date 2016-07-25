@@ -4,7 +4,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.lookupData = {}; // stores master list of classifications and protocol forms //
 
     this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-        searchAltName:"", searchAltNameTypes:{alternateNameTypes: ["ALL"]}, searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
+        searchAltName:"", searchAltNameType:[], searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
 
     this.searchFilter = {};
     this.isAChildNodeSearch = false;
@@ -18,9 +18,9 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     // resets all important variables
     this.resetFilters = function() {
         this.isAChildNodeSearch = false;
+        this.resetElementsInCommon();        
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-            searchAltName:"", searchAltNameTypes:{alternateNameTypes: ["ALL"]}, searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
-        this.resetElementsInCommon();
+            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
         // this.classifications = [];
         // this.protocols = [];
         // this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
@@ -32,7 +32,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     }
 
     this.resetElementsInCommon=function(){
-        this.searchFilter = {programArea:0}// reset search filter to just having program area selected to all //
+        this.searchFilter = {programArea:0,workFlowStatus:["ALL"],registrationStatus:["ALL"]}// reset search filter to just having program area selected to all //
         this.classifications = [];
         this.protocols = [];
         this.showClassificationsProtocolForms = 0;
@@ -52,7 +52,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 
     // select context dropdown based on context click in left menu //
     this.selectContextByNode = function(programArea,id) {
-        this.searchFilter = {programArea:programArea}; // user clicked the left menu. set program area //
+        this.searchFilter = {programArea:programArea,workFlowStatus:["ALL"],registrationStatus:["ALL"]}; // user clicked the left menu. set program area //
         this.searchFilter.context = id;
         // this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
     };
@@ -62,7 +62,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.isAChildNodeSearch = false;
 
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-            searchAltName:"", searchAltNameTypes:{alternateNameTypes: ["ALL"]}, searchVersions:"0", searchContextUse:"2", searchObjectClass:""};
+            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:""};
 
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;
