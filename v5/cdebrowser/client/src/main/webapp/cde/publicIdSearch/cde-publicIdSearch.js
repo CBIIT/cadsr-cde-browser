@@ -31,7 +31,7 @@ $scope.setSelected = function() {
   }
 }
 
-   $scope.publicSearch = function() {
+  $scope.publicSearch = function() {
   filterService.resetDataElementSearch();
     $scope.onClickBasicSearch($scope.publicIdSearchQuery, 'publicId', '', ' ', 0, $scope.fs.dataElementVariables.selectedQueryType, 
       $scope.publicIdName, $scope.fs.dataElementVariables.searchAltName, $scope.fs.dataElementVariables.searchAltNameType, '', '', '', '', 

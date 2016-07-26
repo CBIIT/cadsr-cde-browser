@@ -78,7 +78,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     delete newobj.workFlowStatus;
                     delete prevobj.workFlowStatus;
 
-                    if(!angular.equals(newobj,prevobj)){
+                    if(!angular.equals(newobj,prevobj) && Object.keys(newobj).length>1){
                         $scope.onClickBasicSearch(
                             fs.dataElementVariables.basicSearchQuery,
                             'name',
@@ -115,10 +115,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         groupFactory1.clearData();
     };
 
-    $scope.search = function(){
+    $scope.search = function() {
         // console.log($scope.fs);
 
-        $rootScope.$broadcast('genericsearch', $scope.fs);
+        $scope.$broadcast('genericsearch', $scope.fs);
 
     }
 
@@ -402,14 +402,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
         }
         searchAltNameType = str;
-
-        // Convert searchContextUse string to index integer
-
-        searchContextUse = $scope.searchContextUseValues.indexOf(searchContextUse.toString()); // FIX ME
-
-        // console.log("[" + searchContextUse + "]");
-
-
+        
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
 
@@ -483,7 +476,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if ( searchContextUse >= 0) {
             connector = c == 0 ? "?" : "&";
             c++;
-            url += connector + "contextUse=" + searchContextUse;
+            url += connector + "contextUse=" + parseInt(searchContextUse);
         }
 
         if( searchObjectClass != '') {

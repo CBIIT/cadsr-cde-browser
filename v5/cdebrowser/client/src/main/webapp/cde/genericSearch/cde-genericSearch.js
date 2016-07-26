@@ -16,7 +16,7 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
  	$scope.fs.dataElementVariables.searchFieldOptions.options = [];
  	$scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
- 	$rootScope.$on('genericsearch',function(eve,fs) {
+ 	$scope.$on('genericsearch',function(eve,fs) {
 		$scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery,
 			'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV,
 			fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
