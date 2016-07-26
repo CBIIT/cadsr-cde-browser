@@ -226,15 +226,216 @@ public class SearchQueryBuilderTest
     }
 
     @Test
-    public void testBuildStatusWhereClause() throws Exception
+    public void testBuildSearchTextWhere01() throws Exception
     {
+        String text = "inputText";
+        String[] searchDomain = {"ALL fields"};
+        String searchMode = "searchMode";
+        String expected = "AND de.de_idseq IN ( (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "+
+                "WHERE  de1.de_idseq  = dsn.ac_idseq (+)  "+
+                "AND dsn.detl_name = 'UML Class:UML Attr'  " +
+                "AND ((UPPER (nvl(dsn.name,'%')) LIKE UPPER ('% inputText %') OR UPPER (nvl(dsn.name,'%')) LIKE UPPER ('inputText %') OR UPPER (nvl(dsn.name,'%')) LIKE UPPER ('inputText') OR UPPER (nvl(dsn.name,'%')) LIKE UPPER ('% inputText'))) ) " +
+                "UNION " +
+                "(SELECT de_idseq "+
+                " FROM sbr.reference_documents_view rd1, sbr.data_elements_view de1  " +
+                "WHERE  de1.de_idseq  = rd1.ac_idseq (+)  AND    " +
+                "rd1.dctl_name (+) = 'Preferred Question Text'  " +
+                "AND (((UPPER (de1.long_name) LIKE UPPER ('% inputText %')  OR UPPER (de1.long_name) LIKE UPPER ('inputText %')  OR UPPER (de1.long_name) LIKE UPPER ('inputText')  OR UPPER (de1.long_name) LIKE UPPER ('% inputText') )) " +
+                "OR ((UPPER (de1.preferred_name) LIKE UPPER ('% inputText %')  OR UPPER (de1.preferred_name) LIKE UPPER ('inputText %')  OR UPPER (de1.preferred_name) LIKE UPPER ('inputText')  OR UPPER (de1.preferred_name) LIKE UPPER ('% inputText') ))" +
+                " OR ((UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('% inputText %')  OR UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('inputText %')  OR UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('inputText')  OR UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('% inputText') )))  " +
+                "UNION  " +
+                "SELECT de_idseq  FROM sbr.reference_documents_view rd2,sbr.data_elements_view de2  WHERE  de2.de_idseq  = rd2.ac_idseq (+)  AND    rd2.dctl_name (+) = 'Alternate Question Text' " +
+                " AND    ((UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('% inputText %')  OR UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('inputText %')  OR UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('inputText')  OR UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('% inputText') ))) )";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
 
     }
 
     @Test
-    public void testBuildRegStatusWhereClause() throws Exception
+    public void testBuildSearchTextWhere02() throws Exception
     {
+        String text = "inputText";
+        String[] searchDomain = {"ALL fields", "Long Name"};
+        String searchMode = "searchMode";
+        String expected = "AND de.de_idseq IN ( (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "+
+                "WHERE  de1.de_idseq  = dsn.ac_idseq (+)  "+
+                "AND dsn.detl_name = 'UML Class:UML Attr'  " +
+                "AND ((UPPER (nvl(dsn.name,'%')) LIKE UPPER ('% inputText %') OR UPPER (nvl(dsn.name,'%')) LIKE UPPER ('inputText %') OR UPPER (nvl(dsn.name,'%')) LIKE UPPER ('inputText') OR UPPER (nvl(dsn.name,'%')) LIKE UPPER ('% inputText'))) ) " +
+                "UNION " +
+                "(SELECT de_idseq "+
+                " FROM sbr.reference_documents_view rd1, sbr.data_elements_view de1  " +
+                "WHERE  de1.de_idseq  = rd1.ac_idseq (+)  AND    " +
+                "rd1.dctl_name (+) = 'Preferred Question Text'  " +
+                "AND (((UPPER (de1.long_name) LIKE UPPER ('% inputText %')  OR UPPER (de1.long_name) LIKE UPPER ('inputText %')  OR UPPER (de1.long_name) LIKE UPPER ('inputText')  OR UPPER (de1.long_name) LIKE UPPER ('% inputText') )) " +
+                "OR ((UPPER (de1.preferred_name) LIKE UPPER ('% inputText %')  OR UPPER (de1.preferred_name) LIKE UPPER ('inputText %')  OR UPPER (de1.preferred_name) LIKE UPPER ('inputText')  OR UPPER (de1.preferred_name) LIKE UPPER ('% inputText') ))" +
+                " OR ((UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('% inputText %')  OR UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('inputText %')  OR UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('inputText')  OR UPPER (nvl(rd1.doc_text,'%')) LIKE UPPER ('% inputText') )))  " +
+                "UNION  " +
+                "SELECT de_idseq  FROM sbr.reference_documents_view rd2,sbr.data_elements_view de2  WHERE  de2.de_idseq  = rd2.ac_idseq (+)  AND    rd2.dctl_name (+) = 'Alternate Question Text' " +
+                " AND    ((UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('% inputText %')  OR UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('inputText %')  OR UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('inputText')  OR UPPER (nvl(rd2.doc_text,'%')) LIKE UPPER ('% inputText') ))) )";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
 
+    }
+
+    @Test
+    public void testBuildSearchTextWhere03() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ FROM SBR.DATA_ELEMENTS_VIEW DE1 " +
+                "WHERE((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT'))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere04() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Short Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ FROM SBR.DATA_ELEMENTS_VIEW DE1 " +
+                "WHERE((UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT'))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere05() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Preferred Question Text"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ " +
+                "FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)" +
+                "AND RD1.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' AND((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT'))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere06() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Alternate Question Text"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ " +
+                "FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)" +
+                "AND RD1.DCTL_NAME(+)= 'Alternate QUESTION TEXT' AND((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT'))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere07() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"UML Class: UML Attr Alternate Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ " +
+                "FROM SBR.DESIGNATIONS_VIEW DSN, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = DSN.AC_IDSEQ(+)AND DSN.DETL_NAME = 'UML CLASS:UML ATTR' AND((UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT %')" +
+                "OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT %')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT'))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere08() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name","Short Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ " +
+                "FROM SBR.DATA_ELEMENTS_VIEW DE1 WHERE((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT'))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+
+    @Test
+    public void testBuildSearchTextWhere09() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name","Short Name", "Preferred Question Text"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 " +
+                "WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)AND RD1.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' AND(((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')" +
+                "OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')" +
+                "OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT')))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere10() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name","Short Name", "Alternate Question Text"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN(SELECT DE_IDSEQ " +
+                "FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 " +
+                "WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)AND RD1.DCTL_NAME(+)= 'ALTERNATE QUESTION TEXT' AND(((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT %')" +
+                "OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT')))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere11() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name", "Preferred Question Text", "UML Class: UML Attr Alternate Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN((SELECT DE_IDSEQ " +
+                "FROM SBR.DESIGNATIONS_VIEW DSN, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = DSN.AC_IDSEQ(+)AND DSN.DETL_NAME = 'UML CLASS:UML ATTR' AND((UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT'))))UNION(SELECT DE_IDSEQ FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)" +
+                "AND RD1.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' AND(((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT')))" +
+                "OR((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT'))))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere12() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name", "Short Name", "Preferred Question Text", "UML Class: UML Attr Alternate Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN((SELECT DE_IDSEQ FROM SBR.DESIGNATIONS_VIEW DSN, SBR.DATA_ELEMENTS_VIEW DE1 " +
+                "WHERE DE1.DE_IDSEQ = DSN.AC_IDSEQ(+)AND DSN.DETL_NAME = 'UML CLASS:UML ATTR' AND((UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT %')" +
+                "OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT %')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT'))))UNION(SELECT DE_IDSEQ FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 " +
+                "WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)AND RD1.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' AND(((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT %')" +
+                "OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('INPUTTEXT')OR UPPER(DE1.PREFERRED_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT'))))))\n";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
+    }
+
+    @Test
+    public void testBuildSearchTextWhere13() throws Exception
+    {
+        String text = "inputText";
+        String[] searchDomain = {"Long Name", "Alternate Question Text", "Preferred Question Text", "UML Class: UML Attr Alternate Name"};
+        String searchMode = "searchMode";
+        String expected = "AND DE.DE_IDSEQ IN((SELECT DE_IDSEQ FROM SBR.DESIGNATIONS_VIEW DSN, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = DSN.AC_IDSEQ(+)" +
+                "AND DSN.DETL_NAME = 'UML CLASS:UML ATTR' AND((UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT %')OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('INPUTTEXT')" +
+                "OR UPPER(NVL(DSN.NAME, '%'))LIKE UPPER('% INPUTTEXT'))))UNION(SELECT DE_IDSEQ FROM SBR.REFERENCE_DOCUMENTS_VIEW RD1, SBR.DATA_ELEMENTS_VIEW DE1 WHERE DE1.DE_IDSEQ = RD1.AC_IDSEQ(+)" +
+                "AND RD1.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' AND(((UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT %')OR UPPER(DE1.LONG_NAME)LIKE UPPER('INPUTTEXT')" +
+                "OR UPPER(DE1.LONG_NAME)LIKE UPPER('% INPUTTEXT')))OR((UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')" +
+                "OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD1.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT'))))UNION SELECT DE_IDSEQ " +
+                "FROM SBR.REFERENCE_DOCUMENTS_VIEW RD2, SBR.DATA_ELEMENTS_VIEW DE2 WHERE DE2.DE_IDSEQ = RD2.AC_IDSEQ(+)AND RD2.DCTL_NAME(+)= 'ALTERNATE QUESTION TEXT' AND((UPPER(NVL(RD2.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT %')" +
+                "OR UPPER(NVL(RD2.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT %')OR UPPER(NVL(RD2.DOC_TEXT, '%'))LIKE UPPER('INPUTTEXT')OR UPPER(NVL(RD2.DOC_TEXT, '%'))LIKE UPPER('% INPUTTEXT')))))";
+        String received = searchQueryBuilder.buildSearchTextWhere( text, searchDomain, searchMode );
+        assertEquals( cleanup( expected ), cleanup( received ) );
     }
 
     @Test
@@ -257,7 +458,7 @@ public class SearchQueryBuilderTest
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
     }
-    
+
     @Test
     public void testVersionTypeAll()
     {
@@ -277,11 +478,11 @@ public class SearchQueryBuilderTest
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( versionTypeAllQuery ) );
-    }    
+    }
 
     private String cleanup( String s )
     {
-        return s.replaceAll( "\\s\\s*", " " ).replaceAll( "\\s*,\\s*", ", " ).replaceAll( "\\s*\\)\\s*", ")" ).replaceAll( "\\s*\\(\\s*", "(" ).toUpperCase();
+        return s.replaceAll( "\\s\\s*", " " ).replaceAll( "\\s*,\\s*", ", " ).replaceAll( "\\s*\\)\\s*", ")" ).replaceAll( "\\s*\\(\\s*", "(" ).toUpperCase().trim();
     }
 
     /**
@@ -322,7 +523,7 @@ public class SearchQueryBuilderTest
             "AND             qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' " +
             "AND             qc.de_idseq = de.de_idseq AND pt.proto_idseq = 'B40DD2C8-A047-DBE1-E040-BB89AD437202' " +
             "AND             de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) AND de.asl_name = asl.asl_name (+)";
-    
+
     String versionTypeAllQuery = "SELECT DISTINCT de.de_idseq, de.preferred_name de_preferred_name, de.long_name , " +
             "rd.doc_text , conte.NAME ,de.asl_name , To_char(de.cde_id) de_cdeid , de.version de_version , " +
             "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,de.vd_idseq , " +
@@ -340,7 +541,7 @@ public class SearchQueryBuilderTest
             "AND             frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF' " +
             "AND             qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' " +
             "AND             qc.de_idseq = de.de_idseq AND pt.proto_idseq = 'B40DD2C8-A047-DBE1-E040-BB89AD437202' " +
-            "AND             de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) AND de.asl_name = asl.asl_name (+)";    
+            "AND             de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) AND de.asl_name = asl.asl_name (+)";
 
     String sql00 = "SELECT DISTINCT de.de_idseq," +
             "                de.preferred_name de_preferred_name," +
@@ -367,7 +568,7 @@ public class SearchQueryBuilderTest
             "     sbr.ac_status_lov_view asl" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
-            " AND de.latest_version_ind = 'Yes'" +            
+            " AND de.latest_version_ind = 'Yes'" +
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired') AND " +
             getExcludList() +
             "  AND asl.asl_name = 'APPRVD FOR TRIAL USE'" +
@@ -406,7 +607,7 @@ public class SearchQueryBuilderTest
             "     sbr.ac_status_lov_view asl" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
-            " AND de.latest_version_ind = 'Yes'" +            
+            " AND de.latest_version_ind = 'Yes'" +
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
             "  AND " + getExcludList() +
             "  AND conte.name NOT IN ('TEST'," +
@@ -446,7 +647,7 @@ public class SearchQueryBuilderTest
             " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0') " +
             "  AND de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
-            " AND de.latest_version_ind = 'Yes'" +            
+            " AND de.latest_version_ind = 'Yes'" +
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
             "  AND " + getExcludList() +
             "  AND conte.name NOT IN ('TEST'," +

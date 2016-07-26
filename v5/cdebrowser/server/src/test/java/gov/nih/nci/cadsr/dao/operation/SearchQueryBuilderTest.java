@@ -21,11 +21,11 @@ import gov.nih.nci.cadsr.model.SearchPreferences;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 /**
- * 
+ *
  * @author asafievan
  *
  */
-public class SearchQueryBuilderTest {	
+public class SearchQueryBuilderTest {
 	//There is another test file SearchQueryBuilderTest located in test package gov.nih.nci.cadsr.service.search
 	private SearchQueryBuilder searchQueryBuilder;
 	private SearchPreferencesServer searchPreferences;
@@ -35,7 +35,7 @@ public class SearchQueryBuilderTest {
 	{
 
 	}
-	
+
 	@Before
 	public void setUp() throws Exception
 	{
@@ -90,16 +90,16 @@ public class SearchQueryBuilderTest {
 	@Test
 	public void testInitWorkflowExcluded() {
 		List <String> workflowStatusExcluded = new ArrayList<>();
-		workflowStatusExcluded.add(WorkflowStatusEnum.DraftMod.getWorkflowStatus());		
+		workflowStatusExcluded.add(WorkflowStatusEnum.DraftMod.getWorkflowStatus());
 		searchPreferences.setWorkflowStatusExcluded(workflowStatusExcluded);
-		
+
 		String workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
 
 		//MUT
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
 		//check
 		assertTrue(sqlStmtReceived.indexOf(workflowWhere) > 0);
-	}	
+	}
 	//Registration Status tests
 	@Test
 	public void testInitRegNoExcluded() {
@@ -113,15 +113,15 @@ public class SearchQueryBuilderTest {
 	@Test
 	public void testInitRegExcluded() {
 		List <String> regStatusExcluded = new ArrayList<>();
-		regStatusExcluded.add(RegistrationStatusEnum.PROPOSED.getRegStatus());		
+		regStatusExcluded.add(RegistrationStatusEnum.PROPOSED.getRegStatus());
 		searchPreferences.setRegistrationStatusExcluded(regStatusExcluded);
-		
+
 		String[] arr = regStatusExcluded.toArray(new String[1]);
 		String workflowWhere = searchQueryBuilder.getExcludeWhereClause( "nvl(acr.registration_status,'-1')", arr );;
 
 		//MUT
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
-		
+
 		//check
 		assertTrue(sqlStmtReceived.indexOf(workflowWhere) > 0);
 	}
