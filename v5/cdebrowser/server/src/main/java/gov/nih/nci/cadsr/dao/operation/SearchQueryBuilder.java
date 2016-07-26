@@ -124,13 +124,13 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             permissibleValueWhere = buildPermissibleValueWhere( searchCriteria.getPermissibleValue(), searchCriteria.getPvQueryType() );
         }
 
-        if( StringUtils.isBlank( searchCriteria.getObjectClass()  ) )
+        if( StringUtils.isBlank( searchCriteria.getObjectClass() ) )
         {
             objectClassWhere = "";
         }
         else
         {
-            objectClassWhere =  buildObjectClassWhere(searchCriteria.getObjectClass().replace( "*", "%" ) );
+            objectClassWhere = buildObjectClassWhere( searchCriteria.getObjectClass().replace( "*", "%" ) );
         }
         if( StringUtils.isBlank( searchCriteria.getDataElementConcept() ) )
         {
@@ -172,7 +172,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             }
         }
         //this is for search Concept Name and Concept type
-        String conceptInputWhere = SearchQueryBuilderUtils.buildConceptWhere(searchCriteria);
+        String conceptInputWhere = SearchQueryBuilderUtils.buildConceptWhere( searchCriteria );
         ////////////////////////////////////////////////////
         // we use selected or excluded Registration Status here
         String registrationExcludeWhere = "";
@@ -187,7 +187,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         //This is a criteria which comes from drop down box of the basic search
         if( StringUtils.isNotBlank( searchCriteria.getRegistrationStatus() ) )
         {
-             registrationStatusWhere =  SearchQueryBuilderUtils.buildRegistrationWhere(searchCriteria.getRegistrationStatus(), "acr.registration_status");
+            registrationStatusWhere = SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getRegistrationStatus(), "acr.registration_status" );
         }
 
         ////////////////////////////////////////////////////
@@ -202,7 +202,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
-        	workflowWhere += SearchQueryBuilderUtils.buildRegistrationWhere(searchCriteria.getWorkFlowStatus(), "asl.asl_name");
+            workflowWhere += SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name" );
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
 
@@ -240,8 +240,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                     break;
                 case 2:
                 case -1: // -1 is the value from the client if "Context Use" selector has not been set.  I still need to set "Owned By/Used by" as the default in the client (18_JUL_2016)
-                contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
-                        " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
+                    contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
+                            " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
             }
 
 
@@ -266,14 +266,17 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( StringUtils.isNotBlank( searchCriteria.getValueDomain() ) )
         {
-        	if (searchCriteria.getVdTypeFlag()!="") {
-	            vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
-	                    + " AND vd.vd_type_flag = '"+searchCriteria.getVdTypeFlag()+"' AND vd.vd_idseq = de.vd_idseq ";
-        	} else {
-	            vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
-	                    + " AND vd.vd_idseq = de.vd_idseq ";
-        	}
-	            vdFrom = " ,sbr.value_domains_view vd ";
+            if( searchCriteria.getVdTypeFlag() != "" )
+            {
+                vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
+                        + " AND vd.vd_type_flag = '" + searchCriteria.getVdTypeFlag() + "' AND vd.vd_idseq = de.vd_idseq ";
+            }
+            else
+            {
+                vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
+                        + " AND vd.vd_idseq = de.vd_idseq ";
+            }
+            vdFrom = " ,sbr.value_domains_view vd ";
 
 
         }
@@ -286,7 +289,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 /*
             docWhere = this.buildSearchTextWhere( clientName, searchIn, searchCriteria.getSearchMode() );
 */
-            docWhere = this.buildSearchTextWhere( clientName, searchCriteria.getFilteredinput().split("\\s*,\\s*"), searchCriteria.getSearchMode() );
+            docWhere = this.buildSearchTextWhere( clientName, searchCriteria.getFilteredinput().split( "\\s*,\\s*" ), searchCriteria.getSearchMode() );
         }
 
         whereBuffer.append( wkFlowWhere );
@@ -301,16 +304,17 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
         whereBuffer.append( dataElementConceptWhere );
-        whereBuffer.append( conceptInputWhere);
+        whereBuffer.append( conceptInputWhere );
         whereBuffer.append( permissibleValueWhere );
         whereBuffer.append( deDerivWhere ).append( protocolWhere ).append( formWhere );
 
-        String altNamesWhere = SearchQueryBuilderUtils.buildAltNamesWhere(searchCriteria.getAltName(), searchCriteria.getAltNameType());
-        whereBuffer.append(altNamesWhere);
+        String altNamesWhere = SearchQueryBuilderUtils.buildAltNamesWhere( searchCriteria.getAltName(), searchCriteria.getAltNameType() );
+        whereBuffer.append( altNamesWhere );
 
         whereClause = whereBuffer.toString();
-        if (searchCriteria.getVersionType() == 0) {
-        	versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
+        if( searchCriteria.getVersionType() == 0 )
+        {
+            versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
         }
         //we do not check for No for the latest_version_ind because we have no UI for previous versions only
 
@@ -336,12 +340,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( fromWhere );
 
         String sqlStmt = finalSqlStmt.toString();
-        logger.debug("initSearchQueryBuilder DE search sqlStmt: " + sqlStmt);
+        logger.debug( "initSearchQueryBuilder DE search sqlStmt: " + sqlStmt );
         return sqlStmt;
     }
 
 
-    public String buildObjectClassWhere( String objecClass)
+    public String buildObjectClassWhere( String objecClass )
     {
         String where = "and  de.de_idseq IN " +
                 "(select de_idseq from   sbr.data_elements_view where  " +
@@ -353,7 +357,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 "                sbrext.object_classes_view_ext oc  " +
                 "            where" +
                 "                oc.oc_idseq = dec.oc_idseq  " +
-                "                and upper(oc.LONG_NAME) like upper('"+ objecClass + "')" +
+                "                and upper(oc.LONG_NAME) like upper('" + objecClass + "')" +
                 ")" +
                 "    )";
         return where;
@@ -419,7 +423,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     }
 
 
-    protected String buildSearchTextWhere( String text, String[] searchDomain, String searchMode )
+    public String buildSearchTextWhere( String text, String[] searchDomain, String searchMode )
     {
 
         String docWhere = null;
@@ -546,9 +550,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 return nameWhere;
             }
         }
-        logger.debug( "  buildSearchTextWhere - docWhere: " + docWhere );
-        logger.debug( "  buildSearchTextWhere - docTextTypeWhere: " + docTextTypeWhere );
-
         return " AND de.de_idseq IN " + docWhere;
     }
 
