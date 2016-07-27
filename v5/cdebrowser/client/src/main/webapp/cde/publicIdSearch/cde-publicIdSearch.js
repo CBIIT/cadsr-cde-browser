@@ -17,7 +17,8 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
    $scope.options = ["ALL", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
    $scope.fs.dataElementVariables.searchFieldOptions.options = [];
    $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
-var previous=$scope.fs.dataElementVariables.searchFieldOptions.options;
+
+var previous = $scope.fs.dataElementVariables.searchFieldOptions.options;
 
 $scope.setSelected = function() {
   var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
@@ -31,11 +32,25 @@ $scope.setSelected = function() {
   }
 }
 
-  $scope.publicSearch = function() {
-  filterService.resetDataElementSearch();
-    $scope.onClickBasicSearch($scope.publicIdSearchQuery, 'publicId', '', ' ', 0, $scope.fs.dataElementVariables.selectedQueryType, 
-      $scope.publicIdName, $scope.fs.dataElementVariables.searchAltName, $scope.fs.dataElementVariables.searchAltNameType, '', '', '', '', 
-      $scope.fs.dataElementVariables.searchFieldOptions.options, $scope.fs.dataElementVariables.searchVersions, '', '');
-   }
+$scope.publicSearch = function() {
+filterService.resetDataElementSearch();
+  $scope.onClickBasicSearch($scope.publicIdSearchQuery,
+                            'publicId',
+                            '',
+                            '',
+                            0,
+                            $scope.fs.dataElementVariables.selectedQueryType,
+                            '',
+                            2,
+                            '',
+                            0,
+                            $scope.publicIdName,
+                            $scope.fs.dataElementVariables.searchAltName,
+                            $scope.fs.dataElementVariables.searchAltNameType,
+                            $scope.fs.dataElementVariables.searchFieldOptions.options,
+                            $scope.fs.dataElementVariables.searchVersions,
+                            $scope.fs.dataElementVariables.searchContextUse,
+                            ''); // , '', $scope.fs.dataElementVariables.derivedDE
+}
 
 }]);
