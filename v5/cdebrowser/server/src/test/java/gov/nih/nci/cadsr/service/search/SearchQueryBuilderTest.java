@@ -229,7 +229,7 @@ public class SearchQueryBuilderTest
     public void testBuildSearchTextWhere01() throws Exception
     {
         String text = "inputText";
-        String[] searchDomain = {"ALL fields"};
+        String[] searchDomain = {"ALL"};
         String searchMode = "searchMode";
         String expected = "AND de.de_idseq IN ( (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "+
                 "WHERE  de1.de_idseq  = dsn.ac_idseq (+)  "+
@@ -255,7 +255,7 @@ public class SearchQueryBuilderTest
     public void testBuildSearchTextWhere02() throws Exception
     {
         String text = "inputText";
-        String[] searchDomain = {"ALL fields", "Long Name"};
+        String[] searchDomain = {"ALL", "Long Name"};
         String searchMode = "searchMode";
         String expected = "AND de.de_idseq IN ( (SELECT de_idseq  FROM sbr.designations_view dsn, sbr.data_elements_view de1  "+
                 "WHERE  de1.de_idseq  = dsn.ac_idseq (+)  "+

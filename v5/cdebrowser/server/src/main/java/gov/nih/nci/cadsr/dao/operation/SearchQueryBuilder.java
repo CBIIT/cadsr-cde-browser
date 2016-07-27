@@ -439,20 +439,20 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         newSearchStr = StringReplace.strReplace( text, "*", "%" );
         newSearchStr = StringReplace.strReplace( newSearchStr, "'", "''" );
 
-        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
                 StringUtilities.containsKey( searchDomain, "Long Name" ) )
         {
             longNameWhere = buildSearchString( "UPPER (de1.long_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
                 StringUtilities.containsKey( searchDomain, "Short Name" ) )
         {
 
             shortNameWhere = buildSearchString( "UPPER (de1.preferred_name) LIKE UPPER ('SRCSTR') ", newSearchStr, searchMode );
         }
 
-        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
                 StringUtilities.containsKey( searchDomain, "Preferred Question Text" ) ||
                 StringUtilities.containsKey( searchDomain, "Alternate Question Text" ) )
         {
@@ -483,7 +483,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             searchWhere = " AND (" + searchWhere + ") ";
         }
 
-        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
                 ( StringUtilities.containsKey( searchDomain, "Preferred Question Text" ) &&
                         StringUtilities.containsKey( searchDomain, "Alternate Question Text" ) ) )
         {
@@ -530,7 +530,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
 
-        if( StringUtilities.containsKey( searchDomain, "ALL fields" ) ||
+        if( StringUtilities.containsKey( searchDomain, "ALL" ) ||
                 StringUtilities.containsKey( searchDomain, "UML Class: UML Attr Alternate Name" ) )
         {
             umlAltNameWhere =
