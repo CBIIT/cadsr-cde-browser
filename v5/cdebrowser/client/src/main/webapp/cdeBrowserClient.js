@@ -77,7 +77,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     delete newobj.workFlowStatus;
                     delete prevobj.workFlowStatus;
 
-                    if(!angular.equals(newobj,prevobj) && Object.keys(newobj).length>1){
+                    if(!angular.equals(newobj,prevobj) && Object.keys(newobj).length>1) {
                         $scope.onClickBasicSearch(
                             fs.dataElementVariables.basicSearchQuery,
                             'name',
@@ -87,11 +87,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             fs.dataElementVariables.selectedQueryType,
                             fs.dataElementVariables.searchVD,
                             fs.dataElementVariables.searchVDTQueryType,
-                            "",
                             fs.dataElementVariables.conceptInput,
                             fs.dataElementVariables.conceptQueryType,
+                            "",
                             fs.dataElementVariables.searchAltName,
                             fs.dataElementVariables.searchAltNameType,
+                            fs.dataElementVariables.searchFieldOptions.options,
                             fs.dataElementVariables.searchVersions,
                             fs.dataElementVariables.searchContextUse,
                             fs.dataElementVariables.searchObjectClass);
