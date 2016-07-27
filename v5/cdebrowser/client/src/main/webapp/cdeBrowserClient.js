@@ -21,7 +21,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
     $scope.fs = filterService;
-    // console.log($scope.fs);
 
     var cs = compareService;
     $scope.compareService = cs;
@@ -116,7 +115,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.search = function() {
-        // console.log($scope.fs);
 
         $scope.$broadcast('genericsearch', $scope.fs);
 
@@ -402,7 +400,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             }
         }
         searchAltNameType = str;
-        
+
         $scope.currentCdeTab = 0;
         $location.path("/search").replace(); // change url to search since we are doing a search //
 
@@ -595,8 +593,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
 
-        // console.log("URL:  " + url);
-
         $http.get(url).success(function (response) {
             fs.isSearching = false;
             // $scope.tableParams.$params.page = 1;
@@ -676,19 +672,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //   $scope.dataLoad6 = function () {
     // $scope.dataLoad("data6.json");
     // };
-
-    // $scope.getAlternateNameTypesFromServer = function () {
-    //     var serverUrl = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/lookupdata/alternateType";
-    //     $http.get(serverUrl)
-
-    //         .success(function (response) {
-    //             $scope.alternateNameTypes = response;
-    //         })
-    //         .error(function (error) {
-    //             console.log("Error [" + serverUrl + "]: " + error.statusText);
-    //         });
-    // };
-
 
     $scope.dataLoadFromServer = function () {
         $scope.staticFilters = {};
