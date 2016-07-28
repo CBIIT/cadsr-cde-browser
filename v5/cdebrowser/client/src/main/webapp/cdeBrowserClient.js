@@ -1,5 +1,5 @@
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout,$localStorage,$sessionStorage,$http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout, $localStorage, $sessionStorage, $http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
@@ -10,6 +10,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchVersionsHOLD = 0;
     $scope.searchContextUseHOLD = 2;
     $scope.searchObjectClassHOLD = "";
+    $scope.searchPropertyHOLD = "";
+    $scope.searchderivedDEHOLD = "";
     var delimiter= ":::";
 
     $http.get('/cdebrowserServer/rest/programAreaNames').success(function(response) {
@@ -95,7 +97,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             fs.dataElementVariables.searchFieldOptions.options,
                             fs.dataElementVariables.searchVersions,
                             fs.dataElementVariables.searchContextUse,
-                            fs.dataElementVariables.searchObjectClass);
+                            fs.dataElementVariables.searchObjectClass,
+                            fs.dataElementVariables.searchProperty,
+                            fs.dataElementVariables.derivedDE);
 
                         $scope.breadCrumbs = fs.createBreadcrumbs();
                     }
@@ -116,9 +120,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.search = function() {
-
-        $scope.$broadcast('genericsearch', $scope.fs);
-
+        $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery,
+            'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV,
+            fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
+            fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '',
+            fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options,
+            fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
     }
 
     // When a context is changed, get classifications and protocol forms //
@@ -391,7 +398,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.currentCdeTab = 0;
 
     // Search button
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
 
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
@@ -484,6 +491,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             url += connector + "objectClass=" + searchObjectClass;
         }
 
+        if( searchProperty != '') {
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "property=" + searchProperty;
+        }
+
+        if( derivedDE != '' && $scope.more) {
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "derivedDE=" + derivedDE;
+        }
 
         for (var x in fs.searchFilter) {
 
@@ -1151,7 +1169,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Start of Advance Search Options //
 
-    $scope.more = false;
+    $scope.more = true;
 
 
     // CHECKME - it may be better to get rid of all these hold values, and just use $scope.more to determine if they should be treated as empty as we build the search url string,
@@ -1159,6 +1177,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // We now have radio button type values which can be used by themselves, we have been indicating that we don't want to use field by making it empty (so no need for it's radio button).
     // This won't work for radio button type values which can be used by themselves, I am setting values for these radio button types to "-1" to indicate not to use in the search.
+  
     $scope.advanceSearchShow = function() {
         $scope.more = $scope.more ? false : true;
 
@@ -1187,6 +1206,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             $scope.searchObjectClassHOLD = fs.dataElementVariables.searchObjectClass;
             fs.dataElementVariables.searchObjectClass = "";
+
+            $scope.searchPropertyHOLD = fs.dataElementVariables.searchProperty;
+            fs.dataElementVariables.searchProperty = "";
+
+            $scope.searchderivedDEHOLD = fs.dataElementVariables.searchderivedDE;
+            fs.dataElementVariables.searchderivedDE = "";
         }
         else {
             fs.dataElementVariables.searchDEC = $scope.dataElementConceptHOLD;
@@ -1209,9 +1234,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             fs.dataElementVariables.searchObjectClass = $scope.searchObjectClassHOLD;
             $scope.searchObjectClassHOLD = "";
+
+            fs.dataElementVariables.searchProperty = $scope.searchPropertyHOLD;
+            $scope.searchPropertyHOLD = "";
+
+            fs.dataElementVariables.searchderivedDE = $scope.searchderivedDEHOLD;
+            $scope.searchderivedDEHOLD = "";
         }
     };
 
-
+    $scope.advanceSearchShow();
 
 });

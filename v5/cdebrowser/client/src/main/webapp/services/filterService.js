@@ -4,7 +4,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.lookupData = {}; // stores master list of classifications and protocol forms //
 
     this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-        searchAltName:"", searchAltNameType:[], searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
+        searchAltName:"", searchAltNameType:[], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
 
     this.searchFilter = {};
     this.isAChildNodeSearch = false;
@@ -20,7 +20,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.isAChildNodeSearch = false;
         this.resetElementsInCommon();        
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:""}
+            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
         // this.classifications = [];
         // this.protocols = [];
         // this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
@@ -62,7 +62,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.isAChildNodeSearch = false;
 
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:""};
+            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"};
 
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;

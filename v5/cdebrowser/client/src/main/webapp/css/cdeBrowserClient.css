@@ -686,6 +686,14 @@ display:inline-block !important;
     width: 301px;
 }
 
+.advanceSearchPropInput {
+    width: 324px;
+}
+
+.advanceSearchTextBoxSpacing {
+    padding-top: 4px;
+}
+
 .advanceView {
     padding-bottom: 15px;
 }

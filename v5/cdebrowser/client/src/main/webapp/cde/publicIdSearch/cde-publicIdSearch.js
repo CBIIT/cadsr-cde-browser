@@ -50,7 +50,9 @@ filterService.resetDataElementSearch();
                             $scope.fs.dataElementVariables.searchFieldOptions.options,
                             $scope.fs.dataElementVariables.searchVersions,
                             $scope.fs.dataElementVariables.searchContextUse,
-                            ''); // , '', $scope.fs.dataElementVariables.derivedDE
+                            '',
+                            '',
+                            $scope.fs.dataElementVariables.derivedDE);
 }
 
 }]);

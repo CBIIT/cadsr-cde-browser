@@ -81,6 +81,12 @@
                    ng-model="fs.dataElementVariables.searchObjectClass"/>
         </div>
 
+        <div class="advanceSearchTextBoxSpacing">
+            <label class="advancedSearchLabel">Property</label>
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchPropInput" type="text" placeholder="Property"
+                   ng-model="fs.dataElementVariables.searchProperty"/>
+        </div>
+
         <div>
         <label data-ng-repeat="queryType in searchContextUseValues">
             <div class="queryTypeRadioButtons">
@@ -92,6 +98,13 @@
                 {{queryType.name}}&nbsp;&nbsp;
             </div>
         </label>
+        </div>
+
+        <div>
+            <label class="advancedSearchLabel">
+                <input type="checkbox" ng-model="fs.dataElementVariables.derivedDE" />
+                Search only Derived DEs
+            </label>          
         </div>
     </div>
 
