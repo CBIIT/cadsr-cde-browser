@@ -1,61 +1,40 @@
+<br />
 
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th  align="left">Created by</th>
-    </tr>
-</table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription" width="20%">Created by:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.createdBy">{{cdeDetails.adminInfo.createdBy}}</td>
-    </tr> 
-</table><br>
-
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th  align="left">Date created</th>
     </tr>
-</table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Date created:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.dateCreated">{{cdeDetails.adminInfo.dateCreated}}</td>
-    </tr> 
-</table><br>
-
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th  align="left">Modified by</th>
     </tr>
-</table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Modified by:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.modifiedBy">{{cdeDetails.adminInfo.modifiedBy}}</td>
-    </tr> 
-</table><br>
-
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th  align="left">Date modified</th>
     </tr>
-</table>
-
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Date modified:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.dateModified">{{cdeDetails.adminInfo.dateModified}}</td>
     </tr>
-</table><br>
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th  align="left">Value Domain</th>
-    </tr>
-</table>
-
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.longName">{{cdeDetails.valueDomain.valueDomainDetails.longName}}</td>
     </tr>
-</table><br>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Creator:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdCreatedBy">{{cdeDetails.adminInfo.vdCreatedBy}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Owner:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdOwnedBy">{{cdeDetails.adminInfo.vdOwnedBy}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">DEC Creator:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.decCreatedBy">{{cdeDetails.adminInfo.decCreatedBy}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">DEC Owner:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.decOwnedBy">{{cdeDetails.adminInfo.decOwnedBy}}</td>
+    </tr>
+</table>
