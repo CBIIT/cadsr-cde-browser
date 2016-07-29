@@ -65,6 +65,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String permissibleValueWhere = "";
         String objectClassWhere = "";
         String versionIndWhere = "";
+        String propertyWhere = "";
 
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
@@ -132,6 +133,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             objectClassWhere = buildObjectClassWhere( searchCriteria.getObjectClass().replace( "*", "%" ) );
         }
+        if( StringUtils.isBlank( searchCriteria.getProperty() ) )
+        {
+        	propertyWhere = "";
+        }
+        else
+        {
+        	propertyWhere = buildPropertyWhere( searchCriteria.getProperty().replace( "*", "%" ) );
+        }        
         if( StringUtils.isBlank( searchCriteria.getDataElementConcept() ) )
         {
             dataElementConceptWhere = "";
@@ -300,6 +309,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( cdeIdWhere );
         whereBuffer.append( decWhere );
         whereBuffer.append( objectClassWhere );
+        whereBuffer.append( propertyWhere );        
         whereBuffer.append( vdWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
@@ -357,13 +367,33 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 "                sbrext.object_classes_view_ext oc  " +
                 "            where" +
                 "                oc.oc_idseq = dec.oc_idseq  " +
-                "                and upper(oc.LONG_NAME) like upper('" + objecClass + "')" +
+                "                and upper(oc.long_name) like upper('" + objecClass + "')" +
                 ")" +
                 "    )";
         return where;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    public String buildPropertyWhere( String property )
+    {
+        String where = "and  de.de_idseq IN " +
+                "(select de_idseq from   sbr.data_elements_view where  " +
+                "    dec_idseq IN " +
+                "    (" +
+                "        select dec.dec_idseq " +
+                "            from" +
+                "                sbr.data_element_concepts_view dec," +
+                "                sbrext.properties_view_ext prop " +
+                "            where" +
+                "                prop.prop_idseq = dec.prop_idseq  " +
+                "                and upper(prop.long_name) like upper('" + property + "')" +
+                ")" +
+                "    )";
+        return where;
+    }    
+    
+    
     public String buildPermissibleValueWhere( String query, int queryType )
     {
         query = query.replaceAll( "\\*", "%" );
