@@ -66,6 +66,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String objectClassWhere = "";
         String versionIndWhere = "";
         String propertyWhere = "";
+        String derivedDEWhere = "";
 
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
@@ -95,7 +96,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             csiWhere = " AND acs.cs_csi_idseq = '" + searchCriteria.getCsCsiIdSeq() + "' AND acs.ac_idseq = de.de_idseq";
         }
-
+        
         if( StringUtils.isBlank( searchCriteria.getProtocol() ) )
         {
             protocolFrom = "";
@@ -140,7 +141,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         else
         {
         	propertyWhere = buildPropertyWhere( searchCriteria.getProperty().replace( "*", "%" ) );
-        }        
+        }
+        if (searchCriteria.getDerivedDEFlag() != null) {
+	        if (searchCriteria.getDerivedDEFlag().equalsIgnoreCase("false")) {
+	        	derivedDEWhere = "";
+	        } else {
+	        	derivedDEWhere = " AND de.de_idseq IN (SELECT data_elements.de_idseq FROM complex_data_elements , data_elements WHERE data_elements.de_idseq = complex_data_elements.p_de_idseq) ";
+	        }
+        }
         if( StringUtils.isBlank( searchCriteria.getDataElementConcept() ) )
         {
             dataElementConceptWhere = "";
@@ -309,7 +317,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( cdeIdWhere );
         whereBuffer.append( decWhere );
         whereBuffer.append( objectClassWhere );
-        whereBuffer.append( propertyWhere );        
+        whereBuffer.append( propertyWhere );
+        whereBuffer.append( derivedDEWhere );        
         whereBuffer.append( vdWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
