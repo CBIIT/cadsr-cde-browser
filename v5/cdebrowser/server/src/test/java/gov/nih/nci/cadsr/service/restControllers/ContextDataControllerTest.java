@@ -278,7 +278,7 @@ public class ContextDataControllerTest extends TestCase
         String parentIdSeq = "F7BA6033-BAEA-C5EF-E040-BB89AD437201";
         initCsCsisNodeList();
 
-        List<CsCsiModel> csCsiChildModelList = contextDataController.getCsCsisByParentCsCsi( parentIdSeq );
+        List<CsCsiModel> csCsiChildModelList = contextDataController.getCsCsisByParentCsCsi( parentIdSeq, csCsiNodelList);
         for( CsCsiModel csCsiModel : csCsiChildModelList )
         {
             if( ( csCsiModel.getCsLongName().compareTo( "CRF CDEs" ) != 0 ) && ( csCsiModel.getCsLongName().compareTo( "MDR" ) != 0 ) )
@@ -295,7 +295,7 @@ public class ContextDataControllerTest extends TestCase
         String parentIdSeq = "F7BA6033-BAEA-C5EF-E040-BB89AD437201";
         initCsCsisNodeList();
 
-        List<CsCsiModel> csCsiChildModelList = contextDataController.getCsCsisByParentCsCsi( parentIdSeq );
+        List<CsCsiModel> csCsiChildModelList = contextDataController.getCsCsisByParentCsCsi( parentIdSeq, csCsiNodelList );
         for( CsCsiModel csCsiModel : csCsiChildModelList )
         {
             if( csCsiModel.getCsLongName().compareTo( "Not a child" ) == 0 )
@@ -315,7 +315,7 @@ public class ContextDataControllerTest extends TestCase
 
         ClassificationItemNode classificationItemNodeParent = new ClassificationItemNode();
         classificationItemNodeParent.setIdSeq( "F7BA6033-BAEA-C5EF-E040-BB89AD437201" );
-        contextDataController.addChildrenToCsi( classificationItemNodeParent );
+        contextDataController.addChildrenToCsi( classificationItemNodeParent, csCsiNodelList );
 
         //Look at the parent, do we have two children?
         assertEquals( 2, classificationItemNodeParent.getChildren().size() );
@@ -449,7 +449,6 @@ public class ContextDataControllerTest extends TestCase
     public void testInsertClassifications0()
     {
 
-        contextDataController.setCsCsiNodelList( initCsCsiModelList() );
         ContextModel contextModel = new ContextModel();
 
         //For the context model, we only need the ConteIdseq
@@ -462,7 +461,7 @@ public class ContextDataControllerTest extends TestCase
         ParentNode classificationsParentNode = new ParentNode();
         contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
 
-        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea );
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea, initCsCsiModelList()  );
 
         //Should be five children for this context
         assertEquals( 5, classificationsParentNode.getChildren().size() );
@@ -471,7 +470,6 @@ public class ContextDataControllerTest extends TestCase
     public void testInsertClassifications1()
     {
 
-        contextDataController.setCsCsiNodelList( initCsCsiModelList() );
         ContextModel contextModel = new ContextModel();
 
         //For the context model, we only need the ConteIdseq
@@ -483,7 +481,7 @@ public class ContextDataControllerTest extends TestCase
         //CS (Classification Scheme) folder - A single parent node
         ParentNode classificationsParentNode = new ParentNode();
         contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
-        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea );
+        contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea, initCsCsiModelList()  );
 
         //Should be two children for this context
         assertEquals( 2, classificationsParentNode.getChildren().size() );
@@ -596,7 +594,6 @@ public class ContextDataControllerTest extends TestCase
         csCsiNodelList.add( childeClassificationFolder0 );
         csCsiNodelList.add( childeClassificationFolder1 );
         csCsiNodelList.add( childeClassificationFolder2 );
-        contextDataController.setCsCsiNodelList( csCsiNodelList );
     }
 
 }

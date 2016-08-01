@@ -43,7 +43,7 @@ import gov.nih.nci.cadsr.service.model.context.ProtocolNode;
 public class ContextDataController
 {
 
-    private Logger logger = LogManager.getLogger( ContextDataController.class.getName() );
+    private static Logger logger = LogManager.getLogger( ContextDataController.class.getName() );
 
     @Autowired
     private ContextDAO contextDAO;
@@ -59,8 +59,8 @@ public class ContextDataController
 
     @Autowired
     private ProtocolDAO protocolDAO;
-
-    private List<CsCsiModel> csCsiNodelList = null;
+    //TODO remove this class memeber
+    //private List<CsCsiModel> csCsiNodelList = null;//this is not thread safe to use; added parameters to the methods
     private List<ProgramAreaModel> programAreaModelList = null;
 
     private RestControllerCommon restControllerCommon;
@@ -68,9 +68,11 @@ public class ContextDataController
     @Autowired
     private AppConfig appConfig;
 
-    private Map csi = new HashMap();
+    private Map csi = new HashMap();//TODO remove
 
     private int contextPalNameCount;
+    
+    private static final Integer rootLevel = 1;
 
     @Autowired
     public ContextDataController(RestControllerCommon restControllerCommon)
@@ -261,13 +263,13 @@ public class ContextDataController
 
             // Classification Scheme Item List - This is a list of all individual items that are in the Classifications of this Context
             // they will be place in their correct Classification later in insertClassifications.
-            setCsCsiNodelList( this.csCsiDAO.getCsCsisByConteId( contextId ) );
+            List<CsCsiModel> csCsiNodelList = this.csCsiDAO.getCsCsisByConteId( contextId );
 
             // Last parameter is "Collapsed" should be false if folderType is Classifications
             initClassificationsParentNode( parentNode, programArea, false );
 
             //Add the Classifications to the parentNode for this Context.
-            insertClassifications( parentNode, csModelList, model, programArea );
+            insertClassifications( parentNode, csModelList, model, programArea, csCsiNodelList);
         }
         else if( folderType == CaDSRConstants.PROTOCOLFORMS_TYPE_FOLDER )
         {
@@ -469,7 +471,7 @@ public class ContextDataController
      * @param csCsiIdseq parent Classification Scheme Item.
      * @return list of children of this parent Classification Scheme Item.
      */
-    protected List<CsCsiModel> getCsCsisByParentCsCsi( String csCsiIdseq )
+    protected List<CsCsiModel> getCsCsisByParentCsCsi( String csCsiIdseq, List<CsCsiModel> csCsiNodelList )
     {
         List<CsCsiModel> childrenList = new ArrayList<>();
 
@@ -490,10 +492,10 @@ public class ContextDataController
      *
      * @param classificationItemNodeParent The parent Classification node, to which any children will be added.
      */
-    protected void addChildrenToCsi( ClassificationItemNode classificationItemNodeParent )
+    protected void addChildrenToCsi( ClassificationItemNode classificationItemNodeParent , List<CsCsiModel> csCsiNodelList)
     {
         //Find nodes which are children of this parent
-        List<CsCsiModel> csCsiChildNodelList = getCsCsisByParentCsCsi( classificationItemNodeParent.getIdSeq() );
+        List<CsCsiModel> csCsiChildNodelList = getCsCsisByParentCsCsi( classificationItemNodeParent.getIdSeq(), csCsiNodelList);
 
         if( !csCsiChildNodelList.isEmpty() )
         {
@@ -576,7 +578,7 @@ public class ContextDataController
         classificationsParentNode.addChildNode( placeHolderNode );
     }
 
-    protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel, int programArea )
+    protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel, int programArea, List<CsCsiModel> csCsiNodelList )
     {
         //////////////////////////////////////////////////
         //CS (Classification Scheme) List for this Context
@@ -611,37 +613,43 @@ public class ContextDataController
                 String csId = classificationSchemeModel.getCsIdseq();
                 for( CsCsiModel csCsiModel : csCsiNodelList )
                 {
-
                     if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
                     {
-                        //Create the new node, and set as much as we can without knowing if it has children
-                        ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
-                        classificationSchemeItemNode.setHref( appConfig.getCdesByClassificationSchemeItemRestServiceName() + "," + csCsiModel.getCsCsiIdseq() );
-                        classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
-                        //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + contextModel.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
-                        classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
-                        classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
-                        classificationSchemeItemNode.setCollapsed( true );
-                        classificationSchemeItemNode.setProgramArea( programArea );
-                        logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
-                        addChildrenToCsi( classificationSchemeItemNode );
-
-                        //Add this CSI to the CS
-                        classificationSchemeNode.addChildNode( classificationSchemeItemNode );
+                    	if (rootLevel.equals(csCsiModel.getCsiLevel())) {
+	                    	//Create the new node, and set as much as we can without knowing if it has children
+	                        ClassificationItemNode classificationSchemeItemNode = new ClassificationItemNode();
+	                        classificationSchemeItemNode.setHref( appConfig.getCdesByClassificationSchemeItemRestServiceName() + "," + csCsiModel.getCsCsiIdseq() );
+	                        classificationSchemeItemNode.setText( csCsiModel.getCsiName() );
+	                        //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + contextModel.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
+	                        classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
+	                        classificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
+	                        classificationSchemeItemNode.setCollapsed( true );
+	                        classificationSchemeItemNode.setProgramArea( programArea );
+	                        logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
+	                        
+	                        addChildrenToCsi( classificationSchemeItemNode, csCsiNodelList);
+	
+	                        //Add this CSI to the CS
+	                        classificationSchemeNode.addChildNode( classificationSchemeItemNode );
+                    	}
                     }
                 }
+
                 //Add this CS to the CS Folder
                 classificationsParentNode.addChildNode( classificationSchemeNode );
 
-                // FIXME - This is a hasty hack/work around.   TODO Explain
-                cleanUpClassificationSchemeNode( classificationSchemeNode, 0 );
+                // FIXME - This is a hasty hack/work around.   TODO Explain 
+                //TODO remove this call
+                //cleanUpClassificationSchemeNode( classificationSchemeNode, 0 );
             }
 
         }
 
     }
 
-    // FIXME - This is a hasty hack/work around.   TODO Explain
+    // FIXME - This is a hasty hack/work around.   
+    //TODO Explain
+    //TODO remove this method it is not thread safe
     private void cleanUpClassificationSchemeNode( BaseNode classificationSchemeNode, int depth )
     {
         //String space = "                                                          ";
@@ -821,11 +829,6 @@ public class ContextDataController
     public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
     {
         this.programAreaModelList = programAreaModelList;
-    }
-
-    public void setCsCsiNodelList( List<CsCsiModel> csCsiNodelList )
-    {
-        this.csCsiNodelList = csCsiNodelList;
     }
 
     public int getContextPalNameCount()

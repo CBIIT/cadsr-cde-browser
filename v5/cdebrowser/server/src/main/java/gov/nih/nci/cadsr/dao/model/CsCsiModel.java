@@ -5,7 +5,11 @@ package gov.nih.nci.cadsr.dao.model;
 
 public class CsCsiModel extends BaseModel
 {
-    public static final String UNCLASSIFIED = "UNCLASSIFIED";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final String UNCLASSIFIED = "UNCLASSIFIED";
     private String csiName; // Goes in CSI* Name
     private String csiType; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
     private String csitlName; // Goes in CSI* Type
@@ -20,6 +24,7 @@ public class CsCsiModel extends BaseModel
     private String csConteIdseq;
     private String acCsiIdseq; // this field is not in the view.  Needs to be set with a rowmapper or deleted if not needed.
     private String cstlName;
+    private Integer csiLevel;
 
     private String csId;
     private Float csVersion;
@@ -230,6 +235,26 @@ public class CsCsiModel extends BaseModel
         this.csitlName = csitlName;
     }
 
+	public Integer getCsiLevel() {
+		return csiLevel;
+	}
+
+	public void setCsiLevel(Integer csiLevel) {
+		this.csiLevel = csiLevel;
+	}
+
+	@Override
+	public String toString() {
+		return "CsCsiModel [csiName=" + csiName + ", csiType=" + csiType + ", csitlName=" + csitlName + ", csiIdseq="
+				+ csiIdseq + ", csCsiIdseq=" + csCsiIdseq + ", csiDescription=" + csiDescription + ", parentCsiIdseq="
+				+ parentCsiIdseq + ", csIdseq=" + csIdseq + ", csPreffredDefinition=" + csPreffredDefinition
+				+ ", csLongName=" + csLongName + ", csPrefName=" + csPrefName + ", csConteIdseq=" + csConteIdseq
+				+ ", acCsiIdseq=" + acCsiIdseq + ", cstlName=" + cstlName + ", csiLevel=" + csiLevel + ", csId=" + csId
+				+ ", csVersion=" + csVersion + ", csiId=" + csiId + ", csiVersion=" + csiVersion + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate="
+				+ modifiedDate + ", formattedVersion=" + formattedVersion + "]";
+	}
+	
     @Override
     public boolean equals( Object o )
     {
@@ -295,28 +320,4 @@ public class CsCsiModel extends BaseModel
         return result;
     }
 
-    @Override
-    public String toString()
-    {
-        return "CsCsiModel{" +
-                "csiName='" + csiName + '\'' +
-                ", csiType='" + csiType + '\'' +
-                ", csitlName='" + csitlName + '\'' +
-                ", csiIdseq='" + csiIdseq + '\'' +
-                ", csCsiIdseq='" + csCsiIdseq + '\'' +
-                ", csiDescription='" + csiDescription + '\'' +
-                ", parentCsiIdseq='" + parentCsiIdseq + '\'' +
-                ", csIdseq='" + csIdseq + '\'' +
-                ", csPreffredDefinition='" + csPreffredDefinition + '\'' +
-                ", csLongName='" + csLongName + '\'' +
-                ", csPrefName='" + csPrefName + '\'' +
-                ", csConteIdseq='" + csConteIdseq + '\'' +
-                ", acCsiIdseq='" + acCsiIdseq + '\'' +
-                ", cstlName='" + cstlName + '\'' +
-                ", csId='" + csId + '\'' +
-                ", csVersion=" + csVersion +
-                ", csiId=" + csiId +
-                ", csiVersion=" + csiVersion +
-                '}';
-    }
 }
