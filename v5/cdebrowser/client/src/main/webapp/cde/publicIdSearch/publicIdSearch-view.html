@@ -2,13 +2,13 @@
 <div class="publicIdSearch">
     <span class="searchField">
         <label for="publicId" class="publicIdLabel">Public ID</label>
-        <input class="basicSearchQuery roundInput publicIdInput" id="publicId" type="text" ng-disabled="fs.isSearching" data-ng-model="publicIdSearchQuery" placeholder="Public ID" />
+        <input class="basicSearchQuery roundInput publicIdInput" id="publicId" type="text" ng-disabled="fs.isSearching" data-ng-model="publicIdSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Public ID" />
         <div class="searchTips"><strong>Tip</strong>: To search for multiple public ids, type the ids separated by a space.
         </div>
     </span>
     <span class="searchField name">
         <label for="name" class="publicIdLabel">Name</label>
-        <input class="basicSearchQuery roundInput publicIdInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" placeholder="Names and Definitions" />
+        <input class="basicSearchQuery roundInput publicIdInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
         <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
             <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
                         <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>

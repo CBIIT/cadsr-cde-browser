@@ -55,4 +55,28 @@ filterService.resetDataElementSearch();
                             $scope.fs.dataElementVariables.derivedDE);
 }
 
+$scope.searchKey = function(e) {
+        if (e.keyCode==13) {
+            $scope.onClickBasicSearch($scope.publicIdSearchQuery,
+                            'publicId',
+                            '',
+                            '',
+                            0,
+                            $scope.fs.dataElementVariables.selectedQueryType,
+                            '',
+                            2,
+                            '',
+                            0,
+                            $scope.publicIdName,
+                            $scope.fs.dataElementVariables.searchAltName,
+                            $scope.fs.dataElementVariables.searchAltNameType,
+                            $scope.fs.dataElementVariables.searchFieldOptions.options,
+                            $scope.fs.dataElementVariables.searchVersions,
+                            $scope.fs.dataElementVariables.searchContextUse,
+                            '',
+                            '',
+                            $scope.fs.dataElementVariables.derivedDE);
+        }
+};
+
 }]);
