@@ -126,7 +126,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '',
             fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options,
             fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
-    }
+    };
+
+    $scope.searchKey = function(e) {
+        if (e.keyCode==13) {
+            $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery,
+            'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV,
+            fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
+            fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '',
+            fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options,
+            fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
+        }
+    };
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
@@ -328,6 +339,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.hideContexts();
         $scope.show[tab] = true;
         // $scope.testtrianing
+        // var sidetree=angular.copy($scope.contextListMaster);
+        // $scope.contextListMaster="";
+        // $scope.contextListMaster=sidetree;
         if($scope.contextListMaster[tab].text.toLowerCase()=="unassigned")
             $scope.$broadcast('updateTree',$scope.testtrianing);
     };
@@ -821,6 +835,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // });
 
     $scope.$on('updateTree',function(event,data) {
+        $scope.testtrianing = data;
         var filtered_data = $filter('filter')($scope.contextListMaster[$scope.currentTab].children,function(item,index,array) {
             var search_text=item.text;
             if(search_text.indexOf('Test')!=-1) {

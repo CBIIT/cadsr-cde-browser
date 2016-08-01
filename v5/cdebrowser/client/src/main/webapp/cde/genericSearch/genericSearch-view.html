@@ -2,7 +2,7 @@
 
     <div class="searchInput">
         <label class="basicSearchName" for="name">Name</label>
-        <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" placeholder="Names and Definitions" />
+        <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
 
         <span class="searchFieldDropDown" ng-show="activeSearchTab==0" ng-disabled="true">
             <select ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelectedField()">
