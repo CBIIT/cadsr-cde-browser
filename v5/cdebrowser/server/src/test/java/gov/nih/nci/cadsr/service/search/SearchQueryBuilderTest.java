@@ -114,6 +114,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "registrationStatus" );
         searchCriteria.setConceptName( "conceptName" );
         searchCriteria.setConceptCode( "conceptCode" );
+        searchCriteria.setDerivedDEFlag("false");
         // With workFlow
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertTrue( sqlStmt.contains( "asl.asl_name = 'workFlowStatus'" ) );
@@ -134,6 +135,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "registrationStatus" );
         searchCriteria.setConceptName( "conceptName" );
         searchCriteria.setConceptCode( "conceptCode" );
+        searchCriteria.setDerivedDEFlag("false");
         // With out workFlow, make sure workflow is empty, and exclude clause is right
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertTrue( sqlStmt.contains( " asl.asl_name NOT IN  ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED')" ) );
@@ -157,6 +159,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql00 ) );
@@ -178,6 +181,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql01 ) );
@@ -200,6 +204,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setContextUse( 2 );
         searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( sql02 ) );
@@ -220,6 +225,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setRegistrationStatus( "" );
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
+        searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         System.out.println( cleanup( sqlStmt ) );
@@ -454,6 +460,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
@@ -475,6 +482,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptName( "" );
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(1);
+        searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( versionTypeAllQuery ) );

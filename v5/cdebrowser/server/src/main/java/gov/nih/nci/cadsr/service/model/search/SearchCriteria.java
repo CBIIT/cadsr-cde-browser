@@ -35,6 +35,7 @@ public class SearchCriteria implements Serializable
 	private String valueDomain;
 	private String filteredinput;
 	private String property;
+	private String derivedDEFlag;
 
 	public String getName() {
 		return name;
@@ -279,6 +280,14 @@ public class SearchCriteria implements Serializable
 		this.property = property;
 	}
 
+	public String getDerivedDEFlag() {
+		return derivedDEFlag;
+	}
+
+	public void setDerivedDEFlag(String derivedDEFlag) {
+		this.derivedDEFlag = derivedDEFlag;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType="
@@ -290,7 +299,7 @@ public class SearchCriteria implements Serializable
 				+ objectClass + ", contextUse=" + contextUse + ", versionType=" + versionType + ", altName=" + altName
 				+ ", altNameType=" + altNameType + ", vdTypeFlag=" + vdTypeFlag + ", valueDomain=" + valueDomain
 				+ ", filteredinput=" + filteredinput + ", conceptInput=" + conceptInput + ", conceptType=" + conceptQueryType
-				+ ", property=" + property
+				+ ", property=" + property + ", derivedDEFlag=" + derivedDEFlag
 				+ "]";
 	}
 

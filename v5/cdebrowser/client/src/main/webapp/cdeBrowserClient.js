@@ -514,7 +514,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if( derivedDE != '' && $scope.more) {
             connector= c==0?"?":"&";
             c++;
-            url += connector + "derivedDE=" + derivedDE;
+            url += connector + "derivedDEFlag=" + derivedDE;
         }
 
         for (var x in fs.searchFilter) {
