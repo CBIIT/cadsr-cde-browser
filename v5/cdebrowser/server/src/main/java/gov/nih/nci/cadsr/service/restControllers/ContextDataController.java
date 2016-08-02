@@ -4,10 +4,7 @@ package gov.nih.nci.cadsr.service.restControllers;
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -59,16 +56,13 @@ public class ContextDataController
 
     @Autowired
     private ProtocolDAO protocolDAO;
-    //TODO remove this class memeber
-    //private List<CsCsiModel> csCsiNodelList = null;//this is not thread safe to use; added parameters to the methods
+
     private List<ProgramAreaModel> programAreaModelList = null;
 
     private RestControllerCommon restControllerCommon;
 
     @Autowired
     private AppConfig appConfig;
-
-    private Map csi = new HashMap();//TODO remove
 
     private int contextPalNameCount;
     
@@ -637,43 +631,6 @@ public class ContextDataController
 
                 //Add this CS to the CS Folder
                 classificationsParentNode.addChildNode( classificationSchemeNode );
-
-                // FIXME - This is a hasty hack/work around.   TODO Explain 
-                //TODO remove this call
-                //cleanUpClassificationSchemeNode( classificationSchemeNode, 0 );
-            }
-
-        }
-
-    }
-
-    // FIXME - This is a hasty hack/work around.   
-    //TODO Explain
-    //TODO remove this method it is not thread safe
-    private void cleanUpClassificationSchemeNode( BaseNode classificationSchemeNode, int depth )
-    {
-        //String space = "                                                          ";
-        List<BaseNode> children = classificationSchemeNode.getChildren();
-
-        Iterator<BaseNode> i = children.iterator();
-        while( i.hasNext() )
-        {
-            BaseNode node = i.next();
-            //Is it in the hashMap with a higher depth
-            String searchKey = node.getText();
-            if( csi.containsKey( searchKey ) )
-            {
-                if( depth < ( int ) csi.get( searchKey ) )
-                {
-                    i.remove();
-                }
-            }
-
-            csi.put( node.getText(), depth );
-            if( node.isIsParent() )
-            {
-                //logger.debug( space.substring( 0, ( depth * 4 ) ) + "+cNode[" + depth + "]: " + node.getText() + "   IsChild:" + node.isIsChild() + "   IsParent:" + node.isIsParent() + "  " + node.getType() );
-                cleanUpClassificationSchemeNode( node, depth + 1 );
             }
         }
     }
