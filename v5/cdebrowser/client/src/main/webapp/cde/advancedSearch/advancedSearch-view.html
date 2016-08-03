@@ -58,6 +58,19 @@
             </div>
         </label>
         </div>
+
+         <div>
+        <label data-ng-repeat="queryType in searchContextUseValues">
+            <div class="queryTypeRadioButtons">
+                <input ng-disabled="fs.isSearching"
+                       name="searchContextUse"
+                       type="radio"
+                       value="{{queryType.id}}"
+                       data-ng-model="fs.dataElementVariables.searchContextUse"/>
+                {{queryType.name}}&nbsp;&nbsp;
+            </div>
+        </label>
+        </div>
     </div>
 
     <div class="advanceSearchRight">
@@ -87,20 +100,7 @@
                    ng-model="fs.dataElementVariables.searchProperty"/>
         </div>
 
-        <div>
-        <label data-ng-repeat="queryType in searchContextUseValues">
-            <div class="queryTypeRadioButtons">
-                <input ng-disabled="fs.isSearching"
-                       name="searchContextUse"
-                       type="radio"
-                       value="{{queryType.id}}"
-                       data-ng-model="fs.dataElementVariables.searchContextUse"/>
-                {{queryType.name}}&nbsp;&nbsp;
-            </div>
-        </label>
-        </div>
-
-        <div>
+        <div class="advanceSearchCheckboxSpacing">
             <label class="advancedSearchLabel">
                 <input type="checkbox" ng-model="fs.dataElementVariables.derivedDE" />
                 Search only Derived DEs

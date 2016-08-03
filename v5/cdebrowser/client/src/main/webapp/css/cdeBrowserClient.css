@@ -694,6 +694,10 @@ display:inline-block !important;
     padding-top: 4px;
 }
 
+.advanceSearchCheckboxSpacing {
+    padding-top: 18px;
+}
+
 .advanceView {
     padding-bottom: 15px;
 }
