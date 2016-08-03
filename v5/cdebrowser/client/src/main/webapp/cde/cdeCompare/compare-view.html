@@ -65,12 +65,23 @@
             Data Element <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-show="!dataElement"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-hide="!dataElement">
         </div>
       
-        <table  class="compareCDEDataElementDetailsTable advancedDemo
-" ng-show="!dataElement">
+        <table  class="compareCDEDataElementDetailsTable" ng-show="!dataElement">
+<!--         <table  class="compareCDEDataElementDetailsTable advancedDemo
++" ng-show="!dataElement"> --><!-- TO DO -->
+
             <tr>
                 <td>CDE:
                 	<img src="icons/delete.png" alt="delete all CDEs" class="compareScreenDelete" ng-click="deleteAllCDEs()">
                 </td>
+
+                <td ng-repeat="item in cdeDetails" data-drop="true" ng-model='cdeDetails' jqyoui-droppable="{index: {{$index}}}">
+                    <div class="thumbnail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="cdeDetails" jqyoui-draggable="{index: {{$index}},animate:true}">
+                <!-- <td ng-repeat="item in cdeDetails" data-drop="true" 
+                ng-model='cdeDetails' dnd-draggable="item"
+                dnd-type="'itemType'"
+                dnd-effect-allowed="copyMove">
+                    <div> --><!-- TO DO -->
+
                 <td ng-repeat="item in cdeDetails" data-drop="true" 
                 ng-model='cdeDetails' dnd-draggable="item"
                 dnd-type="'itemType'"
