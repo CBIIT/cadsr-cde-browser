@@ -1,4 +1,4 @@
-angular.module("cdeBrowserApp").service('filterService', function($resource,$injector) {
+angular.module("cdeBrowserApp").service('filterService', function($resource,$injector,$filter) {
     // define variables //
     this.serverData = []; // initial data from server goes here //
     this.lookupData = {}; // stores master list of classifications and protocol forms //
@@ -57,6 +57,11 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         // this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
     };
 
+    this.setClassifications=function(cs){
+        this.myclassifications=cs;
+        // console.log(this.myclassifications);
+    }
+
     // selects dropdown values based on search left tree click //
     this.selectFiltersByNode = function(searchType,id, selectedNode, programArea) {
         this.isAChildNodeSearch = false;
@@ -96,10 +101,18 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         };
 
         if (this.searchFilter.classification) {
+            
+            breadcrumbs.push("Classification");
             if(this.searchFilter.classification.name==this.searchFilter.classification.csLongName)
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
             else if(this.searchFilter.classification.name==this.searchFilter.classification.csCsiName){
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
+                
+                if(this.searchFilter.classification.csiLevel==2){
+                    var data=$filter('filter')(this.myclassifications,{"csCsiIdSeq":this.searchFilter.classification.parentCsiIdSeq,
+                        csiLevel:1});
+                    breadcrumbs.push(data[0].csCsiName);
+                }
                 breadcrumbs.push(this.searchFilter.classification.csCsiName);
             }else if(this.searchFilter.classification.csiLevel==2){
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
@@ -109,6 +122,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 
         // else
         if (this.searchFilter.protocol) {
+            breadcrumbs.push("ProtocolForms");
             if(this.searchFilter.protocol.name==this.searchFilter.protocol.protocolLongName)
                 breadcrumbs.push(this.searchFilter.protocol.protocolLongName);
             else if(this.searchFilter.protocol.name==this.searchFilter.protocol.formLongName){

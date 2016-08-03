@@ -33,7 +33,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 
 
-	    // excel download from compare screen
+	    // excel download from compare screen //
 	     this.excelDownload = function(param, items) {
 	     	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
 	     	var that = this;

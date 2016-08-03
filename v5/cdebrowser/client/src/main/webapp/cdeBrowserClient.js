@@ -38,6 +38,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.contextCascade = function(selectedInput) {
         if (selectedInput!==undefined)
             $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
+        // fs.classifications=$scope.filterService.classifications;
+        // console.log($scope.filterService.classifications);
     };
 
 

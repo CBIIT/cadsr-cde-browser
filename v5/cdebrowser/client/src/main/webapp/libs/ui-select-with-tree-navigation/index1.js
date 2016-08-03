@@ -94,7 +94,9 @@ angular.module('cdeBrowserApp')
           },
 
           fillClassifications: function(cs) {
-            filterService.classifications = cs;
+            // filterService.classifications = cs;
+            filterService.setClassifications(cs);
+            
             sampledata[0] = cs;
 
              _.forEach(sampledata[0], function (value, index) {

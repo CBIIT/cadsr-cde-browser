@@ -18,6 +18,7 @@ angular.module('cdeBrowserApp')
             $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
             groupFactory.fillProtocols(response);
            scope.filterService.protocols = groupFactory.load(0);
+           
             }); 
                   };   };
 
