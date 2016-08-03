@@ -110,6 +110,18 @@
     text-align: right;
 }
 
+.dataElementDescriptionLeft {
+    /*
+    width: 25%;
+    */
+    FONT-WEIGHT: bold;
+    font-size: 10pt;
+    color: #2b5681; /* color: #336699; */
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    background-color: #cccc99;
+    text-align: left;
+}
+
 .dataElementHeading {
  /*
  FIXMENOW Color contrast fail!  try 2b5681

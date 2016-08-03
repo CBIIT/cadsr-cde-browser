@@ -237,6 +237,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             title: 'Value Domain',
             view: 'valueDomain'
         }, {
+            title: 'Value Meaning',
+            view: 'valueMeaning'
+        }, {
             title: 'Classifications',
             view: 'classifications'
         }, {

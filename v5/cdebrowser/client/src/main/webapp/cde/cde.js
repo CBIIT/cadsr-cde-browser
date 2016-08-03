@@ -13,6 +13,7 @@ angular.module("cde", [
     "cdeDataElementDerivation",
     "cdeUsage",
     "cdeValueDomain",
+    "cdeValueMeaning",
     "cdeGenericSearch",
     "cdeAdvancedSearch",
     "cdePublicIdSearch",
@@ -75,6 +76,11 @@ angular.module("cde", [
             controller: "ValueDomainCtrl",
             templateUrl: "cde/valueDomain/valueDomain-view.html",
             title: "Value Domain"
+        })
+        .when("/valueMeaning", {
+            controller: "ValueMeaningCtrl",
+            templateUrl: "cde/valueMeaning/valueMeaning-view.html",
+            title: "Value Meaning"
         })
         .when("/cdeCart", {
             controller: "CartCtrl",

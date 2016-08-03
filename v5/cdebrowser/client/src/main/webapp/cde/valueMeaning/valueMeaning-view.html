@@ -1,0 +1,49 @@
+<br />
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Value Meaning</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescriptionLeft" width="20%">PV Meaning</td>
+        <td colspan="4" class="dataElementValue">Alternate Names</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr">
+        <td rowspan="5" class="dataElementValue"><!--  data-ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues" -->
+        PV Meaning = {{p_value.value}}<br />
+        VM Public ID = {{p_value.vmId}}<br />
+        VM Version = {{p_value.formattedVersion}}<br />
+        </td>
+        <td class="dataElementDescriptionLeft">Name</td>
+        <td class="dataElementDescriptionLeft">Type</td>
+        <td class="dataElementDescriptionLeft">Context</td>
+        <td class="dataElementDescriptionLeft">Language</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr"><!--  data-ng-repeat="representation in cdeDetails.valueDomain.representationConcepts" -->
+        <td class="dataElementValue">N1</td><!--  ng-bind-html="representation.conceptName">{{representation.conceptName}} -->
+        <td class="dataElementValue">T1</td><!--  ng-bind-html="representation.conceptName">{{representation.conceptName}} -->
+        <td class="dataElementValue">C1</td><!--  ng-bind-html="representation.publicId">{{representation.publicId}} -->
+        <td class="dataElementValue">L1</td><!--  ng-bind-html="representation.definitionSource">{{representation.definitionSource}} -->
+    </tr>
+
+    <tr class="dataElementViewTableTr">
+        <td colspan="4" class="dataElementValue">Alternate Definitions</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescriptionLeft">Name</td>
+        <td class="dataElementDescriptionLeft">Type</td>
+        <td class="dataElementDescriptionLeft">Context</td>
+        <td class="dataElementDescriptionLeft">Language</td>
+    </tr>
+
+    <tr class="dataElementViewTableTr"><!--  data-ng-repeat="representation in cdeDetails.valueDomain.representationConcepts" -->
+        <td class="dataElementValue">N2</td><!--  ng-bind-html="representation.conceptName">{{representation.conceptName}} -->
+        <td class="dataElementValue">T2</td><!--  ng-bind-html="representation.conceptName">{{representation.conceptName}} -->
+        <td class="dataElementValue">C2</td><!--  ng-bind-html="representation.publicId">{{representation.publicId}} -->
+        <td class="dataElementValue">L2</td><!--  ng-bind-html="representation.definitionSource">{{representation.definitionSource}} -->
+    </tr>
+</table><br />
