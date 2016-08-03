@@ -7,7 +7,8 @@ public enum ExcelDownloadTypes {
 	DE_EXCEL("deSearch"),
 	DE_EXCEL_PRIOR("deSearchPrior"),
 	CDR_CART_EXCEL("cdeCart"),
-	CDR_CART_EXCEL_PRIOR("cdeCartPrior");
+	CDR_CART_EXCEL_PRIOR("cdeCartPrior"),
+	CDE_COMPARE_EXCEL("cdeCompare");
 	
 	private ExcelDownloadTypes(final String paramValue) {
 		this.paramValue = paramValue;
