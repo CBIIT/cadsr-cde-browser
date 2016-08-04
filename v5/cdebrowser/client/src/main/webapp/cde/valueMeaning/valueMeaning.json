@@ -1,0 +1,308 @@
+{
+  "valueMeaning": [
+    {
+      "pvIdseq": "66708DD8-3DC3-41AF-E040-BB89AD437914",
+      "pvMeaning": "The absence of life or state of being dead.",
+      "vmPublicId": "2847328",
+      "vmVersion": "1",
+      "alternateNames": [
+        
+      ],
+      "alternateDefinitions": [
+        
+      ]
+    },
+    {
+      "pvIdseq": "66708DD8-3DD8-41AF-E040-BB89AD437914",
+      "pvMeaning": "One of the possible results of an adverse event outcome that indicates that the event has not improved or recuperated.",
+      "vmPublicId": "2572294",
+      "vmVersion": "1",
+      "alternateNames": [
+        
+      ],
+      "alternateDefinitions": [
+        
+      ]
+    },
+    {
+      "pvIdseq": "66708DD8-3DED-41AF-E040-BB89AD437914",
+      "pvMeaning": "One of the possible results of an adverse event outcome that indicates that the event has improved or recuperated.",
+      "vmPublicId": "2577946",
+      "vmVersion": "1",
+      "alternateNames": [
+        
+      ],
+      "alternateDefinitions": [
+        
+      ]
+    },
+    {
+      "pvIdseq": "EA48E1E1-DCEF-5447-E034-0003BA3F9857",
+      "pvMeaning": null,
+      "vmPublicId": "2572295",
+      "vmVersion": "1",
+      "alternateNames": [
+        
+      ],
+      "alternateDefinitions": [
+        
+      ]
+    },
+    {
+      "pvIdseq": "EA48D4AF-3144-5623-E034-0003BA3F9857",
+      "pvMeaning": null,
+      "vmPublicId": "2572297",
+      "vmVersion": "1",
+      "alternateNames": [
+        
+      ],
+      "alternateDefinitions": [
+        
+      ]
+    },
+    {
+      "pvIdseq": "99BA9DC8-58C4-4E69-E034-080020C9C0E0",
+      "pvMeaning": "unknown",
+      "vmPublicId": "2575365",
+      "vmVersion": "1",
+      "alternateNames": [
+        {
+          "name": "Unknown",
+          "type": "LOINC_NAME",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "LA4489-6",
+          "type": "LOINC_CODE",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown",
+          "type": "LOINC_NAME",
+          "context": "ONC SDC Project",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "LA4489-6",
+          "type": "LOINC_CODE",
+          "context": "ONC SDC Project",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown",
+          "type": "UML Value Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown",
+          "type": "UML Value Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Grade/differentiation unknown, not stated, or not applicable",
+          "type": "NAACCR Alt Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "unknown",
+          "type": "NAACCR VM Name",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "UNK",
+          "type": "HL7 Code",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown",
+          "type": "UML Value Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "UNK",
+          "type": "HL7 Code",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Grade/differentiation unknown, not stated, or not applicable",
+          "type": "NAACCR Alt Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "unknown",
+          "type": "NAACCR VM Name",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown",
+          "type": "UML Value Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "UNK",
+          "type": "HL7 Code",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown",
+          "type": "UML Value Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "unknown",
+          "type": "NAACCR VM Name",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Grade/differentiation unknown, not stated, or not applicable",
+          "type": "NAACCR Alt Name",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        }
+      ],
+      "alternateDefinitions": [
+        {
+          "name": "Could not be determined or unsure.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Not known, not observed, not recorded, or refused.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Not known, not observed, or not recorded.",
+          "type": "Manually-curated",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Patient's address is unknown",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown whether Spanish or not\r\n",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "a proper value is applicable but not known.  this event occurred, but the date is unknown (e.g., birth date).",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "A response indicating that the respondent does not know what the correct answer is.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Patient's address is unknown",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "a proper value is applicable but not known.  this event occurred, but the date is unknown (e.g., birth date).",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Not known, not observed, not recorded, or refused.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Not known, not observed, or not recorded.",
+          "type": "Manually-curated",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown whether Spanish or not\r\n",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "A response indicating that the respondent does not know what the correct answer is.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Could not be determined or unsure.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "a proper value is applicable but not known.  this event occurred, but the date is unknown (e.g., birth date).",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "A response indicating that the respondent does not know what the correct answer is.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Not known, not observed, or not recorded.",
+          "type": "Manually-curated",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Unknown whether Spanish or not\r\n",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Not known, not observed, not recorded, or refused.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Patient's address is unknown",
+          "type": "NAACCR",
+          "context": "PS&CC",
+          "language": "ENGLISH"
+        },
+        {
+          "name": "Could not be determined or unsure.",
+          "type": "UML Value Definition",
+          "context": "NCIP",
+          "language": "ENGLISH"
+        }
+      ]
+    }
+  ]
+}
