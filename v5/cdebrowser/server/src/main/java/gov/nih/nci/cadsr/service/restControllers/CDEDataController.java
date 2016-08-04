@@ -672,7 +672,9 @@ public class CDEDataController
         //add PV VM designations (AKA alternate names) and definitions CDEBROWSER-457
         logger.debug( "PermissibleValueExtList section start.......");
 
-        List<PermissibleValueExt> permissibleValueExtList = buildPermissibleValueExtList(permissibleValues);
+        //FIXME this requirement is changed not to use Classification information in PV and VM
+        //List<PermissibleValueExt> permissibleValueExtList = buildPermissibleValueExtList(permissibleValues);
+        List<PermissibleValueExt> permissibleValueExtList = new ArrayList<>();
         valueDomain.setPermissibleValueExtList(permissibleValueExtList);
 
         logger.debug( ".........PermissibleValueExtList section done");
