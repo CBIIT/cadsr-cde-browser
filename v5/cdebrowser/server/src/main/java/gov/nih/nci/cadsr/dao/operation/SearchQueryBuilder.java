@@ -96,7 +96,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             csiWhere = " AND acs.cs_csi_idseq = '" + searchCriteria.getCsCsiIdSeq() + "' AND acs.ac_idseq = de.de_idseq";
         }
-        
+
         if( StringUtils.isBlank( searchCriteria.getProtocol() ) )
         {
             protocolFrom = "";
@@ -250,25 +250,22 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             switch( searchCriteria.getContextUse() )
             {
                 case 0:
-                    contextWhere = "conte.conte_idseq = '" + searchCriteria.getContext() + "' AND ";
+                    contextWhere = " AND conte.conte_idseq = '" + searchCriteria.getContext() + "' ";
                     break;
                 case 1:
-                    contextWhere = "de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = '" + searchCriteria.getContext() + "' and des.DETL_NAME = 'USED_BY') AND ";
+                    contextWhere = " AND de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = '" + searchCriteria.getContext() + "' and des.DETL_NAME = 'USED_BY')  ";
                     break;
                 case 2:
                 case -1: // -1 is the value from the client if "Context Use" selector has not been set.  I still need to set "Owned By/Used by" as the default in the client (18_JUL_2016)
-                    contextWhere = " de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
-                            " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "') AND ";
+                    contextWhere = " AND de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
+                            " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "')  ";
             }
 
-
-            //System.out.println("MHL contextWhere: " + contextWhere);
-            //System.out.println("MHL searchCriteria.getContextUse(): " + searchCriteria.getContextUse());
         }
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific programArea
-        if( StringUtils.isNotBlank( searchCriteria.getProgramArea() ) )
+        if( StringUtils.isNotBlank( searchCriteria.getProgramArea() ) &&  StringUtils.isBlank( searchCriteria.getProgramArea() ) )
         {
             programAreaWhere = " conte.pal_name = '" + searchCriteria.getProgramArea() + "' AND ";
         }
@@ -318,7 +315,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( decWhere );
         whereBuffer.append( objectClassWhere );
         whereBuffer.append( propertyWhere );
-        whereBuffer.append( derivedDEWhere );        
+        whereBuffer.append( derivedDEWhere );
         whereBuffer.append( vdWhere );
         whereBuffer.append( docWhere );
         whereBuffer.append( vvWhere );
@@ -345,13 +342,15 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 wkFlowFrom +
                 deDerivFrom +
                 " WHERE " +
-                contextWhere +
+
                 programAreaWhere +
                 " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text'" +
                 versionIndWhere + registrationExcludeWhere + workflowWhere + contextExludeWhere +
                 //" AND de.asl_name != 'RETIRED DELETED' " + //removing this condition from SQL statement. This status is controlled by Search Preferences Server as of release 5.2
                 " AND conte.conte_idseq = de.conte_idseq " +
-                whereClause + registrationWhere + workFlowWhere + deDerivWhere;
+                whereClause + registrationWhere + workFlowWhere +
+                contextWhere +
+                deDerivWhere;
 
         StringBuffer finalSqlStmt = new StringBuffer();
 
@@ -400,9 +399,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 ")" +
                 "    )";
         return where;
-    }    
-    
-    
+    }
+
+
     public String buildPermissibleValueWhere( String query, int queryType )
     {
         query = query.replaceAll( "\\*", "%" );

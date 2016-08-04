@@ -135,7 +135,7 @@ public class ContextDataController
     public List<String> retrieveProgramAreas()
     {
         List<String> results = new ArrayList<>(  );
-       
+
         results.add( new String("All Program Areas") );
         results.addAll( programAreaModelList.stream().map( ProgramAreaModel::getPalName ).collect( Collectors.toList() ) );
         logger.debug("returning Program Areas RESTful call result: " + results);

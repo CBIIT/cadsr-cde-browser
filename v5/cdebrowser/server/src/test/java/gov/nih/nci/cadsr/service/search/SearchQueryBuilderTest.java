@@ -628,45 +628,60 @@ public class SearchQueryBuilderTest
             "  AND acr.registration_status = rsl.registration_status (+)" +
             "  AND de.asl_name = asl.asl_name (+)";
 
-    String sql02 = "SELECT DISTINCT de.de_idseq," +
-            "                de.preferred_name de_preferred_name," +
-            "                de.long_name," +
-            "                rd.doc_text," +
-            "                conte.name," +
-            "                de.asl_name," +
-            "                to_char(de.cde_id) de_cdeid," +
-            "                de.version de_version," +
-            "                meta_config_mgmt.get_usedby(de.de_idseq) de_usedby," +
-            "                de.vd_idseq," +
-            "                de.dec_idseq," +
-            "                de.conte_idseq," +
-            "                de.preferred_definition," +
-            "                acr.registration_status," +
-            "                rsl.display_order," +
-            "                asl.display_order wkflow_order," +
-            "                de.cde_id cdeid" +
-            " FROM sbr.data_elements_view de," +
-            "     sbr.reference_documents_view rd," +
-            "     sbr.contexts_view conte," +
-            "     sbr.ac_registrations_view acr," +
-            "     sbr.reg_status_lov_view rsl," +
-            "     sbr.ac_status_lov_view asl" +
-            " WHERE de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0' " +
-            " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '99BA9DC8-2095-4E69-E034-080020C9C0E0') " +
-            "  AND de.de_idseq = rd.ac_idseq (+)" +
-            "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
-            " AND de.latest_version_ind = 'Yes'" +
-            "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
-            "  AND " + getExcludList() +
-            "  AND conte.name NOT IN ('TEST'," +
-            "                         'Training')" +
-            //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
-            "  AND conte.conte_idseq = de.conte_idseq" +
-            "  AND to_char(de.cde_id) LIKE '25%'" +
-            "  AND de.latest_version_ind = 'Yes'" +
-            "  AND de.de_idseq = acr.ac_idseq (+)" +
-            "  AND acr.registration_status = rsl.registration_status (+)" +
-            "  AND de.asl_name = asl.asl_name (+)";
-
+    String sql02 = "SELECT DISTINCT " +
+            "           DE.DE_IDSEQ," +
+            "           DE.PREFERRED_NAME DE_PREFERRED_NAME," +
+            "           DE.LONG_NAME, RD.DOC_TEXT," +
+            "           CONTE.NAME, DE.ASL_NAME," +
+            "           TO_CHAR(DE.CDE_ID)DE_CDEID, " +
+            "           DE.VERSION DE_VERSION," +
+            "           META_CONFIG_MGMT.GET_USEDBY(DE.DE_IDSEQ)DE_USEDBY," +
+            "           DE.VD_IDSEQ, DE.DEC_IDSEQ," +
+            "           DE.CONTE_IDSEQ, DE.PREFERRED_DEFINITION," +
+            "           ACR.REGISTRATION_STATUS," +
+            "           RSL.DISPLAY_ORDER," +
+            "           ASL.DISPLAY_ORDER WKFLOW_ORDER," +
+            "           DE.CDE_ID CDEID " +
+            " FROM " +
+            "     SBR.DATA_ELEMENTS_VIEW DE," +
+            "     SBR.REFERENCE_DOCUMENTS_VIEW RD," +
+            "     SBR.CONTEXTS_VIEW CONTE," +
+            "     SBR.AC_REGISTRATIONS_VIEW ACR," +
+            "     SBR.REG_STATUS_LOV_VIEW RSL," +
+            "     SBR.AC_STATUS_LOV_VIEW ASL " +
+            " WHERE DE.DE_IDSEQ = RD.AC_IDSEQ(+)" +
+            " AND RD.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' " +
+            " AND DE.LATEST_VERSION_IND = 'YES' " +
+            " AND NVL(ACR.REGISTRATION_STATUS, '-1')NOT IN('RETIRED')" +
+            " AND ASL.ASL_NAME NOT IN" +
+            " (" +
+            "     'CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED'" +
+            " )" +
+            "AND CONTE.NAME NOT IN" +
+            "(" +
+            "    'TEST', 'TRAINING'" +
+            ")" +
+            "AND CONTE.CONTE_IDSEQ = DE.CONTE_IDSEQ " +
+            "AND TO_CHAR(DE.CDE_ID)LIKE '25%' " +
+            "AND DE.LATEST_VERSION_IND = 'YES' " +
+            "AND DE.DE_IDSEQ = ACR.AC_IDSEQ(+)" +
+            "AND ACR.REGISTRATION_STATUS = RSL.REGISTRATION_STATUS(+)" +
+            "AND DE.ASL_NAME = ASL.ASL_NAME(+)" +
+            "AND DE.DE_IDSEQ IN" +
+            "(" +
+            "    SELECT " +
+            "        AC_IDSEQ " +
+            "    FROM " +
+            "        SBR.DESIGNATIONS_VIEW DES " +
+            "    WHERE DES.CONTE_IDSEQ = '99BA9DC8-2095-4E69-E034-080020C9C0E0' " +
+            "    AND DES.DETL_NAME = 'USED_BY' " +
+            "    UNION " +
+            "    SELECT " +
+            "        DE_IDSEQ " +
+            "    FROM " +
+            "        SBR.DATA_ELEMENTS_VIEW DE1 " +
+            "    WHERE " +
+            "        DE1.CONTE_IDSEQ = '99BA9DC8-2095-4E69-E034-080020C9C0E0'" +
+            ")";
 
 }

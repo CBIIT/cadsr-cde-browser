@@ -746,7 +746,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $timeout(function() {
                     $scope.filterService.searchFilter.workFlowStatus = [];
                     $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
-                },100);            
+                },100);
             });
         }).then(function() {
             $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
@@ -772,7 +772,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $timeout(function() {
                     $scope.filterService.searchFilter.registrationStatus = [];
                     $scope.filterService.searchFilter.registrationStatus[0] = "ALL";
-                },100); 
+                },100);
             });
         }).then(function() {
             $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
@@ -791,7 +791,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if(selectedlen.length>0) {
             if(selectedlen[0]=="ALL" && selectedlen.length==2) {
                 $scope.filterService.searchFilter.workFlowStatus.splice(0,1);
-            }   
+            }
             else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
                 $scope.filterService.searchFilter.workFlowStatus = [];
                 $scope.filterService.searchFilter.workFlowStatus[0] = $scope.options[0];
@@ -804,7 +804,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if(selectedlen.length>0) {
             if(selectedlen[0]=="ALL" && selectedlen.length==2) {
                 $scope.filterService.searchFilter.registrationStatus.splice(0,1);
-            }   
+            }
             else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
                 $scope.filterService.searchFilter.registrationStatus = [];
                 $scope.filterService.searchFilter.registrationStatus[0] = $scope.options[0];
@@ -821,7 +821,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //     var filtered_data = $filter('filter')(arr,function(item,index,array) {
     //         var search_text=item.text;
     //         // console.log(item)
-    //         if(search_text.indexOf('Test')!=-1) {   
+    //         if(search_text.indexOf('Test')!=-1) {
     //             //console.log(angular.element(document.querySelectorAll("#"+item.idSeq)));
     //             angular.element(document.getElementById(item.idSeq)).parent().prop('hidden',data.text);
     //             // angular.element(document.getElementById(item.idSeq)).parent().css("display","none")
@@ -836,7 +836,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     //     });
     //     // console.log(filtered_data)
     //     // },2000)
-        
+
     // });
 
     $scope.$on('updateTree',function(event,data) {
@@ -863,7 +863,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             return !$scope.testtrianing.training;
         }
         }
-        
+
         return true;
     }
 
@@ -1115,7 +1115,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $timeout(function() {
                         $scope.filterService.searchFilter.workFlowStatus = [];
                         $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
-                    },100);            
+                    },100);
                 });
             }).then(function() {
                 $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
@@ -1141,7 +1141,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $timeout(function() {
                         $scope.filterService.searchFilter.registrationStatus = [];
                         $scope.filterService.searchFilter.registrationStatus[0] = "ALL";
-                    },100); 
+                    },100);
                 });
             // }).then(function() {
             //     $http.get('/cdebrowserServer/rest/lookupdata/alternateType').then(function(response) {
@@ -1149,7 +1149,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             //         $timeout(function() {
             //             $scope.fs.dataElementVariables.searchAltNameType = [];
             //             $scope.fs.dataElementVariables.searchAltNameType[0] = "ALL";
-            //         },100);    
+            //         },100);
             //     });
             });
 
@@ -1197,7 +1197,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // We now have radio button type values which can be used by themselves, we have been indicating that we don't want to use field by making it empty (so no need for it's radio button).
     // This won't work for radio button type values which can be used by themselves, I am setting values for these radio button types to "-1" to indicate not to use in the search.
-  
+
     $scope.advanceSearchShow = function() {
         $scope.more = $scope.more ? false : true;
 
