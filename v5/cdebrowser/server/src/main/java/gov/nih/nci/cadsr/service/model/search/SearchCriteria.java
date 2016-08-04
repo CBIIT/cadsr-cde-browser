@@ -18,11 +18,15 @@ public class SearchCriteria implements Serializable
 	private String formIdSeq;
 	private String workFlowStatus;
 	private String registrationStatus;
+	
 	//FIXME we do not use in 5.2 conceptName and conceptCode. If this version stay consider to remove these two fields.
 	private String conceptName;
 	private String conceptCode;
-	private String conceptInput;
+	
+	private String conceptInput;//this is either Concept long name or preferred name AKA Concept Code
+	//FIXME in 5.3 we remove conceptQueryType and make the search as in CT in both name values
 	private String conceptQueryType;
+
 	private String dataElementConcept;
 	private String permissibleValue;
 	private int pvQueryType;
