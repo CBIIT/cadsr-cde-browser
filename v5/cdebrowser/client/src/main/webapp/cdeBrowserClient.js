@@ -121,8 +121,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     }
 
+    $scope.filterService.resetContext = function() {
+        $scope.filterService.searchFilter.context = "";
+        $scope.filterService.searchFilter.classification = "";
+        $scope.filterService.searchFilter.protocol = "";
+        groupFactory.clearData();
+        groupFactory1.clearData();
+    };
+
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
+        $scope.filterService.searchFilter.classification = "";
+        $scope.filterService.searchFilter.protocol = "";
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
             $scope.filterService.protocols = groupFactory.load(0);
