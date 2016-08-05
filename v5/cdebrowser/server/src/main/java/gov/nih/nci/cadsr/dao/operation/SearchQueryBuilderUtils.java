@@ -70,65 +70,43 @@ public class SearchQueryBuilderUtils {
 	
 	public static String buildConceptWhere(SearchCriteria searchCriteria) {
 		if (searchCriteria == null) return "";
-		String dataElementConcept = searchCriteria.getConceptInput();
+		String conceptNameFilter = searchCriteria.getConceptInput();
 
-		if (StringUtils.isBlank(dataElementConcept)) {
+		if (StringUtils.isBlank(conceptNameFilter)) {
 				return "";
 		}
-		String conceptQueryType = searchCriteria.getConceptQueryType();
-		logger.debug("conceptQueryType: " + conceptQueryType);
 
-		String conceptSearchTag = searchCriteria.getConceptQueryType();
+		//in CDE Browser 5.3 we assume search by both: Concept code or Concept Name
+		return buildConceptWhere(conceptNameFilter);
 
-		//Concept name search is default
-		boolean isConceptCodeSearch = "1".equals(conceptSearchTag);
-		logger.debug("Searching for ConceptName: " + isConceptCodeSearch);
-
-		//in CDE Browser 5.2 we assume only search by one of two: Concept code or Concept Name
-		if (! isConceptCodeSearch) {
-			return buildConceptWhere(dataElementConcept, "");
-		}
-		else {
-			return buildConceptWhere("", dataElementConcept);
-		}
 	}
 	/**
-	 * This function can search both parameters.
-	 * It is taken from 4.0.5.
+	 * This function searches by both long and preferred names.
+	 * SQL is taken from 4.0.5.
 	 * 
 	 * @param conceptName
 	 * @param conceptCode
 	 * @return DE where clause part
 	 */
-	public static String buildConceptWhere(String conceptName, String conceptCode) {
+	public static String buildConceptWhere(String conceptFilter) {
 		String conceptWhere = "";
 		String conceptCodeWhere = "";
 		String conceptNameWhere = "";
 
-		boolean isNameEmpty = StringUtils.isBlank(conceptName);
-		boolean isCodeEmpty = StringUtils.isBlank(conceptCode);
+		boolean isNameEmpty = StringUtils.isBlank(conceptFilter);
 		
-		if ((isNameEmpty && isCodeEmpty)) {
+		if (isNameEmpty) {
 			logger.debug("No Concept filters given to DE search");
 			return conceptWhere;
 		}
 		
-		if (! isNameEmpty) {
-			String newConceptName = conceptName.replaceAll("\\*", "%").trim();
-			conceptNameWhere = " where upper(long_name) like upper('" + newConceptName + "')";
-		}
+		String newConceptFilter = conceptFilter.replaceAll("\\*", "%").trim();
 		
-		if (! isCodeEmpty) {
-			String newConceptCode = conceptCode.replaceAll("\\*", "%").trim();
-			if (! isNameEmpty)
-				conceptCodeWhere = " and ";
-			else 
-				conceptCodeWhere = " where ";
-			conceptCodeWhere += "upper(preferred_name) like upper('"+ newConceptCode + "')";
-		}
-		
-		if ((!"".equals(conceptName)) || (!"".equals(conceptCode))) {
-			conceptWhere = "and    de.de_idseq IN (" + "select de_idseq " + "from   sbr.data_elements_view "
+		conceptNameWhere = " where upper(long_name) like upper('" + newConceptFilter + "')";		
+
+		conceptCodeWhere += " or upper(preferred_name) like upper('"+ newConceptFilter + "')";
+
+		conceptWhere = "and    de.de_idseq IN (" + "select de_idseq " + "from   sbr.data_elements_view "
 					+ "where  dec_idseq IN (" + "select dec.dec_idseq " + "from   sbr.data_element_concepts_view dec, "
 					+ "       sbrext.object_classes_view_ext oc " + "where  oc.oc_idseq = dec.oc_idseq "
 					+ "and    oc.condr_idseq in(select cdr.condr_idseq "
@@ -151,7 +129,7 @@ public class SearchQueryBuilderUtils {
 					+ "       sbrext.component_concepts_view_ext cc " + "where  cdr.condr_idseq = cc.condr_idseq "
 					+ "and    cc.con_idseq in (select con_idseq " + "from   sbrext.concepts_view_ext "
 					+ conceptNameWhere + conceptCodeWhere + ")))) ";
-		}
+		
 		logger.debug("conceptWhere: " + conceptWhere);
 		return conceptWhere;
 	}

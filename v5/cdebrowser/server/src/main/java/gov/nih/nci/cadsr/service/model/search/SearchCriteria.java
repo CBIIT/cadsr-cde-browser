@@ -18,11 +18,15 @@ public class SearchCriteria implements Serializable
 	private String formIdSeq;
 	private String workFlowStatus;
 	private String registrationStatus;
+	
 	//FIXME we do not use in 5.2 conceptName and conceptCode. If this version stay consider to remove these two fields.
 	private String conceptName;
 	private String conceptCode;
-	private String conceptInput;
+	
+	private String conceptInput;//this is either Concept long name or preferred name AKA Concept Code
+	//FIXME in 5.3 we remove conceptQueryType and make the search as in CT in both name values
 	private String conceptQueryType;
+
 	private String dataElementConcept;
 	private String permissibleValue;
 	private int pvQueryType;
@@ -34,6 +38,8 @@ public class SearchCriteria implements Serializable
 	private String vdTypeFlag;
 	private String valueDomain;
 	private String filteredinput;
+	private String property;
+	private String derivedDEFlag;
 
 	public String getName() {
 		return name;
@@ -270,6 +276,22 @@ public class SearchCriteria implements Serializable
 		this.conceptQueryType = conceptQueryType;
 	}
 
+	public String getProperty() {
+		return property;
+	}
+
+	public void setProperty(String property) {
+		this.property = property;
+	}
+
+	public String getDerivedDEFlag() {
+		return derivedDEFlag;
+	}
+
+	public void setDerivedDEFlag(String derivedDEFlag) {
+		this.derivedDEFlag = derivedDEFlag;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType="
@@ -281,6 +303,7 @@ public class SearchCriteria implements Serializable
 				+ objectClass + ", contextUse=" + contextUse + ", versionType=" + versionType + ", altName=" + altName
 				+ ", altNameType=" + altNameType + ", vdTypeFlag=" + vdTypeFlag + ", valueDomain=" + valueDomain
 				+ ", filteredinput=" + filteredinput + ", conceptInput=" + conceptInput + ", conceptType=" + conceptQueryType
+				+ ", property=" + property + ", derivedDEFlag=" + derivedDEFlag
 				+ "]";
 	}
 
