@@ -88,7 +88,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             fs.dataElementVariables.searchVD,
                             fs.dataElementVariables.searchVDTQueryType,
                             fs.dataElementVariables.conceptInput,
-                            fs.dataElementVariables.conceptQueryType,
+                            // fs.dataElementVariables.conceptQueryType,
                             "",
                             fs.dataElementVariables.searchAltName,
                             fs.dataElementVariables.searchAltNameType,
@@ -401,7 +401,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.currentCdeTab = 0;
 
     // Search button
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, conceptQueryType, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass) {
 
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
@@ -479,7 +479,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             connector = c == 0 ? "?" : "&";
             c++;
             url += connector + "conceptInput=" + conceptInput;
-            url += connector + "conceptQueryType=" + conceptQueryType;
+            // url += connector + "conceptQueryType=" + conceptQueryType;
         }
 
         if ( searchContextUse >= 0) {

@@ -20,7 +20,7 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 		$scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery,
 			'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV,
 			fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
-			fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, fs.dataElementVariables.conceptQueryType, '',
+			fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, '',
 			fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options,
 			fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass);
  	});
