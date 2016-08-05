@@ -256,7 +256,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                     contextWhere = " AND de.de_idseq IN (select ac_idseq from sbr.designations_view des where des.conte_idseq = '" + searchCriteria.getContext() + "' and des.DETL_NAME = 'USED_BY')  ";
                     break;
                 case 2:
-                case -1: // -1 is the value from the client if "Context Use" selector has not been set.  I still need to set "Owned By/Used by" as the default in the client (18_JUL_2016)
                     contextWhere = " AND de.de_idseq IN (SELECT ac_idseq FROM sbr.designations_view des WHERE des.conte_idseq = '" + searchCriteria.getContext() + "' " +
                             " AND des.detl_name = 'USED_BY' UNION SELECT de_idseq FROM  sbr.data_elements_view de1 WHERE de1.conte_idseq = '" + searchCriteria.getContext() + "')  ";
             }
@@ -358,7 +357,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( fromWhere );
 
         String sqlStmt = finalSqlStmt.toString();
-        logger.debug( "initSearchQueryBuilder DE search sqlStmt: " + sqlStmt );
+        //logger.debug( "initSearchQueryBuilder DE search sqlStmt: " + sqlStmt );
         return sqlStmt;
     }
 

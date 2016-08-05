@@ -1201,7 +1201,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.advanceSearchShow = function() {
         $scope.more = $scope.more ? false : true;
 
-
         // If Advanced Search is hidden, clear the advanced Search fields.
         // If advanced search is shown, restore any fields that where cleared on hide.
         if( ! $scope.more) {
@@ -1222,7 +1221,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchVersions = -1;
 
             $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
-            fs.dataElementVariables.searchContextUse = -1;
+            fs.dataElementVariables.searchContextUse = 2;
 
             $scope.searchObjectClassHOLD = fs.dataElementVariables.searchObjectClass;
             fs.dataElementVariables.searchObjectClass = "";
@@ -1261,6 +1260,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchderivedDE = $scope.searchderivedDEHOLD;
             $scope.searchderivedDEHOLD = "";
         }
+
     };
 
     $scope.advanceSearchShow();
