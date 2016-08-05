@@ -377,22 +377,9 @@
                 </span>
 
                 <span>
-                    <div class="conceptGroup">
-                        <label>Concept</label>
-                        <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" ng-keyup="searchKey(e=$event)" placeholder="Concept Name or Concept Code" />
-                        <div class="conceptRadio">
-                            <label data-ng-repeat="c in concept">
-                                <div>
-                                    <input ng-disabled="fs.isSearching || fs.dataElementVariables.conceptInput==''"
-                                           name="conceptQueryType"
-                                           type="radio"
-                                           value="{{c.id}}"
-                                           data-ng-model="fs.dataElementVariables.conceptQueryType"/>
-                                    {{c.name}}
-                                </div>
-                            </label>
-                        </div>
-                    </div>
+                    <label>Concept</label>
+                    <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" ng-keyup="searchKey(e=$event)" placeholder="Concept Name or Concept Code" />
+                    </label>
                 </span>
 
                     <br />
