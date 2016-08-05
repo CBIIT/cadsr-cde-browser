@@ -60,11 +60,12 @@
         </a>&nbsp;
     </span>
     </div>
-
+        
         <div id="dataElement" class="compareCDEDataElementDetailsHeading">
             Data Element <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-show="!dataElement"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-hide="!dataElement">
         </div>
-      
+        <div class="compareScreenTip" ng-show="!dataElement"><strong>Tip</strong>: Use the mouse to change the order (drag and drop) of the CDEs.
+        </div>
         <table  class="compareCDEDataElementDetailsTable" ng-show="!dataElement">
             <tr>
                 <td>CDE:
