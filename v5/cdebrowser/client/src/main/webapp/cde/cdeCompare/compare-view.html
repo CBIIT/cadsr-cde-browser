@@ -435,11 +435,20 @@
         <!-- Permissible Values -->
         <br>
         <div id="permissibleValues" class="compareCDEDataElementDetailsHeading">
-            Permissible Values <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="permissibleValues=!permissibleValues" ng-show="!permissibleValues"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="permissibleValues=!permissibleValues" ng-hide="!permissibleValues">
+            Permissible Values <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" 
+            ng-click="permissibleValues=!permissibleValues" 
+            ng-show="!permissibleValues">
+            <img src="icons/plus.png" 
+            alt="collapse" 
+            class="compareScreenExpandCollapse" 
+            ng-click="permissibleValues=!permissibleValues" 
+            ng-hide="!permissibleValues">
         </div>
+        
+
         <table ng-show="!permissibleValues">
             <tr>
-                <td valign="top" ng-repeat="(element, data) in cdeDetails">
+                <td valign="top" ng-repeat="(element, data) in cdeDetails" >
 
                     <table class="compareCDEDataElementDetailsTable">
                         <tr>
@@ -474,6 +483,8 @@
                             <td class="compareDataElementValue">{{data1.formattedVersion}}</td>
 
                         </tr>
+                        <tr  class="dataElementViewTableTr" ng-show="data.valueDomain.permissibleValues==null">
+                        <td colspan="8" style="text-align:center">No data found</td></tr>
                     </table>
                 </td>
             </tr>
