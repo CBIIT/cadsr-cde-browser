@@ -718,7 +718,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
                 $timeout(function() {
                     $scope.filterService.searchFilter.workFlowStatus = [];
-                    $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
+                    $scope.filterService.searchFilter.workFlowStatus[0] = "ALL Workflow Statuses";
                 },100);            
             });
         }).then(function() {
@@ -744,7 +744,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
                 $timeout(function() {
                     $scope.filterService.searchFilter.registrationStatus = [];
-                    $scope.filterService.searchFilter.registrationStatus[0] = "ALL";
+                    $scope.filterService.searchFilter.registrationStatus[0] = "ALL Registration Statuses";
                 },100); 
             });
         }).then(function() {
@@ -752,7 +752,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.alternateNameTypes = response.data;
                 $timeout(function() {
                     $scope.fs.dataElementVariables.searchAltNameType = [];
-                    $scope.fs.dataElementVariables.searchAltNameType[0] = "ALL";
+                    $scope.fs.dataElementVariables.searchAltNameType[0] = "ALL Alternate Name Types";
                 },100);
             });
         });
@@ -762,10 +762,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.setSelectedWs = function() {
     var selectedlen = $scope.filterService.searchFilter.workFlowStatus;
         if(selectedlen.length>0) {
-            if(selectedlen[0]=="ALL" && selectedlen.length==2) {
+            if(selectedlen[0]=="ALL Workflow Statuses" && selectedlen.length==2) {
                 $scope.filterService.searchFilter.workFlowStatus.splice(0,1);
             }   
-            else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
+            else if(selectedlen.length>2 && selectedlen[0]=="ALL Workflow Statuses") {
                 $scope.filterService.searchFilter.workFlowStatus = [];
                 $scope.filterService.searchFilter.workFlowStatus[0] = $scope.options[0];
             }
@@ -775,10 +775,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.setSelectedRs = function() {
     var selectedlen = $scope.filterService.searchFilter.registrationStatus;
         if(selectedlen.length>0) {
-            if(selectedlen[0]=="ALL" && selectedlen.length==2) {
+            if(selectedlen[0]=="ALL Registration Statuses" && selectedlen.length==2) {
                 $scope.filterService.searchFilter.registrationStatus.splice(0,1);
             }   
-            else if(selectedlen.length>2 && selectedlen[0]=="ALL") {
+            else if(selectedlen.length>2 && selectedlen[0]=="ALL Registration Statuses") {
                 $scope.filterService.searchFilter.registrationStatus = [];
                 $scope.filterService.searchFilter.registrationStatus[0] = $scope.options[0];
             }
@@ -1086,7 +1086,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.staticFilters.workflowStatusFilter = angular.copy($scope.workflowSort).sort();
                     $timeout(function() {
                         $scope.filterService.searchFilter.workFlowStatus = [];
-                        $scope.filterService.searchFilter.workFlowStatus[0] = "ALL";
+                        $scope.filterService.searchFilter.workFlowStatus[0] = "ALL Workflow Statuses";
                     },100);            
                 });
             }).then(function() {
@@ -1112,7 +1112,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.staticFilters.registrationStatusFilter.splice(0,1); // remove empty value
                     $timeout(function() {
                         $scope.filterService.searchFilter.registrationStatus = [];
-                        $scope.filterService.searchFilter.registrationStatus[0] = "ALL";
+                        $scope.filterService.searchFilter.registrationStatus[0] = "ALL Registration Statuses";
                     },100); 
                 });
             // }).then(function() {
