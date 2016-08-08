@@ -3,7 +3,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.serverData = []; // initial data from server goes here //
     this.lookupData = {}; // stores master list of classifications and protocol forms //
 
-    this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
+    this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL fields"]}, conceptInput:"", conceptQueryType:"0",
         searchAltName:"", searchAltNameType:[], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
 
     this.searchFilter = {};
@@ -19,8 +19,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.resetFilters = function() {
         this.isAChildNodeSearch = false;
         this.resetElementsInCommon();        
-        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
+        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL fields"]}, conceptInput:"", conceptQueryType:"0",
+            searchAltName:"", searchAltNameType:["ALL Alternate Name Types"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
         // this.classifications = [];
         // this.protocols = [];
         // this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
@@ -32,7 +32,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     }
 
     this.resetElementsInCommon=function(){
-        this.searchFilter = {programArea:0,workFlowStatus:["ALL"],registrationStatus:["ALL"]}// reset search filter to just having program area selected to all //
+        this.searchFilter = {programArea:0,workFlowStatus:["ALL Workflow Statuses"],registrationStatus:["ALL Registration Statuses"]}// reset search filter to just having program area selected to all //
         this.classifications = [];
         this.protocols = [];
         this.showClassificationsProtocolForms = 0;
@@ -52,7 +52,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 
     // select context dropdown based on context click in left menu //
     this.selectContextByNode = function(programArea,id) {
-        this.searchFilter = {programArea:programArea,workFlowStatus:["ALL"],registrationStatus:["ALL"]}; // user clicked the left menu. set program area //
+        this.searchFilter = {programArea:programArea,workFlowStatus:["ALL Workflow Statuses"],registrationStatus:["ALL Registration Statuses"]}; // user clicked the left menu. set program area //
         this.searchFilter.context = id;
         // this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
     };
@@ -66,8 +66,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.selectFiltersByNode = function(searchType,id, selectedNode, programArea) {
         this.isAChildNodeSearch = false;
 
-        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL"]}, conceptInput:"", conceptQueryType:"0",
-            searchAltName:"", searchAltNameType:["ALL"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"};
+        this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL fields"]}, conceptInput:"", conceptQueryType:"0",
+            searchAltName:"", searchAltNameType:["ALL Alternate Name Types"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"};
 
         this.searchFilter.programArea = programArea;
         this.isLeftTreeClick = true;
