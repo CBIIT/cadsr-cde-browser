@@ -41,6 +41,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     {
         logger.debug( "Initializing Search query builder with Search Criteria : " + searchCriteria );
         logger.debug( "Initializing Search query builder with Search Preferences : " + searchPreferences );
+        searchCriteria.preprocessCriteria();;
 
         String vdFrom = "";
         String deDerivWhere = "";

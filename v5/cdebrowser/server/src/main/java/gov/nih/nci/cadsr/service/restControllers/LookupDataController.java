@@ -3,6 +3,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,52 +24,52 @@ import gov.nih.nci.cadsr.dao.DesignationDAO;
 @RestController
 @RequestMapping("/lookupdata")
 public class LookupDataController
-{	
+{
 	private Logger logger = LogManager.getLogger(LookupDataController.class.getName());
 	//DesignationDAO designationDAO = new DesignationDAOImpl();
-	
+
 	@Autowired
 	ClassificationSchemeService classificationSchemeService;
-	
+
 	@Autowired
 	ProtocolService protocolService;
-	
+
     @Autowired
-    private DesignationDAO designationDAO;	
-	
-	
+    private DesignationDAO designationDAO;
+
+
 	@RequestMapping(value="/workflowstatus", produces = "application/json")
 	public List<String> getWorkflowStatus()
 	{
 		logger.debug("Received request for Workflow Status information.");
 		List<String> resList = WorkflowStatusEnum.getAsList();
-		resList.add(0, "ALL");
+		resList.add(0, SearchCriteria.ALL_WORKFLOW_STATUSES);
 		return resList;
 	}
-	
+
 	@RequestMapping(value="/registrationstatus", produces = "application/json")
 	public List<String> getRegistrationStatus()
 	{
 		logger.debug("Received request for Registration Status information.");
-		List<String> resList = RegistrationStatusEnum.getAsList();;
-		resList.add(0, "ALL");
+		List<String> resList = RegistrationStatusEnum.getAsList();
+		resList.add(0, SearchCriteria.ALL_REGISRTATION_STATUSES);
 		return resList;
 	}
-	
-	@RequestMapping(value="/alternateType", produces = "application/json")	
+
+	@RequestMapping(value="/alternateType", produces = "application/json")
 	public List<String> getAlternateTypes()
 	{
-		
+
 		logger.debug("Received request for Alternate Type(s) information.");
 		return designationDAO.getAllDesignationModelTypes();
-	}	
-	
+	}
+
 	@RequestMapping(value="/classificationscheme", produces = "application/json")
 	public List<ClassificationScheme> getClassificationScheme(@RequestParam(value="contextIdSeq", required=false) String contexIdSeq,
 															  @RequestParam(value="csOrCsCsi", required=false) String csOrCsCsi) throws RestControllerException
 	{
 		logger.debug("Received request for Classification Scheme information for context = " + contexIdSeq + ", csOrCsCsi = " + csOrCsCsi );
-		
+
 		List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
 		try {
 			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(csOrCsCsi))
@@ -89,20 +90,20 @@ public class LookupDataController
 		}
 		return csList;
 	}
-	
+
 	@RequestMapping(value="/protocol", produces = "application/json")
 	public List<Protocol> getProtocol(@RequestParam(value="contextIdSeq", required=false) String contexIdSeq,
 									  @RequestParam(value="protocolOrForm", required=false) String protocolOrForm) throws RestControllerException
 	{
 		logger.debug("Received request for Protocol information for context = " + contexIdSeq + ", protocolOrForm = " + protocolOrForm);
-		
+
 		List<Protocol> protocolList = new ArrayList<Protocol>();
 		try {
 			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(protocolOrForm))
 				throw new RestControllerException("Either one of context id seq or protocol or form name should be provided. ");
 			else
 				protocolList = protocolService.getProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
-		} 
+		}
 		catch (RestControllerException re)
 		{
 			logger.error(re.getMessage(), re);

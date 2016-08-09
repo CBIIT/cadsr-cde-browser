@@ -12,15 +12,16 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 
 /**
- * 
+ *
  * @author asafievan
  *
  */
 public class ControllerUtils {
 	private static Logger logger = LogManager.getLogger(ControllerUtils.class.getName());
+
 	/**
 	 * This method initializes Search Preferences in HTTP Session.
-	 * 
+	 *
 	 * @throws NullPointerException
 	 * @param httpSession session to add search preferences attribute
 	 */
@@ -33,7 +34,7 @@ public class ControllerUtils {
 	}
 	/**
 	 * This method adds initial Search Preferences to HTTP Session if they are not in the session.
-	 * 
+	 *
 	 * @throws NullPointerException
 	 * @param httpSession session to add search preferences attribute
 	 * @returns SearchPreferencesServer object of the session
@@ -51,5 +52,5 @@ public class ControllerUtils {
 			logger.debug("SearchPreferencesServer found in the user HTTP session: " + obj);
 			return (SearchPreferencesServer)obj;
 		}
-	}	
+	}
 }

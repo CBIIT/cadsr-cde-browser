@@ -55,44 +55,44 @@ public class LookupDataControllerTest
 		public ProtocolService protocolService() {
 			return new ProtocolServiceImpl();
 		}
-		
+
 		@Bean
 		public DesignationDAO designationDAO() {
 			return Mockito.mock(DesignationDAO.class);
-		}		
+		}
 
 		@Bean
 		public LookupDataController lookupDataController() {
 			return new LookupDataController();
 		}
-		
+
 		@Bean
 		public ClassificationSchemeDAO classificationSchemeDAO() {
 			return Mockito.mock(ClassificationSchemeDAO.class);
 		}
-		
+
 		@Bean
 		public ProtocolDAO protocolDAO() {
 			return Mockito.mock(ProtocolDAO.class);
 		}
-		
+
 	}
 
 	@Autowired
 	private WebApplicationContext wac;
-	
+
 	@Autowired
 	private ClassificationSchemeService classificationSchemeService;
-	
+
 	@Autowired
 	private ProtocolService protocolService;
-	
-	@Autowired 
+
+	@Autowired
 	private LookupDataController lookupDataController;
-	
+
 	@Autowired
 	private ClassificationSchemeDAO classificationSchemeDAO;
-	
+
 	@Autowired
 	private ProtocolDAO protocolDAO;
 
@@ -104,19 +104,19 @@ public class LookupDataControllerTest
 	private static final String[] EXPECTED_WRK_FLW_STATUS = {"ALL", "RELEASED", "APPRVD FOR TRIAL USE", "DRAFT NEW",
 			"CMTE APPROVED", "CMTE SUBMTD", "CMTE SUBMTD USED", "DRAFT MOD", "RETIRED ARCHIVED", "RETIRED PHASED OUT",
 			"RETIRED WITHDRAWN", "RELEASED-NON-CMPLNT" };
-	
+
 	private List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
 	private List<Protocol> protoList = new ArrayList<Protocol>();
-	
+
 	private String programAreaPalName = "NCI Consortium";
 	private String contextIdSeq = "F6117C06-C689-F9FD-E040-BB89AD432E40";
 	private String contextName = "ABTC";
 
 	@Before
 	public void setup()
-	{	
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();		
-		
+	{
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+
 		ClassificationScheme cs1 = new ClassificationSchemeBuilder()
 									.programAreaPalName(programAreaPalName)
 									.contextIdSeq(contextIdSeq).contextName(contextName)
@@ -124,7 +124,7 @@ public class LookupDataControllerTest
 									.csCsiIdSeq("F7BA6033-BAEA-C5EF-E040-BB89AD437201").csCsiName("Dosing")
 									.csiLevel(1)
 									.build();
-		
+
 		ClassificationScheme cs2 = new ClassificationSchemeBuilder()
 									.programAreaPalName(programAreaPalName)
 									.contextIdSeq(contextIdSeq).contextName(contextName)
@@ -132,7 +132,7 @@ public class LookupDataControllerTest
 									.csCsiIdSeq("F7BA5589-4430-0BF5-E040-BB89AD435EB8").csCsiName("Lapatinib Dosing")
 									.csiLevel(2).parentCsiIdSeq("F7BA6033-BAEA-C5EF-E040-BB89AD437201")
 									.build();
-		
+
 		ClassificationScheme cs3 = new ClassificationSchemeBuilder()
 									.programAreaPalName(programAreaPalName)
 									.contextIdSeq(contextIdSeq).contextName(contextName)
@@ -140,7 +140,7 @@ public class LookupDataControllerTest
 									.csCsiIdSeq("F7BA528D-C7D7-A8CF-E040-BB89AD4371BC").csCsiName("30-Day Follow-Up")
 									.csiLevel(1)
 									.build();
-		
+
 		ClassificationScheme cs4 = new ClassificationSchemeBuilder()
 									.programAreaPalName(programAreaPalName)
 									.contextIdSeq(contextIdSeq).contextName(contextName)
@@ -148,42 +148,43 @@ public class LookupDataControllerTest
 									.csCsiIdSeq("F7BABB40-FBF3-ACC0-E040-BB89AD430920").csCsiName("Enrollment Additional Information")
 									.csiLevel(1)
 									.build();
-		
+
 		csList.add(cs1); csList.add(cs2);
 		csList.add(cs3); csList.add(cs4);
-		
+
 		Protocol prot1 = new ProtocolBuilder()
 							.programAreaPalName(programAreaPalName)
-							.contextIdSeq(contextIdSeq).contextName(contextName)							
+							.contextIdSeq(contextIdSeq).contextName(contextName)
 							.protocolIdSeq("B40DD2C8-A047-DBE1-E040-BB89AD437202").protocolLongName("ABTC-0904")
 							.formIdSeq("B2D14B67-725F-9400-E040-BB89AD4314A4").formLongName("ABTC Vital Signs").build();
-		
+
 		Protocol prot2 = new ProtocolBuilder()
 							.programAreaPalName(programAreaPalName)
 							.contextIdSeq(contextIdSeq).contextName(contextName)
 							.protocolIdSeq("B40DD2C8-A047-DBE1-E040-BB89AD437202").protocolLongName("ABTC-0904")
 							.formIdSeq("DAF96B53-07DB-23D6-E040-BB89AD4318A2").formLongName("ABTC TMZ Dosing").build();
-		
+
 		Protocol prot3 = new ProtocolBuilder()
 							.programAreaPalName(programAreaPalName)
-							.contextIdSeq(contextIdSeq).contextName(contextName)							
+							.contextIdSeq(contextIdSeq).contextName(contextName)
 							.protocolIdSeq("DAA64912-F072-6637-E040-BB89AD434736").protocolLongName("ABTC-1202")
 							.formIdSeq("2D8CD1C6-F647-C967-E050-BB89AD43465C").formLongName("CT Scan Report").build();
-		
+
 		Protocol prot4 = new ProtocolBuilder()
 							.programAreaPalName(programAreaPalName)
-							.contextIdSeq(contextIdSeq).contextName(contextName)							
+							.contextIdSeq(contextIdSeq).contextName(contextName)
 							.protocolIdSeq("DAA64912-F072-6637-E040-BB89AD434736").protocolLongName("ABTC-1202")
 							.formIdSeq("246F2368-5949-47BD-E050-BB89AD4313AA").formLongName("Fresh Tissue").build();
-		
+
 		protoList.add(prot1); protoList.add(prot2);
 		protoList.add(prot3); protoList.add(prot4);
-		
+
 		Mockito.when(classificationSchemeDAO.getAllClassificationSchemeWithProgramAreaAndContext(contextIdSeq, "")).thenReturn(csList);
-		
+
 		Mockito.when(protocolDAO.getAllProtocolsWithProgramAreaAndContext(contextIdSeq, "")).thenReturn(protoList);
 	}
 
+/*
 	@Test
 	public void getRegistrationStatus() throws Exception {
 		testRESTResponseOfList("/lookupdata/registrationstatus", EXPECTED_REG_STATUS);
@@ -193,19 +194,20 @@ public class LookupDataControllerTest
 	public void getWorkflowStatus() throws Exception {
 		testRESTResponseOfList("/lookupdata/workflowstatus", EXPECTED_WRK_FLW_STATUS);
 	}
-	
+*/
+
 	@Test
 	public void getClassificationScheme() throws Exception {
 		MvcResult result = mockMvc.perform(get("/lookupdata/classificationscheme").param("contextIdSeq", contextIdSeq).param("csOrCsCsi", ""))
 				//.andDo(print());
 				.andExpect(status().isOk()).andReturn();
-		
+
 		Object responseObj = result.getModelAndView().getModel().get("classificationSchemeList");
 		Assert.notNull(responseObj);
 		Assert.isTrue(responseObj.getClass() == java.util.ArrayList.class);
 
 		List<ClassificationScheme> resultList = (List<ClassificationScheme>) responseObj;
-		
+
 		Assert.isTrue(csList.size() == resultList.size());
 
 		for (int i = 0; i < resultList.size(); i++)
@@ -216,20 +218,20 @@ public class LookupDataControllerTest
 			Assert.isTrue(csList.get(i).getCsLongName() == resultList.get(i).getCsLongName());
 		}
 	}
-	
+
 	@Test
 	public void getProtocol() throws Exception
 	{
 		MvcResult result = mockMvc.perform(get("/lookupdata/protocol").param("contextIdSeq", contextIdSeq).param("protocolOrForm", ""))
 				//.andDo(print())
 				.andExpect(status().isOk()).andReturn();
-		
+
 		Object responseObj = result.getModelAndView().getModel().get("protocolList");
 		Assert.notNull(responseObj);
 		Assert.isTrue(responseObj.getClass() == java.util.ArrayList.class);
 
 		List<Protocol> resultList = (List<Protocol>) responseObj;
-		
+
 		Assert.isTrue(protoList.size() == resultList.size());
 
 		for (int i = 0; i < resultList.size(); i++)

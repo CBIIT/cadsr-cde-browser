@@ -275,7 +275,7 @@
             <!-- end generate tabs -->
             <!-- display proper view based on tab selected -->
             <div id="cdeSearchArea">
-                <div class="view" ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
+                <div class="view"  ng-include="'cde/genericSearch/genericSearch-view.html'" ng-show="activeSearchTab==0">
                     This is the generic search pane.
                 </div>
                 <div class="view" ng-include="'cde/publicIdSearch/publicIdSearch-view.html'" ng-show="activeSearchTab==1">
@@ -303,7 +303,7 @@
                 <span>
                 <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
                     <ui-select-match allow-clear="true" placeholder="Context">{{$select.selected.text}}</ui-select-match>
-                    <ui-select-choices 
+                    <ui-select-choices
                     repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search | filter:manageOptions"
                     >
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
