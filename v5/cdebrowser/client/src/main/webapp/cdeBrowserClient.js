@@ -157,7 +157,20 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory1.fillClassifications(response);
-            $scope.filterService.classifications = groupFactory1.load(0);
+        //    if(contextId.selectedNode!=undefined){
+        //         if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId){
+        //         $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
+        //         $filter('filter')($scope.filterService.classifications,{})
+        //         $rootScope.$broadcast('loadClassifications',{});
+        //         $scope.selectFiltersByNode(contextId.searchType,contextId.id,contextId.selectedNode);
+        //     }else{
+        //         $scope.filterService.classifications = groupFactory1.load(0);
+        //     }
+        // }else{
+             $scope.filterService.classifications = groupFactory1.load(0);
+        // }
+            
+            
         });
     };
 
@@ -361,7 +374,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
-        console.log("URL:  " + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
         $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
 
     };
@@ -624,6 +636,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (isNode) {
             if (!isDropdown) // check if user selected dropdown instead of tree //
             {
+                // if(selectedNode.isChild){
+                //     $scope.contextSearch({idSeq:selectedNode.contextId,selectedNode:selectedNode,searchType:searchType,id:id});
+                // }
+                if (searchType=='contextId') {
+                    $scope.contextSearch({idSeq:selectedNode.idSeq});
+                }
                 $scope.selectFiltersByNode(searchType,id, selectedNode);
             };
             $scope.isNode  = !$scope.isNode;
