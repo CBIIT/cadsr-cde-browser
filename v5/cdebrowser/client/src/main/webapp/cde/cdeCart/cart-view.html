@@ -1,6 +1,6 @@
 <div id="cdeCart">
 	<div style="padding-top:5px">
-		<span class="headerText">Note: Displays CDEs saved in the cart. To load previously saved CDEs, click Retrieve Saved. To remove CDEs from the cart, check the box in the Select column and click Delete. To add CDEs to the cart, click Return to Search. Click Refresh to display newly added CDEs from CDE Browser.</span>
+		<span class="headerText">Note: Displays CDEs saved in the cart. To load previously saved CDEs, click Retrieve Saved. To remove CDEs from the cart, check the box in the Select column and click Delete. To add CDEs to the cart, click Return to Search.</span>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToExcel()">Download to Excel</button>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToExcel('prior')">Download to Prior Excel</button>
 		<button ng-disabled="cartService.checkedCartItemsLength()" ng-click="downloadToXML()">Download Data Elements as XML</button>
