@@ -14,7 +14,7 @@ angular.module("cdePublicIdSearch").controller("PublicIdSearchController", ["$sc
 		$scope.resetFilters();
     };
 
-   $scope.options = ["ALL fields", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
+   $scope.options = ["ALL Fields", "Long Name", "Short Name", "Preferred Question Text", "Alternate Question Text", "UML Class: UML Attr Alternate Name"];
    $scope.fs.dataElementVariables.searchFieldOptions.options = [];
    $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
@@ -23,9 +23,9 @@ var previous = $scope.fs.dataElementVariables.searchFieldOptions.options;
 $scope.setSelected = function() {
   var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
   if(selectedlen.length>0) {
-    if(selectedlen[0]=="ALL fields" && selectedlen.length==2) {
+    if(selectedlen[0]=="ALL Fields" && selectedlen.length==2) {
       $scope.fs.dataElementVariables.searchFieldOptions.options.splice(0,1);
-    } else if(selectedlen.length>2 && selectedlen[0]=="ALL fields") {
+    } else if(selectedlen.length>2 && selectedlen[0]=="ALL Fields") {
       $scope.fs.dataElementVariables.searchFieldOptions.options = [];
       $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
     }

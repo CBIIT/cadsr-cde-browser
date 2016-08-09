@@ -50,7 +50,7 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
     $scope.dataLoad = function (dataSource) {
         $http.get(dataSource).success(function (response) {
             $scope.cdeDetails = response;
-            console.loog($scope.cdeDetails);
+            // console.log($scope.cdeDetails);
         });
 
     };
