@@ -1,31 +1,33 @@
 <span ng-controller="GenericSearchController">
 
-    <div class="searchInput">
-        <label class="basicSearchName" for="name">Name</label>
-        <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
+    <div class="dataElementGroup">
+        <div class="searchInput">
+            <label class="basicSearchName" for="name">Name</label>
+            <input ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
 
-        <span class="searchFieldDropDown" ng-show="activeSearchTab==0" ng-disabled="true">
-            <select ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelectedField()">
-                <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
-            </select>
-            <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
-            </div>
-        </span>
-    </div>
+            <span class="searchFieldDropDown" ng-show="activeSearchTab==0" ng-disabled="true">
+                <select ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelectedField()">
+                    <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
+                </select>
+                <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
+                </div>
+            </span>
+        </div>
 
-    <div class="queryTypeRadioButtons">
-        <label data-ng-repeat="qType in searchQueryTypes">
-            <div>
-                <input ng-disabled="fs.isSearching"
-                        name="selectedQueryType"
-                        type="radio"
-                        value="{{qType.id}}"
-                        data-ng-model="fs.dataElementVariables.selectedQueryType"/>
-                {{qType.name}}
+        <div class="queryTypeRadioButtons">
+            <label data-ng-repeat="qType in searchQueryTypes">
+                <div>
+                    <input ng-disabled="fs.isSearching"
+                            name="selectedQueryType"
+                            type="radio"
+                            value="{{qType.id}}"
+                            data-ng-model="fs.dataElementVariables.selectedQueryType"/>
+                    {{qType.name}}
+                </div>
+            </label>
+            <div class="searchTips"><strong>Tip</strong>: To search for partial words or phrases, use the * (asterisk) as a wildcard.<BR>
+                <strong>Note</strong>: Default settings exclude the Test and Training Context view from the tree.
             </div>
-        </label>
-        <div class="searchTips"><strong>Tip</strong>: To search for partial words or phrases, use the * (asterisk) as a wildcard.<BR>
-            <strong>Note</strong>: Default settings exclude the Test and Training Context view from the tree.
         </div>
     </div>
 

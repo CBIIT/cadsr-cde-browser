@@ -161,22 +161,30 @@ a:hover {
 }
 
 .queryTypeRadioButtons label {
-margin-left: 15px;
-display:inline-block !important;
+    margin-right: 15px;
+    display:inline-block !important;
+}
+
+.queryTypePublicRadioButtons {
+    font-size: 11pt;
+    color: #18344d;
+    padding-top: 4px;
+    margin-top: 1px;
+}
+
+.queryTypePublicRadioButtons label {
+    margin-left: 15px;
+    display:inline-block !important;
 }
 
 .searchInput {
     color: #18344d;
-    width: 745px !important;
-    margin-left: 20px;
-    padding-top: 4px;
-    margin-top: 16px;
+    width: 740px !important;
 }
 
 .publicIdSearch {
-    padding-top: 4px;
     padding-left: 16px;
-    margin-top: 16px;
+    margin-top: 12px;
 }
 
 .publicIdSearch .searchField label{
@@ -190,7 +198,6 @@ display:inline-block !important;
 
 .publicIdSearch .searchField {
     display:block !important;
-    padding-bottom:8px;
     font-size:85%;
 }
 
@@ -205,7 +212,6 @@ display:inline-block !important;
 .searchTips {
     margin-top: 7px;
     margin-bottom: 4px;
-    margin-left:20px;
     font-size: 8pt;
 }
 
@@ -386,6 +392,10 @@ display:inline-block !important;
 }
 
 .publicIdInput {
+    width: 642px;
+}
+
+.publicIdNameInput {
     width: 425px;
 }
 
@@ -655,7 +665,7 @@ display:inline-block !important;
     border-radius: 4px;
     border: 1px solid #73AD21;
     padding: 6px 4px 4px;
-    margin: 0 0 4px 0;
+    margin: 4px 0;
 }
 
 .permissibleValueGroup {
@@ -676,7 +686,7 @@ display:inline-block !important;
     border-radius: 4px;
     border: 1px solid #73AD21;
     padding: 6px 4px 4px;
-    margin: 4px 0;
+    margin: 0 0 4px 0;
 }
 
 .advanceSearchDECInput {
@@ -700,7 +710,7 @@ display:inline-block !important;
 }
 
 .advanceSearchPropInput {
-    width: 314px;
+    width: 313px;
 }
 
 /*.advanceSearchTextBoxSpacing {
@@ -779,11 +789,36 @@ display:inline-block !important;
     width: 185px;
 }
 
-.wsAndRs select{
+.wsAndRs select {
     width: 185px !important;
     height: 64px;
     border-radius: 2px;
     border-width: thin;
+}
+
+/* Public ID tab borders */
+
+.publicIDGroup {
+    border-radius: 4px;
+    border: 1px solid #73AD21;
+    padding: 6px 4px 4px;
+    margin: 4px 0;
+}
+
+.publicIDNameGroup {
+    border-radius: 4px;
+    border: 1px solid #73AD21;
+    padding: 6px 4px 4px;
+    margin: 4px 0;
+}
+
+/* Data Element tab border */
+
+.dataElementGroup {
+    border-radius: 4px;
+    border: 1px solid #73AD21;
+    padding: 6px 4px 4px;
+    margin: 15px 0 0 15px;
 }
 
 

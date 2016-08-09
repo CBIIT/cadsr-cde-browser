@@ -1,50 +1,52 @@
 <span ng-controller="PublicIdSearchController">
-<div class="publicIdSearch">
-    <span class="searchField">
-        <label for="publicId" class="publicIdLabel">Public ID</label>
-        <input class="basicSearchQuery roundInput publicIdInput" id="publicId" type="text" ng-disabled="fs.isSearching" data-ng-model="publicIdSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Public ID" />
-        <div class="searchTips"><strong>Tip</strong>: To search for multiple public ids, type the ids separated by a space.
-        </div>
-    </span>
-    <hr>
-    <span class="searchField name">
-        <label for="name" class="publicIdLabel">Name</label>
-        <input class="basicSearchQuery roundInput publicIdInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
-        <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
-            <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
-                        <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
-                    </select>
-            <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
-            </div>
-        </span>
-
-        <div class="queryTypeRadioButtons">
-            <label data-ng-repeat="qType in searchQueryTypes">
-                <div class="radioFix">
-                    <input  ng-disabled="fs.isSearching || publicIdSearchQuery==''"
-                            name="selectedQueryType1"
-                            type="radio"
-                            value="{{qType.id}}"
-                            data-ng-model="fs.dataElementVariables.selectedQueryType"/>
-                    {{qType.name}}
+    <div class="publicIdSearch">
+        <div class="publicIDGroup">
+            <span class="searchField">
+                <label for="publicId" class="publicIdLabel">Public ID</label>
+                <input class="basicSearchQuery roundInput publicIdInput" id="publicId" type="text" ng-disabled="fs.isSearching" data-ng-model="publicIdSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Public ID" />
+                <div class="searchTips"><strong>Tip</strong>: To search for multiple public ids, type the ids separated by a space.
                 </div>
-            </label>
-            <div class="searchTips"><strong>Tip</strong>: To search for partial words or phrases, use the * (asterisk) as a wildcard.<BR>
-        <strong>Note</strong>: Default settings exclude the Test and Training Context view from the tree.
-            </div>
+            </span>
         </div>
-    </span>
+        <div class="publicIDNameGroup">
+            <span class="searchField name">
+                <label for="name" class="publicIdLabel">Name</label>
+                <input class="basicSearchQuery roundInput publicIdNameInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
+                <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
+                    <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
+                                <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
+                            </select>
+                    <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
+                    </div>
+                </span>
 
-    <!-- The third, fourth, and fifth parameters are place holders for values used by advanced search, their emptiness indicates to server that advanced search should not be used -->
-    <span class="searchAndClearButton">
-    <button class="btn btn-default" id="search" ng-disabled="fs.isSearching" data-ng-click="publicSearch()">
-        Search
-    </button>
-    </span>
-    <span class="searchAndClearButton rightButton">
-    <button class="btn btn-default" id="clear" ng-disabled="fs.isSearching" data-ng-click="clear()">
-        Clear
-    </button>
-    </span>
-</div>
+                <div class="queryTypePublicRadioButtons">
+                    <label data-ng-repeat="qType in searchQueryTypes">
+                        <div class="radioFix">
+                            <input  ng-disabled="fs.isSearching || publicIdSearchQuery==''"
+                                    name="selectedQueryType1"
+                                    type="radio"
+                                    value="{{qType.id}}"
+                                    data-ng-model="fs.dataElementVariables.selectedQueryType"/>
+                            {{qType.name}}
+                        </div>
+                    </label>
+                    <div class="searchTips"><strong>Tip</strong>: To search for partial words or phrases, use the * (asterisk) as a wildcard.<BR>
+                    <strong>Note</strong>: Default settings exclude the Test and Training Context view from the tree.
+                    </div>
+                </div>
+            </span>
+        </div>
+        <!-- The third, fourth, and fifth parameters are place holders for values used by advanced search, their emptiness indicates to server that advanced search should not be used -->
+        <span class="searchAndClearButton">
+            <button class="btn btn-default" id="search" ng-disabled="fs.isSearching" data-ng-click="publicSearch()">
+                Search
+            </button>
+        </span>
+        <span class="searchAndClearButton rightButton">
+            <button class="btn btn-default" id="clear" ng-disabled="fs.isSearching" data-ng-click="clear()">
+                Clear
+            </button>
+        </span>
+    </div>
 </span>
