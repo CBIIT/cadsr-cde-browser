@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,12 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
     public List<DesignationModelAlt> getDesignationModelsNoClsssification( String acIdseq )
     {
 
-        String sql = "SELECT des.NAME des_name, des.DETL_NAME des_type, des.DESIG_IDSEQ, des.LAE_NAME lang, conte.NAME context_name " + 
+        String sql = "SELECT des.NAME des_name, des.DETL_NAME des_type, des.DESIG_IDSEQ, des.LAE_NAME lang, conte.NAME context_name " +
         		"FROM designations des inner join sbr.contexts conte  on conte.CONTE_IDSEQ = des.CONTE_IDSEQ WHERE ac_idseq = ?";
         List<DesignationModelAlt> designationModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new DesignationMapperContext());
         return designationModels;
     }
-    
+
     @Override
     public List<DesignationModel> getUsedByDesignationModels( String acIdseq )
     {
@@ -66,7 +67,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
         List<DesignationModel> designationModels = jdbcTemplate.query( sql, new Object[]{ acIdseq }, new DesignationMapper( DesignationModel.class ) );
         return designationModels;
     }
-    
+
     @Override
     public List<String> getAllDesignationModelTypes()
     {
@@ -74,13 +75,13 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
         String sql = "SELECT distinct(DETL_NAME) FROM sbr.designations order by upper(DETL_NAME)";
         List<String> dModelTypes = (List<String>) jdbcTemplate.queryForList(sql, String.class);
         List<String> designationModelTypes = new ArrayList<String>();
-        designationModelTypes.add("ALL");
+        designationModelTypes.add( SearchCriteria.ALL_ALTNAME_TYPES);
         for (String dtype : dModelTypes)
         {
         	designationModelTypes.add(dtype);
         }
         return designationModelTypes;
-    }    
+    }
 
     public ContextDAO getContextDAO()
     {
@@ -170,13 +171,13 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
         public DesignationModelAlt mapRow( ResultSet rs, int rowNum ) throws SQLException
         {
         	DesignationModelAlt designationModel = new DesignationModelAlt();
-            
+
             designationModel.setDesigIdseq(rs.getString("DESIG_IDSEQ"));
             designationModel.setName(rs.getString("des_name"));
             designationModel.setType(rs.getString("des_type"));
             designationModel.setLang(rs.getString("lang"));
             designationModel.setContextName(rs.getString("context_name"));
-            
+
             return designationModel;
         }
     }

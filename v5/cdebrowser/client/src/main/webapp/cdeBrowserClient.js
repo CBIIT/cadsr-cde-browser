@@ -361,6 +361,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
+        console.log("URL:  " + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
         $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
 
     };
