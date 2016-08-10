@@ -5,6 +5,7 @@ package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
 
 import java.util.List;
 
+import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 
 public class CsCsi
@@ -51,7 +52,14 @@ public class CsCsi
             hide = true;
         }
     }
+    public CsCsi( CsCsiDeModel csCsiDeModel )
+    {
+        csLongName = csCsiDeModel.getCsLongName();
+        csDefinition = csCsiDeModel.getCsDefinition();
 
+        csiName = csCsiDeModel.getCsiName();
+        csiType = csCsiDeModel.getCsitlName();
+    }
     public String getCsLongName()
     {
         return csLongName;

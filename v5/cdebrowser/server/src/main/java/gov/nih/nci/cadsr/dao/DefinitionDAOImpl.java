@@ -155,7 +155,7 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
             DefinitionModelAlt definitionModel = new DefinitionModelAlt();
             
             definitionModel.setDefinIdseq(rs.getString("DEFIN_IDSEQ"));
-            definitionModel.setName(rs.getString("definition"));
+            definitionModel.setDefinition(rs.getString("definition"));
             definitionModel.setType(rs.getString("def_type"));
             definitionModel.setLang(rs.getString("lang"));
             definitionModel.setContextName(rs.getString("context_name"));

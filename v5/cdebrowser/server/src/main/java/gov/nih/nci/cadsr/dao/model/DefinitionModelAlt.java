@@ -17,7 +17,7 @@ public class DefinitionModelAlt implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	private String definIdseq;
-	private String name;
+	private String definition;
 	private String type;
 	private String contextName;
 	private String lang;
@@ -25,12 +25,12 @@ public class DefinitionModelAlt implements Serializable
 	public DefinitionModelAlt() {
 	}
 
-	public String getName() {
-		return name;
+	public String getDefinition() {
+		return definition;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDefinition(String definition) {
+		this.definition = definition;
 	}
 
 	public String getType() {
@@ -65,20 +65,21 @@ public class DefinitionModelAlt implements Serializable
 		this.definIdseq = definIdseq;
 	}
 
+
 	@Override
 	public String toString() {
-		return "DefinitionModelAlt [definIdseq=" + definIdseq + ", name=" + name + ", type=" + type + ", contextName="
-				+ contextName + ", lang=" + lang + "]";
+		return "DefinitionModelAlt [definIdseq=" + definIdseq + ", definition=" + definition + ", type=" + type
+				+ ", contextName=" + contextName + ", lang=" + lang + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((contextName == null) ? 0 : contextName.hashCode());
 		result = prime * result + ((definIdseq == null) ? 0 : definIdseq.hashCode());
+		result = prime * result + ((definition == null) ? 0 : definition.hashCode());
 		result = prime * result + ((lang == null) ? 0 : lang.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -102,15 +103,15 @@ public class DefinitionModelAlt implements Serializable
 				return false;
 		} else if (!definIdseq.equals(other.definIdseq))
 			return false;
+		if (definition == null) {
+			if (other.definition != null)
+				return false;
+		} else if (!definition.equals(other.definition))
+			return false;
 		if (lang == null) {
 			if (other.lang != null)
 				return false;
 		} else if (!lang.equals(other.lang))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
 			return false;
 		if (type == null) {
 			if (other.type != null)
@@ -120,5 +121,5 @@ public class DefinitionModelAlt implements Serializable
 		return true;
 	}
 
-
+	
 }

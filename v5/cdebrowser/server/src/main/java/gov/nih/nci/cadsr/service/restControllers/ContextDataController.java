@@ -72,14 +72,19 @@ public class ContextDataController
     public ContextDataController(RestControllerCommon restControllerCommon)
     {
         this.restControllerCommon = restControllerCommon;
-    	try
-        {
-            programAreaModelList = restControllerCommon.getProgramAreaList();
-            logger.info("Loaded Program Areas from database in amount: " + programAreaModelList.size() + programAreaModelList);
-        } catch( Exception e )
-        {
-            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
-            programAreaModelList = new ArrayList<>();
+        if (restControllerCommon != null) {
+	    	try
+	        {
+	            programAreaModelList = restControllerCommon.getProgramAreaList();
+	            logger.info("Loaded Program Areas from database in amount: " + programAreaModelList.size() + programAreaModelList);
+	        } catch( Exception e )
+	        {
+	            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
+	            programAreaModelList = new ArrayList<>();
+	        }
+        }
+        else {
+        	programAreaModelList = new ArrayList<>();
         }
     }
 

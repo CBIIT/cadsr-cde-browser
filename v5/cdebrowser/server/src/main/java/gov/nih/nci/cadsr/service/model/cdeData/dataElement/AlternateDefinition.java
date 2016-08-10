@@ -27,7 +27,7 @@ public class AlternateDefinition
     
     public AlternateDefinition( DefinitionModelAlt definitionModel )
     {
-        setName( definitionModel.getName() );
+        setName( definitionModel.getDefinition() );
         setContext( definitionModel.getContextName() );
         setType( definitionModel.getType() );
         setLanguage(definitionModel.getLang());
