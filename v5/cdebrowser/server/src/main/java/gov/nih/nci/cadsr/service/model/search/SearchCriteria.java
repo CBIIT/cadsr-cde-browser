@@ -18,11 +18,11 @@ public class SearchCriteria implements Serializable
 	private String formIdSeq;
 	private String workFlowStatus;
 	private String registrationStatus;
-	
+
 	//FIXME we do not use in 5.2 conceptName and conceptCode. If this version stay consider to remove these two fields.
 	private String conceptName;
 	private String conceptCode;
-	
+
 	private String conceptInput;//this is either Concept long name or preferred name AKA Concept Code
 	//FIXME in 5.3 we remove conceptQueryType and make the search as in CT in both name values
 	private String conceptQueryType;
@@ -40,6 +40,26 @@ public class SearchCriteria implements Serializable
 	private String filteredinput;
 	private String property;
 	private String derivedDEFlag;
+
+
+	public static final String ALL_REGISRTATION_STATUSES = "ALL Registration Statuses";
+	public static final String ALL_WORKFLOW_STATUSES = "ALL Workflow Statuses";
+	public static final String ALL_ALTNAME_TYPES = "ALL Alternate Name Types";
+	public static final String ALL_FIELDS = "ALL Fields";
+	/**
+	 * This method takes care of client values received to be adjusted to server component expectations.
+	 *
+	 */
+	public void preprocessCriteria() {
+		if (ALL_FIELDS.equals(this.filteredinput))
+			this.filteredinput = "ALL";
+		if (ALL_ALTNAME_TYPES.equals(this.altNameType))
+			this.altNameType = "ALL";
+		if (ALL_WORKFLOW_STATUSES.equals(this.workFlowStatus))
+			this.workFlowStatus = "ALL";
+		if (ALL_REGISRTATION_STATUSES.equals(this.registrationStatus))
+			this.registrationStatus = "ALL";
+	}
 
 	public String getName() {
 		return name;
