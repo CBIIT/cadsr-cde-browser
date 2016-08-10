@@ -3,6 +3,21 @@
 <span ng-controller="GenericSearchController">
 
     <div class="advanceSearchLeft">
+        <div class="textInputGroup">
+             <div>
+                <label class="advancedSearchLabel">Data Element Concept</label>
+                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept"
+                       id="advancedSearchDEC" name="searchDEC"
+                       ng-model="fs.dataElementVariables.searchDEC"/>
+            </div>
+
+            <div>
+                <label class="advancedSearchLabel">Object Class</label>
+                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Object Class"
+                       ng-model="fs.dataElementVariables.searchObjectClass"/>
+            </div>
+        </div>
+
         <div class="valueDomainGroup">
             <div>
                 <label class="advancedSearchLabel">Value Domain</label>
@@ -16,7 +31,7 @@
                            type="radio"
                            value="{{queryType.id}}"
                            data-ng-model="fs.dataElementVariables.searchVDTQueryType"/>
-                    {{queryType.name}}&nbsp;&nbsp;
+                    {{queryType.name}}&nbsp;
                 </div>
             </label>
         </div>
@@ -35,22 +50,9 @@
                            type="radio"
                            value="{{queryType.id}}"
                            data-ng-model="fs.dataElementVariables.searchPVQueryType"/>
-                    {{queryType.name}}&nbsp;&nbsp;
+                    {{queryType.name}}&nbsp;
                 </div>
             </label>
-        </div>
-
-        <div>
-        <label class="advancedSearchLabel">Version:&nbsp;&nbsp;</label>
-        <label data-ng-repeat="versionType in searchVersions">
-            <div class="queryTypeRadioButtons">
-                <input ng-disabled="fs.isSearching"
-                       type="radio"
-                       value="{{versionType.id}}"
-                       data-ng-model="fs.dataElementVariables.searchVersions"/>
-                {{versionType.name}}&nbsp;&nbsp;
-            </div>
-        </label>
         </div>
     </div>
 
@@ -69,29 +71,21 @@
             </div>
         </div>
 
-        <div class="textInputGroup">
-             <div>
-                <label class="advancedSearchLabel">Data Element Concept</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept"
-                       id="advancedSearchDEC" name="searchDEC"
-                       ng-model="fs.dataElementVariables.searchDEC"/>
-            </div>
-
-            <div>
-                <label class="advancedSearchLabel">Object Class</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Object Class"
-                       ng-model="fs.dataElementVariables.searchObjectClass"/>
-            </div>
-
-            <div>
-                <label class="advancedSearchLabel">Property</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchPropInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Property"
-                       ng-model="fs.dataElementVariables.searchProperty"/>
-            </div>
-        </div>
-
         <div>
-        <label class="advancedSearchLabel">Context Use:&nbsp;&nbsp;</label>
+        <label class="advancedSearchLabel">Version:&nbsp;</label>
+        <label data-ng-repeat="versionType in searchVersions">
+            <div class="queryTypeRadioButtons">
+                <input ng-disabled="fs.isSearching"
+                       type="radio"
+                       value="{{versionType.id}}"
+                       data-ng-model="fs.dataElementVariables.searchVersions"/>
+                {{versionType.name}}&nbsp;
+            </div>
+        </label>
+        </div>
+          
+        <div>
+        <label class="advancedSearchLabel">Context Use:&nbsp;</label>
         <label data-ng-repeat="queryType in searchContextUseValues">
             <div class="queryTypeRadioButtons">
                 <input ng-disabled="fs.isSearching"
@@ -99,7 +93,7 @@
                        type="radio"
                        value="{{queryType.id}}"
                        data-ng-model="fs.dataElementVariables.searchContextUse"/>
-                {{queryType.name}}&nbsp;&nbsp;
+                {{queryType.name}}&nbsp;
             </div>
         </label>
         </div>
