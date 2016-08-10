@@ -265,7 +265,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific programArea
-        if( StringUtils.isNotBlank( searchCriteria.getProgramArea() )   )
+        if( StringUtils.isNotBlank( searchCriteria.getProgramArea() ) && (StringUtils.isBlank( searchCriteria.getContext())))
         {
             programAreaWhere = " conte.pal_name = '" + searchCriteria.getProgramArea() + "' AND ";
         }
