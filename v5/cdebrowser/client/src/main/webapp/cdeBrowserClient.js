@@ -588,6 +588,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (isNode) {
             if (!isDropdown) // check if user selected dropdown instead of tree //
             {
+                if (searchType=='contextId') {
+                    $scope.contextSearch({idSeq:selectedNode.idSeq});
+                }
                 $scope.selectFiltersByNode(searchType,id, selectedNode);
             };
             $scope.isNode  = !$scope.isNode;

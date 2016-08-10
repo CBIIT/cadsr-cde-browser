@@ -6,7 +6,8 @@ angular.module('cdeBrowserApp')
   '$http',
   'filterService',
   '$filter',
-  function (groupFactory1, $timeout, $http,filterService,$filter) {
+  '$rootScope',
+  function (groupFactory1, $timeout, $http,filterService,$filter,$rootScope) {
       return {
           restrict: 'E',
           scope: { model1: '=' , contextCascade: '&' },
@@ -27,11 +28,15 @@ angular.module('cdeBrowserApp')
       if(scope.filterService.classifications.length==0) {
               scope.breadcrumbs = [{ "id": 0, "title": "CS" }];
       }
-    })
+    });
 
     scope.checkChildren1=function(selectedGroup){
             return groupFactory1.isChildAvailable(selectedGroup,scope.breadcrumbs.length);
         }
+
+        $rootScope.$on('loadClassifications',function(){
+          // scope.loadChildGroupsOf1();
+        })
 
               scope.loadChildGroupsOf1 = function (group, $select) {
                   $select.search = '';
