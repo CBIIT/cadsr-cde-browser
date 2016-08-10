@@ -75,13 +75,13 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
             this.selectContextByNode(this.searchFilter.programArea,id);
         }
         else {
-            this.selectContextByNode(this.searchFilter.programArea,selectedNode.contextId);
+            this.selectContextByNode(this.searchFilter.programArea,selectedNode.contextIdSeq);
             this.isAChildNodeSearch = true;
             if (searchType=='protocolId'||searchType=='id') { // if protocol set protocol for dropdown //
-                this.searchFilter['protocol']=selectedNode.parentId;
+                this.searchFilter['protocol']=selectedNode;
             }
             else { // if classification scheme item or classification scheme item id set classification for dropdown //
-                this.searchFilter['classification']=selectedNode.parentId;
+                this.searchFilter['classification']=selectedNode;
             };
         };
     };
