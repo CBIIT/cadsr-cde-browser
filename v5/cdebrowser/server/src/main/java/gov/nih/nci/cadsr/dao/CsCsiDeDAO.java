@@ -6,7 +6,6 @@ package gov.nih.nci.cadsr.dao;
 import java.util.List;
 
 import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
-import gov.nih.nci.cadsr.dao.model.CsCsiDeModelList;
 import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
 import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
 /**
@@ -22,6 +21,6 @@ public interface CsCsiDeDAO
 	 * @return List of CsCsiValueMeaningModel related to Value Meaning with ID deIdseq
 	 */
 	public List<CsCsiDeModel> getCsCsisByDeId(String deIdseq);
-	public List<DesignationModelAlt> getCsCsiDeAltNamesById(String deIdseq, CsCsiDeModelList csCsiDeModelList);
-	public List<DefinitionModelAlt> getCsCsiDeDefinitionsById(String deIdseq, CsCsiDeModelList csCsiDeModelList);
+	public List<DesignationModelAlt> getCsCsiDeAltNamesById(String deIdseq, List<CsCsiDeModel> csCsiDeModels);
+	public List<DefinitionModelAlt> getCsCsiDeDefinitionsById(String deIdseq, List<CsCsiDeModel> csCsiDeModels);
 }

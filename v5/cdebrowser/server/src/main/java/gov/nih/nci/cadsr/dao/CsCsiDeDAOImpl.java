@@ -86,7 +86,9 @@ public class CsCsiDeDAOImpl extends AbstractDAOOperations implements CsCsiDeDAO 
 		}
 	}
 	
-	public List<DesignationModelAlt> getCsCsiDeAltNamesById(String deIdseq, CsCsiDeModelList csCsiDeModelList) {
+	@Override
+	public List<DesignationModelAlt> getCsCsiDeAltNamesById(String deIdseq, List<CsCsiDeModel> csCsiDeModels) {
+		CsCsiDeModelList csCsiDeModelList = new CsCsiDeModelList(csCsiDeModels);
 		String csCsiIdStr = csCsiDeModelList.buildInSql();
 		String altNamesSql = sqlRetrieveCsCsiAltNamesBegin + csCsiIdStr + sqlRetrieveCsCsiAltNamesEnd;
 		logger.debug("altNamesSql: " + altNamesSql);
@@ -99,7 +101,9 @@ public class CsCsiDeDAOImpl extends AbstractDAOOperations implements CsCsiDeDAO 
 		}		
 	}
 	
-	public List<DefinitionModelAlt> getCsCsiDeDefinitionsById(String deIdseq, CsCsiDeModelList csCsiDeModelList) {
+	@Override
+	public List<DefinitionModelAlt> getCsCsiDeDefinitionsById(String deIdseq, List<CsCsiDeModel> csCsiDeModels) {
+		CsCsiDeModelList csCsiDeModelList = new CsCsiDeModelList(csCsiDeModels);
 		String csCsiIdStr = csCsiDeModelList.buildInSql();
 		String definSql = sqlRetrieveCsCsiDefinBegin + csCsiIdStr + sqlRetrieveCsCsiDefinEnd;
 		logger.debug("definSql: " + definSql);

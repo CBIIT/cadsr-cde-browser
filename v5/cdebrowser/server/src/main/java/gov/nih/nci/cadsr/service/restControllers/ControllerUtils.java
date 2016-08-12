@@ -80,12 +80,11 @@ public class ControllerUtils {
 		else if (logger.isDebugEnabled()) {
 			logger.debug("modelList size: " + modelList.size() + ", modelList: " + modelList);
 		}
-		CsCsiDeModelList csCsiDeModelList = new CsCsiDeModelList(modelList);
 		// Find all Alt Names related to CsCsiModel
-		List<DesignationModelAlt> altNamesList = csCsiDeDAO.getCsCsiDeAltNamesById(deIdseq, csCsiDeModelList);
+		List<DesignationModelAlt> altNamesList = csCsiDeDAO.getCsCsiDeAltNamesById(deIdseq, modelList);
 		logger.debug("altNamesList size=" + altNamesList.size() + altNamesList);
 		// Find all definitions related to CsCsiModel
-		List<DefinitionModelAlt> definList = csCsiDeDAO.getCsCsiDeDefinitionsById(deIdseq, csCsiDeModelList);
+		List<DefinitionModelAlt> definList = csCsiDeDAO.getCsCsiDeDefinitionsById(deIdseq, modelList);
 		logger.debug("definList size=" + definList.size() + definList);
 
 		String csCsiIdseq;
