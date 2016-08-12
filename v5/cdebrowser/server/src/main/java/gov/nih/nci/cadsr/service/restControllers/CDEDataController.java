@@ -89,7 +89,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
 @RestController
 public class CDEDataController
 {
-    private Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
+    private static final Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
 
     @Autowired
     private DataElementDAO dataElementDAO;
@@ -140,7 +140,7 @@ public class CDEDataController
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
-    public CdeDetails CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
+    public CdeDetails retrieveDataElementDetails( @RequestParam( "deIdseq" ) String deIdseq )
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
 
@@ -272,98 +272,6 @@ public class CDEDataController
         getDataElementReferenceDocuments( dataElementModel, dataElement );
         return dataElement;
     }
-    /**
-     * This method creates a list of classified Alt names and Definitions
-     */
-	private List<CsCsi> populateCsCsiDeModel(String deIdseq) {
-		List<CsCsi> deCsCsis = new ArrayList<>();
-		List<CsCsiDeModel> modelList = csCsiDeDAO.getCsCsisByDeId(deIdseq);
-		if ((modelList == null) || (modelList.isEmpty())) {
-			logger.debug("There is no classified Alt Names/Definitions for DE ID: " + deIdseq);
-			return deCsCsis;
-		}
-		else if (logger.isDebugEnabled()) {
-			logger.debug("modelList size: " + modelList.size() + ", modelList: " + modelList);
-		}
-		CsCsiDeModelList csCsiDeModelList = new CsCsiDeModelList(modelList);
-		// Find all Alt Names related to CsCsiModel
-		List<DesignationModelAlt> altNamesList = csCsiDeDAO.getCsCsiDeAltNamesById(deIdseq, csCsiDeModelList);
-		logger.debug("altNamesList size=" + altNamesList.size() + altNamesList);
-		// Find all definitions related to CsCsiModel
-		List<DefinitionModelAlt> definList = csCsiDeDAO.getCsCsiDeDefinitionsById(deIdseq, csCsiDeModelList);
-		logger.debug("definList size=" + definList.size() + definList);
-
-		String csCsiIdseq;
-		String currId;
-		AlternateName alternateName;
-		AlternateDefinition definition;
-		// Loop through deCsCsis Model list to build the models representations
-		for (CsCsiDeModel csCsiDeModel : modelList) {
-			csCsiIdseq = csCsiDeModel.getCsCsiIdseq();
-			CsCsi csCsi = new CsCsi(csCsiDeModel);//this is a representation class
-			ArrayList<AlternateName> classifiedAlternateNames = new ArrayList<>();//representation classes
-			// Add all Alt Names based on cs_csi_id ID
-			for (DesignationModelAlt designationModelAlt : altNamesList) {
-				currId = designationModelAlt.getDesigIdseq();
-				if (csCsiIdseq.equals(currId)) {
-					alternateName = new AlternateName();
-					alternateName.setName(designationModelAlt.getName());
-					alternateName.setType(designationModelAlt.getType());
-					alternateName.setContext(designationModelAlt.getContextName());
-					alternateName.setLanguage(designationModelAlt.getLang());
-					classifiedAlternateNames.add(alternateName);
-				}
-			}
-			csCsi.setAlternateNames(classifiedAlternateNames);
-			
-			ArrayList<AlternateDefinition> classifiedDefinitions = new ArrayList<>();//representation classes
-			//  Add all Definitions based on ID
-			for (DefinitionModelAlt definitionModelAlt : definList) {
-				currId = definitionModelAlt.getDefinIdseq();
-				if (csCsiIdseq.equals(currId)) {
-					definition = new AlternateDefinition();
-					definition.setName(definitionModelAlt.getDefinition());
-					definition.setType(definitionModelAlt.getType());
-					definition.setContext(definitionModelAlt.getContextName());
-					classifiedDefinitions.add(definition);
-				}
-			}
-			
-			if (classifiedAlternateNames.size() > 0 || (classifiedDefinitions.size() > 0)) {
-				csCsi.setAlternateDefinitions(classifiedDefinitions);
-				deCsCsis.add(csCsi);
-			}
-			else {
-				//This CsCsiModel will not be represented since it does not have Alternate Names AKA Designations) nor Definitions
-				logger.debug("Not Alternate Names AKA Designations nor Definitions are found for Classification: " + csCsiDeModel);
-			}
-		}
-		return deCsCsis;
-	}
-    
-    private CsCsi populateCsCsiDeUnclassified (DataElementModel dataElementModel) {
-        CsCsi unclassCsCsi = new CsCsi( dataElementModel.getCsCsiData().get( CsCsiModel.UNCLASSIFIED ) );
-        ArrayList<AlternateName> unclassAlternateNames = new ArrayList<>();
-        if( dataElementModel.getCsCsiDesignations().get( CsCsiModel.UNCLASSIFIED ) != null )
-        {
-            for( String designationIdseq : dataElementModel.getCsCsiDesignations().get( CsCsiModel.UNCLASSIFIED ) )
-            {
-                unclassAlternateNames.add( new AlternateName( dataElementModel.getDesignationModels().get( designationIdseq ) ) );
-            }
-        }
-        unclassCsCsi.setAlternateNames( unclassAlternateNames );
-        ArrayList<AlternateDefinition> unclassAlternateDefinitions = new ArrayList<>();
-        if( dataElementModel.getCsCsiDefinitions().get( CsCsiModel.UNCLASSIFIED ) != null )
-        {
-            for( String definitionIdseq : dataElementModel.getCsCsiDefinitions().get( CsCsiModel.UNCLASSIFIED ) )
-            {
-                unclassAlternateDefinitions.add( new AlternateDefinition( dataElementModel.getDefinitionModels().get( definitionIdseq ) ) );
-            }
-        }
-        unclassCsCsi.setAlternateDefinitions( unclassAlternateDefinitions );
-        return(unclassCsCsi);
-    }
-    
     /**********************************************************************/
     /**********************************************************************/
     /**
@@ -385,11 +293,11 @@ public class CDEDataController
         dataElement.setCsCsis( dataElementCsCsis );
         // add all the cscsi's and their designations and definitions except the unclassified ones
         //change for CDEBROWSER-468
-        List<CsCsi> csCsiClassifiedList = populateCsCsiDeModel(dataElementModel.getDeIdseq());
+        List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiDeModel(dataElementModel.getDeIdseq(), csCsiDeDAO);
         dataElementCsCsis.addAll(csCsiClassifiedList);
         // now get the unclassified ones
 
-        CsCsi unclassCsCsi = populateCsCsiDeUnclassified(dataElementModel);
+        CsCsi unclassCsCsi = ControllerUtils.populateCsCsiDeUnclassified(dataElementModel);
         dataElementCsCsis.add( unclassCsCsi );
 
         /////////////////////////////////////////////////////
