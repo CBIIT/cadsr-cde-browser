@@ -83,4 +83,9 @@ public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 		String excelFilename = localDownloadDirectory +  fileNamePrefix + excelFileSuffix  + DownloadExcelController.fileExtension;
 		return excelFilename;
 	}
+
+	@Override
+	public String generateExcelFileId() throws Exception {
+		return "1234567";
+	}
 }

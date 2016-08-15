@@ -191,50 +191,89 @@ public class CsCsi
     }
 
     @Override
-    public boolean equals( Object o )
-    {
-        if( this == o ) return true;
-        if( !( o instanceof CsCsi ) ) return false;
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CsCsi other = (CsCsi) obj;
+		if (alternateDefinitions == null) {
+			if (other.alternateDefinitions != null)
+				return false;
+		} else if (!alternateDefinitions.equals(other.alternateDefinitions))
+			return false;
+		if (alternateNames == null) {
+			if (other.alternateNames != null)
+				return false;
+		} else if (!alternateNames.equals(other.alternateNames))
+			return false;
+		if (csDefinition == null) {
+			if (other.csDefinition != null)
+				return false;
+		} else if (!csDefinition.equals(other.csDefinition))
+			return false;
+		if (csId == null) {
+			if (other.csId != null)
+				return false;
+		} else if (!csId.equals(other.csId))
+			return false;
+		if (csLongName == null) {
+			if (other.csLongName != null)
+				return false;
+		} else if (!csLongName.equals(other.csLongName))
+			return false;
+		if (csVersion == null) {
+			if (other.csVersion != null)
+				return false;
+		} else if (!csVersion.equals(other.csVersion))
+			return false;
+		if (csiId == null) {
+			if (other.csiId != null)
+				return false;
+		} else if (!csiId.equals(other.csiId))
+			return false;
+		if (csiName == null) {
+			if (other.csiName != null)
+				return false;
+		} else if (!csiName.equals(other.csiName))
+			return false;
+		if (csiType == null) {
+			if (other.csiType != null)
+				return false;
+		} else if (!csiType.equals(other.csiType))
+			return false;
+		if (csiVersion == null) {
+			if (other.csiVersion != null)
+				return false;
+		} else if (!csiVersion.equals(other.csiVersion))
+			return false;
+		if (hide == null) {
+			if (other.hide != null)
+				return false;
+		} else if (!hide.equals(other.hide))
+			return false;
+		return true;
+	}
 
-        CsCsi csCsi = ( CsCsi ) o;
-
-        if( getCsLongName() != null ? !getCsLongName().equals( csCsi.getCsLongName() ) : csCsi.getCsLongName() != null )
-            return false;
-        if( getCsDefinition() != null ? !getCsDefinition().equals( csCsi.getCsDefinition() ) : csCsi.getCsDefinition() != null )
-            return false;
-        if( getCsiName() != null ? !getCsiName().equals( csCsi.getCsiName() ) : csCsi.getCsiName() != null )
-            return false;
-        if( getCsiType() != null ? !getCsiType().equals( csCsi.getCsiType() ) : csCsi.getCsiType() != null )
-            return false;
-        if( getCsId() != null ? !getCsId().equals( csCsi.getCsId() ) : csCsi.getCsId() != null ) return false;
-        if( getCsVersion() != null ? !getCsVersion().equals( csCsi.getCsVersion() ) : csCsi.getCsVersion() != null )
-            return false;
-        if( getCsiId() != null ? !getCsiId().equals( csCsi.getCsiId() ) : csCsi.getCsiId() != null ) return false;
-        if( getCsiVersion() != null ? !getCsiVersion().equals( csCsi.getCsiVersion() ) : csCsi.getCsiVersion() != null )
-            return false;
-        if( getHide() != null ? !getHide().equals( csCsi.getHide() ) : csCsi.getHide() != null ) return false;
-        if( getAlternateNames() != null ? !getAlternateNames().equals( csCsi.getAlternateNames() ) : csCsi.getAlternateNames() != null )
-            return false;
-        return !( getAlternateDefinitions() != null ? !getAlternateDefinitions().equals( csCsi.getAlternateDefinitions() ) : csCsi.getAlternateDefinitions() != null );
-
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = getCsLongName() != null ? getCsLongName().hashCode() : 0;
-        result = 31 * result + ( getCsDefinition() != null ? getCsDefinition().hashCode() : 0 );
-        result = 31 * result + ( getCsiName() != null ? getCsiName().hashCode() : 0 );
-        result = 31 * result + ( getCsiType() != null ? getCsiType().hashCode() : 0 );
-        result = 31 * result + ( getCsId() != null ? getCsId().hashCode() : 0 );
-        result = 31 * result + ( getCsVersion() != null ? getCsVersion().hashCode() : 0 );
-        result = 31 * result + ( getCsiId() != null ? getCsiId().hashCode() : 0 );
-        result = 31 * result + ( getCsiVersion() != null ? getCsiVersion().hashCode() : 0 );
-        result = 31 * result + ( getHide() != null ? getHide().hashCode() : 0 );
-        result = 31 * result + ( getAlternateNames() != null ? getAlternateNames().hashCode() : 0 );
-        result = 31 * result + ( getAlternateDefinitions() != null ? getAlternateDefinitions().hashCode() : 0 );
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alternateDefinitions == null) ? 0 : alternateDefinitions.hashCode());
+		result = prime * result + ((alternateNames == null) ? 0 : alternateNames.hashCode());
+		result = prime * result + ((csDefinition == null) ? 0 : csDefinition.hashCode());
+		result = prime * result + ((csId == null) ? 0 : csId.hashCode());
+		result = prime * result + ((csLongName == null) ? 0 : csLongName.hashCode());
+		result = prime * result + ((csVersion == null) ? 0 : csVersion.hashCode());
+		result = prime * result + ((csiId == null) ? 0 : csiId.hashCode());
+		result = prime * result + ((csiName == null) ? 0 : csiName.hashCode());
+		result = prime * result + ((csiType == null) ? 0 : csiType.hashCode());
+		result = prime * result + ((csiVersion == null) ? 0 : csiVersion.hashCode());
+		result = prime * result + ((hide == null) ? 0 : hide.hashCode());
+		return result;
+	}
 
     @Override
     public String toString()

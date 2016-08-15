@@ -108,7 +108,6 @@ public class ControllerUtils {
 					classifiedAlternateNames.add(alternateName);
 				}
 			}
-			csCsi.setAlternateNames(classifiedAlternateNames);
 			
 			ArrayList<AlternateDefinition> classifiedDefinitions = new ArrayList<>();//representation classes
 			//  Add all Definitions based on ID
@@ -124,12 +123,13 @@ public class ControllerUtils {
 			}
 			
 			if (classifiedAlternateNames.size() > 0 || (classifiedDefinitions.size() > 0)) {
+				csCsi.setAlternateNames(classifiedAlternateNames);
 				csCsi.setAlternateDefinitions(classifiedDefinitions);
 				deCsCsis.add(csCsi);
 			}
 			else {
 				//This CsCsiModel will not be represented since it does not have Alternate Names AKA Designations) nor Definitions
-				logger.debug("Not Alternate Names AKA Designations nor Definitions are found for Classification: " + csCsiDeModel);
+				logger.debug("No Alternate Name AKA Designations nor Definition is found for Classification: " + csCsiDeModel);
 			}
 		}
 		return deCsCsis;
