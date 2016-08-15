@@ -70,7 +70,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		setDataSource(dataSource);
 	}
 
-    private String generateExcelFileId() throws Exception {
+    public String generateExcelFileId() throws Exception {
 		JdbcTemplate jdbcTemplate = getJdbcTemplate();
 		String fileId = jdbcTemplate.queryForObject("SELECT SBREXT.XML_FILE_SEQ.NEXTVAL from dual", new Object[]{}, String.class);
 		

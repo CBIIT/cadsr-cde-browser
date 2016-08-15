@@ -120,7 +120,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.Representation;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomain;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
 /**
- * This is a MVC RESTful controller to download data to Excel file based on provided CDE IDs.
+ * RESTful controller to download CDE data to Excel file based on provided CDE IDs.
  * 
  * @author santhanamv
  *
@@ -309,7 +309,7 @@ public class DownloadCompareExcelController {
 
 		String excelFileSuffix;
 		String excelFilename;		
-		excelFileSuffix = "new";//getExcelDownload.generateExcelFileId() ;
+		excelFileSuffix = getExcelDownload.generateExcelFileId();
 		//the Bean properties set up in the Spring context
 		excelFilename = buildDownloadAbsoluteFileName(excelFileSuffix);
 		//this function saves the file on the local drive
@@ -441,8 +441,6 @@ public class DownloadCompareExcelController {
     @ResponseBody
     public CdeDetails[] downloadCdeCompareExcel( List<String> cdeIds )
     {
-        /*logger.debug( "downloadCdeCompare: " + deIdseq );
-        String[] deIdseqs = deIdseq.split( "," );*/
         int i = 0;
         DataElementModel dataElementModel;
         CdeDetails[] cdeDetailsArray = new CdeDetails[cdeIds.size()];
@@ -666,13 +664,6 @@ public class DownloadCompareExcelController {
 		cell.setCellValue("Data Element Concept");
 		cell.setCellStyle(boldCellStyle);
 
-/*		List cdeConceptList = new ArrayList();
-
-		for (int i = 0; i < amountOfIds; i++){
-			cdeConceptList.add(i, (cdeDetails[i].getDataElementConcept()));	
-		}
-		*/
-
 
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getPublicId());
@@ -738,9 +729,7 @@ public class DownloadCompareExcelController {
 		
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
-/*		cell = row.createCell(0);
-		cell.setCellValue("Reference Documents");
-		cell.setCellStyle(boldCellStyle);*/		
+	
 		
 		List refDocPropertyTitles = new ArrayList();
 		refDocPropertyTitles.add(0, "Document Name");
@@ -750,16 +739,9 @@ public class DownloadCompareExcelController {
 		refDocProperties.add(0, "docName");
 		refDocProperties.add(1, "docType");
 		refDocProperties.add(2, "docText");
-
-		/*rowNumber += this.exportObjects(sheet,   rowNumber,        "Reference Document", "reference-docs", boldCellStyle,
-				cdeDetails, refDocProperties, refDocPropertyTitles);*/
-		
 		
 		rowNumber += this.exportObjects(sheet,   rowNumber,        "Reference Documents", "referenceDocs", boldCellStyle,
 				cdeDetails, refDocProperties, refDocPropertyTitles);
-		
-		
-		
 		
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
@@ -866,21 +848,32 @@ public class DownloadCompareExcelController {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getOrigin());
 		}			
 		addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeList); 
-		cdeList = new ArrayList();
-		
 
+		
+		row = sheet.createRow(rowNumber++);
+		row = sheet.createRow(rowNumber++);
 
 		List pvTitles = new ArrayList();
-		pvTitles.add(0, "Value");
-		pvTitles.add(1, "Value Meaning");
-		pvTitles.add(2, "Description");
+		pvTitles.add(0, "PV");
+		pvTitles.add(1, "PV Meaning");
+		pvTitles.add(2, "PV Meaning Concept Codes");
+		pvTitles.add(3, "PV Meaning Description");
+		pvTitles.add(4, "PV Begin Date");
+		pvTitles.add(5, "PV End Date");
+		pvTitles.add(6, "VM Public ID");
+		pvTitles.add(7, "VM Version");	
 		List pvProperties = new ArrayList();
-		pvProperties.add(0, "shortMeaningValue");
-		pvProperties.add(1, "shortMeaning");
-		pvProperties.add(2, "shortMeaningDescription");
+		pvProperties.add(0, "PV");
+		pvProperties.add(1, "PVMeaning");
+		pvProperties.add(2, "PVMeaningConceptCodes");
+		pvProperties.add(3, "PVMeaningDescription");
+		pvProperties.add(4, "PVBeginDate");
+		pvProperties.add(5, "PVEndDate");
+		pvProperties.add(6, "VMPublicID");
+		pvProperties.add(7, "VMVersion");			
 
 		rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Values",
-		"VALID_VALUES", boldCellStyle,
+		"permissible-values", boldCellStyle,
 		cdeDetails, pvProperties, pvTitles);
 
 
@@ -897,32 +890,50 @@ public class DownloadCompareExcelController {
 
 		rowNumber += this.exportObjects(sheet, rowNumber, "Classifications", "classifications", boldCellStyle,
 				cdeDetails, csProperties, csPropertyTitles);
-
+		
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
 		cell = row.createCell(0);
-		cell.setCellValue("Data Element Derivation");
+		cell.setCellValue("Data Element Derivation - Derivation Details");
 		cell.setCellStyle(boldCellStyle);
+ 
+		List cde1List = new ArrayList();
+		List cde2List = new ArrayList();
+		List cde3List = new ArrayList();
+		List cde4List = new ArrayList();
+		for (int i = 0; i < cdeDetails.length; i++) {
+			if (cdeDetails[i].getDataElementDerivation().getDataElementDerivationDetails()!=null) {
+				cde1List.add(cdeDetails[i].getDataElementDerivation().getDataElementDerivationDetails().getDerivationType());
+				cde2List.add(cdeDetails[i].getDataElementDerivation().getDataElementDerivationDetails().getRule());
+				cde3List.add(cdeDetails[i].getDataElementDerivation().getDataElementDerivationDetails().getMethod());
+				cde4List.add(cdeDetails[i].getDataElementDerivation().getDataElementDerivationDetails().getConcatenationCharacter());
+			}
 
-		// Commented out temporarily to trouble shoot the incorrect writing of other cells in the excel 
-/*		addNewRow(sheet, rowNumber++, "Derivation Type", boldCellStyle, cdeDetails, "derivedDataElement.type.name");
-		addNewRow(sheet, rowNumber++, "Rule", boldCellStyle, cdeDetails, "derivedDataElement.rule");
-		addNewRow(sheet, rowNumber++, "Method", boldCellStyle, cdeDetails, "derivedDataElement.methods");
-		addNewRow(sheet, rowNumber++, "Concatenation Character", boldCellStyle, cdeDetails, "derivedDataElement.concatenationCharacter");*/
+		}		
+		addNewRow(sheet, rowNumber++, "Derivation Type", boldCellStyle, cde1List);
+		addNewRow(sheet, rowNumber++, "Rule", boldCellStyle, cde2List);
+		addNewRow(sheet, rowNumber++, "Method", boldCellStyle, cde3List);
+		addNewRow(sheet, rowNumber++, "Concatenation Character", boldCellStyle, cde4List);
+		
 
 		List dedPropertyTitles = new ArrayList();
-		dedPropertyTitles.add(0, "Long Name");
-		dedPropertyTitles.add(1, "Context");
-		dedPropertyTitles.add(2, "Public ID");
-		dedPropertyTitles.add(3, "Version");
+		dedPropertyTitles.add(0, "Display Order");	
+		dedPropertyTitles.add(1, "Long Name");
+		dedPropertyTitles.add(2, "Context");
+		dedPropertyTitles.add(3, "Workflow Status");		
+		dedPropertyTitles.add(4, "Public ID");		
+		dedPropertyTitles.add(5, "Version");
 		List dedProperties = new ArrayList();
-		dedProperties.add(0, "longName");
-		dedProperties.add(1, "contextName");
-		dedProperties.add(2, "CDEId");
-		dedProperties.add(3, "version");
-
-		rowNumber += this.exportObjects(sheet, rowNumber, "Component Data Elements",
-		"derivedDataElement.dataElementDerivation", boldCellStyle,
+		dedProperties.add(0, "displayOrder");
+		dedProperties.add(1, "longName");
+		dedProperties.add(2, "contextName");
+		dedProperties.add(3, "CDEId");		
+		dedProperties.add(4, "workflowStatus");
+		dedProperties.add(5, "version");
+		
+		cell = row.createCell(0);
+		rowNumber += this.exportObjects(sheet, rowNumber, "Data Element Derivation - Component Data Elements",
+		"de-cde", boldCellStyle,
 		cdeDetails, dedProperties, dedPropertyTitles);
 		return rowNumber;
 	}	
@@ -951,90 +962,55 @@ private void addNewRow(HSSFSheet sheet, int rowNumber, String title, HSSFCellSty
 		}
 }
 
-
-// Will be removed as part of code cleanup once the unit testing is done
-/*private int exportObjects(HSSFSheet sheet,          int rowNumber,  String title,      String propertyName,
+private int exportObjects(HSSFSheet sheet,          int rowNumber, String title,      String propertyName,
         HSSFCellStyle titleStyle, CdeDetails[] cdeDetails,    List propertyList, List titleList) {
 //this row contains the number of valid values for each data element value domain
-	HSSFRow row = sheet.createRow(rowNumber++);
-	HSSFRow startRow;
-	
-	int colNumber = 1;
-	int maxValueNumber = 0;
-	HSSFCell cell;
-	
-//	row = sheet.createRow(rowNumber++);
-//	row = sheet.createRow(rowNumber++);
-//	cell = row.createCell(0);
-//	cell.setCellValue(title);
-//	cell.setCellStyle(titleStyle);
-	int validValueSize = 0;
-	for (int i = 0; i < cdeDetails.length; i++) {		
-		try {
-			//int validValueSize = 20;//((List)PropertyUtils.getProperty(cdeColl.get(i), propertyName)).size();
-			//int validValueSize = cdeDetails[i]//((List)rs.getObject(propertyName)).size();
-			
+HSSFRow row = sheet.createRow(rowNumber++);
 
-			for (int j = 0; j < titleList.size(); j++) {
-				cell = row.createCell(colNumber);
-				cell.setCellStyle(titleStyle);
-				cell.setCellValue(titleList.get(j).toString());		
-				colNumber++;
-			}
-			colNumber++;			
+int colNumber = 1;
+int maxValueNumber = 0;
+HSSFCell cell;
 
-			} catch (Exception e) {
-			logger.debug("Exception in exportObjects " + e.getMessage());
-		}	
-	}
-	startRow = row;
-	colNumber = 1;
-	
-/*	for (int i = 0; i < cdeDetails.length; i++) {
-		if (startRow.getRowNum() != row.getRowNum()) {
-			//row = startRow; 
-		}
-		try {
-			for (int j = 0; j < cdeDetails.length; j++) {
-				List referenceDocs = cdeDetails[j].getDataElement().getReferenceDocuments();
-				row = sheet.createRow(rowNumber++);				
-				validValueSize = referenceDocs.size();
-				for (int l = 0; l < referenceDocs.size(); l++) {
-					row = sheet.createRow(rowNumber++);					
-					ReferenceDocument referenceDoc = (ReferenceDocument)referenceDocs.get(l);
-					cell = row.createCell(colNumber);
-					cell.setCellValue(referenceDoc.getDocumentName());
-					colNumber++;
-					cell = row.createCell(colNumber);					
-					cell.setCellValue(referenceDoc.getDocumentType());
-					colNumber++;
-					cell = row.createCell(colNumber);					
-					cell.setCellValue(referenceDoc.getDocumentText());
-					colNumber++;
-				}
-			}			
-			//cell.setCellValue(validValueSize + " " + title);
-		} catch (Exception e) {
-		logger.debug("Exception in exportObjects " + e.getMessage());
-	}
-	
-	colNumber += COLUMN_PER_CDE;
-	}*/
+row = sheet.createRow(rowNumber++);
+row = sheet.createRow(rowNumber++);
+cell = row.createCell(0);
+cell.setCellValue(title);
+cell.setCellStyle(titleStyle);
 
-/*
-	if (validValueSize > maxValueNumber)
-	maxValueNumber = validValueSize;	
-	
-	
+for (int i = 0; i < cdeDetails.length; i++) {
+cell = row.createCell(colNumber);
+
+try {
+int validValueSize = 0;
+if (propertyName.equalsIgnoreCase("referenceDocs")) {
+	validValueSize = ((List)cdeDetails[i].getDataElement().getReferenceDocuments()).size();
+} else if (propertyName.equalsIgnoreCase("permissible-values")) {
+	validValueSize = ((List)cdeDetails[i].getValueDomain().getPermissibleValues()).size();
+} else if (propertyName.equalsIgnoreCase("classifications")) {	
+	validValueSize = ((List)cdeDetails[i].getClassifications().getClassificationList()).size();
+} else if (propertyName.equalsIgnoreCase("de-cde")) {	
+	validValueSize = ((List)cdeDetails[i].getDataElementDerivation().getDataElementDerivationComponentModels()).size();
+}
+
+if (validValueSize > maxValueNumber)
+maxValueNumber = validValueSize;
+
+	//cell.setCellValue(validValueSize + " " + title);
+} catch (Exception e) {
+//cell.setCellValue("");
+}
+
+colNumber += COLUMN_PER_CDE;
+}
+
 if (maxValueNumber > 0) {
 //this row contains valid value properties
 row = sheet.createRow(rowNumber++);
 
 colNumber = 1;
 
-//for (int i = 0; i < cdeColl.size(); i++) {
 for (int i = 0; i < cdeDetails.length; i++) {
-colNumber = (short)(i * COLUMN_PER_CDE + 1);
+colNumber = i * COLUMN_PER_CDE + 1;
 
 for (int titleIdx = 0; titleIdx < titleList.size(); titleIdx++) {
 cell = row.createCell(colNumber++);
@@ -1049,22 +1025,33 @@ colNumber = 1;
 
 row = sheet.createRow(rowNumber++);
 
-//for (int j = 0; j < cdeColl.size(); j++) {
 for (int j = 0; j < cdeDetails.length; j++) {
 List valueList = null;
 
 try {
-valueList = cdeDetails[j].getDataElement().getReferenceDocuments();
+
+	if (propertyName.equalsIgnoreCase("referenceDocs")) {
+		valueList = (List)cdeDetails[j].getDataElement().getReferenceDocuments();
+	} else if (propertyName.equalsIgnoreCase("permissible-values")) {
+		valueList = (List)cdeDetails[j].getValueDomain().getPermissibleValues();
+	} else if (propertyName.equalsIgnoreCase("classifications")) {	
+		valueList = (List)cdeDetails[j].getClassifications().getClassificationList();
+	} else if (propertyName.equalsIgnoreCase("de-cde")) {	
+		valueList = (List)cdeDetails[j].getDataElementDerivation().getDataElementDerivationComponentModels();
+	}	
 } catch (Exception e) { }
 
 if (valueList != null && valueList.size() > i) {
-colNumber = (short)(j * COLUMN_PER_CDE + 1);
+colNumber = j * COLUMN_PER_CDE + 1;
 
 for (int pIdx = 0; pIdx < propertyList.size(); pIdx++) {
 cell = row.createCell(colNumber++);
 
 try {
-cell.setCellValue("Value Domain");//(PropertyUtils.getProperty(valueList.get(i), (String)propertyList.get(pIdx)).toString());
+	List cdeObjList = new ArrayList();
+	cdeObjList.add(valueList.get(i));
+	String cellValue = getProperty(propertyName ,(String)propertyList.get(pIdx), cdeObjList);
+cell.setCellValue(cellValue);
 } catch (Exception e) {
 cell.setCellValue("");
 }
@@ -1075,109 +1062,67 @@ cell.setCellValue("");
 }     // end of all rows
 
 return (4 + maxValueNumber);
-}    
-*/
-
-
-
-private int exportObjects(HSSFSheet sheet,          int rowNumber, String title,      String propertyName,
-        HSSFCellStyle titleStyle, CdeDetails[] cdeDetails,    List propertyList, List titleList) {
-//this row contains the number of valid values for each data element value domain
-	HSSFRow row = sheet.createRow(rowNumber++);
-	
-	int colNumber = 1;
-	int maxValueNumber = 0;
-	HSSFCell cell;
-
-	//row = sheet.createRow(rowNumber++);
-	//row = sheet.createRow(rowNumber++);
-	cell = row.createCell(0);
-	cell.setCellValue(title);
-	cell.setCellStyle(titleStyle);
-
-	for (int i = 0; i < cdeDetails.length; i++) {
-		cell = row.createCell(colNumber);
-		
-		try {
-			int validValueSize = ((List)cdeDetails[i].getDataElement().getReferenceDocuments()).size();
-			
-			if (validValueSize > maxValueNumber)
-			maxValueNumber = validValueSize;
-			
-			//cell.setCellValue("");
-			} catch (Exception e) {
-			//cell.setCellValue("");
-			}
-		
-		colNumber += COLUMN_PER_CDE;
-	}
-
-		if (maxValueNumber > 0) {
-		//this row contains valid value properties
-			row = sheet.createRow(rowNumber++);
-			
-			colNumber = 1;
-			
-			for (int i = 0; i < cdeDetails.length; i++) {
-				colNumber = i * COLUMN_PER_CDE + 1;
-				
-				for (int titleIdx = 0; titleIdx < titleList.size(); titleIdx++) {
-					cell = row.createCell(colNumber++);
-					
-					cell.setCellValue(titleList.get(titleIdx).toString());
-					cell.setCellStyle(titleStyle);
-				}
-			}
-			int startRow = 0;
-			startRow = rowNumber;			
-			for (int i = 0; i < maxValueNumber; i++) {
-				colNumber = 1;
-				row = sheet.createRow(rowNumber++);
-				
-				for (int j = 0; j < cdeDetails.length; j++) {
-					List valueList = null;
-				
-				try {
-						valueList = (List)cdeDetails[i].getDataElement().getReferenceDocuments();
-					} catch (Exception e) { 
-						logger.error("Error in getting list of reference docs");
-					}
-				
-				if (valueList != null && valueList.size() > i) {
-					colNumber = j * COLUMN_PER_CDE + 1;
-					int startColNumber = colNumber; 
-					for (int pIdx = 0; pIdx < valueList.size(); pIdx++) {
-						colNumber = startColNumber;
-						cell = row.createCell(colNumber++);
-					
-					try {
-						//cell.setCellValue("HH");//(PropertyUtils.getProperty(valueList.get(i), (String)propertyList.get(pIdx)).toString());
-						ReferenceDocument referenceDoc = (ReferenceDocument)valueList.get(pIdx);
-						cell.setCellValue(referenceDoc.getDocumentName());
-						cell = row.createCell(colNumber++);					
-						cell.setCellValue(referenceDoc.getDocumentType());
-						cell = row.createCell(colNumber++);					
-						cell.setCellValue(referenceDoc.getDocumentText());						
-					} catch (Exception e) {
-							cell.setCellValue("");
-					}
-						if (pIdx == valueList.size()-1 && j == cdeDetails.length-1) {
-							rowNumber = startRow;
-							row = sheet.getRow(rowNumber++);	
-						} else {
-							row = sheet.createRow(rowNumber++);
-						}					
-					} //end of writing one object
-				}  //end if object not null
-				}   //end of one row
-			}    //if there is any row
-	}     // end of all rows
-
-return (4 + maxValueNumber);
 }
 
-
-
+private String getProperty (String propertyName, String property, List cdeObjList) {
+	String cellValue = "";
+	if (propertyName.equalsIgnoreCase("referenceDocs")) {	
+		ReferenceDocument referenceDoc = (ReferenceDocument)cdeObjList.get(0);
+		if (property.equalsIgnoreCase("docName")) {
+			cellValue = referenceDoc.getDocumentName();
+		} else if (property.equalsIgnoreCase("docType")) {
+			cellValue = referenceDoc.getDocumentType();
+		} else if (property.equalsIgnoreCase("docText")) {
+			cellValue = referenceDoc.getDocumentText();
+		}		
+	} else if (propertyName.equalsIgnoreCase("permissible-values")) {
+		PermissibleValuesModel pvModel = (PermissibleValuesModel)cdeObjList.get(0);
+		if (property.equalsIgnoreCase("PV")) {
+			cellValue = pvModel.getValue();
+		} else if (property.equalsIgnoreCase("PVMeaning")) {
+			cellValue = pvModel.getShortMeaning();
+		} else if (property.equalsIgnoreCase("PVMeaningConcept Codes")) {
+			cellValue = pvModel.getConceptCode();
+		} else if (property.equalsIgnoreCase("PVMeaningDescription")) {
+			cellValue = pvModel.getMeaningDescription();
+		} else if (property.equalsIgnoreCase("PVBeginDate")) {
+			cellValue = pvModel.getBeginDateString();
+		} else if (property.equalsIgnoreCase("PVEndDate")) {
+			cellValue = pvModel.getEndDateString();
+		} else if (property.equalsIgnoreCase("VMPublicID")) {
+			cellValue = pvModel.getVmId();			
+		} else if (property.equalsIgnoreCase("VMVersion")) {
+			cellValue = pvModel.getVmVersion();			
+		}		
+	} else if (propertyName.equalsIgnoreCase("classifications")) {
+		CsCsi csCsi = (CsCsi)cdeObjList.get(0);
+		if (property.equalsIgnoreCase("classSchemeName")) {	
+			cellValue = csCsi.getCsLongName();
+		} else if (property.equalsIgnoreCase("classSchemeDefinition")) {
+			cellValue = csCsi.getCsDefinition();
+		} else if (property.equalsIgnoreCase("classSchemeItemName")) {
+			cellValue = csCsi.getCsiName();
+		} else if (property.equalsIgnoreCase("classSchemeItemType")) {
+			cellValue = csCsi.getCsiType();
+		}		
+	} else if (propertyName.equalsIgnoreCase("de-cde")) {
+		DataElementDerivationComponentModel deDerivedModel = (DataElementDerivationComponentModel)cdeObjList.get(0);
+		if (property.equalsIgnoreCase("displayOrder")) {
+			cellValue = deDerivedModel.getDisplayOrder();
+		} else  if (property.equalsIgnoreCase("longName")) {
+			cellValue = deDerivedModel.getLongName();
+		} else  if (property.equalsIgnoreCase("contextName")) {
+			cellValue = deDerivedModel.getContext();
+		} else  if (property.equalsIgnoreCase("workflowStatus")) {
+			cellValue = deDerivedModel.getWorkflowStatus();
+		} else  if (property.equalsIgnoreCase("CDEId")) {
+			cellValue = deDerivedModel.getPublicId();
+		} else  if (property.equalsIgnoreCase("version")) {
+			cellValue = deDerivedModel.getVersion();
+		}
+	} 
+	return cellValue;
+}
     
     /**********************************************************************/
     /**********************************************************************/

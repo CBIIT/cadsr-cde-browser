@@ -21,4 +21,5 @@ public interface GetExcelDownloadInterface {
 	String persist(Collection<String> itemIds, String RAI, String source) throws Exception;
 	void setLocalDownloadDirectory(String localDownloadDirectory);
 	public void setFileNamePrefix(String excelFileNamePrefix);
+	public String generateExcelFileId() throws Exception;
 }
