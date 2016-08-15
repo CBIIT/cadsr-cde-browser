@@ -324,6 +324,8 @@ public class CDEDataController
         if( dataElementModelReferenceDocumentList.size() < 1 )
         {
             logger.debug( "No ReferenceDocuments where returned" );
+            referenceDocuments = null;
+            dataElement.setReferenceDocuments( referenceDocuments );
         }
         for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
         {
@@ -801,6 +803,11 @@ public class CDEDataController
         Classifications classifications = new Classifications();
         List<CsCsi> classificationList = new ArrayList<>();
         classifications.setClassificationList( classificationList );
+        if( classificationList.size() < 1 )
+        {
+            logger.debug( "No ReferenceDocuments where returned" );
+            classifications = null;
+        }
         for( CsCsiModel csCsiModel : dataElementModel.getClassifications() )
         {
             CsCsi csCsi = new CsCsi( csCsiModel );

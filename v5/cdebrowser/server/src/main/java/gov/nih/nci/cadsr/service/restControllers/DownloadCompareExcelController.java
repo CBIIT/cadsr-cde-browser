@@ -995,7 +995,7 @@ if (propertyName.equalsIgnoreCase("referenceDocs")) {
 if (validValueSize > maxValueNumber)
 maxValueNumber = validValueSize;
 
-	//cell.setCellValue(validValueSize + " " + title);
+	cell.setCellValue(validValueSize + " " + title);
 } catch (Exception e) {
 //cell.setCellValue("");
 }
