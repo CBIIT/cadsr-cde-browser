@@ -60,7 +60,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // watch for changes to dropdowns. When it changes, refilter data //
     $scope.$watch('filterService.searchFilter', function(updated,previous) {
-        if (fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
+        if ($scope.fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
             fs.isLeftTreeClick = false;
         }
         else {
@@ -149,8 +149,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-        $scope.filterService.searchFilter.classification = "";
-        $scope.filterService.searchFilter.protocol = "";
+        
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')){
@@ -238,10 +237,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     var isInitialColumnClick = 0; // used for sort order direction override. See $scope.$watch('tableParams.sorting()' function //
 
     // Search concept - radio buttons
-    $scope.concept = [
-        {id:"0",name:"Concept Name"},
-        {id:"1",name:"Concept Code"}
-    ];
+    // $scope.concept = [
+    //     {id:"0",name:"Concept Name"},
+    //     {id:"1",name:"Concept Code"}
+    // ];
 
     // Search query types - radio buttons
     $scope.searchQueryTypes = [
@@ -392,10 +391,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.currentTab = tab;
         $scope.hideContexts();
         $scope.show[tab] = true;
-        // $scope.testtrianing
-        // var sidetree=angular.copy($scope.contextListMaster);
-        // $scope.contextListMaster="";
-        // $scope.contextListMaster=sidetree;
         if($scope.contextListMaster[tab].text.toLowerCase()=="unassigned")
             $scope.$broadcast('updateTree',$scope.testtrianing);
     };
@@ -456,7 +451,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.changeLocation = function (location) {
-        // $scope.showSearch = false;
         $location.path(location).replace();
     };
 
@@ -607,7 +601,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             if(fs.searchFilter[x].id==fs.searchFilter[x].csCsiIdSeq){
                                 url+=connector+"csCsiIdSeq"+"="+fs.searchFilter[x].id;
                             }
-                        }else{
+                        }else if(x=='context'){
                             url+=connector+x+"="+fs.searchFilter[x].toString();
                         }
                     };
@@ -620,7 +614,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //
         }
         else {
-            //$scope.breadCrumbs = [$scope.contextListMaster[fs.searchFilter.programArea].text];
             $scope.breadCrumbs = fs.createBreadcrumbs();
         }
 
@@ -651,9 +644,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Basic search query to get search results //
     $scope.searchServerRestCall = function (serverUrl, searchType, id, isNode, isDropdown, selectedNode) {
-        // $scope.searchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
+        var isDataFilling="";
         if (searchType==undefined) { // used when doing keyword search //
             var url = "".concat("/",serverUrl)
         }
@@ -664,23 +657,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (isNode) {
             if (!isDropdown) // check if user selected dropdown instead of tree //
             {
-                // if(selectedNode.isChild){
-                //     $scope.contextSearch({idSeq:selectedNode.contextId,selectedNode:selectedNode,searchType:searchType,id:id});
-                // }
+                fs.isLeftTreeClick=true;
                 if (searchType=='contextId') {
                     $scope.contextSearch({idSeq:selectedNode.idSeq});
                     $scope.selectFiltersByNode(searchType,id, selectedNode);
                 }
-                else if(selectedNode.isChild){
+                else if(selectedNode.isChild) {
                     $scope.contextSearch({idSeq:selectedNode.contextId,selectedNode:selectedNode,searchType:searchType,id:id});
                 }
-                // $scope.selectFiltersByNode(searchType,id, selectedNode);
             };
             $scope.isNode  = !$scope.isNode;
         }
         // reset filters if user searches using the text box //
         else {
-            // $scope.resetFilters();
         }
 
         $scope.tabsDisabled = true;
@@ -689,10 +678,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.isSearching = true;
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
-
-        $http.get(url).success(function (response) {
+            $http.get(url).success(function (response) {
             fs.isSearching = false;
-            // $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
             $scope.tableParams.settings({ dataset: response });
             if ($scope.searchResults.length > 0) {
@@ -727,6 +714,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.tableParams.reload();
             }
         });
+       // }
+
+        
     };
 
 
@@ -1133,13 +1123,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.initTableParams(); // init table params //
     $scope.hideContexts();
-    //$scope.getAlternateNameTypesFromServer();
-
     $scope.dataLoadFromServer();
-
-    // $scope.dataLoad6();
-
-
     $scope.versionData();
     $scope.getToolHosts();
 
