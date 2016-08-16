@@ -58,9 +58,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         };
     });
 
+    // $scope.$watch('filterService.searchFilter',function(){
+
+    // })
+
     // watch for changes to dropdowns. When it changes, refilter data //
     $scope.$watch('filterService.searchFilter', function(updated,previous) {
-        if (fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
+        if ($scope.fs.isLeftTreeClick) { // check to see if left nav was clicked, if so bypass the dropdown search //
             fs.isLeftTreeClick = false;
         }
         else {
@@ -149,8 +153,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-        $scope.filterService.searchFilter.classification = "";
-        $scope.filterService.searchFilter.protocol = "";
+        
+        // $scope.filterService.searchFilter.classification = undefined;
+        // $scope.filterService.searchFilter.protocol = undefined;
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')){
@@ -168,6 +173,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     var fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
                 }
                 $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
+        //         delete $scope.filterService.searchFilter.classification;
+        // delete $scope.filterService.searchFilter.protocol;
             }
             else{
             $scope.filterService.protocols = groupFactory.load(0);
@@ -607,7 +614,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             if(fs.searchFilter[x].id==fs.searchFilter[x].csCsiIdSeq){
                                 url+=connector+"csCsiIdSeq"+"="+fs.searchFilter[x].id;
                             }
-                        }else{
+                        }else if(x=='context'){
                             url+=connector+x+"="+fs.searchFilter[x].toString();
                         }
                     };
@@ -654,6 +661,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // $scope.searchServerRestCall = function (serverUrl,isNode, id, type) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
+        var isDataFilling="";
         if (searchType==undefined) { // used when doing keyword search //
             var url = "".concat("/",serverUrl)
         }
@@ -664,6 +672,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (isNode) {
             if (!isDropdown) // check if user selected dropdown instead of tree //
             {
+                fs.isLeftTreeClick=true;
                 // if(selectedNode.isChild){
                 //     $scope.contextSearch({idSeq:selectedNode.contextId,selectedNode:selectedNode,searchType:searchType,id:id});
                 // }
@@ -672,6 +681,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.selectFiltersByNode(searchType,id, selectedNode);
                 }
                 else if(selectedNode.isChild){
+                    //isDataFilling=true;
+
                     $scope.contextSearch({idSeq:selectedNode.contextId,selectedNode:selectedNode,searchType:searchType,id:id});
                 }
                 // $scope.selectFiltersByNode(searchType,id, selectedNode);
@@ -689,8 +700,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.isSearching = true;
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
-
-        $http.get(url).success(function (response) {
+        //if(!isDataFilling){
+            $http.get(url).success(function (response) {
             fs.isSearching = false;
             // $scope.tableParams.$params.page = 1;
             $scope.searchResults = response;
@@ -727,6 +738,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.tableParams.reload();
             }
         });
+       // }
+
+        
     };
 
 
