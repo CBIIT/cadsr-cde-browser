@@ -4,6 +4,7 @@
 package gov.nih.nci.cadsr.download;
 
 import java.io.FileOutputStream;
+
 import java.util.Collection;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -14,7 +15,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import gov.nih.nci.cadsr.service.restControllers.DownloadExcelController;
-
+/**
+ * 
+ * @author asafievan
+ *
+ */
 public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 	private String localDownloadDirectory;  //"/local/content/cdebrowser/output/" a value provided by service controller
 	private String fileNamePrefix; // a value provided by service controller
