@@ -110,8 +110,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 	$scope.excelDownload = function() {
 		var items = [];
 		items = compareService.checkedItemsForCompare;
-    console.log(compareService.checkedItemsForCompare);
-    console.log(items);
 		var param = false;
 		$scope.downloadFactory.excelDownload(param,items);
 	};
