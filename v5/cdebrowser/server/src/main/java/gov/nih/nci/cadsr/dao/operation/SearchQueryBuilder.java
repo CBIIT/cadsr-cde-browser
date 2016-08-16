@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gov.nih.nci.cadsr.dao.DataElementConceptDAO;
-import gov.nih.nci.cadsr.dao.DataElementConceptDAOImpl;
 import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -271,11 +270,11 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
 
 
-        if( StringUtils.isNotBlank( searchCriteria.getPublicId() ) && ( !searchCriteria.getPublicId().trim().equals( "*" ) ) )
+        if( StringUtils.isNotBlank( searchCriteria.getPublicId() ))
         {
-            String newCdeStr = StringReplace.strReplace( searchCriteria.getPublicId(), "*", "%" );
-            cdeIdWhere = " AND " + buildSearchString( "to_char(de.cde_id) LIKE 'SRCSTR'", newCdeStr, searchCriteria.getSearchMode() )
-                    + " AND de.latest_version_ind = 'Yes' ";
+            String cdeStrPublicIdSqlFragment = SearchQueryBuilderUtils.buildSearchByPublicId(searchCriteria.getPublicId(), "de.cde_id");
+            cdeIdWhere = cdeStrPublicIdSqlFragment
+                    + "AND de.latest_version_ind = 'Yes' ";
         }
 
         if( StringUtils.isNotBlank( searchCriteria.getValueDomain() ) )

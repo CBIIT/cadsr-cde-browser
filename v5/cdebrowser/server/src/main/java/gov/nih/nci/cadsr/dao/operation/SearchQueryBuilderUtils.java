@@ -3,6 +3,8 @@
  */
 package gov.nih.nci.cadsr.dao.operation;
 
+import java.util.StringTokenizer;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -160,5 +162,48 @@ public class SearchQueryBuilderUtils {
 		}
 		
 		return resultWhere;
+	}
+	/**
+	 * Parses Public ID filter string, and returns SQL where clause part as ((TO_CHAR(de.cde_id) like '4%5%1') or (de.cde_id = 76) or ...)
+	 * 
+	 * @param publicIdFilter
+	 * @return
+	 */
+	public static String buildSearchByPublicId(String publicIdFilter, String columnName) {
+		if (StringUtils.isBlank(publicIdFilter)) {
+			return "";
+		}
+		StringTokenizer st = new StringTokenizer(publicIdFilter, " ,");
+		if (! st.hasMoreTokens()) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder(" (");
+		String curr;
+		int idx;
+		while (st.hasMoreTokens()) {
+			curr = st.nextToken();
+			if (StringUtils.isBlank(curr)) 
+				continue;
+			idx = curr.indexOf('*');
+			if (idx >= 0) {
+				sb.append("(TO_CHAR(").append(columnName).append(") like '");
+				sb.append(StringUtils.replaceChars(curr, '*', '%'));
+				sb.append("') or ");//4 chars for the next group
+			}
+			else {
+				sb.append('(').append(columnName).append(" = ");
+				sb.append(curr);
+				sb.append(") or ");//4 chars for the next group
+			}
+		}
+		
+		String res = "";
+		if (sb.length() > 2) {//we have append something from IDs filter
+			res = sb.toString();
+			res = res.substring(0, res.length() - 4);//remove 4 extra characters from the last group
+			res = " AND" + res + ") ";
+		}
+
+		return res;
 	}
 }

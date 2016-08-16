@@ -162,7 +162,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
-        assertEquals( cleanup( sqlStmt ), cleanup( sql00 ) );
+        assertEquals( cleanup( sql00 ), cleanup( sqlStmt ));
     }
 
     @Test
@@ -584,7 +584,7 @@ public class SearchQueryBuilderTest
             "                         'Training')" +
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
-            "  AND to_char(de.cde_id) LIKE '25%'" +
+            "  AND ((to_char(de.cde_id) LIKE '25%'))" +
             "  AND de.latest_version_ind = 'Yes'" +
             "  AND de.de_idseq = acr.ac_idseq (+)" +
             "  AND acr.registration_status = rsl.registration_status (+)" +
@@ -622,7 +622,7 @@ public class SearchQueryBuilderTest
             "                         'Training')" +
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
-            "  AND to_char(de.cde_id) LIKE '25%'" +
+            "  AND ((to_char(de.cde_id) LIKE '25%'))" +
             "  AND de.latest_version_ind = 'Yes'" +
             "  AND de.de_idseq = acr.ac_idseq (+)" +
             "  AND acr.registration_status = rsl.registration_status (+)" +
@@ -662,7 +662,7 @@ public class SearchQueryBuilderTest
             "    'TEST', 'TRAINING'" +
             ")" +
             "AND CONTE.CONTE_IDSEQ = DE.CONTE_IDSEQ " +
-            "AND TO_CHAR(DE.CDE_ID)LIKE '25%' " +
+            "AND ((TO_CHAR(DE.CDE_ID)LIKE '25%')) " +
             "AND DE.LATEST_VERSION_IND = 'YES' " +
             "AND DE.DE_IDSEQ = ACR.AC_IDSEQ(+)" +
             "AND ACR.REGISTRATION_STATUS = RSL.REGISTRATION_STATUS(+)" +
