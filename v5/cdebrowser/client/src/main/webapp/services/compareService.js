@@ -22,7 +22,6 @@ angular.module("cdeBrowserApp").service('compareService', function () {
     this.idList = "";
 
     this.compareCDE = function (checkedItemsForDownload, searchResults) {
-        // this.checkedItemsForCompare = [];
         
         //Add any newly checked CDEs  CHECKME, make sure this is the correct functionality.
         this.addToCompare(checkedItemsForDownload, searchResults);
@@ -40,21 +39,18 @@ angular.module("cdeBrowserApp").service('compareService', function () {
 
         this.idList = cdeListString;
 
-        // var usrlString= window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserClient/cdeCompare.html?cde=" + cdeListString;
-        // window.open(usrlString);
-      
-
-     this.deleteCheckedItemsforCompare=function(id,all){
-        if(all){
-           this.checkedItemsForCompare=[]; 
-        }else{
-        var len=this.checkedItemsForCompare.length;
-for(var x=0;x<len;x++){
-if(this.checkedItemsForCompare[x]==id){
-    this.checkedItemsForCompare.splice(x,1);
-    break;
-}
-}    
+     this.deleteCheckedItemsforCompare = function(id,all){
+        if(all) {
+           this.checkedItemsForCompare = []; 
+        }
+        else {
+            var len=this.checkedItemsForCompare.length;
+            for(var x=0;x<len;x++) {
+                if(this.checkedItemsForCompare[x]==id) {
+                    this.checkedItemsForCompare.splice(x,1);
+                    break;
+                }
+            }    
         }
         
      }   

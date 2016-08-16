@@ -9,7 +9,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
     $scope.compareService = compareService;
     $scope.downloadFactory = new downloadFactory();
     $scope.checkedItems = [];
-   // $scope.compareDataDoneLoading = false;
 
     //CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
@@ -21,8 +20,6 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
     $scope.multipleCdeDetails = function () {
 
         $scope.compareDataDoneLoading = false;
-        // var idList = window.location.toString().split('?cde=')[1];
-        // $scope.compareDataDoneLoading = false;
         $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/multiCDEData?deIdseq=" + compareService.idList);
     };
 
@@ -36,12 +33,11 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function (serverUrl) {
         $http.get(serverUrl).success(function (response) {
-         var len=compareService.checkedItemsForCompare.length;
+         var len = compareService.checkedItemsForCompare.length;
          $scope.cdeDetails = response;
           for(var i=0;i<len;i++){
             $scope.cdeDetails[i].id=compareService.checkedItemsForCompare[i];
           }
-            
             $scope.compareDataDoneLoading = true;
             // FIXME  Check here for errors
         });
@@ -54,9 +50,9 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
     };
 
-  //							//
-  //	FOR TESTING PURPOSE		//
-  //  							//
+  //							           //
+  //	FOR TESTING PURPOSE		 //
+  //  							         //
 
   //   $scope.dataLoad1 = function () {
   //       $scope.dataLoad("data1.json");
@@ -84,34 +80,19 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 
   // $scope.dataLoad6();
 	
-  //							//
-  //	END TESTING PURPOSE		//
-  //  							//
+  //							           //
+  //	END TESTING PURPOSE		 //
+  //  							         //
 
    	$scope.deleteAllCDEs = function() {
    		$scope.cdeDetails.splice(0);
       compareService.deleteCheckedItemsforCompare('',true);
-
    	}
    	
    	$scope.deleteCDE = function(id,ndx) {
    		$scope.cdeDetails.splice(ndx,1);
       compareService.deleteCheckedItemsforCompare(id,false);
    	}
-
-   	// $scope.selectAll=function(){
-   	// 	for(var i=0;i<$scope.cdeDetails.length;i++){
-   	// 		$scope.checkedItems[i]=$scope.checkAllItems;
-   	// 	}
-   	// }
-
-   	// $scope.checkSelection=function(){
-   	// 	if($filter('filter')($scope.checkedItems,true).length===$scope.cdeDetails.length)
-   	// 		$scope.checkAllItems=true;
-   	// 	else
-   	// 		$scope.checkAllItems=false;
-
-   	// }
 
 	$scope.goTo = function(id) {
 		var change = $location.hash();
@@ -120,37 +101,25 @@ angular.module("cdeCompare").controller("cdeCompareController",  ["$scope", "$ht
 		$location.hash(change);
 	}
 
-   	// go back to search screen, show search area //
+  // go back to search screen, show search area //
 	$scope.goBack = function() {
-		$scope.checkboxes.items={};
+		$scope.checkboxes.items = {};
 		$location.path("/search");
 	};
 
 	$scope.excelDownload = function() {
-
-		var items=[];
-
-		// for(var i=0;i<$scope.checkedItems.length;i++) {
-		// 	if($scope.checkedItems[i])
-		// 	items.push(compareService.idList.split(',')[i]);
-		// }
-
-		items=compareService.idList.split(",");
-
-		// console.log(items);
+		var items = [];
+		items = compareService.checkedItemsForCompare;
+    console.log(compareService.checkedItemsForCompare);
+    console.log(items);
 		var param = false;
 		$scope.downloadFactory.excelDownload(param,items);
-
 	};
 
     $scope.compareDataDoneLoading = "true";
     $scope.compareDataLoading2 = "true";
 
     scope.multipleCdeDetails();
-
-/*
-  $scope.multipleCdeDetails('058122C4-17DC-D98B-E050-BB89AD437492,CFCBA97B-D243-5D7B-E034-0003BA12F5E7');
-*/
 
 }]);
 

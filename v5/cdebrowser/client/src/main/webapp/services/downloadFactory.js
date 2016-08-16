@@ -31,8 +31,6 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 	    };
 
-
-
 	    // excel download from compare screen //
 	     this.excelDownload = function(param, items) {
 	     	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
@@ -48,8 +46,6 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 	             });
 
 	     };
-
-
 
 	    // downloads selected items to an excel file //
 	    this.downloadToXML = function(items) {
@@ -67,7 +63,6 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 
 	    // creates array of deIdseq numbers for download as an array //
 	    this.createDownloadableArray = function(items) {
-	    	// console.log(items);
 	    	var itemArray = [];
 	    	for (var x in items) {
 	    		itemArray.push(x)
