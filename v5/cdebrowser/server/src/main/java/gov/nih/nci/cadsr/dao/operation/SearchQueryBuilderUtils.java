@@ -107,6 +107,8 @@ public class SearchQueryBuilderUtils {
 		
 		String newConceptFilter = conceptFilter.replaceAll("\\*", "%").trim();
 		
+		newConceptFilter = newConceptFilter.replaceAll("'", "''");
+		
 		conceptNameWhere = " where upper(long_name) like upper('" + newConceptFilter + "')";		
 
 		conceptCodeWhere += " or upper(preferred_name) like upper('"+ newConceptFilter + "')";
