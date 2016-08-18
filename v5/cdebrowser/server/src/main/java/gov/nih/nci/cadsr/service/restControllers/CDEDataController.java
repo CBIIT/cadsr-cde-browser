@@ -924,7 +924,12 @@ public class CDEDataController
             logger.debug( "dataElementDerivationModel: " + dataElementDerivationModel.toString() );
             dataElementDerivation.setDataElementDerivationDetails( dataElementDerivationModel );
             List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId( dataElementModel.getCdeId() );
-            dataElementDerivation.setDataElementDerivationComponentModels( dataElementDerivationComponentModels );
+            if (dataElementDerivationComponentModels.size() > 0) {
+            	dataElementDerivation.setDataElementDerivationComponentModels( dataElementDerivationComponentModels );	
+            } else {
+            	dataElementDerivation.setDataElementDerivationComponentModels(null);
+            }
+            
         }
         return dataElementDerivation;
     }
