@@ -11,9 +11,9 @@
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementValue">
-        PV Meaning = {{p_value.value}}<br />
-        VM Public ID = {{p_value.vmId}}<br />
-        VM Version = {{p_value.formattedVersion}}<br />
+        PV Meaning = <span ng-bind-html="p_value.value">{{p_value.value}}</span><br />
+        VM Public ID = <span ng-bind-html="p_value.vmId">{{p_value.vmId}}</span><br />
+        VM Version = <span ng-bind-html="p_value.formattedVersion">{{p_value.formattedVersion}}</span><br />
         </td>
         <td style="vertical-align:top;padding:0;">
         	<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
