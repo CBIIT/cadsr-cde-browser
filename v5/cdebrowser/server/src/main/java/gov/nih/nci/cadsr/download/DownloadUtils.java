@@ -11,6 +11,7 @@ import java.util.Iterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.service.ClientException;
 
 public class DownloadUtils {
@@ -34,7 +35,9 @@ public class DownloadUtils {
 		for (int indx = 0; indx < max; indx++) {
 			if (iter.hasNext()) {
 				currVal = iter.next();
-				sb.append("'" + currVal + "', ");
+				if (ParameterValidator.validateIdSeq(currVal)) {
+					sb.append("'" + currVal + "', ");
+				}
 			}
 			else break;
 		}

@@ -11,10 +11,10 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -128,7 +128,7 @@ public class DownloadExcelController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
 		File file = new File (excelFileName);
-		if (file.exists()) {
+		if ((StringUtils.isNumeric(fileId)) && (file.exists())) {
 			responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + fileExtension);
 			
 			try {

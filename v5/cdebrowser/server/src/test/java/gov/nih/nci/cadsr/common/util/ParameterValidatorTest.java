@@ -57,4 +57,32 @@ public class ParameterValidatorTest {
 	public void testNotNumberLetters() {
 		assertFalse(ParameterValidator.validatePublicIdWIthStar("aB*cv"));
 	}
+	@Test
+	public void testValidateIdSeqOK() {
+		assertTrue(ParameterValidator.validateIdSeq("D6C8D723-02FA-6501-E034-0003BA12F5E7"));
+	}
+	@Test
+	public void testValidateIdSeqShort() {
+		assertFalse(ParameterValidator.validateIdSeq("D6C8D723-02FA-6501-E034-0003BA12F5E"));
+	}
+	@Test
+	public void testValidateIdSeqLong() {
+		assertFalse(ParameterValidator.validateIdSeq("D6C8D723-02FA-6501-E034-0003BA12F5E71"));
+	}
+	@Test
+	public void testValidateIdSeqWrongFormat1() {
+		assertFalse(ParameterValidator.validateIdSeq("1D6C8D72302FA-6501-E034-0003BA12F5E7"));
+	}
+	@Test
+	public void testValidateIdSeqWrongFormat2() {
+		assertFalse(ParameterValidator.validateIdSeq("2D6C8D723-02FA6501-E034-0003BA12F5E7"));
+	}
+	@Test
+	public void testValidateIdSeqWrongFormat3() {
+		assertFalse(ParameterValidator.validateIdSeq("3D6C8D723-02FA-6501E034-0003BA12F5E7"));
+	}
+	@Test
+	public void testValidateIdSeqWrong4() {
+		assertFalse(ParameterValidator.validateIdSeq("D6C-D723-02FA-6501-E034-000-BA12F5E7"));
+	}
 }
