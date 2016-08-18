@@ -50,7 +50,7 @@ public class SearchQueryBuilderUtilsTest {
 	public void testBuildSearchByPublicIdEmpty() {
 		String publicIdFilter = "  ";
 		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
-		assertEquals("Expected SQL fragment for Public ID search", "", received);
+		assertEquals("Expected SQL fragment for Public ID search", " AND ((de.cde_id = -1)) ", received);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class SearchQueryBuilderUtilsTest {
 	public void testBuildSearchByPublicIdNull() {
 		String publicIdFilter = null;
 		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
-		assertEquals("Expected SQL fragment for Public ID search", "", received);
+		assertEquals("Expected SQL fragment for Public ID search", " AND ((de.cde_id = -1)) ", received);
 	}
 	@Test
 	public void testBuildSearchByPublicIdAll() {
@@ -77,5 +77,28 @@ public class SearchQueryBuilderUtilsTest {
 		String expected = " AND ((TO_CHAR(de.cde_id) like '%')) ";
 		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
 		assertEquals("Expected SQL fragment for Public ID search", expected, received);
+	}
+	@Test
+	public void testBuildSearchByPublicIdWrongAll() {
+		String publicIdFilter = " abc def";
+		String expectedSearchSQL = " AND ((de.cde_id = -1)) ";
+		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
+		assertEquals("Expected SQL fragment for Public ID search", expectedSearchSQL, received);
+	}
+	
+	@Test
+	public void testBuildSearchByPublicIdPartlyWrong() {
+		String publicIdFilter = " *2*3 2ae";
+		String expectedSearchSQL = " AND ((TO_CHAR(de.cde_id) like '%2%3')) ";
+		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
+		assertEquals("Expected SQL fragment for Public ID search", expectedSearchSQL, received);
+	}
+	
+	@Test
+	public void testBuildSearchByPublicIdAllWrong() {
+		String publicIdFilter = " *2*&3 2a%e*";
+		String expectedSearchSQL = " AND ((de.cde_id = -1)) ";
+		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
+		assertEquals("Expected SQL fragment for Public ID search", expectedSearchSQL, received);
 	}
 }

@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
@@ -20,6 +21,8 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
  */
 public class SearchQueryBuilderUtils {
 	private static Logger logger = LogManager.getLogger(SearchQueryBuilderUtils.class.getName());
+	//will be used if all provided public IDs are not valid ensure an empty search result
+	public static final String NONEXISTED_PUBLIC_ID = "-1";
 
 	public static String buildAltNamesWhere(String text, String altNameTypesStr) {
 		String altWhere = "";
@@ -167,12 +170,13 @@ public class SearchQueryBuilderUtils {
 	 * Parses Public ID filter string, and returns SQL where clause part as ((TO_CHAR(de.cde_id) like '4%5%1') or (de.cde_id = 76) or ...)
 	 * 
 	 * @param publicIdFilter
-	 * @return
+	 * @return String SQL fragment
 	 */
 	public static String buildSearchByPublicId(String publicIdFilter, String columnName) {
 		if (StringUtils.isBlank(publicIdFilter)) {
-			return "";
+			return " AND (("+ columnName + " = -1)) ";//no results if filter is empty
 		}
+		boolean foundNotValidId = false;
 		StringTokenizer st = new StringTokenizer(publicIdFilter, " ,");
 		if (! st.hasMoreTokens()) {
 			return "";
@@ -186,18 +190,35 @@ public class SearchQueryBuilderUtils {
 				continue;
 			idx = curr.indexOf('*');
 			if (idx >= 0) {
-				sb.append("(TO_CHAR(").append(columnName).append(") like '");
-				sb.append(StringUtils.replaceChars(curr, '*', '%'));
-				sb.append("') or ");//4 chars for the next group
+				if (ParameterValidator.validatePublicIdWIthStar(curr)) {
+					sb.append("(TO_CHAR(").append(columnName).append(") like '");
+					sb.append(StringUtils.replaceChars(curr, '*', '%'));
+					sb.append("') or ");//4 chars for the next group
+				}
+				else {
+					foundNotValidId = true;
+				}
 			}
 			else {
-				sb.append('(').append(columnName).append(" = ");
-				sb.append(curr);
-				sb.append(") or ");//4 chars for the next group
+				if (StringUtils.isNumeric(curr)) {
+					sb.append('(').append(columnName).append(" = ");
+					sb.append(curr);
+					sb.append(") or ");//4 chars for the next group
+				}
+				else {
+					foundNotValidId = true;
+				}
 			}
 		}
 		
 		String res = "";
+		if ((sb.length() == 2) && (foundNotValidId)) {
+			//We have only invalid IDs we make the search return empty
+			sb.append('(').append(columnName).append(" = ");
+			sb.append(NONEXISTED_PUBLIC_ID);
+			sb.append(") or ");//4 chars for the next group
+		}
+		
 		if (sb.length() > 2) {//we have append something from IDs filter
 			res = sb.toString();
 			res = res.substring(0, res.length() - 4);//remove 4 extra characters from the last group
@@ -206,4 +227,5 @@ public class SearchQueryBuilderUtils {
 
 		return res;
 	}
+	
 }
