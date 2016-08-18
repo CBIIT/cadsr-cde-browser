@@ -32,7 +32,7 @@
             </div>
             <label data-ng-repeat="queryType in searchVDTQueryTypes">
                 <div class="queryTypeRadioButtons">
-                    <input ng-disabled="fs.isSearching || fs.dataElementVariables.searchVD==''"
+                    <input ng-disabled="fs.isSearching"
                            name="searchVDTQueryType"
                            type="radio"
                            value="{{queryType.id}}"
