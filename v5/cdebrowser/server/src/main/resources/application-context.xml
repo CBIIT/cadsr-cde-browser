@@ -112,6 +112,13 @@
         <property name="conceptDAO" ref="conceptDAO"/>
     </bean>
 
+    <bean id="alternateDefinitionDAO" class="gov.nih.nci.cadsr.dao.AlternateDefinitionDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+    <bean id="alternateNameDAO" class="gov.nih.nci.cadsr.dao.AlternateNameDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+    </bean>
+
     <bean id="toolOptionsDAO" class="gov.nih.nci.cadsr.dao.ToolOptionsDAOImpl" parent="abstractDao"/>
 
     <bean id="representationConceptsDAO" class="gov.nih.nci.cadsr.dao.RepresentationConceptsDAOImpl"
@@ -130,6 +137,11 @@
           parent="abstractDao"/>
     <bean id="objectClassConceptDAO" class="gov.nih.nci.cadsr.dao.ObjectClassConceptDAOImpl" parent="abstractDao">
         <property name="conceptDAO" ref="conceptDAO"/>
+    </bean>
+
+    <bean id="valueMeaningDAO" class="gov.nih.nci.cadsr.dao.ValueMeaningDAOImpl" parent="abstractDao">
+        <property name="alternateDefinitionDAO" ref="alternateDefinitionDAO"/>
+        <property name="alternateNameDAO" ref="alternateNameDAO"/>
     </bean>
 
     <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao"/>

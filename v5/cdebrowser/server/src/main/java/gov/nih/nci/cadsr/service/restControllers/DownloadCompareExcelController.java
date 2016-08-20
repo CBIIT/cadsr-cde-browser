@@ -121,7 +121,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomain;
 import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
 /**
  * RESTful controller to download CDE data to Excel file based on provided CDE IDs.
- * 
+ *
  * @author santhanamv
  *
  */
@@ -132,13 +132,13 @@ public class DownloadCompareExcelController {
 	private static Logger logger = LogManager.getLogger(DownloadCompareExcelController.class.getName());
 	@Autowired
 	GetExcelDownloadInterface getExcelDownload;
-	
+
 	@Autowired
 	AppConfig appConfig;
-	
+
     @Autowired
     private DataElementDAO dataElementDAO;
-    
+
     @Autowired
     private ReferenceDocDAO referenceDocDAO;
 
@@ -175,9 +175,9 @@ public class DownloadCompareExcelController {
 
     @Autowired
     private DesignationDAO designationDAO;
-    
+
     @Autowired
-    private UserManagerDAO userManagerDAO;    	
+    private UserManagerDAO userManagerDAO;
 
 	/*@Value("${registrationAuthorityIdentifier}")
 	String registrationAuthorityIdentifier;
@@ -186,29 +186,29 @@ public class DownloadCompareExcelController {
 	@Value("${downloadFileNamePrefix}")
 	String fileNamePrefix;*/
 	public static final String fileExtension = ".xls";
-	private static final int COLUMN_PER_CDE = 4;	
-	
+	private static final int COLUMN_PER_CDE = 4;
+
 //	@Value("${downloadDirectory}")
 	String localDownloadDirectory = "/local/content/cdebrowser/output/";
 //	@Value("${downloadFileNamePrefix}")
 	String fileNamePrefix = "DataElements_";
-	
-	
+
+
 	//Client Error Texts
 	public static final String clientErrorMessageFileNotFound = "Please contact the support group. Expected Excel file is not found on the server: '%s'.";
 	public static final String clientErrorMessageWrongParam = "The expected ‘src’ parameter value is not correct. Please correct the value and try again. Received: '%s'.";
 	public static final String clientErrorMessageNoIDs = "Please select CDEs in the search results and download again. Expected CDE IDs were not provided.";
-	
+
 	//Server Error Text
 	public static final String serverErrorMessage = "Please contact the support group for the following Java error message: %s.";
 	public static final String serverErrorMessageStreaming = "Please contact the support group. An error occurred in downloaded document streaming '%s'. Java error message: %s.";
 	public static final String serverErrorBuildingDocument = "unable to build Excel document file.";
-	
+
 
 	public void setGetExcelDownload(GetExcelDownloadInterface getExcelDownload) {
 		this.getExcelDownload = getExcelDownload;
 	}
-	
+
 /*	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
 	}
@@ -220,14 +220,14 @@ public class DownloadCompareExcelController {
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<String> downloadExcel(RequestEntity<List<String>> request) {
 		logger.debug("Received rest call downloadCompareExcel");
-		
+
 		URI url = request.getUrl();
 
 		String path = String.format("%s://%s:%d%s",url.getScheme(),  url.getHost(), url.getPort(), url.getPath());
 
 		//String path = url.getPath();
 		List<String> cdeIds = request.getBody();
-		
+
 		String excelFileId = null;
 		try {
 /*
@@ -241,11 +241,11 @@ public class DownloadCompareExcelController {
 			CdeDetails[] cdeDetailsArray = downloadCdeCompareExcel(cdeIds);
 			logger.debug("CDE details Array: " + cdeDetailsArray.length);
 			excelFileId = persist(cdeDetailsArray);
-		
+
 			if (excelFileId != null) {
 				HttpHeaders responseHeaders = new HttpHeaders();
 				String location = path + '/'+ excelFileId;
-				logger.debug("Location header value: " + location);	
+				logger.debug("Location header value: " + location);
 				responseHeaders.set("Location", location);
 				//cdebrowser client expects file ID in the response body or an error message
 				return new ResponseEntity<String>(excelFileId, responseHeaders, HttpStatus.CREATED);
@@ -255,7 +255,7 @@ public class DownloadCompareExcelController {
 				logger.error(str);
 				return new ResponseEntity<String>(str , HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-		} 
+		}
 		catch (ClientException e) {
 			logger.error("Sending client error: " + e);
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -271,11 +271,11 @@ public class DownloadCompareExcelController {
 		logger.debug("Received RESTful call to retrieve Excel file; fileId: " + fileId);
 		String excelFileName = appConfig.getDownloadDirectory() + appConfig.getFileNamePrefix() + fileId + fileExtension;
 		HttpHeaders responseHeaders = new HttpHeaders();
-		
+
 		File file = new File (excelFileName);
 		if (file.exists()) {
 			responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + fileExtension);
-			
+
 			try {
 				InputStream inputStream = getExcelFileAsInputStream(excelFileName);
 				InputStreamResource isr = new InputStreamResource(inputStream);
@@ -308,7 +308,7 @@ public class DownloadCompareExcelController {
 	private String persist(CdeDetails[] cdeDetails) throws Exception {
 
 		String excelFileSuffix;
-		String excelFilename;		
+		String excelFilename;
 		excelFileSuffix = getExcelDownload.generateExcelFileId();
 		//the Bean properties set up in the Spring context
 		excelFilename = buildDownloadAbsoluteFileName(excelFileSuffix);
@@ -317,18 +317,18 @@ public class DownloadCompareExcelController {
 		//the file name returned to the RESTful service to build the response
 		return excelFileSuffix;
 	}
-	
 
-	
+
+
 	public String buildDownloadAbsoluteFileName(String excelFileSuffix) {
 		String excelFilename = localDownloadDirectory + fileNamePrefix + excelFileSuffix + DownloadCompareExcelController.fileExtension;
 		return excelFilename;
-	}	
+	}
 
-	
+
 	/**
 	 * This method generates Excel file with the given file name.
-	 * 
+	 *
 	 * @param filename absolute file name
 	 * @param itemIds internal IDs
 	 * @param RAI
@@ -342,7 +342,7 @@ public class DownloadCompareExcelController {
 
 		HSSFWorkbook wb = null;
 		FileOutputStream fileOut = null;
-		
+
 		try {
 			//source tells what type of download do we do: "deSearch", "deCart", "deSearchPrior"
 			wb = new HSSFWorkbook();
@@ -355,18 +355,18 @@ public class DownloadCompareExcelController {
 			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 			boldCellStyle.setFont(font);
 			boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
-			
+
 			rowNumber++; //this is the row where we want to start data
 			rowNumber = generateWorkbookCdeCompare(cdeDetails, sheet, rowNumber, cdeDetails.length, boldCellStyle);
 			logger.error("Final File name:"+ filename);
 			fileOut = new FileOutputStream(filename);
 
 			wb.write(fileOut);
-			
+
 			fileOut.flush();
 		}
 		catch (Exception ex) {
-			logger.error("Exception caught in Generate Excel File", ex);			
+			logger.error("Exception caught in Generate Excel File", ex);
 			throw ex;
 		}
 		finally {
@@ -378,7 +378,7 @@ public class DownloadCompareExcelController {
 					logger.debug("Unable to close Excel Workbook due to the following error ", e);
 				}
 			}
-			
+
 			if (fileOut != null) {
 				try{
 					fileOut.flush();
@@ -390,9 +390,9 @@ public class DownloadCompareExcelController {
 			}
 		}//finally
 	}
-	
-	
-	
+
+
+
 	protected BufferedInputStream getExcelFileAsInputStream(String excelFilename) throws Exception {
 		BufferedInputStream bis = null;
 		FileInputStream fis = new FileInputStream(excelFilename);
@@ -408,7 +408,7 @@ public class DownloadCompareExcelController {
 	public void setAppConfig(AppConfig appConfig) {
 		this.appConfig = appConfig;
 	}
-	
+
     @RequestMapping( value = "/CDEData1" )
     @ResponseBody
     public CdeDetails CDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
@@ -458,7 +458,7 @@ public class DownloadCompareExcelController {
         }
         return cdeDetailsArray;
     }
-    
+
     /**
      * Accept a comma separated list of deIdseq values.
      * @param deIdseq Comma separated list of deIdseqs
@@ -477,11 +477,11 @@ public class DownloadCompareExcelController {
         		dataElementModel = this.dataElementDAO.getCdeByDeIdseq( id.trim() );
                 logger.debug( dataElementModel.toString() );
                 cdeDetailsArray[i] = buildCdeDetailsForCompare( dataElementModel );
-                i++;        		
-        	}            
+                i++;
+        	}
         }
         return cdeDetailsArray;
-    }    
+    }
 
 
     // Build a CdeDetails to send to the client
@@ -575,7 +575,7 @@ public class DownloadCompareExcelController {
 	/**
 	 * This method populates provided HSSFSheet.
 	 * It loops through the provided ResultSet, but it does not close it. This is a job of the calling method.
-	 * 
+	 *
 	 * @param rs ResultSet to retrieve DB CDE Compare data for Excel
 	 * @param sheet HSSFSheet created by the calling method which will be populated with DB data
 	 * @param rowNumber the row number in Excel table which shall be the first one created by this method
@@ -583,76 +583,76 @@ public class DownloadCompareExcelController {
 	 * @param colInfo
 	 * @throws Exception
 	 */
-	protected int generateWorkbookCdeCompare(CdeDetails[] cdeDetails, 
-		HSSFSheet sheet, int rowNumber, 
-		int amountOfIds, HSSFCellStyle boldCellStyle) throws Exception 
+	protected int generateWorkbookCdeCompare(CdeDetails[] cdeDetails,
+		HSSFSheet sheet, int rowNumber,
+		int amountOfIds, HSSFCellStyle boldCellStyle) throws Exception
 	{
 		// Create a row and put some cells in it. Rows are 0 based.
 		HSSFRow row = sheet.createRow(rowNumber++);
 		HSSFCell cell = row.createCell(0);
 		cell.setCellValue("Data Element");
 		cell.setCellStyle(boldCellStyle);
-		
+
 		List cdeList = new ArrayList();
 
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getPublicId());
 		}
 		addNewRow(sheet, rowNumber++, "Public ID", boldCellStyle, cdeList);
-		cdeList = new ArrayList();		
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getVersion());
-		}	
+		}
 		addNewRow(sheet, rowNumber++, "Version", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getLongName());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Long Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getShortName());
-		}					
+		}
 		addNewRow(sheet, rowNumber++, "Short Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();		
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getPreferredQuestionText());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Preferred Question Text", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getDefinition());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Definition", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getValueDomain().toString());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Value Domain", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getDataElementConcept().toString());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Data Element Concept", boldCellStyle, cdeList);
-		cdeList = new ArrayList();		
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getContext());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Context", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getWorkflowStatus());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getOrigin());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElement().getDataElementDetails().getRegistrationStatus());
-		}							
+		}
 		addNewRow(sheet, rowNumber++, "Registration Status", boldCellStyle, cdeList);
 		cdeList = new ArrayList();
 
@@ -667,70 +667,70 @@ public class DownloadCompareExcelController {
 
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getPublicId());
-		}									
+		}
 		addNewRow(sheet, rowNumber++, "Public Id", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getVersion());
-		}		
+		}
 		addNewRow(sheet, rowNumber++, "Version", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getLongName());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Long Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getShortName());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Short Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getDefinition());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Definition", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getContext());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Context", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getWorkflowStatus());
-		}		
+		}
 		addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getConceptualDomainPublicId());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Public Id", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getConceptualDomainShortName());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Short Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getConceptualDomainContextName());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Context Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getConceptualDomainVersion());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Version", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getDataElementConcept().getDataElementConceptDetails().getOrigin());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 
-		
+
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
-	
-		
+
+
 		List refDocPropertyTitles = new ArrayList();
 		refDocPropertyTitles.add(0, "Document Name");
 		refDocPropertyTitles.add(1, "Document Type");
@@ -739,10 +739,10 @@ public class DownloadCompareExcelController {
 		refDocProperties.add(0, "docName");
 		refDocProperties.add(1, "docType");
 		refDocProperties.add(2, "docText");
-		
+
 		rowNumber += this.exportObjects(sheet,   rowNumber,        "Reference Documents", "referenceDocs", boldCellStyle,
 				cdeDetails, refDocProperties, refDocPropertyTitles);
-		
+
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
 		cell = row.createCell(0);
@@ -751,105 +751,105 @@ public class DownloadCompareExcelController {
 
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getPublicId());
-		}		
+		}
 		addNewRow(sheet, rowNumber++, "Public ID", boldCellStyle, cdeList);
-		cdeList = new ArrayList();		
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getVersion());
-		}		
+		}
 		addNewRow(sheet, rowNumber++, "Version", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getLongName());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Long Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getShortName());
-		}						
+		}
 		addNewRow(sheet, rowNumber++, "Short Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getContext());
-		}				
+		}
 		addNewRow(sheet, rowNumber++, "Context", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getDefinition());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Definition", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getWorkflowStatus());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getDataType());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Data Type", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getUnitOfMeasure());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Unit of Measure", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getDisplayFormat());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Display Format", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getMaximumLength());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Maximum Length", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getMinimumLength());
-		}		
+		}
 		addNewRow(sheet, rowNumber++, "Minimum Length", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getDecimalPlace());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Decimal Place", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getHighValue());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "High Value", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getLowValue());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Low Value", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getValueDomainType());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Value Domain Type", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getConceptualDomainShortName());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Short Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getConceptualDomainContextName());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Context Name", boldCellStyle, cdeList);
-		cdeList = new ArrayList();	
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getConceptualDomainVersion());
-		}			
+		}
 		addNewRow(sheet, rowNumber++, "Conceptual Domain Version", boldCellStyle, cdeList);
-		cdeList = new ArrayList();		
+		cdeList = new ArrayList();
 		for (int i = 0; i < cdeDetails.length; i++) {
 			cdeList.add(cdeDetails[i].getValueDomain().getValueDomainDetails().getOrigin());
-		}			
-		addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeList); 
+		}
+		addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeList);
 
-		
+
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
 
@@ -861,7 +861,7 @@ public class DownloadCompareExcelController {
 		pvTitles.add(4, "PV Begin Date");
 		pvTitles.add(5, "PV End Date");
 		pvTitles.add(6, "VM Public ID");
-		pvTitles.add(7, "VM Version");	
+		pvTitles.add(7, "VM Version");
 		List pvProperties = new ArrayList();
 		pvProperties.add(0, "PV");
 		pvProperties.add(1, "PVMeaning");
@@ -870,7 +870,7 @@ public class DownloadCompareExcelController {
 		pvProperties.add(4, "PVBeginDate");
 		pvProperties.add(5, "PVEndDate");
 		pvProperties.add(6, "VMPublicID");
-		pvProperties.add(7, "VMVersion");			
+		pvProperties.add(7, "VMVersion");
 
 		rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Values",
 		"permissible-values", boldCellStyle,
@@ -890,13 +890,13 @@ public class DownloadCompareExcelController {
 
 		rowNumber += this.exportObjects(sheet, rowNumber, "Classifications", "classifications", boldCellStyle,
 				cdeDetails, csProperties, csPropertyTitles);
-		
+
 		row = sheet.createRow(rowNumber++);
 		row = sheet.createRow(rowNumber++);
 		cell = row.createCell(0);
 		cell.setCellValue("Data Element Derivation - Derivation Details");
 		cell.setCellStyle(boldCellStyle);
- 
+
 		List cde1List = new ArrayList();
 		List cde2List = new ArrayList();
 		List cde3List = new ArrayList();
@@ -909,35 +909,35 @@ public class DownloadCompareExcelController {
 				cde4List.add(cdeDetails[i].getDataElementDerivation().getDataElementDerivationDetails().getConcatenationCharacter());
 			}
 
-		}		
+		}
 		addNewRow(sheet, rowNumber++, "Derivation Type", boldCellStyle, cde1List);
 		addNewRow(sheet, rowNumber++, "Rule", boldCellStyle, cde2List);
 		addNewRow(sheet, rowNumber++, "Method", boldCellStyle, cde3List);
 		addNewRow(sheet, rowNumber++, "Concatenation Character", boldCellStyle, cde4List);
-		
+
 
 		List dedPropertyTitles = new ArrayList();
-		dedPropertyTitles.add(0, "Display Order");	
+		dedPropertyTitles.add(0, "Display Order");
 		dedPropertyTitles.add(1, "Long Name");
 		dedPropertyTitles.add(2, "Context");
-		dedPropertyTitles.add(3, "Workflow Status");		
-		dedPropertyTitles.add(4, "Public ID");		
+		dedPropertyTitles.add(3, "Workflow Status");
+		dedPropertyTitles.add(4, "Public ID");
 		dedPropertyTitles.add(5, "Version");
 		List dedProperties = new ArrayList();
 		dedProperties.add(0, "displayOrder");
 		dedProperties.add(1, "longName");
 		dedProperties.add(2, "contextName");
-		dedProperties.add(3, "CDEId");		
+		dedProperties.add(3, "CDEId");
 		dedProperties.add(4, "workflowStatus");
 		dedProperties.add(5, "version");
-		
+
 		cell = row.createCell(0);
 		rowNumber += this.exportObjects(sheet, rowNumber, "Data Element Derivation - Component Data Elements",
 		"de-cde", boldCellStyle,
 		cdeDetails, dedProperties, dedPropertyTitles);
 		return rowNumber;
-	}	
-	
+	}
+
 private void addNewRow(HSSFSheet sheet, int rowNumber, String title, HSSFCellStyle titleStyle, List cdeList) {
 		HSSFRow row = sheet.createRow(rowNumber++);
 
@@ -946,7 +946,7 @@ private void addNewRow(HSSFSheet sheet, int rowNumber, String title, HSSFCellSty
 	cell.setCellValue(title);
 	cell.setCellStyle(titleStyle);
 	logger.debug("cdeList size : "+cdeList.size());
-	try {	
+	try {
 			for (int i = 0; i < cdeList.size(); i++) {
 				cell = row.createCell(colNumber);
 				if (cdeList.get(i)!=null) {
@@ -986,9 +986,9 @@ if (propertyName.equalsIgnoreCase("referenceDocs")) {
 	validValueSize = ((List)cdeDetails[i].getDataElement().getReferenceDocuments()).size();
 } else if (propertyName.equalsIgnoreCase("permissible-values")) {
 	validValueSize = ((List)cdeDetails[i].getValueDomain().getPermissibleValues()).size();
-} else if (propertyName.equalsIgnoreCase("classifications")) {	
+} else if (propertyName.equalsIgnoreCase("classifications")) {
 	validValueSize = ((List)cdeDetails[i].getClassifications().getClassificationList()).size();
-} else if (propertyName.equalsIgnoreCase("de-cde")) {	
+} else if (propertyName.equalsIgnoreCase("de-cde")) {
 	validValueSize = ((List)cdeDetails[i].getDataElementDerivation().getDataElementDerivationComponentModels()).size();
 }
 
@@ -1034,11 +1034,11 @@ try {
 		valueList = (List)cdeDetails[j].getDataElement().getReferenceDocuments();
 	} else if (propertyName.equalsIgnoreCase("permissible-values")) {
 		valueList = (List)cdeDetails[j].getValueDomain().getPermissibleValues();
-	} else if (propertyName.equalsIgnoreCase("classifications")) {	
+	} else if (propertyName.equalsIgnoreCase("classifications")) {
 		valueList = (List)cdeDetails[j].getClassifications().getClassificationList();
-	} else if (propertyName.equalsIgnoreCase("de-cde")) {	
+	} else if (propertyName.equalsIgnoreCase("de-cde")) {
 		valueList = (List)cdeDetails[j].getDataElementDerivation().getDataElementDerivationComponentModels();
-	}	
+	}
 } catch (Exception e) { }
 
 if (valueList != null && valueList.size() > i) {
@@ -1066,7 +1066,7 @@ return (4 + maxValueNumber);
 
 private String getProperty (String propertyName, String property, List cdeObjList) {
 	String cellValue = "";
-	if (propertyName.equalsIgnoreCase("referenceDocs")) {	
+	if (propertyName.equalsIgnoreCase("referenceDocs")) {
 		ReferenceDocument referenceDoc = (ReferenceDocument)cdeObjList.get(0);
 		if (property.equalsIgnoreCase("docName")) {
 			cellValue = referenceDoc.getDocumentName();
@@ -1074,7 +1074,7 @@ private String getProperty (String propertyName, String property, List cdeObjLis
 			cellValue = referenceDoc.getDocumentType();
 		} else if (property.equalsIgnoreCase("docText")) {
 			cellValue = referenceDoc.getDocumentText();
-		}		
+		}
 	} else if (propertyName.equalsIgnoreCase("permissible-values")) {
 		PermissibleValuesModel pvModel = (PermissibleValuesModel)cdeObjList.get(0);
 		if (property.equalsIgnoreCase("PV")) {
@@ -1090,13 +1090,13 @@ private String getProperty (String propertyName, String property, List cdeObjLis
 		} else if (property.equalsIgnoreCase("PVEndDate")) {
 			cellValue = pvModel.getEndDateString();
 		} else if (property.equalsIgnoreCase("VMPublicID")) {
-			cellValue = pvModel.getVmId();			
+			cellValue = pvModel.getVmId();
 		} else if (property.equalsIgnoreCase("VMVersion")) {
-			cellValue = pvModel.getVmVersion();			
-		}		
+			cellValue = pvModel.getVmVersion();
+		}
 	} else if (propertyName.equalsIgnoreCase("classifications")) {
 		CsCsi csCsi = (CsCsi)cdeObjList.get(0);
-		if (property.equalsIgnoreCase("classSchemeName")) {	
+		if (property.equalsIgnoreCase("classSchemeName")) {
 			cellValue = csCsi.getCsLongName();
 		} else if (property.equalsIgnoreCase("classSchemeDefinition")) {
 			cellValue = csCsi.getCsDefinition();
@@ -1104,7 +1104,7 @@ private String getProperty (String propertyName, String property, List cdeObjLis
 			cellValue = csCsi.getCsiName();
 		} else if (property.equalsIgnoreCase("classSchemeItemType")) {
 			cellValue = csCsi.getCsiType();
-		}		
+		}
 	} else if (propertyName.equalsIgnoreCase("de-cde")) {
 		DataElementDerivationComponentModel deDerivedModel = (DataElementDerivationComponentModel)cdeObjList.get(0);
 		if (property.equalsIgnoreCase("displayOrder")) {
@@ -1120,10 +1120,10 @@ private String getProperty (String propertyName, String property, List cdeObjLis
 		} else  if (property.equalsIgnoreCase("version")) {
 			cellValue = deDerivedModel.getVersion();
 		}
-	} 
+	}
 	return cellValue;
 }
-    
+
     /**********************************************************************/
     /**********************************************************************/
     /**
@@ -1156,7 +1156,7 @@ private String getProperty (String propertyName, String property, List cdeObjLis
                     // get the list of DesignationIdseq from DataElementModel.csCsiDesignations, a hashmap of Lists of designationIdseq's indexed by csCsiIdseq
                     for( String designationIdseq : dataElementModel.getCsCsiDesignations().get( csCsiModel.getCsiIdseq() ) )
                     {
-                        // call the AlternateName() constructor that takes a Designation model, giving it the model found by its index
+                        // call the AlternateNameDAO() constructor that takes a Designation model, giving it the model found by its index
                         alternateNames.add( new AlternateName( dataElementModel.getDesignationModels().get( designationIdseq ) ) );
                     }
                 }
@@ -2311,6 +2311,6 @@ private String getProperty (String propertyName, String property, List cdeObjLis
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
         return new java.sql.Timestamp( now.getTime() );
-    }	
-	
+    }
+
 }

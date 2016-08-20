@@ -1,6 +1,7 @@
-/**
- * Created by lernermh on 4/17/15.
+/*
+ * Copyright 2016 Leidos Biomedical Research, Inc.
  */
+
 angular.module("cdeLogin", []);
 
 angular.module("cdeLogin").controller("LoginCtrl", ["$scope","authenticationService","searchFactory","cartService", function ($scope, authenticationService, searchFactory, cartService) {

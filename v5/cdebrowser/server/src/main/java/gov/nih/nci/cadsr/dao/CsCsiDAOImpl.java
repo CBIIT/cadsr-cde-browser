@@ -159,6 +159,7 @@ public class CsCsiDAOImpl extends AbstractDAOOperations implements CsCsiDAO
                 "WHERE def.ac_idseq = ? " +
                 "AND att.att_idseq = def.defin_idseq " +
                 "AND cs_csi.cs_csi_idseq = att.cs_csi_idseq";
+        logger.debug( definitionCsCsiSql.replace( "?", deIdseq ) + " <<<<<<<" );
         //csCsiModels = jdbcTemplate.queryForList(definitionCsCsiSql, CsCsiModel.class, deIdseq);
         csCsiModels = jdbcTemplate.query( definitionCsCsiSql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( CsCsiModel.class ) );
 

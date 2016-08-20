@@ -16,7 +16,7 @@ public class AlternateName
     public AlternateName()
     {
     }
-    
+
     public AlternateName( DesignationModel designationModel )
     {
         setName( designationModel.getName() );
@@ -24,7 +24,7 @@ public class AlternateName
         setContext( designationModel.getContex().getName() );
         setLanguage( designationModel.getLang() );
     }
-    
+
     public AlternateName( DesignationModelAlt designationModel )
     {
         setName( designationModel.getName() );
@@ -75,7 +75,7 @@ public class AlternateName
 
 	@Override
 	public String toString() {
-		return "AlternateName [name=" + name + ", type=" + type + ", context=" + context + ", language=" + language
+		return "AlternateNameDAO [name=" + name + ", type=" + type + ", context=" + context + ", language=" + language
 				+ "]";
 	}
 

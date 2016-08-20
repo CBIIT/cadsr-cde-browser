@@ -1,8 +1,6 @@
 package gov.nih.nci.cadsr.service.model.cdeData.valueDomain;
 
-import gov.nih.nci.cadsr.dao.model.ConceptModel;
-import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
-import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
+import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 
 import java.util.List;
@@ -19,8 +17,10 @@ public class ValueDomain
     private List<ValueDomainReferenceDocument> referenceDocuments = null;
 */
     private List<PermissibleValueExt> permissibleValueExtList;
-    
+
     private List<ReferenceDocModel> referenceDocuments = null;
+
+    private List<ValueMeaningUiModel> ValueMeanings = null;
 
     public SelectedDataElement getSelectedDataElement()
     {
@@ -100,7 +100,15 @@ public class ValueDomain
 		this.permissibleValueExtList = permissibleValueExtList;
 	}
 
-	
+    public List<ValueMeaningUiModel> getValueMeanings()
+    {
+        return ValueMeanings;
+    }
+
+    public void setValueMeanings( List<ValueMeaningUiModel> ValueMeaningModels )
+    {
+        this.ValueMeanings = ValueMeaningModels;
+    }
 /*
 
     public List<ValueDomainReferenceDocument> getValueDomainReferenceDocuments()
