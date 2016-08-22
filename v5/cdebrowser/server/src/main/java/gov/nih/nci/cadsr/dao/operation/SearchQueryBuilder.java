@@ -281,12 +281,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             if( searchCriteria.getVdTypeFlag() != "" )
             {
-                vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
+                vdWhere = " AND upper(vd.long_name) like upper('" + searchCriteria.getValueDomain().replace( "*", "%" ) + "')"
                         + " AND vd.vd_type_flag = '" + searchCriteria.getVdTypeFlag() + "' AND vd.vd_idseq = de.vd_idseq ";
             }
             else
             {
-                vdWhere = " AND vd.preferred_name = '" + searchCriteria.getValueDomain() + "'"
+                vdWhere = " AND upper(vd.long_name) like upper('" + searchCriteria.getValueDomain().replace( "*", "%" ) + "')"
                         + " AND vd.vd_idseq = de.vd_idseq ";
             }
             vdFrom = " ,sbr.value_domains_view vd ";
