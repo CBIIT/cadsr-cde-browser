@@ -272,7 +272,7 @@
                             <td class="dataElementHeading compareDataElementColumn0">documentText</td>
                         </tr>
                         <tr class="dataElementViewTableTr"
-                            ng-repeat="(element1, data1) in data.dataElement.referenceDocuments | orderBy : 'documentType'"><!--  | orderBy : 'documentName' -->
+                            ng-repeat="(element1, data1) in data.dataElement.referenceDocuments | orderBy:['documentType','documentName']">
                             <td class="dataElementValue compareDataElementColumn0">{{data1.documentName}}</td>
                             <td class="dataElementValue compareDataElementColumn0">{{data1.documentType}}</td>
                             <td class="dataElementValue compareDataElementColumn0">{{data1.documentText}}</td>
