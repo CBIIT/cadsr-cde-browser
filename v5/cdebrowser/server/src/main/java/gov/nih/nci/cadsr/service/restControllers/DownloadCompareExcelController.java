@@ -1053,6 +1053,8 @@ try {
 	String cellValue = getProperty(propertyName ,(String)propertyList.get(pIdx), cdeObjList);
 cell.setCellValue(cellValue);
 } catch (Exception e) {
+logger.debug("Exception in excel exportRow"+e.getMessage());
+e.printStackTrace();
 cell.setCellValue("");
 }
 } //end of writing one object
@@ -1081,10 +1083,10 @@ private String getProperty (String propertyName, String property, List cdeObjLis
 			cellValue = pvModel.getValue();
 		} else if (property.equalsIgnoreCase("PVMeaning")) {
 			cellValue = pvModel.getShortMeaning();
-		} else if (property.equalsIgnoreCase("PVMeaningConcept Codes")) {
+		} else if (property.equalsIgnoreCase("PVMeaningConceptCodes")) {
 			cellValue = pvModel.getConceptCode();
 		} else if (property.equalsIgnoreCase("PVMeaningDescription")) {
-			cellValue = pvModel.getMeaningDescription();
+			cellValue = pvModel.getVmDescription();
 		} else if (property.equalsIgnoreCase("PVBeginDate")) {
 			cellValue = pvModel.getBeginDateString();
 		} else if (property.equalsIgnoreCase("PVEndDate")) {
@@ -1451,6 +1453,13 @@ private String getProperty (String propertyName, String property, List cdeObjLis
         ValueDomain valueDomain = new ValueDomain();
         ValueDomainDetails valueDomainDetails = getValueDomainDetails( dataElementModel );
         valueDomain.setValueDomainDetails( valueDomainDetails );
+        List<PermissibleValuesModel> permissibleValues = permissibleValuesDAO.getPermissibleValuesByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
+        if (permissibleValues.size() > 0) {
+        	valueDomain.setPermissibleValues( permissibleValues );	
+        } else {
+        	valueDomain.setPermissibleValues( null );
+        }        
+        logger.debug( "PermissibleValues count: " + permissibleValues.size() );        
         return valueDomain;
     }
 

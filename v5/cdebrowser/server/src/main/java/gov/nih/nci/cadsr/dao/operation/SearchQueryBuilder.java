@@ -357,7 +357,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         finalSqlStmt.append( fromWhere );
 
         String sqlStmt = finalSqlStmt.toString();
-        //logger.debug( "initSearchQueryBuilder DE search sqlStmt: " + sqlStmt );
+        logger.debug( "initSearchQueryBuilder DE search sqlStmt: " + sqlStmt );
         return sqlStmt;
     }
 

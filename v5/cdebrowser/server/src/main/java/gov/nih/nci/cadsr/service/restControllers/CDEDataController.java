@@ -517,6 +517,13 @@ public class CDEDataController
         ValueDomain valueDomain = new ValueDomain();
         ValueDomainDetails valueDomainDetails = getValueDomainDetails( dataElementModel );
         valueDomain.setValueDomainDetails( valueDomainDetails );
+        List<PermissibleValuesModel> permissibleValues = permissibleValuesDAO.getPermissibleValuesByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
+        if (permissibleValues.size() > 0) {
+        	valueDomain.setPermissibleValues( permissibleValues );	
+        } else {
+        	valueDomain.setPermissibleValues( null );
+        }                
+        logger.debug( "PermissibleValues count: " + permissibleValues.size() );        
         return valueDomain;
     }
 
