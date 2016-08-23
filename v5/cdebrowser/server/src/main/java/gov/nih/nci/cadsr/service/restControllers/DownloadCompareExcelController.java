@@ -186,7 +186,7 @@ public class DownloadCompareExcelController {
 	@Value("${downloadFileNamePrefix}")
 	String fileNamePrefix;*/
 	public static final String fileExtension = ".xls";
-	private static final int COLUMN_PER_CDE = 4;
+	private static final int COLUMN_PER_CDE = 8;
 
 //	@Value("${downloadDirectory}")
 	String localDownloadDirectory = "/local/content/cdebrowser/output/";
@@ -740,7 +740,7 @@ public class DownloadCompareExcelController {
 		refDocProperties.add(1, "docType");
 		refDocProperties.add(2, "docText");
 
-		rowNumber += this.exportObjects(sheet,   rowNumber,        "Reference Documents", "referenceDocs", boldCellStyle,
+		rowNumber += this.exportObjects(sheet,   rowNumber,        "Reference Document(s)", "referenceDocs", boldCellStyle,
 				cdeDetails, refDocProperties, refDocPropertyTitles);
 
 		row = sheet.createRow(rowNumber++);
@@ -872,7 +872,7 @@ public class DownloadCompareExcelController {
 		pvProperties.add(6, "VMPublicID");
 		pvProperties.add(7, "VMVersion");
 
-		rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Values",
+		rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Value(s)",
 		"permissible-values", boldCellStyle,
 		cdeDetails, pvProperties, pvTitles);
 
@@ -888,7 +888,7 @@ public class DownloadCompareExcelController {
 		csProperties.add(2, "classSchemeItemName");
 		csProperties.add(3, "classSchemeItemType");
 
-		rowNumber += this.exportObjects(sheet, rowNumber, "Classifications", "classifications", boldCellStyle,
+		rowNumber += this.exportObjects(sheet, rowNumber, "Classification(s)", "classifications", boldCellStyle,
 				cdeDetails, csProperties, csPropertyTitles);
 
 		row = sheet.createRow(rowNumber++);
