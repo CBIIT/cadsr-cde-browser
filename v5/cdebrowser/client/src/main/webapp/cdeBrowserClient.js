@@ -495,6 +495,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         var  connector="";
 
+        if( filterService.searchFilter.registrationStatus != '') {
+	        connector= c==0?"?":"&";
+	        c++;
+	        url += connector + "registrationStatus=" + filterService.searchFilter.registrationStatus;
+        }        
+        
         if( dec != '') {
             connector= c==0?"?":"&";
             c++;
