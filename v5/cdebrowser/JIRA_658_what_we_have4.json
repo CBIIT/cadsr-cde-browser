@@ -400,8 +400,7 @@
       "dateModified": null
     }],
     "permissibleValueExtList": [],
-    "valueDomainReferenceDocuments": [],
-    "valueMeanings": [{
+    "valueMeaning": [{
       "pvIdseq": "66708DD8-3DC3-41AF-E040-BB89AD437914",
       "pvMeaning": "The absence of life or state of being dead.",
       "vmPublicId": "2847328",
@@ -539,7 +538,8 @@
       "vmIdseq": "2509CE87-E774-5C23-E044-0003BA3F9857",
       "alternateNames": [],
       "alternateDefinitions": []
-    }]
+    }],
+    "valueDomainReferenceDocuments": []
   },
   "classifications": {
     "selectedDataElement": {

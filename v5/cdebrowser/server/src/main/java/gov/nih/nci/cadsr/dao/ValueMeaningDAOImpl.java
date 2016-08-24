@@ -7,8 +7,6 @@ package gov.nih.nci.cadsr.dao;
 import gov.nih.nci.cadsr.dao.model.ValueMeaningModel;
 import gov.nih.nci.cadsr.dao.model.ValueMeaningUiModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
-import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateDefinition;
-import gov.nih.nci.ncicb.cadsr.common.resource.ValueMeaning;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

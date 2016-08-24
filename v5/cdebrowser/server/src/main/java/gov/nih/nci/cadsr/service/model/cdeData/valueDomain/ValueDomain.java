@@ -20,7 +20,7 @@ public class ValueDomain
 
     private List<ReferenceDocModel> referenceDocuments = null;
 
-    private List<ValueMeaningUiModel> ValueMeanings = null;
+    private List<ValueMeaningUiModel> ValueMeaning = null;
 
     public SelectedDataElement getSelectedDataElement()
     {
@@ -100,14 +100,14 @@ public class ValueDomain
 		this.permissibleValueExtList = permissibleValueExtList;
 	}
 
-    public List<ValueMeaningUiModel> getValueMeanings()
+    public List<ValueMeaningUiModel> getValueMeaning()
     {
-        return ValueMeanings;
+        return ValueMeaning;
     }
 
-    public void setValueMeanings( List<ValueMeaningUiModel> ValueMeaningModels )
+    public void setValueMeaning( List<ValueMeaningUiModel> ValueMeaningModels )
     {
-        this.ValueMeanings = ValueMeaningModels;
+        this.ValueMeaning = ValueMeaningModels;
     }
 /*
 

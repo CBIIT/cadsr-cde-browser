@@ -4,16 +4,16 @@
         <th colspan="2" align="left">Value Meaning</th>
     </tr>
 </table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="p_value in cdeDetails.valueDomain.valueMeaning">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescriptionLeft" width="20%">PV Meaning</td>
         <td class="dataElementValue">Alternate Names</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementValue">
-        PV Meaning = <span ng-bind-html="p_value.value">{{p_value.value}}</span><br />
-        VM Public ID = <span ng-bind-html="p_value.vmId">{{p_value.vmId}}</span><br />
-        VM Version = <span ng-bind-html="p_value.formattedVersion">{{p_value.formattedVersion}}</span><br />
+        PV Meaning = <span ng-bind-html="p_value.pvMeaning">{{p_value.pvMeaning}}</span><br />
+        VM Public ID = <span ng-bind-html="p_value.vmPublicId">{{p_value.vmPublicId}}</span><br />
+        VM Version = <span ng-bind-html="p_value.vmVersion">{{p_value.vmVersion}}</span><br />
         </td>
         <td style="vertical-align:top;padding:0;">
         	<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
@@ -23,16 +23,18 @@
 			        <td class="dataElementDescriptionLeft">Context</td>
 			        <td class="dataElementDescriptionLeft">Language</td>
 				</tr>
-				<tr class="dataElementViewTableTr">
-			        <td class="dataElementValue">Names</td>
-			        <td class="dataElementValue">Types</td>
-			        <td class="dataElementValue">Contexts</td>
-			        <td class="dataElementValue">Languages</td>
+				<tr class="dataElementViewTableTr"   data-ng-repeat ="altName in p_value.alternateNames">
+			        <td class="dataElementValue">{{altName.name}}</td>
+			        <td class="dataElementValue">{{altName.type}}</td>
+			        <td class="dataElementValue">{{altName.context}}</td>
+			        <td class="dataElementValue">{{altName.language}}</td>
 			    </tr>
         	</table>
+
         	<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
         		<tr class="dataElementViewTableTr"><td class="dataElementValue">Alternate Definitions</td></tr>
         	</table>
+
         	<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
 				<tr>
 			        <td class="dataElementDescriptionLeft">Definition</td>
@@ -40,13 +42,14 @@
 			        <td class="dataElementDescriptionLeft">Context</td>
 			        <td class="dataElementDescriptionLeft">Language</td>
 				</tr>
-				<tr class="dataElementViewTableTr">
-			        <td class="dataElementValue">Definitions</td>
-			        <td class="dataElementValue">Types</td>
-			        <td class="dataElementValue">Contexts</td>
-			        <td class="dataElementValue">Languages</td>
+				<tr class="dataElementViewTableTr"  data-ng-repeat ="altDef in p_value.alternateDefinitions">
+			        <td class="dataElementValue">{{altDef.name}}</td>
+			        <td class="dataElementValue">{{altDef.type}}</td>
+			        <td class="dataElementValue">{{altDef.context}}</td>
+			        <td class="dataElementValue">{{altDef.language}}</td>
 			    </tr>
         	</table>
+
         </td>
     </tr>
 </table><br />

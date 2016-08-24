@@ -519,11 +519,11 @@ public class CDEDataController
         valueDomain.setValueDomainDetails( valueDomainDetails );
         List<PermissibleValuesModel> permissibleValues = permissibleValuesDAO.getPermissibleValuesByVdIdseq( dataElementModel.getValueDomainModel().getVdIdseq() );
         if (permissibleValues.size() > 0) {
-        	valueDomain.setPermissibleValues( permissibleValues );	
+        	valueDomain.setPermissibleValues( permissibleValues );
         } else {
         	valueDomain.setPermissibleValues( null );
-        }                
-        logger.debug( "PermissibleValues count: " + permissibleValues.size() );        
+        }
+        logger.debug( "PermissibleValues count: " + permissibleValues.size() );
         return valueDomain;
     }
 
@@ -604,10 +604,11 @@ public class CDEDataController
 
         //FIXME this requirement is changed not to use Classification information in PV and VM
         //List<PermissibleValueExt> permissibleValueExtList = buildPermissibleValueExtList(permissibleValues);
+        /*  JIRA 658
         List<PermissibleValueExt> permissibleValueExtList = new ArrayList<>();
         valueDomain.setPermissibleValueExtList( permissibleValueExtList );
-
         logger.debug( ".........PermissibleValueExtList section done" );
+        */
 
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "value Domain" Tab
@@ -615,7 +616,7 @@ public class CDEDataController
         valueDomain.setValueDomainReferenceDocuments( valueDomainReferenceDocuments );
 
         // Add List of valueMeaning here
-        valueDomain.setValueMeanings( valueMeaningDAO.getUiValueMeaningsByCdeIdAndVersion( dataElementModel.getCdeId(), dataElementModel.getVersion() ) );
+        valueDomain.setValueMeaning( valueMeaningDAO.getUiValueMeaningsByCdeIdAndVersion( dataElementModel.getCdeId(), dataElementModel.getVersion() ) );
 
         return valueDomain;
     }

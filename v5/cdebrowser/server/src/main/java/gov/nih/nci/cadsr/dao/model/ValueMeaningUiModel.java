@@ -98,7 +98,7 @@ public class ValueMeaningUiModel
         if( alternateNames != null )
         {
             valueMeaningStr += "\n";
-            for( AlternateNameUiModel alternateName : alternateNames )
+            for( AlternateNameUiModel alternateName : this.alternateNames )
             {
                 valueMeaningStr += alternateName.toString() + "\n";
             }
@@ -106,7 +106,7 @@ public class ValueMeaningUiModel
         if( alternateDefinitions != null)
         {
             valueMeaningStr += "\n";
-            for( AlternateDefinitionUiModel alternateDefinition: alternateDefinitions)
+            for( AlternateDefinitionUiModel alternateDefinition: this.alternateDefinitions )
             {
                 valueMeaningStr += alternateDefinition.toString() + "\n";
             }
