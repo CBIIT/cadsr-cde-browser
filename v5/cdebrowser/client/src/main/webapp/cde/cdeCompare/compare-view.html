@@ -65,7 +65,7 @@
         <!-- <table  class="compareCDEDataElementDetailsTable advancedDemo" ng-show="!dataElement"> -->
         <!-- <td ng-repeat="item in cdeDetails" data-drop="true" ng-model='cdeDetails' dnd-draggable="item" dnd-type="'itemType'" dnd-effect-allowed="copyMove">
                     <div>
-                <td ng-repeat="item in cdeDetails" data-drop="true" 
+                <td ng-repeat="item in cdeDetails" data-drop="true"
                 ng-model='cdeDetails' dnd-draggable="item"
                 dnd-type="'itemType'"
                 dnd-effect-allowed="copyMove">
@@ -283,7 +283,7 @@
                     </table>
                 </td>
             </tr>
-            
+
         </table>
 
 
@@ -456,16 +456,16 @@
         <!-- Permissible Values -->
         <br>
         <div id="permissibleValues" class="compareCDEDataElementDetailsHeading">
-            Permissible Values <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" 
-            ng-click="permissibleValues=!permissibleValues" 
+            Permissible Values <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse"
+            ng-click="permissibleValues=!permissibleValues"
             ng-show="!permissibleValues">
-            <img src="icons/plus.png" 
-            alt="collapse" 
-            class="compareScreenExpandCollapse" 
-            ng-click="permissibleValues=!permissibleValues" 
+            <img src="icons/plus.png"
+            alt="collapse"
+            class="compareScreenExpandCollapse"
+            ng-click="permissibleValues=!permissibleValues"
             ng-hide="!permissibleValues">
         </div>
-        
+
 
         <table ng-show="!permissibleValues">
             <tr>
@@ -485,6 +485,8 @@
                             <td class="dataElementHeading">VM Public ID</td>
                             <td class="dataElementHeading">VM Version</td>
                         </tr>
+
+
                         <tr class="dataElementViewTableTr"
                             ng-repeat="(element1, data1) in data.valueDomain.permissibleValues">
                             <td width="24px" class="compareDataElementValue">{{data1.value}}</td>
@@ -576,7 +578,7 @@
         <div id="derivationDetails" class="compareCDEDataElementDetailsHeading">
             Data Element Derivation - Derivation Details <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-show="!derivationDetails"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-hide="!derivationDetails">
         </div>
-       
+
         <table class="compareCDEDataElementDetailsTable" ng-show="!derivationDetails">
             <tr>
                 <td>CDE:</td>

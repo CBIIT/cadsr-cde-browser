@@ -149,7 +149,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-        
+
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')){
@@ -196,8 +196,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             else{
                  $scope.filterService.classifications = groupFactory1.load(0);
             }
-            
-            
+
+
         });
     };
 
@@ -499,8 +499,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 	        connector= c==0?"?":"&";
 	        c++;
 	        url += connector + "registrationStatus=" + filterService.searchFilter.registrationStatus;
-        }        
-        
+        }
+
         if( dec != '') {
             connector= c==0?"?":"&";
             c++;
@@ -722,7 +722,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
        // }
 
-        
+
     };
 
 
