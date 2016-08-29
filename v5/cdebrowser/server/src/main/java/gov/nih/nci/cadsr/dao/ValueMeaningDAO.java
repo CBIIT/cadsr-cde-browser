@@ -14,6 +14,6 @@ public interface ValueMeaningDAO
     List<ValueMeaningModel> getValueMeaningsByIdAndVersion( String id, String version);
     List<ValueMeaningModel> getValueMeaningsByCdeIdAndVersion( String cdeId, String version );
     List<ValueMeaningModel> getValueMeaningsByCdeIdAndVersion( int cdeId, float version );
-    List<ValueMeaningUiModel> getUiValueMeaningsByCdeIdAndVersion( int cdeId, float version );
+    List<ValueMeaningUiModel> getUiValueMeanings( int cdeId, float version );
 
 }

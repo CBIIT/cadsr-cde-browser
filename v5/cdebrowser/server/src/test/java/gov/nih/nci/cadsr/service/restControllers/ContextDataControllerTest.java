@@ -8,7 +8,7 @@ import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.DBUtil;
 import gov.nih.nci.cadsr.dao.model.*;
-import gov.nih.nci.cadsr.service.UnitTestCommon;
+import gov.nih.nci.cadsr.common.util.UnitTestCommon;
 import gov.nih.nci.cadsr.service.model.context.*;
 import junit.framework.TestCase;
 

@@ -616,7 +616,7 @@ public class CDEDataController
         valueDomain.setValueDomainReferenceDocuments( valueDomainReferenceDocuments );
 
         // Add List of valueMeaning here
-        valueDomain.setValueMeaning( valueMeaningDAO.getUiValueMeaningsByCdeIdAndVersion( dataElementModel.getCdeId(), dataElementModel.getVersion() ) );
+        valueDomain.setValueMeaning( valueMeaningDAO.getUiValueMeanings( dataElementModel.getCdeId(), dataElementModel.getVersion() ) );
 
         return valueDomain;
     }

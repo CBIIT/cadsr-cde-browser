@@ -1,0 +1,49 @@
+[{
+	"name": "Grade/differentiation unknown, not stated, or not applicable",
+	"type": "NAACCR Alt Name",
+	"context": "NCIP",
+	"language": "ENGLISH",
+	"conteIdseq": "D9344734-8CAF-4378-E034-0003BA12F5E7"
+}, {
+	"name": "Unknown",
+	"type": "UML Value Name",
+	"context": "NCIP",
+	"language": "ENGLISH",
+	"conteIdseq": "D9344734-8CAF-4378-E034-0003BA12F5E7"
+}, {
+	"name": "unknown",
+	"type": "NAACCR VM Name",
+	"context": "PS&CC",
+	"language": "ENGLISH",
+	"conteIdseq": "C70EECD5-9998-2C9B-E034-0003BA12F5E7"
+}, {
+	"name": "UNK",
+	"type": "HL7 Code",
+	"context": "PS&CC",
+	"language": "ENGLISH",
+	"conteIdseq": "C70EECD5-9998-2C9B-E034-0003BA12F5E7"
+}, {
+	"name": "LA4489-6",
+	"type": "LOINC_CODE",
+	"context": "NCIP",
+	"language": "ENGLISH",
+	"conteIdseq": "D9344734-8CAF-4378-E034-0003BA12F5E7"
+}, {
+	"name": "LA4489-6",
+	"type": "LOINC_CODE",
+	"context": "ONC SDC Project",
+	"language": "ENGLISH",
+	"conteIdseq": "F6141DD3-5081-EC4B-E040-BB89AD435D8B"
+}, {
+	"name": "Unknown",
+	"type": "LOINC_NAME",
+	"context": "ONC SDC Project",
+	"language": "ENGLISH",
+	"conteIdseq": "F6141DD3-5081-EC4B-E040-BB89AD435D8B"
+}, {
+	"name": "Unknown",
+	"type": "LOINC_NAME",
+	"context": "NCIP",
+	"language": "ENGLISH",
+	"conteIdseq": "D9344734-8CAF-4378-E034-0003BA12F5E7"
+}]

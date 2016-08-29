@@ -65,7 +65,7 @@ public class AlternateDefinitionUiModel
     @Override
     public String toString()
     {
-        return "AlternateNameUiModel{" +
+        return "AlternateDefinitionUiModel{" +
                 "name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", context='" + context + '\'' +

@@ -32,7 +32,7 @@ public class AlternateNameDAOImpl  extends AbstractDAOOperations implements Alte
     public List<AlternateNameModel> getAlternateNamesByAcIdseq( String acIdseq )
     {
         String sql = "select * from CABIO31_DESIGNATIONS_VIEW alternateDefinitions where AC_IDSEQ = ?";
-        //logger.debug( sql.replace( "?", acIdseq) + " <<<<<<<" );
+        logger.debug( sql.replace( "?", acIdseq) + " <<<<<<<" );
 
         return getAll( sql, acIdseq, AlternateNameModel.class );
     }

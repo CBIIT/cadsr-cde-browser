@@ -1,4 +1,4 @@
-package gov.nih.nci.cadsr.service;
+package gov.nih.nci.cadsr.common.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

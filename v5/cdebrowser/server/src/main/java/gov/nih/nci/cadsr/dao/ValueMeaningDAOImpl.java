@@ -34,18 +34,8 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
     @Override
     public List<ValueMeaningModel> getValueMeaningsByPvIdseq( String pvIdseq )
     {
-        String sql = "SELECT DISTINCT  " +
-                "value_meanings.* " +
-                "FROM " +
-                "sbr.permissible_values," +
-                "sbr.vd_pvs,sbr.value_meanings  " +
-                "WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
-                "AND sbr.vd_pvs.vd_idseq = ? " +
-                "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ";
-
-        logger.debug( sql.replace( "?", pvIdseq ) + " <<<<<<<" );
-
-        List<ValueMeaningModel>  valueMeaningModelList = getAll( sql, pvIdseq, ValueMeaningModel.class );
+        String sql = pvIdseqQueryBuilder(  pvIdseq );
+        List<ValueMeaningModel>  valueMeaningModelList = getAll( sql, ValueMeaningModel.class );
 
         // Add the AlternateNames and AlternateDefinitions
         for( ValueMeaningModel valueMeaningModel: valueMeaningModelList)
@@ -57,24 +47,26 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
         return valueMeaningModelList;
     }
 
-
-    @Override
-    public List<ValueMeaningModel> getValueMeaningsByCdeIdAndVersion( String cdeId, String version )
+    protected String pvIdseqQueryBuilder( String pvIdseq )
     {
         String sql = "SELECT DISTINCT  " +
                 "value_meanings.* " +
                 "FROM " +
                 "sbr.permissible_values," +
-                "sbr.vd_pvs,sbr.value_meanings,  " +
-                "sbr.data_elements " +
+                "sbr.vd_pvs,sbr.value_meanings  " +
                 "WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
-                "AND sbr.data_elements.cde_id = ? " +
-                "AND sbr.data_elements.version = "+ version +
-                 "AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq " +
+                "AND sbr.vd_pvs.vd_idseq = " + pvIdseq + " " +
                 "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ";
 
-        logger.debug( sql.replace( "?", cdeId ) + " <<<<<<<" );
+        //logger.debug( sql + " <<<<<<<" );
+        return sql;
+    }
 
+
+    @Override
+    public List<ValueMeaningModel> getValueMeaningsByCdeIdAndVersion( String cdeId, String version )
+    {
+        String sql = cdeIdAndVersionQueryBuilder(  cdeId,  version );
         List<ValueMeaningModel>  valueMeaningModelList = getAll( sql, cdeId, ValueMeaningModel.class );
 
         // Add the AlternateNames and AlternateDefinitions
@@ -85,6 +77,24 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
         }
 
         return valueMeaningModelList;
+    }
+
+    protected String cdeIdAndVersionQueryBuilder( String cdeId, String version )
+    {
+        String sql = "SELECT DISTINCT  " +
+                "value_meanings.* " +
+                "FROM " +
+                "sbr.permissible_values," +
+                "sbr.vd_pvs,sbr.value_meanings,  " +
+                "sbr.data_elements " +
+                "WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
+                "AND sbr.data_elements.cde_id = " + cdeId + " " +
+                "AND sbr.data_elements.version = "+ version + " " +
+                "AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq " +
+                "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ";
+
+        //logger.debug( sql.replace( "?", cdeId ) + " <<<<<<<" );
+        return sql;
     }
 
     @Override
@@ -100,7 +110,7 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
         String sql = "SELECT * from  sbr.value_meanings " +
                 "WHERE ( vm_id = ? AND version = " + version + " )";
 
-        logger.debug( sql.replace( "?", id ) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", id ) + " <<<<<<<" );
 
         List<ValueMeaningModel>  valueMeaningModelList = getAll( sql, id, ValueMeaningModel.class );
 
@@ -113,36 +123,22 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
         return valueMeaningModelList;
     }
 
-
     /**
-     * This query only get's the fields that are needed for the UI and renames them, it populates ValueMeaningUiModel rather than  ValueMeaningModel
-
      * @param cdeId
      * @param version
      * @return
      */
     @Override
-    public List<ValueMeaningUiModel> getUiValueMeaningsByCdeIdAndVersion( int cdeId, float version )
+    public List<ValueMeaningUiModel> getUiValueMeanings( int cdeId, float version )
     {
-        String sql = "SELECT sbr.vd_pvs.pv_idseq AS pvIdseq, " +
-                "sbr.permissible_values.meaning_description AS pvMeaning, " +
-                "sbr.value_meanings.vm_id AS vmPublicId, " +
-                "sbr.value_meanings.version AS vmVersion, " +
-                "sbr.value_meanings.vm_idseq AS vmIdseq " +
+        List<ValueMeaningUiModel>  valueMeaningUiModelList = getUiValueMeaningsByCdeIdAndVersion(  cdeId,  version );
 
-                "FROM sbr.permissible_values," +
-                " sbr.vd_pvs," +
-                " sbr.value_meanings," +
-                " sbr.data_elements " +
-                "WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
-                "AND sbr.data_elements.cde_id = ? " +
-                "AND sbr.data_elements.version = "+ version + " " +
-                "AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq " +
-                "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ";
+        // Add the AlternateNames and AlternateDefinitions
+        return addAltNamesAndDefinitions(valueMeaningUiModelList);
+    }
 
-        logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
-
-        List<ValueMeaningUiModel>  valueMeaningUiModelList = getAll( sql, Integer.toString( cdeId ), ValueMeaningUiModel.class );
+    protected List<ValueMeaningUiModel> addAltNamesAndDefinitions(  List<ValueMeaningUiModel>  valueMeaningUiModelList)
+    {
         // Add the AlternateNames and AlternateDefinitions
         for( ValueMeaningUiModel valueMeaningUiModel: valueMeaningUiModelList)
         {
@@ -152,9 +148,48 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
         return valueMeaningUiModelList;
     }
 
+    protected List<ValueMeaningUiModel> getUiValueMeaningsByCdeIdAndVersion( int cdeId, float version )
+    {
+        String sql = uiCdeIdAndVersionQueryBuilder( cdeId, version );
+        List<ValueMeaningUiModel>  valueMeaningUiModelList = getAll( sql, ValueMeaningUiModel.class );
+        return valueMeaningUiModelList;
+    }
+
+    protected List<ValueMeaningUiModel> getUiValueMeaningsByCdeIdAndVersion( String cdeId, String version )
+    {
+        return getUiValueMeaningsByCdeIdAndVersion(Integer.parseInt(cdeId), Float.parseFloat( version )  );
+    }
+
+    /**
+     * This query only get's the fields that are needed for the UI and renames them, it populates ValueMeaningUiModel rather than  ValueMeaningModel
+     * @param cdeId
+     * @param version
+     * @return
+     */
+    protected String uiCdeIdAndVersionQueryBuilder(int cdeId, float version )
+    {
+        String sql = "SELECT sbr.vd_pvs.pv_idseq AS pvIdseq, " +
+                "sbr.permissible_values.meaning_description AS pvMeaning, " +
+                "sbr.value_meanings.vm_id AS vmPublicId, " +
+                "sbr.value_meanings.version AS vmVersion, " +
+                "sbr.value_meanings.vm_idseq AS vmIdseq " +
+                "FROM sbr.permissible_values," +
+                " sbr.vd_pvs," +
+                " sbr.value_meanings," +
+                " sbr.data_elements " +
+                "WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq " +
+                "AND sbr.data_elements.cde_id = " + cdeId + " " +
+                "AND sbr.data_elements.version = "+ version + " " +
+                "AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq " +
+                "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ";
+
+        logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
+        return sql;
+    }
 
 
-    public AlternateDefinitionDAOImpl getAlternateDefinitionDAO()
+
+        public AlternateDefinitionDAOImpl getAlternateDefinitionDAO()
     {
         return alternateDefinitionDAO;
     }

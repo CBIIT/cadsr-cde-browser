@@ -1,7 +1,7 @@
 package gov.nih.nci.cadsr.service.model.context;
 
 import gov.nih.nci.cadsr.dao.model.ContextModel;
-import gov.nih.nci.cadsr.service.UnitTestCommon;
+import gov.nih.nci.cadsr.common.util.UnitTestCommon;
 import junit.framework.TestCase;
 
 import java.sql.Timestamp;

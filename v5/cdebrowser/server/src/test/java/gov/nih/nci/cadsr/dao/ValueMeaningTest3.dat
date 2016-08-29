@@ -1,0 +1,17 @@
+[{
+ 	"pvIdseq": "66708DD8-3DC3-41AF-E040-BB89AD437914",
+ 	"pvMeaning": "The absence of life or state of being dead.",
+ 	"vmPublicId": "2847328",
+ 	"vmVersion": "1",
+ 	"vmIdseq": "64BAF314-B712-B697-E040-BB89AD433DB5",
+ 	"alternateNames": [],
+ 	"alternateDefinitions": []
+ }, {
+ 	"pvIdseq": "66708DD8-3DD8-41AF-E040-BB89AD437914",
+ 	"pvMeaning": "One of the possible results of an adverse event outcome that indicates that the event has not improved or recuperated.",
+ 	"vmPublicId": "2572294",
+ 	"vmVersion": "1",
+ 	"vmIdseq": "2509CE87-E773-5C23-E044-0003BA3F9857",
+ 	"alternateNames": [],
+ 	"alternateDefinitions": []
+ }]
