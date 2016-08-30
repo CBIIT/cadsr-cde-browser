@@ -476,6 +476,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         var c=0; // index of searchFilter key //
         if (query!='') { // create base url. determine if query is blank //
+
+            // in previous versions users could use % to do a "like", will substitute *, to avoid % being interited as a hexadecimal prefix
+            if( field == 'name')
+            {
+                query = query.replace("%", "*");
+            }
+
             var url = "".concat("cdebrowserServer/rest/search?", field, "=",query); // search has a query value //
 
             if(typeof type != 'undefined' )
@@ -572,8 +579,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
 
         for (var x in fs.searchFilter) {
-
-
             if (fs.searchFilter[x]&&field=='name') {
                 connector= c==0?"?":"&";
                 c++;
@@ -614,7 +619,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 };
             };
         };
-
         $scope.searchServerRestCall(url);
         if (field=='publicId') {
             $scope.breadCrumbs = [$scope.contextListMaster[0].text]; // only list breadcrumbs as all program areas for public id //
@@ -652,6 +656,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchServerRestCall = function (serverUrl, searchType, id, isNode, isDropdown, selectedNode) {
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
+
         var isDataFilling="";
         if (searchType==undefined) { // used when doing keyword search //
             var url = "".concat("/",serverUrl)
@@ -684,7 +689,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.isSearching = true;
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
-            $http.get(url).success(function (response) {
+        console.log("url: " + url);
+
+        $http.get(url).success(function (response) {
+
             fs.isSearching = false;
             $scope.searchResults = response;
             $scope.tableParams.settings({ dataset: response });
@@ -719,10 +727,19 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
                 $scope.tableParams.reload();
             }
+        }).error(function (data, status, headers, config) {
+            console.log("Error making call to server: " + url);
+
+            if( status == 400)
+            {
+                console.log("HTTP Error 400: The request could not be understood by the server due to malformed syntax.");
+            }
+            else
+            {
+                console.log("Error: " + status);
+            }
+
         });
-       // }
-
-
     };
 
 

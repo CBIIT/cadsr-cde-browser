@@ -437,7 +437,7 @@ public class StringUtilities
     }
 
     /**
-     *
+     * Checks for escaped (with %) hexadecimal
      * @param args
      * @return
      */
@@ -448,7 +448,7 @@ public class StringUtilities
             // It's okay if it's null.
             if( arg != null)
             {
-                if( arg.matches( ".*%.*" ) )
+                if( arg.matches( ".*%[0-9a-fA-F]{2}.*" ) )
                 {
                     return true;
                 }
@@ -488,7 +488,7 @@ public class StringUtilities
 		}
 
 		return paramValue.split(separator);
-	}	
+	}
 	public static boolean containsKeyLoop(String[] arr, String targetValue) {
 		if (arr == null)
 			return false;
