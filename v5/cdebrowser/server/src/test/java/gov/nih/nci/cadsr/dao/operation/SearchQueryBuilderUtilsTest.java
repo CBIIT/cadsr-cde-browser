@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
+
 public class SearchQueryBuilderUtilsTest {
 
 	@Test
@@ -100,5 +102,75 @@ public class SearchQueryBuilderUtilsTest {
 		String expectedSearchSQL = " AND ((de.cde_id = -1)) ";
 		String received = SearchQueryBuilderUtils.buildSearchByPublicId(publicIdFilter, "de.cde_id");
 		assertEquals("Expected SQL fragment for Public ID search", expectedSearchSQL, received);
+	}
+	
+	@Test 
+	public void buildValueDomainWhere() {
+		SearchCriteria sc = new SearchCriteria();
+		sc.setValueDomain("test'SearchPattern*");
+		sc.setVdTypeFlag("0");
+		String expectedWhere = buildValueDomainStringBoth("test''SearchPattern%", sc.getVdTypeFlag());
+		String receivedWhere = SearchQueryBuilderUtils.buildValueDomainWhere(sc);
+		assertEquals(expectedWhere, receivedWhere);
+	}
+
+	@Test 
+	public void buildValueDomainWhereVal() {
+		SearchCriteria sc = new SearchCriteria();
+		sc.setValueDomain("test'SearchPattern1*");
+		String expectedWhere = buildValueDomainStringValue("test''SearchPattern1%");
+		String receivedWhere = SearchQueryBuilderUtils.buildValueDomainWhere(sc);
+		assertEquals(expectedWhere, receivedWhere);
+	}
+	
+	@Test 
+	public void buildValueDomainWhereFlag() {
+		SearchCriteria sc = new SearchCriteria();
+		sc.setValueDomain("test'SearchPattern2*");
+		String expectedWhere = buildValueDomainStringValue("test''SearchPattern2%");
+		String receivedWhere = SearchQueryBuilderUtils.buildValueDomainWhere(sc);
+		assertEquals(expectedWhere, receivedWhere);
+	}
+	
+	@Test 
+	public void buildValueDomainWhereNoValues() {
+		SearchCriteria sc = new SearchCriteria();
+		String expectedWhere = "";
+		String receivedWhere = SearchQueryBuilderUtils.buildValueDomainWhere(sc);
+		assertEquals(expectedWhere, receivedWhere);
+	}	
+	
+	@Test 
+	public void buildValueDomainWhereEmpties() {
+		SearchCriteria sc = new SearchCriteria();
+		sc.setValueDomain("  ");
+		sc.setVdTypeFlag("3");
+		String expectedWhere = "";
+		String receivedWhere = SearchQueryBuilderUtils.buildValueDomainWhere(sc);
+		assertEquals(expectedWhere, receivedWhere);
+	}
+	@Test 
+	public void buildValueDomainWhereEmpties1() {
+		SearchCriteria sc = new SearchCriteria();
+		sc.setValueDomain("  ");
+		sc.setVdTypeFlag("3  ");
+		String expectedWhere = "";
+		String receivedWhere = SearchQueryBuilderUtils.buildValueDomainWhere(sc);
+		assertEquals(expectedWhere, receivedWhere);
+	}
+
+	public static String buildValueDomainStringBoth(String expectedVd, String expectedVdFlag) {
+		String vdWhere = " AND upper(vd.long_name) like upper('" + expectedVd + "')"
+			+ " AND vd.vd_type_flag = '" + expectedVdFlag + "' AND vd.vd_idseq = de.vd_idseq ";
+		return vdWhere;
+	}
+	public static String buildValueDomainStringValue(String expectedVd) {
+		String vdWhere = " AND upper(vd.long_name) like upper('" + expectedVd + "')"
+			+ " AND vd.vd_idseq = de.vd_idseq ";
+		return vdWhere;
+	}
+	public static String buildValueDomainStringFlag(String expectedVdFlag) {
+		String vdWhere = " AND vd.vd_type_flag = '" + expectedVdFlag + "' AND vd.vd_idseq = de.vd_idseq ";
+		return vdWhere;
 	}
 }

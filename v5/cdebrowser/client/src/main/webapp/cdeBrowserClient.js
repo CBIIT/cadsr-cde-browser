@@ -525,7 +525,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             connector= c==0?"?":"&";
             c++;
             url += connector + "valueDomain=" + vd;
-            url += "&vdTypeFlag=" + vdtType;
+        }
+
+        if( vdtType != '') {
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "vdTypeFlag=" + vdtType;
         }
 
         if (searchAltName != '') {

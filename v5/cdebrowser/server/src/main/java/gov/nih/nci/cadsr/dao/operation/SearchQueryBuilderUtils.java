@@ -229,5 +229,55 @@ public class SearchQueryBuilderUtils {
 
 		return res;
 	}
-	
+
+	public static String buildValueDomainWhere(SearchCriteria searchCriteria) {
+		StringBuilder sb = new StringBuilder();
+		String vdWhere;
+		String valueDomainPattern = searchCriteria.getValueDomain();
+		String typeFlagPattern = searchCriteria.getVdTypeFlag();//this flag allowed values are E and N one character, and this is controlled by setter method
+		if (StringUtils.isNotBlank(valueDomainPattern) || StringUtils.isNotBlank(typeFlagPattern)) {
+			String newSearchStr = "";
+			if (valueDomainPattern != null) {
+				newSearchStr = StringReplace.strReplace(valueDomainPattern, "*", "%");
+				newSearchStr = StringReplace.strReplace(newSearchStr, "'", "''");//Escape SQL single quote
+			}
+			else {
+				newSearchStr = "";
+			}
+			
+			if(StringUtils.isNotBlank(newSearchStr) && StringUtils.isNotBlank(typeFlagPattern)) {
+				sb.append(" AND upper(vd.long_name) like upper('")
+			    .append(newSearchStr)
+			    .append("')")
+			    .append(" AND vd.vd_type_flag = '")
+			    .append(typeFlagPattern)
+			    .append("'");
+				
+			    
+			//	        	vdWhere = " AND upper(vd.long_name) like upper('" + searchCriteria.getValueDomain().replace( "*", "%" ) + "')"
+			//	                    + " AND vd.vd_type_flag = '" + searchCriteria.getVdTypeFlag() + "' AND vd.vd_idseq = de.vd_idseq ";
+			}
+			else if(StringUtils.isNotBlank(searchCriteria.getValueDomain()))
+			{
+				sb.append(" AND upper(vd.long_name) like upper('")
+			    .append(newSearchStr)
+			    .append("')");
+				
+				//vdWhere = " AND upper(vd.long_name) like upper('" + searchCriteria.getValueDomain().replace( "*", "%" ) + "')"
+			            //+ " AND vd.vd_idseq = de.vd_idseq ";
+			}
+			else //StringUtils.isNotBlank(searchCriteria.getVdTypeFlag())
+			{
+			    sb.append(" AND vd.vd_type_flag = '")
+			    .append(typeFlagPattern)
+			    .append("'");
+				
+				//vdWhere = " AND vd.vd_type_flag = '" + searchCriteria.getVdTypeFlag() + "' AND vd.vd_idseq = de.vd_idseq ";
+			}
+			sb.append(" AND vd.vd_idseq = de.vd_idseq ");
+		}
+		vdWhere = sb.toString();
+		logger.debug("vdWhere = " + vdWhere);
+		return vdWhere;
+	}
 }

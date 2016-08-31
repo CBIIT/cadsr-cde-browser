@@ -277,21 +277,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                     + "AND de.latest_version_ind = 'Yes' ";
         }
 
-        if( StringUtils.isNotBlank( searchCriteria.getValueDomain() ) )
+        if ((StringUtils.isNotBlank(searchCriteria.getValueDomain())) || (StringUtils.isNotBlank(searchCriteria.getVdTypeFlag())))
         {
-            if( searchCriteria.getVdTypeFlag() != "" )
-            {
-                vdWhere = " AND upper(vd.long_name) like upper('" + searchCriteria.getValueDomain().replace( "*", "%" ) + "')"
-                        + " AND vd.vd_type_flag = '" + searchCriteria.getVdTypeFlag() + "' AND vd.vd_idseq = de.vd_idseq ";
-            }
-            else
-            {
-                vdWhere = " AND upper(vd.long_name) like upper('" + searchCriteria.getValueDomain().replace( "*", "%" ) + "')"
-                        + " AND vd.vd_idseq = de.vd_idseq ";
-            }
+        	vdWhere = SearchQueryBuilderUtils.buildValueDomainWhere(searchCriteria);
             vdFrom = " ,sbr.value_domains_view vd ";
-
-
         }
 
         if( StringUtils.isNotBlank( searchCriteria.getName() ) )
