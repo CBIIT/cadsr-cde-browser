@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import gov.nih.nci.cadsr.common.UsageLog;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class SearchController
 
     @Autowired
     private RestControllerCommon restControllerCommon;
+
+    @Autowired
+    private UsageLog usageLog;
 
     private List<ProgramAreaModel> programAreaModelList = null;
 
@@ -79,8 +83,8 @@ public class SearchController
     public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result, HttpSession httpSession)
     {
         logger.debug("Received a search request with the following search criteria: " + searchCriteria);
-        SearchNode[] results;
 
+        SearchNode[] results;
         if (result.hasErrors())
         {
         	logger.error("Error in binding search criteria to the SearchCriteria bean.");
@@ -101,7 +105,7 @@ public class SearchController
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
-            
+
             searchCriteria.preprocessCriteria();
 
             results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession)));
@@ -111,37 +115,41 @@ public class SearchController
             //FIXME, this doesn't have the newest advanced search fields yet.
             return createErrorNode( "Server Error:\nsearch criteria : " + searchCriteria.getName() + ", publicId: " + searchCriteria.getPublicId() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getProgramArea() + " failed ", e );
         }
+        usageLog.log( "search", searchCriteria.toLogString() + " [" + results.length + " results returned]" );
 
         return results;
     }
 
     @RequestMapping( value = "/cdesByContext" )
     @ResponseBody
-    public SearchNode[] getCDEsByContext( @RequestParam( "contextId" ) String contexId, HttpSession httpSession )
+    public SearchNode[] getCDEsByContext( @RequestParam( "contextId" ) String contextId, HttpSession httpSession )
     {
         // Sample contextId   DCC52A25-A107-42D4-E040-BB89AD4346A7
         // Check for bad values of contextId - defend against SQL Injection
-        if( contexId.matches( "^[0-9A-Za-z-]+$" ) )
+        if( contextId.matches( "^[0-9A-Za-z-]+$" ) )
         {
-            logger.debug( "Good contexId: " + contexId );
+            logger.debug( "Good contextId: " + contextId );
         }
         else
         {
             // Log this, as it may be an attempt to hack the SQL server.  Return null to the client
-            logger.warn( "getCDEsByContext failed Bad contex ID [" + contexId + "]" );
+            logger.warn( "getCDEsByContext failed Bad contex ID [" + contextId + "]" );
             return null;
-            //return createErrorNode( "Server Error:\ngetCDEsByContext failed: Bad contex ID [" + contexId + "]", contexId );
+            //return createErrorNode( "Server Error:\ngetCDEsByContext failed: Bad contex ID [" + contextId + "]", contextId );
         }
 
         SearchNode[] results = null;
         try
         {
-            results = getCdeByContext( contexId, httpSession );
+            results = getCdeByContext( contextId, httpSession );
         } catch( Exception e )
         {
-        	logger.error("Error in Searching by context id: " + contexId, e);
+        	logger.error("Error in Searching by context id: " + contextId, e);
             return createErrorNode( "Server Error:\ngetCDEsByContext failed ", e );
         }
+
+        usageLog.log( "cdesByContext",  "contextId=" + contextId + " [" + results.length + " results returned]" );
+
         return results;
     }
 
@@ -155,9 +163,9 @@ public class SearchController
             results = cdeByContextClassificationScheme( classificationSchemeId, httpSession );
         } catch( Exception e )
         {
-
             return createErrorNode( "Server Error:\ngetCDEsByClassificationScheme failed ", e );
         }
+        usageLog.log( "cdesByClassificationScheme",  "classificationSchemeId=" + classificationSchemeId + " [" + results.length + " results returned]" );
         return results;
     }
 
@@ -174,6 +182,7 @@ public class SearchController
 
             return createErrorNode( "Server Error:\ngetCDEsByClassificationSchemeItem failed ", e );
         }
+        usageLog.log( "cdesByClassificationSchemeItem",  "classificationSchemeItemId=" + classificationSchemeItemId + " [" + results.length + " results returned]" );
         return results;
     }
 
@@ -190,6 +199,8 @@ public class SearchController
 
             return createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
         }
+        usageLog.log( "cdesByProtocol",  "protocolId=" + protocolId + " [" + results.length + " results returned]" );
+
         return results;
     }
 
@@ -206,6 +217,7 @@ public class SearchController
 
             return createErrorNode( "Server Error:\ngetCDEsByProtocol failed ", e );
         }
+        usageLog.log( "cdesByProtocolForm",  "id=" + id + " [" + results.length + " results returned]" );
         return results;
     }
 
@@ -359,4 +371,13 @@ public class SearchController
 		this.appConfig = appConfig;
 	}
 
+    public UsageLog getUsageLog()
+    {
+        return usageLog;
+    }
+
+    public void setUsageLog( UsageLog usageLog )
+    {
+        this.usageLog = usageLog;
+    }
 }

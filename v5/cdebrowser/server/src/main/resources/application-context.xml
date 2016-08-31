@@ -170,4 +170,6 @@
 
     <bean id="cdeCartUtil" class="gov.nih.nci.cadsr.cdecart.CdeCartUtil">
     </bean>
+    <bean id="usageLog" class="gov.nih.nci.cadsr.common.UsageLog">
+    </bean>
 </beans>

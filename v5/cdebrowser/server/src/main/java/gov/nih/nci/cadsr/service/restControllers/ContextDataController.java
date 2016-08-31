@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import gov.nih.nci.cadsr.common.UsageLog;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +65,11 @@ public class ContextDataController
     @Autowired
     private AppConfig appConfig;
 
+    @Autowired
+    private UsageLog usageLog;
+
     private int contextPalNameCount;
-    
+
     private static final Integer rootLevel = 1;
 
     @Autowired
@@ -131,7 +135,8 @@ public class ContextDataController
         logger.debug( "Received rest call \"oneContextData\" [" + contextId + "]   Program Area[" + programArea + "]   FolderType[" + folderType + "]" );
         programAreaModelList = restControllerCommon.getProgramAreaList();
         List<ParentNode> contextTree = getOneTreeByContextId( contextId, programArea, folderType );
-        logger.debug( "Done rest call oneContextData" );
+
+        usageLog.log( "oneContextData",  "contextId=" + contextId + "programArea=" + programArea + "folderType=" + folderType +" [" + contextTree.size() + " results returned]" );
         return contextTree;
     }
 
@@ -625,9 +630,9 @@ public class ContextDataController
 	                        classificationSchemeItemNode.setCollapsed( true );
 	                        classificationSchemeItemNode.setProgramArea( programArea );
 	                        logger.debug( "addChildrenToCsi(" + classificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
-	                        
+
 	                        addChildrenToCsi( classificationSchemeItemNode, csCsiNodelList);
-	
+
 	                        //Add this CSI to the CS
 	                        classificationSchemeNode.addChildNode( classificationSchemeItemNode );
                     	}

@@ -4,7 +4,6 @@
 
 package gov.nih.nci.cadsr.dao.model;
 
-import gov.nih.nci.cadsr.common.Audit;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import java.sql.Timestamp;
 /**
  * This class contains all the things that are common to all database data models.
  */
-public abstract class BaseModel implements Serializable, Audit
+public abstract class BaseModel implements Serializable
 {
     protected String createdBy;
     protected Timestamp createdDate;

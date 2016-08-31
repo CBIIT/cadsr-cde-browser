@@ -325,4 +325,114 @@ public class SearchCriteria implements Serializable
 				+ "]";
 	}
 
+    public String toLogString()
+    {
+        StringBuilder logBuilderString = new StringBuilder( "SearchCriteria{" );
+        if( ( name != null ) && ( !name.isEmpty() ) )
+        {
+            logBuilderString.append( "name='" + name + "\'," );
+        }
+        if( ( searchMode != null ) && ( !searchMode.isEmpty() ) )
+        {
+            logBuilderString.append( "searchMode='" + searchMode + "\'," );
+        }
+        if( ( publicId != null ) && ( !publicId.isEmpty() ) )
+        {
+            logBuilderString.append( "publicId='" + publicId + "\'," );
+        }
+        logBuilderString.append( "queryType='" + queryType + "\'," );
+        if( ( programArea != null ) && ( !programArea.isEmpty() ) )
+        {
+            logBuilderString.append( "programArea='" + programArea + "\'," );
+        }
+        if( ( context != null ) && ( !context.isEmpty() ) )
+        {
+            logBuilderString.append( "context='" + context + "\'," );
+        }
+        if( ( classification != null ) && ( !classification.isEmpty() ) )
+        {
+            logBuilderString.append( "classification='" + classification + "\'," );
+        }
+        if( ( csCsiIdSeq != null ) && ( !csCsiIdSeq.isEmpty() ) )
+        {
+            logBuilderString.append( "csCsiIdSeq='" + csCsiIdSeq + "\'," );
+        }
+        if( ( protocol != null ) && ( !protocol.isEmpty() ) )
+        {
+            logBuilderString.append( "protocol='" + protocol + "\'," );
+        }
+        if( ( formIdSeq != null ) && ( !formIdSeq.isEmpty() ) )
+        {
+            logBuilderString.append( "formIdSeq='" + formIdSeq + "\'," );
+        }
+        if( ( workFlowStatus != null ) && ( !workFlowStatus.isEmpty() ) )
+        {
+            logBuilderString.append( "workFlowStatus='" + workFlowStatus + "\'," );
+        }
+        if( ( registrationStatus != null ) && ( !registrationStatus.isEmpty() ) )
+        {
+            logBuilderString.append( "registrationStatus='" + registrationStatus + "\'," );
+        }
+        if( ( conceptName != null ) && ( !conceptName.isEmpty() ) )
+        {
+            logBuilderString.append( "conceptName='" + conceptName + "\'," );
+        }
+        if( ( conceptCode != null ) && ( !conceptCode.isEmpty() ) )
+        {
+            logBuilderString.append( "conceptCode='" + conceptCode + "\'," );
+        }
+        if( ( conceptInput != null ) && ( !conceptInput.isEmpty() ) )
+        {
+            logBuilderString.append( "conceptInput='" + conceptInput + "\'," );
+        }
+        if( ( conceptQueryType != null ) && ( !conceptQueryType.isEmpty() ) )
+        {
+            logBuilderString.append( "conceptQueryType='" + conceptQueryType + "\'," );
+        }
+        if( ( dataElementConcept != null ) && ( !dataElementConcept.isEmpty() ) )
+        {
+            logBuilderString.append( "dataElementConcept='" + dataElementConcept + "\'," );
+        }
+        if( ( permissibleValue != null ) && ( !permissibleValue.isEmpty() ) )
+        {
+            logBuilderString.append( "permissibleValue='" + permissibleValue + "\'," );
+        }
+        logBuilderString.append( "pvQueryType='" + pvQueryType + "\'," );
+        if( ( objectClass != null ) && ( !objectClass.isEmpty() ) )
+        {
+            logBuilderString.append( "objectClass='" + objectClass + "\'," );
+        }
+        logBuilderString.append( "contextUse='" + contextUse + "\'," );
+        logBuilderString.append( "versionType='" + versionType + "\'," );
+        if( ( altName != null ) && ( !altName.isEmpty() ) )
+        {
+            logBuilderString.append( "altName='" + altName + "\'," );
+        }
+        if( ( altNameType != null ) && ( !altNameType.isEmpty() ) )
+        {
+            logBuilderString.append( "altNameType='" + altNameType + "\'," );
+        }
+        if( ( vdTypeFlag != null ) && ( !vdTypeFlag.isEmpty() ) )
+        {
+            logBuilderString.append( "vdTypeFlag='" + vdTypeFlag + "\'," );
+        }
+        if( ( valueDomain != null ) && ( !valueDomain.isEmpty() ) )
+        {
+            logBuilderString.append( "valueDomain='" + valueDomain + "\'," );
+        }
+        if( ( filteredinput != null ) && ( !filteredinput.isEmpty() ) )
+        {
+            logBuilderString.append( "filteredinput='" + filteredinput + "\'," );
+        }
+        if( ( property != null ) && ( !property.isEmpty() ) )
+        {
+            logBuilderString.append( "property='" + property + "\'," );
+        }
+        if( ( derivedDEFlag != null ) && ( !derivedDEFlag.isEmpty() ) )
+        {
+            logBuilderString.append( "derivedDEFlag='" + derivedDEFlag + "\'," );
+        }
+        return  logBuilderString.toString().replaceFirst( ",$", "}" );
+    }
+
 }

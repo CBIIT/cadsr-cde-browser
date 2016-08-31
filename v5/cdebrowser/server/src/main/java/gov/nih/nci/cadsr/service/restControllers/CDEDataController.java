@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import gov.nih.nci.cadsr.common.UsageLog;
 import gov.nih.nci.cadsr.dao.*;
 import gov.nih.nci.cadsr.dao.model.*;
 import org.apache.logging.log4j.LogManager;
@@ -104,6 +105,9 @@ public class CDEDataController
     @Autowired
     private ValueMeaningDAO valueMeaningDAO;
 
+    @Autowired
+    private UsageLog usageLog;
+
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
@@ -124,6 +128,7 @@ public class CDEDataController
 
         CdeDetails cdeDetails = buildCdeDetails( dataElementModel );
         //CdeDetails cdeDetails = buildTestRecord();
+        usageLog.log( "CDEData",  "deIdseq=" + deIdseq );
 
         return cdeDetails;
     }
@@ -150,6 +155,7 @@ public class CDEDataController
             cdeDetailsArray[i] = buildCdeDetailsForCompare( dataElementModel );
             i++;
         }
+        usageLog.log( "multiCDEData",  "deIdseq=" + deIdseq + " [" + cdeDetailsArray.length + " results returned]" );
         return cdeDetailsArray;
     }
 
