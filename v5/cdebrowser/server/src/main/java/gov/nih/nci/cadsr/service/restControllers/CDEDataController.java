@@ -955,7 +955,6 @@ public class CDEDataController
         adminInfo.setVdOwnedBy( dataElementModel.getValueDomainModel().getCdContextName() );
         adminInfo.setDecCreatedBy( dataElementModel.getDec().getCreatedBy() );
         adminInfo.setDecOwnedBy( dataElementModel.getDec().getCdContextName() );
-        adminInfo.setOrganization( userManagerDAO.getOrganization( dataElementModel.getCreatedBy() ) );
         return adminInfo;
     }
 
