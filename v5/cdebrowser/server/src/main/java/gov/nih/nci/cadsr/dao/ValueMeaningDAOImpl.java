@@ -169,7 +169,7 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
     protected String uiCdeIdAndVersionQueryBuilder(int cdeId, float version )
     {
         String sql = "SELECT sbr.vd_pvs.pv_idseq AS pvIdseq, " +
-                "sbr.permissible_values.meaning_description AS pvMeaning, " +
+                "sbr.value_meanings.long_name AS pvMeaning, " +
                 "sbr.value_meanings.vm_id AS vmPublicId, " +
                 "sbr.value_meanings.version AS vmVersion, " +
                 "sbr.value_meanings.vm_idseq AS vmIdseq " +
