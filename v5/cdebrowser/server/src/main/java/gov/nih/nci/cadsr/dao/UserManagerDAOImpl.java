@@ -131,10 +131,16 @@ public class UserManagerDAOImpl extends AbstractDAOOperations implements UserMan
 	}
 
 	public String getOrganization(String username) {
-		String organization = jdbcTemplate.queryForObject(
-				"select name from organizations where org_idseq = (select org_idseq from USER_ACCOUNTS where ua_name = ?)",
-				new Object[] { username }, String.class);
-		return organization;
+		try {
+			String organization = jdbcTemplate.queryForObject(
+					"select name from organizations where org_idseq = (select org_idseq from USER_ACCOUNTS where ua_name = ?)",
+					new Object[] { username }, String.class);
+			return organization;
+		}
+		catch (Exception e) {
+			logger.debug("getOrganization exception for a user:" + username +  ' ' + e);
+			return null;
+		}
 	}
 
 	private class UserConext {

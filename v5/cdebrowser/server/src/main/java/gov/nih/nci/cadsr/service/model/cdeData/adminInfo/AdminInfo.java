@@ -3,8 +3,6 @@ package gov.nih.nci.cadsr.service.model.cdeData.adminInfo;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import java.util.Date;
-
 public class AdminInfo
 {
     private String createdBy;
@@ -96,4 +94,13 @@ public class AdminInfo
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
+
+	@Override
+	public String toString() {
+		return "AdminInfo [createdBy=" + createdBy + ", dateCreated=" + dateCreated + ", modifiedBy=" + modifiedBy
+				+ ", dateModified=" + dateModified + ", vdCreatedBy=" + vdCreatedBy + ", vdOwnedBy=" + vdOwnedBy
+				+ ", decCreatedBy=" + decCreatedBy + ", decOwnedBy=" + decOwnedBy + ", organization=" + organization
+				+ "]";
+	}
+	
 }
