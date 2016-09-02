@@ -19,6 +19,10 @@
 			<mvc:mapping path="/cdeCart" />
 			<ref bean="authenticationInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<ref bean="restUsageInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 </beans>
