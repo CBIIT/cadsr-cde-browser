@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
+import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.error.RestControllerException;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ProtocolService;
@@ -72,10 +73,15 @@ public class LookupDataController
 
 		List<ClassificationScheme> csList = new ArrayList<ClassificationScheme>();
 		try {
-			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(csOrCsCsi))
+			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(csOrCsCsi)) {
 				throw new RestControllerException("Either one of context id seq or CS or CSI name should be provided. ");
-			else
+			}
+			else if (ParameterValidator.validateIdSeq(contexIdSeq)) {
 				csList = classificationSchemeService.getClassificationSchemesWithProgramAreaAndContext(contexIdSeq, csOrCsCsi);
+			}
+			else {
+				throw new RestControllerException("Context id seq unexpected value provided: " + contexIdSeq);
+			}
 		}
 		catch (RestControllerException re)
 		{
@@ -99,10 +105,15 @@ public class LookupDataController
 
 		List<Protocol> protocolList = new ArrayList<Protocol>();
 		try {
-			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(protocolOrForm))
+			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(protocolOrForm)) {
 				throw new RestControllerException("Either one of context id seq or protocol or form name should be provided. ");
-			else
+			}		
+			else if (ParameterValidator.validateIdSeq(contexIdSeq)) {
 				protocolList = protocolService.getProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
+			}
+			else {
+				throw new RestControllerException("Context id seq unexpected value provided: " + contexIdSeq);
+			}
 		}
 		catch (RestControllerException re)
 		{
