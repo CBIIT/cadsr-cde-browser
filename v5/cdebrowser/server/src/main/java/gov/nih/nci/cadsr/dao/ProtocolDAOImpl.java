@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -68,9 +69,13 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
 	public List<Protocol> getAllProtocolsWithProgramAreaAndContext(String contexIdSeq, String protocolOrForm)
 	{
     	String sql = lookupDataQueryBuilder.buildProtocolLookupQuery(contexIdSeq, protocolOrForm);
-		
-    	List<Protocol> result = getAll(sql, Protocol.class);
-
+    	List<Protocol> result;
+    	if (StringUtils.isNotEmpty(contexIdSeq)) {
+    		result = jdbcTemplate.query( sql, new Object[]{ contexIdSeq}, new BeanPropertyRowMapper(Protocol.class));
+    	}
+    	else {
+    		result = jdbcTemplate.query( sql, new Object[]{protocolOrForm, protocolOrForm}, new BeanPropertyRowMapper(Protocol.class));
+    	}
         return result;
 	}
 

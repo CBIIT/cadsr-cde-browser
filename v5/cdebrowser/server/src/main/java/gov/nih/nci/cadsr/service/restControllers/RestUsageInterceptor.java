@@ -23,11 +23,11 @@ public class RestUsageInterceptor extends HandlerInterceptorAdapter
 	private static final Logger logger = LogManager.getLogger(RestUsageInterceptor.class.getName());
 	
 	protected static Level useLevel = Level.INFO;//consider to make it parameter
-	public static final String REST_CONTROLLER_USAGE_PREFIX = "CDE_BROWSER_REST_CONTROLLER_USAGE";
-    public static final String LOG_DATE_TIME_FORMAT = "YYYY:MM:dd:HH:mm";
-	public static final String REST_USAGE_LOG_REQUEST_FORMAT = "[%s][Request %s][%s][%s][%s]";//prefix time method URI query
-	public static final String REST_USAGE_LOG_RESPONSE_FORMAT = "[%s][Response %s][response code %d][%s][%s][%s]";//prefix time code method URI query
-	//prefix method URI query Date
+	public static final String REST_CONTROLLER_USAGE_PREFIX_REQUEST = "CDE_BROWSER_REST_REQUEST";
+	public static final String REST_CONTROLLER_USAGE_PREFIX_RESPONSE = "CDE_BROWSER_REST_RESPONSE";
+    public static final String LOG_DATE_TIME_FORMAT = "YYYY-MM-dd'T'HH:mm:ss.SSS";
+	public static final String REST_USAGE_LOG_REQUEST_FORMAT = "[%s][%s][%s][%s][%s]";//prefix time method URI query
+	public static final String REST_USAGE_LOG_RESPONSE_FORMAT = "[%s][%s][response code %d][%s][%s][%s]";//prefix time code method URI query
 	//we can consider to add log request parameters for POST requests
 	
 	@Override
@@ -35,7 +35,7 @@ public class RestUsageInterceptor extends HandlerInterceptorAdapter
 	{
 		LocalDateTime now = LocalDateTime.now();
 		String formattedCurrentDate = now.format( DateTimeFormatter.ofPattern( LOG_DATE_TIME_FORMAT));
-		String toLog = String.format(REST_USAGE_LOG_REQUEST_FORMAT, REST_CONTROLLER_USAGE_PREFIX, formattedCurrentDate, request.getMethod(), request.getRequestURI(),request.getQueryString());
+		String toLog = String.format(REST_USAGE_LOG_REQUEST_FORMAT, REST_CONTROLLER_USAGE_PREFIX_REQUEST, formattedCurrentDate, request.getMethod(), request.getRequestURI(),request.getQueryString());
 		logger.log(useLevel, toLog);
 		
 		return true;
@@ -47,7 +47,7 @@ public class RestUsageInterceptor extends HandlerInterceptorAdapter
 		int responseCode = response.getStatus();
 		LocalDateTime now = LocalDateTime.now();
 		String formattedCurrentDate = now.format( DateTimeFormatter.ofPattern( LOG_DATE_TIME_FORMAT));
-		String toLog = String.format(REST_USAGE_LOG_RESPONSE_FORMAT, REST_CONTROLLER_USAGE_PREFIX, formattedCurrentDate, responseCode, request.getMethod(), request.getRequestURI(),request.getQueryString());
+		String toLog = String.format(REST_USAGE_LOG_RESPONSE_FORMAT, REST_CONTROLLER_USAGE_PREFIX_RESPONSE, formattedCurrentDate, responseCode, request.getMethod(), request.getRequestURI(),request.getQueryString());
 		logger.log(useLevel, toLog);
 	}
 

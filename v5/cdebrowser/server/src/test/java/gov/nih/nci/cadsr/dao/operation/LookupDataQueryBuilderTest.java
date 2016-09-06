@@ -20,11 +20,11 @@ public class LookupDataQueryBuilderTest
 	private static final String csOrCsCsi = "LABS";
 	private static final String protocolForm = "FORM";
 	
-	private static final String csContextQuery = "AND c.conte_idseq = '" + contextIdSeq + "'";
-	private static final String csCsiQuery = "AND (Upper(csv.cs_long_name) like '%" + csOrCsCsi + "%' OR Upper(csv.csi_name) like '%" + csOrCsCsi + "%')";
+	private static final String csContextQuery = "AND c.conte_idseq = ?";
+	private static final String csCsiQuery = "AND (UPPER(csv.cs_long_name) like UPPER(?) OR UPPER(csv.csi_name) like UPPER(?))";
 	
-	private static final String protocolContextQuery = "AND c.conte_idseq = '" + contextIdSeq + "'";
-	private static final String formQuery = " AND (Upper(ffv.protocol_long_name) like '%" + protocolForm + "%' OR Upper(ffv.long_name) like '%" + protocolForm + "%') ";
+	private static final String protocolContextQuery = "AND c.conte_idseq = ?";
+	private static final String formQuery = " AND (UPPER(ffv.protocol_long_name) like UPPER(?) OR UPPER(ffv.long_name) like UPPER(?))";
 	
 	@Configuration
 	static class LookupDataServiceTestContextConfiguration
@@ -67,7 +67,7 @@ public class LookupDataQueryBuilderTest
 	public void testBuildProtocolLookupQuery()
 	{
 		String sql = lookupDataQueryBuilder.buildProtocolLookupQuery(null, protocolForm );
-		
+		System.out.println (sql);
 		Assert.isTrue(StringUtils.contains(sql, formQuery));
 		
 	}

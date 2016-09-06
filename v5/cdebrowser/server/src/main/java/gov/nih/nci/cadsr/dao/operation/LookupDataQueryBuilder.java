@@ -17,34 +17,46 @@ public class LookupDataQueryBuilder
 						  "FROM sbrext.br_cs_csi_hier_view_ext csv, sbr.contexts c " +
 						  "WHERE csv.cs_asl_name = 'RELEASED' AND csv.cstl_name != 'Publishing' AND csv.cs_conte_idseq = c.conte_idseq " +
 						  "AND csv.csi_level <= 2 ";
-
+	/**
+	 * 
+	 * @param contexIdSeq
+	 * @param protocolOrForm 
+	 * @return String query with one or two parameter place holders
+	 */
 	public String buildProtocolLookupQuery(String contexIdSeq, String protocolOrForm)
 	{
 		StringBuffer sql = new StringBuffer(protocolLookupSql);
 		
-		if (StringUtils.isNotBlank(contexIdSeq))
-			sql.append(" AND c.conte_idseq = '" + contexIdSeq + "' ");
-		else if (StringUtils.isNotBlank(protocolOrForm))
-			sql.append(" AND (Upper(ffv.protocol_long_name) like '%" + StringUtils.upperCase(protocolOrForm) + "%' OR " +
-							   "Upper(ffv.long_name) like '%" + StringUtils.upperCase(protocolOrForm) + "%') ");
-		
+		if (StringUtils.isNotBlank(contexIdSeq)) {
+			sql.append(" AND c.conte_idseq = ?");
+		}
+		else if (StringUtils.isNotBlank(protocolOrForm)) {
+			protocolOrForm = '%' + protocolOrForm + '%';
+			sql.append(" AND (UPPER(ffv.protocol_long_name) like UPPER(?) OR UPPER(ffv.long_name) like UPPER(?))");
+		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(ffv.protocol_long_name), UPPER(ffv.long_name)");
 		
 		return sql.toString();
 	}
-	
+	/**
+	 * 
+	 * @param contexIdSeq
+	 * @param csOrCsCsi
+	 * @return String query with one or two parameter place holders
+	 */
 	public String buildCSLookupQuery(String contexIdSeq, String csOrCsCsi)
 	{
     	//Limiting the data to 2 levels of CSIs to match up with the left context menu tree.
     	//Can be changed later based on client feedback.
 		StringBuffer sql = new StringBuffer(csLookupSql);
 		
-		if (StringUtils.isNotBlank(contexIdSeq))
-			sql.append(" AND c.conte_idseq = '" + contexIdSeq + "' ");
-		else if (StringUtils.isNotBlank(csOrCsCsi))
-			sql.append(" AND (Upper(csv.cs_long_name) like '%" + StringUtils.upperCase(csOrCsCsi) + "%' OR " +
-						"Upper(csv.csi_name) like '%" + StringUtils.upperCase(csOrCsCsi) + "%') ");
-		
+		if (StringUtils.isNotBlank(contexIdSeq)) {
+			sql.append(" AND c.conte_idseq = ?");
+		}
+		else if (StringUtils.isNotBlank(csOrCsCsi)) {
+			csOrCsCsi = '%' + csOrCsCsi + '%';
+			sql.append(" AND (UPPER(csv.cs_long_name) like UPPER(?) OR UPPER(csv.csi_name) like UPPER(?))");
+		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.cs_long_name), UPPER(csv.csi_name)");
 		
 		return sql.toString();

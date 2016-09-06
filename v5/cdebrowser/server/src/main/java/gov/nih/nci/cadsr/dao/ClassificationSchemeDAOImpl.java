@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -127,7 +128,13 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 	{
     	String sql = lookupDataQueryBuilder.buildCSLookupQuery(contexIdSeq, csOrCsCsi);
 		
-        List<ClassificationScheme> results = getAll(sql, ClassificationScheme.class);
+        List<ClassificationScheme> results;
+    	if (StringUtils.isNotEmpty(contexIdSeq)) {
+    		results = jdbcTemplate.query(sql, new Object[]{ contexIdSeq}, new BeanPropertyRowMapper(ClassificationScheme.class));
+    	}
+    	else {
+    		results = jdbcTemplate.query(sql, new Object[]{csOrCsCsi, csOrCsCsi}, new BeanPropertyRowMapper(ClassificationScheme.class));
+    	}
         return results;
 	}
     
