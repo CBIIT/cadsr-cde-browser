@@ -45,6 +45,7 @@ public class SearchCriteria implements Serializable
 	public static final String ALL_WORKFLOW_STATUSES = "ALL Workflow Statuses";
 	public static final String ALL_ALTNAME_TYPES = "ALL Alternate Name Types";
 	public static final String ALL_FIELDS = "ALL Fields";
+	public static final String delimiter= ":::";//this is a separator used by the client part.
 	/**
 	 * This method takes care of client values received to be adjusted to server component expectations.
 	 *
@@ -52,8 +53,10 @@ public class SearchCriteria implements Serializable
 	public void preprocessCriteria() {
 		if (ALL_FIELDS.equals(this.filteredinput))
 			this.filteredinput = "ALL";
-		if (ALL_ALTNAME_TYPES.equals(this.altNameType))
-			this.altNameType = "ALL";
+		if (altNameType != null) {
+			if (altNameType.startsWith(ALL_ALTNAME_TYPES)) //use this one since delimiter separator can be added by client
+				this.altNameType = "ALL";
+		}
 		if (ALL_WORKFLOW_STATUSES.equals(this.workFlowStatus))
 			this.workFlowStatus = "ALL";
 		if (ALL_REGISRTATION_STATUSES.equals(this.registrationStatus))
