@@ -76,7 +76,7 @@ public class LookupDataController
 			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(csOrCsCsi)) {
 				throw new RestControllerException("Either one of context id seq or CS or CSI name should be provided. ");
 			}
-			else if (ParameterValidator.validateIdSeq(contexIdSeq)) {
+			else if ((StringUtils.isEmpty(contexIdSeq)) || (ParameterValidator.validateIdSeq(contexIdSeq))) {
 				csList = classificationSchemeService.getClassificationSchemesWithProgramAreaAndContext(contexIdSeq, csOrCsCsi);
 			}
 			else {
@@ -108,7 +108,7 @@ public class LookupDataController
 			if (StringUtils.isBlank(contexIdSeq) && StringUtils.isBlank(protocolOrForm)) {
 				throw new RestControllerException("Either one of context id seq or protocol or form name should be provided. ");
 			}		
-			else if (ParameterValidator.validateIdSeq(contexIdSeq)) {
+			else if ((StringUtils.isEmpty(contexIdSeq)) || (ParameterValidator.validateIdSeq(contexIdSeq)))  {
 				protocolList = protocolService.getProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
 			}
 			else {
