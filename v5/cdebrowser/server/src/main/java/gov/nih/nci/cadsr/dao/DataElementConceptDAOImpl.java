@@ -51,7 +51,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
     {
         // Change wildcard *  to Oracle %
         lName = lName.replaceAll( "\\*", "%" );
-        String sql = "SELECT * FROM sbr.data_element_concepts WHERE long_name like '"+ lName + "'";
+        String sql = "SELECT * FROM sbr.data_element_concepts WHERE upper(long_name) like upper('"+ lName + "')";
 
         return getAll( sql,  DataElementConceptModel.class );
     }
