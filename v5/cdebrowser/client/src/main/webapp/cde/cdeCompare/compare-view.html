@@ -199,7 +199,7 @@
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">definition:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null" ng-bind-html="data.dataElementConcept.dataElementConceptDetails.definition">
                     {{data.dataElementConcept.dataElementConceptDetails.definition}}
                 </td>
             </tr>
@@ -229,7 +229,7 @@
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">conceptualDomainShortName:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null" ng-bind-html="data.dataElementConcept.dataElementConceptDetails.conceptualDomainShortName">
                     {{data.dataElementConcept.dataElementConceptDetails.conceptualDomainShortName}}
                 </td>
             </tr>
@@ -317,7 +317,7 @@
 
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Long Name:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.valueDomain.valueDomainDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.valueDomain.valueDomainDetails==null" ng-bind-html="data.valueDomain.valueDomainDetails.longName">
                     {{data.valueDomain.valueDomainDetails.longName}}
                 </td>
             </tr>
