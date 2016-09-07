@@ -273,9 +273,9 @@
                         </tr>
                         <tr class="dataElementViewTableTr"
                             ng-repeat="(element1, data1) in data.dataElement.referenceDocuments | orderBy:['documentType','documentName']">
-                            <td class="dataElementValue compareDataElementColumn0">{{data1.documentName}}</td>
-                            <td class="dataElementValue compareDataElementColumn0">{{data1.documentType}}</td>
-                            <td class="dataElementValue compareDataElementColumn0">{{data1.documentText}}</td>
+                            <td class="dataElementValue compareDataElementColumn0" ng-bind-html="data1.documentName">{{data1.documentName}}</td>
+                            <td class="dataElementValue compareDataElementColumn0" ng-bind-html="data1.documentType">{{data1.documentType}}</td>
+                            <td class="dataElementValue compareDataElementColumn0" ng-bind-html="data1.documentText">{{data1.documentText}}</td>
                         </tr>
                         <tr  class="dataElementViewTableTr" ng-show="data.dataElement.referenceDocuments==null">
                             <td colspan="3" style="text-align:center">No data found</td>
@@ -338,7 +338,7 @@
 
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Definition:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.valueDomain.valueDomainDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.valueDomain.valueDomainDetails==null" ng-bind-html="data.valueDomain.valueDomainDetails.definition">
                     {{data.valueDomain.valueDomainDetails.definition}}
                 </td>
             </tr>
@@ -489,17 +489,17 @@
 
                         <tr class="dataElementViewTableTr"
                             ng-repeat="(element1, data1) in data.valueDomain.permissibleValues">
-                            <td width="24px" class="compareDataElementValue">{{data1.value}}</td>
+                            <td width="24px" class="compareDataElementValue" ng-bind-html="data1.value">{{data1.value}}</td>
 
 
-                            <td class="compareDataElementValue">{{data1.shortMeaning}}</td>
+                            <td class="compareDataElementValue" ng-bind-html="data1.shortMeaning">{{data1.shortMeaning}}</td>
 
                             <td class="compareDataElementValue">
                                 <a class="link" TARGET="_blank"
                                    href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{data1.conceptCode}}">
                                     {{data1.conceptCode}}</a>
                             </td>
-                            <td class="compareDataElementValue">{{data1.vmDescription}}</td>
+                            <td class="compareDataElementValue" ng-bind-html="data1.vmDescription">{{data1.vmDescription}}</td>
                             <td class="compareDataElementValue">{{data1.beginDateString}}</td>
                             <td class="compareDataElementValue">{{data1.endDateString}}</td>
                             <td class="compareDataElementValue">{{data1.vmId}}</td>

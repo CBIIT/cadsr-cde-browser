@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueMeaningDAO
 {
-    private static final Logger logger = LogManager.getLogger( PermissibleValuesDAOImpl.class.getName() );
+    private static final Logger logger = LogManager.getLogger( ValueMeaningDAOImpl.class.getName() );
     private JdbcTemplate jdbcTemplate;
 
     private AlternateDefinitionDAOImpl alternateDefinitionDAO;
