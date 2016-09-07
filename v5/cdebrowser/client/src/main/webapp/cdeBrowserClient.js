@@ -478,10 +478,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (query!='') { // create base url. determine if query is blank //
 
             // in previous versions users could use % to do a "like", will substitute *, to avoid % being interited as a hexadecimal prefix
-            if( field == 'name')
-            {
-                query = query.replace("%", "*");
-            }
+
+            query = encodeURIComponent(query.replace(/%/g, "*"));
 
             var url = "".concat("cdebrowserServer/rest/search?", field, "=",query); // search has a query value //
 
@@ -491,8 +489,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 c++;
             }
 
-            if (publicIdName && publicIdName!='') {
-                url=url.concat("&name=",publicIdName)
+            if (publicIdName && publicIdName!='') {//search by Public ID and Name on Public ID search tab
+                url=url.concat("&name=",encodeURIComponent(publicIdName.replace(/%/g, "*")));
                 c++;
             };
         }
@@ -518,20 +516,20 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if( dec != '') {
             connector= c==0?"?":"&";
             c++;
-            url += connector + "dataElementConcept=" + dec;
+            url += connector + "dataElementConcept=" + encodeURIComponent(dec.replace(/%/g, "*"));
         }
 
         if( pv != '') {
             connector= c==0?"?":"&";
             c++;
-            url += connector + "permissibleValue=" + pv;
+            url += connector + "permissibleValue=" + encodeURIComponent(pv.replace(/%/g, "*"));
             url += "&pvQueryType=" + pvType;
         }
 
         if( vd != '') {
             connector= c==0?"?":"&";
             c++;
-            url += connector + "valueDomain=" + vd;
+            url += connector + "valueDomain=" + encodeURIComponent(vd.replace(/%/g, "*"));
         }
 
         if( vdtType != '') {
@@ -543,7 +541,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (searchAltName != '') {
             connector = c == 0 ? "?" : "&";
             c++;
-            url += connector + "altName=" + searchAltName;
+            url += connector + "altName=" + encodeURIComponent(searchAltName.replace(/%/g, "*"));
             url += "&altNameType=" + searchAltNameType;
         }
 
@@ -562,8 +560,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (conceptInput != '') {
             connector = c == 0 ? "?" : "&";
             c++;
-            url += connector + "conceptInput=" + conceptInput;
-            // url += connector + "conceptQueryType=" + conceptQueryType;
+            url += connector + "conceptInput=" + encodeURIComponent(conceptInput.replace(/%/g, "*"));
         }
 
         if ( searchContextUse >= 0) {
@@ -575,13 +572,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if( searchObjectClass != '') {
             connector= c==0?"?":"&";
             c++;
-            url += connector + "objectClass=" + searchObjectClass;
+            url += connector + "objectClass=" + encodeURIComponent(searchObjectClass.replace(/%/g, "*"));
         }
 
         if( searchProperty != '') {
             connector= c==0?"?":"&";
             c++;
-            url += connector + "property=" + searchProperty;
+            url += connector + "property=" + encodeURIComponent(searchProperty.replace(/%/g, "*"));
         }
 
         if( derivedDE != '' && $scope.more) {
