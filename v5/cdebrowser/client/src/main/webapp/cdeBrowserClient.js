@@ -143,6 +143,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.filterService.searchFilter.context = "";
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
+        fs.resetClassificationAndProtocol();
         groupFactory.clearData();
         groupFactory1.clearData();
     };

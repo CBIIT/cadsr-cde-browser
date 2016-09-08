@@ -26,16 +26,22 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         // this.showClassificationsProtocolForms = 0; // hide protocol forms and classification dropdowns //
     };
 
-    this.resetDataElementSearch=function(){
+    this.resetDataElementSearch = function() {
         this.resetElementsInCommon();
 
     }
 
-    this.resetElementsInCommon=function(){
+    this.resetElementsInCommon = function() {
         this.searchFilter = {programArea:0,workFlowStatus:["ALL Workflow Statuses"],registrationStatus:["ALL Registration Statuses"]}// reset search filter to just having program area selected to all //
+        // this.classifications = [];
+        // this.protocols = [];
+        this.resetClassificationAndProtocol();
+        this.showClassificationsProtocolForms = 0;
+    }
+
+    this.resetClassificationAndProtocol = function() {
         this.classifications = [];
         this.protocols = [];
-        this.showClassificationsProtocolForms = 0;
     }
 
     // gets initial server data //
