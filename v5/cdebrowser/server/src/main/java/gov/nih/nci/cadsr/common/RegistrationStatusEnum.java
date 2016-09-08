@@ -5,8 +5,8 @@ import java.util.List;
 
 public enum RegistrationStatusEnum
 {
-	STANDARD("Standard"),
 	PREFSTD("Preferred Standard"),	
+	STANDARD("Standard"),	
 	CANDIDATE("Candidate"),
 	PROPOSED("Proposed"),
 	QUALIFIED("Qualified"),
