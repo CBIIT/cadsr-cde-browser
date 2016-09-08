@@ -24,11 +24,13 @@ public class ProtocolServiceImpl implements ProtocolService
 	{
 		logger.debug("Fetching the list of all protocols with program area and context idSeq = " + contexIdSeq + ", protocolOrForm = " + protocolOrForm);
 		List<Protocol> protoList = protocolDAO.getAllProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
-		if (protoList == null || protoList.size() == 0)
+		if (protoList == null)
 		{
 			protoList = new ArrayList<Protocol>();
 		}
-			
+		
+		logger.debug("Returning the list of all protocols with program area and context idSeq = " + contexIdSeq + ", protocolOrForm = " + protocolOrForm + ", protoList.size = " + protoList.size());
+		
 		return protoList;
 	}
 

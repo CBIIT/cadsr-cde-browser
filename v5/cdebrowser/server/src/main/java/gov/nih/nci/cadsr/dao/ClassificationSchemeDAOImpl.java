@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+
 import java.util.List;
 
 public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implements ClassificationSchemeDAO
@@ -128,11 +129,12 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 	{
     	String sql = lookupDataQueryBuilder.buildCSLookupQuery(contexIdSeq, csOrCsCsi);
 		
-        List<ClassificationScheme> results;
+        List<ClassificationScheme> results = null;
     	if (StringUtils.isNotEmpty(contexIdSeq)) {
     		results = jdbcTemplate.query(sql, new Object[]{ contexIdSeq}, new BeanPropertyRowMapper(ClassificationScheme.class));
     	}
-    	else {
+    	else if (StringUtils.isNotEmpty(csOrCsCsi)) {
+    		csOrCsCsi = '%' + csOrCsCsi + '%';
     		results = jdbcTemplate.query(sql, new Object[]{csOrCsCsi, csOrCsCsi}, new BeanPropertyRowMapper(ClassificationScheme.class));
     	}
         return results;

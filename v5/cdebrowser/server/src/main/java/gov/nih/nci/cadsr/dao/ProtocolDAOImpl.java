@@ -3,10 +3,9 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import gov.nih.nci.cadsr.dao.model.ProtocolModel;
-import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
-import gov.nih.nci.cadsr.dao.operation.LookupDataQueryBuilder;
-import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
+import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -15,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
-import java.util.List;
+import gov.nih.nci.cadsr.dao.model.ProtocolModel;
+import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
+import gov.nih.nci.cadsr.dao.operation.LookupDataQueryBuilder;
+import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
 
 public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDAO
 {
@@ -69,13 +70,15 @@ public class ProtocolDAOImpl extends AbstractDAOOperations implements ProtocolDA
 	public List<Protocol> getAllProtocolsWithProgramAreaAndContext(String contexIdSeq, String protocolOrForm)
 	{
     	String sql = lookupDataQueryBuilder.buildProtocolLookupQuery(contexIdSeq, protocolOrForm);
-    	List<Protocol> result;
+    	List<Protocol> result = null;
     	if (StringUtils.isNotEmpty(contexIdSeq)) {
     		result = jdbcTemplate.query( sql, new Object[]{ contexIdSeq}, new BeanPropertyRowMapper(Protocol.class));
     	}
-    	else {
+    	else if (StringUtils.isNotEmpty(protocolOrForm) ){
+    		protocolOrForm = '%' + protocolOrForm + '%';
     		result = jdbcTemplate.query( sql, new Object[]{protocolOrForm, protocolOrForm}, new BeanPropertyRowMapper(Protocol.class));
     	}
+    	
         return result;
 	}
 

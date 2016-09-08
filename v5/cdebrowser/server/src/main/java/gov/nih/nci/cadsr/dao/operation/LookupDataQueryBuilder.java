@@ -1,9 +1,12 @@
 package gov.nih.nci.cadsr.dao.operation;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LookupDataQueryBuilder 
 {
+	private static Logger logger = LogManager.getLogger( LookupDataQueryBuilder.class.getName() );
 	
 	private static final String protocolLookupSql = "SELECT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, " + 
 						 "c.name contextName, ffv.proto_idseq protocolIdSeq, ffv.protocol_long_name protocolLongName, " +
@@ -31,12 +34,12 @@ public class LookupDataQueryBuilder
 			sql.append(" AND c.conte_idseq = ?");
 		}
 		else if (StringUtils.isNotBlank(protocolOrForm)) {
-			protocolOrForm = '%' + protocolOrForm + '%';
 			sql.append(" AND (UPPER(ffv.protocol_long_name) like UPPER(?) OR UPPER(ffv.long_name) like UPPER(?))");
 		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(ffv.protocol_long_name), UPPER(ffv.long_name)");
-		
-		return sql.toString();
+		String resSql = sql.toString();
+		logger.debug("buildProtocolLookupQuery = " + resSql);
+		return resSql;
 	}
 	/**
 	 * 
@@ -58,8 +61,9 @@ public class LookupDataQueryBuilder
 			sql.append(" AND (UPPER(csv.cs_long_name) like UPPER(?) OR UPPER(csv.csi_name) like UPPER(?))");
 		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.cs_long_name), UPPER(csv.csi_name)");
-		
-		return sql.toString();
+		String resSql = sql.toString();
+		logger.debug("buildCSLookupQuery = " + resSql);
+		return resSql;
 	}
 	
 }
