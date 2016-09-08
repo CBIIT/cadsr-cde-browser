@@ -7,14 +7,14 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.List;
-
-import com.sun.media.jfxmedia.logging.Logger;
-
 
 public class PermissibleValuesModel extends BaseModel
 {
-    private String pvIdseq;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String pvIdseq;
     private String value;
     private String shortMeaning;
     private String meaningDescription;
