@@ -100,25 +100,25 @@
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Long Name:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null" ng-bind-html="data.dataElement.dataElementDetails.longName">
                     {{data.dataElement.dataElementDetails.longName}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Short Name:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null" ng-bind-html="data.dataElement.dataElementDetails.shortName">
                     {{data.dataElement.dataElementDetails.shortName}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Preferred Question Text:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null" ng-bind-html="data.dataElement.dataElementDetails.preferredQuestionText">
                     {{data.dataElement.dataElementDetails.preferredQuestionText}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Definition:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null">
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null" ng-bind-html="data.dataElement.dataElementDetails.definition">
                     {{data.dataElement.dataElementDetails.definition}}
                 </td>
             </tr>
