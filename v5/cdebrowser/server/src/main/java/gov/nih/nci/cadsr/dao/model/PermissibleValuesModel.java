@@ -7,6 +7,9 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
+
+import com.sun.media.jfxmedia.logging.Logger;
 
 
 public class PermissibleValuesModel extends BaseModel
@@ -23,6 +26,7 @@ public class PermissibleValuesModel extends BaseModel
     private String lowValueNum;
     private String vmIdseq;
     private String conceptCode;
+    private String[] conceptCodeArray;
     private String vmDescription;
     private String vmId;
     private String vmVersion;
@@ -35,6 +39,9 @@ public class PermissibleValuesModel extends BaseModel
     public void setConceptCode( String conceptCode )
     {
         this.conceptCode = conceptCode;
+        if (conceptCode!= null) {
+        	setConceptCodeArray(conceptCode.split(":"));
+        }
     }
 
     public String getVmVersion()
@@ -194,6 +201,14 @@ public class PermissibleValuesModel extends BaseModel
     {
         this.vmIdseq = vmIdseq;
     }
+
+	public String[] getConceptCodeArray() {
+		return conceptCodeArray;
+	}
+
+	public void setConceptCodeArray(String[] conceptCodeArray) {
+		this.conceptCodeArray = conceptCodeArray;
+	}
 
 	@Override
 	public String toString() {
