@@ -63,8 +63,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         // this.getClassificationsAndProtocolForms(); // get classifications and protocol forms //
     };
 
-    this.setClassifications=function(cs){
-        this.myclassifications=cs;
+    this.setClassifications = function(cs){
+        this.myclassifications = cs;
         // console.log(this.myclassifications);
     }
 
@@ -87,7 +87,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
                 this.searchFilter['protocol']=selectedNode;
             }
             else { // if classification scheme item or classification scheme item id set classification for dropdown //
-                this.searchFilter['classification']=selectedNode;
+                this.searchFilter['classification'] = selectedNode;
             };
         };
     };
@@ -114,13 +114,13 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
             else if(this.searchFilter.classification.name==this.searchFilter.classification.csCsiName){
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
                 
-                if(this.searchFilter.classification.csiLevel==2){
+                if(this.searchFilter.classification.csiLevel==2) {
                     var data=$filter('filter')(this.myclassifications,{"csCsiIdSeq":this.searchFilter.classification.parentCsiIdSeq,
                         csiLevel:1});
                     breadcrumbs.push(data[0].csCsiName);
                 }
                 breadcrumbs.push(this.searchFilter.classification.csCsiName);
-            }else if(this.searchFilter.classification.csiLevel==2){
+            }else if(this.searchFilter.classification.csiLevel==2) {
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
                 breadcrumbs.push(this.searchFilter.classification.name);
             }

@@ -743,7 +743,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
                 $scope.tableParams.reload();
             }
-            $scope.goToAnchor("breadCrumbsAnchor");
+            $timeout(function() {
+                $scope.goToAnchor("breadCrumbsAnchor");
+            }, 1);
         }).error(function (data, status, headers, config) {
             console.log("Error making call to server: " + url);
 
