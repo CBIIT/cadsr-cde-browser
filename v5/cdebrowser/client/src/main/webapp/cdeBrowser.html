@@ -444,7 +444,7 @@
         </span>
 
             <!--  Bread Crumbs  -->
-            <div class="breadCrumbs">
+            <div id="breadCrumbsAnchor" class="breadCrumbs">
             <span>
                 <span data-ng-repeat="b in breadCrumbs" data-ng-show="breadCrumbs.length>1">
                     {{b}}<span data-ng-show="!$last"> >></span>
@@ -474,6 +474,11 @@
                         Download Data Elements as XML
                     </button>
                 </li>
+                <br />
+                <li>
+                    &nbsp;
+                </li>
+                <br />
                 <li>
                     <button label="Add to CDE Cart" ng-click="addCDE()" ng-disabled="!checkedItemsForDownload.length">
                         Add to CDE Cart

@@ -579,40 +579,36 @@
             Data Element Derivation - Derivation Details <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-show="!derivationDetails"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-hide="!derivationDetails">
         </div>
 
-        <table class="compareCDEDataElementDetailsTable" ng-show="!derivationDetails">
+        <table ng-show="!derivationDetails">
             <tr>
-                <td>CDE:</td>
-                <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}</td>
-            </tr>
-
-            <tr class="dataElementViewTableTr">
-                <td class="compareDataElementDescription">Derivation Type:</td>
-                <td class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementDerivation.dataElementDerivationDetails==null">
-                    {{data.dataElementDerivation.dataElementDerivationDetails.derivationType}}
-                </td>
-                <td rowspan="4" style="text-align:center" class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-show="data.dataElementDerivation.dataElementDerivationDetails==null">
-                    No data found
-                </td>
-            </tr>
-
-           <tr class="dataElementViewTableTr">
-                <td class="compareDataElementDescription">Rule:</td>
-                <td class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementDerivation.dataElementDerivationDetails==null">
-                    {{data.dataElementDerivation.dataElementDerivationDetails.rule}}
-                </td>
-            </tr>
-
-           <tr class="dataElementViewTableTr">
-                <td class="compareDataElementDescription">Method:</td>
-                <td class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementDerivation.dataElementDerivationDetails==null">
-                    {{data.dataElementDerivation.dataElementDerivationDetails.method}}
-                </td>
-            </tr>
-
-           <tr class="dataElementViewTableTr">
-                <td class="compareDataElementDescription">Concatenation Character:</td>
-                <td class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementDerivation.dataElementDerivationDetails==null">
-                    {{data.dataElementDerivation.dataElementDerivationDetails.concatenationCharacter}}
+                <td valign="top" ng-repeat="(element, data) in cdeDetails">
+                    <table class="compareCDEDataElementDetailsTable">
+                        <tr>
+                            <td>{{element + 1}}</td>
+                        </tr>
+                        <tr>
+                            <th class="dataElementHeading">Derivation Type</th>
+                            <th class="dataElementHeading">Rule</th>
+                            <th class="dataElementHeading">Method</th>
+                            <th class="dataElementHeading">Concatenation Character</th>
+                        </tr>
+                        <tr class="dataElementViewTableTr" ng-hide="data.dataElementDerivation.dataElementDerivationDetails==null">
+                            <td class="compareDataElementValue" ng-bind-html="data.dataElementDerivation.dataElementDerivationDetails.derivationType">
+                                {{data.dataElementDerivation.dataElementDerivationDetails.derivationType}}
+                            </td>
+                            <td class="compareDataElementValue" ng-bind-html="data.dataElementDerivation.dataElementDerivationDetails.rule">
+                                {{data.dataElementDerivation.dataElementDerivationDetails.rule}}
+                            </td>
+                            <td class="compareDataElementValue" ng-bind-html="data.dataElementDerivation.dataElementDerivationDetails.method">
+                                {{data.dataElementDerivation.dataElementDerivationDetails.method}}
+                            </td>
+                            <td class="compareDataElementValue" ng-bind-html="data.dataElementDerivation.dataElementDerivationDetails.concatenationCharacter">
+                                {{data.dataElementDerivation.dataElementDerivationDetails.concatenationCharacter}}
+                            </td>
+                        </tr>
+                        <tr  class="dataElementViewTableTr" ng-show="data.dataElementDerivation.dataElementDerivationDetails==null">
+                        <td colspan="4" style="text-align:center">No data found</td></tr>
+                    </table>
                 </td>
             </tr>
         </table>

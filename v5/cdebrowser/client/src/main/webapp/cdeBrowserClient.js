@@ -1,5 +1,5 @@
 // controller
-angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout, $localStorage, $sessionStorage, $http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope) {
+angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($window, $scope, $filter, $timeout, $localStorage, $sessionStorage, $http, $location, $route, NgTableParams, searchFactory, cartService, filterService, authenticationService, downloadFactory, groupFactory, groupFactory1, compareService, $rootScope, $anchorScroll) {
     window.scope = $scope;
     $scope.searchFactory = searchFactory;
     $scope.location = $location.url();
@@ -18,6 +18,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.programAreaTabs = response;
     });
 
+    $scope.goToAnchor = function (id) {
+        var change = $location.hash();
+        $location.hash(id);
+        $anchorScroll();
+        $location.hash(change);
+    }
 
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -737,6 +743,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
                 $scope.tableParams.reload();
             }
+            $scope.goToAnchor("breadCrumbsAnchor");
         }).error(function (data, status, headers, config) {
             console.log("Error making call to server: " + url);
 
