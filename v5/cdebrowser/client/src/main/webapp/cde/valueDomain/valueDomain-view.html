@@ -239,6 +239,9 @@
     </tr>
 </table>
 
+
+
+
 <div class="dataElementViewTableWithScroller" data-ng-show="cdeDetails.valueDomain.permissibleValues.length">
     <table align="center" cellpadding="1" cellspacing="1" width="100%">
         <tr class="dataElementViewTableTr">
@@ -253,14 +256,12 @@
         </tr>
         <tr class="dataElementViewTableTr" data-ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
             <td width="24px" class="dataElementValue" ng-bind-html="p_value.value">{{p_value.value}}</td>
-
-
             <td class="dataElementValue" ng-bind-html="p_value.shortMeaning">{{p_value.shortMeaning}}</td>
-
             <td class="dataElementValue">
-                <a class="link" TARGET="_blank"
-                   href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{p_value.conceptCode}}">
-                   <span ng-bind-html="p_value.conceptCode">{{p_value.conceptCode}}</span></a>
+
+                <a class="link"  data-ng-repeat="cCode in p_value.conceptCodeArray" TARGET="_blank"
+                   href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{cCode}}">{{cCode}}&nbsp;</a>
+
             </td>
             <td class="dataElementValue" ng-bind-html="p_value.vmDescription">{{p_value.vmDescription}}</td>
             <td class="dataElementValue" ng-bind-html="p_value.beginDateString">{{p_value.beginDateString}}</td>
