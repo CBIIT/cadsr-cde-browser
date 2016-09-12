@@ -39,18 +39,18 @@ div[data-tree-model] li .emptyFolder {
 
 div[data-tree-model] li .csi {
     padding: 1px 10px;
-    background: url("../icons/csi.png") no-repeat;
+    background: url("../icons/openCsiFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 }
 
 div[data-tree-model] li .csiFolderOpen {
     padding: 1px 10px;
-    background: url("../icons/openCsiFolder-icon_16.png") no-repeat;
+    background: url("../icons/openFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 }
 div[data-tree-model] li .csiFolderClosed {
     padding: 1px 10px;
-    background: url("../icons/closedCsiFolder-icon_16.png") no-repeat;
+    background: url("../icons/closedFolder-icon_16.png") no-repeat;
     white-space:nowrap;
 }
 
