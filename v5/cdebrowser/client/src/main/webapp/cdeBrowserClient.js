@@ -116,6 +116,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // reset filters //
     $scope.resetFilters = function() {
+        console.log("IN resetFilters");
+
         fs.resetFilters();
         $scope.resetSortOrder();
         $scope.searchResults = [];
@@ -146,6 +148,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.filterService.resetContext = function() {
+        console.log("IN filterService.resetContext");
         $scope.filterService.searchFilter.context = "";
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
@@ -156,10 +159,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId) {
-
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')){
+
                 var finalID = '';
                 if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
                     $scope.filterService.protocols = groupFactory.load(contextId.selectedNode.parentId);
@@ -176,13 +179,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
             }
             else{
-            $scope.filterService.protocols = groupFactory.load(0);
+                $scope.filterService.searchFilter.classification = "";
+                $scope.filterService.searchFilter.protocol = "";
+                $scope.filterService.protocols = groupFactory.load(0);
+
             }
         });
+
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+
             groupFactory1.fillClassifications(response);
            if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')){
-                var finalID = '';
+               var finalID = '';
                 if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
                     $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
                     var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
@@ -199,9 +207,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     var fName = $filter('filter')($scope.filterService.classifications,{csIdSeq:contextId.selectedNode.idSeq})
                 }
                 $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
-            }
+           }
             else{
-                 $scope.filterService.classifications = groupFactory1.load(0);
+               $scope.filterService.searchFilter.classification = "";
+               $scope.filterService.searchFilter.protocol = "";
+               $scope.filterService.classifications = groupFactory1.load(0);
             }
 
 
@@ -512,13 +522,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 	        c++;
 	        url += connector + "registrationStatus=" + filterService.searchFilter.registrationStatus;
         }
-        
+
         if( filterService.searchFilter.workFlowStatus != '') {
 	        connector= c==0?"?":"&";
 	        c++;
 	        url += connector + "workFlowStatus=" + filterService.searchFilter.workFlowStatus;
-        }        
-        
+        }
+
 
         if( dec != '') {
             connector= c==0?"?":"&";
