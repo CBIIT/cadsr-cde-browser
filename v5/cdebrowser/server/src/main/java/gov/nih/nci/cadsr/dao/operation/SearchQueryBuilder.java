@@ -71,7 +71,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
 
-        String classificationFrom = ", sbr.classification_schemes cls ";
         String csiFrom = ", sbr.ac_csi_view acs ";
         String protocolFrom = ", sbrext.quest_contents_view_ext frm, sbrext.protocol_qc_ext ptfrm, sbrext.protocols_view_ext pt, sbrext.quest_contents_view_ext qc ";
         String formFrom = ", sbrext.quest_contents_view_ext qc ";
@@ -79,7 +78,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( StringUtils.isBlank( searchCriteria.getClassification() ) )
         {
-            classificationFrom = "";
+
         }
         else
         {
@@ -325,7 +324,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String fromWhere = " FROM sbr.data_elements_view de , " +
                 "sbr.reference_documents_view rd , " +
                 "sbr.contexts_view conte " +
-                vdFrom + classificationFrom + csiFrom + protocolFrom + formFrom +
+                vdFrom + csiFrom + protocolFrom + formFrom +
                 registrationFrom +
                 wkFlowFrom +
                 deDerivFrom +
