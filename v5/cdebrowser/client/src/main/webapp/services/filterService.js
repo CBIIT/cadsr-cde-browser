@@ -18,7 +18,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     // resets all important variables
     this.resetFilters = function() {
         this.isAChildNodeSearch = false;
-        this.resetElementsInCommon();        
+        this.resetElementsInCommon();
         this.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL Fields"]}, conceptInput:"", conceptQueryType:"0",
             searchAltName:"", searchAltNameType:["ALL Alternate Name Types"], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
         // this.classifications = [];
@@ -42,6 +42,10 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.resetClassificationAndProtocol = function() {
         this.classifications = [];
         this.protocols = [];
+
+        // CHECKME MHL  JIRA 737 & 682
+        this.searchFilter.classification = "";
+        this.searchFilter.protocol = "";
     }
 
     // gets initial server data //
@@ -107,13 +111,13 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         };
 
         if (this.searchFilter.classification) {
-            
+
             breadcrumbs.push("Classification");
             if(this.searchFilter.classification.name==this.searchFilter.classification.csLongName)
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
             else if(this.searchFilter.classification.name==this.searchFilter.classification.csCsiName){
                 breadcrumbs.push(this.searchFilter.classification.csLongName);
-                
+
                 if(this.searchFilter.classification.csiLevel==2) {
                     var data=$filter('filter')(this.myclassifications,{"csCsiIdSeq":this.searchFilter.classification.parentCsiIdSeq,
                         csiLevel:1});

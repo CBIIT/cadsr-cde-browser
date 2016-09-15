@@ -179,8 +179,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
             }
             else{
+/*
                 $scope.filterService.searchFilter.classification = "";
                 $scope.filterService.searchFilter.protocol = "";
+*/
                 $scope.filterService.protocols = groupFactory.load(0);
 
             }
@@ -209,9 +211,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
            }
             else{
+ /*
                $scope.filterService.searchFilter.classification = "";
                $scope.filterService.searchFilter.protocol = "";
-               $scope.filterService.classifications = groupFactory1.load(0);
+*/               $scope.filterService.classifications = groupFactory1.load(0);
             }
 
 
