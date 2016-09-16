@@ -44,8 +44,8 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         this.protocols = [];
 
         // CHECKME MHL  JIRA 737 & 682
-        this.searchFilter.classification = "";
-        this.searchFilter.protocol = "";
+        delete this.searchFilter.classification;
+        delete this.searchFilter.protocol;
     }
 
     // gets initial server data //
