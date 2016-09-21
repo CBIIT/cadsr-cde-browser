@@ -980,7 +980,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataLoad = function (dataSource) {
         $scope.waitMessage = "    Loading";
         $scope.messageClass = $scope.cssClasses["BIG"];
-
+        angular.element(document.getElementById("allHTML")).removeClass("allHTML");
         $http.get(dataSource).success(function (response) {
 
             if (response[0].status == $scope.ERROR) {
