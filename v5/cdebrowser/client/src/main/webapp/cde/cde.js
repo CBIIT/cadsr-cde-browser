@@ -99,6 +99,10 @@ angular.module("cde", [
         });
 
 
+}]).run(['$rootScope','$window','$location',function($rootScope,$window,$location) {
+    $rootScope.$on('$viewContentLoaded', function(event) {
+    $window.ga('send', 'pageview', { page: $location.url() });
+  });
 }]);
 
 /**
