@@ -99,7 +99,7 @@ angular.module("cde", [
         });
 
 
-}]).run(['$rootScope','$window','$location',function($rootScope,$window,$location) {
+}]).run(['$rootScope','$window','$location',function($rootScope,$window,$location) { //Google Analytics URL creation to track # (hash) changes
     $rootScope.$on('$viewContentLoaded', function(event) {
     $window.ga('send', 'pageview', { page: $location.url() });
   });
