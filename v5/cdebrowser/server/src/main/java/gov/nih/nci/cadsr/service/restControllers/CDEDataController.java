@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import gov.nih.nci.cadsr.common.UsageLog;
-import gov.nih.nci.cadsr.dao.*;
-import gov.nih.nci.cadsr.dao.model.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,48 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.UsageLog;
+import gov.nih.nci.cadsr.dao.ConceptDAO;
+import gov.nih.nci.cadsr.dao.CsCsiDAO;
+import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
+import gov.nih.nci.cadsr.dao.CsCsiValueMeaningDAO;
+import gov.nih.nci.cadsr.dao.DataElementDAO;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
+import gov.nih.nci.cadsr.dao.DefinitionDAO;
+import gov.nih.nci.cadsr.dao.DesignationDAO;
+import gov.nih.nci.cadsr.dao.ObjectClassConceptDAO;
+import gov.nih.nci.cadsr.dao.PermissibleValuesDAO;
+import gov.nih.nci.cadsr.dao.PropertyConceptDAO;
+import gov.nih.nci.cadsr.dao.ReferenceDocDAO;
+import gov.nih.nci.cadsr.dao.RepresentationConceptsDAO;
+import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
+import gov.nih.nci.cadsr.dao.UserManagerDAO;
+import gov.nih.nci.cadsr.dao.ValueDomainConceptDAO;
+import gov.nih.nci.cadsr.dao.ValueMeaningDAO;
+import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
+import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
+import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
+import gov.nih.nci.cadsr.dao.model.ConceptModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModel;
+import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModelList;
+import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
+import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
+import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
+import gov.nih.nci.cadsr.dao.model.DesignationModel;
+import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
+import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
+import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
+import gov.nih.nci.cadsr.dao.model.PropertyModel;
+import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
+import gov.nih.nci.cadsr.dao.model.RepresentationModel;
+import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
+import gov.nih.nci.cadsr.dao.model.UsageModel;
+import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConcept;
@@ -132,7 +172,36 @@ public class CDEDataController
 
         return cdeDetails;
     }
+    @RequestMapping( value = "/CDELink" )
+    @ResponseBody
+    public CdeDetails retrieveDataElementDetailsByLink( @RequestParam( "publicId" ) String publicId, 
+    		@RequestParam( "version" ) String versionNumber )
+    {
+        logger.debug( "Received rest call \"CDELink\" publicId: " + publicId + "v." + versionNumber );
 
+        DataElementModel dataElementModel = null;
+        if (checkLinkParameters(publicId, versionNumber)) {
+	        // Get the data model from the database
+	        try
+	        {
+	            dataElementModel = dataElementDAO.geCdeByCdeIdAndVersion( new Integer(publicId), new Float(versionNumber));
+	        } catch( Exception e )
+	        {
+	            logger.error("retrieveDataElementDetailsByLink query parameters received caused exception", e);
+	        }
+        }
+        CdeDetails cdeDetails;
+        if (dataElementModel != null) {
+        	cdeDetails = buildCdeDetails( dataElementModel );
+        }
+        else {
+        	cdeDetails = new CdeDetails();
+        }
+        //CdeDetails cdeDetails = buildTestRecord();
+        usageLog.log( "CDELink",  "publicId=" + publicId + "v." + versionNumber);
+
+        return cdeDetails;
+    }
     /**
      * Accept a comma separated list of deIdseq values.
      *
@@ -159,7 +228,12 @@ public class CDEDataController
         return cdeDetailsArray;
     }
 
-
+    private boolean checkLinkParameters(String publicId, String versionNumber) {
+    	if ((NumberUtils.isNumber(versionNumber)) && (NumberUtils.isDigits(publicId))) {
+    		return true;
+    	}
+    	else return false;
+    }
     // Build a CdeDetails to send to the client
     private CdeDetails buildCdeDetails( DataElementModel dataElementModel )
     {
@@ -287,34 +361,35 @@ public class CDEDataController
         // List to populate for client side
         List<ReferenceDocument> referenceDocuments = new ArrayList<>();
         dataElement.setReferenceDocuments( referenceDocuments );
-
-        //List from database
-        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
-        if( dataElementModelReferenceDocumentList.size() < 1 )
-        {
-            logger.debug( "No ReferenceDocuments where returned" );
-            referenceDocuments = null;
-            dataElement.setReferenceDocuments( referenceDocuments );
-        }
-        for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
-        {
-            ReferenceDocument referenceDoc = new ReferenceDocument();
-            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
-            //logger.debug( referenceDocModel.getDocName() );
-
-            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
-            //logger.debug( referenceDocModel.getDocType() );
-
-            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
-            //logger.debug( referenceDocModel.getDocText() );
-
-            referenceDoc.setContext( referenceDocModel.getContext().getName() );
-            //logger.debug( referenceDocModel.getContext().getName() );
-
-            referenceDoc.setUrl( referenceDocModel.getUrl() );
-            //logger.debug( referenceDocModel.getUrl() );
-
-            referenceDocuments.add( referenceDoc );
+        if (dataElementModel != null) {
+	        //List from database
+	        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
+	        if( dataElementModelReferenceDocumentList.size() < 1 )
+	        {
+	            logger.debug( "No ReferenceDocuments where returned" );
+	            referenceDocuments = null;
+	            dataElement.setReferenceDocuments( referenceDocuments );
+	        }
+	        for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
+	        {
+	            ReferenceDocument referenceDoc = new ReferenceDocument();
+	            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
+	            //logger.debug( referenceDocModel.getDocName() );
+	
+	            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
+	            //logger.debug( referenceDocModel.getDocType() );
+	
+	            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
+	            //logger.debug( referenceDocModel.getDocText() );
+	
+	            referenceDoc.setContext( referenceDocModel.getContext().getName() );
+	            //logger.debug( referenceDocModel.getContext().getName() );
+	
+	            referenceDoc.setUrl( referenceDocModel.getUrl() );
+	            //logger.debug( referenceDocModel.getUrl() );
+	
+	            referenceDocuments.add( referenceDoc );
+	        }
         }
     }
 

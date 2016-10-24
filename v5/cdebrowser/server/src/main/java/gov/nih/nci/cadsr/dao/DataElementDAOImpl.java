@@ -86,7 +86,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     }
 
     @Override
-    public DataElementModel geCdeByCdeIdAndVersion( Integer cdeId, Integer version )
+    public DataElementModel geCdeByCdeIdAndVersion( Integer cdeId, Number version )
     {
         String sql = "SELECT * FROM data_elements WHERE cde_id = ? AND version = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject( sql, new Object[]{ cdeId, version }, new DataElementMapper( DataElementModel.class ) );

@@ -15,7 +15,7 @@ public interface DataElementDAO
     DataElementModel getCdeByDeIdseq( String deIdseq ) throws EmptyResultDataAccessException;
     List<DataElementModel> getCdeByDeIdseqList(List<String> deIdseqSet) throws EmptyResultDataAccessException;
     List<DataElementModel> getAllCdeByCdeId( Integer cdeId );
-    DataElementModel geCdeByCdeIdAndVersion( Integer cdeId, Integer version );
+    DataElementModel geCdeByCdeIdAndVersion( Integer cdeId, Number version );
 
 
     //public void setDataElementSql( String dataElementSql );

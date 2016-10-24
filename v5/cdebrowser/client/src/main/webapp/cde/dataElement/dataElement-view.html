@@ -55,6 +55,12 @@
         <td class="dataElementDescription">Registration Status:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
     </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Data Element Link:</td>
+        <td class="dataElementValue">
+        	<a data-ng-href="dataElementLink" ng-bind-html="dataElementLink">{{dataElementLink}}</a>
+        </td>
+    </tr>
 </table>
 
 <br/>

@@ -3,94 +3,42 @@
  */
 
 angular.module("cdeDataElement", []);
-
-angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", function ($scope) {
-
-/*
-
+//TODO this code tries to create a direct link to a DE details view by DE Public ID and Version. It is a test implementation, it does not really work
+angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", "$location", "$http", function ($scope, $location, $http) {
+    $scope.getCdeDetailByLink = function (serverUrl) {
+        $scope.bigSearchResultsMessageClass = true;
+        $http.get(serverUrl).success(function (response) {
+            $scope.tabsDisabled = false;
+            // Change to "Data Element" tab
+            $scope.changeView(1, $scope.tabs[1]);
+            $scope.cdeDetails = response;
+            $scope.searchResultsMessage = "";
+            $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
+            $scope.bigSearchResultsMessageClass = false;
+        });
+    };
     $scope.getCdeData = function () {
+    	$scope.publicId = $location;
+    	var searchObject = $location.search();
+    	console.log("cde-dataElement.js debug log searchObject.publicId: " + searchObject.publicId + ", searchObject.version: " + searchObject.version );
+    	if (($location.search().hasOwnProperty('publicId')) && ($location.search().hasOwnProperty('version'))) {
+    		var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
+        		+ "/cdebrowserServer/rest/CDELink?publicId=" + searchObject.publicId+"&version=" + searchObject.version;
+    		console.log("cde-dataElement.js debug log dataElementServerLink: " + dataElementServerLink);
+    		$scope.dataElementLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
+			+ "/cdebrowserClient/cdeBrowser.html#/dataElement?publicId=" + searchObject.publicId +"&version=" 
+				+ searchObject.version;
+    		console.log("cde-dataElement.js debug log $scope.dataElementLink: " + $scope.dataElementLink);
+            $scope.getCdeDetailByLink(dataElementServerLink);
+    	}
+    	else {
+    		$scope.dataElementLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
+    			+ "/cdebrowserClient/cdeBrowser.html#/dataElement?publicId=" + $scope.cdeDetails.dataElement.dataElementDetails.publicId +"&version=" 
+    				+ $scope.cdeDetails.dataElement.dataElementDetails.formattedVersion;
+    		console.log("cde-dataElement.js dataElementLink: " + $scope.dataElementLink);
+    	}
+    };
 
-
-        $scope.dataElementDataElementDetails=
-            [
-                {
-                    description: "Public ID",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.publicId
-                },
-                {
-                    description: "Version",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.version
-                },
-                {
-                    description: "Long Name",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.longName
-                },
-                {
-                    description: "Short Name",
-                    // value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredName
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.shortName
-                },
-                {
-                    description: "Preferred Question Text",
-                    //value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.longCDEName
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredQuestionText
-                },
-                {
-                    description: "Definition",
-                    //value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.preferredDefinition
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.definition
-                },
-                {
-                    description: "Value Domain",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.valueDomain
-                },
-                {
-                    description: "Data Element Concept",
-                    value:  JSON.parse($scope.cdeData).dataElement.dataElementDetails.dataElementConcept
-                },
-                {
-                    description: "Context",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.context
-                },
-                {
-                    description: "Workflow Status",
-
-                    value:  JSON.parse($scope.cdeData).dataElement.dataElementDetails.workflowStatus
-                },
-                {
-                    description: "Origin",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.origin
-                },
-                {
-                    description: "Registration Status",
-                    value: JSON.parse($scope.cdeData).dataElement.dataElementDetails.registrationStatus
-                }
-
-            ]
-
-    $scope.dataElementReferenceDocuments=
-        [
-            {
-                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.documentName
-            },
-            {
-                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.documentType
-            },
-            {
-                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.documentText
-            },
-            {
-                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.context
-            }
-            ,
-            {
-                documentName: JSON.parse($scope.cdeData).dataElement.referenceDocuments.url
-            }
-
-        ]
-};
-
-$scope.getCdeData();
-*/
+    $scope.getCdeData();
 
 }]);
