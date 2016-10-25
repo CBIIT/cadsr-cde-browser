@@ -460,6 +460,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.cdeTabHasFocus[tabnumber] = false;
     };
 
+    $scope.changeLocation = function (location) {
+        $location.path(location).replace();
+    };
+    
     $scope.changeView = function (tabnumber, tab) {
         $location.path(tab.view);
         $scope.showSearch = true;
@@ -472,13 +476,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         {
             $scope.showCdeSearchResults = false;
         }
-
+        if (tabnumber != 1) {
+            $location.replace();
+            $location.search('publicId', null);
+            $location.search('version', null);
+            $scope.location = $location.url();
+        }
     };
-
-    $scope.changeLocation = function (location) {
-        $location.path(location).replace();
-    };
-
 
     //Set to first tab - CDE Search tab
     $location.path("search");

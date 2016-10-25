@@ -5,18 +5,6 @@
 angular.module("cdeDataElement", []);
 //TODO this code tries to create a direct link to a DE details view by DE Public ID and Version. It is a test implementation, it does not really work
 angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", "$location", "$http", function ($scope, $location, $http) {
-    $scope.getCdeDetailByLink = function (serverUrl) {
-        $scope.bigSearchResultsMessageClass = true;
-        $http.get(serverUrl).success(function (response) {
-            $scope.tabsDisabled = false;
-            // Change to "Data Element" tab
-            $scope.changeView(1, $scope.tabs[1]);
-            $scope.cdeDetails = response;
-            $scope.searchResultsMessage = "";
-            $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
-            $scope.bigSearchResultsMessageClass = false;
-        });
-    };
     $scope.getCdeData = function () {
     	$scope.publicId = $location;
     	var searchObject = $location.search();
@@ -29,7 +17,7 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", "$loca
 			+ "/cdebrowserClient/cdeBrowser.html#/dataElement?publicId=" + searchObject.publicId +"&version=" 
 				+ searchObject.version;
     		console.log("cde-dataElement.js debug log $scope.dataElementLink: " + $scope.dataElementLink);
-            $scope.getCdeDetailByLink(dataElementServerLink);
+    		$scope.getCdeDetailRestCall(dataElementServerLink);
     	}
     	else {
     		$scope.dataElementLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 

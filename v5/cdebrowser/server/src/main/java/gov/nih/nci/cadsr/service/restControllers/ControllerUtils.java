@@ -129,7 +129,7 @@ public class ControllerUtils {
 			}
 			else {
 				//This CsCsiModel will not be represented since it does not have Alternate Names AKA Designations) nor Definitions
-				logger.debug("No Alternate Name AKA Designations nor Definition is found for Classification: " + csCsiDeModel);
+				logger.trace("No Alternate Name AKA Designations nor Definition is found for Classification: " + csCsiDeModel);
 			}
 		}
 		return deCsCsis;
