@@ -180,21 +180,21 @@ public class CDEDataController
         logger.debug( "Received rest call \"CDELink\" publicId: " + publicId + "v." + versionNumber );
 
         DataElementModel dataElementModel = null;
+        CdeDetails cdeDetails = null;
         if (checkLinkParameters(publicId, versionNumber)) {
 	        // Get the data model from the database
 	        try
 	        {
 	            dataElementModel = dataElementDAO.geCdeByCdeIdAndVersion( new Integer(publicId), new Float(versionNumber));
+	            if (dataElementModel != null) {
+	            	cdeDetails = buildCdeDetails( dataElementModel );
+	            }
 	        } catch( Exception e )
 	        {
 	            logger.error("retrieveDataElementDetailsByLink query parameters received caused exception", e);
 	        }
         }
-        CdeDetails cdeDetails;
-        if (dataElementModel != null) {
-        	cdeDetails = buildCdeDetails( dataElementModel );
-        }
-        else {
+        if (cdeDetails == null) {
         	cdeDetails = new CdeDetails();
         }
         //CdeDetails cdeDetails = buildTestRecord();

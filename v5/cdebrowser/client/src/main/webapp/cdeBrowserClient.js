@@ -446,6 +446,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
             $scope.bigSearchResultsMessageClass = false;
         });
+        //TODO in a case of error
     };
 
     $scope.isActiveCdeTab = function (cdeTabNumber) {
@@ -1365,21 +1366,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.getCdeData = function () {
     	$scope.publicId = $location;
     	var searchObject = $location.search();
-    	console.log("cdeBrowserClient.js debug log searchObject.publicId: " + searchObject.publicId + ", searchObject.version: " + searchObject.version );
     	if (($location.search().hasOwnProperty('publicId')) && ($location.search().hasOwnProperty('version'))) {
     		var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
         		+ "/cdebrowserServer/rest/CDELink?publicId=" + searchObject.publicId+"&version=" + searchObject.version;
-    		console.log("cdeBrowserClient.js debug log dataElementServerLink: " + dataElementServerLink);
     		$scope.dataElementLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
 			+ "/cdebrowserClient/cdeBrowser.html#/search?publicId=" + searchObject.publicId +"&version=" 
 				+ searchObject.version;
-    		console.log("cdeBrowserClient.js debug log $scope.dataElementLink: " + $scope.dataElementLink);
     		$scope.more = false;
     		$scope.getCdeDetailRestCall(dataElementServerLink);
-    	}
-    	else {
-    		//TODO remove this else
-    		console.log("cdeBrowserClient.js debug log from getCdeData no parameter");
     	}
     };
     
