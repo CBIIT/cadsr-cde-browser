@@ -9,7 +9,6 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", "$loca
     	$scope.dataElementLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
     			+ "/cdebrowserClient/cdeBrowser.html#/search?publicId=" + $scope.cdeDetails.dataElement.dataElementDetails.publicId +"&version=" 
     				+ $scope.cdeDetails.dataElement.dataElementDetails.formattedVersion;
-    	console.log("cde-dataElement.js scope.dataElementLink: " + $scope.dataElementLink);    	
     };
     if ($scope.cdeDetails.dataElement != null) {
     	$scope.getCdeData();
