@@ -80,6 +80,21 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
 
     /**
      * @param sql
+     * @param where array of SQL parameters
+     * @param type
+     * @param <T>
+     * @return List
+     */
+    public <T> List<T> getAll(String sql, Object[] where, Class<T> type)
+    {
+        List<T> allColumns = getJdbcTemplate().query(
+                sql, where, new BeanPropertyRowMapper( type )
+        );
+
+        return allColumns;
+    }
+    /**
+     * @param sql
      * @param where
      * @param type
      * @param <T>
@@ -95,7 +110,6 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
 
         return allColumns;
     }
-
     public Integer getOneInt( String sql, String where )
     {
         Integer n = ( Integer ) getJdbcTemplate().queryForObject(

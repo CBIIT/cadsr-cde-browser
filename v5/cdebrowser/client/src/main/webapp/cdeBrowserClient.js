@@ -1032,11 +1032,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             {
                 if( response[i].toolName =="CURATION" )
                 {
-                    $scope.curationToolHost = response[i].value;
+                    $scope.curationToolHost = response[i].value;//cdeBrowser.html
                 }
                 else if( response[i].toolName =="caDSR" )
                 {
-                    $scope.cadsrToolHost = response[i].value;
+                    $scope.cadsrToolHost = response[i].value;//not used, not in DB
                 }
                 else if( response[i].toolName =="CADSRAPI" )
                 {
@@ -1044,51 +1044,51 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 }
                 else if( response[i].toolName =="EVS" )
                 {
-                    $scope.evsToolHost = response[i].value;
+                    $scope.evsToolHost = response[i].value;//not used
                 }
                 else if( response[i].toolName =="FREESTYLE" )
                 {
-                    $scope.freestyleToolHost = response[i].value;
+                    $scope.freestyleToolHost = response[i].value;//not used
                 }
                 else if( response[i].toolName =="SENTINEL" )
                 {
-                    $scope.sentinelToolHost = response[i].value;
+                    $scope.sentinelToolHost = response[i].value;//cdeBrowser.html
                 }
                 else if( response[i].toolName =="BROWSER" )
                 {
-                    $scope.browserToolHost = response[i].value;
+                    $scope.browserToolHost = response[i].value;//not used
                 }
                 else if( response[i].toolName =="EVSAPI" )
                 {
-                    $scope.evsapiToolHost = response[i].value;
+                    $scope.evsapiToolHost = response[i].value; //not used
                 }
                 else if( response[i].toolName =="FormBuilder" )
                 {
-                    $scope.formbuilderToolHost = response[i].value;
+                    $scope.formbuilderToolHost = response[i].value;//cdeBrowser.html
                 }
                 else if( response[i].toolName =="UMLBrowser" )
                 {
-                    $scope.umlbrowserToolHost = response[i].value;
+                    $scope.umlbrowserToolHost = response[i].value;//not used
                 }
                 else if( response[i].toolName =="AdminTool" )
                 {
-                    $scope.admintoolToolHost = response[i].value;
+                    $scope.admintoolToolHost = response[i].value;//cdeBrowser.html
                 }
                 else if( response[i].toolName =="CDEBrowser" )
                 {
-                    $scope.cdebrowserToolHost = response[i].value;
+                    $scope.cdebrowserToolHost = response[i].value;//not used
                 }
                 else if( response[i].toolName =="EVSBrowser" )
                 {
-                    $scope.evsbrowserToolHost = response[i].value;
+                    $scope.evsbrowserToolHost = response[i].value;//not used
                 }
                 else if( response[i].toolName =="ObjectCartAPI" )
                 {
-                    $scope.objectcartapiToolHost = response[i].value;
+                    $scope.objectcartapiToolHost = response[i].value;//TODO
                 }
                 else if( response[i].toolName =="PasswordChangeStation" )
                 {
-                    $scope.passwordchangestationToolHost = response[i].value;
+                    $scope.passwordchangestationToolHost = response[i].value;//not used, not in DB
                 }
 
             }
