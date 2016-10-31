@@ -6,14 +6,16 @@ import java.util.List;
 public enum RegistrationStatusEnum
 {
 	PREFSTD("Preferred Standard"),	
-	STANDARD("Standard"),	
-	CANDIDATE("Candidate"),
-	PROPOSED("Proposed"),
+	STANDARD("Standard"),
 	QUALIFIED("Qualified"),
+	RECORDED("Recorded"),		
+	CANDIDATE("Candidate"),
+	INCOMPLETE("Incomplete"),
+	PROPOSED("Proposed"),
 	SUPERCEDED("Superceded"),
 	STDELSEWHERE("Standardized Elsewhere"),
-	RETIRED("Retired"),
 	APPLICATION("Application"),
+	HISTORICAL("Historical"),
 	SUSPENDED("Suspended"),
 	BLANK("");
 
@@ -39,7 +41,6 @@ public enum RegistrationStatusEnum
 		{
 			regStatusList.add(rs.getRegStatus());
 		}
-		
 		return regStatusList;
 	}	
 
