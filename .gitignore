@@ -6,4 +6,6 @@ target/
 v5/cdebrowser/client/src/main/webapp/version.json
 v5/cdebrowser/server/debug.log
 software/
-
+node_modules/
+v5/cdebrowser/client/src/main/webapp/version.json.json
+v5/cdebrowser/server/testExcel.xls

@@ -20,8 +20,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.goToAnchor = function (id) {
         var change = $location.hash();
+
         $location.hash(id);
         $anchorScroll();
+        // console.log($location.hash(id));
         $location.hash(change);
     }
 
