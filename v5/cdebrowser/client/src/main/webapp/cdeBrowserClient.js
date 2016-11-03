@@ -20,10 +20,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.goToAnchor = function (id) {
         var change = $location.hash();
-
         $location.hash(id);
         $anchorScroll();
-        // console.log($location.hash(id));
         $location.hash(change);
     }
 
@@ -118,7 +116,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // reset filters //
     $scope.resetFilters = function() {
-        console.log("IN resetFilters");
+        // console.log("IN resetFilters");
 
         fs.resetFilters();
         $scope.resetSortOrder();
@@ -150,7 +148,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.filterService.resetContext = function() {
-        console.log("IN filterService.resetContext");
+        // console.log("IN filterService.resetContext");
         $scope.filterService.searchFilter.context = "";
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
@@ -730,7 +728,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.isSearching = true;
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
-        console.log("url: " + url);
+        // console.log("url: " + url);
 
         $http.get(url).success(function (response) {
 
@@ -772,15 +770,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.goToAnchor("breadCrumbsAnchor");
             }, 1);
         }).error(function (data, status, headers, config) {
-            console.log("Error making call to server: " + url);
+            // console.log("Error making call to server: " + url);
 
             if( status == 400)
             {
-                console.log("HTTP Error 400: The request could not be understood by the server due to malformed syntax.");
+                // console.log("HTTP Error 400: The request could not be understood by the server due to malformed syntax.");
             }
             else
             {
-                console.log("Error: " + status);
+                // console.log("Error: " + status);
             }
 
         });
@@ -843,7 +841,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
                 $scope.workflowStatuses = response.data;
                 $scope.workflowSort = [];
-                $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                $scope.workflowSort = $scope.workflowStatuses.filter(function(x) { return $scope.workflowStatusExcluded.indexOf(x)<0});
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                         case "workflowStatusIncluded":
@@ -868,7 +866,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
                 $scope.registrationStatuses = response.data;
                 $scope.registrationSort = [];
-                $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                $scope.registrationSort = $scope.registrationStatuses.filter(function(x) { return $scope.registrationStatusExcluded.indexOf(x)<0});
                 angular.forEach($scope.models, function(list) {
                     switch(list.label) {
                         case "registrationStatusIncluded":
@@ -1206,7 +1204,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $http.get('/cdebrowserServer/rest/lookupdata/workflowstatus').then(function(response) {
                     $scope.workflowStatuses = response.data;
                     $scope.workflowSort = [];
-                    $scope.workflowSort = $scope.workflowStatuses.filter(function(x){ return $scope.workflowStatusExcluded.indexOf(x)<0});
+                    $scope.workflowSort = $scope.workflowStatuses.filter(function(x) { return $scope.workflowStatusExcluded.indexOf(x)<0});
                     angular.forEach($scope.models, function(list) {
                         switch(list.label) {
                             case "workflowStatusIncluded":
@@ -1231,7 +1229,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $http.get('/cdebrowserServer/rest/lookupdata/registrationstatus').then(function(response) {
                     $scope.registrationStatuses = response.data;
                     $scope.registrationSort = [];
-                    $scope.registrationSort = $scope.registrationStatuses.filter(function(x){ return $scope.registrationStatusExcluded.indexOf(x)<0});
+                    $scope.registrationSort = $scope.registrationStatuses.filter(function(x) { return $scope.registrationStatusExcluded.indexOf(x)<0});
                     angular.forEach($scope.models, function(list) {
                         switch(list.label) {
                             case "registrationStatusIncluded":
