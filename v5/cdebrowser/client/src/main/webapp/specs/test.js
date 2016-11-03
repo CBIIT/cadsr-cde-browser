@@ -82,7 +82,7 @@ describe('CDE Browser Client spec', function() {
 
     }));
 
-    // cdeBrowserClient sample test cases //
+    // cdeBrowserClient.js sample test case //
 
     it('should test goToAnchor()', function() {
      	$scope.goToAnchor("test");
