@@ -16,6 +16,7 @@ public enum RegistrationStatusEnum
 	STDELSEWHERE("Standardized Elsewhere"),
 	APPLICATION("Application"),
 	HISTORICAL("Historical"),
+	RETIRED("Retired"),	
 	SUSPENDED("Suspended"),
 	BLANK("");
 
