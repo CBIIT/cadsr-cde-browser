@@ -61,6 +61,7 @@
 .tabNormal {
     background-color: #bbb; /* color: #336699; */
     color: #4A4A4A;
+    cursor: pointer;
 }
 
 .tabDisabled {
