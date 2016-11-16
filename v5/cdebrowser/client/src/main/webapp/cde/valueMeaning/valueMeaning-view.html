@@ -1,12 +1,12 @@
 <br />
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <th colspan="2" align="left">Value Meaning</th>
+        <th colspan="2" align="left">Value Meaning <span style="float: right;">(The total number of PVs = {{cdeDetails.valueDomain.valueMeaning.length}})</span></th>
     </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="p_value in cdeDetails.valueDomain.valueMeaning">
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescriptionLeft" width="20%">PV Meaning</td>
+        <td id="{{$index + 1}}" class="dataElementDescriptionLeft" width="20%">PV Meaning</td>
         <td class="dataElementValue">Alternate Names</td>
     </tr>
     <tr class="dataElementViewTableTr">

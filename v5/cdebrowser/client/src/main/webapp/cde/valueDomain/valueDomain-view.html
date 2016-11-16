@@ -234,7 +234,7 @@
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
-        <td colspan="6" align="left">Permissible Values
+        <td colspan="6" align="left">Permissible Values <span style="float: right;">(The total number of PVs = {{cdeDetails.valueDomain.permissibleValues.length}})</span>
         </td>
     </tr>
 </table>
@@ -256,7 +256,7 @@
         </tr>
         <tr class="dataElementViewTableTr" data-ng-repeat="p_value in cdeDetails.valueDomain.permissibleValues">
             <td width="24px" class="dataElementValue" ng-bind-html="p_value.value">{{p_value.value}}</td>
-            <td class="dataElementValue" ng-bind-html="p_value.shortMeaning">{{p_value.shortMeaning}}</td>
+            <td class="dataElementValue"><a class="link" data-ng-click="goToVM($index + 1)" ng-bind-html="p_value.shortMeaning">{{p_value.shortMeaning}}</a></td>
             <td class="dataElementValue">
 
                 <a class="link"  data-ng-repeat="cCode in p_value.conceptCodeArray" TARGET="_blank"
@@ -273,7 +273,7 @@
 </div>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" data-ng-hide="cdeDetails.valueDomain.permissibleValues.length">
     <tr class="dataElementViewTableTr">
-        <td class="dataElementValue" >This Value Domain is Non Enumerated.</td>
+        <td class="dataElementValue">This Value Domain is Non Enumerated.</td>
     </tr>
 </table>
 
