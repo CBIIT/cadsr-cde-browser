@@ -41,9 +41,13 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 	// go back to search screen, show search area //
 	$scope.goBack = function() {
 		// this needs to be properly moved into a service along with the entire search //
-			$scope.checkboxes.items={};
+			$scope.checkboxes.items = {};
 		// end this needs to be properly moved into a service along with the entire search //
 		$location.path("/search");
+		// $scope.rslt1 = [];
+        // $scope.rslt2 = [];
+        // console.log($scope.rslt1);
+        // console.log($scope.rslt2);
 	};
 
 	// select all or de-select all items in cart //

@@ -259,8 +259,8 @@
             <td class="dataElementValue"><a class="link" data-ng-click="goToVM($index + 1)" ng-bind-html="p_value.shortMeaning">{{p_value.shortMeaning}}</a></td>
             <td class="dataElementValue">
 
-                <a class="link"  data-ng-repeat="cCode in p_value.conceptCodeArray" TARGET="_blank"
-                   href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{cCode}}">{{cCode}}&nbsp;</a>
+                <a style="text-decoration: none;" data-ng-repeat="cCode in p_value.conceptCodeArray" TARGET="_blank"
+                   href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{cCode}}"><span style="text-decoration: underline !important;">{{cCode}}</span><span ng-show="!$last">:</span></a><br />
 
             </td>
             <td class="dataElementValue" ng-bind-html="p_value.vmDescription">{{p_value.vmDescription}}</td>

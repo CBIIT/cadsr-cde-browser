@@ -360,6 +360,18 @@ ul.cdeSearchMessage li{
     vertical-align:top;
 }
 
+.cdeCartList {
+    color: #089f00;
+    font-size: 13.3px;
+    font-weight: bold;
+}
+
+.cdeCompareList {
+    color: #089f00;
+    font-size: 13.3px;
+    font-weight: bold;
+}
+
 /* Code clean up below (TO DO)*/
 
 /*-------------------------------------------------------------------*/

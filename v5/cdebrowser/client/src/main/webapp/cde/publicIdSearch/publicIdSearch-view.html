@@ -6,6 +6,20 @@
                 <input class="basicSearchQuery roundInput publicIdInput" id="publicId" type="text" ng-disabled="fs.isSearching" data-ng-model="publicIdSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Public ID" />
                 <div class="searchTips"><strong>Tip</strong>: To search for multiple public ids, type the ids separated by a space.
                 </div>
+
+                <div>
+                    <label class="publicIdLabel">Version:&nbsp;&nbsp;</label>
+                    <label data-ng-repeat="versionType in searchVersions">
+                        <div class="queryTypePublicRadioButtons">
+                            <input ng-disabled="fs.isSearching"
+                                   type="radio"
+                                   value="{{versionType.id}}"
+                                   data-ng-model="fs.dataElementVariables.searchVersions"/>
+                            {{versionType.name}}&nbsp;
+                        </div>
+                    </label>
+                </div>
+
             </span>
         </div>
         <div class="publicIDNameGroup">

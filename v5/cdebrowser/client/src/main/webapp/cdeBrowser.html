@@ -125,7 +125,7 @@
                             <img src="icons/buttonIconSet/brown/75_percent/circle_shopping_cart.png"
                                  alt="CDE Cart button" />
                             <br>
-                            <span> &nbsp;CDE&nbsp;Cart</span>
+                            <span> &nbsp;CDE&nbsp;Cart&nbsp;</span>
                         </a>
                     </span>
                 </td>
@@ -499,6 +499,15 @@
                     </button>
                 </li>
             </ul>
+
+            <span class="cdeCartList" ng-show="rslt1.length>0">
+                <span ng-repeat="r in rslt1">{{r.longName}}<span ng-show="!$last">,</span> </span>successfully added to CDE Cart
+            </span>
+
+            <span class="cdeCompareList" ng-show="rslt2.length>0">
+                <span ng-repeat="r in rslt2">{{r.longName}}<span ng-show="!$last">,</span> </span>successfully added to CDE Compare List
+            </span>
+
             <!-- show progress bar -->
             <ul ng-show="downloadFactory.progressMessage.status"
                 ng-class="{'cdeProgressMessage error': downloadFactory.progressMessage.isErrorMessage,'cdeProgressMessage': !downloadFactory.progressMessage.isErrorMessage}">
@@ -566,14 +575,14 @@
                 </div>
 
                 <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-                    <input type="checkbox" data-ng-model="checkboxes.checked" id="select_all" name="filter-checkbox"
+                    <input type="checkbox" data-ng-model="checkboxes.checked" ng-change="cdeCartCheckAll(checkboxes.checked)" id="select_all" name="filter-checkbox"
                            value=""/>
                 </script>
 
                 <table data-ng-table="tableParams" show-filter="false" class="searchResultsTable" ng-show="searchResults.length">
                     <tr class="searchResultsTableTr" data-ng-repeat="result in $data track by $index">
                         <td header="'ng-table/headers/checkbox.html'">
-                            <input type="checkbox" data-ng-model="checkboxes.items[result.deIdseq]" ng-click="">
+                            <input type="checkbox" data-ng-model="checkboxes.items[result.deIdseq]" ng-change="cdeCartCheck(result, checkboxes.items[result.deIdseq])" ng-click="">
                         </td>
 
                         <td data-title="'Long Name'" sortable="'longName'" class="searchResultsTableTd" width="15%">

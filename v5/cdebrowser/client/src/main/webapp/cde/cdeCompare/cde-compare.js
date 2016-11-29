@@ -106,9 +106,9 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
 
     };
 
-    //							           //
-    //	FOR TESTING PURPOSE		 //
-    //  							         //
+    //                            //
+    //   FOR TESTING PURPOSE      //
+    //                            //
 
     //   $scope.dataLoad1 = function () {
     //       $scope.dataLoad("data1.json");
@@ -130,15 +130,15 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     //       $scope.dataLoad("data5.json");
     //   };
 
-    // $scope.dataLoad6 = function () {
+    //  $scope.dataLoad6 = function () {
     //       $scope.dataLoad("data6.json");
     //   };
 
-    // $scope.dataLoad6();
+    //  $scope.dataLoad6();
 
-    //							           //
-    //	END TESTING PURPOSE		 //
-    //  							         //
+    //                            //
+    //   END TESTING PURPOSE      //
+    //                            //
 
     $scope.deleteAllCDEs = function () {
         $scope.cdeDetails.splice(0);
@@ -161,6 +161,10 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     $scope.goBack = function () {
         $scope.checkboxes.items = {};
         $location.path("/search");
+        // $scope.rslt1 = [];
+        // $scope.rslt2 = [];
+        // console.log($scope.rslt1);
+        // console.log($scope.rslt2);
     };
 
     $scope.excelDownload = function () {

@@ -7,12 +7,38 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataElementConceptHOLD = "";
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
-    $scope.searchVersionsHOLD = 0;
+    // $scope.searchVersionsHOLD = 0; // searchVersions is now available in Public ID Search tab as well (not exclusive to Advance Search anymore) //
     $scope.searchContextUseHOLD = 2;
     $scope.searchObjectClassHOLD = "";
     $scope.searchPropertyHOLD = "";
     $scope.searchderivedDEHOLD = "";
     var delimiter= ":::";
+
+    // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
+    $scope.rslt = [];
+    $scope.cdeCartCheck = function(r, k) {
+        if (k) {
+            $scope.rslt.push(r);
+        }
+        else {
+            for (i=0; i<$scope.rslt.length; i++) {
+                if ($scope.rslt[i].deIdseq==r.deIdseq) {
+                    $scope.rslt.splice(i,1);
+                    break;
+                }
+            }
+        }
+    };
+
+    // check all checkbox case //
+    $scope.cdeCartCheckAll = function(status) {
+        if (status) {
+            $scope.rslt = angular.copy($scope.tableParams.data);
+        }
+        else {
+            $scope.rslt = [];
+        }
+    };
 
     $http.get('/cdebrowserServer/rest/programAreaNames').success(function(response) {
         $scope.programAreaTabs = response;
@@ -442,6 +468,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.changeView(1, $scope.tabs[1]);
             $scope.cdeDetails = response;
 
+
+
+            // console.log($scope.cdeDetails.valueDomain.valueDomainDetails);
+
+
+
             $scope.searchResultsMessage = "";
             $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
             $scope.bigSearchResultsMessageClass = false;
@@ -463,6 +495,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.changeLocation = function (location) {
         $location.path(location).replace();
+        $scope.rslt1 = [];
+        $scope.rslt2 = [];
     };
     
     $scope.changeView = function (tabnumber, tab) {
@@ -734,6 +768,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             fs.isSearching = false;
             $scope.searchResults = response;
+            $scope.rslt = []; // clear message //
+            $scope.rslt1 = [];
+            $scope.rslt2 = [];
             $scope.tableParams.settings({ dataset: response });
             if ($scope.searchResults.length > 0) {
 
@@ -1259,6 +1296,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // add items to cart //
     $scope.addCDE = function() {
         $scope.cartService.addCDE($scope.checkedItemsForDownload,$scope.searchResults);
+        $scope.rslt1 = angular.copy($scope.rslt);
+        $scope.rslt2 = [];
     };
 
     // downloads selected search results to an excel file //
@@ -1279,12 +1318,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // add items to compare list //
     $scope.addToCompare = function() {
         $scope.compareService.addToCompare($scope.checkedItemsForDownload,$scope.searchResults);
+        $scope.rslt2 = angular.copy($scope.rslt);
+        $scope.rslt1 = [];
     };
 
     // compare the items in the compare list along with any checked items //
     $scope.compareCDE = function() {
         $scope.compareService.compareCDE($scope.checkedItemsForDownload,$scope.searchResults);
         $location.path("/cdeCompare").replace();
+        $scope.rslt1 = [];
+        $scope.rslt2 = [];
     };
 
     // Start of Advance Search Options //
@@ -1317,8 +1360,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.searchAltNameHOLD = fs.dataElementVariables.searchAltName;
             fs.dataElementVariables.searchAltName = "";
 
-            $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
-            fs.dataElementVariables.searchVersions = -1;
+            // $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
+            // fs.dataElementVariables.searchVersions = -1;
 
             $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
             fs.dataElementVariables.searchContextUse = 2;
@@ -1345,8 +1388,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchAltName = $scope.searchAltNameHOLD;
             $scope.searchAltNameHOLD = "";
 
-            fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
-            $scope.searchVersionsHOLD = -1;
+            // fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
+            // $scope.searchVersionsHOLD = -1;
 
             fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
             $scope.searchContextUseHOLD = -1;
@@ -1369,8 +1412,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     	if (($location.search().hasOwnProperty('publicId')) && ($location.search().hasOwnProperty('version'))) {
     		var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
         		+ "/cdebrowserServer/rest/CDELink?publicId=" + searchObject.publicId+"&version=" + searchObject.version;
-    		$scope.dataElementLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
-			+ "/cdebrowserClient/cdeBrowser.html#/search?publicId=" + searchObject.publicId +"&version=" 
+
+    		$scope.dataElementLink = window.location.protocol + "//" + window.location.host	+ "/cdebrowserClient/cdeBrowser.html#/search?publicId=" + searchObject.publicId +"&version=" 
 				+ searchObject.version;
     		$scope.more = false;
     		$scope.getCdeDetailRestCall(dataElementServerLink);

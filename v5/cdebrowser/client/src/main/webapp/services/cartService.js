@@ -28,7 +28,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				};
 			};
 		};
-	};	
+	};
 
 	// delete cde's from cart //
 	this.deleteCDEs = function() {
