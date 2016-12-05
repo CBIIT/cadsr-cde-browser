@@ -495,6 +495,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     $scope.changeLocation = function (location) {
         $location.path(location).replace();
+        $scope.rslt = [];
         $scope.rslt1 = [];
         $scope.rslt2 = [];
     };
@@ -1326,6 +1327,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.compareCDE = function() {
         $scope.compareService.compareCDE($scope.checkedItemsForDownload,$scope.searchResults);
         $location.path("/cdeCompare").replace();
+        $scope.rslt = [];   
         $scope.rslt1 = [];
         $scope.rslt2 = [];
     };

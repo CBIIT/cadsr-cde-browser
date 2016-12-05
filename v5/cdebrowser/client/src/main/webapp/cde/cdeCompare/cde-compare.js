@@ -10,13 +10,32 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     $scope.downloadFactory = new downloadFactory();
     $scope.checkedItems = [];
 
-    //CDE details
+    // sort table columns
+    $scope.sortPVMeaning = function(e,i,v) {
+        var img = $(e.target).attr("src");
+        $(e.target).attr("src","icons/arrowDown.png")
+        $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'shortMeaning',img.indexOf("arrowUp")!=-1);
+    }
+
+    $scope.sortPV = function(e,i,v) {
+        var img = $(e.target).attr("src");
+        $(e.target).attr("src","icons/arrowDown.png")
+        $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'value',img.indexOf("arrowUp")!=-1);
+    }
+
+    $scope.sortPVMeaningConceptCode = function(e,i,v) {
+        var img = $(e.target).attr("src");
+        $(e.target).attr("src","icons/arrowDown.png")
+        $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'conceptCode',img.indexOf("arrowUp")!=-1);
+    }
+
+    // CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
         $scope.getCdeDetailRestCall(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq);
 
     };
 
-    //Multiple CDE details
+    // Multiple CDE details
     $scope.multipleCdeDetails = function () {
 
         $scope.compareDataDoneLoading = false;
@@ -161,10 +180,6 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     $scope.goBack = function () {
         $scope.checkboxes.items = {};
         $location.path("/search");
-        // $scope.rslt1 = [];
-        // $scope.rslt2 = [];
-        // console.log($scope.rslt1);
-        // console.log($scope.rslt2);
     };
 
     $scope.excelDownload = function () {

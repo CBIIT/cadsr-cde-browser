@@ -57,7 +57,7 @@
     </div>
 
         <div id="dataElement" class="compareCDEDataElementDetailsHeading">
-            Data Element <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-show="!dataElement"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-hide="!dataElement">
+            Data Element <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-show="!dataElement"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="dataElement=!dataElement" ng-hide="!dataElement">
         </div>
         <div class="compareScreenTip" ng-show="!dataElement"><strong>Tip</strong>: Use the mouse to change the order (drag and drop) of the CDEs.
         </div>
@@ -163,7 +163,7 @@
 
 
         <div id="dataElementConcept" class="compareCDEDataElementDetailsHeading">
-            Data Element Concept <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="dataElementConcept=!dataElementConcept" ng-show="!dataElementConcept"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="dataElementConcept=!dataElementConcept" ng-hide="!dataElementConcept">
+            Data Element Concept <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="dataElementConcept=!dataElementConcept" ng-show="!dataElementConcept"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="dataElementConcept=!dataElementConcept" ng-hide="!dataElementConcept">
         </div>
         <table class="compareCDEDataElementDetailsTable" ng-show="!dataElementConcept">
             <tr>
@@ -256,7 +256,7 @@
 
         <br>
         <div id="referenceDocuments" class="compareCDEDataElementDetailsHeading">
-            Reference Documents <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="referenceDocuments=!referenceDocuments" ng-show="!referenceDocuments"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="referenceDocuments=!referenceDocuments" ng-hide="!referenceDocuments">
+            Reference Documents <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="referenceDocuments=!referenceDocuments" ng-show="!referenceDocuments"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="referenceDocuments=!referenceDocuments" ng-hide="!referenceDocuments">
         </div>
         <table ng-show="!referenceDocuments">
             <tr>
@@ -291,7 +291,7 @@
 
 
         <div id="valueDomain" class="compareCDEDataElementDetailsHeading">
-            Value Domain <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="valueDomain=!valueDomain" ng-show="!valueDomain"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="valueDomain=!valueDomain" ng-hide="!valueDomain">
+            Value Domain <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="valueDomain=!valueDomain" ng-show="!valueDomain"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="valueDomain=!valueDomain" ng-hide="!valueDomain">
         </div>
         <table class="compareCDEDataElementDetailsTable" ng-show="!valueDomain">
             <tr>
@@ -456,11 +456,11 @@
         <!-- Permissible Values -->
         <br>
         <div id="permissibleValues" class="compareCDEDataElementDetailsHeading">
-            Permissible Values <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse"
+            Permissible Values <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse"
             ng-click="permissibleValues=!permissibleValues"
             ng-show="!permissibleValues">
             <img src="icons/plus.png"
-            alt="collapse"
+            alt="expand"
             class="compareScreenExpandCollapse"
             ng-click="permissibleValues=!permissibleValues"
             ng-hide="!permissibleValues">
@@ -476,9 +476,9 @@
                             <td>{{element + 1}}</td>
                         </tr>
                         <tr class="dataElementViewTableTr">
-                            <td width="24px" class="dataElementHeading">PV</td>
-                            <td class="dataElementHeading">PV Meaning</td>
-                            <td class="dataElementHeading">PV Meaning Concept Codes</td>
+                            <td width="24px" class="dataElementHeading">PV<img src="icons/arrowUp.png" alt="sort" width="16" ng-click="sortPV($event,element,data.valueDomain.permissibleValues)"></td>
+                            <td class="dataElementHeading">PV Meaning<img src="icons/arrowUp.png" alt="sort" width="16" ng-click="sortPVMeaning($event,element,data.valueDomain.permissibleValues)"></td>
+                            <td class="dataElementHeading">PV Meaning Concept Codes<img src="icons/arrowUp.png" alt="sort" width="16" ng-click="sortPVMeaningConceptCode($event,element,data.valueDomain.permissibleValues)"></td>
                             <td class="dataElementHeading">PV Meaning Description</td>
                             <td class="dataElementHeading">PV Begin Date</td>
                             <td class="dataElementHeading">PV End Date</td>
@@ -517,7 +517,7 @@
         <!-- Classifications -->
         <br>
         <div id="classifications" class="compareCDEDataElementDetailsHeading">
-            Classifications <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="classifications=!classifications" ng-show="!classifications"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="classifications=!classifications" ng-hide="!classifications">
+            Classifications <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="classifications=!classifications" ng-show="!classifications"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="classifications=!classifications" ng-hide="!classifications">
         </div>
         <table ng-show="!classifications">
             <tr>
@@ -576,7 +576,7 @@
         <!-- dataElementDerivation -->
         <br>
         <div id="derivationDetails" class="compareCDEDataElementDetailsHeading">
-            Data Element Derivation - Derivation Details <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-show="!derivationDetails"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-hide="!derivationDetails">
+            Data Element Derivation - Derivation Details <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-show="!derivationDetails"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="derivationDetails=!derivationDetails" ng-hide="!derivationDetails">
         </div>
 
         <table ng-show="!derivationDetails">
@@ -615,7 +615,7 @@
 
         <br>
         <div id="componentDataElements" class="compareCDEDataElementDetailsHeading">
-            Data Element Derivation - Component Data Elements <img src="icons/minus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="componentDataElements=!componentDataElements" ng-show="!componentDataElements"><img src="icons/plus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="componentDataElements=!componentDataElements" ng-hide="!componentDataElements">
+            Data Element Derivation - Component Data Elements <img src="icons/minus.png" alt="collapse" class="compareScreenExpandCollapse" ng-click="componentDataElements=!componentDataElements" ng-show="!componentDataElements"><img src="icons/plus.png" alt="expand" class="compareScreenExpandCollapse" ng-click="componentDataElements=!componentDataElements" ng-hide="!componentDataElements">
         </div>
         <table ng-show="!componentDataElements">
             <tr>
