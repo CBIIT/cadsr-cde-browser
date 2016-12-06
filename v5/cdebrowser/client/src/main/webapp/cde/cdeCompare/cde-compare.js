@@ -13,19 +13,19 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     // sort table columns
     $scope.sortPVMeaning = function(e,i,v) {
         var img = $(e.target).attr("src");
-        $(e.target).attr("src","icons/arrowDown.png")
+        $(e.target).attr("src","icons/arrowDown.png");
         $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'shortMeaning',img.indexOf("arrowUp")!=-1);
     }
 
     $scope.sortPV = function(e,i,v) {
         var img = $(e.target).attr("src");
-        $(e.target).attr("src","icons/arrowDown.png")
+        $(e.target).attr("src","icons/arrowDown.png");
         $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'value',img.indexOf("arrowUp")!=-1);
     }
 
     $scope.sortPVMeaningConceptCode = function(e,i,v) {
         var img = $(e.target).attr("src");
-        $(e.target).attr("src","icons/arrowDown.png")
+        $(e.target).attr("src","icons/arrowDown.png");
         $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'conceptCode',img.indexOf("arrowUp")!=-1);
     }
 
@@ -92,7 +92,7 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
                 }
             }
             else {
-                console.log("getCdeDetailRestCall  cdeDetails[" + i + "]$scope.cdeDetails[i].valueDomain.permissibleValues: Is null, undefined, or only has one element.");
+                // console.log("getCdeDetailRestCall  cdeDetails[" + i + "]$scope.cdeDetails[i].valueDomain.permissibleValues: Is null, undefined, or only has one element.");
             }
         }
     }
