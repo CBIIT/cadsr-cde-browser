@@ -13,20 +13,38 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     // sort table columns
     $scope.sortPVMeaning = function(e,i,v) {
         var img = $(e.target).attr("src");
-        $(e.target).attr("src","icons/arrowDown.png");
-        $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'shortMeaning',img.indexOf("arrowUp")!=-1);
+        if (img.indexOf("arrowUp")!=-1) {
+            $(e.target).attr("src","icons/arrowDown.png");
+            $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'shortMeaning',true);
+        }
+        else {
+            $(e.target).attr("src","icons/arrowUp.png");
+            $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'shortMeaning',false);
+        }
     }
 
     $scope.sortPV = function(e,i,v) {
         var img = $(e.target).attr("src");
-        $(e.target).attr("src","icons/arrowDown.png");
-        $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'value',img.indexOf("arrowUp")!=-1);
+        if (img.indexOf("arrowUp")!=-1) {
+            $(e.target).attr("src","icons/arrowDown.png");
+            $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'value',true);
+        }
+        else {
+            $(e.target).attr("src","icons/arrowUp.png");
+            $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'value',false);
+        }        
     }
 
     $scope.sortPVMeaningConceptCode = function(e,i,v) {
         var img = $(e.target).attr("src");
-        $(e.target).attr("src","icons/arrowDown.png");
-        $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'conceptCode',img.indexOf("arrowUp")!=-1);
+        if (img.indexOf("arrowUp")!=-1) {
+            $(e.target).attr("src","icons/arrowDown.png");
+            $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'conceptCode',true);
+        }
+        else {
+            $(e.target).attr("src","icons/arrowUp.png");
+            $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'conceptCode',false);
+        }
     }
 
     // CDE details
