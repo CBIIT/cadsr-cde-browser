@@ -218,7 +218,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
-            workflowWhere += SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name" );
+            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name" );
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
 
@@ -272,8 +272,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         if( StringUtils.isNotBlank( searchCriteria.getPublicId() ))
         {
             String cdeStrPublicIdSqlFragment = SearchQueryBuilderUtils.buildSearchByPublicId(searchCriteria.getPublicId(), "de.cde_id");
-            cdeIdWhere = cdeStrPublicIdSqlFragment
-                    + "AND de.latest_version_ind = 'Yes' ";
+            cdeIdWhere = cdeStrPublicIdSqlFragment;
+            //search by Public ID follows now (since v.5.2.2.) the same version type rule that the other search type type do; see Ln 320 versionIndWhere String build based on searchCriteria";
+            //0 - the latest, 1 - all the versions of DEs
         }
 
         if ((StringUtils.isNotBlank(searchCriteria.getValueDomain())) || (StringUtils.isNotBlank(searchCriteria.getVdTypeFlag())))

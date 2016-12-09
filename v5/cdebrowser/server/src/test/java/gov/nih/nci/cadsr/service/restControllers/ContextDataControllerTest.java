@@ -15,6 +15,8 @@ import junit.framework.TestCase;
 import java.io.IOException;
 import java.util.*;
 
+import org.mockito.Mockito;
+
 public class ContextDataControllerTest extends TestCase
 {
     private ContextDataController contextDataController;
@@ -33,7 +35,11 @@ public class ContextDataControllerTest extends TestCase
     public void setUp()
     {
         unitTestCommon = new UnitTestCommon();
-        contextDataController = new ContextDataController(null);
+        RestControllerCommon mockRestControllerCommon = Mockito.mock(RestControllerCommon.class);
+        List<ProgramAreaModel> programAreaModelList = new ArrayList<ProgramAreaModel> ();
+        programAreaModelList.add(new ProgramAreaModel());
+        Mockito.when(mockRestControllerCommon.getProgramAreaList()).thenReturn(programAreaModelList);
+        contextDataController = new ContextDataController(mockRestControllerCommon);
         contextDataController.setAppConfig(new AppConfig());
         // TODO set up Spring test @Configuration class with PropertyPlaceholderConfigurer so
         // Spring can resolve the @Value("${maxHoverTextLen}") etc. during Unit tests

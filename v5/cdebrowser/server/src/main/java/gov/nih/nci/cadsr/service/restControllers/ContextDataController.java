@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import gov.nih.nci.cadsr.common.UsageLog;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.collections.CollectionUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,11 +85,23 @@ public class ContextDataController
 	            logger.info("Loaded Program Areas from database in amount: " + programAreaModelList.size() + programAreaModelList);
 	        } catch( Exception e )
 	        {
-	            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
-	            programAreaModelList = new ArrayList<>();
+		    	try
+		        {
+		            Thread.sleep(1000);
+		    		programAreaModelList = restControllerCommon.getProgramAreaList();
+		            logger.info("Loaded Program Areas from database in amount: " + programAreaModelList.size() + programAreaModelList);
+		        } catch( Exception ex )
+		        {
+		            logger.error( "Server Error:\nCould not retrieve Program Areas from database on the second attempt", ex );
+		        }
+	        	if (CollectionUtils.isEmpty(programAreaModelList)) {
+	        		logger.error( "Server Error: Could not retrieve Program Areas from database");
+	        		programAreaModelList = new ArrayList<>();
+	        	}
 	        }
         }
         else {
+        	logger.info( "Server Error: RestControllerCommon Spring framework component is null; cannot populate programAreaModelList");
         	programAreaModelList = new ArrayList<>();
         }
     }
@@ -98,11 +112,19 @@ public class ContextDataController
     {
         logger.debug( "Received rest call \"contextData\"" );
         // Get Program Areas
-        if (programAreaModelList.isEmpty())
+        if (CollectionUtils.isEmpty(programAreaModelList))
         {
-            ContextNode[] errorNode = new ContextNode[1];
-            errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Program Areas from database", new Exception("Spring configuration related exception"), ContextNode.class );
-            return errorNode;
+        	//TODO do we want to make this retry once in x minutes, not every time a request comes?
+        	synchronized(this) {
+            	if ((CollectionUtils.isEmpty(programAreaModelList)) && restControllerCommon != null) {
+            		programAreaModelList = restControllerCommon.getProgramAreaList();
+            	}
+            }
+            if (CollectionUtils.isEmpty(programAreaModelList)) {
+	            ContextNode[] errorNode = new ContextNode[1];
+	            errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Program Areas from database", new Exception("Program Areas failed to be retrieved"), ContextNode.class );
+	            return errorNode;
+            }
         }
 
         // Get the (only) top level Context data
@@ -112,7 +134,7 @@ public class ContextDataController
             contextNodes = getAllTopLevelTreeData();
         } catch( Exception e )
         {
-            logger.error( "Server Error:\nCould not retrieve Program Areas from database", e );
+            logger.error( "Server Error:\nCould not retrieve Top Level Context data from database", e );
             ContextNode[] errorNode = new ContextNode[1];
             errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Top Level Context data from database", e, ContextNode.class );
             return errorNode;
