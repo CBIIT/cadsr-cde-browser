@@ -273,8 +273,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             String cdeStrPublicIdSqlFragment = SearchQueryBuilderUtils.buildSearchByPublicId(searchCriteria.getPublicId(), "de.cde_id");
             cdeIdWhere = cdeStrPublicIdSqlFragment;
-            //search by Public ID follows now (since v.5.2.2.) the same version type rule that the other search type type do; see Ln 320 versionIndWhere String build based on searchCriteria";
-            //0 - the latest, 1 - all the versions of DEs
+            //search by Public ID follows now (since v.5.2.2.) similar version type rule that the other search type type do; see Ln 320 versionIndWhere String build based on searchCriteria";
+            //publicIdVersion 0 - the latest, 1 - all the versions of DEs
         }
 
         if ((StringUtils.isNotBlank(searchCriteria.getValueDomain())) || (StringUtils.isNotBlank(searchCriteria.getVdTypeFlag())))
@@ -316,7 +316,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         whereBuffer.append( altNamesWhere );
 
         whereClause = whereBuffer.toString();
-        if( searchCriteria.getVersionType() == 0 )
+        if(
+        	((StringUtils.isEmpty(searchCriteria.getPublicId())) && (searchCriteria.getVersionType() == 0 )) || 
+        	((StringUtils.isNotEmpty(searchCriteria.getPublicId())) && (searchCriteria.getPublicIdVersion() == 0))
+        	)
         {
             versionIndWhere = " AND de.latest_version_ind = 'Yes' ";
         }

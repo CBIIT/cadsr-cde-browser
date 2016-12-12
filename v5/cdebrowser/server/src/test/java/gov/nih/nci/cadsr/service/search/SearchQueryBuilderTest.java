@@ -160,7 +160,8 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
-        searchCriteria.setVersionType(1);
+        searchCriteria.setPublicIdVersion(1);
+        searchCriteria.setVersionType(0);
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlPublicIdAll ), cleanup( sqlStmt ));
@@ -228,12 +229,58 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
-        searchCriteria.setVersionType(1);
-        
+        searchCriteria.setVersionType(0);
+        searchCriteria.setPublicIdVersion(1);
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sql01PublicIdAll ), cleanup( sqlStmt ) );
     }
-
+    
+    @Test
+    public void testWorkFlowStatus01PublicILatest1() throws Exception
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "25*" );
+        searchCriteria.setSearchMode( "Exact phrase" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "" );
+        searchCriteria.setClassification( "" );
+        searchCriteria.setProtocol( "" );
+        searchCriteria.setWorkFlowStatus( "" );
+        searchCriteria.setRegistrationStatus( "" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
+        searchCriteria.setVersionType(0);
+        searchCriteria.setPublicIdVersion(0);
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        assertEquals( cleanup( sql01PublicIdLatest ), cleanup( sqlStmt ) );
+    }
+    
+    @Test
+    public void testWorkFlowStatus01PublicILatest2() throws Exception
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "25*" );
+        searchCriteria.setSearchMode( "Exact phrase" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "" );
+        searchCriteria.setClassification( "" );
+        searchCriteria.setProtocol( "" );
+        searchCriteria.setWorkFlowStatus( "" );
+        searchCriteria.setRegistrationStatus( "" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
+        searchCriteria.setVersionType(1);
+        searchCriteria.setPublicIdVersion(0);
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        assertEquals( cleanup( sql01PublicIdLatest ), cleanup( sqlStmt ) );
+    }
+    
     @Test
     public void testContext00() throws Exception
     {
@@ -275,8 +322,8 @@ public class SearchQueryBuilderTest
         searchCriteria.setContextUse( 2 );
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
-        searchCriteria.setVersionType(1);
-
+        searchCriteria.setVersionType(0);
+        searchCriteria.setPublicIdVersion(1);
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sql02PublicIdAll ), cleanup( sqlStmt ) );
     }
@@ -536,7 +583,29 @@ public class SearchQueryBuilderTest
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
     }
+    
+    @Test
+    public void testProtocolSearchQuery1()
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "" );
+        searchCriteria.setPublicIdVersion(1);
+        searchCriteria.setSearchMode( "" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "Test" );
+        searchCriteria.setClassification( "" );
+        searchCriteria.setProtocol( "B40DD2C8-A047-DBE1-E040-BB89AD437202" );
+        searchCriteria.setWorkFlowStatus( "" );
+        searchCriteria.setRegistrationStatus( "" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
 
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
+    }
     @Test
     public void testVersionTypeAll()
     {
@@ -558,7 +627,28 @@ public class SearchQueryBuilderTest
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sqlStmt ), cleanup( versionTypeAllQuery ) );
     }
+    @Test
+    public void testVersionTypeAll1()
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "" );
+        searchCriteria.setPublicIdVersion(1);
+        searchCriteria.setSearchMode( "" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "Test" );
+        searchCriteria.setClassification( "" );
+        searchCriteria.setProtocol( "B40DD2C8-A047-DBE1-E040-BB89AD437202" );
+        searchCriteria.setWorkFlowStatus( "" );
+        searchCriteria.setRegistrationStatus( "" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(1);
+        searchCriteria.setDerivedDEFlag("false");
 
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        assertEquals( cleanup( sqlStmt ), cleanup( versionTypeAllQuery ) );
+    }
     private String cleanup( String s )
     {
         return s.replaceAll( "\\s\\s*", " " ).replaceAll( "\\s*,\\s*", ", " ).replaceAll( "\\s*\\)\\s*", ")" ).replaceAll( "\\s*\\(\\s*", "(" ).toUpperCase().trim();
@@ -772,6 +862,44 @@ public class SearchQueryBuilderTest
             "  AND de.de_idseq = acr.ac_idseq (+)" +
             "  AND acr.registration_status = rsl.registration_status (+)" +
             "  AND de.asl_name = asl.asl_name (+)";
+    
+    String sql01PublicIdLatest = "SELECT DISTINCT de.de_idseq," +
+            "                de.preferred_name de_preferred_name," +
+            "                de.long_name," +
+            "                rd.doc_text," +
+            "                conte.name," +
+            "                de.asl_name," +
+            "                to_char(de.cde_id) de_cdeid," +
+            "                de.version de_version," +
+            "                meta_config_mgmt.get_usedby(de.de_idseq) de_usedby," +
+            "                de.vd_idseq," +
+            "                de.dec_idseq," +
+            "                de.conte_idseq," +
+            "                de.preferred_definition," +
+            "                acr.registration_status," +
+            "                rsl.display_order," +
+            "                asl.display_order wkflow_order," +
+            "                de.cde_id cdeid" +
+            " FROM sbr.data_elements_view de," +
+            "     sbr.reference_documents_view rd," +
+            "     sbr.contexts_view conte," +
+            "     sbr.ac_registrations_view acr," +
+            "     sbr.reg_status_lov_view rsl," +
+            "     sbr.ac_status_lov_view asl" +
+            " WHERE de.de_idseq = rd.ac_idseq (+)" +
+            "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
+            " AND de.latest_version_ind = 'Yes'" +
+            "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
+            "  AND " + getExcludList() +
+            "  AND conte.name NOT IN ('TEST'," +
+            "                         'Training')" +
+            //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
+            "  AND conte.conte_idseq = de.conte_idseq" +
+            "  AND ((to_char(de.cde_id) LIKE '25%'))" +
+            "  AND de.de_idseq = acr.ac_idseq (+)" +
+            "  AND acr.registration_status = rsl.registration_status (+)" +
+            "  AND de.asl_name = asl.asl_name (+)";
+    
     
     String sql02 = "SELECT DISTINCT " +
             "           DE.DE_IDSEQ," +

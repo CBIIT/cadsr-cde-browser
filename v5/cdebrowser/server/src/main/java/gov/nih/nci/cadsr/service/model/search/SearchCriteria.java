@@ -2,6 +2,8 @@ package gov.nih.nci.cadsr.service.model.search;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 public class SearchCriteria implements Serializable
 {
 	private static final long serialVersionUID = -4732600582872432160L;
@@ -40,6 +42,7 @@ public class SearchCriteria implements Serializable
 	private String filteredinput;
 	private String property;
 	private String derivedDEFlag;
+	private int publicIdVersion;
 
 	public static final String ALL_REGISRTATION_STATUSES = "ALL Registration Statuses";
 	public static final String ALL_WORKFLOW_STATUSES = "ALL Workflow Statuses";
@@ -61,6 +64,12 @@ public class SearchCriteria implements Serializable
 			this.workFlowStatus = "ALL";
 		if (ALL_REGISRTATION_STATUSES.equals(this.registrationStatus))
 			this.registrationStatus = "ALL";
+		
+		//if this is public ID search then we shall use version type selected on public ID search view
+		if (StringUtils.isNotEmpty(this.publicId)) {
+			int versionTypePublicId = this.publicIdVersion;
+			this.versionType = versionTypePublicId;//this is to avoid using this parameter to override publicId selection
+		}
 	}
 	public String getName() {
 		return name;
@@ -313,22 +322,29 @@ public class SearchCriteria implements Serializable
 		this.derivedDEFlag = derivedDEFlag;
 	}
 
+    public int getPublicIdVersion() {
+		return publicIdVersion;
+	}
+	public void setPublicIdVersion(int publicIdVersion) {
+		this.publicIdVersion = publicIdVersion;
+	}
+	
 	@Override
 	public String toString() {
 		return "SearchCriteria [name=" + name + ", searchMode=" + searchMode + ", publicId=" + publicId + ", queryType="
 				+ queryType + ", programArea=" + programArea + ", context=" + context + ", classification="
 				+ classification + ", csCsiIdSeq=" + csCsiIdSeq + ", protocol=" + protocol + ", formIdSeq=" + formIdSeq
 				+ ", workFlowStatus=" + workFlowStatus + ", registrationStatus=" + registrationStatus + ", conceptName="
-				+ conceptName + ", conceptCode=" + conceptCode + ", dataElementConcept=" + dataElementConcept
+				+ conceptName + ", conceptCode=" + conceptCode + ", conceptInput=" + conceptInput
+				+ ", conceptQueryType=" + conceptQueryType + ", dataElementConcept=" + dataElementConcept
 				+ ", permissibleValue=" + permissibleValue + ", pvQueryType=" + pvQueryType + ", objectClass="
 				+ objectClass + ", contextUse=" + contextUse + ", versionType=" + versionType + ", altName=" + altName
 				+ ", altNameType=" + altNameType + ", vdTypeFlag=" + vdTypeFlag + ", valueDomain=" + valueDomain
-				+ ", filteredinput=" + filteredinput + ", conceptInput=" + conceptInput + ", conceptType=" + conceptQueryType
-				+ ", property=" + property + ", derivedDEFlag=" + derivedDEFlag
-				+ "]";
+				+ ", filteredinput=" + filteredinput + ", property=" + property + ", derivedDEFlag=" + derivedDEFlag
+				+ ", publicIdVersion=" + publicIdVersion + "]";
 	}
-
-    public String toLogString()
+	
+	public String toLogString()
     {
         StringBuilder logBuilderString = new StringBuilder( "SearchCriteria{" );
         if( ( name != null ) && ( !name.isEmpty() ) )
@@ -343,6 +359,7 @@ public class SearchCriteria implements Serializable
         {
             logBuilderString.append( "publicId='" + publicId + "\'," );
         }
+        logBuilderString.append( "publicIdVersion='" + publicIdVersion + "\'," );
         logBuilderString.append( "queryType='" + queryType + "\'," );
         if( ( programArea != null ) && ( !programArea.isEmpty() ) )
         {
