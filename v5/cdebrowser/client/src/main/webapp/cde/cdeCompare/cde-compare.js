@@ -10,7 +10,7 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     $scope.downloadFactory = new downloadFactory();
     $scope.checkedItems = [];
 
-    // sort table columns
+    // sort table columns   
     $scope.sortPVMeaning = function(e,i,v) {
         var img = $(e.target).attr("src");
         if (img.indexOf("arrowUp")!=-1) {
@@ -21,7 +21,7 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
             $(e.target).attr("src","icons/arrowUp.png");
             $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'shortMeaning',false);
         }
-    }
+    };
 
     $scope.sortPV = function(e,i,v) {
         var img = $(e.target).attr("src");
@@ -33,7 +33,7 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
             $(e.target).attr("src","icons/arrowUp.png");
             $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'value',false);
         }        
-    }
+    };
 
     $scope.sortPVMeaningConceptCode = function(e,i,v) {
         var img = $(e.target).attr("src");
@@ -45,7 +45,7 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
             $(e.target).attr("src","icons/arrowUp.png");
             $scope.cdeDetails[i]["valueDomain"]["permissibleValues"] = $filter('orderBy')(v,'conceptCode',false);
         }
-    }
+    };
 
     // CDE details
     $scope.onClickCdeDetails = function (deIdseq) {
