@@ -32,7 +32,7 @@ public class ValueMeaningDAOImplTest
     private int cdeId = 2179601;
     private float version = 1.0F;
     private String expectedSql0 = "SELECT DISTINCT  value_meanings.* FROM sbr.permissible_values,sbr.vd_pvs,sbr.value_meanings  WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq AND sbr.vd_pvs.vd_idseq = pvIdseq AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq";
-    private String expectedSql1 = "SELECT sbr.vd_pvs.pv_idseq AS pvIdseq, sbr.value_meanings.long_name AS pvMeaning, sbr.value_meanings.vm_id AS vmPublicId, sbr.value_meanings.version AS vmVersion, sbr.value_meanings.vm_idseq AS vmIdseq FROM sbr.permissible_values, sbr.vd_pvs, sbr.value_meanings, sbr.data_elements WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq AND sbr.data_elements.cde_id = CDE_ID AND sbr.data_elements.version = VERSION_NUMBER AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq";
+    private String expectedSql1 = "SELECT sbr.vd_pvs.pv_idseq AS pvIdseq, sbr.value_meanings.long_name AS pvMeaning, sbr.value_meanings.vm_id AS vmPublicId, sbr.value_meanings.version AS vmVersion, sbr.value_meanings.vm_idseq AS vmIdseq FROM sbr.permissible_values, sbr.vd_pvs, sbr.value_meanings, sbr.data_elements WHERE sbr.permissible_values.pv_idseq = sbr.vd_pvs.pv_idseq AND sbr.data_elements.cde_id = CDE_ID AND sbr.data_elements.version = VERSION_NUMBER AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ORDER BY UPPER(sbr.permissible_values.value)";
     private UnitTestCommon unitTestCommon;
 
     @Mock
