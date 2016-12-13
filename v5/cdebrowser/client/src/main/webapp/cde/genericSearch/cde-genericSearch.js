@@ -49,7 +49,7 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
             $scope.fs.dataElementVariables.searchPVQueryType, $scope.fs.dataElementVariables.selectedQueryType, $scope.fs.dataElementVariables.searchVD,
             $scope.fs.dataElementVariables.searchVDTQueryType, $scope.fs.dataElementVariables.conceptInput, '',
             $scope.fs.dataElementVariables.searchAltName, $scope.fs.dataElementVariables.searchAltNameType, $scope.fs.dataElementVariables.searchFieldOptions.options,
-            $scope.fs.dataElementVariables.searchVersions, $scope.fs.dataElementVariables.searchContextUse, $scope.fs.dataElementVariables.searchObjectClass, $scope.fs.dataElementVariables.searchProperty, $scope.fs.dataElementVariables.derivedDE);
+            $scope.fs.dataElementVariables.searchVersions, $scope.fs.dataElementVariables.publicSearchVersions, $scope.fs.dataElementVariables.searchContextUse, $scope.fs.dataElementVariables.searchObjectClass, $scope.fs.dataElementVariables.searchProperty, $scope.fs.dataElementVariables.derivedDE);
         }
     };
 

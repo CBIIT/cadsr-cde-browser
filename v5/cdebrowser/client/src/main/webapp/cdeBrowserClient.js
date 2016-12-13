@@ -7,7 +7,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataElementConceptHOLD = "";
     $scope.valueDomainHOLD = "";
     $scope.searchAltNameHOLD = "";
-    // $scope.searchVersionsHOLD = 0; // searchVersions is now available in Public ID Search tab as well (not exclusive to Advance Search anymore) //
+    $scope.searchVersionsHOLD = 0;
     $scope.searchContextUseHOLD = 2;
     $scope.searchObjectClassHOLD = "";
     $scope.searchPropertyHOLD = "";
@@ -129,6 +129,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             fs.dataElementVariables.searchAltNameType,
                             fs.dataElementVariables.searchFieldOptions.options,
                             fs.dataElementVariables.searchVersions,
+                            fs.dataElementVariables.publicSearchVersions,
                             fs.dataElementVariables.searchContextUse,
                             fs.dataElementVariables.searchObjectClass,
                             fs.dataElementVariables.searchProperty,
@@ -160,7 +161,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
             fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, '',
             fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options,
-            fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
+            fs.dataElementVariables.searchVersions, fs.dataElementVariables.publicSearchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
     };
 
     $scope.searchKey = function(e) {
@@ -170,7 +171,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
             fs.dataElementVariables.searchVDTQueryType, fs.dataElementVariables.conceptInput, '',
             fs.dataElementVariables.searchAltName, fs.dataElementVariables.searchAltNameType, fs.dataElementVariables.searchFieldOptions.options,
-            fs.dataElementVariables.searchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
+            fs.dataElementVariables.searchVersions, fs.dataElementVariables.publicSearchVersions, fs.dataElementVariables.searchContextUse, fs.dataElementVariables.searchObjectClass, fs.dataElementVariables.searchProperty, fs.dataElementVariables.derivedDE);
         }
     };
 
@@ -526,7 +527,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.currentCdeTab = 0;
 
     // Search button
-    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
+    $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, publicSearchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
 
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
@@ -621,6 +622,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             connector = c == 0 ? "?" : "&";
             c++;
             url += connector + "versionType=" + searchVersions;
+        }
+
+        if (publicSearchVersions >= 0) {
+            connector = c == 0 ? "?" : "&";
+            c++;
+            url += connector + "publicIdVersion=" + publicSearchVersions;
         }
 
         if (conceptInput != '') {
@@ -1363,8 +1370,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.searchAltNameHOLD = fs.dataElementVariables.searchAltName;
             fs.dataElementVariables.searchAltName = "";
 
-            // $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
-            // fs.dataElementVariables.searchVersions = -1;
+            $scope.searchVersionsHOLD = fs.dataElementVariables.searchVersions;
+            fs.dataElementVariables.searchVersions = -1;
 
             $scope.searchContextUseHOLD = fs.dataElementVariables.searchContextUse;
             fs.dataElementVariables.searchContextUse = 2;
@@ -1391,8 +1398,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             fs.dataElementVariables.searchAltName = $scope.searchAltNameHOLD;
             $scope.searchAltNameHOLD = "";
 
-            // fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
-            // $scope.searchVersionsHOLD = -1;
+            fs.dataElementVariables.searchVersions = $scope.searchVersionsHOLD;
+            $scope.searchVersionsHOLD = -1;
 
             fs.dataElementVariables.searchContextUse = $scope.searchContextUseHOLD;
             $scope.searchContextUseHOLD = -1;

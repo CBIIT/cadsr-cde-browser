@@ -78,7 +78,7 @@ describe('CDE Browser Client spec', function() {
         	$anchorScroll:anchor_scroll
         });
 		filterservice.dataElementVariables = {selectedQueryType:"0",basicSearchQuery:"",searchDEC:"asdf",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL Fields"]}, conceptInput:"", conceptQueryType:"0",
-        searchAltName:"", searchAltNameType:[], searchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"};
+        searchAltName:"", searchAltNameType:[], searchVersions:"0", publicSearchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"};
 
     }));
 
