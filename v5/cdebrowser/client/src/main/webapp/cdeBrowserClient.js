@@ -15,6 +15,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     var delimiter= ":::";
 
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
+    // change in requirement makes only the count relavent //
     $scope.rslt = [];
     $scope.cdeCartCheck = function(r, k) {
         if (k) {

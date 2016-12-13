@@ -501,11 +501,13 @@
             </ul>
 
             <span class="cdeCartList" ng-show="rslt1.length>0">
-                <span ng-repeat="r in rslt1">{{r.longName}}<span ng-show="!$last">,</span> </span>successfully added to CDE Cart
+                <span style="padding-left:4px;">{{rslt1.length}} Selected CDE(s) added to your CDE Cart Successfully</span>
+                <!-- <span ng-repeat="r in rslt1">{{r.longName}}<span ng-show="!$last">,</span> </span>successfully added to CDE Cart -->
             </span>
 
             <span class="cdeCompareList" ng-show="rslt2.length>0">
-                <span ng-repeat="r in rslt2">{{r.longName}}<span ng-show="!$last">,</span> </span>successfully added to CDE Compare List
+                <span style="padding-left:4px;">{{rslt2.length}} Selected CDE(s) were added to the CDE Compare List Successfully</span>
+                <!-- <span ng-repeat="r in rslt2">{{r.longName}}<span ng-show="!$last">,</span> </span>successfully added to CDE Compare List -->
             </span>
 
             <!-- show progress bar -->
