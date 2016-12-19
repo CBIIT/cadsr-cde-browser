@@ -4,10 +4,12 @@ package gov.nih.nci.cadsr.dao;
  */
 
 import gov.nih.nci.cadsr.dao.model.VdPvsModel;
+import gov.nih.nci.ncicb.cadsr.common.dto.ValidValueTransferObject;
 
 import java.util.List;
 
 public interface VdPvsDAO
 {
     List<VdPvsModel> getVdPvs( String vdIdseq );
+    List<ValidValueTransferObject> getVdVvs( String vdIdseq );
 }

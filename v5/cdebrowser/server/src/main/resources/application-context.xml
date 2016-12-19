@@ -144,7 +144,11 @@
         <property name="alternateNameDAO" ref="alternateNameDAO"/>
     </bean>
 
-    <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao"/>
+    <bean id="vdPvsDAO" class="gov.nih.nci.cadsr.dao.VdPvsDAOImpl" parent="abstractDao">
+        <property name="contextDAO" ref="contextDAO"/>
+        <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
+    </bean>
+
     <bean id="permissibleValuesDAO" class="gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl" parent="abstractDao"/>
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>

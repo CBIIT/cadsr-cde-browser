@@ -16,6 +16,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implements ConceptDerivationRuleDAO
 {
@@ -34,12 +35,30 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
         jdbcTemplate = getJdbcTemplate();
     }
 
+    public ConceptDerivationRuleModel getCDRByIdseqORIG( String condrIdseq ) throws EmptyResultDataAccessException
+    {
+        String sql = "SELECT * FROM sbrext.con_derivation_rules_ext WHERE condr_idseq = ?";
+        if( condrIdseq == null)
+        {
+            System.err.println("ConceptDerivationRuleDAOImpl.getCDRByIdseq  condrIdseq == null ");
+        }
+
+        ConceptDerivationRuleModel conceptDerivationRuleModel = jdbcTemplate.queryForObject( sql, new Object[]{ condrIdseq }, new ConceptDerivationRuleMapper() );
+        return conceptDerivationRuleModel;
+    }
+
     @Override
     public ConceptDerivationRuleModel getCDRByIdseq( String condrIdseq ) throws EmptyResultDataAccessException
     {
         String sql = "SELECT * FROM sbrext.con_derivation_rules_ext WHERE condr_idseq = ?";
-        ConceptDerivationRuleModel conceptDerivationRuleModel = jdbcTemplate.queryForObject( sql, new Object[]{ condrIdseq }, new ConceptDerivationRuleMapper() );
-        return conceptDerivationRuleModel;
+        if( condrIdseq == null)
+        {
+            System.err.println("ConceptDerivationRuleDAOImpl.getCDRByIdseq  condrIdseq == null ");
+            return null;
+        }
+
+        List<ConceptDerivationRuleModel> conceptDerivationRuleModel = getAll( sql, condrIdseq, ConceptDerivationRuleModel.class );
+        return conceptDerivationRuleModel.get(0);
     }
 
     @Override

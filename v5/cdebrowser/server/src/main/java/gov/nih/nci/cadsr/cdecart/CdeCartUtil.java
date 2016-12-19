@@ -55,10 +55,10 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 	VdPvsDAO vdPvsDAO;
 	@Autowired
 	ContextDAO contextDAO;
-	
+
 	@Autowired
 	DataElementDAO dataElementDAO;
-	
+
 	public void setToolOptionsDAO(ToolOptionsDAO toolOptionsDAO) {
 		this.toolOptionsDAO = toolOptionsDAO;
 	}
@@ -74,7 +74,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 	}
 
 	//We assume this URL is not changes often as the system is running, so we will read it until it is not found
-	public static transient String ocURL;
+	 public static transient String ocURL;
 
 	protected CDECart findCdeCart(final HttpSession mySession, final String principalName) throws ObjectCartException, AutheticationFailureException {
 		CDECart cdeCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
@@ -92,14 +92,14 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 					log.debug("Found Object Cart URL:" + ocURL);
 				}
 			}
-			
+
 			ObjectCartClient ocClient = null;
 
 			if (ocURL != null)
 				ocClient = new ObjectCartClient(ocURL);
 			else
 				ocClient = new ObjectCartClient();
-			
+
 			uid = principalName;
 
 			//we shall be after login here, and uid is never null
@@ -116,7 +116,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			String toPrint = (col != null) ? "" + col.size() : "0";
 			log.debug("Object Cart is retrived from remote site; # of objects: " + toPrint);
 		}
-		
+
 		return cdeCart;
 	}
 	/* (non-Javadoc)
@@ -128,7 +128,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			log.warn("Nothing to delete no ID received");
 			return;
 		}
-		
+
 		if (mySession == null) {
 			//this shall never happen; controller provides the session
 			log.warn("Session is not found");
@@ -150,36 +150,36 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 					log.warn("Cannot get a value of ObjectCart URL from the system configuration");
 				}
 			}
-			
+
 			ObjectCartClient ocClient = null;
-	
+
 			if (!ocURL.equals(""))
 				ocClient = new ObjectCartClient(ocURL);
 			else
 				ocClient = new ObjectCartClient();
-			
+
 			//Get the cart in the session
 			CDECart sessionCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
-			
+
 			CDECart userCart = new CDECartOCImpl(ocClient, principalName, CaDSRConstants.CDE_CART);
-			
+
 			Collection<String> items = Arrays.asList(ids);
 
 			sessionCart.removeDataElements(items);
-			userCart.removeDataElements(items);	
+			userCart.removeDataElements(items);
 		}
 		catch (ObjectCartException oce){
 			log.error("Exception on cdeCart.getDataElements", oce);
 			throw oce;
 		}
-		
+
 	}
 	/* (non-Javadoc)
 	 * @see gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface#findCartNodes(javax.servlet.http.HttpSession, java.lang.String)
 	 */
 	@Override
 	public List<SearchNode> findCartNodes(HttpSession mySession, String principalName) throws Exception{
-		
+
 		String uid = principalName;
 
 		//we shall be after login here, and uid is never null
@@ -205,7 +205,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			//We use either retrieved cart or found in the session cart to build the result for the client page
 			@SuppressWarnings("rawtypes")
 			Collection col = cdeCart.getDataElements();
-			
+
 			arr = buildSearchNodeList(col);
 			return arr;
 		}
@@ -223,13 +223,13 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			log.debug("Nothing to save");
 			return;
 		}
-		
+
 		CDECart sessionCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
-		
+
 		if (sessionCart == null) {
 			sessionCart = findCdeCart(mySession, principalName);
 		}
-		
+
 		String userName = principalName;
 
 		//we shall be after login here, and userName is never null
@@ -237,7 +237,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			log.error("........No user found in session in addToCart");
 			throw new AutheticationFailureException("Authenticated user not found in the session");
 		}
-		
+
 		try {
 			if (ocURL == null) {//try to get it again for a chance fixed in DB
 				ToolOptionsModel cdeCartOptionsModel = toolOptionsDAO.getToolOptionsByToolNameAndProperty("ObjectCartAPI", "URL");
@@ -248,18 +248,18 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 					log.warn("Cannot get a value of ObjectCart URL from the system configuration");
 				}
 			}
-			
+
 			ObjectCartClient ocClient = null;
-	
+
 			if (!ocURL.equals(""))
 				ocClient = new ObjectCartClient(ocURL);
 			else
 				ocClient = new ObjectCartClient();
-			
+
 			CDECart userCart = new CDECartOCImpl(ocClient, userName, CaDSRConstants.CDE_CART);
-	
+
 			List<DataElementModel> deModelList = dataElementDAO.getCdeByDeIdseqList(cdeIds);
-			
+
 			Collection<DataElementTransferObject> addCandidates = buildCartTransferObjects(deModelList);
 			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
 
@@ -276,7 +276,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 					items.add(cartItem);
 				}
 			}
-			
+
 			userCart.mergeDataElements(items);
 		}
 		catch (ObjectCartException oce){
@@ -284,7 +284,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			throw oce;
 		}
 	}
-	
+
 	public Cart buildObjectCart(ObjectCartClient client, String uid, String cName) {
 		Cart oCart = new Cart();
 
@@ -295,7 +295,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 		}
 		return oCart;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected List<SearchNode> buildSearchNodeList(@SuppressWarnings("rawtypes") Collection col) {
 		List<SearchNode> res = new ArrayList<SearchNode>();
@@ -303,7 +303,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			if (obj instanceof CDECartItemTransferObject) {
 				CDECartItemTransferObject curr = (CDECartItemTransferObject)obj;
 				AdminComponent admin = curr.getItem();
-				
+
 				SearchNode searchNode = buildSearchModel(admin);
 				res.add(searchNode);
 			}
@@ -327,11 +327,11 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 		res.setPublicId(admin.getPublicId());
 		res.setVersion(""+admin.getVersion());
 		res.setDeIdseq(admin.getIdseq());
-		
+
 		//printAdminComponent(admin);
 		return res;
 	}
-	
+
     public Collection<DataElementTransferObject> buildCartTransferObjects (List<DataElementModel> deList) {
     	ArrayList<DataElementTransferObject> resultModel = new ArrayList<DataElementTransferObject>();
     	if (deList != null) {
@@ -351,20 +351,20 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	}
     	return resultModel;
     }
-    
+
     public DataElementTransferObject toDataElement(DataElementModel deModel) {
     	//this is the code modified from v.4.0.5 DTOTransformer DTOTransformer.toDataElement
     	//we need to assign all the data for compatibility
         DataElementTransferObject de = new DataElementTransferObject();
         if (deModel == null) return de;
-        
+
         de.setDeIdseq(deModel.getDeIdseq().trim());
         de.setPreferredName(deModel.getPreferredName());
         de.setPublicId(deModel.getPublicId());
         de.setLongName(deModel.getLongName());
         de.setPreferredDefinition(deModel.getPreferredDefinition());
         ValueDomainModel vdm = deModel.getValueDomainModel();
-        
+
         //This was commented in v.4.0.5 I keep in here for consistency
         //List values = toPermissibleValueList(vd);
         //vd.setValidValues(values);
@@ -374,10 +374,10 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 //        ContextModel cm = deModel.getContext();
         de.setContext(null);
         deModel.getContext();
-        
+
         //I believe this is the data stored which we need to the Question/Doc Text/Preferred Question Text
         de.setLongCDEName(deModel.getQuestion());
-        
+
         de.setAslName(deModel.getAslName());
         de.setVersion(deModel.getVersion());
         de.setContextName(deModel.getContextName());
@@ -386,13 +386,13 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
         return de;
     }
-    public ValueDomain buildValueDomainTransfer(ValueDomainModel modelVm){
-    	ValueDomain dtoVd = new ValueDomainTransferObject();
+	public ValueDomainTransferObject buildValueDomainTransfer(ValueDomainModel modelVm){
+		ValueDomainTransferObject dtoVd = new ValueDomainTransferObject();
     	if (modelVm == null) return dtoVd;
-    	
+
     	//same 15 methods
-    	//setAslName, setCharSet, setCreatedBy, setDatatype, setDecimalPlace, setDeletedInd, 
-    	//setIdseq, setLongName, setMaxLength, setMinLength, setModifiedBy, setOrigin, 
+    	//setAslName, setCharSet, setCreatedBy, setDatatype, setDecimalPlace, setDeletedInd,
+    	//setIdseq, setLongName, setMaxLength, setMinLength, setModifiedBy, setOrigin,
     	//setPreferredDefinition, setPreferredName, setVdIdseq
     	dtoVd.setAslName(modelVm.getAslName());
     	dtoVd.setCharSet(modelVm.getCharSet());
@@ -405,72 +405,86 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	dtoVd.setMaxLength(""+modelVm.getMaxLength());
     	dtoVd.setMinLength(""+modelVm.getMinLength());
     	dtoVd.setModifiedBy(modelVm.getModifiedBy());
-    	dtoVd.setOrigin(modelVm.getOrigin()); 
+    	dtoVd.setOrigin(modelVm.getOrigin());
     	dtoVd.setPreferredDefinition(modelVm.getPreferredDefinition());
     	dtoVd.setPreferredName(modelVm.getPreferredName());
     	dtoVd.setVdIdseq(modelVm.getVdIdseq());
-    	
+
     	//setDateCreated, setDateModified
     	dtoVd.setDateCreated(modelVm.getDateCreated());
     	dtoVd.setDateModified(modelVm.getDateModified());
     	//different 17
-    	//setConceptDerivationRule, setContacts, setConteIdseq, setContext, setDefinitions, setDesignations, 
-    	//setDisplayFormat, setHighValue, setLatestVersionInd, setLowValue, setPublished, setReferenceDocs, 
+    	//setConceptDerivationRule, setContacts, setConteIdseq, setContext, setDefinitions, setDesignations,
+    	//setDisplayFormat, setHighValue, setLatestVersionInd, setLowValue, setPublished, setReferenceDocs,
     	//setRegistrationStatus, setRepresentation, setUnitOfMeasure, setVDType, setValidValues
-    	
+
     	//FIXME we have not find all the data for ConceptDerivationRule
     	dtoVd.setConceptDerivationRule(buildConceptDerivationRuleTransfer(modelVm.getConceptDerivationRuleModel()));
-    	
+
     	//FIXME expected List<Contact> contacts do not see in v5
     	dtoVd.setContacts(null);
-    	
+
     	//FIXME take it from ContextTransferObject
     	dtoVd.setConteIdseq(null);
-    	
+
     	//FIXME I do not see in VDM ???
     	dtoVd.setContext(null);
-    	
+
     	//FIXME
     	dtoVd.setDefinitions(null);
-    	
+
     	//FIXME
     	dtoVd.setDesignations(null);
-    	
+
     	dtoVd.setDisplayFormat(modelVm.getDispFormat());
-    	
+
     	dtoVd.setHighValue(modelVm.getHighVal());
-    	
+
     	dtoVd.setLatestVersionInd(modelVm.getLatestVerInd());
 
        	dtoVd.setLatestVersionInd(modelVm.getLatestVerInd());
-    	
+
        	dtoVd.setLowValue(""+modelVm.getLowVal());
-       	
+
        	//FIXME What is this data?
        	dtoVd.setPublished(false);
-       	
+
        	//FIXME
        	dtoVd.setReferenceDocs(null);
-       
+
        	//FIXME
     	dtoVd.setRegistrationStatus(null);
-    	
+
     	//FIXME
     	RepresentationModel representationModel = modelVm.getRepresentationModel();
-    	
+
     	dtoVd.setRepresentation(buildRepresentationTransfer(representationModel)); //modelVm.getRepresentationModel()
-    	
+
     	//FIXME
     	dtoVd.setUnitOfMeasure(null);
-    	
+
     	dtoVd.setVDType(modelVm.getVdType());
-    	
+
     	//FIXME where is is list in ValueDomainModel
     	dtoVd.setValidValues(buildValidValueTransferList(modelVm.getVdIdseq()));
-    	
+
     	return dtoVd;
     }
-    public List<ValidValue> buildValidValueTransferList(String vdIdseq) {
+
+
+	/**
+	 * Changed for JIRA CDE-BROWSER-761
+	 * @param vdIdseq
+	 * @return
+	 */
+	public List<ValidValueTransferObject> buildValidValueTransferList(String vdIdseq)
+	{
+		List<ValidValueTransferObject> transferObjectList = vdPvsDAO.getVdVvs(vdIdseq);
+		return transferObjectList;
+	}
+
+/* Changed for JIRA CDE-BROWSER-761
+	public List<ValidValue> buildValidValueTransferList_ORIG(String vdIdseq) {
     	java.text.SimpleDateFormat simpleDate = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
     	List<ValidValue> validValueList = new ArrayList<ValidValue>();
@@ -496,8 +510,8 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     				dtoVv.setShortMeaningDescription(null);
     				dtoVv.setShortMeaningValue(null);
     				//FIXNE ValueMeaning object
-    				dtoVv.setValueMeaning(null); 
-    				
+    				dtoVv.setValueMeaning(null);
+
     				dtoVv.setVdIdseq(model.getVdIdseq());
     				dtoVv.setWorkflowstatus(null);
     			});
@@ -505,6 +519,8 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	}
     	return validValueList;
     }
+*/
+
     public ConceptDerivationRule buildConceptDerivationRuleTransfer(ConceptDerivationRuleModel model) {
     	ConceptDerivationRule rule = new ConceptDerivationRuleTransferObject();
     	if (model == null) return rule;
@@ -529,7 +545,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	representation.setDateCreated(model.getDateCreated());
     	representation.setDateModified(model.getDateModified());
     	representation.setPreferredName(model.getPreferredName());
-    	
+
     	ContextModel contextModel = model.getContext();
     	if (contextModel != null) {
     		representation.setPreferredDefinition(contextModel.getPreferredDefinition());
