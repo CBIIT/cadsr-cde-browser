@@ -74,7 +74,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 	}
 
 	//We assume this URL is not changes often as the system is running, so we will read it until it is not found
-	 public static transient String ocURL;
+	public static transient String ocURL;
 
 	protected CDECart findCdeCart(final HttpSession mySession, final String principalName) throws ObjectCartException, AutheticationFailureException {
 		CDECart cdeCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
@@ -472,19 +472,15 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     }
 
 
-	/**
-	 * Changed for JIRA CDE-BROWSER-761
-	 * @param vdIdseq
-	 * @return
-	 */
+/*
 	public List<ValidValueTransferObject> buildValidValueTransferList(String vdIdseq)
 	{
 		List<ValidValueTransferObject> transferObjectList = vdPvsDAO.getVdVvs(vdIdseq);
 		return transferObjectList;
 	}
+*/
 
-/* Changed for JIRA CDE-BROWSER-761
-	public List<ValidValue> buildValidValueTransferList_ORIG(String vdIdseq) {
+	public List<ValidValue> buildValidValueTransferList(String vdIdseq) {
     	java.text.SimpleDateFormat simpleDate = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
     	List<ValidValue> validValueList = new ArrayList<ValidValue>();
@@ -514,12 +510,15 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
     				dtoVv.setVdIdseq(model.getVdIdseq());
     				dtoVv.setWorkflowstatus(null);
+
+					// CHECKME
+					validValueList.add( dtoVv );
     			});
     		}
     	}
     	return validValueList;
     }
-*/
+
 
     public ConceptDerivationRule buildConceptDerivationRuleTransfer(ConceptDerivationRuleModel model) {
     	ConceptDerivationRule rule = new ConceptDerivationRuleTransferObject();

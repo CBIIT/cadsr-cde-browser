@@ -40,41 +40,6 @@ public class VdPvsDAOImpl extends AbstractDAOOperations implements VdPvsDAO
         return getAll( sql, vdIdseq, VdPvsModel.class );
     }
 
-    /**
-     * Each ValidValueTransferObject in the list returned, may contain none or more nested ConceptDerivationRule objects
-     * This list of ConceptDerivationRule objects is retrieved by a call to conceptDerivationRuleDAO for each ValidValue
-     * @param vdIdseq matches the VD_IDSEQ column in SBR.VD_PVS
-     * @return List of ValidValueTransferObject
-     */
-    @Override
-    public List<ValidValueTransferObject> getVdVvs( String vdIdseq )
-    {
-        String sql = "select * from CABIO31_VM_VIEW where VM_IDSEQ in ( select VM_IDSEQ from CABIO31_PV_VIEW where PV_IDSEQ in (select PV_IDSEQ from SBR.VD_PVS where VD_IDSEQ like '" + vdIdseq + "') )";
-        List<ValidValueTransferObject> vvtObjList = getAll( sql, ValidValueTransferObject.class );
-
-        for( ValidValueTransferObject transferObject : vvtObjList )
-        {
-            // Add the concept derivation rules for this
-            String condrIdseq = transferObject.getCondrIdseq();
-            if( condrIdseq != null )
-            {
-                // conceptDerivationRuleDAO.getCDRByIdseq returns a ConceptDerivationRuleModel,
-                // the ConceptDerivationRuleTransferObject constructor converts/copies it to a ConceptDerivationRuleTransferObject, which is what we need.
-                ConceptDerivationRule conceptDerivationRule  =  new ConceptDerivationRuleTransferObject(conceptDerivationRuleDAO.getCDRByIdseq( condrIdseq ));
-                transferObject.setConceptDerivationRule( conceptDerivationRule );
-            }
-
-            String contextIdseq = transferObject.getConteIdseq();
-            if( contextIdseq != null )
-            {
-                // Get it's Context's name
-                ContextModel contextModel = contextDAO.getContextByIdseq( contextIdseq );
-                transferObject.setContext( contextModel.getName() );
-            }
-        }
-        return vvtObjList;
-    }
-
     public ContextDAO getContextDAO()
     {
         return contextDAO;
