@@ -35,7 +35,8 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
         jdbcTemplate = getJdbcTemplate();
     }
 
-    public ConceptDerivationRuleModel getCDRByIdseqORIG( String condrIdseq ) throws EmptyResultDataAccessException
+    @Override
+    public ConceptDerivationRuleModel getCDRByIdseq( String condrIdseq ) throws EmptyResultDataAccessException
     {
         String sql = "SELECT * FROM sbrext.con_derivation_rules_ext WHERE condr_idseq = ?";
         if( condrIdseq == null)
@@ -47,19 +48,6 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
         return conceptDerivationRuleModel;
     }
 
-    @Override
-    public ConceptDerivationRuleModel getCDRByIdseq( String condrIdseq ) throws EmptyResultDataAccessException
-    {
-        String sql = "SELECT * FROM sbrext.con_derivation_rules_ext WHERE condr_idseq = ?";
-        if( condrIdseq == null)
-        {
-            System.err.println("ConceptDerivationRuleDAOImpl.getCDRByIdseq  condrIdseq == null ");
-            return null;
-        }
-
-        List<ConceptDerivationRuleModel> conceptDerivationRuleModel = getAll( sql, condrIdseq, ConceptDerivationRuleModel.class );
-        return conceptDerivationRuleModel.get(0);
-    }
 
     @Override
     /**
