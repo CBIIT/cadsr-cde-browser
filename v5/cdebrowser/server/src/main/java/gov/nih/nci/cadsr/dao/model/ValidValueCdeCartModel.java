@@ -14,6 +14,7 @@ public class ValidValueCdeCartModel {
 	private String workflowstatus;
 	private String shortMeaning;
 	private Float vmVersion; //not empty ever
+	private String conceptDerivationRuleIdseq;
 	private String vdIdseq; //non-empty expected
 	
 	public String getVdIdseq() {
@@ -58,26 +59,24 @@ public class ValidValueCdeCartModel {
 	public void setVmVersion(Float vmVersion) {
 		this.vmVersion = vmVersion;
 	}
-	public String getConceptDerivationRuleIdSeq() {
-		return conceptDerivationRuleIdSeq;
+	public String getConceptDerivationRuleIdseq() {
+		return conceptDerivationRuleIdseq;
 	}
-	public void setConceptDerivationRuleIdSeq(String conceptDerivationRuleIdSeq) {
-		this.conceptDerivationRuleIdSeq = conceptDerivationRuleIdSeq;
+	public void setConceptDerivationRuleIdseq(String conceptDerivationRuleIdseq) {
+		this.conceptDerivationRuleIdseq = conceptDerivationRuleIdseq;
 	}
-	private String conceptDerivationRuleIdSeq;
-
 	@Override
 	public String toString() {
 		return "ValidValueCdeCartModel [context=" + context + ", vmId=" + vmId + ", shortMeaningValue="
 				+ shortMeaningValue + ", workflowstatus=" + workflowstatus + ", shortMeaning=" + shortMeaning
-				+ ", vmVersion=" + vmVersion + ", vdIdseq=" + vdIdseq + ", conceptDerivationRuleIdSeq="
-				+ conceptDerivationRuleIdSeq + "]";
+				+ ", vmVersion=" + vmVersion + ", conceptDerivationRuleIdseq=" + conceptDerivationRuleIdseq
+				+ ", vdIdseq=" + vdIdseq + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((conceptDerivationRuleIdSeq == null) ? 0 : conceptDerivationRuleIdSeq.hashCode());
+		result = prime * result + ((conceptDerivationRuleIdseq == null) ? 0 : conceptDerivationRuleIdseq.hashCode());
 		result = prime * result + ((context == null) ? 0 : context.hashCode());
 		result = prime * result + ((shortMeaning == null) ? 0 : shortMeaning.hashCode());
 		result = prime * result + ((shortMeaningValue == null) ? 0 : shortMeaningValue.hashCode());
@@ -96,10 +95,10 @@ public class ValidValueCdeCartModel {
 		if (getClass() != obj.getClass())
 			return false;
 		ValidValueCdeCartModel other = (ValidValueCdeCartModel) obj;
-		if (conceptDerivationRuleIdSeq == null) {
-			if (other.conceptDerivationRuleIdSeq != null)
+		if (conceptDerivationRuleIdseq == null) {
+			if (other.conceptDerivationRuleIdseq != null)
 				return false;
-		} else if (!conceptDerivationRuleIdSeq.equals(other.conceptDerivationRuleIdSeq))
+		} else if (!conceptDerivationRuleIdseq.equals(other.conceptDerivationRuleIdseq))
 			return false;
 		if (context == null) {
 			if (other.context != null)

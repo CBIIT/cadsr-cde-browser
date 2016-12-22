@@ -157,6 +157,8 @@
 	<bean id="csCsiValueMeaningDAO" class="gov.nih.nci.cadsr.dao.CsCsiValueMeaningDAOImpl" parent="abstractDao"/>
 
 	<bean id="csCsiDeDAO" class="gov.nih.nci.cadsr.dao.CsCsiDeDAOImpl" parent="abstractDao"/>
+	
+	<bean id="cdeCartValidValueDAO" class="gov.nih.nci.cadsr.dao.CdeCartValidValueDAOImpl" parent="abstractDao"/>
 
 	<bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownload">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
