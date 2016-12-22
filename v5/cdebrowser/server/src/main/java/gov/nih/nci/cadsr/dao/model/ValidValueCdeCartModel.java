@@ -15,6 +15,7 @@ public class ValidValueCdeCartModel {
 	private String shortMeaning;
 	private Float vmVersion; //not empty ever
 	private String conceptDerivationRuleIdseq;
+	private String description;
 	private String vdIdseq; //non-empty expected
 	
 	public String getVdIdseq() {
@@ -65,19 +66,29 @@ public class ValidValueCdeCartModel {
 	public void setConceptDerivationRuleIdseq(String conceptDerivationRuleIdseq) {
 		this.conceptDerivationRuleIdseq = conceptDerivationRuleIdseq;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	@Override
 	public String toString() {
 		return "ValidValueCdeCartModel [context=" + context + ", vmId=" + vmId + ", shortMeaningValue="
 				+ shortMeaningValue + ", workflowstatus=" + workflowstatus + ", shortMeaning=" + shortMeaning
 				+ ", vmVersion=" + vmVersion + ", conceptDerivationRuleIdseq=" + conceptDerivationRuleIdseq
-				+ ", vdIdseq=" + vdIdseq + "]";
+				+ ", description=" + description + ", vdIdseq=" + vdIdseq + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((conceptDerivationRuleIdseq == null) ? 0 : conceptDerivationRuleIdseq.hashCode());
 		result = prime * result + ((context == null) ? 0 : context.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((shortMeaning == null) ? 0 : shortMeaning.hashCode());
 		result = prime * result + ((shortMeaningValue == null) ? 0 : shortMeaningValue.hashCode());
 		result = prime * result + ((vdIdseq == null) ? 0 : vdIdseq.hashCode());
@@ -86,6 +97,7 @@ public class ValidValueCdeCartModel {
 		result = prime * result + ((workflowstatus == null) ? 0 : workflowstatus.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -104,6 +116,11 @@ public class ValidValueCdeCartModel {
 			if (other.context != null)
 				return false;
 		} else if (!context.equals(other.context))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
 			return false;
 		if (shortMeaning == null) {
 			if (other.shortMeaning != null)
