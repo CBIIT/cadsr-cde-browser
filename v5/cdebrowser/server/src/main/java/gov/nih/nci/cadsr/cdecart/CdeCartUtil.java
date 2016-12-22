@@ -10,22 +10,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import gov.nih.nci.cadsr.dao.*;
+import gov.nih.nci.cadsr.dao.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
-import gov.nih.nci.cadsr.dao.ContextDAO;
-import gov.nih.nci.cadsr.dao.DataElementDAO;
-import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
-import gov.nih.nci.cadsr.dao.VdPvsDAO;
-import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
-import gov.nih.nci.cadsr.dao.model.ContextModel;
-import gov.nih.nci.cadsr.dao.model.DataElementModel;
-import gov.nih.nci.cadsr.dao.model.RepresentationModel;
-import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
-import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
-import gov.nih.nci.cadsr.dao.model.VdPvsModel;
 import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
 import gov.nih.nci.ncicb.cadsr.common.dto.ConceptDerivationRuleTransferObject;
@@ -59,6 +50,9 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 	@Autowired
 	DataElementDAO dataElementDAO;
 
+	@Autowired
+	CdeCartValidValueDAO cdeCartValidValueDAO;
+
 	public void setToolOptionsDAO(ToolOptionsDAO toolOptionsDAO) {
 		this.toolOptionsDAO = toolOptionsDAO;
 	}
@@ -73,10 +67,16 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 		this.dataElementDAO = dataElementDAO;
 	}
 
+	public void setCdeCartValidValueDAO( CdeCartValidValueDAO cdeCartValidValueDAO )
+	{
+		this.cdeCartValidValueDAO = cdeCartValidValueDAO;
+	}
+
 	//We assume this URL is not changes often as the system is running, so we will read it until it is not found
-	public static transient String ocURL;
+	static transient String ocURL;
 
 	protected CDECart findCdeCart(final HttpSession mySession, final String principalName) throws ObjectCartException, AutheticationFailureException {
+
 		CDECart cdeCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
 		String uid = null;
 		if (cdeCart == null) {
@@ -92,7 +92,6 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 					log.debug("Found Object Cart URL:" + ocURL);
 				}
 			}
-
 			ObjectCartClient ocClient = null;
 
 			if (ocURL != null)
@@ -115,6 +114,8 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			Collection col = cdeCart.getDataElements();
 			String toPrint = (col != null) ? "" + col.size() : "0";
 			log.debug("Object Cart is retrived from remote site; # of objects: " + toPrint);
+
+
 		}
 
 		return cdeCart;
@@ -465,22 +466,29 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
     	dtoVd.setVDType(modelVm.getVdType());
 
-    	//FIXME where is is list in ValueDomainModel
+    	// Add Valid Values
     	dtoVd.setValidValues(buildValidValueTransferList(modelVm.getVdIdseq()));
 
     	return dtoVd;
     }
 
 
-/*
 	public List<ValidValueTransferObject> buildValidValueTransferList(String vdIdseq)
 	{
-		List<ValidValueTransferObject> transferObjectList = vdPvsDAO.getVdVvs(vdIdseq);
+		List<ValidValueCdeCartModel> validValueCdeCartModels = cdeCartValidValueDAO.getValueDomainTransferObjectsById(vdIdseq);
+
+		// Convert data to objects that match what ObjectCart needs.
+		List<ValidValueTransferObject> transferObjectList = new ArrayList<>(  );
+		for(ValidValueCdeCartModel validValueCdeCartModel: validValueCdeCartModels)
+		{
+			transferObjectList.add( new ValidValueTransferObject(validValueCdeCartModel) );
+		}
 		return transferObjectList;
 	}
-*/
 
-	public List<ValidValue> buildValidValueTransferList(String vdIdseq) {
+/*
+
+	public List<ValidValue> buildValidValueTransferListORIG(String vdIdseq) {
     	java.text.SimpleDateFormat simpleDate = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
     	List<ValidValue> validValueList = new ArrayList<ValidValue>();
@@ -502,7 +510,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     					dtoVv.setContext(contextModel.getName());
     					dtoVv.setDescription(contextModel.getDescription());
     				}
-    				dtoVv.setShortMeaning(null);
+    				dtoVv.setShortMeaning("TEST SHORT MEANING");
     				dtoVv.setShortMeaningDescription(null);
     				dtoVv.setShortMeaningValue(null);
     				//FIXNE ValueMeaning object
@@ -512,12 +520,14 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     				dtoVv.setWorkflowstatus(null);
 
 					// CHECKME
-					validValueList.add( dtoVv );
+                    validValueList.add( dtoVv );
     			});
     		}
     	}
     	return validValueList;
     }
+*/
+
 
 
     public ConceptDerivationRule buildConceptDerivationRuleTransfer(ConceptDerivationRuleModel model) {

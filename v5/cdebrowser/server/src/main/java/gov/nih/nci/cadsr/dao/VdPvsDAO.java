@@ -11,5 +11,4 @@ import java.util.List;
 public interface VdPvsDAO
 {
     List<VdPvsModel> getVdPvs( String vdIdseq );
-    //List<ValidValueTransferObject> getVdVvs( String vdIdseq );
 }

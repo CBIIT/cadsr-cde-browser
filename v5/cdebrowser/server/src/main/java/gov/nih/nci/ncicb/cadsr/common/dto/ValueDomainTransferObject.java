@@ -15,11 +15,9 @@
 package gov.nih.nci.ncicb.cadsr.common.dto;
 import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.common.resource.Representation;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
+
+import java.util.List;
 
 public class ValueDomainTransferObject extends AdminComponentTransferObject
   implements ValueDomain {
@@ -36,7 +34,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   String decimalPlace;
   String cdContextName;
   String cdPrefName;
-  Float cdVersion; 
+  Float cdVersion;
   int cdPublicId;
   String vdType;
   List validValues;
@@ -46,22 +44,22 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   protected String representationContextName;
   protected Float representationVersion;
   protected String representationPublicId;
-  
+
   public ValueDomainTransferObject() {
   }
 
   public String getVdIdseq() {
     return vdIdseq;
   }
-  
+
   public void setVdIdseq(String vdIdseq) {
     this.vdIdseq = vdIdseq;
   }
-  
+
   public String getDatatype() {
     return dataType;
   }
-  
+
   public void setDatatype(String dataType) {
     this.dataType = dataType;
   }
@@ -69,7 +67,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getDisplayFormat() {
     return displayFormat;
   }
-  
+
   public void setDisplayFormat(String displayFormat) {
     this.displayFormat = displayFormat;
   }
@@ -77,16 +75,16 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getUnitOfMeasure() {
     return unitOfMeasure;
   }
-  
+
   public void setUnitOfMeasure(String unitOfMeasure) {
     this.unitOfMeasure = unitOfMeasure;
-    
+
   }
 
   public String getMaxLength() {
     return maxLength;
   }
-  
+
   public void setMaxLength(String maxLength) {
     this.maxLength = maxLength;
   }
@@ -94,7 +92,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getMinLength() {
     return minLength;
   }
-  
+
   public void setMinLength(String minLength) {
     this.minLength = minLength;
   }
@@ -102,7 +100,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getHighValue() {
     return highValue;
   }
-  
+
   public void setHighValue(String highValue) {
     this.highValue = highValue;
   }
@@ -110,7 +108,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getLowValue() {
     return lowValue;
   }
-  
+
   public void setLowValue(String lowValue) {
     this.lowValue = lowValue;
   }
@@ -118,15 +116,15 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getCharSet() {
     return charSet;
   }
-  
+
   public void setCharSet(String charSet) {
-    this.charSet = charSet;  
+    this.charSet = charSet;
   }
 
   public String getDecimalPlace() {
     return decimalPlace;
   }
-  
+
   public void setDecimalPlace(String decimalPlace) {
     this.decimalPlace = decimalPlace;
   }
@@ -134,21 +132,21 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getCDContextName() {
     return cdContextName;
   }
-  
 
-  
+
+
   public String setCDContextName(String cdContextName) {
     return cdContextName;
   }
-  
+
   public String getCDPrefName(){
     return cdPrefName;
   }
-  
+
   public Float getCDVersion() {
     return cdVersion;
   }
-  
+
     public String getRepresentationPrefName() {
                return representationPrefName;
        }
@@ -156,11 +154,11 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
     public String getRepresentationContextName() {
                return representationContextName;
        }
-       
+
     public Float getRepresentationVersion() {
             return representationVersion;
     }
-    
+
     public String getRepresentationPublicId()
     {
       return representationPublicId;
@@ -170,15 +168,15 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public String getVDType() {
     return vdType;
   }
-  
+
   public void setVDType(String vdType) {
     this.vdType = vdType;
   }
-   
+
   public List getValidValues() {
     return validValues;
   }
-  
+
   public void setValidValues(List validValues) {
     this.validValues = validValues;
   }
@@ -198,7 +196,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
    public void setConceptDerivationRule(ConceptDerivationRule rule)
    {
      conceptDerivationRule = rule;
-   }  
+   }
    public int getCDPublicId()
    {
      return cdPublicId;
@@ -207,6 +205,6 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
     {
       this.representationPublicId = objClassPublicId;
     }
-    
-    
+
+
 }

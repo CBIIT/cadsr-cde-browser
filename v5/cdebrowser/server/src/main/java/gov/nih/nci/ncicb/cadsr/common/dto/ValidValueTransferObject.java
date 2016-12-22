@@ -13,14 +13,16 @@
  */
 
 package gov.nih.nci.ncicb.cadsr.common.dto;
+
+import gov.nih.nci.cadsr.dao.model.ValidValueCdeCartModel;
 import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValueMeaning;
 
 import java.util.Collection;
-import java.sql.Date;
 
-public class ValidValueTransferObject implements ValidValue {
+public class ValidValueTransferObject implements ValidValue
+{
 
     protected String vdIdseq;
     protected String vpIdseq;
@@ -38,47 +40,85 @@ public class ValidValueTransferObject implements ValidValue {
     protected ConceptDerivationRule conceptDerivationRule = null;
     protected ValueMeaning valueMeaning = null;
 
-    public ValidValueTransferObject() {
+
+    public ValidValueTransferObject()
+    {}
+
+
+    public ValidValueTransferObject( ValidValueCdeCartModel validValueCdeCartModel )
+    {
+        this.vdIdseq = validValueCdeCartModel.getVdIdseq();
+        this.vpIdseq = validValueCdeCartModel.getVdIdseq();
+        this.shortMeaning = validValueCdeCartModel.getShortMeaning();
+        this.shortMeaningDescription = "";
+        this.shortMeaningValue = validValueCdeCartModel.getShortMeaningValue();
+        this.description = validValueCdeCartModel.getDescription();
+        this.vmId = validValueCdeCartModel.getVmId();
+        this.vmVersion = validValueCdeCartModel.getVmVersion();
+        this.beginDate = "";
+        this.endDate = "";
+        this.context = validValueCdeCartModel.getContext();
+        this.workflowstatus = validValueCdeCartModel.getWorkflowstatus();
+
+        this.conceptDerivationRule = getConceptDerivationRuleByIdSeq(validValueCdeCartModel.getVdIdseq());
+
     }
 
+    private ConceptDerivationRule getConceptDerivationRuleByIdSeq( String vdIdseq)
+    {
+        // FIXME - in the future we will need to retrieve data from the database for some of the ConceptDerivationRule field, for now, we only populate
+        ConceptDerivationRule conceptDerivationRule  =  new ConceptDerivationRuleTransferObject();
+        conceptDerivationRule.setIdseq( vdIdseq );
+        return conceptDerivationRule;
+    }
 
-    public String getVdIdseq() {
+    public String getVdIdseq()
+    {
         return vdIdseq;
     }
 
-    public void setVdIdseq(String aVdIdseq) {
+    public void setVdIdseq( String aVdIdseq )
+    {
         this.vdIdseq = vdIdseq;
     }
 
-    public String getShortMeaning() {
+    public String getShortMeaning()
+    {
         return shortMeaning;
     }
 
-    public void setShortMeaning(String shortMeaning) {
+    public void setShortMeaning( String shortMeaning )
+    {
         this.shortMeaning = shortMeaning;
     }
 
-    public String getShortMeaningDescription() {
+    public String getShortMeaningDescription()
+    {
         return shortMeaningDescription;
     }
 
-    public void setShortMeaningDescription(String aShortMeaningDescription) {
+    public void setShortMeaningDescription( String aShortMeaningDescription )
+    {
         this.shortMeaningDescription = shortMeaningDescription;
     }
 
-    public String getShortMeaningValue() {
+    public String getShortMeaningValue()
+    {
         return shortMeaningValue;
     }
 
-    public void setShortMeaningValue(String shortMeaningValue) {
+    public void setShortMeaningValue( String shortMeaningValue )
+    {
         this.shortMeaningValue = shortMeaningValue;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription( String description )
+    {
         this.description = description;
     }
 
@@ -86,101 +126,123 @@ public class ValidValueTransferObject implements ValidValue {
     {
         return instructions;
     }
-    public void setInstructions(Collection newInstructions)
+
+    public void setInstructions( Collection newInstructions )
     {
-        instructions=newInstructions;
+        instructions = newInstructions;
     }
-    public Object clone() throws CloneNotSupportedException {
+
+    public Object clone() throws CloneNotSupportedException
+    {
         return null;
     }
 
     /**
      * This equals method only compares the Idseq to define equals
+     *
      * @param obj
-     * @return
+     * @return public boolean equals(Object obj)
+     * {
+     * if(obj == null)
+     * return false;
+     * if(!(obj instanceof ValidValue))
+     * return false;
+     * ValidValue vv = (ValidValue)obj;
+     * <p>
+     * if(this.getShortMeaningValue().equalsIgnoreCase(vv.getShortMeaningValue()))
+     * return true;
+     * else
+     * return false;
+     * }
      */
-    public boolean equals(Object obj)
+
+    public String getVpIdseq()
     {
-        if(obj == null)
-            return false;
-        if(!(obj instanceof ValidValue))
-            return false;
-        ValidValue vv = (ValidValue)obj;
-
-        if(this.getShortMeaningValue().equalsIgnoreCase(vv.getShortMeaningValue()))
-            return true;
-        else
-            return false;
-    }
-
-    public String getVpIdseq() {
         return vpIdseq;
     }
 
-    public void setVpIdseq(String aVpIdseq) {
+    public void setVpIdseq( String aVpIdseq )
+    {
         vpIdseq = aVpIdseq;
     }
+
     public ConceptDerivationRule getConceptDerivationRule()
     {
         return conceptDerivationRule;
     }
-    public void setConceptDerivationRule(ConceptDerivationRule rule)
+
+    public void setConceptDerivationRule( ConceptDerivationRule rule )
     {
         conceptDerivationRule = rule;
     }
 
-    public void setValueMeaning(ValueMeaning vm){
+    public void setValueMeaning( ValueMeaning vm )
+    {
         valueMeaning = vm;
     }
 
-    public ValueMeaning getValueMeaning() {
+    public ValueMeaning getValueMeaning()
+    {
         return valueMeaning;
     }
 
-    public String getBeginDate(){
+    public String getBeginDate()
+    {
         return beginDate;
     }
 
-    public void setBeginDate(String beginDate){
+    public void setBeginDate( String beginDate )
+    {
         this.beginDate = beginDate;
     }
 
-    public String getEndDate(){
+    public String getEndDate()
+    {
         return beginDate;
     }
 
-    public void setEndDate(String beginDate){
+    public void setEndDate( String beginDate )
+    {
         this.beginDate = beginDate;
     }
 
-    public Integer getVmId(){
-        return  vmId;
+    public Integer getVmId()
+    {
+        return vmId;
     }
 
-    public void setVmId(Integer vmId){
+    public void setVmId( Integer vmId )
+    {
         this.vmId = vmId;
     }
-    public Float getVmVersion(){
+
+    public Float getVmVersion()
+    {
         return vmVersion;
     }
 
-    public void setVmVersion(Float vmVersion){
+    public void setVmVersion( Float vmVersion )
+    {
         this.vmVersion = vmVersion;
     }
 
-    public String getContext() {
+    public String getContext()
+    {
         return context;
     }
 
-    public void setContext(String context) {
+    public void setContext( String context )
+    {
         this.context = context;
     }
 
-    public String getWorkflowstatus() {
+    public String getWorkflowstatus()
+    {
         return workflowstatus;
     }
 
-    public void setWorkflowstatus(String workflowstatus) {
+    public void setWorkflowstatus( String workflowstatus )
+    {
         this.workflowstatus = workflowstatus;
     }
 
