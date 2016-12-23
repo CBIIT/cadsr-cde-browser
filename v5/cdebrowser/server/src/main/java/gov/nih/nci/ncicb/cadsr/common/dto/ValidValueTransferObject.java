@@ -60,15 +60,15 @@ public class ValidValueTransferObject implements ValidValue
         this.context = validValueCdeCartModel.getContext();
         this.workflowstatus = validValueCdeCartModel.getWorkflowstatus();
 
-        this.conceptDerivationRule = getConceptDerivationRuleByIdSeq(validValueCdeCartModel.getVdIdseq());
+        this.conceptDerivationRule = getConceptDerivationRuleByIdSeq(validValueCdeCartModel.getConceptDerivationRuleIdseq());
 
     }
 
-    private ConceptDerivationRule getConceptDerivationRuleByIdSeq( String vdIdseq)
+    private ConceptDerivationRule getConceptDerivationRuleByIdSeq(String derIdseq)
     {
-        // FIXME - in the future we will need to retrieve data from the database for some of the ConceptDerivationRule field, for now, we only populate
+        //we retrieve data from the database for some of the ConceptDerivationRule field
         ConceptDerivationRule conceptDerivationRule  =  new ConceptDerivationRuleTransferObject();
-        conceptDerivationRule.setIdseq( vdIdseq );
+        conceptDerivationRule.setIdseq( derIdseq );
         return conceptDerivationRule;
     }
 
