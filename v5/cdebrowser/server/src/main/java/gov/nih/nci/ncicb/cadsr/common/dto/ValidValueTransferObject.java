@@ -48,7 +48,7 @@ public class ValidValueTransferObject implements ValidValue
     public ValidValueTransferObject( ValidValueCdeCartModel validValueCdeCartModel )
     {
         this.vdIdseq = validValueCdeCartModel.getVdIdseq();
-        this.vpIdseq = validValueCdeCartModel.getVdIdseq();
+        this.vpIdseq = "";//FIXME This field shall be VM IDSEQ or PV IDSEQ we do not knoq the requirement for sure
         this.shortMeaning = validValueCdeCartModel.getShortMeaning();
         this.shortMeaningDescription = "";
         this.shortMeaningValue = validValueCdeCartModel.getShortMeaningValue();

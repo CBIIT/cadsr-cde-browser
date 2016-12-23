@@ -29,7 +29,7 @@ public class CdeCartValidValueDAOImpl extends AbstractDAOOperations implements C
 	private JdbcTemplate jdbcTemplate;
 
 	public static final String RETRIEVE_VALID_VALUES_BY_VD_SQL = "select conte.NAME context, "
-			+ "vm.PUBLIC_ID vm_id, pv.short_meaning short_meaning, vm.ASL_NAME workflowstatus, "
+			+ "vm.PUBLIC_ID vm_id, pv.value short_meaning, vm.ASL_NAME workflowstatus, "
 			+ "vm.SHORT_MEANING short_meaning_value, vm.version vm_version, "
 			+ "vm.CONDR_IDSEQ concept_derivation_rule_idseq, vm.DESCRIPTION description, "
 			+ "vdpvs.vd_idseq vd_idseq "
