@@ -17,6 +17,7 @@ public class ValidValueCdeCartModel {
 	private String conceptDerivationRuleIdseq;
 	private String description;
 	private String vdIdseq; //non-empty expected
+	private String vpIdseq; //non-empty expected
 	
 	public String getVdIdseq() {
 		return vdIdseq;
@@ -74,14 +75,20 @@ public class ValidValueCdeCartModel {
 		this.description = description;
 	}
 	
+	public String getVpIdseq() {
+		return vpIdseq;
+	}
+	public void setVpIdseq(String vpIdseq) {
+		this.vpIdseq = vpIdseq;
+	}
+	
 	@Override
 	public String toString() {
 		return "ValidValueCdeCartModel [context=" + context + ", vmId=" + vmId + ", shortMeaningValue="
 				+ shortMeaningValue + ", workflowstatus=" + workflowstatus + ", shortMeaning=" + shortMeaning
 				+ ", vmVersion=" + vmVersion + ", conceptDerivationRuleIdseq=" + conceptDerivationRuleIdseq
-				+ ", description=" + description + ", vdIdseq=" + vdIdseq + "]";
+				+ ", description=" + description + ", vdIdseq=" + vdIdseq + ", vpIdseq=" + vpIdseq + "]";
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,6 +101,7 @@ public class ValidValueCdeCartModel {
 		result = prime * result + ((vdIdseq == null) ? 0 : vdIdseq.hashCode());
 		result = prime * result + vmId;
 		result = prime * result + ((vmVersion == null) ? 0 : vmVersion.hashCode());
+		result = prime * result + ((vpIdseq == null) ? 0 : vpIdseq.hashCode());
 		result = prime * result + ((workflowstatus == null) ? 0 : workflowstatus.hashCode());
 		return result;
 	}
@@ -143,6 +151,11 @@ public class ValidValueCdeCartModel {
 			if (other.vmVersion != null)
 				return false;
 		} else if (!vmVersion.equals(other.vmVersion))
+			return false;
+		if (vpIdseq == null) {
+			if (other.vpIdseq != null)
+				return false;
+		} else if (!vpIdseq.equals(other.vpIdseq))
 			return false;
 		if (workflowstatus == null) {
 			if (other.workflowstatus != null)
