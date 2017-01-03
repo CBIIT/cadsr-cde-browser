@@ -47,7 +47,8 @@ public class ValidValueTransferObject implements ValidValue
 
     public ValidValueTransferObject( ValidValueCdeCartModel validValueCdeCartModel )
     {
-        this.vdIdseq = validValueCdeCartModel.getVdIdseq();
+        //We do not want to set up VdIdseq in this instance even we have this class member
+    	//this.vdIdseq = validValueCdeCartModel.getVdIdseq();
         this.vpIdseq = validValueCdeCartModel.getVpIdseq();
         this.shortMeaning = validValueCdeCartModel.getShortMeaning();
         this.shortMeaningDescription = "";

@@ -403,8 +403,10 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	dtoVd.setDeletedInd(modelVm.getDeletedInd());
     	dtoVd.setIdseq(modelVm.getIdseq());
     	dtoVd.setLongName(modelVm.getLongName());
-    	dtoVd.setMaxLength(""+modelVm.getMaxLength());
-    	dtoVd.setMinLength(""+modelVm.getMinLength());
+    	//We use modelVm ValueDomainModel class which has min amd max Length defined as 'int'. It needs to be changed 
+    	//to use Integer in order to distinguish zeros from null. Commented until this change is done in the model
+    	//dtoVd.setMaxLength(""+modelVm.getMaxLength());
+    	//dtoVd.setMinLength(""+modelVm.getMinLength());
     	dtoVd.setModifiedBy(modelVm.getModifiedBy());
     	dtoVd.setOrigin(modelVm.getOrigin());
     	dtoVd.setPreferredDefinition(modelVm.getPreferredDefinition());
