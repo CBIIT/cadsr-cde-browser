@@ -399,14 +399,19 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	dtoVd.setCharSet(modelVm.getCharSet());
     	dtoVd.setCreatedBy(modelVm.getCreatedBy());
     	dtoVd.setDatatype(modelVm.getDatatype());
-    	dtoVd.setDecimalPlace(""+modelVm.getDecimalPlace());
+    	if (modelVm.getDecimalPlace() != null) {
+    		dtoVd.setDecimalPlace(modelVm.getDecimalPlace().toString());
+    	}
+
     	dtoVd.setDeletedInd(modelVm.getDeletedInd());
     	dtoVd.setIdseq(modelVm.getIdseq());
     	dtoVd.setLongName(modelVm.getLongName());
-    	//We use modelVm ValueDomainModel class which has min amd max Length defined as 'int'. It needs to be changed 
-    	//to use Integer in order to distinguish zeros from null. Commented until this change is done in the model
-    	//dtoVd.setMaxLength(""+modelVm.getMaxLength());
-    	//dtoVd.setMinLength(""+modelVm.getMinLength());
+    	if (modelVm.getMaxLength() != null) {
+    		dtoVd.setMaxLength(modelVm.getMaxLength().toString());
+    	}
+    	if (modelVm.getMinLength() != null) {
+    		dtoVd.setMinLength(modelVm.getMinLength().toString());
+    	}
     	dtoVd.setModifiedBy(modelVm.getModifiedBy());
     	dtoVd.setOrigin(modelVm.getOrigin());
     	dtoVd.setPreferredDefinition(modelVm.getPreferredDefinition());
@@ -447,7 +452,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
        	dtoVd.setLatestVersionInd(modelVm.getLatestVerInd());
 
-       	dtoVd.setLowValue(""+modelVm.getLowVal());
+       	dtoVd.setLowValue(modelVm.getLowVal());
 
        	//FIXME What is this data?
        	dtoVd.setPublished(false);

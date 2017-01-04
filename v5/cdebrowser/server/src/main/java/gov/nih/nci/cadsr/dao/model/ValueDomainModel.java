@@ -20,12 +20,12 @@ public class ValueDomainModel extends BaseModel
     private String uom;
     private String dispFormat;
     private String formlName;
-    private int maxLength;
-    private int minLength;
+    private Integer maxLength;
+    private Integer minLength;
     private String highVal;
     private String lowVal;
     private String charSet;
-    private int decimalPlace;
+    private Integer decimalPlace;
     private String cdPrefName;
     private String cdContextName;
     private Float cdVersion;
@@ -189,26 +189,6 @@ public class ValueDomainModel extends BaseModel
         this.dispFormat = dispFormat;
     }
 
-    public int getMaxLength()
-    {
-        return maxLength;
-    }
-
-    public void setMaxLength( int maxLength )
-    {
-        this.maxLength = maxLength;
-    }
-
-    public int getMinLength()
-    {
-        return minLength;
-    }
-
-    public void setMinLength( int minLength )
-    {
-        this.minLength = minLength;
-    }
-
     public String getHighVal()
     {
         return highVal;
@@ -239,17 +219,31 @@ public class ValueDomainModel extends BaseModel
         this.charSet = charSet;
     }
 
-    public int getDecimalPlace()
-    {
-        return decimalPlace;
-    }
+    public Integer getMaxLength() {
+		return maxLength;
+	}
 
-    public void setDecimalPlace( int decimalPlace )
-    {
-        this.decimalPlace = decimalPlace;
-    }
+	public void setMaxLength(Integer maxLength) {
+		this.maxLength = maxLength;
+	}
 
-    public String getCdPrefName()
+	public Integer getMinLength() {
+		return minLength;
+	}
+
+	public void setMinLength(Integer minLength) {
+		this.minLength = minLength;
+	}
+
+	public Integer getDecimalPlace() {
+		return decimalPlace;
+	}
+
+	public void setDecimalPlace(Integer decimalPlace) {
+		this.decimalPlace = decimalPlace;
+	}
+
+	public String getCdPrefName()
     {
         return cdPrefName;
     }

@@ -97,12 +97,21 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             valueDomainModel.setDatatype( rs.getString( "DTL_NAME" ) ); // according to old code (BC4JValueDomainTransferObject)
             valueDomainModel.setUom( rs.getString( "UOML_NAME" ) ); // according to old code (BC4JValueDomainTransferObject)
             valueDomainModel.setDispFormat( rs.getString( "FORML_NAME" ) );
-            valueDomainModel.setMaxLength( rs.getInt( "MAX_LENGTH_NUM" ) );
-            valueDomainModel.setMinLength( rs.getInt( "MIN_LENGTH_NUM" ) );
+            int curr = rs.getInt( "MAX_LENGTH_NUM" );
+            if (! rs.wasNull()) {
+            	valueDomainModel.setMaxLength( curr );
+            }
+            curr = rs.getInt( "MIN_LENGTH_NUM" );
+            if (! rs.wasNull()) {
+            	valueDomainModel.setMinLength( curr );
+            }
             valueDomainModel.setHighVal( rs.getString( "HIGH_VALUE_NUM" ) );
             valueDomainModel.setLowVal( rs.getString( "LOW_VALUE_NUM" ) );
             valueDomainModel.setCharSet( rs.getString( "CHAR_SET_NAME" ) );
-            valueDomainModel.setDecimalPlace( rs.getInt( "DECIMAL_PLACE" ) );
+            curr = rs.getInt( "DECIMAL_PLACE" );
+            if (! rs.wasNull()) {
+            	valueDomainModel.setDecimalPlace( curr );
+            }
             valueDomainModel.setVdType( rs.getString( "VD_TYPE_FLAG" ) );
             valueDomainModel.setCreatedBy( rs.getString( "CREATED_BY" ) );
 
