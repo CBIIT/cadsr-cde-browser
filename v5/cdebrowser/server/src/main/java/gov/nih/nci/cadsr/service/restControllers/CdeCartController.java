@@ -127,7 +127,7 @@ public class CdeCartController
 	@RequestMapping(value="/delete", produces = "text/plain", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> deleteFromCart(HttpSession mySession, 
-			@RequestParam("id") String[] idParams) throws AutheticationFailureException {
+			RequestEntity<List<String>> request) throws AutheticationFailureException {
 		String principalName = null;
 
 		if (mySession != null) {
@@ -140,17 +140,24 @@ public class CdeCartController
 			throw new AutheticationFailureException("Authenticated user not found in the session operation delete CDE Object Cart");
 		}
 
-		if ((idParams == null) || (idParams.length == 0)) {
-			logger.debug("No ID received for delete returning rest call OK");
+		if (request == null) {
+			logger.debug("No ID received for delete; returning rest call OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		}
+		List<String> cdeIds = request.getBody();
+		if (cdeIds == null) {
+			logger.debug("No ID received for delete in request body; returning rest call OK");
+			return new ResponseEntity<String>("Done", HttpStatus.OK);
+		}		
 		else if (logger.isDebugEnabled()) {
-			logger.debug("ID received for delete from Cart: " + arrayToString(idParams));
+			logger.debug("ID received for delete from Cart in amount: " + cdeIds.size());
+			logger.debug("ID received for delete from Cart: " + cdeIds);
 		}
 		
 		try {
 			//call delete from cart implementation
-			cdeCartUtil.deleteCartNodes(mySession, principalName, idParams);
+			String[] idItems = cdeIds.toArray(new String[cdeIds.size()]);
+			cdeCartUtil.deleteCartNodes(mySession, principalName, idItems);
 			logger.debug("Returning rest call deleteFromCart OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 

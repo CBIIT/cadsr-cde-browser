@@ -46,22 +46,17 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			that.checkedCartItems.items={};				
 		};
 
+		var itemArray = [];
 		// create url for delete call //
 		for (var i=0; i<this.cartData.length; i++) {
 			if (this.checkedCartItems.items[this.cartData[i].deIdseq]) {
 				if (this.cartData[i].unsavedItem==false) {
-					if (c==0) {
-						url+='?id='+this.cartData[i].deIdseq;
-					}
-					else {
-						url+='&id='+this.cartData[i].deIdseq;
-					};					
-					c++;
+					itemArray.push(this.cartData[i].deIdseq);
 				};
 			};
 		};	
 
-		$http({method: 'POST',url:url})
+		$http({method: 'POST',url:url, data:itemArray})
 			.success(function(response) { 
 				deleteItems();
 				that.statusMessage = '';
