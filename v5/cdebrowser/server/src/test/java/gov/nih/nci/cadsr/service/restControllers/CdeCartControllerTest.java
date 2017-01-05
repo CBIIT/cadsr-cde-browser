@@ -173,9 +173,12 @@ public class CdeCartControllerTest {
 	public void testDeleteObjectCartNoIDs() throws Exception {
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser1");
-		String[] expected = {};
+		List<String> expected1 =  new ArrayList<String>();
+
+		RequestEntity<List<String>> request = Mockito.mock(RequestEntity.class);
+		Mockito.when(request.getBody()).thenReturn(expected1);
 		//MUT
-		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, expected);
+		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, request);
 		
 		assertNotNull(received);
 		assertEquals("Done", received.getBody());
@@ -189,10 +192,17 @@ public class CdeCartControllerTest {
 		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser1");
 		
 		String[] expected = {"1", "2"};
+		List<String> expected1 =  new ArrayList<String>();
+		expected1.add("1");
+		expected1.add("2");
+		ObjectCartException expectedException = new ObjectCartException("test exception1");
+		
 		Mockito.doNothing().when(cdeCartUtil).deleteCartNodes(mockSession, "testUser1", expected);
+		RequestEntity<List<String>> request = Mockito.mock(RequestEntity.class);
+		Mockito.when(request.getBody()).thenReturn(expected1);
 
 		//MUT
-		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, expected);
+		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, request);
 		
 		assertNotNull(received);
 		assertEquals("Done", received.getBody());
@@ -205,14 +215,17 @@ public class CdeCartControllerTest {
 	public void testDeleteObjectCartError() throws Exception {
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser1");
-		
 		String[] expected = {"1", "2"};
+		List<String> expected1 =  new ArrayList<String>();
+		expected1.add("1");
+		expected1.add("2");
 		ObjectCartException expectedException = new ObjectCartException("test exception1");
 		
 		Mockito.doThrow(expectedException).when(cdeCartUtil).deleteCartNodes(mockSession, "testUser1", expected);
-
+		RequestEntity<List<String>> request = Mockito.mock(RequestEntity.class);
+		Mockito.when(request.getBody()).thenReturn(expected1);
 		//MUT
-		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, expected);
+		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, request);
 		
 		assertNotNull(received);
 		assertEquals(expectedException.toString(), received.getBody());

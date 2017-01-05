@@ -145,7 +145,7 @@ public class CdeCartController
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		}
 		List<String> cdeIds = request.getBody();
-		if (cdeIds == null) {
+		if ((cdeIds == null) || (cdeIds.size() == 0)) {
 			logger.debug("No ID received for delete in request body; returning rest call OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		}		
