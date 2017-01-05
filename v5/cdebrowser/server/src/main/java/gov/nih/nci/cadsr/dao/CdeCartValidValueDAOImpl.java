@@ -79,7 +79,7 @@ public class CdeCartValidValueDAOImpl extends AbstractDAOOperations implements C
 				+ (res != null ? res.size() : "none"));
 
 		// TODO remove this debug log
-		logger.debug("List<ValidValueCdeCartModel>: " + res);
+		//logger.debug("List<ValidValueCdeCartModel>: " + res);
 
 		return (res);
 	}

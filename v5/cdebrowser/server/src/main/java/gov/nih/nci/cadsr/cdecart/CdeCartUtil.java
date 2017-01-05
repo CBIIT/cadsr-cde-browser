@@ -110,12 +110,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			cdeCart = new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
 			//we need to set up this session attribute not to make the remote call again
 			mySession.setAttribute(CaDSRConstants.CDE_CART, cdeCart);
-			@SuppressWarnings("rawtypes")
-			Collection col = cdeCart.getDataElements();
-			String toPrint = (col != null) ? "" + col.size() : "0";
-			log.debug("Object Cart is retrived from remote site; # of objects: " + toPrint);
-
-
+			log.debug("Object Cart cdeCart attribute is added to session of: " + principalName);
 		}
 
 		return cdeCart;
@@ -198,10 +193,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 				cdeCart = findCdeCart(mySession, principalName);
 			}
 			else {
-				@SuppressWarnings("rawtypes")
-				Collection col = cdeCart.getDataElements();
-				String toPrint = (col != null) ? "" + col.size() : "0";
-				log.debug("Object Cart is found in session; # of objects: " + toPrint);
+				log.debug("Object Cart is found in session: " + principalName);
 			}
 			//We use either retrieved cart or found in the session cart to build the result for the client page
 			@SuppressWarnings("rawtypes")
@@ -309,6 +301,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 				res.add(searchNode);
 			}
 		});
+		log.debug("buildSearchNodeList number of items built from CDECartItemTransferObject collection: " + res.size());
 		return res;
 	}
 
