@@ -12,7 +12,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchObjectClassHOLD = "";
     $scope.searchPropertyHOLD = "";
     $scope.searchderivedDEHOLD = "";
-    var delimiter= ":::";
+    var delimiter = ":::";
 
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
     // change in requirement makes only the count relavent //
@@ -34,11 +34,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // check all checkbox case //
     $scope.cdeCartCheckAll = function(status) {
         if (status) {
-            $scope.rslt = angular.copy($scope.tableParams.data);
+            // $scope.rslt = angular.copy($scope.tableParams.data);
+            $scope.rslt = angular.copy($scope.tableParams.settings().dataset);
+            // $data
         }
         else {
             $scope.rslt = [];
         }
+        // console.log($scope.tableParams.settings());
+        // console.log($scope.tableParams.sorting());
+        // console.log($scope.tableParams.orderBy());
     };
 
     $http.get('/cdebrowserServer/rest/programAreaNames').success(function(response) {
