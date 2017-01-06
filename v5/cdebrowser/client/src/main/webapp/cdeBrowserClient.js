@@ -34,16 +34,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // check all checkbox case //
     $scope.cdeCartCheckAll = function(status) {
         if (status) {
-            // $scope.rslt = angular.copy($scope.tableParams.data);
             $scope.rslt = angular.copy($scope.tableParams.settings().dataset);
-            // $data
         }
         else {
             $scope.rslt = [];
         }
-        // console.log($scope.tableParams.settings());
-        // console.log($scope.tableParams.sorting());
-        // console.log($scope.tableParams.orderBy());
     };
 
     $http.get('/cdebrowserServer/rest/programAreaNames').success(function(response) {
