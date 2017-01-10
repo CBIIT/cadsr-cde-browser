@@ -200,9 +200,9 @@ describe('CDE Browser Client spec', function() {
 	it('should test cdeCartCheckAll()', function() {
 		$scope.cdeCartCheckAll(false);
 		expect($scope.rslt.length).toEqual(0);
-		$scope.tableParams = {data:[{"longName":"Access Route of Administration Text Code","preferredQuestionText":"Route","ownedBy":"CCR","publicId":2003586,"workflowStatus":"RELEASED","version":"6.0","usedByContext":"AECC, BOLD, CITN, DCI, DCP, LCC, NCIP, NHC-NCI, NINDS, NRG, OHSU Knight, PBTC, SPOREs, USC/NCCC","registrationStatus":"Standard","href":"cdebrowserServer/rest/CDEData","deIdseq":"2F6EA110-B303-52A4-E044-0003BA3F9857","status":0,"registrationSort":2,"workflowSort":1},{"longName":"Administration Schedule Term Name","preferredQuestionText":"Frequency","ownedBy":"CCR","publicId":2003322,"workflowStatus":"RELEASED","version":"4.0","usedByContext":"AECC, Alliance, BOLD, CITN, DCP, LCC, NCIP, NHC-NCI, NRG, OHSU Knight, PBTC, SPOREs, USC/NCCC","registrationStatus":"Standard","href":"cdebrowserServer/rest/CDEData","deIdseq":"B404581B-9E0E-EC81-E040-BB89AD433FB4","status":0,"registrationSort":2,"workflowSort":1}]}
+		$scope.tableParams.settings().dataset = {data:[{"longName":"Access Route of Administration Text Code","preferredQuestionText":"Route","ownedBy":"CCR","publicId":2003586,"workflowStatus":"RELEASED","version":"6.0","usedByContext":"AECC, BOLD, CITN, DCI, DCP, LCC, NCIP, NHC-NCI, NINDS, NRG, OHSU Knight, PBTC, SPOREs, USC/NCCC","registrationStatus":"Standard","href":"cdebrowserServer/rest/CDEData","deIdseq":"2F6EA110-B303-52A4-E044-0003BA3F9857","status":0,"registrationSort":2,"workflowSort":1},{"longName":"Administration Schedule Term Name","preferredQuestionText":"Frequency","ownedBy":"CCR","publicId":2003322,"workflowStatus":"RELEASED","version":"4.0","usedByContext":"AECC, Alliance, BOLD, CITN, DCP, LCC, NCIP, NHC-NCI, NRG, OHSU Knight, PBTC, SPOREs, USC/NCCC","registrationStatus":"Standard","href":"cdebrowserServer/rest/CDEData","deIdseq":"B404581B-9E0E-EC81-E040-BB89AD433FB4","status":0,"registrationSort":2,"workflowSort":1}]}
 		$scope.cdeCartCheckAll(true);
-		expect($scope.rslt).toEqual($scope.tableParams.data);
+		expect($scope.rslt).toEqual($scope.tableParams.settings().dataset);
 	});	
 
 });
