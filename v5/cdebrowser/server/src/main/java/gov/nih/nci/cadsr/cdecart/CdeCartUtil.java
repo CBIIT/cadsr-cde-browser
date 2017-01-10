@@ -107,13 +107,16 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 				throw new AutheticationFailureException("Authenticated user not found in the session");
 			}
 
-			cdeCart = new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
+			cdeCart = getCDECartOCImpl(ocClient, uid);
 			//we need to set up this session attribute not to make the remote call again
 			mySession.setAttribute(CaDSRConstants.CDE_CART, cdeCart);
-			log.debug("Object Cart cdeCart attribute is added to session of: " + principalName);
+			log.info("Object Cart cdeCart attribute is added to session of: " + principalName);
 		}
 
 		return cdeCart;
+	}
+	private synchronized CDECart getCDECartOCImpl(ObjectCartClient ocClient, String uid) {
+		return new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
 	}
 	/* (non-Javadoc)
 	 * @see gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface#deleteCartNodes(javax.servlet.http.HttpSession, java.lang.String, java.lang.String[])
@@ -190,10 +193,11 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
 		try{
 			if (cdeCart == null) {
+				log.info("Object Cart is not found in session: " + principalName);
 				cdeCart = findCdeCart(mySession, principalName);
 			}
 			else {
-				log.debug("Object Cart is found in session: " + principalName);
+				log.info("Object Cart is found in session: " + principalName);
 			}
 			//We use either retrieved cart or found in the session cart to build the result for the client page
 			@SuppressWarnings("rawtypes")

@@ -44,6 +44,8 @@ public class CdeBrowserAuthenticationController
 		{
 			try 
 			{
+				//we use upper cased user name further
+				credentials[0] = credentials[0].toUpperCase(); //credentials[0] is not null at this point
 				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
 				HttpSession session = request.getSession(false);
 				if (session != null)
@@ -56,7 +58,6 @@ public class CdeBrowserAuthenticationController
 						session.invalidate();
 					}
 				}
-				
 				logger.debug("Setting user in a new session after successful login:" + credentials[0]);
 				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
 			} 
