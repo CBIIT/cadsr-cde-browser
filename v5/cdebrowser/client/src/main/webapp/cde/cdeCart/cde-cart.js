@@ -17,12 +17,13 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 
 	if (redirect=='retrieve') { cartService.retrieveCart(); } // checks if user has been redirected after logging in //
 	else if(redirect == 'save') { cartService.saveCart(); }	 // checks if user has been redirected after logging in //
-
+	else {
+		//I am adding here 'else' branch to prevent calling cartService.retrieveCart the second time after 'retrieve' called it once above - see JIRA CDEBROWSER-763
 	// retrieve cart everytime controller is loaded. //
 	// Doesnt have to force login. if authentication fails simply ignore authentication failure // 
 	// Only force login on retrieve cart button //
-	cartService.retrieveCart();
-
+		cartService.retrieveCart();
+	}
 	// retrieve items and put them in cde cart //
 	$scope.retrieveCart = function() {
 		cartService.retrieveCart('click'); 
