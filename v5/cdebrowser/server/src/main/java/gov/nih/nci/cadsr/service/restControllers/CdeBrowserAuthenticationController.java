@@ -52,9 +52,9 @@ public class CdeBrowserAuthenticationController
 				{
 					String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 					// do not invalidate if the same user is trying to login again.
-					if (!StringUtils.equals(currUser, credentials[0]))
+					if ((StringUtils.isNotEmpty(currUser)) && (!StringUtils.equals(currUser, credentials[0])))
 					{
-						logger.debug("Invalidating current session since a new user is loggin in.");
+						logger.debug("Invalidating current session since a new user is loggin in, previous user: " + currUser);
 						session.invalidate();
 					}
 				}
