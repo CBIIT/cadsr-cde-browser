@@ -39,9 +39,9 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     @Override
     public ValueDomainModel getValueDomainByIdseq( String vdIdseq ) throws EmptyResultDataAccessException
     {
-        String sql = "SELECT * FROM sbr.value_domains WHERE vd_idseq = ?";
+        String sql = "SELECT vd.*, ct.NAME VD_CONTEXT_NAME FROM sbr.value_domains vd INNER JOIN SBR.CONTEXTS ct on vd.CONTE_IDSEQ = ct.CONTE_IDSEQ "
+        	+ "WHERE vd.vd_idseq = ?";
         logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
-        //String sql = "SELECT * FROM value_domains_view where vd_idseq = ?";
         ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject( sql, new Object[]{ vdIdseq }, new ValueDomainMapper() );
         return valueDomainModel;
     }
@@ -113,6 +113,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             	valueDomainModel.setDecimalPlace( curr );
             }
             valueDomainModel.setVdType( rs.getString( "VD_TYPE_FLAG" ) );
+            valueDomainModel.setVdContextName(rs.getString( "VD_CONTEXT_NAME"));//CDEBROWSER-760 Setting here VD Context Name
             valueDomainModel.setCreatedBy( rs.getString( "CREATED_BY" ) );
 
             try

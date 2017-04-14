@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.UsageLog;
+import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.dao.ConceptDAO;
-import gov.nih.nci.cadsr.dao.CsCsiDAO;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
 import gov.nih.nci.cadsr.dao.CsCsiValueMeaningDAO;
 import gov.nih.nci.cadsr.dao.DataElementDAO;
@@ -62,6 +63,7 @@ import gov.nih.nci.cadsr.dao.model.RepresentationModel;
 import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 import gov.nih.nci.cadsr.dao.model.UsageModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
+import gov.nih.nci.cadsr.error.RestControllerException;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept.DataElementConcept;
@@ -134,13 +136,7 @@ public class CDEDataController
     private DesignationDAO designationDAO;
 
     @Autowired
-    private UserManagerDAO userManagerDAO;
-
-    @Autowired
     private CsCsiDeDAO csCsiDeDAO;
-
-    @Autowired
-    private CsCsiDAO csCsiDAO;
 
     @Autowired
     private ValueMeaningDAO valueMeaningDAO;
@@ -151,9 +147,11 @@ public class CDEDataController
 
     @RequestMapping( value = "/CDEData" )
     @ResponseBody
-    public CdeDetails retrieveDataElementDetails( @RequestParam( "deIdseq" ) String deIdseq )
+    public CdeDetails retrieveDataElementDetails( @RequestParam( "deIdseq" ) String deIdseq ) throws RestControllerException
     {
         logger.debug( "Received rest call \"CDEData\": " + deIdseq );
+        //We need to check IDSEQ format to comply with security scan
+        verifyParameter(deIdseq);
 
         DataElementModel dataElementModel = null;
 
@@ -172,7 +170,13 @@ public class CDEDataController
 
         return cdeDetails;
     }
-    @RequestMapping( value = "/CDELink" )
+    private static void verifyParameter(String deIdseq) throws RestControllerException {
+    	if ((StringUtils.isEmpty(deIdseq)) || (! ParameterValidator.validateIdSeq(deIdseq))) {
+    		logger.error("Unexpected parameter value provided, deIdseq: " + deIdseq);
+			throw new RestControllerException("Unexpected parameter deIdseq value provided: " + deIdseq);
+		}
+	}
+	@RequestMapping( value = "/CDELink" )
     @ResponseBody
     public CdeDetails retrieveDataElementDetailsByLink( @RequestParam( "publicId" ) String publicId, 
     		@RequestParam( "version" ) String versionNumber )
@@ -194,6 +198,9 @@ public class CDEDataController
 	            logger.error("retrieveDataElementDetailsByLink query parameters received caused exception", e);
 	        }
         }
+        else {
+        	logger.info("Unexpected parameter values are ignored in retrieveDataElementDetailsByLink, publicId: " + publicId + ", versionNumber: " + versionNumber);
+        }
         if (cdeDetails == null) {
         	cdeDetails = new CdeDetails();
         }
@@ -214,16 +221,21 @@ public class CDEDataController
     {
         logger.debug( "multiCDEDataController: " + deIdseq );
         String[] deIdseqs = deIdseq.split( "," );
-        int i = 0;
         DataElementModel dataElementModel;
-        CdeDetails[] cdeDetailsArray = new CdeDetails[deIdseqs.length];
+        List<CdeDetails> arrList = new ArrayList<>();
         for( String id : deIdseqs )
         {
-            dataElementModel = dataElementDAO.getCdeByDeIdseq( id.trim() );
-            logger.debug( dataElementModel.toString() );
-            cdeDetailsArray[i] = buildCdeDetailsForCompare( dataElementModel );
-            i++;
+        	if (ParameterValidator.validateIdSeq(id = id.trim())) {//This checking is to prevent unexpected IDSEQ values including given on security scan
+	        	dataElementModel = dataElementDAO.getCdeByDeIdseq(id);
+	            logger.debug( dataElementModel.toString() );
+	            arrList.add(buildCdeDetailsForCompare( dataElementModel ));
+        	}
+        	else {
+        		logger.info("Unexpected value of IDSEQ is ignored: " + id);
+        	}
         }
+        CdeDetails[] cdeDetailsArray = new CdeDetails[arrList.size()];
+        cdeDetailsArray = arrList.toArray(cdeDetailsArray);
         usageLog.log( "multiCDEData",  "deIdseq=" + deIdseq + " [" + cdeDetailsArray.length + " results returned]" );
         return cdeDetailsArray;
     }
@@ -852,9 +864,8 @@ public class CDEDataController
         valueDomainDetails.setLongName( dataElementModel.getValueDomainModel().getLongName() );
         valueDomainDetails.setShortName( dataElementModel.getValueDomainModel().getPreferredName() );
 
-        // CHECKME - need to see where this is getting the wrong value.
-        //valueDomainDetails.setContext( dataElementModel.getValueDomainModel().getCdContextName() );
-        valueDomainDetails.setContext( dataElementModel.getContextName() );// CHECKME
+        //CDEBROWSER-760 Use CD Context here, not DE Context as it was done in v.5.2.2
+        valueDomainDetails.setContext(dataElementModel.getValueDomainModel().getVdContextName());
 
         valueDomainDetails.setDefinition( dataElementModel.getValueDomainModel().getPreferredDefinition() );
         valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );

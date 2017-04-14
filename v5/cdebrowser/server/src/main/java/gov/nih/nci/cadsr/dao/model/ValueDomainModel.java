@@ -5,7 +5,11 @@ package gov.nih.nci.cadsr.dao.model;
 
 public class ValueDomainModel extends BaseModel
 {
-    private String preferredName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String preferredName;
     private String preferredDefinition;
     private String longName;
     private String aslName;
@@ -34,8 +38,9 @@ public class ValueDomainModel extends BaseModel
     private RepresentationModel representationModel;
     private ConceptDerivationRuleModel conceptDerivationRuleModel;
     private String createdBy;
+    private String vdContextName;//CDEBROWSER-760 We need VD Context name on DE Details VD Tab; added in v.5.3
 
-    public ValueDomainModel()
+	public ValueDomainModel()
     {
     }
 
@@ -321,6 +326,13 @@ public class ValueDomainModel extends BaseModel
 		this.createdBy = createdBy;
 	}
 
+	public String getVdContextName() {
+		return vdContextName;
+	}
+
+	public void setVdContextName(String vdContextName) {
+		this.vdContextName = vdContextName;
+	}
 
 	@Override
     public String toString()
@@ -352,6 +364,7 @@ public class ValueDomainModel extends BaseModel
                 ", cdVersion=" + cdVersion +
                 ", cdPublicId=" + cdPublicId +
                 ", vdType='" + vdType + '\'' +
+                ", vdContextName='" + vdContextName + '\'' +
                 ", representationModel=" + representationModel +
                 ", conceptDerivationRuleModel=" + conceptDerivationRuleModel +
                 '}';
@@ -400,6 +413,8 @@ public class ValueDomainModel extends BaseModel
         if( getCdVersion() != null ? !getCdVersion().equals( that.getCdVersion() ) : that.getCdVersion() != null )
             return false;
         if( getVdType() != null ? !getVdType().equals( that.getVdType() ) : that.getVdType() != null ) return false;
+        if( getVdContextName() != null ? !getVdContextName().equals( that.getVdContextName() ) : that.getVdContextName() != null )
+            return false;
         if( getRepresentationModel() != null ? !getRepresentationModel().equals( that.getRepresentationModel() ) : that.getRepresentationModel() != null )
             return false;
         return !( getConceptDerivationRuleModel() != null ? !getConceptDerivationRuleModel().equals( that.getConceptDerivationRuleModel() ) : that.getConceptDerivationRuleModel() != null );
@@ -434,6 +449,7 @@ public class ValueDomainModel extends BaseModel
         result = 31 * result + ( getCdVersion() != null ? getCdVersion().hashCode() : 0 );
         result = 31 * result + getCdPublicId();
         result = 31 * result + ( getVdType() != null ? getVdType().hashCode() : 0 );
+        result = 31 * result + ( getVdContextName() != null ? getVdContextName().hashCode() : 0 );
         result = 31 * result + ( getRepresentationModel() != null ? getRepresentationModel().hashCode() : 0 );
         result = 31 * result + ( getConceptDerivationRuleModel() != null ? getConceptDerivationRuleModel().hashCode() : 0 );
         return result;
