@@ -1,5 +1,6 @@
 package gov.nih.nci.cadsr.common.util;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -500,7 +501,15 @@ public class StringUtilities
 		}
 		return false;
 	}
-
+	public static String removeSqlWildCards(String source) {
+		if (StringUtils.isNotEmpty(source)) {
+			String result = source.replaceAll("(\\*|\\%)", "");
+			return result;
+		}
+		else {
+			return source;
+		}
+	}
     public static void main( String[] args )
     {
         String str = "\"test xxx\\Q\' |AAA & BBB; (CCC) + III <stuff> +  $ddd EEE$ %FFFF% ggg@HHHH zzz 0x0a 0X0a 0x0A JJJJJ \\Q' \"\\";
