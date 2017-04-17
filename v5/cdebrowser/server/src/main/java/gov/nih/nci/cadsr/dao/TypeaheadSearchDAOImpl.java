@@ -28,13 +28,13 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 
 	private JdbcTemplate jdbcTemplate;
 	
-	public static final String sqlRetrieveTypeaheadLongNameStartsWith = "select th from (select distinct substr(long_name, 1, 20) th from sbr.data_elements " + 
-			"where (substr(long_name, 1, "
+	public static final String sqlRetrieveTypeaheadLongNameStartsWith = "select th from (select distinct substr(lower(long_name), 1, 20) th from sbr.data_elements " + 
+			"where (substr(lower(long_name), 1, "
 			+ maxLongNamesToReturn
 			+ ") like ? ) order by th) where rownum < "
 			+ maxLongNamesToReturn;	
-	public static final String sqlRetrieveTypeaheadLongName = "select th from (select distinct substr(long_name, 1, 20) th from sbr.data_elements " + 
-			"where (instr(substr(long_name, 1, "
+	public static final String sqlRetrieveTypeaheadLongName = "select th from (select distinct substr(lower(long_name), 1, 20) th from sbr.data_elements " + 
+			"where (instr(substr(lower(long_name), 1, "
 			+ maxLongNamesToReturn
 			+ "), ?, 1) > 0) order by th) where rownum < "
 			+ maxLongNamesToReturn;
@@ -47,12 +47,12 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	@Override
 	public List<String> getSearchTypeaheadLongName(String pattern) {
 		if (StringUtils.isNotEmpty(pattern)) {
-			List<String> models1 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameStartsWith, new Object[]{pattern + '%'}, new StringPropertyMapper(String.class));
+			List<String> models1 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameStartsWith, new Object[]{pattern.toLowerCase() + '%'}, new StringPropertyMapper(String.class));
 			if (models1.size() >= 20) {
 				return models1;
 			}
 			
-			List<String> models2 = jdbcTemplate.query(sqlRetrieveTypeaheadLongName, new Object[]{pattern}, new StringPropertyMapper(String.class));
+			List<String> models2 = jdbcTemplate.query(sqlRetrieveTypeaheadLongName, new Object[]{pattern.toLowerCase()}, new StringPropertyMapper(String.class));
 			for (int index = 0; (index < models2.size()) && (models1.size() < maxLongNamesToReturn); index++) {
 				models1.add(models2.get(index));
 			}
