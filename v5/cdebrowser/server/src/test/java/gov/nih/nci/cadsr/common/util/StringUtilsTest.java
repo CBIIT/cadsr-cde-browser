@@ -93,4 +93,46 @@ public class StringUtilsTest {
 		boolean received = StringUtilities.containsKeyLoop(null, "abc");
 		assertFalse(received);
 	}
+	@Test 
+	public void testRemoveSqlWildCard() {
+		String source = "gene%";
+		String expected = "gene";
+		String received = StringUtilities.removeSqlWildCards(source);
+		assertEquals(expected, received);
+	}
+	@Test 
+	public void testRemoveSqlWildCard2() {
+		String source = "gene*";
+		String expected = "gene";
+		String received = StringUtilities.removeSqlWildCards(source);
+		assertEquals(expected, received);
+	}
+	@Test 
+	public void testRemoveSqlWildCard3() {
+		String source = "%ge*ne*";
+		String expected = "gene";
+		String received = StringUtilities.removeSqlWildCards(source);
+		assertEquals(expected, received);
+	}
+	@Test 
+	public void testRemoveSqlWildCardNone() {
+		String source = "gene";
+		String expected = source;
+		String received = StringUtilities.removeSqlWildCards(source);
+		assertEquals(expected, received);
+	}
+	@Test 
+	public void testRemoveSqlWildCardEmpty() {
+		String source = "";
+		String expected = source;
+		String received = StringUtilities.removeSqlWildCards(source);
+		assertEquals(expected, received);
+	}
+	@Test 
+	public void testRemoveSqlWildCardNull() {
+		String source = null;
+		String expected = source;
+		String received = StringUtilities.removeSqlWildCards(source);
+		assertEquals(expected, received);
+	}
 }
