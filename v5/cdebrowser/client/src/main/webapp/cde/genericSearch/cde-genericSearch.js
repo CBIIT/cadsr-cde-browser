@@ -16,6 +16,18 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
  	$scope.fs.dataElementVariables.searchFieldOptions.options = [];
  	$scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
+    // returns list of suggestions based on typed text in name field //
+    $scope.getLocation = function(val) {
+    return $http.get('/cdebrowserServer/rest/typeahead/longname', {
+      params: {
+        name: val
+      }
+    }).then(function(response){
+        $scope.vals = response.data;
+      return response.data;
+    });
+    };
+  
  	$scope.setSelectedField = function() {
     var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
         if(selectedlen.length>0) {

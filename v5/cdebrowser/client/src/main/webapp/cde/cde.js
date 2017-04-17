@@ -21,7 +21,8 @@ angular.module("cde", [
     "cdeCart",
     "cdeCompare",
     "cdeLogin",
-    "ui.select"
+    "ui.select",
+    "ui.bootstrap"
 
 ])
 /**
