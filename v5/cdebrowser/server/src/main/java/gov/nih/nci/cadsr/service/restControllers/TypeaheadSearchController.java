@@ -34,5 +34,14 @@ public class TypeaheadSearchController {
 		List<String> resList = typeaheadSearchDAO.getSearchTypeaheadLongName(searchFilter);
 		return resList;
 	}
-
+	@RequestMapping(value="/longnamefull", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchLongNameFull(@RequestParam("name") String searchPattern)
+	{
+		logger.debug("Received request retrieveTypeaheadSearchLongName searchPattern: " + searchPattern);
+		String searchFilter = searchPattern.replaceAll("(\\*|\\%)", "");
+		searchFilter = StringUtilities.sanitizeForSql(searchFilter);
+		logger.debug("Received request retrieveTypeaheadSearchLongName after sanitize searchFilter: " + searchFilter);
+		List<String> resList = typeaheadSearchDAO.getSearchTypeaheadLongNameFull(searchFilter);
+		return resList;
+	}
 }

@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface TypeaheadSearchDAO {
 	List<String> getSearchTypeaheadLongName(String pattern);
+	List<String> getSearchTypeaheadLongNameFull(String pattern);
 }

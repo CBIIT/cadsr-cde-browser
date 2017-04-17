@@ -39,6 +39,14 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 			+ "), ?, 1) > 0) order by th) where rownum < "
 			+ maxLongNamesToReturn;
 
+	public static final String sqlRetrieveTypeaheadLongNameStartsWithFull = "select th from (select distinct lower(long_name) th from sbr.data_elements " + 
+			"where lower(long_name) "
+			+ "like ? order by th) where rownum < "
+			+ maxLongNamesToReturn;	
+	public static final String sqlRetrieveTypeaheadLongNameFull = "select th from (select distinct lower(long_name) th from sbr.data_elements " + 
+			"where instr(lower(long_name), ?, 1) > 0 order by th) where rownum < "
+			+ maxLongNamesToReturn;
+	
 	@Autowired
 	TypeaheadSearchDAOImpl(DataSource dataSource) {
 		setDataSource(dataSource);
@@ -69,5 +77,22 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return rs.getString(1);
 		}
+	}
+
+	@Override
+	public List<String> getSearchTypeaheadLongNameFull(String pattern) {
+		if (StringUtils.isNotEmpty(pattern)) {
+			List<String> models1 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameStartsWithFull, new Object[]{pattern.toLowerCase() + '%'}, new StringPropertyMapper(String.class));
+			if (models1.size() >= 20) {
+				return models1;
+			}
+			
+			List<String> models2 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameFull, new Object[]{pattern.toLowerCase()}, new StringPropertyMapper(String.class));
+			for (int index = 0; (index < models2.size()) && (models1.size() < maxLongNamesToReturn); index++) {
+				models1.add(models2.get(index));
+			}
+			return models1;
+		}
+		return new ArrayList<String>();	
 	}
 }
