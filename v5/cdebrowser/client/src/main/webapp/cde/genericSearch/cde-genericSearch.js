@@ -27,7 +27,7 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
       return response.data;
     });
     };
-  
+
  	$scope.setSelectedField = function() {
     var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
         if(selectedlen.length>0) {
@@ -38,6 +38,10 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
                 $scope.fs.dataElementVariables.searchFieldOptions.options = [];
                 $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
             }
+        }
+        else {
+                $scope.fs.dataElementVariables.searchFieldOptions.options = [];
+                $scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
         }
     }
 
