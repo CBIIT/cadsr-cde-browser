@@ -461,7 +461,10 @@ public class StringUtilities
 
     public static String sanitizeForSql( String text)
     {
-        String cleanString = text;
+        if (StringUtils.isEmpty(text)) {
+        	return text;
+        }
+    	String cleanString = text;
 
         // Anything escaped
         cleanString = cleanString.replaceAll( "\\\\.?", " " );

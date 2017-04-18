@@ -1147,7 +1147,23 @@ public class CDEDataController
         this.valueDomainConceptDAO = valueDomainConceptDAO;
     }
 
-    public ToolOptionsDAO getToolOptionsDAO()
+    public void setCsCsiValueMeaningDAO(CsCsiValueMeaningDAO csCsiValueMeaningDAO) {
+		this.csCsiValueMeaningDAO = csCsiValueMeaningDAO;
+	}
+	public void setDesignationDAO(DesignationDAO designationDAO) {
+		this.designationDAO = designationDAO;
+	}
+	public void setCsCsiDeDAO(CsCsiDeDAO csCsiDeDAO) {
+		this.csCsiDeDAO = csCsiDeDAO;
+	}
+	public void setValueMeaningDAO(ValueMeaningDAO valueMeaningDAO) {
+		this.valueMeaningDAO = valueMeaningDAO;
+	}
+	public void setUsageLog(UsageLog usageLog) {
+		this.usageLog = usageLog;
+	}
+	
+	public ToolOptionsDAO getToolOptionsDAO()
     {
         return toolOptionsDAO;
     }

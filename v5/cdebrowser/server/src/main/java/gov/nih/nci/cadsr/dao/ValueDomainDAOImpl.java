@@ -35,7 +35,15 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
         setDataSource( dataSource );
         jdbcTemplate = getJdbcTemplate();
     }
-
+    /**
+     * This is to use in unit tests only
+     * @param jdbcTemplate
+     */
+    protected ValueDomainDAOImpl(JdbcTemplate jdbcTemplate)
+    {
+    	this.jdbcTemplate = jdbcTemplate;
+    }
+    
     @Override
     public ValueDomainModel getValueDomainByIdseq( String vdIdseq ) throws EmptyResultDataAccessException
     {

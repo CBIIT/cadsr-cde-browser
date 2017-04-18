@@ -27,7 +27,11 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	private static final int maxLongNamesToReturn = 20;
 
 	private JdbcTemplate jdbcTemplate;
+	//TODO we need to consider Search Preferences when we generate typeahead results
+	//see methods in SearchQueryBuilder as initSearchQueryBuilder, buildSearchTextWhere
+	//Do we want to use All words if a filter text contains a space? We use exact phrase now.
 	
+	//These are SQLs for a chance we want to restrict returned strings lengths
 	public static final String sqlRetrieveTypeaheadLongNameStartsWith = "select th from (select distinct substr(lower(long_name), 1, 20) th from sbr.data_elements " + 
 			"where (substr(lower(long_name), 1, "
 			+ maxLongNamesToReturn
@@ -39,6 +43,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 			+ "), ?, 1) > 0) order by th) where rownum < "
 			+ maxLongNamesToReturn;
 
+	//These are SQLs to return full length strings - this one is currently used for the client
 	public static final String sqlRetrieveTypeaheadLongNameStartsWithFull = "select th from (select distinct lower(long_name) th from sbr.data_elements " + 
 			"where lower(long_name) "
 			+ "like ? order by th) where rownum < "
@@ -83,7 +88,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	public List<String> getSearchTypeaheadLongNameFull(String pattern) {
 		if (StringUtils.isNotEmpty(pattern)) {
 			List<String> models1 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameStartsWithFull, new Object[]{pattern.toLowerCase() + '%'}, new StringPropertyMapper(String.class));
-			if (models1.size() >= 20) {
+			if (models1.size() >= maxLongNamesToReturn) {
 				return models1;
 			}
 			
