@@ -18,7 +18,7 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 
     // returns list of suggestions based on typed text in name field //
     $scope.getLocation = function(val) {
-    return $http.get('/cdebrowserServer/rest/typeahead/longname', {
+    return $http.get('/cdebrowserServer/rest/typeahead/longnamefull', {
       params: {
         name: val
       }
