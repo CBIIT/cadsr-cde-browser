@@ -94,6 +94,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
 public class CDEDataController
 {
     private static final Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
+    private static final String USED_BY = "USED_BY";
 
     @Autowired
     private DataElementDAO dataElementDAO;
@@ -348,12 +349,16 @@ public class CDEDataController
         dataElement.setCsCsis( dataElementCsCsis );
         // add all the cscsi's and their designations and definitions except the unclassified ones
         //change for CDEBROWSER-468
+        //now get the unclassified ones 
+        //CDEBROWSER-809 add unclassified first
+        CsCsi unclassCsCsi = ControllerUtils.populateCsCsiDeUnclassified( dataElementModel );
+        //CDEBROWSER-809 we change the lists of alternate names
+        rearrangeUsedBy(unclassCsCsi);
+        
+        dataElementCsCsis.add( unclassCsCsi );
+        
         List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiDeModel( dataElementModel.getDeIdseq(), csCsiDeDAO );
         dataElementCsCsis.addAll( csCsiClassifiedList );
-        // now get the unclassified ones
-
-        CsCsi unclassCsCsi = ControllerUtils.populateCsCsiDeUnclassified( dataElementModel );
-        dataElementCsCsis.add( unclassCsCsi );
 
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
@@ -367,8 +372,24 @@ public class CDEDataController
 
         return dataElement;
     }
-
-    private void getDataElementReferenceDocuments( DataElementModel dataElementModel, DataElement dataElement )
+    //CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
+    protected static CsCsi rearrangeUsedBy(CsCsi unclassCsCsi) {
+    	List<AlternateName> altNameList = unclassCsCsi.getAlternateNames();
+    	List<AlternateName> altNameListAll = new ArrayList<>();
+    	List<AlternateName> altNameListUsedBy = new ArrayList<>();
+    	for (AlternateName alternateName : altNameList) {
+    		if (USED_BY.equals(alternateName.getType())) {
+    			altNameListUsedBy.add(alternateName);
+    		}
+    		else {
+    			altNameListAll.add(alternateName);
+    		}
+    	}
+    	unclassCsCsi.setAlternateNames(altNameListAll);
+    	unclassCsCsi.setUsedByAlternateNames(altNameListUsedBy);
+    	return unclassCsCsi;
+	}
+	private void getDataElementReferenceDocuments( DataElementModel dataElementModel, DataElement dataElement )
     {
         // List to populate for client side
         List<ReferenceDocument> referenceDocuments = new ArrayList<>();

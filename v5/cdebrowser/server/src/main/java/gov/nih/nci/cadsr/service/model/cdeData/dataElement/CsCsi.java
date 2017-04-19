@@ -21,7 +21,8 @@ public class CsCsi
     private Float csiVersion;
     private String formattedCsiVersion;
     private Boolean hide;
-
+    
+    private List<AlternateName> usedByAlternateNames;//CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
     private List<AlternateName> alternateNames;
     private List<AlternateDefinition> alternateDefinitions;
 
@@ -190,7 +191,15 @@ public class CsCsi
         this.alternateDefinitions = alternateDefinitions;
     }
 
-    @Override
+    public List<AlternateName> getUsedByAlternateNames() {
+		return usedByAlternateNames;
+	}
+
+	public void setUsedByAlternateNames(List<AlternateName> usedByAlternateNames) {
+		this.usedByAlternateNames = usedByAlternateNames;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -208,6 +217,11 @@ public class CsCsi
 			if (other.alternateNames != null)
 				return false;
 		} else if (!alternateNames.equals(other.alternateNames))
+			return false;
+		if (usedByAlternateNames == null) {
+			if (other.usedByAlternateNames != null)
+				return false;
+		} else if (!usedByAlternateNames.equals(other.usedByAlternateNames))
 			return false;
 		if (csDefinition == null) {
 			if (other.csDefinition != null)
@@ -261,6 +275,7 @@ public class CsCsi
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((usedByAlternateNames == null) ? 0 : usedByAlternateNames.hashCode());
 		result = prime * result + ((alternateDefinitions == null) ? 0 : alternateDefinitions.hashCode());
 		result = prime * result + ((alternateNames == null) ? 0 : alternateNames.hashCode());
 		result = prime * result + ((csDefinition == null) ? 0 : csDefinition.hashCode());
