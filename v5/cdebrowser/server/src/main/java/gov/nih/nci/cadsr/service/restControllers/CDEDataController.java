@@ -394,24 +394,29 @@ public class CDEDataController
         // List to populate for client side
         List<ReferenceDocument> referenceDocuments = new ArrayList<>();
         dataElement.setReferenceDocuments( referenceDocuments );
+        //CDEBROWSER-809 Separate out the Documents with Document Type containing "*Question Text"
+        List<ReferenceDocument> questionTextReferenceDocuments = new ArrayList<>();
+        dataElement.setQuestionTextReferenceDocuments(questionTextReferenceDocuments);
         if (dataElementModel != null) {
 	        //List from database
 	        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
 	        if( dataElementModelReferenceDocumentList.size() < 1 )
 	        {
-	            logger.debug( "No ReferenceDocuments where returned" );
-	            referenceDocuments = null;
-	            dataElement.setReferenceDocuments( referenceDocuments );
+	            logger.debug( "No ReferenceDocuments where returned for DE: " + dataElementModel.getCdeId() + ", " + dataElementModel.getIdseq());
 	        }
 	        for( ReferenceDocModel referenceDocModel : dataElementModelReferenceDocumentList )
 	        {
 	            ReferenceDocument referenceDoc = new ReferenceDocument();
 	            referenceDoc.setDocumentName( referenceDocModel.getDocName() );
 	            //logger.debug( referenceDocModel.getDocName() );
-	
+	            
 	            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
 	            //logger.debug( referenceDocModel.getDocType() );
-	
+	            
+	            //CDEBROWSER-809 "Separate out the Documents with Document Type containing "*Question Text" "
+	            String refDocType = referenceDoc.getDocumentType();
+	            refDocType = (refDocType == null) ? "" : refDocType;
+	            
 	            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
 	            //logger.debug( referenceDocModel.getDocText() );
 	
@@ -420,8 +425,12 @@ public class CDEDataController
 	
 	            referenceDoc.setUrl( referenceDocModel.getUrl() );
 	            //logger.debug( referenceDocModel.getUrl() );
-	
-	            referenceDocuments.add( referenceDoc );
+	            if (refDocType.contains("Question Text")) {
+	            	questionTextReferenceDocuments.add( referenceDoc );
+	            }
+	            else {
+	            	referenceDocuments.add( referenceDoc );
+	            }
 	        }
         }
     }

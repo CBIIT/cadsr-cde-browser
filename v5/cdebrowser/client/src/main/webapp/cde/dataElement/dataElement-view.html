@@ -87,6 +87,27 @@
     </tr>
 </table><br/>
 
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="5" align="left">Question Texts</th>
+    </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr>
+        <td class="dataElementHeading">Document Name</td>
+        <td class="dataElementHeading">Document Type</td>
+        <td class="dataElementHeading">Document Text</td>
+        <td class="dataElementHeading">Context</td>
+        <td class="dataElementHeading">URL</td>
+    </tr>
+    <tr class="dataElementViewTableTr" data-ng-repeat="refDocQ in cdeDetails.dataElement.questionTextReferenceDocuments">
+        <td class="dataElementValue" ng-bind-html="refDocQ.documentName">{{refDocQ.documentName}}</td>
+        <td class="dataElementValue" ng-bind-html="refDocQ.documentType">{{refDocQ.documentType}}</td>
+        <td class="dataElementValue" ng-bind-html="refDocQ.documentText">{{refDocQ.documentText}}</td>
+        <td class="dataElementValue" ng-bind-html="refDocQ.context">{{refDocQ.context}}</td>
+        <td class="dataElementValue"><a href="{{refDocQ.url}}" target="_blank" ng-bind-html="refDocQ.url">{{refDocQ.url}}</a></td>
+    </tr>
+</table><br/>
 
 <!--
 
@@ -147,7 +168,7 @@
             </tr>
 
             <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.usedByAlternateNames.length">
-                <td colspan="4">No applicable Used By Alternate Names</td>
+                <td colspan="3">No applicable Used By Alternate Names</td>
             </tr>
         </table>
 

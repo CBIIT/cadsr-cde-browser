@@ -983,13 +983,21 @@ cell = row.createCell(colNumber);
 try {
 int validValueSize = 0;
 if (propertyName.equalsIgnoreCase("referenceDocs")) {
-	validValueSize = ((List)cdeDetails[i].getDataElement().getReferenceDocuments()).size();
+	if (cdeDetails[i].getDataElement().getReferenceDocuments() != null) {
+		validValueSize = ((List)cdeDetails[i].getDataElement().getReferenceDocuments()).size();
+	}
 } else if (propertyName.equalsIgnoreCase("permissible-values")) {
-	validValueSize = ((List)cdeDetails[i].getValueDomain().getPermissibleValues()).size();
+	if (cdeDetails[i].getValueDomain().getPermissibleValues() != null) {
+		validValueSize = ((List)cdeDetails[i].getValueDomain().getPermissibleValues()).size();
+	}
 } else if (propertyName.equalsIgnoreCase("classifications")) {
-	validValueSize = ((List)cdeDetails[i].getClassifications().getClassificationList()).size();
+	if (cdeDetails[i].getClassifications().getClassificationList() != null) {
+		validValueSize = ((List)cdeDetails[i].getClassifications().getClassificationList()).size();
+	}
 } else if (propertyName.equalsIgnoreCase("de-cde")) {
-	validValueSize = ((List)cdeDetails[i].getDataElementDerivation().getDataElementDerivationComponentModels()).size();
+	if (cdeDetails[i].getDataElementDerivation().getDataElementDerivationComponentModels() != null) {
+		validValueSize = ((List)cdeDetails[i].getDataElementDerivation().getDataElementDerivationComponentModels()).size();
+	}
 }
 
 if (validValueSize > maxValueNumber)
