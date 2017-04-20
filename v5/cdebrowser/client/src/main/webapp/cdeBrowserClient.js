@@ -531,6 +531,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, publicSearchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
         $scope.disp();
+        $scope.onClickTab($scope.fs.searchFilter.programArea);
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
@@ -1436,14 +1437,21 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.getCdeData();
 
     // interaction with navtree via select dropdowns //
+
+    $scope.getContext = function(contextId) {
+        if (!contextId) { contextId = $scope.fs.searchFilter.context };
+        data = $scope.fs.serverData[0].children;
+        for (var x=0; x<data.length; x++) {
+          if (data[x].idSeq==contextId) {
+            return data[x];
+          };
+        };
+    };
+
     $scope.disp = function () {
         // get context
         data = $scope.fs.serverData[0].children;
-        for (var x=0; x<data.length; x++) {
-          if (data[x].idSeq==scope.fs.searchFilter.context) {
-            context = data[x];
-          };
-        };
+        context = $scope.getContext();
 
         // check if the click is a classification or protocol //
         if ($scope.fs.searchFilter.classification||$scope.fs.searchFilter.protocol) {
@@ -1457,8 +1465,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
         else {
             // this is just a context //
-            $scope.highlightNode(context);
+            $scope.highlightNode(context,false);
         };
+        $scope.multiTabSelect();
+
     };
 
     // looks through tree context and finds matching classification or protocol //
@@ -1475,14 +1485,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // opens folders containing correct protocol or classification //
         for (var a=0; a<children.length; a++) {
           if ($scope.fs.searchFilter[type].id==children[a].idSeq) {
-            $scope.highlightNode(children[a]); // highlight level 1 child //
+            $scope.highlightNode(children[a],false); // highlight level 1 child //
           }
           else {
             var grandChildren = children[a].children;
             for (var child=0; child<grandChildren.length; child++) {
               if (grandChildren[child].idSeq==$scope.fs.searchFilter[type].id) {
                 children[a].collapsed = false; // open parent of level 2 child //
-                $scope.highlightNode(grandChildren[child]); //highlight level 2 child //
+                $scope.highlightNode(grandChildren[child],false); //highlight level 2 child //
               }
               else {
                 var greatGrandChildren = grandChildren[child].children;
@@ -1490,7 +1500,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                   if (greatGrandChildren[g_child].href.split(',')[1]==$scope.fs.searchFilter[type].id) {
                     children[a].collapsed=false; // open grandparent of level 3 child //
                     grandChildren[child].collapsed=false; // open parent of level 3 child //
-                    $scope.highlightNode(greatGrandChildren[g_child]); // highlight level 3 child //
+                    $scope.highlightNode(greatGrandChildren[g_child],false); // highlight level 3 child //
                   }
                 };        
               }
@@ -1500,7 +1510,34 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // selects tree node and highlights it in blue //
-    $scope.highlightNode = function(selNode) {
+    $scope.highlightNode = function(selNode, tree, contextId) {
+        if (!contextId) {
+            contextId = $scope.fs.searchFilter.context;
+        };
+        for (var x=0; x<$scope.contextListMaster[0].children.length;x++) { //unhighlight all program area nodes //
+          $scope.contextListMaster[0].children[x].selected = undefined;
+          if ($scope.contextListMaster[0].children[x].idSeq!=contextId) { // collapse all contexts != current //
+              $scope.contextListMaster[0].children[x].collapsed = true;            
+          }
+
+
+          var grandchildren = $scope.contextListMaster[0].children[x].children;
+          for (var y=0; y<grandchildren.length;y++) {
+            var classifications_protocols = grandchildren[0].children.concat(grandchildren[1].children);
+            for (var cp=0; cp<classifications_protocols.length;cp++) {
+              classifications_protocols[cp].selected = undefined;
+              var grandchildren_1 = classifications_protocols[cp].children;
+              for (var g1=0; g1<grandchildren_1.length;g1++) {
+                grandchildren_1[g1].selected = undefined;
+                var grandchildren_2 = grandchildren_1[g1].children;
+                for (var g2=0; g2<grandchildren_2.length;g2++) {
+                  grandchildren_2[g2].selected = undefined;
+                };
+              };
+            };
+          };
+        };
+
         if ($scope.navTree.currentNode && $scope.navTree.currentNode.selected) {
             $scope.navTree.currentNode.selected = undefined;
         };
@@ -1542,7 +1579,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 });
             }
             else {
-                $scope.matchClassificationOrProtocol(type,context);                        
+                $scope.matchClassificationOrProtocol(type,context);
             };
         };
 
@@ -1552,6 +1589,47 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 selNode.collapsed = false;
             });
         };
+    };
+
+    // gets all program area context and copies to subprogram area if it is an actual sub program area select //
+    $scope.multiTabSelect = function(contextId) {
+        var isClick = contextId;
+        var p = $scope.currentTab;
+        if (!contextId) {
+            contextId = $scope.fs.searchFilter.context;
+            p = $scope.fs.searchFilter.programArea;
+        };
+        selNode = $scope.getContext(contextId);
+        if (p==0) { // find context in another program area //
+            for (var x=1; x<$scope.contextListMaster.length; x++) {
+              for (var child=0; child<$scope.contextListMaster[x].children.length;child++) {
+                if ($scope.contextListMaster[x].children[child].idSeq==contextId) {
+                  p = x;
+                };
+              };
+            };
+        };
+        if (isClick&&$scope.currentTab>0) {
+            currentTabContents = $scope.contextListMaster[$scope.currentTab].children;
+            for (var x=0; x<currentTabContents.length;x++) {
+                if (contextId==currentTabContents[x].idSeq) {
+                    for (var z=0; z<$scope.contextListMaster[0].children.length;z++) {
+                        if ($scope.contextListMaster[0].children[z].idSeq==contextId) {
+                            $scope.contextListMaster[0].children[z]=currentTabContents[x];
+                        };
+                    };
+                };
+            };
+        }
+        else {
+            pChildren = $scope.contextListMaster[p].children;
+            for (var x=0; x<pChildren.length; x++) {
+              if (contextId==pChildren[x].idSeq) {
+                pChildren[x]=selNode;
+              }
+            }
+        };
+
     };
 
 });

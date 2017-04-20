@@ -282,21 +282,28 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
             // Used above (for now) when a user Clicks.
             var disp = function (selNode) {
-                console.log(selNode);
                 scope.$parent.navTree = scope[treeId];
-
-                //remove highlight from previous node
-                if (scope[treeId].currentNode && scope[treeId].currentNode.selected) {
-                    scope[treeId].currentNode.selected = undefined;
+                var contextId = 0;
+                if (selNode.contextId) {
+                    contextId = selNode.contextId;
                 }
+                else {
+                    contextId = selNode.idSeq;
+                };
+                scope.highlightNode(selNode,true, contextId);
+                scope.multiTabSelect(contextId);
+                //remove highlight from previous node
+                // if (scope[treeId].currentNode && scope[treeId].currentNode.selected) {
+                //     scope[treeId].currentNode.selected = undefined;
+                // }
 
-                //set highlight to selected node
-                selNode.selected = 'selected';
-                // console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
-                scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
+                // //set highlight to selected node
+                // selNode.selected = 'selected';
+                // // console.log("selNode.text: [" + selNode.text + "]  selNode.action(href): [" + selNode.href + "]  selNode.hover: [" + selNode.hover + "]");
+                // scope.displaySelected(selNode, selNode.treePath, selNode.text, selNode.href, selNode.hover);
 
-                //Update the current node with the one just selected.
-                scope[treeId].currentNode = selNode;
+                // //Update the current node with the one just selected.
+                // scope[treeId].currentNode = selNode;
             };
 
         }

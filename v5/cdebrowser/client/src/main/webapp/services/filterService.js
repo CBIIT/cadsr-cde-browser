@@ -141,7 +141,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
             }
         };
         return breadcrumbs
-    };
+    };  
 
 
 });
