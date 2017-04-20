@@ -18,7 +18,6 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
              */
 
-
             //tree id
             var treeId = attrs.treeId;
 
@@ -273,16 +272,18 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             // console.log("* * * Setting  scope.showCdeSearchResults = true;");
                             scope.showCdeSearchResults = true;
                             scope.changeView(0,0);
-                            scope.isSearch
+                            scope.isSearch;
                         };
                 }
-
+                scope.$parent.navTree = scope[treeId];
                 //Render template.
                 element.html('').append($compile(template)(scope));
             }
 
             // Used above (for now) when a user Clicks.
             var disp = function (selNode) {
+                console.log(selNode);
+                scope.$parent.navTree = scope[treeId];
 
                 //remove highlight from previous node
                 if (scope[treeId].currentNode && scope[treeId].currentNode.selected) {
@@ -296,7 +297,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
                 //Update the current node with the one just selected.
                 scope[treeId].currentNode = selNode;
-            }
+            };
 
         }
     };

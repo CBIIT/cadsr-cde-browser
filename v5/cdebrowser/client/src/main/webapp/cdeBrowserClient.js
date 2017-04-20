@@ -12,6 +12,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchObjectClassHOLD = "";
     $scope.searchPropertyHOLD = "";
     $scope.searchderivedDEHOLD = "";
+
     var delimiter = ":::";
 
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
@@ -176,13 +177,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.filterService.resetContext = function() {
-        // console.log("IN filterService.resetContext");
         $scope.filterService.searchFilter.context = "";
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
-        // fs.resetClassificationAndProtocol();
-        // groupFactory.clearData();
-        // groupFactory1.clearData();
     };
 
     // When a context is changed, get classifications and protocol forms //
@@ -275,6 +272,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.tabsDisabled = true;
     $scope.cssClasses = {"NORMAL":0,"BIG":1,"ERROR":2}
     $scope.isNode = false;
+
+    // variables for tree for controller to access child //
+    $scope.navTree = null;
+    // variables for tree for controller to access child //
+
     $scope.checkedItemsForDownload = [];
     $scope.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // set status to 0 if message should not be displayed. Set isErrorMessage to 1 if error message //
     $scope.showSearch = true; // important variable used to show and hide search area when changing routes //
@@ -528,7 +530,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, publicSearchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
-
+        $scope.disp();
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
         for (var p in searchAltNameType) {
@@ -1431,7 +1433,125 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
     
     $scope.advanceSearchShow();
-    
     $scope.getCdeData();
+
+    // interaction with navtree via select dropdowns //
+    $scope.disp = function () {
+        // get context
+        data = $scope.fs.serverData[0].children;
+        for (var x=0; x<data.length; x++) {
+          if (data[x].idSeq==scope.fs.searchFilter.context) {
+            context = data[x];
+          };
+        };
+
+        // check if the click is a classification or protocol //
+        if ($scope.fs.searchFilter.classification||$scope.fs.searchFilter.protocol) {
+            context.collapsed = false;
+            if ($scope.fs.searchFilter.classification) {
+                $scope.getNodeChildren(context.children[0],0, context, 'classification');
+            }
+            else {
+                $scope.getNodeChildren(context.children[1],0, context, 'protocol');                
+            };
+        }
+        else {
+            // this is just a context //
+            $scope.highlightNode(context);
+        };
+    };
+
+    // looks through tree context and finds matching classification or protocol //
+    $scope.matchClassificationOrProtocol = function(type,context) {
+        // find children of classifications or protocols //
+        if (type=='classification') {
+          children = context.children[0].children;
+        }
+        else {
+          children = context.children[1].children;
+        };
+
+        // loops through children and highlights correct level //
+        // opens folders containing correct protocol or classification //
+        for (var a=0; a<children.length; a++) {
+          if ($scope.fs.searchFilter[type].id==children[a].idSeq) {
+            $scope.highlightNode(children[a]); // highlight level 1 child //
+          }
+          else {
+            var grandChildren = children[a].children;
+            for (var child=0; child<grandChildren.length; child++) {
+              if (grandChildren[child].idSeq==$scope.fs.searchFilter[type].id) {
+                children[a].collapsed = false; // open parent of level 2 child //
+                $scope.highlightNode(grandChildren[child]); //highlight level 2 child //
+              }
+              else {
+                var greatGrandChildren = grandChildren[child].children;
+                for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
+                  if (greatGrandChildren[g_child].href.split(',')[1]==$scope.fs.searchFilter[type].id) {
+                    children[a].collapsed=false; // open grandparent of level 3 child //
+                    grandChildren[child].collapsed=false; // open parent of level 3 child //
+                    $scope.highlightNode(greatGrandChildren[g_child]); // highlight level 3 child //
+                  }
+                };        
+              }
+            }
+          }
+        };
+    };
+
+    // selects tree node and highlights it in blue //
+    $scope.highlightNode = function(selNode) {
+        if ($scope.navTree.currentNode && $scope.navTree.currentNode.selected) {
+            $scope.navTree.currentNode.selected = undefined;
+        };
+        selNode.selected = 'selected';
+        $scope.displaySelected(selNode,selNode.treePath,selNode.text,selNode.href,selNode.hover);
+        $scope.navTree.currentNode = selNode;        
+    };
+
+    // duplicate directive function to get children in tree if dropdowns are used //
+    $scope.getNodeChildren = function(selNode, childType, context, type) {
+        var parameters = selNode.href.split(',');
+        if (selNode.text == 'Classifications' || selNode.text == 'ProtocolForms') {
+            if (!selNode.dataLoaded && selNode['children'].length) { // check if data is already loaded and children are > 0 //
+                $http.get(window.location.protocol + "//"  + window.location.hostname + ":" + window.location.port +
+                    "/" + parameters[0] +
+                    "/?contextId=" + parameters[1] +
+                    "&programArea=" + parameters[2] +
+                    "&folderType=" + parameters[3]).success(function (response) {
+                    selNode['children'] = response[0]['children'];
+                    selNode['dataLoaded'] = true;
+                    var children = selNode['children'];
+                    $scope.matchClassificationOrProtocol(type,context); // match classificiation or protocol //
+
+                    for (var i=0; i<children.length; i++) {
+                      var parentId = children[i].href.split(',')[1];
+                      var grandChildren = children[i].children;
+                      children[i]['parentId']=parentId; // classification or protocol //
+                      children[i]['contextId']=parameters[1]; // classification or protocol //
+                      for (var child=0; child<grandChildren.length; child++) {
+                        grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
+                        grandChildren[child]['parentId']=parentId; // classification scheme item //
+                        var greatGrandChildren = grandChildren[child].children;
+                        for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
+                            greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
+                            greatGrandChildren[g_child]['parentId']=parentId; // classification scheme item child //
+                        };
+                      };
+                    };
+                });
+            }
+            else {
+                $scope.matchClassificationOrProtocol(type,context);                        
+            };
+        };
+
+        // open current node's folder //
+        if (selNode.isParent == 1) {
+            $timeout(function () {
+                selNode.collapsed = false;
+            });
+        };
+    };
 
 });
