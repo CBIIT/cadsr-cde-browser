@@ -8,6 +8,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,7 +52,9 @@ import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.dao.model.ValueMeaningUiModel;
+import gov.nih.nci.cadsr.service.ServiceTestUtils;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 
 /**
  * @author asafievan
@@ -210,6 +213,16 @@ public class CDEDataControllerTest {
 		//verify
 		Mockito.verify(valueMeaningDAO).getUiValueMeanings(publicIdToReturn, deVersionToReturn);
 		Mockito.verify(dataElementDAO).getCdeByDeIdseq(paramdeIdseq);
+	}
+	@Test
+	public void testGetDataElementReferenceDocuments() {
+		DataElementModel dataElementModelDB = ServiceTestUtils.buildTestRecordDataElementModel();
+		dataElementModelDB.setRefDocs(ServiceTestUtils.buildTestReferenceDocModelList());
+		dataElementModelDB.getRefDocs().add(ServiceTestUtils.buildTestReferenceDocModel("QuestionText1", "1-Question Text"));
+		dataElementModelDB.getRefDocs().add(ServiceTestUtils.buildTestReferenceDocModel("QuestionText2", "2-Question Text"));
+		DataElement dataElement = new DataElement();
+		cdeDataController.getDataElementReferenceDocuments(dataElementModelDB, dataElement);
+		assertNotNull(dataElement.getReferenceDocuments());
 	}
 
 }

@@ -11,6 +11,8 @@ public class DataElement
     private DataElementDetails dataElementDetails;
     //CDEBROWSER-809 Separate out the Documents with Document Type containing "*Question Text"
     private List<ReferenceDocument> questionTextReferenceDocuments;
+    private List<ReferenceDocument> otherReferenceDocuments;//other than Document Type containing "*Question Text"
+    
     private List<ReferenceDocument> referenceDocuments;
     private List<AlternateName> alternateNames; // probably taking this out
     private List<AlternateDefinition> alternateDefinitions; // probably taking this out
@@ -83,6 +85,14 @@ public class DataElement
 
 	public void setQuestionTextReferenceDocuments(List<ReferenceDocument> questionTextReferenceDocuments) {
 		this.questionTextReferenceDocuments = questionTextReferenceDocuments;
+	}
+
+	public List<ReferenceDocument> getOtherReferenceDocuments() {
+		return otherReferenceDocuments;
+	}
+
+	public void setOtherReferenceDocuments(List<ReferenceDocument> otherReferenceDocuments) {
+		this.otherReferenceDocuments = otherReferenceDocuments;
 	}
     
 }
