@@ -6,9 +6,7 @@
  */
 package gov.nih.nci.cadsr.service.restControllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -55,6 +53,7 @@ import gov.nih.nci.cadsr.dao.model.ValueMeaningUiModel;
 import gov.nih.nci.cadsr.service.ServiceTestUtils;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
 
 /**
  * @author asafievan
@@ -223,6 +222,37 @@ public class CDEDataControllerTest {
 		DataElement dataElement = new DataElement();
 		cdeDataController.getDataElementReferenceDocuments(dataElementModelDB, dataElement);
 		assertNotNull(dataElement.getReferenceDocuments());
+		assertEquals(dataElementModelDB.getRefDocs().size(), dataElement.getReferenceDocuments().size());
+		List<ReferenceDocument> received = dataElement.getReferenceDocuments();
+		List<ReferenceDocModel> source = dataElementModelDB.getRefDocs();
+		int index = 0;
+		for (ReferenceDocument curr : received) {
+			assertTrue(ServiceTestUtils.comparaReferenceDocumentsData(curr, source.get(index++)));
+		}
 	}
+	@Test
+	public void testGetDataElementReferenceDocumentsDetails() {
+		DataElementModel dataElementModelDB = ServiceTestUtils.buildTestRecordDataElementModel();
+		dataElementModelDB.setRefDocs(ServiceTestUtils.buildTestReferenceDocModelList());
+		dataElementModelDB.getRefDocs().add(ServiceTestUtils.buildTestReferenceDocModel("QuestionText1", "1-Question Text"));
+		dataElementModelDB.getRefDocs().add(ServiceTestUtils.buildTestReferenceDocModel("QuestionText2", "2-Question Text"));
+		DataElement dataElement = new DataElement();
+		cdeDataController.getDataElementReferenceDocuments(dataElementModelDB, dataElement, true);
+		assertNotNull(dataElement.getReferenceDocuments());
+		assertEquals(dataElement.getReferenceDocuments().size(), 0);
+		List<ReferenceDocument> receivedOther = dataElement.getOtherReferenceDocuments();
+		List<ReferenceDocument> receivedQuestionTexts = dataElement.getQuestionTextReferenceDocuments();
+		assertNotNull(receivedOther);
+		assertNotNull(receivedQuestionTexts);
+		assertEquals(dataElementModelDB.getRefDocs().size(), (receivedOther.size() + receivedQuestionTexts.size()));
+		assertEquals(receivedQuestionTexts.size(), 2);
 
+		List<ReferenceDocModel> source = dataElementModelDB.getRefDocs();
+		for (int index = 0; index < receivedOther.size(); index++) {
+			assertTrue(ServiceTestUtils.comparaReferenceDocumentsData(receivedOther.get(index), source.get(index)));
+		}
+		for (int index = receivedOther.size(); index < source.size(); index++) {
+			assertTrue(ServiceTestUtils.comparaReferenceDocumentsData(receivedQuestionTexts.get(index - receivedOther.size()), source.get(index)));
+		}
+	}
 }

@@ -409,4 +409,16 @@ public class ServiceTestUtils {
         java.util.Date now = calendar.getTime();
         return new java.sql.Timestamp( now.getTime() );
     }
+    public static boolean comparaReferenceDocumentsData(ReferenceDocument refDocRepresentation, ReferenceDocModel refDocDbModel) {
+    	boolean res;
+    	res = (objectsEqual(refDocRepresentation.getDocumentName(), refDocDbModel.getDocName()));
+    	res &= (objectsEqual(refDocRepresentation.getContext(), refDocDbModel.getContext().getName()));
+    	res &= 	(objectsEqual(refDocRepresentation.getDocumentText(), refDocDbModel.getDocText()));
+    	res &= 	(objectsEqual(refDocRepresentation.getUrl(), refDocDbModel.getUrl()));
+    	res &= 	(objectsEqual(refDocRepresentation.getDocumentType(), refDocDbModel.getDocType()));
+    	return res;
+    }
+    public static boolean objectsEqual(Object objectA, Object objectB) {
+    	return ((objectA == null) ? (objectB == null) : objectA.equals(objectB));
+    }
 }

@@ -341,7 +341,8 @@ public class CDEDataController
         DataElement dataElement = getDataElementDetails( dataElementModel );
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "Data Element" Tab
-        getDataElementReferenceDocuments( dataElementModel, dataElement );
+       //CDEBROWSER-809 "Separate out the Documents with Document Type containing "*Question Text" "
+        getDataElementReferenceDocuments( dataElementModel, dataElement, true );
 
         /////////////////////////////////////////////////////
         // CS/CSI data of the "Data Element" Tab
@@ -396,6 +397,10 @@ public class CDEDataController
      */
 	protected void getDataElementReferenceDocuments( DataElementModel dataElementModel, DataElement dataElement )
     {
+		getDataElementReferenceDocuments(dataElementModel, dataElement, false);//called from Compare service
+    }
+	protected void getDataElementReferenceDocuments( DataElementModel dataElementModel, DataElement dataElement, boolean toCdeDetailsView )
+    {
         // List to populate for client side
         List<ReferenceDocument> referenceDocuments = new ArrayList<>();
         dataElement.setReferenceDocuments( referenceDocuments );
@@ -420,10 +425,6 @@ public class CDEDataController
 	            referenceDoc.setDocumentType( referenceDocModel.getDocType() );
 	            //logger.debug( referenceDocModel.getDocType() );
 	            
-	            //CDEBROWSER-809 "Separate out the Documents with Document Type containing "*Question Text" "
-	            String refDocType = referenceDoc.getDocumentType();
-	            refDocType = (refDocType == null) ? "" : refDocType;
-	            
 	            referenceDoc.setDocumentText( referenceDocModel.getDocText() );
 	            //logger.debug( referenceDocModel.getDocText() );
 	
@@ -432,13 +433,20 @@ public class CDEDataController
 	
 	            referenceDoc.setUrl( referenceDocModel.getUrl() );
 	            //logger.debug( referenceDocModel.getUrl() );
-	            if (refDocType.contains("Question Text")) {
-	            	questionTextReferenceDocuments.add(referenceDoc);
+	            if (toCdeDetailsView) {
+		            //CDEBROWSER-809 "Separate out the Documents with Document Type containing "*Question Text" "
+		            String refDocType = referenceDoc.getDocumentType();
+		            refDocType = (refDocType == null) ? "" : refDocType;
+		            if (refDocType.contains("Question Text")) {
+		            	questionTextReferenceDocuments.add(referenceDoc);
+		            }
+		            else {
+		            	otherReferenceDocuments.add(referenceDoc);
+		            }
 	            }
 	            else {
-	            	otherReferenceDocuments.add(referenceDoc);
+	            	referenceDocuments.add( referenceDoc );//this one contains all ref docs
 	            }
-            	referenceDocuments.add( referenceDoc );//this one contains all ref docs
 	        }
         }
     }
