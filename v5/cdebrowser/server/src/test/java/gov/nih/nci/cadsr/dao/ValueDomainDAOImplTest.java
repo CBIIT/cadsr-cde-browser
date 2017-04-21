@@ -30,7 +30,7 @@ public class ValueDomainDAOImplTest {
 
 	//JdbcTemplate jdbcTemplateMock = mock(JdbcTemplate.class);
 	@Mock
-	JdbcTemplate jdbcTemplateMock = mock(JdbcTemplate.class);;
+	JdbcTemplate jdbcTemplateMock = mock(JdbcTemplate.class);
 	@Mock
 	DataSource dataSourceMock = mock(DataSource.class);
 	
@@ -55,7 +55,6 @@ public class ValueDomainDAOImplTest {
 	 */
 	@Test
 	public void testGetValueDomainByIdseq() {
-		System.out.println("in testGetValueDomainByIdseq");
 		ValueDomainModel valueDomainModelExpected = new ValueDomainModel();
 		valueDomainModelExpected.setVdContextName("vdContextNameTest");
 		

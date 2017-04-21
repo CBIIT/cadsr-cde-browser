@@ -114,7 +114,6 @@ public class ContextDataController
         // Get Program Areas
         if (CollectionUtils.isEmpty(programAreaModelList))
         {
-        	//TODO do we want to make this retry once in x minutes, not every time a request comes?
         	synchronized(this) {
             	if ((CollectionUtils.isEmpty(programAreaModelList)) && restControllerCommon != null) {
             		programAreaModelList = restControllerCommon.getProgramAreaList();
@@ -134,9 +133,9 @@ public class ContextDataController
             contextNodes = getAllTopLevelTreeData();
         } catch( Exception e )
         {
-            logger.error( "Server Error:\nCould not retrieve Top Level Context data from database", e );
+            logger.error( "Server Error:\nCould not retrieve Top Level Context data from database. ", e );
             ContextNode[] errorNode = new ContextNode[1];
-            errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Top Level Context data from database", e, ContextNode.class );
+            errorNode[0] = createErrorNode( "Server Error:\nCould not retrieve Top Level Context data from database. ", e, ContextNode.class );
             return errorNode;
         }
 
@@ -736,16 +735,36 @@ public class ContextDataController
      */
     protected int getProgramAreaByName( String contextPalName )
     {
-        for( int i = 0; i < contextPalNameCount; i++ )
+    	int palIndex = findProgramAreaByName(contextPalName);
+        if (palIndex > 0) {
+        	return palIndex;//we found Program Area by name
+        }
+        else {//reload programAreaModelList when we have not found one by name, probably this cached list is stale
+        	synchronized(this) {//TODO is this enough when Program Area list is changed by Admin Tool?
+        		programAreaModelList = restControllerCommon.getProgramAreaList();
+        		contextPalNameCount = programAreaModelList.size() + 1;
+        	}
+        	return findProgramAreaByName(contextPalName);
+        }
+    }
+    /**
+     * Iterate through cached list.
+     * 
+     * @param contextPalName
+     * @return int Program Area index which shall be more than 0 if the name is found
+     */
+    protected int findProgramAreaByName ( String contextPalName ) {
+        for( int i = 0; i < programAreaModelList.size(); i++ )
         {
-            if( programAreaModelList.get( i ).getPalName().compareTo( contextPalName ) == 0 )
+            String palNameCurr = programAreaModelList.get( i ).getPalName();
+        	if((palNameCurr != null) && (palNameCurr.equals(contextPalName)))
             {
                 return i + 1; //The +1 is for "All" to be 0
             }
         }
         return 0;
     }
-
+    
     protected String getProgramAreaDescriptionByIndex( int i )
     {
         //If it's "All"(0)

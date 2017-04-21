@@ -41,7 +41,7 @@ public class RestControllerCommon
 
     protected List<ProgramAreaModel> getProgramAreaList()
     {
-        List<ProgramAreaModel> programAreaModelList = programAreaDAO.getAllProgramAreas();
+        List<ProgramAreaModel> programAreaModelList = programAreaDAO.getAllProgramAreas();//this call does retry on a DB error, or on empty DB return
         Collections.sort( programAreaModelList, new ProgramAreaComparator() );
         return programAreaModelList;
     }
