@@ -530,7 +530,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, publicSearchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
-        $scope.disp();
+        if ($scope.fs.searchFilter.context&&$scope.fs.searchFilter.context!='') {
+            $scope.disp();
+        };
         $scope.onClickTab($scope.fs.searchFilter.programArea);
         var str = '';
         // Get searchAltNameType type field from searchAltNameType object
