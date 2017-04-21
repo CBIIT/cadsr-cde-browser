@@ -19,6 +19,7 @@ import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
 import gov.nih.nci.cadsr.dao.model.RepresentationModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
@@ -104,7 +105,7 @@ public class ServiceTestUtils {
         dataElementModel.setRefDocs( buildTestReferenceDocModelList() );
 
         //List<DesignationModel>
-        dataElementModel.setDesignationModels( buildDesignationModelList() );
+        dataElementModel.setDesignationModels( buildTestDesignationModelList() );
 
         dataElementModel.setPublicId( 12345 );
         dataElementModel.setIdseq( "Idseq" );
@@ -137,7 +138,7 @@ public class ServiceTestUtils {
 
     /////////////////////////////////////////////////////////////////////////
     // Test DesignationModel List
-    public static List<DesignationModel> buildDesignationModelList()
+    public static List<DesignationModel> buildTestDesignationModelList()
     {
         List<DesignationModel> designationModelList = new ArrayList<>();
         designationModelList.add( buildTestDesignationModel( "A" ) );
@@ -420,5 +421,20 @@ public class ServiceTestUtils {
     }
     public static boolean objectsEqual(Object objectA, Object objectB) {
     	return ((objectA == null) ? (objectB == null) : objectA.equals(objectB));
+    }
+    /**
+     * This builds representation instance.
+     * 
+     * @param name
+     * @param altNameType
+     * @return AlternateName
+     */
+    public static AlternateName builTestdAlternateName (String name, String altNameType) {
+    	AlternateName altName = new AlternateName();
+    	altName.setContext("contextTest");
+    	altName.setLanguage("en");
+    	altName.setName(name);
+    	altName.setType(altNameType);
+    	return altName;
     }
 }

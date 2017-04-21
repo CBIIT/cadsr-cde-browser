@@ -94,7 +94,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.valueDomain.ValueDomainDetails;
 public class CDEDataController
 {
     private static final Logger logger = LogManager.getLogger( CDEDataController.class.getName() );
-    private static final String USED_BY = "USED_BY";
+    protected static final String USED_BY = "USED_BY";
 
     @Autowired
     private DataElementDAO dataElementDAO;
