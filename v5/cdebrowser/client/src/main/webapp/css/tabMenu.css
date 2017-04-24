@@ -1,7 +1,7 @@
 
 /*  The top of the Program Area tabs  */
 .topTabPos {
-    position: fixed;
+    position: absolute;
     top: 97px; /* if this is changed, you will also need to change .resultsDisplay & .treeMenu */
     left: 3px;
     width: 100%;
@@ -44,6 +44,6 @@
     width:100%;
     top: 124px;
     left:7px;
-    position: fixed;
+    position: absolute;
     
 }
