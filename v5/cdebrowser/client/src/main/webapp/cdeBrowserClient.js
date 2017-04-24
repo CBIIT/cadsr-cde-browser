@@ -1478,29 +1478,31 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // find children of classifications or protocols //
         if (type=='classification') {
           children = context.children[0].children;
+          typeId = 'idSeq';
         }
         else {
           children = context.children[1].children;
+          typeId = 'parentId';
         };
 
         // loops through children and highlights correct level //
         // opens folders containing correct protocol or classification //
-        console.log("Here is where the protocol stuff isnt matching and why it is not unhighlighting")
+
         for (var a=0; a<children.length; a++) {
-          if ($scope.fs.searchFilter[type].id==children[a].idSeq) {
+          if ($scope.fs.searchFilter[type].id==children[a][typeId]) {
             $scope.highlightNode(children[a],false); // highlight level 1 child //
           }
           else {
             var grandChildren = children[a].children;
             for (var child=0; child<grandChildren.length; child++) {
-              if (grandChildren[child].idSeq==$scope.fs.searchFilter[type].id) {
+              if ($scope.fs.searchFilter[type].id==grandChildren[child][typeId]) {
                 children[a].collapsed = false; // open parent of level 2 child //
                 $scope.highlightNode(grandChildren[child],false); //highlight level 2 child //
               }
               else {
                 var greatGrandChildren = grandChildren[child].children;
                 for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
-                  if (greatGrandChildren[g_child].href.split(',')[1]==$scope.fs.searchFilter[type].id) {
+                  if ($scope.fs.searchFilter[type].id==greatGrandChildren[g_child].href.split(',')[1]) {
                     children[a].collapsed=false; // open grandparent of level 3 child //
                     grandChildren[child].collapsed=false; // open parent of level 3 child //
                     $scope.highlightNode(greatGrandChildren[g_child],false); // highlight level 3 child //
@@ -1563,23 +1565,26 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     selNode['children'] = response[0]['children'];
                     selNode['dataLoaded'] = true;
                     var children = selNode['children'];
-                    $scope.matchClassificationOrProtocol(type,context); // match classificiation or protocol //
 
                     for (var i=0; i<children.length; i++) {
-                      var parentId = children[i].href.split(',')[1];
+                      var pid = children[i].href.split(',')[1];
                       var grandChildren = children[i].children;
-                      children[i]['parentId']=parentId; // classification or protocol //
+                      children[i]['parentId']=pid; // classification or protocol //
                       children[i]['contextId']=parameters[1]; // classification or protocol //
                       for (var child=0; child<grandChildren.length; child++) {
+                        var gpid = grandChildren[child].href.split(',')[1]
                         grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
-                        grandChildren[child]['parentId']=parentId; // classification scheme item //
+                        grandChildren[child]['parentId']=gpid; // classification scheme item //
                         var greatGrandChildren = grandChildren[child].children;
                         for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
+                            var ggpid = greatGrandChildren[g_child].href.split(',')[1]
                             greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
-                            greatGrandChildren[g_child]['parentId']=parentId; // classification scheme item child //
+                            greatGrandChildren[g_child]['parentId']=ggpid; // classification scheme item child //
                         };
                       };
                     };
+                    $scope.matchClassificationOrProtocol(type,context); // match classificiation or protocol //
+
                 });
             }
             else {

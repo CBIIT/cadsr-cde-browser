@@ -198,17 +198,17 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                         selectedNode['dataLoaded'] = true;
                                         var children = selectedNode['children'];
                                         for (var i=0; i<children.length; i++) {
-                                          var parentId = children[i].href.split(',')[1];
+                                          var pId = children[i].href.split(',')[1];
                                           var grandChildren = children[i].children;
-                                          children[i]['parentId']=parentId; // classification or protocol //
+                                          children[i]['parentId']=pId; // classification or protocol //
                                           children[i]['contextId']=parameters[1]; // classification or protocol //
                                           for (var child=0; child<grandChildren.length; child++) {
                                             grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
-                                            grandChildren[child]['parentId']=parentId; // classification scheme item //
+                                            grandChildren[child]['parentId']=pId; // classification scheme item //
                                             var greatGrandChildren = grandChildren[child].children;
                                             for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
                                                 greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
-                                                greatGrandChildren[g_child]['parentId']=parentId; // classification scheme item child //
+                                                greatGrandChildren[g_child]['parentId']=pId; // classification scheme item child //
                                             };
                                           };
                                         };
