@@ -69,7 +69,7 @@
         <th colspan="5" align="left">Reference Documents</th>
     </tr>
 </table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length>0">
     <tr>
         <td class="dataElementHeading">Document Name</td>
         <td class="dataElementHeading">Document Type</td>
@@ -85,14 +85,20 @@
         <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank" ng-bind-html="refDoc.url">{{refDoc.url}}</a></td>
 
     </tr>
-</table><br/>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length==0">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue">No reference documents available</td>
+    </tr>
+</table>
+        <br/>
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
         <th colspan="5" align="left">Question Texts</th>
     </tr>
 </table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.questionTextReferenceDocuments.length>0">
     <tr>
         <td class="dataElementHeading">Document Name</td>
         <td class="dataElementHeading">Document Type</td>
@@ -107,7 +113,13 @@
         <td class="dataElementValue" ng-bind-html="refDocQ.context">{{refDocQ.context}}</td>
         <td class="dataElementValue"><a href="{{refDocQ.url}}" target="_blank" ng-bind-html="refDocQ.url">{{refDocQ.url}}</a></td>
     </tr>
-</table><br/>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="deDetails.dataElement.questionTextReferenceDocuments.length==0">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementValue">No question texts available</td>
+    </tr>
+</table>
+<br/>
 
 <!--
 
@@ -129,9 +141,7 @@
     </tr>
 </table>
 
-
 <span data-ng-repeat="(n, cdeCsi) in cdeDetails.dataElement.csCsis">
-
     <table data-ng-hide="cdeCsi.hide" class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
         <tr>
             <td class="dataElementHeading">CS Long Name</td>
