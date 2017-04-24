@@ -46,7 +46,6 @@ public class ContextDataControllerTest extends TestCase
         contextDataController.getAppConfig().setMaxHoverTextLenStr( "50" );
         testMaxHoverTextLen = Integer.parseInt( contextDataController.getAppConfig().getMaxHoverTextLenStr() );
         contextDataController.setProgramAreaModelList( unitTestCommon.initSampleProgramAreas() );
-        contextDataController.setContextPalNameCount( contextDataController.getProgramAreaModelList().size() );
         initTestPreferredDefinition();
     }
 
