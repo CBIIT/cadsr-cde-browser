@@ -1485,6 +1485,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         // loops through children and highlights correct level //
         // opens folders containing correct protocol or classification //
+        console.log("Here is where the protocol stuff isnt matching and why it is not unhighlighting")
         for (var a=0; a<children.length; a++) {
           if ($scope.fs.searchFilter[type].id==children[a].idSeq) {
             $scope.highlightNode(children[a],false); // highlight level 1 child //
@@ -1513,6 +1514,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // selects tree node and highlights it in blue //
     $scope.highlightNode = function(selNode, tree, contextId) {
+        
         if (!contextId) {
             contextId = $scope.fs.searchFilter.context;
         };
