@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import gov.nih.nci.cadsr.common.UsageLog;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.commons.collections.CollectionUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.UsageLog;
 import gov.nih.nci.cadsr.dao.ClassificationSchemeDAO;
 import gov.nih.nci.cadsr.dao.ContextDAO;
 import gov.nih.nci.cadsr.dao.CsCsiDAO;
@@ -69,8 +68,6 @@ public class ContextDataController
 
     @Autowired
     private UsageLog usageLog;
-
-    private int contextPalNameCount;
 
     private static final Integer rootLevel = 1;
 
@@ -131,7 +128,15 @@ public class ContextDataController
         try
         {
             contextNodes = getAllTopLevelTreeData();
-        } catch( Exception e )
+        } 
+        catch(IndexOutOfBoundsException e) {
+        	logger.info( "IndexOutOfBoundsException on retrieve Top Level Context data from database, reloading all program areas from DB. ", e );
+        	synchronized(this) {
+        		programAreaModelList = restControllerCommon.getProgramAreaList();
+        	}
+        	contextNodes = getAllTopLevelTreeData();
+        }
+        catch (Exception e)
         {
             logger.error( "Server Error:\nCould not retrieve Top Level Context data from database. ", e );
             ContextNode[] errorNode = new ContextNode[1];
@@ -142,7 +147,7 @@ public class ContextDataController
         logger.debug( "Done rest call contextData" );
         return contextNodes;
     }
-
+    
     /**
      * @param contextId   The one Context who's tree we need to return to the client.
      * @param programArea We already have the original Program area, but this will tell us if it is being called from "All"
@@ -247,7 +252,7 @@ public class ContextDataController
         }
 
         // Set bread crumb data
-        for( int f = 0; f < contextPalNameCount; f++ )
+        for( int f = 0; f < contextNodes.length; f++ )
         {
             addBreadCrumbs( contextNodes[f], null );
         }
@@ -392,13 +397,11 @@ public class ContextDataController
      */
     protected ContextNode[] initTopLevelContextNodes()
     {
-        contextPalNameCount = programAreaModelList.size() + 1;//The + 1 is for "All"
-
-        ContextNode[] contextNodes = new ContextNode[contextPalNameCount];
-        for( int i = 1; i < contextPalNameCount; i++ )
+        ContextNode[] contextNodes = new ContextNode[programAreaModelList.size() + 1];//The + 1 is for "All"
+        for( int i = 0; i < programAreaModelList.size(); i++ )
         {
-            contextNodes[i] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get( i - 1 ).getPalName(), i );
-            contextNodes[i].setPalNameDescription( programAreaModelList.get( i - 1 ).getDescription() );
+            contextNodes[i+1] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get(i).getPalName(), i );
+            contextNodes[i+1].setPalNameDescription( programAreaModelList.get(i).getDescription() );
         }
 
         //Add "All" contexts tab at the end
@@ -742,7 +745,7 @@ public class ContextDataController
         else {//reload programAreaModelList when we have not found one by name, probably this cached list is stale
         	synchronized(this) {//TODO is this enough when Program Area list is changed by Admin Tool?
         		programAreaModelList = restControllerCommon.getProgramAreaList();
-        		contextPalNameCount = programAreaModelList.size() + 1;
+        		logger.info("programAreaModelList was re-loaded from DB on search context: " + contextPalName);
         	}
         	return findProgramAreaByName(contextPalName);
         }
@@ -837,16 +840,6 @@ public class ContextDataController
     public void setProgramAreaModelList( List<ProgramAreaModel> programAreaModelList )
     {
         this.programAreaModelList = programAreaModelList;
-    }
-
-    public int getContextPalNameCount()
-    {
-        return contextPalNameCount;
-    }
-
-    public void setContextPalNameCount( int contextPalNameCount )
-    {
-        this.contextPalNameCount = contextPalNameCount;
     }
 
 	public AppConfig getAppConfig() {
