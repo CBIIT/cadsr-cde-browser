@@ -421,7 +421,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // end checkboxes for table //
 
     // Default query type
-    $scope.selectedQueryType = '0'; //Starting selection
+    $scope.selectedQueryType = '2'; //Starting selection
 
     // Query field - drop down
     $scope.searchFieldsBasic = [

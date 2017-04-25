@@ -24,7 +24,7 @@
         </div>
         <div class="publicIDNameGroup">
             <span class="searchField name">
-                <label for="name" class="publicIdLabel">Name</label>
+                <label for="name" class="publicIdLabel">Search Term</label>
                 <input class="basicSearchQuery roundInput publicIdNameInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
                 <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
                     <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
