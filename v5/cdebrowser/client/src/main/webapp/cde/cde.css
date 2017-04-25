@@ -111,6 +111,18 @@
     height:15px;
 }
 
+.dataElementDescriptionLeftVM.col1 {
+  width:45%;
+}
+
+.dataElementDescriptionLeftVM.col2, .dataElementDescriptionLeftVM.col3 {
+  width:20%;
+}
+
+.dataElementDescriptionLeftVM.col4 {
+  width:15%;
+}
+
 
 .dataElementValueVM {
     border-collapse: collapse;
