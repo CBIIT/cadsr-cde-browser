@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.*;
 
 import org.mockito.Mockito;
-
+import static org.mockito.Mockito.*;
 public class ContextDataControllerTest extends TestCase
 {
     private ContextDataController contextDataController;
@@ -31,11 +31,11 @@ public class ContextDataControllerTest extends TestCase
     private String testLongName;
     private String testHoverText;
     private int testMaxHoverTextLen;
-
+    RestControllerCommon mockRestControllerCommon = Mockito.mock(RestControllerCommon.class);
+    
     public void setUp()
     {
         unitTestCommon = new UnitTestCommon();
-        RestControllerCommon mockRestControllerCommon = Mockito.mock(RestControllerCommon.class);
         List<ProgramAreaModel> programAreaModelList = new ArrayList<ProgramAreaModel> ();
         programAreaModelList.add(new ProgramAreaModel());
         Mockito.when(mockRestControllerCommon.getProgramAreaList()).thenReturn(programAreaModelList);
@@ -48,7 +48,9 @@ public class ContextDataControllerTest extends TestCase
         contextDataController.setProgramAreaModelList( unitTestCommon.initSampleProgramAreas() );
         initTestPreferredDefinition();
     }
-
+    protected void tearDown() throws Exception {
+    	Mockito.reset(mockRestControllerCommon);
+    }
 
     public void testAddBreadCrumbs()
     {
@@ -272,9 +274,68 @@ public class ContextDataControllerTest extends TestCase
         {
             assertEquals( name[f], contextNode[f].getText() );
             assertEquals( description[f], contextNode[f].getPalNameDescription() );
+            assertEquals(f, contextNode[f].getProgramArea());
         }
     }
+    
+    //tests of getProgramAreaByName
+    
+    public void testFindProgramAreaByNameSuccess() {
+    	int paIndex = 0;
+    	ProgramAreaModel expected = contextDataController.getProgramAreaModelList().get(paIndex);
+    	int receivedNumber = contextDataController.findProgramAreaByName(expected.getPalName());
+    	assertEquals(paIndex+1, receivedNumber);
+    }
+    
+    public void testFindProgramAreaByNameNotExisted() {
+    	int paIndex = 0;
+    	int receivedNumber = contextDataController.findProgramAreaByName("test Non Existed");
+    	assertEquals(paIndex, receivedNumber);
+    }
+    
+    public void testGetProgramAreaByName()
+    {
+    	int paIndex = 0;
+    	ProgramAreaModel expected = contextDataController.getProgramAreaModelList().get(paIndex);
+    	int receivedNumber = contextDataController.getProgramAreaByName(expected.getPalName());
+    	assertEquals(paIndex+1, receivedNumber);
+    }
+    
+    public void testGetProgramAreaByNameNotExisted() {
+    	int paIndexExpected = 0;
+    	reset(mockRestControllerCommon);
+    	List<ProgramAreaModel> emptyPaList = new ArrayList<ProgramAreaModel>();
+    	when(mockRestControllerCommon.getProgramAreaList()).thenReturn(emptyPaList);
+    	int receivedNumber = contextDataController.getProgramAreaByName("test Non Existed");
+    	assertEquals(paIndexExpected, receivedNumber);
+    	verify(mockRestControllerCommon, times(1)).getProgramAreaList();
+    }
 
+    public void testGetProgramAreaByNameError() {
+    	reset(mockRestControllerCommon);
+    	when(mockRestControllerCommon.getProgramAreaList()).thenThrow(new RuntimeException("test Exception"));
+    	try {
+    		contextDataController.getProgramAreaByName("test Non Existed");
+    	}
+    	catch(RuntimeException e) {
+    		assertEquals("test Exception", e.getMessage());
+    	}
+    	verify(mockRestControllerCommon, times(1)).getProgramAreaList();
+    }
+    public void testGetProgramAreaByNameReload() {
+    	int paIndexExpected = 1;
+    	reset(mockRestControllerCommon);
+    	String newProgramArea = "test Non Existed";
+    	List<ProgramAreaModel> newPaList = new ArrayList<ProgramAreaModel>();
+    	ProgramAreaModel programAreaModel = new ProgramAreaModel();
+    	programAreaModel.setPalName(newProgramArea);
+    	newPaList.add(programAreaModel);
+    	when(mockRestControllerCommon.getProgramAreaList()).thenReturn(newPaList);
+    	int receivedNumber = contextDataController.getProgramAreaByName(newProgramArea);
+    	assertEquals(paIndexExpected, receivedNumber);
+    	verify(mockRestControllerCommon, times(1)).getProgramAreaList();
+    }
+    
     // Test - ContextDataController.getCsCsisByParentCsCsi
 
     // Create three children, two match the parent ID, one does not, make sure we find two
@@ -545,7 +606,6 @@ public class ContextDataControllerTest extends TestCase
         assertEquals( "", contextDataController.getProgramAreaDescriptionByIndex( 0 ) );
     }
 
-
     // Test data initialization
     private void initProtocolFormModel()
     {
@@ -554,7 +614,7 @@ public class ContextDataControllerTest extends TestCase
         protocolFormModel.setProtoPreferredDefinition( testPreferredDefinition );
         protocolFormModel.setProtoIdseq( protoIdseq );
     }
-
+    
     // Creates and initializes a list of ClassificationSchemeModels for insertClassifications tests
     private List<ClassificationSchemeModel> initCsModelList()
     {
