@@ -400,7 +400,7 @@ public class ContextDataController
         ContextNode[] contextNodes = new ContextNode[programAreaModelList.size() + 1];//The + 1 is for "All"
         for( int i = 0; i < programAreaModelList.size(); i++ )
         {
-            contextNodes[i+1] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get(i).getPalName(), i );
+            contextNodes[i+1] = new ContextNode( CaDSRConstants.FOLDER, true, programAreaModelList.get(i).getPalName(), i + 1);
             contextNodes[i+1].setPalNameDescription( programAreaModelList.get(i).getDescription() );
         }
 
