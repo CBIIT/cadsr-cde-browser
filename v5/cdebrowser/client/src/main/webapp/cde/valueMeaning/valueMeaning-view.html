@@ -7,49 +7,43 @@
 <table id="{{$index + 1}}" class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="p_value in cdeDetails.valueDomain.valueMeaning">
     <tr class="dataElementViewTableTrVM">
         <td class="dataElementDescriptionLeftVM" width="20%">PV Meaning</td>
-        <td class="dataElementValueVM">Alternate Names</td>
+        <td class="dataElementValueVM" rowspan="2">
+<table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
+        <tr>
+              <td class="dataElementDescriptionLeftVM">Alternate Name</td>
+              <td class="dataElementDescriptionLeftVM">Type</td>
+              <td class="dataElementDescriptionLeftVM">Context</td>
+              <td class="dataElementDescriptionLeftVM">Language</td>
+        </tr>
+        <tr class="dataElementViewTableTrVM"   data-ng-repeat ="altName in p_value.alternateNames">
+              <td class="dataElementValueVM">{{altName.name}}</td>
+              <td class="dataElementValueVM">{{altName.type}}</td>
+              <td class="dataElementValueVM">{{altName.context}}</td>
+              <td class="dataElementValueVM">{{altName.language}}</td>
+          </tr>
+          </table>
+
+          <table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
+        <tr>
+              <td class="dataElementDescriptionLeftVM">Alternate Definition</td>
+              <td class="dataElementDescriptionLeftVM">Type</td>
+              <td class="dataElementDescriptionLeftVM">Context</td>
+              <td class="dataElementDescriptionLeftVM">Language</td>
+        </tr>
+        <tr class="dataElementViewTableTrVM"  data-ng-repeat ="altDef in p_value.alternateDefinitions">
+              <td class="dataElementValueVM">{{altDef.name}}</td>
+              <td class="dataElementValueVM">{{altDef.type}}</td>
+              <td class="dataElementValueVM">{{altDef.context}}</td>
+              <td class="dataElementValueVM">{{altDef.language}}</td>
+          </tr>
+          </table>          
+        </td>
     </tr>
     <tr class="dataElementViewTableTrVM">
         <td class="dataElementValueVM">
-        PV Meaning = <span ng-bind-html="p_value.pvMeaning">{{p_value.pvMeaning}}</span><br />
+        <span ng-class="{bold: currentHash==$index+1}">PV Meaning = <span ng-bind-html="p_value.pvMeaning">{{p_value.pvMeaning}}</span></span><br />
         VM Public ID = <span ng-bind-html="p_value.vmPublicId">{{p_value.vmPublicId}}</span><br />
         VM Version = <span ng-bind-html="p_value.vmVersion">{{p_value.vmVersion}}</span><br />
-        </td>
-        <td style="vertical-align:top;padding:0;">
-        	<table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
-				<tr>
-			        <td class="dataElementDescriptionLeftVM">Name</td>
-			        <td class="dataElementDescriptionLeftVM">Type</td>
-			        <td class="dataElementDescriptionLeftVM">Context</td>
-			        <td class="dataElementDescriptionLeftVM">Language</td>
-				</tr>
-				<tr class="dataElementViewTableTrVM"   data-ng-repeat ="altName in p_value.alternateNames">
-			        <td class="dataElementValueVM">{{altName.name}}</td>
-			        <td class="dataElementValueVM">{{altName.type}}</td>
-			        <td class="dataElementValueVM">{{altName.context}}</td>
-			        <td class="dataElementValueVM">{{altName.language}}</td>
-			    </tr>
-        	</table>
-
-        	<table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
-        		<tr class="dataElementViewTableTrVM"><td class="dataElementValueVM">Alternate Definitions</td></tr>
-        	</table>
-
-        	<table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
-				<tr>
-			        <td class="dataElementDescriptionLeftVM">Definition</td>
-			        <td class="dataElementDescriptionLeftVM">Type</td>
-			        <td class="dataElementDescriptionLeftVM">Context</td>
-			        <td class="dataElementDescriptionLeftVM">Language</td>
-				</tr>
-				<tr class="dataElementViewTableTrVM"  data-ng-repeat ="altDef in p_value.alternateDefinitions">
-			        <td class="dataElementValueVM">{{altDef.name}}</td>
-			        <td class="dataElementValueVM">{{altDef.type}}</td>
-			        <td class="dataElementValueVM">{{altDef.context}}</td>
-			        <td class="dataElementValueVM">{{altDef.language}}</td>
-			    </tr>
-        	</table>
-
         </td>
     </tr>
     <tr style="background-color: white;">

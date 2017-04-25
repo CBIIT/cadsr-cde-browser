@@ -12,7 +12,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchObjectClassHOLD = "";
     $scope.searchPropertyHOLD = "";
     $scope.searchderivedDEHOLD = "";
-
+    $scope.valueMeaningHash = "";
     var delimiter = ":::";
 
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
@@ -505,6 +505,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
     
     $scope.changeView = function (tabnumber, tab) {
+        if (tab.valueMeaning!='valueMeaning') {
+            $location.hash("");
+        };
+
         $location.path(tab.view);
         $scope.showSearch = true;
         $scope.currentCdeTab = tabnumber;

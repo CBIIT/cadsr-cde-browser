@@ -108,6 +108,7 @@
     font-family: Arial, Helvetica, Geneva, sans-serif;
     background-color: #cccc99;
     text-align: left;
+    height:15px;
 }
 
 
@@ -117,6 +118,10 @@
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 9pt;
     color: #000000
+}
+
+.dataElementValueVM .bold {
+    font-weight:bold;
 }
 
 
