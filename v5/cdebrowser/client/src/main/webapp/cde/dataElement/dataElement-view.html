@@ -159,7 +159,7 @@
 
 
 
-    <span data-ng-show="(( cdeDetails.dataElement.csCsis.length > 1) && (n != ( cdeDetails.dataElement.csCsis.length - 1 )) || (cdeCsi.alternateNames.length > 0) || (cdeCsi.alternateDefinitions.length > 0))">
+    <span data-ng-show="(( cdeDetails.dataElement.csCsis.length > 1) && (n != ( cdeDetails.dataElement.csCsis.length - 1 )) || (cdeCsi.alternateNames.length > 0) || (cdeCsi.alternateDefinitions.length > 0) || cdeCsi.usedByAlternateNames.length > 0))">
 
         <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
             <tr class="cdeDetailsSubSubHeading">
