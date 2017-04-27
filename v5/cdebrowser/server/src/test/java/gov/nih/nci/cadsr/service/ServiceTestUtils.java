@@ -435,6 +435,12 @@ public class ServiceTestUtils {
     	altName.setLanguage("en");
     	altName.setName(name);
     	altName.setType(altNameType);
+    	if (!("USED_BY".equals(altNameType))){
+    		altName.setName(name);
+    	}
+    	else {
+    		altName.setName("contextTest");
+    	}
     	return altName;
     }
 }

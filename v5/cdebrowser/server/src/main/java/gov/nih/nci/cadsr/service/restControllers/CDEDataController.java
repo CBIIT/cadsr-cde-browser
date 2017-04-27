@@ -379,7 +379,7 @@ public class CDEDataController
     	List<AlternateName> altNameListAll = new ArrayList<>();
     	List<AlternateName> altNameListUsedBy = new ArrayList<>();
     	for (AlternateName alternateName : altNameList) {
-    		if (USED_BY.equals(alternateName.getType())) {
+    		if ((USED_BY.equals(alternateName.getType())) && (alternateName.getName().equals(alternateName.getContext()))) {
     			altNameListUsedBy.add(alternateName);
     		}
     		else {
