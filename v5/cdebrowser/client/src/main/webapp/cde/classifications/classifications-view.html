@@ -53,23 +53,21 @@
     <table align="center" cellpadding="1" cellspacing="1" width="100%">
         <tr class="dataElementViewTableTr">
             <th class="dataElementHeading">CS* Long Name</th>
-            <th class="dataElementHeading">CS* Definition</th>
             <th class="dataElementHeading">CS* Public ID/Version</th>
             <th class="dataElementHeading">CSI* Name</th>
-            <th class="dataElementHeading">CSI* Type</th>
             <th class="dataElementHeading">CSI* Public ID/Version</th>
+            <th class="dataElementHeading">CSI* Type</th>
         </tr>
         <tr class="dataElementViewTableTr" data-ng-repeat="classif in cdeDetails.classifications.classificationList">
             <td class="dataElementValue" ng-bind-html="classif.csLongName">{{classif.csLongName}}</td>
-            <td class="dataElementValue" ng-bind-html="classif.csDefinition">{{classif.csDefinition}}</td>
             <td class="dataElementValue">
                 <span ng-bind-html="classif.csId">{{classif.csId}}</span>v<span ng-bind-html="classif.csVersion">{{classif.csVersion}}</span>
             </td>
             <td class="dataElementValue" ng-bind-html="classif.csiName">{{classif.csiName}}</td>
-            <td class="dataElementValue" ng-bind-html="classif.csiType">{{classif.csiType}}</td>
             <td class="dataElementValue">
                 <span ng-bind-html="classif.csiId">{{classif.csiId}}</span>v<span ng-bind-html="classif.csiVersion">{{classif.csiVersion}}</span>
-            </td>
+            </td>            
+            <td class="dataElementValue" ng-bind-html="classif.csiType">{{classif.csiType}}</td>
         </tr>
         <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.classifications.classificationList.length">
             <td colspan="3">No applicable Classifications</td>
