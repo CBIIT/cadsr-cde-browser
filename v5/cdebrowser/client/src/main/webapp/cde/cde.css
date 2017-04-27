@@ -81,6 +81,10 @@
     background-color: #999966;
 }
 
+.dataElementViewTable .dataElementHeading.col1, .dataElementHeading.col2, .dataElementHeading.col3, .dataElementHeading.col4{
+    width:25%;
+}
+
 
 
 .dataElementViewTableVM {
@@ -216,6 +220,8 @@
     border: none;
     font-weight: bold
 }
+
+
 
 .cdeDetailsSubHeading {
     font-family: Arial, Helvetica, Geneva, sans-serif;

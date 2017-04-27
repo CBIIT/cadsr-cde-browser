@@ -159,26 +159,28 @@
 
 
 
-    <span data-ng-show="(( cdeDetails.dataElement.csCsis.length > 1) && (n != ( cdeDetails.dataElement.csCsis.length - 1 )) || (cdeCsi.alternateNames.length > 0) || (cdeCsi.alternateDefinitions.length > 0) || cdeCsi.usedByAlternateNames.length > 0))">
+    <span data-ng-show="(cdeDetails.dataElement.csCsis.length > 1 && n != cdeDetails.dataElement.csCsis.length - 1) || alternateNames.length > 0 || cdeCsi.alternateDefinitions.length > 0 || cdeCsi.usedByAlternateNames.length > 0">
 
         <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
             <tr class="cdeDetailsSubSubHeading">
                 <td colspan="4">Used By Alternate Names</td>
             </tr>
             <tr>
-                <td class="dataElementHeading">Name</td>
-                <td class="dataElementHeading">Context</td>
-                <td class="dataElementHeading">Language</td>
+                <td class="dataElementHeading col1">Name</td>
+                <td class="dataElementHeading col2">Type</td>
+                <td class="dataElementHeading col3">Context</td>
+                <td class="dataElementHeading col4">Language</td>
             </tr>
             <tr class="dataElementViewTableTr"
                 data-ng-repeat="usedByAltName in cdeCsi.usedByAlternateNames">
                 <td class="dataElementValue" ng-bind-html="usedByAltName.name">{{usedByAltName.name}}</td>
+                <td class="dataElementValue" ng-bind-html="usedByAltName.context">{{usedByAltName.type}}</td>
                 <td class="dataElementValue" ng-bind-html="usedByAltName.context">{{usedByAltName.context}}</td>
                 <td class="dataElementValue" ng-bind-html="usedByAltName.language">{{usedByAltName.language}}</td>
             </tr>
 
             <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.usedByAlternateNames.length">
-                <td colspan="3">No applicable Used By Alternate Names</td>
+                <td colspan="4">No applicable Used By Alternate Names</td>
             </tr>
         </table>
 
@@ -187,10 +189,10 @@
                 <td colspan="4">Alternate Names</td>
             </tr>
             <tr>
-                <td class="dataElementHeading">Name</td>
-                <td class="dataElementHeading">Type</td>
-                <td class="dataElementHeading">Context</td>
-                <td class="dataElementHeading">Language</td>
+                <td class="dataElementHeading col1">Name</td>
+                <td class="dataElementHeading col2">Type</td>
+                <td class="dataElementHeading col3">Context</td>
+                <td class="dataElementHeading col4">Language</td>
             </tr>
             <tr class="dataElementViewTableTr"
                 data-ng-repeat="altName in cdeCsi.alternateNames">
