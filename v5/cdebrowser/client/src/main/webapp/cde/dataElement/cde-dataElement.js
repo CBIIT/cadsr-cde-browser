@@ -12,4 +12,19 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", "$loca
     if ($scope.cdeDetails.dataElement != null) {
     	$scope.getCdeData();
 	}
+
+	$scope.getContextsUsingCDE = function(usedByAlternateNames) {
+		var contextString = "";
+		if (usedByAlternateNames) {
+			for (var x=0; x<usedByAlternateNames.length; x++) {
+				if (usedByAlternateNames[x].name==usedByAlternateNames[x].context) {
+					contextString = contextString + ', ' + usedByAlternateNames[x].name;
+				};
+			};			
+		};
+		if (!contextString.length) {
+			contextString = "None";
+		};
+		return contextString;
+	};
 }]);
