@@ -35,6 +35,10 @@
         <td class="dataElementDescription"> Workflow Status:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.selectedDataElement.workflowStatus">{{cdeDetails.dataElementConcept.selectedDataElement.workflowStatus}}</td>
     </tr>
+<!--     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription"> Registration Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
+    </tr>  -->   
 </table>
 <br>
 
@@ -87,12 +91,6 @@
         </td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Conceptual Domain Context Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainContextName">
-            {{cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainContextName}}
-        </td>
-    </tr>
-    <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Version:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.formattedConceptualDomainVersion">
             {{cdeDetails.dataElementConcept.dataElementConceptDetails.formattedConceptualDomainVersion}}
@@ -127,16 +125,8 @@
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.objectClass.longName">{{cdeDetails.dataElementConcept.objectClass.longName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.objectClass.shortName">{{cdeDetails.dataElementConcept.objectClass.shortName}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Context:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.objectClass.context">{{cdeDetails.dataElementConcept.objectClass.context}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Qualifier:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.objectClass.qualifier">{{cdeDetails.dataElementConcept.objectClass.qualifier}}</td>
     </tr>
 </table>
 <Br/>
@@ -195,16 +185,8 @@
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.property.longName">{{cdeDetails.dataElementConcept.property.longName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.property.shortName">{{cdeDetails.dataElementConcept.property.shortName}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Context:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.property.context">{{cdeDetails.dataElementConcept.property.context}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Qualifier:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.property.qualifier">{{cdeDetails.dataElementConcept.property.qualifier}}</td>
     </tr>
 
 </table><br/>
