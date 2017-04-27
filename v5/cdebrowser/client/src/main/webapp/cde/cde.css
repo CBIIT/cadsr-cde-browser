@@ -133,7 +133,8 @@
     border: solid 1px #999966;
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 9pt;
-    color: #000000
+    color: #000000;
+    vertical-align:top;
 }
 
 .dataElementValueVM .bold {
