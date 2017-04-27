@@ -3,32 +3,52 @@
  */
 package gov.nih.nci.cadsr.cdecart;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import gov.nih.nci.cadsr.dao.*;
-import gov.nih.nci.cadsr.dao.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.CdeCartValidValueDAO;
+import gov.nih.nci.cadsr.dao.ContextDAO;
+import gov.nih.nci.cadsr.dao.DataElementDAO;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
+import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
+import gov.nih.nci.cadsr.dao.VdPvsDAO;
+import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
+import gov.nih.nci.cadsr.dao.model.ContextModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
+import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
+import gov.nih.nci.cadsr.dao.model.DataElementModel;
+import gov.nih.nci.cadsr.dao.model.RepresentationModel;
+import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
+import gov.nih.nci.cadsr.dao.model.ValidValueCdeCartModel;
+import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
+import gov.nih.nci.ncicb.cadsr.common.dto.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ConceptDerivationRuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.dto.DataElementDerivationTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.dto.DataElementDerivationTypeTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.DataElementTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.dto.DerivedDataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.RepresentationTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.common.resource.DerivedDataElement;
 import gov.nih.nci.ncicb.cadsr.common.resource.Representation;
-import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
-import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItemTransferObject;
@@ -52,6 +72,11 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
 	@Autowired
 	CdeCartValidValueDAO cdeCartValidValueDAO;
+	
+	@Autowired
+	DataElementDerivationDAO dataElementDerivationDAO;
+	
+	private final Integer lockToCreateCart = new Integer(1);
 
 	public void setToolOptionsDAO(ToolOptionsDAO toolOptionsDAO) {
 		this.toolOptionsDAO = toolOptionsDAO;
@@ -70,6 +95,10 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 	public void setCdeCartValidValueDAO( CdeCartValidValueDAO cdeCartValidValueDAO )
 	{
 		this.cdeCartValidValueDAO = cdeCartValidValueDAO;
+	}	
+	
+	public void setDataElementDerivationDAO(DataElementDerivationDAO dataElementDerivationDAO) {
+		this.dataElementDerivationDAO = dataElementDerivationDAO;
 	}
 
 	//We assume this URL is not changes often as the system is running, so we will read it until it is not found
@@ -115,8 +144,10 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
 		return cdeCart;
 	}
-	private synchronized CDECart getCDECartOCImpl(ObjectCartClient ocClient, String uid) {
-		return new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
+	private CDECart getCDECartOCImpl(ObjectCartClient ocClient, String uid) {
+		synchronized(lockToCreateCart) {
+			return new CDECartOCImpl(ocClient, uid, CaDSRConstants.CDE_CART);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface#deleteCartNodes(javax.servlet.http.HttpSession, java.lang.String, java.lang.String[])
@@ -381,6 +412,10 @@ public class CdeCartUtil implements CdeCartUtilInterface {
         de.setContextName(deModel.getContextName());
         de.setUsingContexts(deModel.getUsingContexts());
         de.setRegistrationStatus(deModel.getRegistrationStatus());
+        
+        //Add Derivation section
+        DerivedDataElement derivedDataElement = buildDerivedDataElementTransferObject(deModel.getPublicId());
+        de.setDerivedDataElement(derivedDataElement);
 
         return de;
     }
@@ -575,5 +610,106 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
     	return representation;
     }
-
+    /**
+     * This method finds CDE Derivation based on CDE Public ID.
+     * 
+     * @param deId Derived element public ID
+     * @return DerivedDataElementTransferObject implementing interface DerivedDataElement
+     */
+    
+    public DerivedDataElement buildDerivedDataElementTransferObject(int deId) {
+    	DerivedDataElementTransferObject derivedDto = new DerivedDataElementTransferObject();
+    	DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeId(deId);
+    	
+    	//make mapping
+    	DataElementDerivationTypeTransferObject dtoType = new DataElementDerivationTypeTransferObject();
+    	dtoType.setName(dataElementDerivationModel.getDerivationType());
+    	derivedDto.setType(dtoType);
+    	derivedDto.setConcatenationCharacter(dataElementDerivationModel.getConcatenationCharacter());
+    	derivedDto.setCreatedBy(dataElementDerivationModel.getCreatedBy());
+    	derivedDto.setDateModified(dataElementDerivationModel.getDateModified());
+    	//FIXME where this Dde ID? This model does not have it???
+    	derivedDto.setDdeIdSeq(null);
+    	derivedDto.setMethods(dataElementDerivationModel.getMethod());
+    	derivedDto.setModifiedBy(dataElementDerivationModel.getModifiedBy());
+    	derivedDto.setRule(dataElementDerivationModel.getRule());
+        List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId(deId);
+        DataElementDerivationTransferObject derivedItem;
+        DataElementTransferObject de;
+        Collection<DataElementDerivationTransferObject> derivedCollection = new ArrayList<>();
+        for (DataElementDerivationComponentModel modelItem : dataElementDerivationComponentModels) {
+        	derivedItem = new DataElementDerivationTransferObject();
+        	de = new DataElementTransferObject();
+        	derivedItem.setDerivedDataElement(de);
+        	derivedCollection.add(derivedItem);
+        	derivedItem.setCreatedBy(modelItem.getCreatedBy());
+        	derivedItem.setDateCreated(modelItem.getDateCreated());
+        	derivedItem.setDateModified(modelItem.getDateModified());
+        	//FIXME where CDR ID? This model does not have it???
+        	derivedItem.setCdrIdSeq(null);
+        	try {
+        		int displayOrderValue = Integer.parseInt(modelItem.getDisplayOrder());
+        		derivedItem.setDisplayOrder(displayOrderValue);
+        	}
+        	catch (NumberFormatException e) {
+        		log.error("Error in DisplayOrder data in " + modelItem, e);
+        	}
+        	derivedItem.setModifiedBy(modelItem.getModifiedBy());
+        	try {
+        		int publicIdValue = Integer.parseInt(modelItem.getPublicId());
+        		derivedItem.setDisplayOrder(publicIdValue);
+        	}
+        	catch (NumberFormatException e) {
+        		log.error("Error in publicId data in " + modelItem, e);
+        	}
+        	
+            de.setIdseq(modelItem.getDeIdseq());
+            de.setLongName(modelItem.getLongName());
+            de.setAslName(modelItem.getWorkflowStatus());
+            try {
+            	de.setVersion(Float.parseFloat(modelItem.getVersion()));
+            }
+            catch(NumberFormatException e) {
+            	log.error("Error in Version data in " + modelItem, e);
+            }
+            de.setContextName(modelItem.getContext());
+            de.setDeIdseq(modelItem.getDeIdseq());
+        }
+        if (! derivedCollection.isEmpty()) {
+        	derivedDto.setDataElementDerivation(derivedCollection);
+        }
+    	//TODO continue mapping
+    	return derivedDto;
+    }
+    /*
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      DataElementDerivationTransferObject ded = new DataElementDerivationTransferObject();
+      DataElementTransferObject de = new DataElementTransferObject();
+      ded.setCdrIdSeq(rs.getString(1));
+      de.setIdseq(rs.getString(2));
+      de.setLongName(rs.getString(3));
+      de.setCDEId(rs.getString(4));
+      de.setAslName(rs.getString(5));
+      de.setVersion(new Float(rs.getFloat(6)));
+      ded.setDisplayOrder(rs.getInt(7));
+      de.setContextName(rs.getString(8));
+      de.setDeIdseq(rs.getString(9));
+      ded.setDerivedDataElement(de);
+      return ded;
+    }
+     */
+    /*//CDEBROWSER-280
+<ComponentDataElementsList_ITEM>
+<PublicId>2341957</PublicId>
+<LongName>Address Secondary Unit Indicator/Designator Number</LongName>
+<PreferredName>ADDR_SEC_U_DES_NUM</PreferredName>
+<PreferredDefinition>A component of an address that specifies a location by identification of an additional subdivision of the primary address by number.</PreferredDefinition>
+<Version>1</Version>
+<WorkflowStatus>RELEASED</WorkflowStatus>
+<ContextName>NCIP</ContextName>
+<DisplayOrder>8</DisplayOrder>
+</ComponentDataElementsList_ITEM>
+     */
 }

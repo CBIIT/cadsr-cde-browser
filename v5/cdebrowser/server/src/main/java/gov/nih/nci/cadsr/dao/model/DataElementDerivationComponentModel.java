@@ -83,4 +83,75 @@ public class DataElementDerivationComponentModel extends BaseModel
     {
         this.deIdseq = deIdseq;
     }
+
+	@Override
+	public String toString() {
+		return "DataElementDerivationComponentModel [displayOrder=" + displayOrder + ", longName=" + longName
+				+ ", context=" + context + ", workflowStatus=" + workflowStatus + ", publicId=" + publicId
+				+ ", version=" + version + ", deIdseq=" + deIdseq + ", getCreatedBy()=" + getCreatedBy()
+				+ ", getDateCreated()=" + getDateCreated() + ", getModifiedBy()=" + getModifiedBy()
+				+ ", getDateModified()=" + getDateModified() + ", getFormattedVersion()=" + getFormattedVersion() + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((context == null) ? 0 : context.hashCode());
+		result = prime * result + ((deIdseq == null) ? 0 : deIdseq.hashCode());
+		result = prime * result + ((displayOrder == null) ? 0 : displayOrder.hashCode());
+		result = prime * result + ((longName == null) ? 0 : longName.hashCode());
+		result = prime * result + ((publicId == null) ? 0 : publicId.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		result = prime * result + ((workflowStatus == null) ? 0 : workflowStatus.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DataElementDerivationComponentModel other = (DataElementDerivationComponentModel) obj;
+		if (context == null) {
+			if (other.context != null)
+				return false;
+		} else if (!context.equals(other.context))
+			return false;
+		if (deIdseq == null) {
+			if (other.deIdseq != null)
+				return false;
+		} else if (!deIdseq.equals(other.deIdseq))
+			return false;
+		if (displayOrder == null) {
+			if (other.displayOrder != null)
+				return false;
+		} else if (!displayOrder.equals(other.displayOrder))
+			return false;
+		if (longName == null) {
+			if (other.longName != null)
+				return false;
+		} else if (!longName.equals(other.longName))
+			return false;
+		if (publicId == null) {
+			if (other.publicId != null)
+				return false;
+		} else if (!publicId.equals(other.publicId))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		if (workflowStatus == null) {
+			if (other.workflowStatus != null)
+				return false;
+		} else if (!workflowStatus.equals(other.workflowStatus))
+			return false;
+		return true;
+	}
+    
 }
