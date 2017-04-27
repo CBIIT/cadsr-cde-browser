@@ -18,7 +18,10 @@ angular.module("cdeDataElement").controller("DataElementCtrl", ["$scope", "$loca
 		if (usedByAlternateNames) {
 			for (var x=0; x<usedByAlternateNames.length; x++) {
 				if (usedByAlternateNames[x].name==usedByAlternateNames[x].context) {
-					contextString = contextString + ', ' + usedByAlternateNames[x].name;
+					if (x>0) {
+						contextString+=', ';
+					};
+					contextString+=usedByAlternateNames[x].name;
 				};
 			};			
 		};

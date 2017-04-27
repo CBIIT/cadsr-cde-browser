@@ -163,27 +163,8 @@
 
         <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
             <tr class="cdeDetailsSubSubHeading">
-                <td colspan="dataElementHeading" colspan="4">Contexts using this CDE: {{getContextsUsingCDE(cdeCsi.usedByAlternateNames)}}</td>
-            </tr>
-            <tr class="cdeDetailsSubSubHeading">
-                <td colspan="dataElementHeading" colspan="4">Used By Alternate Names</td>
-            </tr>            
-            <tr>
-                <td class="dataElementHeading col1">Name</td>
-                <td class="dataElementHeading col2">Type</td>
-                <td class="dataElementHeading col3">Context</td>
-                <td class="dataElementHeading col4">Language</td>
-            </tr>
-            <tr class="dataElementViewTableTr"
-                data-ng-repeat="usedByAltName in cdeCsi.usedByAlternateNames">
-                <td class="dataElementValue" ng-bind-html="usedByAltName.name">{{usedByAltName.name}}</td>
-                <td class="dataElementValue" ng-bind-html="usedByAltName.context">{{usedByAltName.type}}</td>
-                <td class="dataElementValue" ng-bind-html="usedByAltName.context">{{usedByAltName.context}}</td>
-                <td class="dataElementValue" ng-bind-html="usedByAltName.language">{{usedByAltName.language}}</td>
-            </tr>
-
-            <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.usedByAlternateNames.length">
-                <td colspan="4">No applicable Used By Alternate Names</td>
+                <td class="dataElementHeading col1">Contexts using this CDE: </td>
+                <td class="dataElementValue" colspan="3">{{getContextsUsingCDE(cdeCsi.usedByAlternateNames)}}</td>
             </tr>
         </table>
 
