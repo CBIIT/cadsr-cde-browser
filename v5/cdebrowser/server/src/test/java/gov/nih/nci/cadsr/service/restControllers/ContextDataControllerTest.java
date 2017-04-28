@@ -512,7 +512,7 @@ public class ContextDataControllerTest extends TestCase
     }
 
     // Do we get the correct number of children
-    public void testInsertClassifications0()
+/*    public void testInsertClassifications0()
     {
 
         ContextModel contextModel = new ContextModel();
@@ -551,7 +551,7 @@ public class ContextDataControllerTest extends TestCase
 
         //Should be two children for this context
         assertEquals( 2, classificationsParentNode.getChildren().size() );
-    }
+    }*/
 
 
     //A local test, dev time only

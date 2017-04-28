@@ -12,7 +12,9 @@ public interface ClassificationSchemeDAO
 {
     public List<ClassificationSchemeModel> getAllClassificationSchemes();
     public List<ClassificationSchemeModel> getClassificationSchemes( String conteId );
+    public List<ClassificationSchemeModel> getClassificationSchemesSansChildren( String conteId );
     public List<ClassificationSchemeModel> getChildrenClassificationSchemesByCsId( String csId );
+    public List<ClassificationSchemeModel> getAllChildrenClassificationSchemes();
     public ClassificationSchemeModel getClassificationSchemeById( String contextId );
     
     public List<ClassificationScheme> getAllClassificationSchemeWithProgramAreaAndContext(String contexIdSeq, String csOrCsCsi);

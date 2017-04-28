@@ -81,7 +81,14 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
                 ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 4"' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
+                
+                //Is a Container type folder
+                '<i class="container" cl' +
+                //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}  ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                'title="{{node.' + nodeHoverText + '}} "' +
 
+                ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 1"' +
+                ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +                
 
                 //Is a CSI folder with children and is collapsed
                 '<i class="csiFolderClosed" cl' +
@@ -97,7 +104,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //'title="D {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
-                ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' != 4 && node.' + nodeType + ' != 5"' +
+                ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' != 4 && node.' + nodeType + ' != 5 && node.' + nodeType + ' != 1"' + 
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
 
                 //Is a CSI folder and Has child node(s) and is expanded
@@ -115,6 +122,14 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
 
                 ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 4" ' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +
+                
+                //Is a Container, Has child node(s) and is expanded
+                '<i class="container" ' +
+                //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
+                'title="{{node.' + nodeHoverText + '}} "' +
+
+                ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 1" ' +
+                ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +                
 
 
                 //End leaf (not a folder) that is NOT a Protocol form

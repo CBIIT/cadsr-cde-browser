@@ -289,7 +289,7 @@ public class ContextDataController
         if( folderType == CaDSRConstants.CLASSIFICATIONS_TYPE_FOLDER )
         {
             // The contents for the Classifications folder - the Classification Scheme, which is the list of individual Classifications.
-            List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemes( contextId );
+            List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemesSansChildren( contextId );
 
             // Classification Scheme Item List - This is a list of all individual items that are in the Classifications of this Context
             // they will be place in their correct Classification later in insertClassifications.
@@ -606,6 +606,14 @@ public class ContextDataController
         classificationsParentNode.addChildNode( placeHolderNode );
     }
 
+    
+    /**
+     * Adds the classification schemes and its own children (CS and CSI) of this Classification node to the parent, recursively. 
+     *
+     * @param classificationsNode The parent Classification node, to which any children will be added.
+     * @param csModelList List of Classification Scheme Models.
+     * @param contextModel Context data & its attributes to which the Classification Scheme belongs. 
+     */        
     protected void insertClassifications( ParentNode classificationsParentNode, List<ClassificationSchemeModel> csModelList, ContextModel contextModel, int programArea, List<CsCsiModel> csCsiNodelList )
     {
         //////////////////////////////////////////////////
@@ -622,7 +630,14 @@ public class ContextDataController
             {
                 ClassificationNode classificationSchemeNode = new ClassificationNode();
                 classificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
-                classificationSchemeNode.setType( CaDSRConstants.FOLDER );
+               
+                // Check for and assign the Container type folder for the Classifications 
+                if (classificationSchemeModel.getCstlName().equalsIgnoreCase("Container")) {
+                	classificationSchemeNode.setType( CaDSRConstants.CONTAINER );
+                } else {
+                	classificationSchemeNode.setType( CaDSRConstants.FOLDER );	
+                }
+                
                 classificationSchemeNode.setText( classificationSchemeModel.getLongName() );
 
                 //classificationSchemeNode.setHover( classificationSchemeModel.getPreferredDefinition() + " Conte Idseq:" + contextModel.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
@@ -662,12 +677,85 @@ public class ContextDataController
                     	}
                     }
                 }
-
+                // Retrieving the children of Classification Schemes (which are also Classification Schemes)
+                List<ClassificationSchemeModel> csChildModelList = this.classificationSchemeDAO.getChildrenClassificationSchemesByCsId(csId);
                 //Add this CS to the CS Folder
-                classificationsParentNode.addChildNode( classificationSchemeNode );
+                classificationsParentNode.addChildNode( insertChildClassifications(classificationSchemeNode, csChildModelList, contextModel, programArea, csCsiNodelList));
             }
         }
     }
+    
+    
+    
+    /**
+     * Adds the CS and CSI of the Classification Scheme, recursively. 
+     *
+     * @param classificationsNode The parent Classification node, to which any children will be added.
+     * @param childCsModelList List of Child Classification Scheme Models.
+     * @param contextModel Context data & its attributes to which the Classification Scheme belongs. 
+     */    
+    protected ClassificationNode insertChildClassifications( ClassificationNode classificationsNode, List<ClassificationSchemeModel> childCsModelList, ContextModel contextModel, int programArea, List<CsCsiModel> csCsiNodelList )
+    {
+        //////////////////////////////////////////////////
+        //CS (Classification Scheme) List for this Context
+        //////////////////////////////////////////////////
+        String contextId = contextModel.getConteIdseq();
+
+        //Loop through the Classification Schemes, and find the ones with the same contextID as the ContextModel
+        for( ClassificationSchemeModel childClassificationSchemeModel : childCsModelList )
+        {
+
+            //Is this CS (Classification scheme) for this Context
+            if( childClassificationSchemeModel.getConteIdseq().compareTo( contextId ) == 0 )
+            {
+                ClassificationNode childClassificationSchemeNode = new ClassificationNode();
+                childClassificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
+                childClassificationSchemeNode.setType( CaDSRConstants.FOLDER );
+                childClassificationSchemeNode.setText( childClassificationSchemeModel.getLongName() );
+
+                //classificationSchemeNode.setHover( classificachildClassificationl.getPreferredDefinition() + " Conte Idseq:" + contextModel.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
+                childClassificationSchemeNode.setHover( childClassificationSchemeModel.getPreferredDefinition() );
+                childClassificationSchemeNode.setCollapsed( true );
+                childClassificationSchemeNode.setIsParent( false );
+                childClassificationSchemeNode.setIdSeq( childClassificationSchemeModel.getCsIdseq() );
+                childClassificationSchemeNode.setProgramArea( programArea );
+                childClassificationSchemeNode.setHref( appConfig.getCdesByClassificationSchemeRestServiceName() + "," + childClassificationSchemeModel.getCsIdseq() );
+
+                //logger.debug( "\nclassificationSchemeNode: " + classificationSchemeNode.toString() );
+
+                ////////////////////////////////////////////////
+                //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
+                ////////////////////////////////////////////////
+                String csId = childClassificationSchemeModel.getCsIdseq();
+                for( CsCsiModel csCsiModel : csCsiNodelList )
+                {
+                    if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
+                    {
+                    	if (rootLevel.equals(csCsiModel.getCsiLevel())) {
+	                    	//Create the new node, and set as much as we can without knowing if it has children
+	                        ClassificationItemNode childClassificationSchemeItemNode = new ClassificationItemNode();
+	                        childClassificationSchemeItemNode.setHref( appConfig.getCdesByClassificationSchemeItemRestServiceName() + "," + csCsiModel.getCsCsiIdseq() );
+	                        childClassificationSchemeItemNode.setText( csCsiModel.getCsiName() );
+	                        //classificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() + "    Conte Idseq:" + contextModel.getConteIdseq() + "     Csi Idseq:" + csCsiModel.getCsiIdseq() );
+	                        childClassificationSchemeItemNode.setHover( csCsiModel.getCsiDescription() );
+	                        childClassificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
+	                        childClassificationSchemeItemNode.setCollapsed( true );
+	                        childClassificationSchemeItemNode.setProgramArea( programArea );
+	                        logger.debug( "addChildrenToCsi(" + childClassificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
+
+	                        addChildrenToCsi( childClassificationSchemeItemNode, csCsiNodelList);
+
+	                        //Add this CSI to the CS
+	                        childClassificationSchemeNode.addChildNode( childClassificationSchemeItemNode );
+                    	}
+                    }
+                }                
+                //Add this CS to the CS Folder
+                classificationsNode.addChildNode( childClassificationSchemeNode );
+            }
+        }
+       return classificationsNode;
+    }        
 
     /**
      * Create a protocolNode (for the client side) from a ProtocolModel (from the database)

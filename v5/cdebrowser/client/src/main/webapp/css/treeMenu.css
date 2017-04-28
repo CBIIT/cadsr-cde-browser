@@ -37,6 +37,12 @@ div[data-tree-model] li .emptyFolder {
     white-space:nowrap;
 }
 
+div[data-tree-model] li .container {
+    padding: 1px 10px;
+    background: url("../icons/container.png") no-repeat;
+    white-space:nowrap;
+}
+
 div[data-tree-model] li .csi {
     padding: 1px 10px;
     background: url("../icons/openCsiFolder-icon_16.png") no-repeat;

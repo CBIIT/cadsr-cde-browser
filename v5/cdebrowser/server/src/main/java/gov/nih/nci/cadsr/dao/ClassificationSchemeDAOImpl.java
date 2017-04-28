@@ -49,7 +49,7 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
         //  todo: I can't see there's any reason to use the view instead of SBR.CLASSIFICATION_SCHEMES do you?
         sql = "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
                 "preferred_definition, cstl_name,asl_name,conte_idseq " +
-                " FROM sbr.classification_Schemes_view, sbr.cs_recs_view c  " +
+                " FROM sbr.classification_Schemes, sbr.cs_recs c  " +
                 " WHERE  cs_idseq = c_cs_idseq " +
                 " AND rl_name = 'HAS_A' " +
                 " AND p_cs_idseq = ?" +
@@ -58,6 +58,24 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
         logger.debug( "getChildrenClassificationSchemesByCsId( String csId ) executing query " + sql + " (p_cs_idseq is " + csId + ")" );
 
         return getAll( sql, csId, ClassificationSchemeModel.class );
+    }
+
+    
+    /**
+     * @param csId
+     * @return
+     */
+    @Override
+    public List<ClassificationSchemeModel> getAllChildrenClassificationSchemes()
+    {
+        sql = "SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
+                "preferred_definition, cstl_name,asl_name,conte_idseq " +
+                " FROM sbr.classification_Schemes, sbr.cs_recs c  " +
+                " WHERE  cs_idseq = c_cs_idseq " +
+                " AND rl_name = 'HAS_A' ";
+        logger.debug( "getAllChildrenClassificationSchemes executing query " + sql);
+
+        return getAll( sql, ClassificationSchemeModel.class );
     }
 
 
@@ -92,6 +110,37 @@ public class ClassificationSchemeDAOImpl extends AbstractDAOOperations implement
 
         return results;
     }
+    
+
+    /**
+     * Retrieving only Classification schemes that have children and preventing the corresponding child classification schemes 
+     * from being part of the main Parent Classifications list as they would be recursively added to their parents
+     * @param conteId
+     * @return
+     */
+    @Override
+    public List<ClassificationSchemeModel> getClassificationSchemesSansChildren( String conteId )
+    {
+        List<ClassificationSchemeModel> results;
+
+        sql = "SELECT * FROM sbr.classification_schemes WHERE conte_idseq=? AND asl_name='RELEASED' " +
+        		"and cs_idseq NOT IN "+
+        		"(select CS_IDSEQ from (SELECT distinct CS_IDSEQ , preferred_name, long_name, " +
+        		                "preferred_definition, cstl_name,asl_name, conte_idseq " +
+        		                "FROM sbr.classification_Schemes, sbr.cs_recs c " +
+        		                "WHERE  cs_idseq = c_cs_idseq " +
+        		                "AND rl_name = 'HAS_A')) " +
+        " ORDER BY LOWER(long_name)";
+
+        //logger.debug( "getClassificationSchemes" );
+        logger.debug( ">>>>>>> " + sql.replace( "?", conteId ) );
+        results = getAll( sql, conteId, ClassificationSchemeModel.class );
+        //logger.debug( sql.replace( "?", conteId ) + " <<<<<<<" );
+        //logger.debug( "Done getClassificationSchemes\n" );
+
+        return results;
+    }    
+    
 
 
     public boolean haveClassificationSchemes( String conteId )
