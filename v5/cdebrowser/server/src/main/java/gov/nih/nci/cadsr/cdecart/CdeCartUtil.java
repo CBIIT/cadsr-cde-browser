@@ -2,15 +2,10 @@
  * Copyright (C) 2016 Leidos Biomedical Research, Inc. - All rights reserved.
  */
 package gov.nih.nci.cadsr.cdecart;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,7 +31,6 @@ import gov.nih.nci.cadsr.dao.model.ValidValueCdeCartModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
-import gov.nih.nci.ncicb.cadsr.common.dto.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ConceptDerivationRuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.DataElementDerivationTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.DataElementDerivationTypeTransferObject;
@@ -413,11 +407,12 @@ public class CdeCartUtil implements CdeCartUtilInterface {
         de.setUsingContexts(deModel.getUsingContexts());
         de.setRegistrationStatus(deModel.getRegistrationStatus());
         
-        //Add Derivation section
-        DerivedDataElement derivedDataElement = buildDerivedDataElementTransferObject(deModel.getPublicId());
-        if (derivedDataElement != null) {
-        	de.setDerivedDataElement(derivedDataElement);
-        }
+        //Add Derivation section 
+        //FIXME this call creates a wrong format of Derived DE
+//        DerivedDataElement derivedDataElement = buildDerivedDataElementTransferObject(deModel.getPublicId());
+//        if (derivedDataElement != null) {
+//        	de.setDerivedDataElement(derivedDataElement);
+//        }
         return de;
     }
 	public ValueDomainTransferObject buildValueDomainTransfer(ValueDomainModel modelVm){
@@ -638,6 +633,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	derivedDto.setRule(dataElementDerivationModel.getRule());
         List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId(deId);
         Collection<DataElementDerivationTransferObject> derivedCollection = new ArrayList<>();
+        derivedDto.setDataElementDerivation(derivedCollection);
         if (dataElementDerivationComponentModels != null) {
 	        DataElementDerivationTransferObject derivedItem;
 	        DataElementTransferObject de;
@@ -678,10 +674,9 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 	            }
 	            de.setContextName(modelItem.getContext());
 	            de.setDeIdseq(modelItem.getDeIdseq());
-	        }
+	        }//for
 	    	//TODO find and map missing data
         }
-        derivedDto.setDataElementDerivation(derivedCollection);
     	return derivedDto;
     }
     /* This is old code from CDE Browser v.4 mapping DED and its internal DE.
