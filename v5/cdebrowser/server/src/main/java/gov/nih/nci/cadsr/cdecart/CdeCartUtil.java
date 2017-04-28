@@ -415,8 +415,9 @@ public class CdeCartUtil implements CdeCartUtilInterface {
         
         //Add Derivation section
         DerivedDataElement derivedDataElement = buildDerivedDataElementTransferObject(deModel.getPublicId());
-        de.setDerivedDataElement(derivedDataElement);
-
+        if (derivedDataElement != null) {
+        	de.setDerivedDataElement(derivedDataElement);
+        }
         return de;
     }
 	public ValueDomainTransferObject buildValueDomainTransfer(ValueDomainModel modelVm){
@@ -620,7 +621,9 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     public DerivedDataElement buildDerivedDataElementTransferObject(int deId) {
     	DerivedDataElementTransferObject derivedDto = new DerivedDataElementTransferObject();
     	DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeId(deId);
-    	
+    	if (dataElementDerivationModel == null) {
+    		return null;
+    	}
     	//make mapping
     	DataElementDerivationTypeTransferObject dtoType = new DataElementDerivationTypeTransferObject();
     	dtoType.setName(dataElementDerivationModel.getDerivationType());
@@ -634,54 +637,54 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	derivedDto.setModifiedBy(dataElementDerivationModel.getModifiedBy());
     	derivedDto.setRule(dataElementDerivationModel.getRule());
         List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId(deId);
-        DataElementDerivationTransferObject derivedItem;
-        DataElementTransferObject de;
         Collection<DataElementDerivationTransferObject> derivedCollection = new ArrayList<>();
-        for (DataElementDerivationComponentModel modelItem : dataElementDerivationComponentModels) {
-        	derivedItem = new DataElementDerivationTransferObject();
-        	de = new DataElementTransferObject();
-        	derivedItem.setDerivedDataElement(de);
-        	derivedCollection.add(derivedItem);
-        	derivedItem.setCreatedBy(modelItem.getCreatedBy());
-        	derivedItem.setDateCreated(modelItem.getDateCreated());
-        	derivedItem.setDateModified(modelItem.getDateModified());
-        	//FIXME where CDR ID? This model does not have it???
-        	derivedItem.setCdrIdSeq(null);
-        	try {
-        		int displayOrderValue = Integer.parseInt(modelItem.getDisplayOrder());
-        		derivedItem.setDisplayOrder(displayOrderValue);
-        	}
-        	catch (NumberFormatException e) {
-        		log.error("Error in DisplayOrder data in " + modelItem, e);
-        	}
-        	derivedItem.setModifiedBy(modelItem.getModifiedBy());
-        	try {
-        		int publicIdValue = Integer.parseInt(modelItem.getPublicId());
-        		derivedItem.setDisplayOrder(publicIdValue);
-        	}
-        	catch (NumberFormatException e) {
-        		log.error("Error in publicId data in " + modelItem, e);
-        	}
-        	
-            de.setIdseq(modelItem.getDeIdseq());
-            de.setLongName(modelItem.getLongName());
-            de.setAslName(modelItem.getWorkflowStatus());
-            try {
-            	de.setVersion(Float.parseFloat(modelItem.getVersion()));
-            }
-            catch(NumberFormatException e) {
-            	log.error("Error in Version data in " + modelItem, e);
-            }
-            de.setContextName(modelItem.getContext());
-            de.setDeIdseq(modelItem.getDeIdseq());
+        if (dataElementDerivationComponentModels != null) {
+	        DataElementDerivationTransferObject derivedItem;
+	        DataElementTransferObject de;
+	        for (DataElementDerivationComponentModel modelItem : dataElementDerivationComponentModels) {
+	        	derivedItem = new DataElementDerivationTransferObject();
+	        	de = new DataElementTransferObject();
+	        	derivedItem.setDerivedDataElement(de);
+	        	derivedCollection.add(derivedItem);
+	        	derivedItem.setCreatedBy(modelItem.getCreatedBy());
+	        	derivedItem.setDateCreated(modelItem.getDateCreated());
+	        	derivedItem.setDateModified(modelItem.getDateModified());
+	        	//FIXME where CDR ID? This model does not have it???
+	        	derivedItem.setCdrIdSeq(null);
+	        	try {
+	        		int displayOrderValue = Integer.parseInt(modelItem.getDisplayOrder());
+	        		derivedItem.setDisplayOrder(displayOrderValue);
+	        	}
+	        	catch (NumberFormatException e) {
+	        		log.error("Error in DisplayOrder data in " + modelItem, e);
+	        	}
+	        	derivedItem.setModifiedBy(modelItem.getModifiedBy());
+	        	try {
+	        		int publicIdValue = Integer.parseInt(modelItem.getPublicId());
+	        		derivedItem.setDisplayOrder(publicIdValue);
+	        	}
+	        	catch (NumberFormatException e) {
+	        		log.error("Error in publicId data in " + modelItem, e);
+	        	}
+	        	
+	            de.setIdseq(modelItem.getDeIdseq());
+	            de.setLongName(modelItem.getLongName());
+	            de.setAslName(modelItem.getWorkflowStatus());
+	            try {
+	            	de.setVersion(Float.parseFloat(modelItem.getVersion()));
+	            }
+	            catch(NumberFormatException e) {
+	            	log.error("Error in Version data in " + modelItem, e);
+	            }
+	            de.setContextName(modelItem.getContext());
+	            de.setDeIdseq(modelItem.getDeIdseq());
+	        }
+	    	//TODO find and map missing data
         }
-        if (! derivedCollection.isEmpty()) {
-        	derivedDto.setDataElementDerivation(derivedCollection);
-        }
-    	//TODO continue mapping
+        derivedDto.setDataElementDerivation(derivedCollection);
     	return derivedDto;
     }
-    /*
+    /* This is old code from CDE Browser v.4 mapping DED and its internal DE.
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
@@ -700,7 +703,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
       return ded;
     }
      */
-    /*//CDEBROWSER-280
+    /*//CDEBROWSER-280 Derived requirement taking from XML Download. OC and XML Download are not the same XMLs.
 <ComponentDataElementsList_ITEM>
 <PublicId>2341957</PublicId>
 <LongName>Address Secondary Unit Indicator/Designator Number</LongName>
