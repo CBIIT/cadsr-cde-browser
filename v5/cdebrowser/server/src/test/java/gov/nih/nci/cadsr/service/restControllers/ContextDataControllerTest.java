@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.DBUtil;
+import gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.common.util.UnitTestCommon;
 import gov.nih.nci.cadsr.service.model.context.*;
@@ -15,6 +16,7 @@ import junit.framework.TestCase;
 import java.io.IOException;
 import java.util.*;
 
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
 public class ContextDataControllerTest extends TestCase
@@ -32,6 +34,8 @@ public class ContextDataControllerTest extends TestCase
     private String testHoverText;
     private int testMaxHoverTextLen;
     RestControllerCommon mockRestControllerCommon = Mockito.mock(RestControllerCommon.class);
+    @Mock
+    private ClassificationSchemeDAOImpl classificationSchemeDAO = mock(ClassificationSchemeDAOImpl.class);    
     
     public void setUp()
     {
@@ -512,7 +516,7 @@ public class ContextDataControllerTest extends TestCase
     }
 
     // Do we get the correct number of children
-/*    public void testInsertClassifications0()
+    public void testInsertClassifications0()
     {
 
         ContextModel contextModel = new ContextModel();
@@ -522,11 +526,12 @@ public class ContextDataControllerTest extends TestCase
 
         //List of Classification Schemes
         List<ClassificationSchemeModel> csModelList = initCsModelList();
+        //List<ClassificationSchemeModel> csChildModelList = initChildCsModelList();
 
         //CS (Classification Scheme) folder
         ParentNode classificationsParentNode = new ParentNode();
+        contextDataController.setClassificationSchemeDAO(classificationSchemeDAO);
         contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
-
         contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea, initCsCsiModelList()  );
 
         //Should be five children for this context
@@ -546,12 +551,36 @@ public class ContextDataControllerTest extends TestCase
 
         //CS (Classification Scheme) folder - A single parent node
         ParentNode classificationsParentNode = new ParentNode();
+        contextDataController.setClassificationSchemeDAO(classificationSchemeDAO);        
         contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
         contextDataController.insertClassifications( classificationsParentNode, csModelList, contextModel, programArea, initCsCsiModelList()  );
 
         //Should be two children for this context
         assertEquals( 2, classificationsParentNode.getChildren().size() );
-    }*/
+    }
+    
+    
+    public void testInsertChildClassifications1()
+    {
+
+        ContextModel contextModel = new ContextModel();
+
+        //For the context model, we only need the ConteIdseq
+        contextModel.setConteIdseq( "D9344734-8CAF-4378-E034-0003BA12F5E7" );
+
+        //List of Classification Schemes
+        List<ClassificationSchemeModel> csModelList = initCsModelList();
+        //List<ClassificationSchemeModel> csChildModelList = initChildCsModelList();
+
+        //CS (Classification Scheme) folder
+        ParentNode classificationsParentNode = new ParentNode();
+        ClassificationNode classificationsNode = new ClassificationNode(); 
+        contextDataController.setClassificationSchemeDAO(classificationSchemeDAO);
+        contextDataController.initClassificationsParentNode( classificationsParentNode, programArea, true );
+        ClassificationNode classificationsNodeResult = contextDataController.insertChildClassifications(classificationsNode, csModelList, contextModel, programArea, initCsCsiModelList());       
+        assertEquals( classificationsNodeResult.getChildren(), classificationsNode.getChildren());
+    }    
+    
 
 
     //A local test, dev time only
@@ -632,6 +661,24 @@ public class ContextDataControllerTest extends TestCase
         {
         }.getType() );
     }
+    
+    // Creates and initializes a list of Child ClassificationSchemeModels for insertClassifications tests
+    private List<ClassificationSchemeModel> initChildCsModelList()
+    {
+        Gson gson = new GsonBuilder().create();
+        String json = null;
+        try
+        {
+            json = DBUtil.readFile(  unitTestCommon.getTestDataDir() + "/src/test/java/gov/nih/nci/cadsr/service/restControllers/classificationSchemeModelTest.data" );
+        }
+        catch( IOException e )
+        {
+            assertTrue( e.getMessage(), false );
+        }
+        return gson.fromJson( json, new TypeToken<List<ClassificationSchemeModel>>()
+        {
+        }.getType() );
+    }    
 
 
     // Initilize test data
