@@ -8,24 +8,27 @@
     <tr class="dataElementViewTableTrVM">
         <td class="dataElementDescriptionLeftVM" width="20%">PV Meaning</td>
         <td class="dataElementValueVM" rowspan="2">
-<table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
-        <tr>
-              <td class="dataElementDescriptionLeftVM col1">Alternate Name</td>
-              <td class="dataElementDescriptionLeftVM col2">Type</td>
-              <td class="dataElementDescriptionLeftVM col3">Context</td>
-              <td class="dataElementDescriptionLeftVM col4">Language</td>
-        </tr>
-        <tr class="dataElementViewTableTrVM"   data-ng-repeat ="altName in p_value.alternateNames">
-              <td class="dataElementValueVM">{{altName.name}}</td>
-              <td class="dataElementValueVM">{{altName.type}}</td>
-              <td class="dataElementValueVM">{{altName.context}}</td>
-              <td class="dataElementValueVM">{{altName.language}}</td>
-          </tr>
+          <table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
+            <tr>
+                  <td class="dataElementDescriptionLeftVM col1">Alternate Names</td>
+                  <td class="dataElementDescriptionLeftVM col2">Type</td>
+                  <td class="dataElementDescriptionLeftVM col3">Context</td>
+                  <td class="dataElementDescriptionLeftVM col4">Language</td>
+            </tr>
+            <tr class="dataElementViewTableTrVM"  data-ng-repeat ="altName in p_value.alternateNames">
+                  <td class="dataElementValueVM">{{altName.name}}</td>
+                  <td class="dataElementValueVM">{{altName.type}}</td>
+                  <td class="dataElementValueVM">{{altName.context}}</td>
+                  <td class="dataElementValueVM">{{altName.language}}</td>
+            </tr>
+            <tr class="dataElementViewTableTrVM" ng-if="!p_value.alternateNames.length">
+                  <td class="dataElementValueVM" colspan="4">No alternate names</td>
+            </tr>            
           </table>
 
           <table class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" style="width:100%;">
         <tr>
-              <td class="dataElementDescriptionLeftVM col1">Alternate Definition</td>
+              <td class="dataElementDescriptionLeftVM col1">Alternate Definitions</td>
               <td class="dataElementDescriptionLeftVM col2">Type</td>
               <td class="dataElementDescriptionLeftVM col3">Context</td>
               <td class="dataElementDescriptionLeftVM col4">Language</td>
@@ -36,6 +39,9 @@
               <td class="dataElementValueVM">{{altDef.context}}</td>
               <td class="dataElementValueVM">{{altDef.language}}</td>
           </tr>
+            <tr class="dataElementViewTableTrVM" ng-if="!p_value.alternateDefinitions.length">
+                  <td class="dataElementValueVM" colspan="4">No alternate definitions</td>
+            </tr>            
           </table>          
         </td>
     </tr>
