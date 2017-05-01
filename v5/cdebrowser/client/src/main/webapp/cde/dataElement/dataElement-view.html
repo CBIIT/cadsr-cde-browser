@@ -161,13 +161,15 @@
 
     <span data-ng-show="(cdeDetails.dataElement.csCsis.length > 1 && n != cdeDetails.dataElement.csCsis.length - 1) || cdeCsi.alternateNames.length > 0 || cdeCsi.alternateDefinitions.length > 0 || cdeCsi.usedByAlternateNames.length > 0">
 <br/>
+        <span ng-if="$index==0">
         <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
             <tr class="cdeDetailsSubSubHeading">
-                <td class="dataElementHeading col1">Contexts using this CDE: </td>
+                <td class="dataElementHeading col1">Contexts using this CDE:</td>
                 <td class="dataElementValue" colspan="3" style="font-weight:normal;">{{getContextsUsingCDE(cdeCsi.usedByAlternateNames)}}</td>
             </tr>
         </table>
         <br />
+        </span>
         <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
             <tr>
                 <td class="dataElementHeading col1">Alternate Names</td>
