@@ -188,69 +188,68 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
         fs.resetClassificationAndProtocol();
-        if (fs.searchFilter.context) {
-            $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-                groupFactory.fillProtocols(response);
-                if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
 
-                    var finalID = '';
-                    if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
-                        $scope.filterService.protocols = groupFactory.load(contextId.selectedNode.parentId);
-                        var fName = $filter('filter')($scope.filterService.protocols,{formLongName:contextId.selectedNode.text})
-                        if (fName.length == 0)  {
-                            $scope.filterService.protocols = groupFactory.load(0);
-                            fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
-                        }
-                    }
-                    else {
+        $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+            groupFactory.fillProtocols(response);
+            if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
+
+                var finalID = '';
+                if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
+                    $scope.filterService.protocols = groupFactory.load(contextId.selectedNode.parentId);
+                    var fName = $filter('filter')($scope.filterService.protocols,{formLongName:contextId.selectedNode.text})
+                    if (fName.length == 0)  {
                         $scope.filterService.protocols = groupFactory.load(0);
-                        var fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
+                        fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
                     }
-                    $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
                 }
-                else{
-
-                    // $scope.filterService.searchFilter.classification = "";
-                    // $scope.filterService.searchFilter.protocol = "";
-
+                else {
                     $scope.filterService.protocols = groupFactory.load(0);
-
+                    var fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
                 }
-            });
+                $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
+            }
+            else{
 
-            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-                groupFactory1.fillClassifications(response);
-                if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
-                   var finalID = '';
-                    if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
-                        $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
-                        var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
-                        if (fName.length==0) {
-                            var datea=$filter('filter')(response,{csCsiName:contextId.selectedNode.text});
-                            $scope.filterService.classifications = $filter('filter')(response,{parentCsiIdSeq:datea[0].parentCsiIdSeq})
-                            fName = datea;
-                            fName[0].id = fName[0].csCsiIdSeq;
-                            fName[0].name = fName[0].csCsiName;
-                        }
+                // $scope.filterService.searchFilter.classification = "";
+                // $scope.filterService.searchFilter.protocol = "";
+
+                $scope.filterService.protocols = groupFactory.load(0);
+
+            }
+        });
+
+        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+            groupFactory1.fillClassifications(response);
+            if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
+               var finalID = '';
+                if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
+                    console.log(contextId.selectedNode.parentId)
+                    $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
+                    var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
+                    if (fName.length==0) {
+                        var datea=$filter('filter')(response,{csCsiName:contextId.selectedNode.text});
+                        $scope.filterService.classifications = $filter('filter')(response,{parentCsiIdSeq:datea[0].parentCsiIdSeq})
+                        fName = datea;
+                        fName[0].id = fName[0].csCsiIdSeq;
+                        fName[0].name = fName[0].csCsiName;
                     }
-                    else {
-                        $scope.filterService.classifications = groupFactory1.load(0);
-                        var fName = $filter('filter')($scope.filterService.classifications,{csIdSeq:contextId.selectedNode.idSeq})
-                    }
-                    $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
-               }
-                else{
-     
-                    // $scope.filterService.searchFilter.classification = "";
-                    // $scope.filterService.searchFilter.protocol = "";
-                   
+                }
+                else {
                     $scope.filterService.classifications = groupFactory1.load(0);
+                    var fName = $filter('filter')($scope.filterService.classifications,{csIdSeq:contextId.selectedNode.idSeq})
                 }
+                $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
+           }
+            else{
+ 
+                // $scope.filterService.searchFilter.classification = "";
+                // $scope.filterService.searchFilter.protocol = "";
+               
+                $scope.filterService.classifications = groupFactory1.load(0);
+            }
 
 
-            });            
-        }
-
+        });
     };
 
     // // selects dropdown values based on search left tree click //
@@ -1513,6 +1512,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     grandChildren[child].collapsed=false; // open parent of level 3 child //
                     $scope.highlightNode(greatGrandChildren[g_child],false); // highlight level 3 child //
                   }
+                  else {
+                    var greatGreatGrandChildren = greatGrandChildren[g_child].children;
+                    for (var g_g_child=0; g_g_child<greatGreatGrandChildren.length;g_g_child++) {
+                        if ($scope.fs.searchFilter[type].id==greatGreatGrandChildren[g_g_child].href.split(',')[1]) {
+                            children[a].collapsed=false;
+                            grandChildren[child].collapsed=false;
+                            greatGrandChildren[g_child].collapsed=false;
+                            $scope.highlightNode(greatGreatGrandChildren[g_g_child], false)
+                        };
+                    };
+                  };                  
                 };        
               }
             }
@@ -1547,7 +1557,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                   var grandchildren_3 = grandchildren_2[g2].children;
                   for (var g3=0; g3<grandchildren_3.length;g3++) {
                     grandchildren_3[g3].selected = undefined;
-                  };
+                  };                  
                 };
               };
             };
@@ -1583,22 +1593,22 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                       children[i]['contextId']=parameters[1]; // classification or protocol //
                       for (var child=0; child<grandChildren.length; child++) {
                         var gpid = grandChildren[child].href.split(',')[1]
-
-                        if (grandChildren[child].isChildOfContainer) {
-                            gpid = grandChildren[child].idSeq;
-                        };                        
                         grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
                         grandChildren[child]['parentId']=gpid; // classification scheme item //
                         var greatGrandChildren = grandChildren[child].children;
                         for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
                             var ggpid = greatGrandChildren[g_child].href.split(',')[1]
+                            if (grandChildren[child].isChildOfContainer) {
+                                ggpid = grandChildren[child].idSeq;
+                            };
+
                             greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
                             greatGrandChildren[g_child]['parentId']=ggpid; // classification scheme item child //
                             var great_greatGrandChildren = greatGrandChildren[g_child].children;
                             for (var g_g_child=0; g_g_child<great_greatGrandChildren.length; g_g_child++) {
                                 great_greatGrandChildren[g_g_child]['contextId']=parameters[1];
                                 great_greatGrandChildren[g_g_child]['parentId']=ggpid;
-                            };                            
+                            };                              
                         };
                       };
                     };
