@@ -5,8 +5,6 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -68,8 +66,9 @@ public class TypeaheadSearchController {
         	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors().get(0));
         	return new ArrayList<>();
         }
-        
-		resList = typeaheadSearchDAO.buildSearchTypeaheadName(searchCriteria);
+        //we consider to use user preferences in typeahead if there is a requirement to do that.
+        SearchPreferencesServer prefs = ControllerUtils.retriveSessionSearchPreferencesServer(httpSession);
+		resList = typeaheadSearchDAO.buildSearchTypeaheadByNameAndDomain(searchCriteria);
 		logger.debug("Response from retrieveTypeaheadSearchLongName: " + resList);
 		return resList;
 	}

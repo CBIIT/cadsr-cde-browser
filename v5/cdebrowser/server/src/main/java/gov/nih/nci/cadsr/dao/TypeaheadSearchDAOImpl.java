@@ -103,7 +103,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	
 	public static final String sqlRetrieveUMLStartsWith = 
 			UNION
-			+ "(select th from (SELECT dsn.name th FROM sbr.designations_view dsn, sbr.data_elements de "
+			+ "(select th from (SELECT distinct lower(dsn.name) th FROM sbr.designations_view dsn, sbr.data_elements de "
 			+ "WHERE "
 			+ "dsn.ac_idseq = de.de_idseq "
 			+ "AND instr(UPPER(dsn.name), ?, 1) > 0 "
@@ -169,7 +169,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	}
 
 	@Override
-	public List<String> buildSearchTypeaheadName(SearchCriteria searchCriteria) {
+	public List<String> buildSearchTypeaheadByNameAndDomain(SearchCriteria searchCriteria) {
 		String filteredInput = searchCriteria.getFilteredinput();
 		String pattern = searchCriteria.getName();
 		if ((StringUtils.isNotEmpty(pattern)) && (StringUtils.isNotEmpty(filteredInput))) {
@@ -184,7 +184,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 					Object[] sqlParamArr = buildSqlParamList(numOfDomains, pattern.toUpperCase());
 					List<String> models1;
 					models1 = jdbcTemplate.query(sqlForTypeahead, sqlParamArr, new StringPropertyMapper(String.class));
-					logger.debug("buildSearchTypeaheadName found matches: " + models1.size() + models1);
+					//logger.debug("buildSearchTypeaheadName found matches: " + models1.size() + models1);
 					return models1;
 				}
 			}
@@ -233,7 +233,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 				sb.append(sbUnion);
 				sb.append(END_TYPEAHEAD_SELECT);
 				res = sb.toString();
-				logger.debug("buildTypeaheadDomainSql: " + res);
+				//logger.debug("buildTypeaheadDomainSql: " + res);
 			}
 		}
 		return res;
@@ -251,7 +251,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		sb.append(sbUnion);
 		sb.append(END_TYPEAHEAD_SELECT);
 		String resSql = sb.toString();
-		logger.debug("buildAlldDomainSql: " + resSql);
+		//logger.debug("buildAlldDomainSql: " + resSql);
 		return resSql;
 	}
 }
