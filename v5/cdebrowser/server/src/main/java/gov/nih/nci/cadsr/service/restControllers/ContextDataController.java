@@ -712,6 +712,7 @@ public class ContextDataController
                 childClassificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
                 childClassificationSchemeNode.setType( CaDSRConstants.FOLDER );
                 childClassificationSchemeNode.setText( childClassificationSchemeModel.getLongName() );
+                childClassificationSchemeNode.setIsChildOfContainer(true);
 
                 //classificationSchemeNode.setHover( classificachildClassificationl.getPreferredDefinition() + " Conte Idseq:" + contextModel.getConteIdseq() + " Cs Idseq:" + classificationSchemeModel.getCsIdseq() );
                 childClassificationSchemeNode.setHover( childClassificationSchemeModel.getPreferredDefinition() );

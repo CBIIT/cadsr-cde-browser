@@ -34,6 +34,7 @@ public abstract class BaseNode implements Serializable
     private boolean isParent;
     private boolean isChild;
     private boolean collapsed;
+    private boolean isChildOfContainer;
     // treePath is used to display "Bread Crumbs"  in client UIs
     private List<String> treePath;
     // children can be nested to an arbitrary depth, in the client UI this is typically nested folders fo "Classifications"
@@ -49,6 +50,7 @@ public abstract class BaseNode implements Serializable
         this.isChild = false;
         this.childType = 0;
         this.status = CaDSRConstants.OK;
+        this.isChildOfContainer = false;
     }
 
     public void addChildNode( BaseNode contextNode )
@@ -118,10 +120,20 @@ public abstract class BaseNode implements Serializable
     {
         return isChild;
     }
+    
+    public boolean isIsChildOfContainer()
+    {
+        return isChildOfContainer;
+    }    
 
     public void setIsChild( boolean child )
     {
         this.isChild = child;
+    }
+    
+    public void setIsChildOfContainer( boolean child )
+    {
+        this.isChildOfContainer = child;
     }
 
     public boolean isCollapsed()
