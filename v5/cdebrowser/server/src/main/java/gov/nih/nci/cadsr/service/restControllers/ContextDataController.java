@@ -538,6 +538,7 @@ public class ContextDataController
                 classificationItemNodeChild.setHover( csCsiChildModel.getCsiDescription() );
                 classificationItemNodeChild.setIdSeq( csCsiChildModel.getCsiIdseq() );
                 classificationItemNodeChild.setProgramArea( classificationItemNodeParent.getProgramArea() );
+                classificationItemNodeChild.setIsChildOfContainer(classificationItemNodeParent.isIsChildOfContainer());
 
                 // TODO  check this - it may not be right
                 classificationItemNodeChild.setHref( appConfig.getCdesByClassificationSchemeItemRestServiceName() + "," + csCsiChildModel.getCsCsiIdseq() );
@@ -742,6 +743,7 @@ public class ContextDataController
 	                        childClassificationSchemeItemNode.setIdSeq( csCsiModel.getCsCsiIdseq() );
 	                        childClassificationSchemeItemNode.setCollapsed( true );
 	                        childClassificationSchemeItemNode.setProgramArea( programArea );
+	                        childClassificationSchemeItemNode.setIsChildOfContainer(true);
 	                        logger.debug( "addChildrenToCsi(" + childClassificationSchemeItemNode.getText() + ")   " + csCsiModel.getCsiName() + "  " + csCsiModel.getCsiDescription() );
 
 	                        addChildrenToCsi( childClassificationSchemeItemNode, csCsiNodelList);
