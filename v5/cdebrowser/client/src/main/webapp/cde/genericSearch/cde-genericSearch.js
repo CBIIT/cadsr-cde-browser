@@ -21,7 +21,9 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
         if (val.indexOf("*")==-1) {
             return $http.get('/cdebrowserServer/rest/typeahead/longnamefull', {
               params: {
-                name: val
+                name: val,
+                filteredinput: $scope.fs.dataElementVariables.searchFieldOptions.options.join(","),
+                queryType: $scope.selectedQueryType
               }
             }).then(function(response){
                 $scope.vals = response.data;
