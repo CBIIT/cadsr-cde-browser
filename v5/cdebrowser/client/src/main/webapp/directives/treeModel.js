@@ -209,6 +209,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                         "/?contextId=" + parameters[1] +
                                         "&programArea=" + parameters[2] +
                                         "&folderType=" + parameters[3]).success(function (response) {
+                                            console.log(selectedNode, "look at this data and here is href--->", selectedNode.href)
                                         selectedNode['children'] = response[0]['children'];
                                         selectedNode['dataLoaded'] = true;
                                         var children = selectedNode['children'];
@@ -218,13 +219,23 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                           children[i]['parentId']=pId; // classification or protocol //
                                           children[i]['contextId']=parameters[1]; // classification or protocol //
                                           for (var child=0; child<grandChildren.length; child++) {
+                                            if (grandChildren[child].isChildOfContainer) {
+                                                console.log("this is a container kid", grandChildren[child])
+                                                pId = grandChildren[child].idSeq;
+                                            };
                                             grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
                                             grandChildren[child]['parentId']=pId; // classification scheme item //
                                             var greatGrandChildren = grandChildren[child].children;
                                             for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
                                                 greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
                                                 greatGrandChildren[g_child]['parentId']=pId; // classification scheme item child //
+                                                var great_greatGrandChildren = greatGrandChildren[g_child].children;
+                                                for (var g_g_child=0; g_g_child<great_greatGrandChildren.length; g_g_child++) {
+                                                    great_greatGrandChildren[g_g_child]['contextId']=parameters[1];
+                                                    great_greatGrandChildren[g_g_child]['parentId']=pId;
+                                                };
                                             };
+
                                           };
                                         };
                                     });

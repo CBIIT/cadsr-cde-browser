@@ -188,67 +188,69 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
         fs.resetClassificationAndProtocol();
+        if (fs.searchFilter.context) {
+            $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+                groupFactory.fillProtocols(response);
+                if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
 
-        $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-            groupFactory.fillProtocols(response);
-            if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
-
-                var finalID = '';
-                if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
-                    $scope.filterService.protocols = groupFactory.load(contextId.selectedNode.parentId);
-                    var fName = $filter('filter')($scope.filterService.protocols,{formLongName:contextId.selectedNode.text})
-                    if (fName.length == 0)  {
+                    var finalID = '';
+                    if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
+                        $scope.filterService.protocols = groupFactory.load(contextId.selectedNode.parentId);
+                        var fName = $filter('filter')($scope.filterService.protocols,{formLongName:contextId.selectedNode.text})
+                        if (fName.length == 0)  {
+                            $scope.filterService.protocols = groupFactory.load(0);
+                            fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
+                        }
+                    }
+                    else {
                         $scope.filterService.protocols = groupFactory.load(0);
-                        fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
+                        var fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
                     }
+                    $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
                 }
-                else {
+                else{
+
+                    // $scope.filterService.searchFilter.classification = "";
+                    // $scope.filterService.searchFilter.protocol = "";
+
                     $scope.filterService.protocols = groupFactory.load(0);
-                    var fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
+
                 }
-                $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
-            }
-            else{
+            });
 
-                // $scope.filterService.searchFilter.classification = "";
-                // $scope.filterService.searchFilter.protocol = "";
-
-                $scope.filterService.protocols = groupFactory.load(0);
-
-            }
-        });
-
-        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-            groupFactory1.fillClassifications(response);
-            if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
-               var finalID = '';
-                if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
-                    $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
-                    var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
-                    if (fName.length==0) {
-                        var datea=$filter('filter')(response,{csCsiName:contextId.selectedNode.text});
-                        $scope.filterService.classifications = $filter('filter')(response,{parentCsiIdSeq:datea[0].parentCsiIdSeq})
-                        fName = datea;
-                        fName[0].id = fName[0].csCsiIdSeq;
-                        fName[0].name = fName[0].csCsiName;
+            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+                groupFactory1.fillClassifications(response);
+                if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
+                   var finalID = '';
+                    if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
+                        $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
+                        var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
+                        if (fName.length==0) {
+                            var datea=$filter('filter')(response,{csCsiName:contextId.selectedNode.text});
+                            $scope.filterService.classifications = $filter('filter')(response,{parentCsiIdSeq:datea[0].parentCsiIdSeq})
+                            fName = datea;
+                            fName[0].id = fName[0].csCsiIdSeq;
+                            fName[0].name = fName[0].csCsiName;
+                        }
                     }
-                }
-                else {
+                    else {
+                        $scope.filterService.classifications = groupFactory1.load(0);
+                        var fName = $filter('filter')($scope.filterService.classifications,{csIdSeq:contextId.selectedNode.idSeq})
+                    }
+                    $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
+               }
+                else{
+     
+                    // $scope.filterService.searchFilter.classification = "";
+                    // $scope.filterService.searchFilter.protocol = "";
+                   
                     $scope.filterService.classifications = groupFactory1.load(0);
-                    var fName = $filter('filter')($scope.filterService.classifications,{csIdSeq:contextId.selectedNode.idSeq})
                 }
-                $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
-           }
-            else{
- 
-                // $scope.filterService.searchFilter.classification = "";
-                // $scope.filterService.searchFilter.protocol = "";
-               
-                $scope.filterService.classifications = groupFactory1.load(0);
-            }
 
 
-        });
+            });            
+        }
+
     };
 
     // // selects dropdown values based on search left tree click //
@@ -577,15 +579,15 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         var  connector="";
 
         if( filterService.searchFilter.registrationStatus != '') {
-	        connector= c==0?"?":"&";
-	        c++;
-	        url += connector + "registrationStatus=" + filterService.searchFilter.registrationStatus;
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "registrationStatus=" + filterService.searchFilter.registrationStatus;
         }
 
         if( filterService.searchFilter.workFlowStatus != '') {
-	        connector= c==0?"?":"&";
-	        c++;
-	        url += connector + "workFlowStatus=" + filterService.searchFilter.workFlowStatus;
+            connector= c==0?"?":"&";
+            c++;
+            url += connector + "workFlowStatus=" + filterService.searchFilter.workFlowStatus;
         }
 
 
@@ -1426,17 +1428,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
     
     $scope.getCdeData = function () {
-    	$scope.publicId = $location;
-    	var searchObject = $location.search();
-    	if (($location.search().hasOwnProperty('publicId')) && ($location.search().hasOwnProperty('version'))) {
-    		var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
-        		+ "/cdebrowserServer/rest/CDELink?publicId=" + searchObject.publicId+"&version=" + searchObject.version;
+        $scope.publicId = $location;
+        var searchObject = $location.search();
+        if (($location.search().hasOwnProperty('publicId')) && ($location.search().hasOwnProperty('version'))) {
+            var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
+                + "/cdebrowserServer/rest/CDELink?publicId=" + searchObject.publicId+"&version=" + searchObject.version;
 
-    		$scope.dataElementLink = window.location.protocol + "//" + window.location.host	+ "/cdebrowserClient/cdeBrowser.html#/search?publicId=" + searchObject.publicId +"&version=" 
-				+ searchObject.version;
-    		$scope.more = false;
-    		$scope.getCdeDetailRestCall(dataElementServerLink);
-    	}
+            $scope.dataElementLink = window.location.protocol + "//" + window.location.host + "/cdebrowserClient/cdeBrowser.html#/search?publicId=" + searchObject.publicId +"&version=" 
+                + searchObject.version;
+            $scope.more = false;
+            $scope.getCdeDetailRestCall(dataElementServerLink);
+        }
     };
     
     $scope.advanceSearchShow();
@@ -1542,6 +1544,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 var grandchildren_2 = grandchildren_1[g1].children;
                 for (var g2=0; g2<grandchildren_2.length;g2++) {
                   grandchildren_2[g2].selected = undefined;
+                  var grandchildren_3 = grandchildren_2[g2].children;
+                  for (var g3=0; g3<grandchildren_3.length;g3++) {
+                    grandchildren_3[g3].selected = undefined;
+                  };
                 };
               };
             };
@@ -1577,6 +1583,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                       children[i]['contextId']=parameters[1]; // classification or protocol //
                       for (var child=0; child<grandChildren.length; child++) {
                         var gpid = grandChildren[child].href.split(',')[1]
+
+                        if (grandChildren[child].isChildOfContainer) {
+                            gpid = grandChildren[child].idSeq;
+                        };                        
                         grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
                         grandChildren[child]['parentId']=gpid; // classification scheme item //
                         var greatGrandChildren = grandChildren[child].children;
@@ -1584,6 +1594,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             var ggpid = greatGrandChildren[g_child].href.split(',')[1]
                             greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
                             greatGrandChildren[g_child]['parentId']=ggpid; // classification scheme item child //
+                            var great_greatGrandChildren = greatGrandChildren[g_child].children;
+                            for (var g_g_child=0; g_g_child<great_greatGrandChildren.length; g_g_child++) {
+                                great_greatGrandChildren[g_g_child]['contextId']=parameters[1];
+                                great_greatGrandChildren[g_g_child]['parentId']=ggpid;
+                            };                            
                         };
                       };
                     };
