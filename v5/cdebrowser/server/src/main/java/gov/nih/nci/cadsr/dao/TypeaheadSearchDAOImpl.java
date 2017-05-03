@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -33,7 +31,7 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements TypeaheadSearchDAO {
 	private static final Logger logger = LogManager.getLogger(TypeaheadSearchDAOImpl.class.getName());
 	
-	private static final int maxLongNamesToReturn = 20;
+	private static final int maxLongNamesToReturn = 21;
 	private JdbcTemplate jdbcTemplate;
 	//TODO we need to consider Search Preferences when we generate typeahead results
 	//see methods in SearchQueryBuilder as initSearchQueryBuilder, buildSearchTextWhere
@@ -65,50 +63,53 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	public static final String START_TYPEAHEAD_SELECT = "select th from (";
 	public static final String END_TYPEAHEAD_SELECT = ") where rownum < " + maxLongNamesToReturn;
 	private static final String UNION = "UNION ";
+	private static final String ALL = "ALL Fields";
+
 	public static final String sqlRetrieveLongName = 
 			UNION
-			+ "(select distinct lower(de.long_name) th from sbr.data_elements de" + 
+			+ "(select th from (select distinct lower(de.long_name) th from sbr.data_elements de " + 
 			"WHERE "
 			+ "instr(UPPER(de.long_name), ?, 1) > 0 "
 			+ ASL_NAME_NOT_USED
-			+ "order by th) ";
+			+ "order by th) where rownum < " + maxLongNamesToReturn + ") ";
 	
 	public static final String sqlRetrieveShortName = 
 			UNION
-			+ "(select distinct lower(de.short_name) th from sbr.data_elements de" + 
+			+ "(select th from (select distinct lower(de.preferred_name) th from sbr.data_elements de " + 
 			"WHERE "
-			+ "instr(UPPER(de.short_name), ?, 1) > 0 "
+			+ "instr(UPPER(de.preferred_name), ?, 1) > 0 "
 			+ ASL_NAME_NOT_USED
-			+ "order by th) ";
+			+ "order by th) where rownum < " + maxLongNamesToReturn + ") ";
 	
 	public static final String sqlRetrievePrefQuestionText = 
 			UNION
-			+ "(select distinct lower(rd1.doc_text) th from sbr.reference_documents_view rd1, sbr.data_elements de "
+			+ "(select th from (select distinct lower(rd1.doc_text) th from sbr.reference_documents_view rd1, sbr.data_elements de "
 			+ "WHERE "
 			+ "rd1.ac_idseq = de.de_idseq " //we are interested only in Ref docs which connect to CDEs
-			+ "AND instr(UPPER(rd1.doc_text), ?, 1) > 0 ) "
+			+ "AND instr(UPPER(rd1.doc_text), ?, 1) > 0 "
 			+ "AND rd1.dctl_name = 'Preferred Question Text' "
 			+ ASL_NAME_NOT_USED
-			+ "order by th) ";
+			+ "order by th) where rownum < " + maxLongNamesToReturn + ") ";
 	
 	public static final String sqlRetrieveAltQuestionText = 
 			UNION
-			+ "(select distinct lower(rd2.doc_text) th from sbr.reference_documents_view rd2, sbr.data_elements de "
+			+ "(select th from (select distinct lower(rd2.doc_text) th from sbr.reference_documents_view rd2, sbr.data_elements de "
 			+ "WHERE "
 			+ "rd2.ac_idseq = de.de_idseq " //we are interested only in Ref docs which connect to CDEs
-			+ "AND instr(UPPER(rd2.doc_text), ?, 1) > 0 ) "
+			+ "AND instr(UPPER(rd2.doc_text), ?, 1) > 0 "
 			+ "AND rd2.dctl_name = 'Alternate Question Text' "
 			+ ASL_NAME_NOT_USED
-			+ "order by th) ";
+			+ "order by th) where rownum < " + maxLongNamesToReturn + ") ";
 	
 	public static final String sqlRetrieveUMLStartsWith = 
 			UNION
-			+ "(SELECT dsn.name th FROM sbr.designations_view dsn, sbr.data_elements de "
+			+ "(select th from (SELECT dsn.name th FROM sbr.designations_view dsn, sbr.data_elements de "
 			+ "WHERE "
 			+ "dsn.ac_idseq = de.de_idseq "
-			+ "AND instr(UPPER(dsn.name), ?, 1) > 0 ) "
+			+ "AND instr(UPPER(dsn.name), ?, 1) > 0 "
 			+ "AND dsn.detl_name = 'UML Class:UML Attr' "
-			+ "order by th) ";
+			+ "order by th) where rownum < " + maxLongNamesToReturn + ") ";
+	
 	private static final Map<String, String> filterInputSqls = new HashMap<>();
 	{
 		filterInputSqls.put("Long Name", sqlRetrieveLongName);
@@ -166,15 +167,23 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		}
 		return new ArrayList<String>();	
 	}
-	public List<String> buildSearchTypeaheadName(String pattern, SearchCriteria searchCriteria) {
-		String fileterdInput = searchCriteria.getFilteredinput();
-		if ((StringUtils.isNotEmpty(pattern)) && (StringUtils.isNotEmpty(fileterdInput))) {
-			String[] searchDomain = fileterdInput.split( "\\s*,\\s*" );
-			if (searchDomain.length > 0) {
+
+	@Override
+	public List<String> buildSearchTypeaheadName(SearchCriteria searchCriteria) {
+		String filteredInput = searchCriteria.getFilteredinput();
+		String pattern = searchCriteria.getName();
+		if ((StringUtils.isNotEmpty(pattern)) && (StringUtils.isNotEmpty(filteredInput))) {
+			String[] searchDomain = filteredInput.split( "\\s*,\\s*" );
+			int numOfDomains = searchDomain.length;
+			if (numOfDomains > 0) {
 				String sqlForTypeahead = buildTypeaheadDomainSql(searchDomain);
 				if (sqlForTypeahead != null) {
+					if ((StringUtilities.containsKey(searchDomain, ALL))) {
+						numOfDomains = filterInputSqls.size();
+					}
+					Object[] sqlParamArr = buildSqlParamList(numOfDomains, pattern.toUpperCase());
 					List<String> models1;
-					models1 = jdbcTemplate.query(sqlForTypeahead, new Object[]{pattern.toUpperCase()}, new StringPropertyMapper(String.class));
+					models1 = jdbcTemplate.query(sqlForTypeahead, sqlParamArr, new StringPropertyMapper(String.class));
 					logger.debug("buildSearchTypeaheadName found matches: " + models1.size() + models1);
 					return models1;
 				}
@@ -182,10 +191,23 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		}
 		return new ArrayList<String>();	
 	}
+	/**
+	 * 
+	 * @param numOfDomains shall be more than 0
+	 * @param upperCase
+	 * @return array Object[]
+	 */
+	protected static Object[] buildSqlParamList(int numOfDomains, String upperCase) {
+		Object[] arr = new Object[numOfDomains];
+		for (int i = 0; i < numOfDomains; i++) {
+			arr[i] = upperCase;
+		}
+		return arr;
+	}
 	protected static String buildTypeaheadDomainSql(String[] searchDomain) {
 		List<String> domainSqlList = new ArrayList<>();
 		String res = null;
-		if (StringUtilities.containsKey(searchDomain, "ALL")) {
+		if (StringUtilities.containsKey(searchDomain, ALL)) {
 			res = buildAlldDomainSql();
 		}
 		else {
