@@ -33,10 +33,10 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	
 	private static final int maxLongNamesToReturn = 21;
 	private JdbcTemplate jdbcTemplate;
-	//TODO we need to consider Search Preferences when we generate typeahead results
-	//see methods in SearchQueryBuilder as initSearchQueryBuilder, buildSearchTextWhere
-	//Do we want to use All words if a filter text contains a space? We use exact phrase now.
+	//TODO decide do we need to consider Search Preferences when we generate typeahead results
+	//Do we want to use All words if a filter text contains a space? We use the exact received token now.
 	
+	//TODO Remove when design is finalized - start
 	//These are SQLs for a chance we want to restrict returned strings lengths
 	public static final String sqlRetrieveTypeaheadLongNameStartsWith = "select th from (select distinct substr(lower(long_name), 1, 20) th from sbr.data_elements " + 
 			"where (substr(lower(long_name), 1, "
@@ -57,6 +57,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	public static final String sqlRetrieveTypeaheadLongNameFull = "select th from (select distinct lower(long_name) th from sbr.data_elements " + 
 			"where instr(lower(long_name), ?, 1) > 0 order by th) where rownum < "
 			+ maxLongNamesToReturn;
+	//TODO Remove when design is finalized - end
 	
 	//These are SQLs for final implementation
 	public static final String ASL_NAME_NOT_USED = " AND de.ASL_NAME != 'RETIRED DELETED'";
@@ -83,7 +84,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	
 	public static final String sqlRetrievePrefQuestionText = 
 			UNION
-			+ "(select th from (select distinct lower(rd1.doc_text) th from sbr.reference_documents_view rd1, sbr.data_elements de "
+			+ "(select th from (select distinct lower(rd1.doc_text) th from sbr.reference_documents rd1, sbr.data_elements de "
 			+ "WHERE "
 			+ "rd1.ac_idseq = de.de_idseq " //we are interested only in Ref docs which connect to CDEs
 			+ "AND instr(UPPER(rd1.doc_text), ?, 1) > 0 "
@@ -93,7 +94,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	
 	public static final String sqlRetrieveAltQuestionText = 
 			UNION
-			+ "(select th from (select distinct lower(rd2.doc_text) th from sbr.reference_documents_view rd2, sbr.data_elements de "
+			+ "(select th from (select distinct lower(rd2.doc_text) th from sbr.reference_documents rd2, sbr.data_elements de "
 			+ "WHERE "
 			+ "rd2.ac_idseq = de.de_idseq " //we are interested only in Ref docs which connect to CDEs
 			+ "AND instr(UPPER(rd2.doc_text), ?, 1) > 0 "
@@ -103,7 +104,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	
 	public static final String sqlRetrieveUMLStartsWith = 
 			UNION
-			+ "(select th from (SELECT distinct lower(dsn.name) th FROM sbr.designations_view dsn, sbr.data_elements de "
+			+ "(select th from (SELECT distinct lower(dsn.name) th FROM sbr.designations dsn, sbr.data_elements de "
 			+ "WHERE "
 			+ "dsn.ac_idseq = de.de_idseq "
 			+ "AND instr(UPPER(dsn.name), ?, 1) > 0 "
@@ -173,12 +174,14 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		String filteredInput = searchCriteria.getFilteredinput();
 		String pattern = searchCriteria.getName();
 		if ((StringUtils.isNotEmpty(pattern)) && (StringUtils.isNotEmpty(filteredInput))) {
-			String[] searchDomain = filteredInput.split( "\\s*,\\s*" );
+			//We do not sanitize in here because we use prepared statements. We pass the value, we do not create a concatenated SQL with this value.
+			//pattern = StringUtilities.sanitizeForSql(pattern);
+			String[] searchDomain = filteredInput.split( "\\s*,\\s*" );//comma separated string with domain values example: filteredinput=Long+Name,Short+Name
 			int numOfDomains = searchDomain.length;
 			if (numOfDomains > 0) {
 				String sqlForTypeahead = buildTypeaheadDomainSql(searchDomain);
 				if (sqlForTypeahead != null) {
-					if ((StringUtilities.containsKey(searchDomain, ALL))) {
+					if ((StringUtilities.containsKey(searchDomain, ALL))) {//we ignore other received if there is ALL, we just take all domains  
 						numOfDomains = filterInputSqls.size();
 					}
 					Object[] sqlParamArr = buildSqlParamList(numOfDomains, pattern.toUpperCase());

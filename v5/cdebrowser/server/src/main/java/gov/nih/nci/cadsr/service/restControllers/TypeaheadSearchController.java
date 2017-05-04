@@ -35,7 +35,7 @@ public class TypeaheadSearchController {
     private TypeaheadSearchDAO typeaheadSearchDAO;
 	@Autowired
 	private SearchQueryBuilder searchQueryBuilder;
-
+	//TODO remove this method
 	@RequestMapping(value="/longname", produces = "application/json")
 	public List<String> retrieveTypeaheadSearchLongName(@RequestParam("name") String searchPattern)
 	{
@@ -46,6 +46,7 @@ public class TypeaheadSearchController {
 		List<String> resList = typeaheadSearchDAO.getSearchTypeaheadLongName(searchFilter);
 		return resList;
 	}
+	//TODO remove this method
 	@RequestMapping(value="/longnamefull", produces = "application/json")
 	public List<String> retrieveTypeaheadSearchLongNameFull(@RequestParam("name") String searchPattern)
 	{
@@ -66,10 +67,10 @@ public class TypeaheadSearchController {
         	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors().get(0));
         	return new ArrayList<>();
         }
-        //we consider to use user preferences in typeahead if there is a requirement to do that.
-        SearchPreferencesServer prefs = ControllerUtils.retriveSessionSearchPreferencesServer(httpSession);
+        //we might consider to use user preferences in typeahead if there is a requirement to do that.
+        //SearchPreferencesServer prefs = ControllerUtils.retriveSessionSearchPreferencesServer(httpSession);
 		resList = typeaheadSearchDAO.buildSearchTypeaheadByNameAndDomain(searchCriteria);
-		logger.debug("Response from retrieveTypeaheadSearchLongName: " + resList);
+		//logger.debug("Response from retrieveTypeaheadSearchLongName: " + resList);
 		return resList;
 	}
 

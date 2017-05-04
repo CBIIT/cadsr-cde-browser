@@ -14,9 +14,9 @@ public class DataElement
     private List<ReferenceDocument> otherReferenceDocuments;//other than Document Type containing "*Question Text"
     
     private List<ReferenceDocument> referenceDocuments;
-    private List<AlternateName> alternateNames; // probably taking this out
-    private List<AlternateDefinition> alternateDefinitions; // probably taking this out
     private List<CsCsi> csCsis;
+    private List<AlternateNameCsCsi> alternateNames;//CDEBROWSER-809
+    private List<AlternateDefinitionCsCsi> alternateDefinitions;//CDEBROWSER-809
     private List<OtherVersion> otherVersions;
 
     public DataElementDetails getDataElementDetails()
@@ -39,27 +39,23 @@ public class DataElement
         this.referenceDocuments = referenceDocuments;
     }
 
-    public List<AlternateName> getAlternateNames()
-    {
-        return alternateNames;
-    }
+    public List<AlternateNameCsCsi> getAlternateNames() {
+		return alternateNames;
+	}
 
-    public void setAlternateNames( List<AlternateName> alternateNames )
-    {
-        this.alternateNames = alternateNames;
-    }
+	public void setAlternateNames(List<AlternateNameCsCsi> alternateNames) {
+		this.alternateNames = alternateNames;
+	}
 
-    public List<AlternateDefinition> getAlternateDefinitions()
-    {
-        return alternateDefinitions;
-    }
+    public List<AlternateDefinitionCsCsi> getAlternateDefinitions() {
+		return alternateDefinitions;
+	}
 
-    public void setAlternateDefinitions( List<AlternateDefinition> alternateDefinitions )
-    {
-        this.alternateDefinitions = alternateDefinitions;
-    }
+	public void setAlternateDefinitions(List<AlternateDefinitionCsCsi> alternateDefinitions) {
+		this.alternateDefinitions = alternateDefinitions;
+	}
 
-    public List<OtherVersion> getOtherVersions()
+	public List<OtherVersion> getOtherVersions()
     {
         return otherVersions;
     }

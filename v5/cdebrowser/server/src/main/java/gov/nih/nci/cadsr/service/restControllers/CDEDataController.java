@@ -3,11 +3,14 @@ package gov.nih.nci.cadsr.service.restControllers;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -36,33 +39,24 @@ import gov.nih.nci.cadsr.dao.PropertyConceptDAO;
 import gov.nih.nci.cadsr.dao.ReferenceDocDAO;
 import gov.nih.nci.cadsr.dao.RepresentationConceptsDAO;
 import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
-import gov.nih.nci.cadsr.dao.UserManagerDAO;
 import gov.nih.nci.cadsr.dao.ValueDomainConceptDAO;
 import gov.nih.nci.cadsr.dao.ValueMeaningDAO;
 import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
 import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
-import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
 import gov.nih.nci.cadsr.dao.model.ConceptModel;
-import gov.nih.nci.cadsr.dao.model.ContextModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModelList;
 import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
-import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
 import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
-import gov.nih.nci.cadsr.dao.model.DesignationModel;
 import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
-import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
 import gov.nih.nci.cadsr.dao.model.PermissibleValuesModel;
-import gov.nih.nci.cadsr.dao.model.PropertyModel;
 import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
-import gov.nih.nci.cadsr.dao.model.RepresentationModel;
 import gov.nih.nci.cadsr.dao.model.ToolOptionsModel;
 import gov.nih.nci.cadsr.dao.model.UsageModel;
-import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.error.RestControllerException;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
@@ -75,7 +69,9 @@ import gov.nih.nci.cadsr.service.model.cdeData.classifications.Classifications;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeItemReferenceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationsSchemeReferenceDocument;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateDefinition;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateDefinitionCsCsi;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateNameCsCsi;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.CsCsi;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
@@ -351,15 +347,18 @@ public class CDEDataController
         // add all the cscsi's and their designations and definitions except the unclassified ones
         //change for CDEBROWSER-468
         //now get the unclassified ones 
+        ////////////////////////////////////////////////////
         //CDEBROWSER-809 add unclassified first
         CsCsi unclassCsCsi = ControllerUtils.populateCsCsiDeUnclassified( dataElementModel );
         //CDEBROWSER-809 we change the lists of alternate names
         rearrangeUsedBy(unclassCsCsi);
         
         dataElementCsCsis.add( unclassCsCsi );
-        
+        ////////////////////////////////////////////////////
         List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiDeModel( dataElementModel.getDeIdseq(), csCsiDeDAO );
-        dataElementCsCsis.addAll( csCsiClassifiedList );
+        
+        //CDEBROWSER-809 Add Alt Names and Definitions with CS/CSIs listed comma separated 
+        buildAltNamesDefinitionsWithCsCsi(csCsiClassifiedList, dataElement);
 
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
@@ -373,7 +372,70 @@ public class CDEDataController
 
         return dataElement;
     }
-    //CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
+    
+    //CDEBROWSER-809
+    protected void buildAltNamesDefinitionsWithCsCsi(List<CsCsi> csCsiClassifiedList, DataElement dataElement) {
+    	if ((csCsiClassifiedList == null) || (csCsiClassifiedList.isEmpty())) {
+    		return;
+    	}
+    	//add ALternate names with CsCsIs
+    	List<AlternateNameCsCsi> alternateNames = new ArrayList<>();
+    	Map<AlternateName, Set<String>> altNamesMap = new HashMap<>();
+    	for (CsCsi csCsi : csCsiClassifiedList) {
+    		List<AlternateName> altNames = csCsi.getAlternateNames();
+    		for (AlternateName altName : altNames) {
+    			String nextCsCsi = csCsi.getCsLongName() + '/' + csCsi.getCsiName();
+    			Set<String> placed = altNamesMap.get(altName);
+    			if (placed == null) {
+    				placed = new TreeSet<String>();
+    				altNamesMap.put(altName, placed);
+    			}
+				placed.add(nextCsCsi);
+    		}
+    		Set<Entry<AlternateName, Set<String>>> entries = altNamesMap.entrySet();
+    		for (Entry<AlternateName, Set<String>> entry : entries) {
+    			StringBuilder sb = new StringBuilder();
+    			for (String curr : entry.getValue()) {
+    				sb.append(curr).append(", ");
+    			}
+    			String strCsCsi = sb.toString();
+    			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
+    			AlternateNameCsCsi altName = new AlternateNameCsCsi(entry.getKey());
+    			altName.setCsCsi(strCsCsi);
+    			alternateNames.add(altName);
+    		}
+    	}
+    	dataElement.setAlternateNames(alternateNames);
+    	//add ALternate Definitions with CsCsIs
+    	List<AlternateDefinitionCsCsi> alternateDefinitions = new ArrayList<>();
+    	Map<AlternateDefinition, Set<String>> altDefinitionsMap = new HashMap<>();
+    	for (CsCsi csCsi : csCsiClassifiedList) {
+    		String nextCsCsi = csCsi.getCsLongName() + '/' + csCsi.getCsiName();
+    		List<AlternateDefinition> altNames = csCsi.getAlternateDefinitions();
+    		for (AlternateDefinition altName : altNames) {
+    			Set<String> placed = altDefinitionsMap.get(altName);
+    			if (placed == null) {
+    				placed = new TreeSet<String>();
+    				altDefinitionsMap.put(altName, placed);
+    			}
+				placed.add(nextCsCsi);
+    		}
+    		Set<Entry<AlternateDefinition, Set<String>>> entries = altDefinitionsMap.entrySet();
+    		for (Entry<AlternateDefinition, Set<String>> entry : entries) {
+    			StringBuilder sb = new StringBuilder();
+    			for (String curr : entry.getValue()) {
+    				sb.append(curr).append(", ");
+    			}
+    			String strCsCsi = sb.toString();
+    			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
+    			AlternateDefinitionCsCsi altDef = new AlternateDefinitionCsCsi(entry.getKey());
+    			altDef.setCsCsi(strCsCsi);
+    			alternateDefinitions.add(altDef);
+    		}
+    	}
+    	dataElement.setAlternateDefinitions(alternateDefinitions);
+	}
+	//CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
     protected static CsCsi rearrangeUsedBy(CsCsi unclassCsCsi) {
     	List<AlternateName> altNameList = unclassCsCsi.getAlternateNames();
     	List<AlternateName> altNameListAll = new ArrayList<>();

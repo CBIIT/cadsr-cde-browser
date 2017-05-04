@@ -216,18 +216,7 @@ public class StringUtilities
 
         int retValue = Arrays.binarySearch( keys, key );
 
-        ArrayList list = new ArrayList();
-
-
-        if( retValue >= 0 )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return ( retValue >= 0 );
     }
 
     public static Date getCurDateDbFormat()
