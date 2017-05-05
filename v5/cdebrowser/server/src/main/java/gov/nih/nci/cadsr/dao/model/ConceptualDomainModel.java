@@ -5,10 +5,10 @@ package gov.nih.nci.cadsr.dao.model;
 
 public class ConceptualDomainModel extends BaseModel
 {
-
-
-    // these are all the fields used for now
+	private static final long serialVersionUID = 1L;
+	// these are all the fields used for now
     private String preferredName;
+    private String longName;//CDEBROWSER-816 Adding CD Long name to use in CDE View
     private Float version;
     private int cdId; //aka public id
     private ContextModel contextModel;
@@ -69,40 +69,71 @@ public class ConceptualDomainModel extends BaseModel
         this.conteIdseq = conteIdseq;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ConceptualDomainModel{" +
-                "preferredName='" + preferredName + '\'' +
-                ", version=" + version +
-                ", cdId=" + cdId +
-                ", contextModel=" + contextModel +
-                '}';
-    }
+	public String getLongName() {
+		return longName;
+	}
 
-    @Override
-    public boolean equals( Object o )
-    {
-        if( this == o ) return true;
-        if( !( o instanceof ConceptualDomainModel ) ) return false;
+	public void setLongName(String longName) {
+		this.longName = longName;
+	}
 
-        ConceptualDomainModel that = ( ConceptualDomainModel ) o;
+	@Override
+	public String toString() {
+		return "ConceptualDomainModel [preferredName=" + preferredName + ", longName=" + longName + ", version="
+				+ version + ", cdId=" + cdId + ", contextModel=" + contextModel + ", conteIdseq=" + conteIdseq
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy
+				+ ", modifiedDate=" + modifiedDate + ", formattedVersion=" + formattedVersion + "]";
+	}
 
-        if( getCdId() != that.getCdId() ) return false;
-        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
-            return false;
-        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null ) return false;
-        return !( getContextModel() != null ? !getContextModel().equals( that.getContextModel() ) : that.getContextModel() != null );
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cdId;
+		result = prime * result + ((conteIdseq == null) ? 0 : conteIdseq.hashCode());
+		result = prime * result + ((contextModel == null) ? 0 : contextModel.hashCode());
+		result = prime * result + ((longName == null) ? 0 : longName.hashCode());
+		result = prime * result + ((preferredName == null) ? 0 : preferredName.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
 
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
-        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
-        result = 31 * result + getCdId();
-        result = 31 * result + ( getContextModel() != null ? getContextModel().hashCode() : 0 );
-        return result;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConceptualDomainModel other = (ConceptualDomainModel) obj;
+		if (cdId != other.cdId)
+			return false;
+		if (conteIdseq == null) {
+			if (other.conteIdseq != null)
+				return false;
+		} else if (!conteIdseq.equals(other.conteIdseq))
+			return false;
+		if (contextModel == null) {
+			if (other.contextModel != null)
+				return false;
+		} else if (!contextModel.equals(other.contextModel))
+			return false;
+		if (longName == null) {
+			if (other.longName != null)
+				return false;
+		} else if (!longName.equals(other.longName))
+			return false;
+		if (preferredName == null) {
+			if (other.preferredName != null)
+				return false;
+		} else if (!preferredName.equals(other.preferredName))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
 }

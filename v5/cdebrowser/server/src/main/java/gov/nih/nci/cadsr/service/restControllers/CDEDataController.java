@@ -705,6 +705,7 @@ public class CDEDataController
         dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
         dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
         dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
+        dataElementConceptDetails.setConceptualDomainLongName( dataElementModel.getDec().getCdLongName() );//CDEBROWSER-816
 
         //Conceptual Domain Version
 

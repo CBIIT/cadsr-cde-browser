@@ -5,7 +5,11 @@ package gov.nih.nci.cadsr.dao.model;
 
 public class DataElementConceptModel extends BaseModel
 {
-    private String preferredName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String preferredName;
     private String preferredDefinition;
     private String longName;
     private String aslName;
@@ -30,6 +34,7 @@ public class DataElementConceptModel extends BaseModel
     private Float objClassVersion; // Object Class
     private String conteName;
     private String cdPrefName;
+    private String cdLongName;//CDEBROWSER-816 Use CD Long Name in CDE View
     private String cdContextName;
     private Float cdVersion;
     private int cdPublicId;
@@ -361,141 +366,238 @@ public class DataElementConceptModel extends BaseModel
 		this.createdBy = createdBy;
 	}
 
+	public String getCdLongName() {
+		return cdLongName;
+	}
+
+	public void setCdLongName(String cdLongName) {
+		this.cdLongName = cdLongName;
+	}
+
 	@Override
-    public boolean equals( Object o )
-    {
-        if( this == o ) return true;
-        if( !( o instanceof DataElementConceptModel ) ) return false;
+	public String toString() {
+		return "DataElementConceptModel [preferredName=" + preferredName + ", preferredDefinition="
+				+ preferredDefinition + ", longName=" + longName + ", aslName=" + aslName + ", version=" + version
+				+ ", deletedInd=" + deletedInd + ", latestVerInd=" + latestVerInd + ", publicId=" + publicId
+				+ ", origin=" + origin + ", idseq=" + idseq + ", decIdseq=" + decIdseq + ", cdIdseq=" + cdIdseq
+				+ ", proplName=" + proplName + ", oclName=" + oclName + ", objClassQualifier=" + objClassQualifier
+				+ ", propertyQualifier=" + propertyQualifier + ", changeNote=" + changeNote + ", objClassPrefName="
+				+ objClassPrefName + ", objClassContextName=" + objClassContextName + ", propertyPrefName="
+				+ propertyPrefName + ", propertyContextName=" + propertyContextName + ", propertyVersion="
+				+ propertyVersion + ", objClassVersion=" + objClassVersion + ", conteName=" + conteName
+				+ ", cdPrefName=" + cdPrefName + ", cdLongName=" + cdLongName + ", cdContextName=" + cdContextName
+				+ ", cdVersion=" + cdVersion + ", cdPublicId=" + cdPublicId + ", objClassPublicId=" + objClassPublicId
+				+ ", property=" + property + ", objectClassModel=" + objectClassModel + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate
+				+ ", formattedVersion=" + formattedVersion + "]";
+	}
 
-        DataElementConceptModel that = ( DataElementConceptModel ) o;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aslName == null) ? 0 : aslName.hashCode());
+		result = prime * result + ((cdContextName == null) ? 0 : cdContextName.hashCode());
+		result = prime * result + ((cdIdseq == null) ? 0 : cdIdseq.hashCode());
+		result = prime * result + ((cdLongName == null) ? 0 : cdLongName.hashCode());
+		result = prime * result + ((cdPrefName == null) ? 0 : cdPrefName.hashCode());
+		result = prime * result + cdPublicId;
+		result = prime * result + ((cdVersion == null) ? 0 : cdVersion.hashCode());
+		result = prime * result + ((changeNote == null) ? 0 : changeNote.hashCode());
+		result = prime * result + ((conteName == null) ? 0 : conteName.hashCode());
+		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
+		result = prime * result + ((decIdseq == null) ? 0 : decIdseq.hashCode());
+		result = prime * result + ((deletedInd == null) ? 0 : deletedInd.hashCode());
+		result = prime * result + ((idseq == null) ? 0 : idseq.hashCode());
+		result = prime * result + ((latestVerInd == null) ? 0 : latestVerInd.hashCode());
+		result = prime * result + ((longName == null) ? 0 : longName.hashCode());
+		result = prime * result + ((objClassContextName == null) ? 0 : objClassContextName.hashCode());
+		result = prime * result + ((objClassPrefName == null) ? 0 : objClassPrefName.hashCode());
+		result = prime * result + objClassPublicId;
+		result = prime * result + ((objClassQualifier == null) ? 0 : objClassQualifier.hashCode());
+		result = prime * result + ((objClassVersion == null) ? 0 : objClassVersion.hashCode());
+		result = prime * result + ((objectClassModel == null) ? 0 : objectClassModel.hashCode());
+		result = prime * result + ((oclName == null) ? 0 : oclName.hashCode());
+		result = prime * result + ((origin == null) ? 0 : origin.hashCode());
+		result = prime * result + ((preferredDefinition == null) ? 0 : preferredDefinition.hashCode());
+		result = prime * result + ((preferredName == null) ? 0 : preferredName.hashCode());
+		result = prime * result + ((property == null) ? 0 : property.hashCode());
+		result = prime * result + ((propertyContextName == null) ? 0 : propertyContextName.hashCode());
+		result = prime * result + ((propertyPrefName == null) ? 0 : propertyPrefName.hashCode());
+		result = prime * result + ((propertyQualifier == null) ? 0 : propertyQualifier.hashCode());
+		result = prime * result + ((propertyVersion == null) ? 0 : propertyVersion.hashCode());
+		result = prime * result + ((proplName == null) ? 0 : proplName.hashCode());
+		result = prime * result + publicId;
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
 
-        if( getPublicId() != that.getPublicId() ) return false;
-        if( getCdPublicId() != that.getCdPublicId() ) return false;
-        if( getObjClassPublicId() != that.getObjClassPublicId() ) return false;
-        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
-            return false;
-        if( getPreferredDefinition() != null ? !getPreferredDefinition().equals( that.getPreferredDefinition() ) : that.getPreferredDefinition() != null )
-            return false;
-        if( getLongName() != null ? !getLongName().equals( that.getLongName() ) : that.getLongName() != null )
-            return false;
-        if( getAslName() != null ? !getAslName().equals( that.getAslName() ) : that.getAslName() != null ) return false;
-        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null ) return false;
-        if( getDeletedInd() != null ? !getDeletedInd().equals( that.getDeletedInd() ) : that.getDeletedInd() != null )
-            return false;
-        if( getLatestVerInd() != null ? !getLatestVerInd().equals( that.getLatestVerInd() ) : that.getLatestVerInd() != null )
-            return false;
-        if( getOrigin() != null ? !getOrigin().equals( that.getOrigin() ) : that.getOrigin() != null ) return false;
-        if( getIdseq() != null ? !getIdseq().equals( that.getIdseq() ) : that.getIdseq() != null ) return false;
-        if( getDecIdseq() != null ? !getDecIdseq().equals( that.getDecIdseq() ) : that.getDecIdseq() != null )
-            return false;
-        if( getCdIdseq() != null ? !getCdIdseq().equals( that.getCdIdseq() ) : that.getCdIdseq() != null ) return false;
-        if( getProplName() != null ? !getProplName().equals( that.getProplName() ) : that.getProplName() != null )
-            return false;
-        if( getOclName() != null ? !getOclName().equals( that.getOclName() ) : that.getOclName() != null ) return false;
-        if( getObjClassQualifier() != null ? !getObjClassQualifier().equals( that.getObjClassQualifier() ) : that.getObjClassQualifier() != null )
-            return false;
-        if( getPropertyQualifier() != null ? !getPropertyQualifier().equals( that.getPropertyQualifier() ) : that.getPropertyQualifier() != null )
-            return false;
-        if( getChangeNote() != null ? !getChangeNote().equals( that.getChangeNote() ) : that.getChangeNote() != null )
-            return false;
-        if( getObjClassPrefName() != null ? !getObjClassPrefName().equals( that.getObjClassPrefName() ) : that.getObjClassPrefName() != null )
-            return false;
-        if( getObjClassContextName() != null ? !getObjClassContextName().equals( that.getObjClassContextName() ) : that.getObjClassContextName() != null )
-            return false;
-        if( getPropertyPrefName() != null ? !getPropertyPrefName().equals( that.getPropertyPrefName() ) : that.getPropertyPrefName() != null )
-            return false;
-        if( getPropertyContextName() != null ? !getPropertyContextName().equals( that.getPropertyContextName() ) : that.getPropertyContextName() != null )
-            return false;
-        if( getPropertyVersion() != null ? !getPropertyVersion().equals( that.getPropertyVersion() ) : that.getPropertyVersion() != null )
-            return false;
-        if( getObjClassVersion() != null ? !getObjClassVersion().equals( that.getObjClassVersion() ) : that.getObjClassVersion() != null )
-            return false;
-        if( getConteName() != null ? !getConteName().equals( that.getConteName() ) : that.getConteName() != null )
-            return false;
-        if( getCdPrefName() != null ? !getCdPrefName().equals( that.getCdPrefName() ) : that.getCdPrefName() != null )
-            return false;
-        if( getCdContextName() != null ? !getCdContextName().equals( that.getCdContextName() ) : that.getCdContextName() != null )
-            return false;
-        if( getCdVersion() != null ? !getCdVersion().equals( that.getCdVersion() ) : that.getCdVersion() != null )
-            return false;
-        if( getProperty() != null ? !getProperty().equals( that.getProperty() ) : that.getProperty() != null )
-            return false;
-        return !( getObjectClassModel() != null ? !getObjectClassModel().equals( that.getObjectClassModel() ) : that.getObjectClassModel() != null );
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DataElementConceptModel other = (DataElementConceptModel) obj;
+		if (aslName == null) {
+			if (other.aslName != null)
+				return false;
+		} else if (!aslName.equals(other.aslName))
+			return false;
+		if (cdContextName == null) {
+			if (other.cdContextName != null)
+				return false;
+		} else if (!cdContextName.equals(other.cdContextName))
+			return false;
+		if (cdIdseq == null) {
+			if (other.cdIdseq != null)
+				return false;
+		} else if (!cdIdseq.equals(other.cdIdseq))
+			return false;
+		if (cdLongName == null) {
+			if (other.cdLongName != null)
+				return false;
+		} else if (!cdLongName.equals(other.cdLongName))
+			return false;
+		if (cdPrefName == null) {
+			if (other.cdPrefName != null)
+				return false;
+		} else if (!cdPrefName.equals(other.cdPrefName))
+			return false;
+		if (cdPublicId != other.cdPublicId)
+			return false;
+		if (cdVersion == null) {
+			if (other.cdVersion != null)
+				return false;
+		} else if (!cdVersion.equals(other.cdVersion))
+			return false;
+		if (changeNote == null) {
+			if (other.changeNote != null)
+				return false;
+		} else if (!changeNote.equals(other.changeNote))
+			return false;
+		if (conteName == null) {
+			if (other.conteName != null)
+				return false;
+		} else if (!conteName.equals(other.conteName))
+			return false;
+		if (createdBy == null) {
+			if (other.createdBy != null)
+				return false;
+		} else if (!createdBy.equals(other.createdBy))
+			return false;
+		if (decIdseq == null) {
+			if (other.decIdseq != null)
+				return false;
+		} else if (!decIdseq.equals(other.decIdseq))
+			return false;
+		if (deletedInd == null) {
+			if (other.deletedInd != null)
+				return false;
+		} else if (!deletedInd.equals(other.deletedInd))
+			return false;
+		if (idseq == null) {
+			if (other.idseq != null)
+				return false;
+		} else if (!idseq.equals(other.idseq))
+			return false;
+		if (latestVerInd == null) {
+			if (other.latestVerInd != null)
+				return false;
+		} else if (!latestVerInd.equals(other.latestVerInd))
+			return false;
+		if (longName == null) {
+			if (other.longName != null)
+				return false;
+		} else if (!longName.equals(other.longName))
+			return false;
+		if (objClassContextName == null) {
+			if (other.objClassContextName != null)
+				return false;
+		} else if (!objClassContextName.equals(other.objClassContextName))
+			return false;
+		if (objClassPrefName == null) {
+			if (other.objClassPrefName != null)
+				return false;
+		} else if (!objClassPrefName.equals(other.objClassPrefName))
+			return false;
+		if (objClassPublicId != other.objClassPublicId)
+			return false;
+		if (objClassQualifier == null) {
+			if (other.objClassQualifier != null)
+				return false;
+		} else if (!objClassQualifier.equals(other.objClassQualifier))
+			return false;
+		if (objClassVersion == null) {
+			if (other.objClassVersion != null)
+				return false;
+		} else if (!objClassVersion.equals(other.objClassVersion))
+			return false;
+		if (objectClassModel == null) {
+			if (other.objectClassModel != null)
+				return false;
+		} else if (!objectClassModel.equals(other.objectClassModel))
+			return false;
+		if (oclName == null) {
+			if (other.oclName != null)
+				return false;
+		} else if (!oclName.equals(other.oclName))
+			return false;
+		if (origin == null) {
+			if (other.origin != null)
+				return false;
+		} else if (!origin.equals(other.origin))
+			return false;
+		if (preferredDefinition == null) {
+			if (other.preferredDefinition != null)
+				return false;
+		} else if (!preferredDefinition.equals(other.preferredDefinition))
+			return false;
+		if (preferredName == null) {
+			if (other.preferredName != null)
+				return false;
+		} else if (!preferredName.equals(other.preferredName))
+			return false;
+		if (property == null) {
+			if (other.property != null)
+				return false;
+		} else if (!property.equals(other.property))
+			return false;
+		if (propertyContextName == null) {
+			if (other.propertyContextName != null)
+				return false;
+		} else if (!propertyContextName.equals(other.propertyContextName))
+			return false;
+		if (propertyPrefName == null) {
+			if (other.propertyPrefName != null)
+				return false;
+		} else if (!propertyPrefName.equals(other.propertyPrefName))
+			return false;
+		if (propertyQualifier == null) {
+			if (other.propertyQualifier != null)
+				return false;
+		} else if (!propertyQualifier.equals(other.propertyQualifier))
+			return false;
+		if (propertyVersion == null) {
+			if (other.propertyVersion != null)
+				return false;
+		} else if (!propertyVersion.equals(other.propertyVersion))
+			return false;
+		if (proplName == null) {
+			if (other.proplName != null)
+				return false;
+		} else if (!proplName.equals(other.proplName))
+			return false;
+		if (publicId != other.publicId)
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
 
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
-        result = 31 * result + ( getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0 );
-        result = 31 * result + ( getLongName() != null ? getLongName().hashCode() : 0 );
-        result = 31 * result + ( getAslName() != null ? getAslName().hashCode() : 0 );
-        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
-        result = 31 * result + ( getDeletedInd() != null ? getDeletedInd().hashCode() : 0 );
-        result = 31 * result + ( getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0 );
-        result = 31 * result + getPublicId();
-        result = 31 * result + ( getOrigin() != null ? getOrigin().hashCode() : 0 );
-        result = 31 * result + ( getIdseq() != null ? getIdseq().hashCode() : 0 );
-        result = 31 * result + ( getDecIdseq() != null ? getDecIdseq().hashCode() : 0 );
-        result = 31 * result + ( getCdIdseq() != null ? getCdIdseq().hashCode() : 0 );
-        result = 31 * result + ( getProplName() != null ? getProplName().hashCode() : 0 );
-        result = 31 * result + ( getOclName() != null ? getOclName().hashCode() : 0 );
-        result = 31 * result + ( getObjClassQualifier() != null ? getObjClassQualifier().hashCode() : 0 );
-        result = 31 * result + ( getPropertyQualifier() != null ? getPropertyQualifier().hashCode() : 0 );
-        result = 31 * result + ( getChangeNote() != null ? getChangeNote().hashCode() : 0 );
-        result = 31 * result + ( getObjClassPrefName() != null ? getObjClassPrefName().hashCode() : 0 );
-        result = 31 * result + ( getObjClassContextName() != null ? getObjClassContextName().hashCode() : 0 );
-        result = 31 * result + ( getPropertyPrefName() != null ? getPropertyPrefName().hashCode() : 0 );
-        result = 31 * result + ( getPropertyContextName() != null ? getPropertyContextName().hashCode() : 0 );
-        result = 31 * result + ( getPropertyVersion() != null ? getPropertyVersion().hashCode() : 0 );
-        result = 31 * result + ( getObjClassVersion() != null ? getObjClassVersion().hashCode() : 0 );
-        result = 31 * result + ( getConteName() != null ? getConteName().hashCode() : 0 );
-        result = 31 * result + ( getCdPrefName() != null ? getCdPrefName().hashCode() : 0 );
-        result = 31 * result + ( getCdContextName() != null ? getCdContextName().hashCode() : 0 );
-        result = 31 * result + ( getCdVersion() != null ? getCdVersion().hashCode() : 0 );
-        result = 31 * result + getCdPublicId();
-        result = 31 * result + getObjClassPublicId();
-        result = 31 * result + ( getProperty() != null ? getProperty().hashCode() : 0 );
-        result = 31 * result + ( getObjectClassModel() != null ? getObjectClassModel().hashCode() : 0 );
-        return result;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "DataElementConceptModel{" +
-                "preferredName='" + preferredName + '\'' +
-                ", preferredDefinition='" + preferredDefinition + '\'' +
-                ", longName='" + longName + '\'' +
-                ", aslName='" + aslName + '\'' +
-                ", version=" + version +
-                ", deletedInd='" + deletedInd + '\'' +
-                ", latestVerInd='" + latestVerInd + '\'' +
-                ", publicId=" + publicId +
-                ", origin='" + origin + '\'' +
-                ", idseq='" + idseq + '\'' +
-                ", decIdseq='" + decIdseq + '\'' +
-                ", cdIdseq='" + cdIdseq + '\'' +
-                ", proplName='" + proplName + '\'' +
-                ", oclName='" + oclName + '\'' +
-                ", objClassQualifier='" + objClassQualifier + '\'' +
-                ", propertyQualifier='" + propertyQualifier + '\'' +
-                ", changeNote='" + changeNote + '\'' +
-                ", objClassPrefName='" + objClassPrefName + '\'' +
-                ", objClassContextName='" + objClassContextName + '\'' +
-                ", propertyPrefName='" + propertyPrefName + '\'' +
-                ", propertyContextName='" + propertyContextName + '\'' +
-                ", propertyVersion=" + propertyVersion +
-                ", objClassVersion=" + objClassVersion +
-                ", conteName='" + conteName + '\'' +
-                ", cdPrefName='" + cdPrefName + '\'' +
-                ", cdContextName='" + cdContextName + '\'' +
-                ", cdVersion=" + cdVersion +
-                ", cdPublicId=" + cdPublicId +
-                ", objClassPublicId=" + objClassPublicId +
-                ", property=" + property +
-                ", objectClassModel=" + objectClassModel +
-                '}';
-    }
 }

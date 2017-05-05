@@ -15,6 +15,7 @@ public class DataElementConceptDetails
     private String workflowStatus;
     private Integer conceptualDomainPublicId;
     private String conceptualDomainShortName;
+    private String conceptualDomainLongName;//CDEBROWSER-816 Use CD Long name on CDE View
     private String conceptualDomainContextName;
     private String conceptualDomainVersion;
     private String formattedConceptualDomainVersion;
@@ -122,7 +123,15 @@ public class DataElementConceptDetails
         this.conceptualDomainShortName = conceptualDomainShortName;
     }
 
-    public String getConceptualDomainContextName()
+    public String getConceptualDomainLongName() {
+		return conceptualDomainLongName;
+	}
+
+	public void setConceptualDomainLongName(String conceptualDomainLongName) {
+		this.conceptualDomainLongName = conceptualDomainLongName;
+	}
+
+	public String getConceptualDomainContextName()
     {
         return conceptualDomainContextName;
     }

@@ -200,6 +200,10 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                     {
                         dataElementConceptModel.setCdPrefName( conceptualDomainModel.getPreferredName() );
                     }
+                    if( conceptualDomainModel.getLongName() != null )//CDEBROWSER-816 Use CD Long name not Preferred name od CDE Details page
+                    {
+                        dataElementConceptModel.setCdLongName(conceptualDomainModel.getLongName());
+                    }
                     if( conceptualDomainModel.getVersion() != null )
                     {
                         dataElementConceptModel.setCdVersion( conceptualDomainModel.getVersion() );
