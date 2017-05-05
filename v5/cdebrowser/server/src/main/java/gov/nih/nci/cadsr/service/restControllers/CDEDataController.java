@@ -73,6 +73,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateDefinitionCs
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateNameCsCsi;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.CsCsi;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.CsCsiForCdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.OtherVersion;
@@ -351,15 +352,26 @@ public class CDEDataController
         //CDEBROWSER-809 add unclassified first
         CsCsi unclassCsCsi = ControllerUtils.populateCsCsiDeUnclassified( dataElementModel );
         //CDEBROWSER-809 we change the lists of alternate names
-        rearrangeUsedBy(unclassCsCsi);
-        
-        dataElementCsCsis.add( unclassCsCsi );
+        CsCsiForCdeDetails csCsiForCdeDetails = rearrangeForCdeDetails(unclassCsCsi);
+        dataElement.setCsCsisCdeDetails(csCsiForCdeDetails );
         ////////////////////////////////////////////////////
         List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiDeModel( dataElementModel.getDeIdseq(), csCsiDeDAO );
         
         //CDEBROWSER-809 Add Alt Names and Definitions with CS/CSIs listed comma separated 
-        buildAltNamesDefinitionsWithCsCsi(csCsiClassifiedList, dataElement);
-
+        List<AlternateNameCsCsi> altNamesWithCsCsi = buildAltNamesWithCsCsi(csCsiClassifiedList);//could be null
+        List<AlternateDefinitionCsCsi> definitionsWithCsCsi = buildDefinitionsWithCsCsi(csCsiClassifiedList);//could be null
+        if (altNamesWithCsCsi != null) {
+	        List<AlternateNameCsCsi> altNamesWithCsCsiAll = csCsiForCdeDetails.getAlternateNames();
+	        for (AlternateNameCsCsi curr : altNamesWithCsCsi) {
+	        	altNamesWithCsCsiAll.add(curr);
+	        }
+        }
+        if (definitionsWithCsCsi != null) {
+	        List<AlternateDefinitionCsCsi> altDefinitionsWithCsCsiAll = csCsiForCdeDetails.getAlternateDefinitions();
+	        for (AlternateDefinitionCsCsi curr : definitionsWithCsCsi) {
+	        	altDefinitionsWithCsCsiAll.add(curr);
+	        }
+        }
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
         List<OtherVersion> otherVersions = new ArrayList<>();
@@ -374,9 +386,9 @@ public class CDEDataController
     }
     
     //CDEBROWSER-809
-    protected void buildAltNamesDefinitionsWithCsCsi(List<CsCsi> csCsiClassifiedList, DataElement dataElement) {
+    protected List<AlternateNameCsCsi> buildAltNamesWithCsCsi(List<CsCsi> csCsiClassifiedList) {
     	if ((csCsiClassifiedList == null) || (csCsiClassifiedList.isEmpty())) {
-    		return;
+    		return null;
     	}
     	//add ALternate names with CsCsIs
     	List<AlternateNameCsCsi> alternateNames = new ArrayList<>();
@@ -405,7 +417,13 @@ public class CDEDataController
     			alternateNames.add(altName);
     		}
     	}
-    	dataElement.setAlternateNames(alternateNames);
+    	return alternateNames;
+    }
+    //CDEBROWSER-809
+    protected List<AlternateDefinitionCsCsi> buildDefinitionsWithCsCsi(List<CsCsi> csCsiClassifiedList) {
+    	if ((csCsiClassifiedList == null) || (csCsiClassifiedList.isEmpty())) {
+    		return null;
+    	}
     	//add ALternate Definitions with CsCsIs
     	List<AlternateDefinitionCsCsi> alternateDefinitions = new ArrayList<>();
     	Map<AlternateDefinition, Set<String>> altDefinitionsMap = new HashMap<>();
@@ -433,24 +451,45 @@ public class CDEDataController
     			alternateDefinitions.add(altDef);
     		}
     	}
-    	dataElement.setAlternateDefinitions(alternateDefinitions);
+    	return alternateDefinitions;
 	}
 	//CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
-    protected static CsCsi rearrangeUsedBy(CsCsi unclassCsCsi) {
+    protected static CsCsiForCdeDetails rearrangeForCdeDetails(CsCsi unclassCsCsi) {
     	List<AlternateName> altNameList = unclassCsCsi.getAlternateNames();
     	List<AlternateName> altNameListAll = new ArrayList<>();
     	List<AlternateName> altNameListUsedBy = new ArrayList<>();
-    	for (AlternateName alternateName : altNameList) {
-    		if ((USED_BY.equals(alternateName.getType())) && (alternateName.getName().equals(alternateName.getContext()))) {
-    			altNameListUsedBy.add(alternateName);
-    		}
-    		else {
-    			altNameListAll.add(alternateName);
-    		}
+    	if (altNameList != null) {
+	    	for (AlternateName alternateName : altNameList) {
+	    		if ((USED_BY.equals(alternateName.getType())) && (alternateName.getName().equals(alternateName.getContext()))) {
+	    			altNameListUsedBy.add(alternateName);
+	    		}
+	    		else {
+	    			altNameListAll.add(alternateName);
+	    		}
+	    	}
     	}
     	unclassCsCsi.setAlternateNames(altNameListAll);
     	unclassCsCsi.setUsedByAlternateNames(altNameListUsedBy);
-    	return unclassCsCsi;
+    	CsCsiForCdeDetails csCsiForCdeDetails = new CsCsiForCdeDetails(unclassCsCsi);//will take usedByAlternateNames
+    	//set up Alt Names
+    	List<AlternateNameCsCsi> alternateNameCsCsiList = new ArrayList<>();
+    	csCsiForCdeDetails.setAlternateNames(alternateNameCsCsiList);
+    	AlternateNameCsCsi nameCsCsi;
+    	for (AlternateName curr: altNameListAll) {
+    		nameCsCsi = new AlternateNameCsCsi(curr);
+    		alternateNameCsCsiList.add(nameCsCsi);
+    	}
+    	//set up Definitions
+    	List<AlternateDefinitionCsCsi> alternateDefCsCsiList = new ArrayList<>();
+    	csCsiForCdeDetails.setAlternateDefinitions(alternateDefCsCsiList);
+    	AlternateDefinitionCsCsi defCsCsi;
+    	if (unclassCsCsi.getAlternateDefinitions() != null) {
+	    	for (AlternateDefinition curr: unclassCsCsi.getAlternateDefinitions()) {
+	    		defCsCsi = new AlternateDefinitionCsCsi(curr);//
+	    		alternateDefCsCsiList.add(defCsCsi);
+	    	}
+    	}
+    	return csCsiForCdeDetails;
 	}
     /**
      * Populates service representation object dataElement with ReferenceDocuments from DB model dataElementModel

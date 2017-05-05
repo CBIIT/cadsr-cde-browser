@@ -53,12 +53,13 @@ public class CsCsiDeDAOImpl extends AbstractDAOOperations implements CsCsiDeDAO 
 	
 	//This SQL retrieves all Definitions related to DE and CS-CSI combinations. ac_att_cscsi_view_ext tracks CS-CSI and Definitions relationships	
 	private final static String sqlRetrieveCsCsiDefinBegin = "SELECT ext.cs_csi_idseq definIdseq, " +
-       "defin.DEFINITION definition, defin.DEFL_NAME type, con.NAME contextName " +
+       "defin.DEFINITION definition, defin.DEFL_NAME type, defin.LAE_NAME lang, con.NAME contextName " +
        "FROM sbrext.ac_att_cscsi_view_ext ext, definitions defin, contexts con " +
        "WHERE "
        + "ext.att_idseq = defin.DEFIN_IDSEQ and defin.CONTE_IDSEQ = con.CONTE_IDSEQ "
        + "and defin.AC_IDSEQ = ? and ext.cs_csi_idseq IN ";
-			
+	//CDEBROWSER-809 Added defin.LAE_NAME lang
+	
 	private final static String sqlRetrieveCsCsiDefinEnd = "order by upper (defin.DEFINITION), defin.DEFL_NAME";
 			
 	private static final Logger logger = LogManager.getLogger(CsCsiValueMeaningDAOImpl.class.getName());

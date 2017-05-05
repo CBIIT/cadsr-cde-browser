@@ -15,8 +15,8 @@ public class DataElement
     
     private List<ReferenceDocument> referenceDocuments;
     private List<CsCsi> csCsis;
-    private List<AlternateNameCsCsi> alternateNames;//CDEBROWSER-809
-    private List<AlternateDefinitionCsCsi> alternateDefinitions;//CDEBROWSER-809
+    private CsCsiForCdeDetails csCsisCdeDetails;//CDEBROWSER-809 regrouping Alternate names and definitions
+
     private List<OtherVersion> otherVersions;
 
     public DataElementDetails getDataElementDetails()
@@ -39,22 +39,6 @@ public class DataElement
         this.referenceDocuments = referenceDocuments;
     }
 
-    public List<AlternateNameCsCsi> getAlternateNames() {
-		return alternateNames;
-	}
-
-	public void setAlternateNames(List<AlternateNameCsCsi> alternateNames) {
-		this.alternateNames = alternateNames;
-	}
-
-    public List<AlternateDefinitionCsCsi> getAlternateDefinitions() {
-		return alternateDefinitions;
-	}
-
-	public void setAlternateDefinitions(List<AlternateDefinitionCsCsi> alternateDefinitions) {
-		this.alternateDefinitions = alternateDefinitions;
-	}
-
 	public List<OtherVersion> getOtherVersions()
     {
         return otherVersions;
@@ -74,6 +58,14 @@ public class DataElement
     {
         this.csCsis = csCsis;
     }
+
+	public CsCsiForCdeDetails getCsCsisCdeDetails() {
+		return csCsisCdeDetails;
+	}
+
+	public void setCsCsisCdeDetails(CsCsiForCdeDetails csCsisCdeDetails) {
+		this.csCsisCdeDetails = csCsisCdeDetails;
+	}
 
 	public List<ReferenceDocument> getQuestionTextReferenceDocuments() {
 		return questionTextReferenceDocuments;

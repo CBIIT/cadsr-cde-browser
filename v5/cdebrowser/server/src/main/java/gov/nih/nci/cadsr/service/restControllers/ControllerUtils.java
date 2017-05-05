@@ -118,6 +118,7 @@ public class ControllerUtils {
 					definition.setName(definitionModelAlt.getDefinition());
 					definition.setType(definitionModelAlt.getType());
 					definition.setContext(definitionModelAlt.getContextName());
+					definition.setLanguage(definitionModelAlt.getLang());
 					classifiedDefinitions.add(definition);
 				}
 			}
