@@ -75,7 +75,7 @@ public class AlternateName
 
 	@Override
 	public String toString() {
-		return "AlternateNameDAO [name=" + name + ", type=" + type + ", context=" + context + ", language=" + language
+		return "AlternateName [name=" + name + ", type=" + type + ", context=" + context + ", language=" + language
 				+ "]";
 	}
 

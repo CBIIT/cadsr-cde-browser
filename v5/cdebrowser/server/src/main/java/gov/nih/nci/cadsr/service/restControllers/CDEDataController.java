@@ -404,19 +404,19 @@ public class CDEDataController
     			}
 				placed.add(nextCsCsi);
     		}
-    		Set<Entry<AlternateName, Set<String>>> entries = altNamesMap.entrySet();
-    		for (Entry<AlternateName, Set<String>> entry : entries) {
-    			StringBuilder sb = new StringBuilder();
-    			for (String curr : entry.getValue()) {
-    				sb.append(curr).append(", ");
-    			}
-    			String strCsCsi = sb.toString();
-    			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
-    			AlternateNameCsCsi altName = new AlternateNameCsCsi(entry.getKey());
-    			altName.setCsCsi(strCsCsi);
-    			alternateNames.add(altName);
-    		}
     	}
+		Set<Entry<AlternateName, Set<String>>> entries = altNamesMap.entrySet();
+		for (Entry<AlternateName, Set<String>> entry : entries) {
+			StringBuilder sb = new StringBuilder();
+			for (String curr : entry.getValue()) {
+				sb.append(curr).append(", ");
+			}
+			String strCsCsi = sb.toString();
+			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
+			AlternateNameCsCsi altName = new AlternateNameCsCsi(entry.getKey());
+			altName.setCsCsi(strCsCsi);
+			alternateNames.add(altName);
+		}
     	return alternateNames;
     }
     //CDEBROWSER-809
@@ -438,19 +438,19 @@ public class CDEDataController
     			}
 				placed.add(nextCsCsi);
     		}
-    		Set<Entry<AlternateDefinition, Set<String>>> entries = altDefinitionsMap.entrySet();
-    		for (Entry<AlternateDefinition, Set<String>> entry : entries) {
-    			StringBuilder sb = new StringBuilder();
-    			for (String curr : entry.getValue()) {
-    				sb.append(curr).append(", ");
-    			}
-    			String strCsCsi = sb.toString();
-    			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
-    			AlternateDefinitionCsCsi altDef = new AlternateDefinitionCsCsi(entry.getKey());
-    			altDef.setCsCsi(strCsCsi);
-    			alternateDefinitions.add(altDef);
-    		}
     	}
+		Set<Entry<AlternateDefinition, Set<String>>> entries = altDefinitionsMap.entrySet();
+		for (Entry<AlternateDefinition, Set<String>> entry : entries) {
+			StringBuilder sb = new StringBuilder();
+			for (String curr : entry.getValue()) {
+				sb.append(curr).append(", ");
+			}
+			String strCsCsi = sb.toString();
+			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
+			AlternateDefinitionCsCsi altDef = new AlternateDefinitionCsCsi(entry.getKey());
+			altDef.setCsCsi(strCsCsi);
+			alternateDefinitions.add(altDef);
+		}
     	return alternateDefinitions;
 	}
 	//CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
@@ -819,7 +819,7 @@ public class CDEDataController
 
             /////////////////////////////////////////////////////
             // "Representation Concepts" of the "value Domain" Tab
-            logger.debug( "Representation Concepts of the value Domain" );
+            //logger.debug( "Representation Concepts of the value Domain" );
             representationConcepts = representationConceptsDAO.getRepresentationConceptByRepresentationId( dataElementModel.getValueDomainModel().getRepresentationModel().getPublicId() );
         }
 
@@ -1133,7 +1133,7 @@ public class CDEDataController
         }
         else
         {
-            logger.error( "no usage models" );
+            logger.error( "no usage models publicId: " + dataElementModel.getPublicId());
         }
         return usage;
     }
