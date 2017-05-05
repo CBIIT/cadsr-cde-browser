@@ -18,6 +18,11 @@
 		<input type="submit" value="Logon" ng-click="login()">
 		<input type="submit" value="Clear" ng-click="resetFields()">
 	</div>
+	<br />
+	<div style="center: 50%; top: 70px; width: 40%; border-style: solid; border-width: 1px;" >
+		<h3>WARNING NOTICE</h3>
+		<p ng-bind-html="hhsWarningMsg"></p>
+	</div>		
 </div>
 
 <script>

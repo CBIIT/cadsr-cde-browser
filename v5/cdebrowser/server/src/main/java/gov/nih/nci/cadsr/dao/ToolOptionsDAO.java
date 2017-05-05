@@ -11,4 +11,5 @@ public interface ToolOptionsDAO
 {
     ToolOptionsModel getToolOptionsByToolNameAndProperty( String toolName, String property );
     List<ToolOptionsModel> getToolOptionsByProperty( String property );
+    public List<ToolOptionsModel> getHhsWarningMsg();
 }

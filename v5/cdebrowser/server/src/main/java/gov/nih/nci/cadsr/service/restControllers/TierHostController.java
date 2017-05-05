@@ -45,6 +45,14 @@ public class TierHostController
         return toolOptions;
     }
     
+    @RequestMapping( value = "/getHhsWarningMessage" )
+    @ResponseBody
+    public List<ToolOptionsModel> getHhsWarningMessage()
+    {
+        List<ToolOptionsModel> toolOptions = getToolOptionsDAO().getHhsWarningMsg();
+        return toolOptions;
+    }    
+    
     @RequestMapping( value = "/getPwcsURL", produces = "text/plain")
     public String getPwcsUrl() throws RestControllerException
     {

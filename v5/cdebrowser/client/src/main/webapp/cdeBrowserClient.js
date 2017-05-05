@@ -1155,6 +1155,21 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
     };
 
+    // Get HHS warning display banner from the DB
+    $scope.getHhsWarning = function () {
+        var restService = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/getHhsWarningMessage"
+
+        $http.get(restService).success(function (response) {
+            for( var i = 0; i < response.length; i++)
+            {
+            	if( response[i].toolName =="caDSR" )
+                {
+                    $scope.hhsWarningMsg = response[i].value;
+                }            	
+            }
+        });
+    };    
+    
 
     $scope.versionData = function() {
         $http.get("version.json").success(function (response) {
@@ -1250,6 +1265,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.dataLoadFromServer();
     $scope.versionData();
     $scope.getToolHosts();
+    $scope.getHhsWarning();    
 
     // change search tab section tabs //
     $scope.changeSearchTab = function(tabIndex) {

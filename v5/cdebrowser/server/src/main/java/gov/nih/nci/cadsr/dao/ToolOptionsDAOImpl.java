@@ -55,4 +55,13 @@ public class ToolOptionsDAOImpl extends AbstractDAOOperations implements ToolOpt
         return toolOptionsModels;
 
     }
+    
+    public List<ToolOptionsModel> getHhsWarningMsg()
+    {
+        String sql = "SELECT * FROM tool_options_ext WHERE TOOL_NAME = 'caDSR' and PROPERTY = 'WARNING.BANNER'";
+
+        List<ToolOptionsModel> toolOptionsModels = getAll( sql, ToolOptionsModel.class );
+        return toolOptionsModels;
+
+    }    
 }
