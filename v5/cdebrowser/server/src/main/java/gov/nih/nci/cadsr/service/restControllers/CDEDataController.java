@@ -409,7 +409,7 @@ public class CDEDataController
 		for (Entry<AlternateName, Set<String>> entry : entries) {
 			StringBuilder sb = new StringBuilder();
 			for (String curr : entry.getValue()) {
-				sb.append(curr).append(", ");
+				sb.append(curr).append("; ");
 			}
 			String strCsCsi = sb.toString();
 			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
@@ -443,7 +443,7 @@ public class CDEDataController
 		for (Entry<AlternateDefinition, Set<String>> entry : entries) {
 			StringBuilder sb = new StringBuilder();
 			for (String curr : entry.getValue()) {
-				sb.append(curr).append(", ");
+				sb.append(curr).append("; ");
 			}
 			String strCsCsi = sb.toString();
 			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
