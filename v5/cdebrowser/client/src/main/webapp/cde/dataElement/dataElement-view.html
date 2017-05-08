@@ -1,295 +1,196 @@
 <br>
-
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th colspan="2" align="left">Data Element Details</th>
-    </tr>
+  <tr class="cdeDetailsSubHeading">
+    <th colspan="2" align="left">Data Element Details</th>
+  </tr>
 </table>
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription" width="20%">Public ID:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.publicId">{{cdeDetails.dataElement.dataElementDetails.publicId}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Version:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.formattedVersion">{{cdeDetails.dataElement.dataElementDetails.formattedVersion}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Long Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.longName">{{cdeDetails.dataElement.dataElementDetails.longName}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Short Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.shortName">{{cdeDetails.dataElement.dataElementDetails.shortName}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Preferred Question Text:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.preferredQuestionText">{{cdeDetails.dataElement.dataElementDetails.preferredQuestionText}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Definition:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.definition">{{cdeDetails.dataElement.dataElementDetails.definition}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Value Domain:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.valueDomain">{{cdeDetails.dataElement.dataElementDetails.valueDomain}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Data Element Concept:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.dataElementConcept">{{cdeDetails.dataElement.dataElementDetails.dataElementConcept}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Context:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.context">{{cdeDetails.dataElement.dataElementDetails.context}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Workflow Status:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.workflowStatus">{{cdeDetails.dataElement.dataElementDetails.workflowStatus}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Origin:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.origin">{{cdeDetails.dataElement.dataElementDetails.origin}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Registration Status:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Data Element Link:</td>
-        <td class="dataElementValue">{{dataElementLink}}</td>
-    </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription" width="20%">Public ID:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.publicId">{{cdeDetails.dataElement.dataElementDetails.publicId}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Version:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.formattedVersion">{{cdeDetails.dataElement.dataElementDetails.formattedVersion}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Long Name:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.longName">{{cdeDetails.dataElement.dataElementDetails.longName}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Short Name:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.shortName">{{cdeDetails.dataElement.dataElementDetails.shortName}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Preferred Question Text:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.preferredQuestionText">{{cdeDetails.dataElement.dataElementDetails.preferredQuestionText}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Definition:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.definition">{{cdeDetails.dataElement.dataElementDetails.definition}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Value Domain:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.valueDomain">{{cdeDetails.dataElement.dataElementDetails.valueDomain}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Data Element Concept:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.dataElementConcept">{{cdeDetails.dataElement.dataElementDetails.dataElementConcept}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Context:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.context">{{cdeDetails.dataElement.dataElementDetails.context}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Workflow Status:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.workflowStatus">{{cdeDetails.dataElement.dataElementDetails.workflowStatus}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Origin:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.origin">{{cdeDetails.dataElement.dataElementDetails.origin}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Registration Status:</td>
+    <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Data Element Link:</td>
+    <td class="dataElementValue">{{dataElementLink}}</td>
+  </tr>
 </table>
 
 <br/>
 
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th colspan="5" align="left">Reference Documents</th>
-    </tr>
+  <tr class="cdeDetailsSubHeading">
+    <th colspan="5" align="left">Reference Documents</th>
+  </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length>0">
-    <tr>
-        <td class="dataElementHeading">Document Name</td>
-        <td class="dataElementHeading">Document Type</td>
-        <td class="dataElementHeading">Document Text</td>
-        <td class="dataElementHeading">Context</td>
-        <td class="dataElementHeading">URL</td>
-    </tr>
-    <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.otherReferenceDocuments">
-        <td class="dataElementValue" ng-bind-html="refDoc.documentName">{{refDoc.documentName}}</td>
-        <td class="dataElementValue" ng-bind-html="refDoc.documentType">{{refDoc.documentType}}</td>
-        <td class="dataElementValue" ng-bind-html="refDoc.documentText">{{refDoc.documentText}}</td>
-        <td class="dataElementValue" ng-bind-html="refDoc.context">{{refDoc.context}}</td>
-        <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank" ng-bind-html="refDoc.url">{{refDoc.url}}</a></td>
+  <tr>
+    <td class="dataElementHeading">Document Name</td>
+    <td class="dataElementHeading">Document Type</td>
+    <td class="dataElementHeading">Document Text</td>
+    <td class="dataElementHeading">Context</td>
+    <td class="dataElementHeading">URL</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.otherReferenceDocuments">
+    <td class="dataElementValue" ng-bind-html="refDoc.documentName">{{refDoc.documentName}}</td>
+    <td class="dataElementValue" ng-bind-html="refDoc.documentType">{{refDoc.documentType}}</td>
+    <td class="dataElementValue" ng-bind-html="refDoc.documentText">{{refDoc.documentText}}</td>
+    <td class="dataElementValue" ng-bind-html="refDoc.context">{{refDoc.context}}</td>
+    <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank" ng-bind-html="refDoc.url">{{refDoc.url}}</a>
+    </td>
 
-    </tr>
+  </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length==0">
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">No reference documents available</td>
-    </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementValue">No reference documents available</td>
+  </tr>
 </table>
-        <br/>
+<br/>
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th colspan="5" align="left">Question Texts</th>
-    </tr>
+  <tr class="cdeDetailsSubHeading">
+    <th colspan="5" align="left">Question Texts</th>
+  </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.questionTextReferenceDocuments.length>0">
-    <tr>
-        <td class="dataElementHeading">Document Name</td>
-        <td class="dataElementHeading">Document Type</td>
-        <td class="dataElementHeading">Document Text</td>
-        <td class="dataElementHeading">Context</td>
-        <td class="dataElementHeading">URL</td>
-    </tr>
-    <tr class="dataElementViewTableTr" data-ng-repeat="refDocQ in cdeDetails.dataElement.questionTextReferenceDocuments">
-        <td class="dataElementValue" ng-bind-html="refDocQ.documentName">{{refDocQ.documentName}}</td>
-        <td class="dataElementValue" ng-bind-html="refDocQ.documentType">{{refDocQ.documentType}}</td>
-        <td class="dataElementValue" ng-bind-html="refDocQ.documentText">{{refDocQ.documentText}}</td>
-        <td class="dataElementValue" ng-bind-html="refDocQ.context">{{refDocQ.context}}</td>
-        <td class="dataElementValue"><a href="{{refDocQ.url}}" target="_blank" ng-bind-html="refDocQ.url">{{refDocQ.url}}</a></td>
-    </tr>
+  <tr>
+    <td class="dataElementHeading">Document Name</td>
+    <td class="dataElementHeading">Document Type</td>
+    <td class="dataElementHeading">Document Text</td>
+    <td class="dataElementHeading">Context</td>
+    <td class="dataElementHeading">URL</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="refDocQ in cdeDetails.dataElement.questionTextReferenceDocuments">
+    <td class="dataElementValue" ng-bind-html="refDocQ.documentName">{{refDocQ.documentName}}</td>
+    <td class="dataElementValue" ng-bind-html="refDocQ.documentType">{{refDocQ.documentType}}</td>
+    <td class="dataElementValue" ng-bind-html="refDocQ.documentText">{{refDocQ.documentText}}</td>
+    <td class="dataElementValue" ng-bind-html="refDocQ.context">{{refDocQ.context}}</td>
+    <td class="dataElementValue"><a href="{{refDocQ.url}}" target="_blank" ng-bind-html="refDocQ.url">{{refDocQ.url}}</a>
+    </td>
+  </tr>
 </table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.questionTextReferenceDocuments.length==0">
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementValue">No question texts available</td>
-    </tr>
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementValue">No question texts available</td>
+  </tr>
 </table>
-
-
-<!--
-
-<table cellpadding="0" cellspacing="0" width="80%" align="center" >
-    <tr>
-        <td class="OraHeaderSubSub" width="100%">Alternate Names and Definitions</td>
-    </tr>
-    <tr>
-        <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
-    </tr>
-</table>
-
--->
-
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th colspan="4" align="left"><br />Alternate Names and Definitions</th>
-    </tr>
+  <tr class="cdeDetailsSubHeading">
+    <th colspan="4" align="left">
+      <br />Alternate Names and Definitions</th>
+  </tr>
 </table>
 
-<span data-ng-repeat="(n, cdeCsi) in cdeDetails.dataElement.csCsis">
-    <table data-ng-hide="cdeCsi.hide" class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-        <tr>
-            <td class="dataElementHeading">CS Long Name</td>
-            <td class="dataElementHeading">CS Definition</td>
-            <td class="dataElementHeading">CSI Name</td>
-            <td class="dataElementHeading">CSI Type</td>
-        </tr>
-        <tr class="dataElementViewTableTr">
-            <td class="dataElementValue" ng-bind-html="cdeCsi.csLongName">{{cdeCsi.csLongName}}</td>
-            <td class="dataElementValue" ng-bind-html="cdeCsi.csDefinition">{{cdeCsi.csDefinition}}</td>
-            <td class="dataElementValue" ng-bind-html="cdeCsi.csiName">{{cdeCsi.csiName}}</td>
-            <td class="dataElementValue" ng-bind-html="cdeCsi.csiType">{{cdeCsi.csiType}}</td>
-        </tr>
-    </table>
-
-
-
-    <span data-ng-show="(cdeDetails.dataElement.csCsis.length > 1 && n != cdeDetails.dataElement.csCsis.length - 1) || cdeCsi.alternateNames.length > 0 || cdeCsi.alternateDefinitions.length > 0 || cdeCsi.usedByAlternateNames.length > 0">
-        <span ng-if="$index==0">
-        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
-            <tr class="cdeDetailsSubSubHeading">
-                <td class="dataElementHeading col1">Contexts using this CDE:</td>
-                <td class="dataElementValue" colspan="3" style="font-weight:normal;">{{getContextsUsingCDE(cdeCsi.usedByAlternateNames)}}</td>
-            </tr>
-        </table>
-        <br />
-        </span>
-        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0" >
-            <tr>
-                <td class="dataElementHeading col1">Alternate Names</td>
-                <td class="dataElementHeading col2">Type</td>
-                <td class="dataElementHeading col3">Context</td>
-                <td class="dataElementHeading col4">Language</td>
-            </tr>
-            <tr class="dataElementViewTableTr"
-                data-ng-repeat="altName in cdeCsi.alternateNames">
-                <td class="dataElementValue" ng-bind-html="altName.name">{{altName.name}}</td>
-                <td class="dataElementValue" ng-bind-html="altName.type">{{altName.type}}</td>
-                <td class="dataElementValue" ng-bind-html="altName.context">{{altName.context}}</td>
-                <td class="dataElementValue" ng-bind-html="altName.language">{{altName.language}}</td>
-            </tr>
-
-            <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.alternateNames.length">
-                <td colspan="4">No applicable Alternate Names</td>
-            </tr>
-        </table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+  <tr class="cdeDetailsSubSubHeading">
+    <td class="dataElementHeading col1">Contexts using this CDE:</td>
+    <td class="dataElementValue" colspan="3" style="font-weight:normal;">{{getContextsUsingCDE(cdeDetails.dataElement.csCsisCdeDetails.usedByAlternateNames)}}</td>
+  </tr>
+</table>
 <br />
-        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-            <tr border="0">
-                <td class="dataElementHeading">Alternate Definitions</td>
-                <td class="dataElementHeading">Type</td>
-                <td class="dataElementHeading">Context</td>
-            </tr>
-            <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeCsi.alternateDefinitions">
-                <td class="dataElementValue" ng-bind-html="altDef.name">{{altDef.name}}</td>
-                <td class="dataElementValue" ng-bind-html="altDef.type">{{altDef.type}}</td>
-                <td class="dataElementValue" ng-bind-html="altDef.context">{{altDef.context}}</td>
-            </tr>
-            <tr class="dataElementViewTableTr" data-ng-hide="cdeCsi.alternateDefinitions.length">
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+  <tr>
+    <td class="dataElementHeading col1">Alternate Names</td>
+    <td class="dataElementHeading col2">Type</td>
+    <td class="dataElementHeading col3">Context</td>
+    <td class="dataElementHeading col4">Language</td>
+    <td class="dataElementHeading col5">Classifications</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="altName in cdeDetails.dataElement.csCsisCdeDetails.alternateNames">
+    <td class="dataElementValue" ng-bind-html="altName.name">{{altName.name}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.type">{{altName.type}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.context">{{altName.context}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.language">{{altName.language}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.csCsi">{{altName.csCsi}}</td>
+  </tr>
 
-                <td colspan="3">There are no alternate definitions for the selected CDE.</td>
-            </tr>
-        </table>
+  <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElement.csCsisCdeDetails.alternateNames.length">
+    <td colspan="5">No applicable Alternate Names</td>
+  </tr>
+</table>
 
-    </span>
+<br />
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+  <tr border="0">
+    <td class="dataElementHeading col1">Alternate Definitions</td>
+    <td class="dataElementHeading col2">Type</td>
+    <td class="dataElementHeading col3">Context</td>
+    <td class="dataElementHeading col4">Language</td>
+    <td class="dataElementHeading col5">Classifications</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeDetails.dataElement.csCsisCdeDetails.alternateDefinitions">
+    <td class="dataElementValue" ng-bind-html="altDef.name">{{altDef.name}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.type">{{altDef.type}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.context">{{altDef.context}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.language">{{altDef.language}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.csCsi">{{altDef.csCsi}}</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElement.csCsisCdeDetails.alternateDefinitions.length">
 
-
-    <Br/>
-</span>
-
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-    <tr class="cdeDetailsSubHeading">
-        <th align="left">Other Versions</th>
-    </tr>
-
-    <div data-ng-show="cdeDetails.dataElement.otherVersions.length > 0">
-        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" width="100%"
-               data-ng-repeat="(n, other) in cdeDetails.dataElement.otherVersions">
-
-            <tr bgcolor="#fff" data-ng-show="n > 0">
-                <td colspan="6">&nbsp;</td>
-            </tr>
-
-            <tr>
-                <td class="dataElementHeading">Version</td>
-                <td class="dataElementHeading">Long Name</td>
-                <td class="dataElementHeading">Workflow Status</td>
-                <td class="dataElementHeading">Registration Status</td>
-                <td class="dataElementHeading">Context</td>
-            </tr>
-            <tr class="dataElementViewTableTr">
-                <td class="dataElementValue" ng-bind-html="other.formattedVersion">{{other.formattedVersion}}</td>
-                <td class="dataElementValue" ng-bind-html="other.longName">{{other.longName}}</td>
-                <td class="dataElementValue" ng-bind-html="other.workFlowStatus">{{other.workFlowStatus}}</td>
-                <td class="dataElementValue" ng-bind-html="other.registrationStatus">{{other.registrationStatus}}</td>
-                <td class="dataElementValue" ng-bind-html="other.context">{{other.context}}</td>
-            </tr>
-
-
-            <tr width="100%">
-                <td colspan="5">
-                    <table cellpadding="1" cellspacing="1" width="100%">
-                        <tr>
-                            <td class="cdeDetailsSubSubHeading" colspan="6">Classifications</td>
-                        </tr>
-                        <tr>
-                            <td class="dataElementHeading">CS Long Name</td>
-                            <td class="dataElementHeading">CS Definition</td>
-                            <td class="dataElementHeading">CS Public ID/Version</td>
-                            <td class="dataElementHeading">CSI Name</td>
-                            <td class="dataElementHeading">CSI Type</td>
-                            <td class="dataElementHeading">CSI Public ID/Version</td>
-                        </tr>
-                        <tr class="dataElementViewTableTr" data-ng-repeat="cscsi in other.csCsis">
-                            <td class="dataElementValue" ng-bind-html="cscsi.csLongName">{{cscsi.csLongName}}</td>
-                            <td class="dataElementValue" ng-bind-html="cscsi.csDefinition">{{cscsi.csDefinition}}</td>
-                            <td class="dataElementValue" ng-bind-html="cscsi.formattedCsVersion">{{cscsi.csId}}v{{cscsi.formattedCsVersion}}</td>
-                            <td class="dataElementValue" ng-bind-html="cscsi.csiName">{{cscsi.csiName}}</td>
-                            <td class="dataElementValue" ng-bind-html="cscsi.csiType">{{cscsi.csiType}}</td>
-                            <td class="dataElementValue">
-                                <span ng-bind-html="cscsi.csiId">{{cscsi.csiId}}</span>
-                                v
-                                <span ng-bind-html="cscsi.formattedCsiVersion">{{cscsi.formattedCsiVersion}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div data-ng-hide="cdeDetails.dataElement.otherVersions.length > 0">
-        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
-            <tr class="dataElementViewTableTr">
-                <td class="dataElementValue">No other versions available</td>
-            </tr>
-        </table>
-    </div>
-
+    <td colspan="5">There are no alternate definitions for the selected CDE.</td>
+  </tr>
 </table>
 
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
   ga('create', 'UA-85797083-1', 'auto');
   ga('send', 'pageview');
-
-</script> 
+</script>

@@ -81,8 +81,21 @@
     background-color: #999966;
 }
 
-.dataElementViewTable .dataElementHeading.col1, .dataElementHeading.col2, .dataElementHeading.col3, .dataElementHeading.col4{
-    width:25%;
+.dataElementViewTable .dataElementHeading.col1 {
+    width:30%
+}
+.dataElementViewTable .dataElementHeading.col2 {
+    width:20%
+}
+.dataElementViewTable .dataElementHeading.col3 {
+    width:12%
+}
+.dataElementViewTable .dataElementHeading.col4 {
+    width:12%
+}
+
+.dataElementViewTable .dataElementHeading.col5 {
+    width:26%
 }
 
 
