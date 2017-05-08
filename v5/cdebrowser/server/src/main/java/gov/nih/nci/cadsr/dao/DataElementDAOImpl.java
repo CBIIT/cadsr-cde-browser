@@ -275,7 +275,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
 
             try
             {
-                dataElementModel.setDec( getDataElementConceptDAO().getDecByDecIdseq( rs.getString( "DEC_IDSEQ" ) ) );
+                dataElementModel.setDec( getDataElementConceptDAO().getDecByDecIdseqWithRegStatus( rs.getString( "DEC_IDSEQ" ) ) );//CDEBROWSER-816 add DEC Reg Status
             } catch( EmptyResultDataAccessException ex )
             {
                 logger.warn( "No DataElementConcept found for Data Element with idseq: " + deIdseq + "  the DEC_IDSEQ is " + rs.getString( "DEC_IDSEQ" ) );

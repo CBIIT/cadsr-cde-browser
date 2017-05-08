@@ -45,7 +45,16 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
         logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
         return dataElementConceptModel;
     }
-
+    @Override
+    public DataElementConceptModel getDecByDecIdseqWithRegStatus( String decIdseq ) throws EmptyResultDataAccessException
+    {
+        //CDEBROWSER-816 add DEC Reg Status
+    	String sql = "SELECT dc.*, reg.REGISTRATION_STATUS cd_registration_status FROM sbr.data_element_concepts dc inner join sbr.AC_REGISTRATIONS reg on reg.ac_idseq = dc.dec_idseq WHERE dc.dec_idseq = ?";
+        DataElementConceptModel dataElementConceptModel = jdbcTemplate.queryForObject( sql, new Object[]{ decIdseq }, new DataElementConceptMapper( DataElementConceptModel.class ) );
+        logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
+        return dataElementConceptModel;
+    }
+    
    @Override
     public List<DataElementConceptModel> getDecByLongNameWildCard( String lName ) throws EmptyResultDataAccessException
     {

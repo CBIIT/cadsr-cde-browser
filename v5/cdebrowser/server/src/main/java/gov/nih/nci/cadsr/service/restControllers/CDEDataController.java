@@ -744,7 +744,8 @@ public class CDEDataController
         dataElementConceptDetails.setWorkflowStatus( dataElementModel.getDec().getAslName() );
         dataElementConceptDetails.setConceptualDomainPublicId( dataElementModel.getDec().getCdPublicId() );
         dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
-        dataElementConceptDetails.setConceptualDomainLongName( dataElementModel.getDec().getCdLongName() );//CDEBROWSER-816
+        dataElementConceptDetails.setConceptualDomainLongName( dataElementModel.getDec().getCdLongName() );//CDEBROWSER-816 used DEC Long Name
+        dataElementConceptDetails.setConceptualDomainRegStatus( dataElementModel.getDec().getCdRegistrationStatus());//CDEBROWSER-816 add DEC Reg Status
 
         //Conceptual Domain Version
 

@@ -13,5 +13,6 @@ public interface DataElementConceptDAO
 
     DataElementConceptModel getDecByDecIdseq( String decIdseq ) throws EmptyResultDataAccessException;
     List<DataElementConceptModel> getDecByLongNameWildCard( String lName ) throws EmptyResultDataAccessException;
+	DataElementConceptModel getDecByDecIdseqWithRegStatus(String decIdseq) throws EmptyResultDataAccessException;//CDEBROWSER-816 add DEC Reg Status
 
 }

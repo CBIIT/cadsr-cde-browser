@@ -91,6 +91,12 @@
         </td>
     </tr>
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Registration Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainRegStatus">
+            {{cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainRegStatus}}
+        </td>
+    </tr>
+    <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Version:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.formattedConceptualDomainVersion">
             {{cdeDetails.dataElementConcept.dataElementConceptDetails.formattedConceptualDomainVersion}}

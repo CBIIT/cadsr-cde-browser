@@ -5,7 +5,7 @@ package gov.nih.nci.cadsr.dao.model;
 
 public class DataElementConceptModel extends BaseModel
 {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -35,6 +35,7 @@ public class DataElementConceptModel extends BaseModel
     private String conteName;
     private String cdPrefName;
     private String cdLongName;//CDEBROWSER-816 Use CD Long Name in CDE View
+    private String cdRegistrationStatus;//CDEBROWSER-816 Add Registration Status Remove if we do not need it
     private String cdContextName;
     private Float cdVersion;
     private int cdPublicId;
@@ -373,6 +374,14 @@ public class DataElementConceptModel extends BaseModel
 	public void setCdLongName(String cdLongName) {
 		this.cdLongName = cdLongName;
 	}
+	
+	public String getCdRegistrationStatus() {
+		return cdRegistrationStatus;
+	}
+
+	public void setCdRegistrationStatus(String cdRegistrationStatus) {
+		this.cdRegistrationStatus = cdRegistrationStatus;
+	}
 
 	@Override
 	public String toString() {
@@ -385,11 +394,12 @@ public class DataElementConceptModel extends BaseModel
 				+ objClassPrefName + ", objClassContextName=" + objClassContextName + ", propertyPrefName="
 				+ propertyPrefName + ", propertyContextName=" + propertyContextName + ", propertyVersion="
 				+ propertyVersion + ", objClassVersion=" + objClassVersion + ", conteName=" + conteName
-				+ ", cdPrefName=" + cdPrefName + ", cdLongName=" + cdLongName + ", cdContextName=" + cdContextName
-				+ ", cdVersion=" + cdVersion + ", cdPublicId=" + cdPublicId + ", objClassPublicId=" + objClassPublicId
-				+ ", property=" + property + ", objectClassModel=" + objectClassModel + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate
-				+ ", formattedVersion=" + formattedVersion + "]";
+				+ ", cdPrefName=" + cdPrefName + ", cdLongName=" + cdLongName + ", cdRegistrationStatus="
+				+ cdRegistrationStatus + ", cdContextName=" + cdContextName + ", cdVersion=" + cdVersion
+				+ ", cdPublicId=" + cdPublicId + ", objClassPublicId=" + objClassPublicId + ", property=" + property
+				+ ", objectClassModel=" + objectClassModel + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate + ", formattedVersion="
+				+ formattedVersion + "]";
 	}
 
 	@Override
@@ -402,6 +412,7 @@ public class DataElementConceptModel extends BaseModel
 		result = prime * result + ((cdLongName == null) ? 0 : cdLongName.hashCode());
 		result = prime * result + ((cdPrefName == null) ? 0 : cdPrefName.hashCode());
 		result = prime * result + cdPublicId;
+		result = prime * result + ((cdRegistrationStatus == null) ? 0 : cdRegistrationStatus.hashCode());
 		result = prime * result + ((cdVersion == null) ? 0 : cdVersion.hashCode());
 		result = prime * result + ((changeNote == null) ? 0 : changeNote.hashCode());
 		result = prime * result + ((conteName == null) ? 0 : conteName.hashCode());
@@ -467,6 +478,11 @@ public class DataElementConceptModel extends BaseModel
 		} else if (!cdPrefName.equals(other.cdPrefName))
 			return false;
 		if (cdPublicId != other.cdPublicId)
+			return false;
+		if (cdRegistrationStatus == null) {
+			if (other.cdRegistrationStatus != null)
+				return false;
+		} else if (!cdRegistrationStatus.equals(other.cdRegistrationStatus))
 			return false;
 		if (cdVersion == null) {
 			if (other.cdVersion != null)
@@ -599,5 +615,5 @@ public class DataElementConceptModel extends BaseModel
 			return false;
 		return true;
 	}
-
+	
 }

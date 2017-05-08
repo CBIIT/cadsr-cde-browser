@@ -16,6 +16,7 @@ public class DataElementConceptDetails
     private Integer conceptualDomainPublicId;
     private String conceptualDomainShortName;
     private String conceptualDomainLongName;//CDEBROWSER-816 Use CD Long name on CDE View
+    private String conceptualDomainRegStatus;//CDEBROWSER-816 Use CD Long name on CDE View
     private String conceptualDomainContextName;
     private String conceptualDomainVersion;
     private String formattedConceptualDomainVersion;
@@ -171,4 +172,13 @@ public class DataElementConceptDetails
     {
         this.origin = origin;
     }
+
+	public String getConceptualDomainRegStatus() {
+		return conceptualDomainRegStatus;
+	}
+
+	public void setConceptualDomainRegStatus(String conceptualDomainRegStatus) {
+		this.conceptualDomainRegStatus = conceptualDomainRegStatus;
+	}
+    
 }
