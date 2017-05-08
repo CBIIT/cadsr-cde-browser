@@ -79,6 +79,12 @@
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.workflowStatus">{{cdeDetails.dataElementConcept.dataElementConceptDetails.workflowStatus}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Registration Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainRegStatus">
+            {{cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainRegStatus}}
+        </td>
+    </tr>
+    <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Public ID:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainPublicId">
             {{cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainPublicId}}
@@ -88,12 +94,6 @@
         <td class="dataElementDescription">Conceptual Domain Long Name:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainLongName">
             {{cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainLongName}}
-        </td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Registration Status:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainRegStatus">
-            {{cdeDetails.dataElementConcept.dataElementConceptDetails.conceptualDomainRegStatus}}
         </td>
     </tr>
     <tr class="dataElementViewTableTr">
