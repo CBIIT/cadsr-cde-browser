@@ -68,7 +68,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="((node.' + nodeChildren + '.length == 0 && ' +
-                ' node.' + nodeType + ' != 2  && ' +
+                ' node.' + nodeType + ' != 2  && ' + ' node.' + nodeType + ' != 1  && ' +
                 ' node.collapsed && node.' + nodeType + ' != 4 ) ' +
                 ' || (   node.' + nodeType + ' == 3  && node.' + nodeChildren + ' == 0) ' +
                 ' ) " ' +
@@ -87,7 +87,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}  ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
-                ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 1"' +
+                ' data-ng-show="node.collapsed && node.' + nodeType + ' == 1"' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +                
 
                 //Is a CSI folder with children and is collapsed
@@ -128,7 +128,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
-                ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 1" ' +
+                ' data-ng-show="!node.collapsed && node.' + nodeType + ' == 1" ' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +                
 
 

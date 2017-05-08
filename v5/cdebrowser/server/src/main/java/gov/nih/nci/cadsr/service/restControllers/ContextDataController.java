@@ -289,7 +289,7 @@ public class ContextDataController
         if( folderType == CaDSRConstants.CLASSIFICATIONS_TYPE_FOLDER )
         {
             // The contents for the Classifications folder - the Classification Scheme, which is the list of individual Classifications.
-            List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getClassificationSchemesSansChildren( contextId );
+            List<ClassificationSchemeModel> csModelList = this.classificationSchemeDAO.getAllClassificationSchemes(  );
 
             // Classification Scheme Item List - This is a list of all individual items that are in the Classifications of this Context
             // they will be place in their correct Classification later in insertClassifications.
