@@ -3,11 +3,15 @@ package gov.nih.nci.cadsr.service.model.search;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class SearchCriteria implements Serializable
 {
 	private static final long serialVersionUID = -4732600582872432160L;
-
+	private static Logger logger = LogManager.getLogger(SearchCriteria.class.getName());
+	
 	private String name;
 	private String searchMode;
 	private String publicId;
@@ -69,6 +73,22 @@ public class SearchCriteria implements Serializable
 		if (StringUtils.isNotEmpty(this.publicId)) {
 			int versionTypePublicId = this.publicIdVersion;
 			this.versionType = versionTypePublicId;//this is to avoid using this parameter to override publicId selection
+		}
+		preprocessSearchContext();//CDEBROWSER-801 When selecting the from the navigation tree search versus the drop down does, search results shall be the same: not using Context not PA
+	}
+	/**
+	 * Exclude from search parameters 'context' and 'programArea' 
+	 * if a request is received from Search widget with parameters 'classification' or 'protocol'.
+	 * See JIRA CDEBROWSER-801, CDEBROWSER-683.
+	 */
+	protected void preprocessSearchContext() {
+		//CDEBROWSER-801 
+		String classificationSearch = this.getClassification();
+		String protocolSearch = this.getClassification();
+		if ((StringUtils.isNotEmpty(classificationSearch)) || (StringUtils.isNotEmpty(protocolSearch))) {
+			logger.debug("We ignore programArea parameter: " + getProgramArea() + " and context parameter: " + getContext() +" because we search either classification: " + classificationSearch +  ", or protocol: " + protocolSearch);
+			this.setProgramArea(null);
+			this.setContext(null);
 		}
 	}
 	public String getName() {
