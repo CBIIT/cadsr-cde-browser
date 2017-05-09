@@ -98,10 +98,9 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
 
     // creates breadcrumbs when using dropdowns //
     this.createBreadcrumbs = function() {
-
         var programArea = this.serverData[this.searchFilter.programArea];
         var breadcrumbs = programArea.treePath;
-        if (this.searchFilter.context) {
+        if (this.searchFilter.context && this.searchFilter.context!="") {
             var contexts = programArea.children;
             for (var context=0; context<contexts.length;context++) {
                 if (this.searchFilter.context==contexts[context].idSeq) {
@@ -109,7 +108,6 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
                 };
             };
         };
-
         if (this.searchFilter.classification) {
 
             breadcrumbs.push("Classification");
