@@ -16,7 +16,7 @@ angular.module('cdeBrowserApp')
               scope.filterService=filterService;
                   scope.loadClassifications = function(searchInput) {
        
-        if(searchInput.length===3) {
+        if(searchInput.length>=3) {
             $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
             groupFactory1.fillClassifications(response);
             scope.filterService.classifications = groupFactory1.load(0);
