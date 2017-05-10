@@ -188,7 +188,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
         fs.resetClassificationAndProtocol();
-        console.log(contextId)
         if (contextId) { // only run if context id has not been reset //
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             groupFactory.fillProtocols(response);
@@ -224,7 +223,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
                var finalID = '';
                 if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
-                    console.log(contextId.selectedNode.parentId)
                     $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
                     var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
                     if (fName.length==0) {

@@ -68,7 +68,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 'title="{{node.' + nodeHoverText + '}} "' +
 
                 ' data-ng-show="((node.' + nodeChildren + '.length == 0 && ' +
-                ' node.' + nodeType + ' != 2  && ' + ' node.' + nodeType + ' != 1  && ' +
+                ' node.' + nodeType + ' != 2  && ' +
                 ' node.collapsed && node.' + nodeType + ' != 4 ) ' +
                 ' || (   node.' + nodeType + ' == 3  && node.' + nodeChildren + ' == 0) ' +
                 ' ) " ' +
@@ -87,7 +87,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //'title="C {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}  ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
-                ' data-ng-show="node.collapsed && node.' + nodeType + ' == 1"' +
+                ' data-ng-show="node.' + nodeChildren + '.length && node.collapsed && node.' + nodeType + ' == 1"' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +                
 
                 //Is a CSI folder with children and is collapsed
@@ -128,7 +128,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 //'title="E {{node.' + nodeHoverText + '}} Parent={{node.' + nodeIsParent + '}} Type[{{ node.' + nodeType + '}}]= {{ getNodeTypeStr(node.' + nodeType + ')}}   ChildType={{getNodeTypeStr(node.' + nodeChildType + ')}} " ' +
                 'title="{{node.' + nodeHoverText + '}} "' +
 
-                ' data-ng-show="!node.collapsed && node.' + nodeType + ' == 1" ' +
+                ' data-ng-show="node.' + nodeChildren + '.length && !node.collapsed && node.' + nodeType + ' == 1" ' +
                 ' data-ng-click="' + treeId + '.selectNodeHead(node, node.' + nodeChildType + ')" ></i>' +                
 
 
@@ -269,7 +269,9 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             ///////////////////////////////////////////////////////
                             // Have they clicked on a Classification
                             if (/cdesByClassificationScheme$/.test(actionParts[0])) {
-                                scope.searchServerRestCall(actionParts[0],"classificationSchemeId",actionParts[1],1,0, selectedNode);
+                                if (selectedNode.type!=1) { 
+                                    scope.searchServerRestCall(actionParts[0],"classificationSchemeId",actionParts[1],1,0, selectedNode);
+                                }
                             }
 
                             ///////////////////////////////////////////////////////
@@ -288,8 +290,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                             if (/cdesByProtocolForm$/.test(actionParts[0])) {
                                 scope.searchServerRestCall(actionParts[0],"id",actionParts[1],1,0, selectedNode);
                             }
-
-                            if (selectedNode.treePath.length!=3) { // don't highlight clicking of classifications or protocolforms tree element //
+                            if (selectedNode.treePath.length!=3 && !(selectedNode.treePath.length==4&&selectedNode.type==1)) { // don't highlight clicking of classifications or protocolforms or container tree element //
                                 disp(selectedNode);
                             }
 
