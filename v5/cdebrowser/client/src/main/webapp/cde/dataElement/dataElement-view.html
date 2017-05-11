@@ -43,6 +43,10 @@
     <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.context">{{cdeDetails.dataElement.dataElementDetails.context}}</td>
   </tr>
   <tr class="dataElementViewTableTr">
+    <td class="dataElementDescription">Contexts using this CDE:</td>
+    <td class="dataElementValue" ng-bind-html="getContextsUsingCDE(cdeDetails.dataElement.csCsisCdeDetails.usedByAlternateNames)">{{getContextsUsingCDE(cdeDetails.dataElement.csCsisCdeDetails.usedByAlternateNames)}}</td>
+  </tr>  
+  <tr class="dataElementViewTableTr">
     <td class="dataElementDescription">Workflow Status:</td>
     <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.workflowStatus">{{cdeDetails.dataElement.dataElementDetails.workflowStatus}}</td>
   </tr>
@@ -60,37 +64,6 @@
   </tr>
 </table>
 
-<br/>
-
-
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-  <tr class="cdeDetailsSubHeading">
-    <th colspan="5" align="left">Reference Documents</th>
-  </tr>
-</table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length>0">
-  <tr>
-    <td class="dataElementHeading">Document Name</td>
-    <td class="dataElementHeading">Document Type</td>
-    <td class="dataElementHeading">Document Text</td>
-    <td class="dataElementHeading">Context</td>
-    <td class="dataElementHeading">URL</td>
-  </tr>
-  <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.otherReferenceDocuments">
-    <td class="dataElementValue" ng-bind-html="refDoc.documentName">{{refDoc.documentName}}</td>
-    <td class="dataElementValue" ng-bind-html="refDoc.documentType">{{refDoc.documentType}}</td>
-    <td class="dataElementValue" ng-bind-html="refDoc.documentText">{{refDoc.documentText}}</td>
-    <td class="dataElementValue" ng-bind-html="refDoc.context">{{refDoc.context}}</td>
-    <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank" ng-bind-html="refDoc.url">{{refDoc.url}}</a>
-    </td>
-
-  </tr>
-</table>
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length==0">
-  <tr class="dataElementViewTableTr">
-    <td class="dataElementValue">No reference documents available</td>
-  </tr>
-</table>
 <br/>
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
@@ -129,13 +102,6 @@
 </table>
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-  <tr class="cdeDetailsSubSubHeading">
-    <td class="dataElementHeading col1">Contexts using this CDE:</td>
-    <td class="dataElementValue" colspan="3" style="font-weight:normal;">{{getContextsUsingCDE(cdeDetails.dataElement.csCsisCdeDetails.usedByAlternateNames)}}</td>
-  </tr>
-</table>
-<br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
   <tr>
     <td class="dataElementHeading col1">Alternate Names</td>
     <td class="dataElementHeading col2">Type</td>
@@ -152,7 +118,7 @@
   </tr>
 
   <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElement.csCsisCdeDetails.alternateNames.length">
-    <td colspan="5">No applicable Alternate Names</td>
+    <td colspan="5">There are no alternate names for the selected CDE.</td>
   </tr>
 </table>
 
@@ -177,7 +143,36 @@
     <td colspan="5">There are no alternate definitions for the selected CDE.</td>
   </tr>
 </table>
+<br />
 
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+  <tr class="cdeDetailsSubHeading">
+    <th colspan="5" align="left">Reference Documents</th>
+  </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length>0">
+  <tr>
+    <td class="dataElementHeading">Document Name</td>
+    <td class="dataElementHeading">Document Type</td>
+    <td class="dataElementHeading">Document Text</td>
+    <td class="dataElementHeading">Context</td>
+    <td class="dataElementHeading">URL</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="refDoc in cdeDetails.dataElement.otherReferenceDocuments">
+    <td class="dataElementValue" ng-bind-html="refDoc.documentName">{{refDoc.documentName}}</td>
+    <td class="dataElementValue" ng-bind-html="refDoc.documentType">{{refDoc.documentType}}</td>
+    <td class="dataElementValue" ng-bind-html="refDoc.documentText">{{refDoc.documentText}}</td>
+    <td class="dataElementValue" ng-bind-html="refDoc.context">{{refDoc.context}}</td>
+    <td class="dataElementValue"><a href="{{refDoc.url}}" target="_blank" ng-bind-html="refDoc.url">{{refDoc.url}}</a>
+    </td>
+
+  </tr>
+</table>
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" ng-if="cdeDetails.dataElement.otherReferenceDocuments.length==0">
+  <tr class="dataElementViewTableTr">
+    <td class="dataElementValue">No reference documents available</td>
+  </tr>
+</table>
 <script>
   (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;

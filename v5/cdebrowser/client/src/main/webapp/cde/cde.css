@@ -82,20 +82,20 @@
 }
 
 .dataElementViewTable .dataElementHeading.col1 {
-    width:30%
+    width:32%
 }
 .dataElementViewTable .dataElementHeading.col2 {
-    width:20%
+    width:15%
 }
 .dataElementViewTable .dataElementHeading.col3 {
-    width:12%
+    width:10%
 }
 .dataElementViewTable .dataElementHeading.col4 {
-    width:12%
+    width:10%
 }
 
 .dataElementViewTable .dataElementHeading.col5 {
-    width:26%
+    width:32%
 }
 
 
@@ -223,7 +223,9 @@
 .dataElementValue {
     font-family: Arial, Helvetica, Geneva, sans-serif;
     font-size: 9pt;
-    color: #000000
+    color: #000000;
+    vertical-align:top;
+    padding:5px;    
 }
 
 .cdeDetailsSubHeadingTable {
