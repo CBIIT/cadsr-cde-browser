@@ -78,15 +78,18 @@ public class SearchCriteria implements Serializable
 	}
 	/**
 	 * Exclude from search parameters 'context' and 'programArea' 
-	 * if a request is received from Search widget with parameters 'classification' or 'protocol'.
+	 * if a request is received from Search widget with parameters 'classification' or 'protocol' or 'csCsiIdSeq'.
 	 * See JIRA CDEBROWSER-801, CDEBROWSER-683.
 	 */
 	protected void preprocessSearchContext() {
 		//CDEBROWSER-801 
 		String classificationSearch = this.getClassification();
 		String protocolSearch = this.getClassification();
-		if ((StringUtils.isNotEmpty(classificationSearch)) || (StringUtils.isNotEmpty(protocolSearch))) {
-			logger.debug("We ignore programArea parameter: " + getProgramArea() + " and context parameter: " + getContext() +" because we search either classification: " + classificationSearch +  ", or protocol: " + protocolSearch);
+		String csCsiIdSeq = this.getCsCsiIdSeq();
+		
+		if ((StringUtils.isNotEmpty(classificationSearch)) || (StringUtils.isNotEmpty(protocolSearch)) || (StringUtils.isNotEmpty(csCsiIdSeq))) {
+			logger.debug("We ignore programArea parameter: " + getProgramArea() + " and context parameter: " + getContext() +" because we search either classification: " + 
+							classificationSearch +  ", or protocol: " + protocolSearch + ", or csCsiIdSeq: " + csCsiIdSeq);
 			this.setProgramArea(null);
 			this.setContext(null);
 		}
