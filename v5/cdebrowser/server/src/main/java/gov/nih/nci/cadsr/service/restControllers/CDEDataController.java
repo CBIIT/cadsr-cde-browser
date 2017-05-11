@@ -506,10 +506,8 @@ public class CDEDataController
         List<ReferenceDocument> referenceDocuments = new ArrayList<>();
         dataElement.setReferenceDocuments( referenceDocuments );
         //CDEBROWSER-809 Separate out the Documents with Document Type containing "*Question Text"
-        List<ReferenceDocument> questionTextReferenceDocuments = new ArrayList<>();
-        List<ReferenceDocument> otherReferenceDocuments = new ArrayList<>();
-        dataElement.setQuestionTextReferenceDocuments(questionTextReferenceDocuments);
-        dataElement.setOtherReferenceDocuments(otherReferenceDocuments);
+        TreeSet<ReferenceDocument> questionTextReferenceDocumentSet = new TreeSet<>();//using TreeSet to keep a specific order
+        TreeSet<ReferenceDocument> otherReferenceDocumentSet = new TreeSet<>();
         if (dataElementModel != null) {
 	        //List from database
 	        List<ReferenceDocModel> dataElementModelReferenceDocumentList = dataElementModel.getRefDocs();
@@ -539,16 +537,21 @@ public class CDEDataController
 		            String refDocType = referenceDoc.getDocumentType();
 		            refDocType = (refDocType == null) ? "" : refDocType;
 		            if (refDocType.contains("Question Text")) {
-		            	questionTextReferenceDocuments.add(referenceDoc);
+		            	questionTextReferenceDocumentSet.add(referenceDoc);
 		            }
 		            else {
-		            	otherReferenceDocuments.add(referenceDoc);
+		            	otherReferenceDocumentSet.add(referenceDoc);
 		            }
 	            }
 	            else {
 	            	referenceDocuments.add( referenceDoc );//this one contains all ref docs
 	            }
 	        }
+	        //Question Text changes Preferred Question Text goes first
+	        List<ReferenceDocument> questionTextReferenceDocuments = new ArrayList<>(questionTextReferenceDocumentSet);
+	        List<ReferenceDocument> otherReferenceDocuments = new ArrayList<>(otherReferenceDocumentSet);
+	        dataElement.setQuestionTextReferenceDocuments(questionTextReferenceDocuments);
+	        dataElement.setOtherReferenceDocuments(otherReferenceDocuments);
         }
     }
 
