@@ -36,6 +36,11 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 
     };
 
+    // if user selects a typeahead suggestion, change query type to all of the words //
+    $scope.changeQueryType = function(item) {
+        $scope.fs.dataElementVariables.selectedQueryType = 1;
+    };
+
  	$scope.setSelectedField = function() {
     var selectedlen = $scope.fs.dataElementVariables.searchFieldOptions.options;
         if(selectedlen.length>0) {
