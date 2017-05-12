@@ -137,7 +137,7 @@ public class ControllerUtils {
 	}
 	/**
      * This auxilary method creates a list of unclassified Alt names and Definitions based on pre-populated DataElementModel
-     * @return List<CsCsi>
+     * @return CsCsi with lists of AlternateNames and AlternateDefinitions (not null lists).
      */
 	public static CsCsi populateCsCsiDeUnclassified (DataElementModel dataElementModel) {
         CsCsi unclassCsCsi = new CsCsi( dataElementModel.getCsCsiData().get( CsCsiModel.UNCLASSIFIED ) );

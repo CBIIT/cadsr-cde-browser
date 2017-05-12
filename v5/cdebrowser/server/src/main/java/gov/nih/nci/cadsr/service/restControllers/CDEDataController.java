@@ -5,6 +5,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -333,7 +334,8 @@ public class CDEDataController
      * @param dataElementModel The data model from the DataBase
      * @return The "Data Element" Tab the way the client needs it.
      */
-    private DataElement initDataElementTabData( DataElementModel dataElementModel )
+    @SuppressWarnings("unchecked")
+	private DataElement initDataElementTabData( DataElementModel dataElementModel )
     {
         DataElement dataElement = getDataElementDetails( dataElementModel );
         /////////////////////////////////////////////////////
@@ -360,18 +362,23 @@ public class CDEDataController
         //CDEBROWSER-809 Add Alt Names and Definitions with CS/CSIs listed comma separated 
         List<AlternateNameCsCsi> altNamesWithCsCsi = buildAltNamesWithCsCsi(csCsiClassifiedList);//could be null
         List<AlternateDefinitionCsCsi> definitionsWithCsCsi = buildDefinitionsWithCsCsi(csCsiClassifiedList);//could be null
+        List<AlternateNameCsCsi> altNamesWithCsCsiAll = csCsiForCdeDetails.getAlternateNames();//never null
         if (altNamesWithCsCsi != null) {
-	        List<AlternateNameCsCsi> altNamesWithCsCsiAll = csCsiForCdeDetails.getAlternateNames();
+            //add classified designations to unclassified
 	        for (AlternateNameCsCsi curr : altNamesWithCsCsi) {
 	        	altNamesWithCsCsiAll.add(curr);
 	        }
         }
+        Collections.sort(altNamesWithCsCsiAll);//sort the list
+        
+        List<AlternateDefinitionCsCsi> altDefinitionsWithCsCsiAll = csCsiForCdeDetails.getAlternateDefinitions();//never null
         if (definitionsWithCsCsi != null) {
-	        List<AlternateDefinitionCsCsi> altDefinitionsWithCsCsiAll = csCsiForCdeDetails.getAlternateDefinitions();
+            //add classified definitions to unclassified
 	        for (AlternateDefinitionCsCsi curr : definitionsWithCsCsi) {
 	        	altDefinitionsWithCsCsiAll.add(curr);
 	        }
         }
+        Collections.sort(altDefinitionsWithCsCsiAll);//sort the list
         /////////////////////////////////////////////////////
         // "Other Versions" of the "Data Element" Tab
         List<OtherVersion> otherVersions = new ArrayList<>();
