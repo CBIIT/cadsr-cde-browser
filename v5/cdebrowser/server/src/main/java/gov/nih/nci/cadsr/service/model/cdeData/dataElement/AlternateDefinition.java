@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
+import org.apache.commons.lang3.StringUtils;
+
 import gov.nih.nci.cadsr.dao.model.DefinitionModel;
 import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
 
@@ -130,7 +132,7 @@ public class AlternateDefinition implements Comparable
 			String thisContext = (this.context != null) ? this.context : "";
 			//Sorting order: name, type, context
 			if (!(thisName.equals(that.name))) {
-				return thisName.compareTo(that.name);
+				return StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.name));
 			}
 			else if (!(thisType.equals(that.type))){
 				return thisType.compareTo(that.type);

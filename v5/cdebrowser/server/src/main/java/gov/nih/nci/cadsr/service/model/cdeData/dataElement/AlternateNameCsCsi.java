@@ -148,7 +148,7 @@ public class AlternateNameCsCsi implements Comparable
 				return 1;
 			}			
 			else if (!(thisName.equals(that.name))) {
-				return thisName.compareTo(that.name);
+				return StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.name));
 			}
 			else if (!(thisType.equals(that.type))){
 				return thisType.compareTo(that.type);
