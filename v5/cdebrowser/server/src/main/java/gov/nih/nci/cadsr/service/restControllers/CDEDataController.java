@@ -612,6 +612,106 @@ public class CDEDataController
         DataElementConcept dataElementConcept = new DataElementConcept();
         DataElementConceptDetails dataElementConceptDetails = getDataElementConceptDetails( dataElementModel );
         dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
+        
+        /////////////////////////////////////////////////////
+        // "Object Class" of the "Data Element Concept" Table for Compare
+        ObjectClass objectClass = new ObjectClass();
+        dataElementConcept.setObjectClass( objectClass );
+
+        objectClass.setPublicId( dataElementModel.getDec().getObjClassPublicId() );
+
+        if( dataElementModel.getDec() == null )
+        {
+            logger.debug( "dataElementModel.getDec() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec() != null" );
+        }
+
+        if( dataElementModel.getDec().getObjClassVersion() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getObjClassVersion() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getObjClassVersion() != null" );
+        }
+
+        if( dataElementModel.getDec().getObjectClassModel() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getObjectClassModel() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getObjectClassModel() != null" );
+        }
+
+        if( dataElementModel.getDec().getObjClassVersion() != null )
+        {
+            // objectClass.setVersion will choke on null.
+            objectClass.setVersion( dataElementModel.getDec().getObjClassVersion() );
+        }
+
+        if( dataElementModel.getDec().getObjectClassModel() != null )
+        {
+            objectClass.setLongName( dataElementModel.getDec().getObjectClassModel().getLongName() );
+        }
+        objectClass.setShortName( dataElementModel.getDec().getObjClassPrefName() );
+        objectClass.setContext( dataElementModel.getDec().getObjClassContextName() );
+        objectClass.setQualifier( dataElementModel.getDec().getObjClassQualifier() );
+
+        /////////////////////////////////////////////////////
+        // "Object Class Concepts" of the "Data Element Concept" Table for Compare
+        // This is a list of ObjectClassConcept
+        if( dataElementModel.getDec().getDecIdseq() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() != null" );
+        }
+
+        List<ConceptModel> objectClassConcepts = objectClassConceptDAO.getObjectClassConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
+        dataElementConcept.setObjectClassConcepts( objectClassConcepts );
+
+        /////////////////////////////////////////////////////
+        // "Property" of the "Data Element Concept" Table for Compare
+        Property property = new Property();
+        dataElementConcept.setProperty( property );
+
+        if( dataElementModel.getDec().getProperty() != null )
+        {
+            logger.debug( "dataElementModel.getDec().getProperty() != null" );
+            property.setPublicId( dataElementModel.getDec().getProperty().getPublicId() );
+            property.setVersion( dataElementModel.getDec().getProperty().getVersion() );
+            property.setLongName( dataElementModel.getDec().getProperty().getLongName() );
+            property.setShortName( dataElementModel.getDec().getProperty().getPreferredName() );
+            property.setContext( dataElementModel.getDec().getProperty().getContext().getName() );
+            property.setQualifier( dataElementModel.getDec().getProperty().getQualifier() );
+
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getProperty() == null" );
+
+        }
+
+
+        /////////////////////////////////////////////////////
+        // "Property Concepts" of the "Data Element Concept" Table for Compare
+        // This is a list of PropertyConcepts
+        if( dataElementModel.getDec().getDecIdseq() == null )
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() == null" );
+        }
+        else
+        {
+            logger.debug( "dataElementModel.getDec().getDecIdseq() != null: " + dataElementModel.getDec().getDecIdseq() );
+        }
+        List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
+        dataElementConcept.setPropertyConcepts( propertyConcepts );                                
         return dataElementConcept;
     }
 

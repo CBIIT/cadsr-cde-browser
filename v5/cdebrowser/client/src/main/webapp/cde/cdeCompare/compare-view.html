@@ -179,78 +179,114 @@
                     No data found
                 </td>
             </tr>
-            <tr class="dataElementViewTableTr">
+            <!--  <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Version:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.formattedVersion}}
                 </td>
-            </tr>
+            </tr>  -->
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">longName:</td>
+                <td class="dataElementDescription compareDataElementDescription">Long Name:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.longName}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">shortName:</td>
+                <td class="dataElementDescription compareDataElementDescription">Short Name:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.shortName}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">definition:</td>
+                <td class="dataElementDescription compareDataElementDescription">Definition:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null" ng-bind-html="data.dataElementConcept.dataElementConceptDetails.definition">
                     {{data.dataElementConcept.dataElementConceptDetails.definition}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
+                <td class="dataElementDescription compareDataElementDescription">Context:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                    {{data.dataElementConcept.dataElementConceptDetails.context}}
+                </td>
+            </tr>            
+            <!-- <tr class="dataElementViewTableTr">
                 <td class="dataElementDescription compareDataElementDescription">Public Id:</td>
                 <td class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.publicId}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">context:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
-                    {{data.dataElementConcept.dataElementConceptDetails.context}}
-                </td>
-            </tr>
-            <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">workflowStatus:</td>
-                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
-                    {{data.dataElementConcept.dataElementConceptDetails.workflowStatus}}
-                </td>
-            </tr>
-            <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">conceptualDomainPublicId:</td>
+                <td class="dataElementDescription compareDataElementDescription">Conceptual Domain Public ID:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.conceptualDomainPublicId}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">conceptualDomainShortName:</td>
+                <td class="dataElementDescription compareDataElementDescription">Conceptual Domain Short Name:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null" ng-bind-html="data.dataElementConcept.dataElementConceptDetails.conceptualDomainShortName">
                     {{data.dataElementConcept.dataElementConceptDetails.conceptualDomainShortName}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">conceptualDomainContextName:</td>
+                <td class="dataElementDescription compareDataElementDescription">Conceptual Domain Context Name:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.conceptualDomainContextName}}
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">conceptualDomainVersion:</td>
+                <td class="dataElementDescription compareDataElementDescription">Conceptual Domain Version:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.formattedConceptualDomainVersion}}
                 </td>
-            </tr>
+            </tr> -->
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">origin:</td>
+                <td class="dataElementDescription compareDataElementDescription">Conceptual Domain Long Name:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null" ng-bind-html="data.dataElementConcept.dataElementConceptDetails.conceptualDomainLongName">
+                    {{data.dataElementConcept.dataElementConceptDetails.conceptualDomainLongName}}
+                </td>
+            </tr>            
+		    <tr class="dataElementViewTableTr">
+		        <td class="dataElementDescription compareDataElementDescription">Object Class Long Name:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                    {{data.dataElementConcept.objectClass.longName}}
+                </td>                		        
+		    </tr>
+		    <tr class="dataElementViewTableTr">
+		        <td class="dataElementDescription compareDataElementDescription">Object Class Codes:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                   <span data-ng-repeat="elements in data.dataElementConcept.objectClassConcepts" >
+               			<a style="text-decoration: underline !important;" TARGET="_blank"
+                		href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{elements.conceptCode}}">{{elements.conceptCode}}</a>
+                   </span>
+                </td>
+		    </tr>		    
+		    <tr class="dataElementViewTableTr">
+		        <td class="dataElementDescription compareDataElementDescription">Property Long Name:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                    {{data.dataElementConcept.property.longName}}
+                </td>
+		    </tr>
+		    <tr class="dataElementViewTableTr">
+		        <td class="dataElementDescription compareDataElementDescription">Property Codes:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">                   
+                   <span data-ng-repeat="elements in data.dataElementConcept.propertyConcepts" >
+               			<a style="text-decoration: underline !important;" TARGET="_blank"
+                		href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{elements.conceptCode}}">{{elements.conceptCode}}</a>
+                   </span>
+                </td>
+		    </tr>	
+            <tr class="dataElementViewTableTr">
+                <td class="dataElementDescription compareDataElementDescription">Origin:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.origin}}
                 </td>
-            </tr>
+            </tr>	
+            <tr class="dataElementViewTableTr">
+                <td class="dataElementDescription compareDataElementDescription">Workflow Status:</td>
+                <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
+                    {{data.dataElementConcept.dataElementConceptDetails.workflowStatus}}
+                </td>
+            </tr>            	    	    		    
         </table>
 
 
