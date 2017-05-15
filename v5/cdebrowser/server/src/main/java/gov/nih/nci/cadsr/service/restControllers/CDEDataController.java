@@ -414,14 +414,12 @@ public class CDEDataController
     	}
 		Set<Entry<AlternateName, Set<String>>> entries = altNamesMap.entrySet();
 		for (Entry<AlternateName, Set<String>> entry : entries) {
-			StringBuilder sb = new StringBuilder();
+			List<String> csCsiList = new ArrayList<>();
 			for (String curr : entry.getValue()) {
-				sb.append(curr).append("; ");
+				csCsiList.add(curr);
 			}
-			String strCsCsi = sb.toString();
-			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
 			AlternateNameCsCsi altName = new AlternateNameCsCsi(entry.getKey());
-			altName.setCsCsi(strCsCsi);
+			altName.setCsCsi(csCsiList);
 			alternateNames.add(altName);
 		}
     	return alternateNames;
@@ -448,14 +446,12 @@ public class CDEDataController
     	}
 		Set<Entry<AlternateDefinition, Set<String>>> entries = altDefinitionsMap.entrySet();
 		for (Entry<AlternateDefinition, Set<String>> entry : entries) {
-			StringBuilder sb = new StringBuilder();
+			List<String> csCsiList = new ArrayList<>();
 			for (String curr : entry.getValue()) {
-				sb.append(curr).append("; ");
+				csCsiList.add(curr);
 			}
-			String strCsCsi = sb.toString();
-			strCsCsi = strCsCsi.substring(0, strCsCsi.length() - 2);
 			AlternateDefinitionCsCsi altDef = new AlternateDefinitionCsCsi(entry.getKey());
-			altDef.setCsCsi(strCsCsi);
+			altDef.setCsCsi(csCsiList);
 			alternateDefinitions.add(altDef);
 		}
     	return alternateDefinitions;

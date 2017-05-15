@@ -55,11 +55,11 @@ public class ControllerUtils {
 	public static SearchPreferencesServer retriveSessionSearchPreferencesServer(HttpSession httpSession) {
 		Object obj;
 		if (((obj = httpSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)) == null) || (!(obj instanceof SearchPreferencesServer))){
-			SearchPreferencesServer SearchPreferencesServer = new SearchPreferencesServer();
-			SearchPreferencesServer.initPreferences();//this operation will add all excluded statuses including server exclusion always
-			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, SearchPreferencesServer);
-			logger.debug("SearchPreferencesServer not found in the user HTTP session, adding default: " + SearchPreferencesServer);
-			return SearchPreferencesServer;
+			SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer();
+			searchPreferencesServer.initPreferences();//this operation will add all excluded statuses including server exclusion always
+			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferencesServer);
+			logger.debug("SearchPreferencesServer not found in the user HTTP session, adding default: " + searchPreferencesServer);
+			return searchPreferencesServer;
 		}
 		else {
 			logger.debug("SearchPreferencesServer found in the user HTTP session: " + obj);
@@ -161,4 +161,20 @@ public class ControllerUtils {
         unclassCsCsi.setAlternateDefinitions( unclassAlternateDefinitions );
         return(unclassCsCsi);
     }
+	/**
+	 * 
+	 * @param arr
+	 * @return true if an array is null or empty
+	 */
+	public static boolean isArrayEmpty (List<String> arr) {
+		return (arr == null) || (arr.isEmpty());
+	}
+	/**
+	 * 
+	 * @param arr
+	 * @return true if an array is not null and is not empty
+	 */
+	public static boolean isArrayNotEmpty (List<String> arr) {
+		return (arr != null) && (! arr.isEmpty());
+	}
 }

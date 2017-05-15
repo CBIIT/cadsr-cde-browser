@@ -1,6 +1,10 @@
 package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
+
+import gov.nih.nci.cadsr.service.restControllers.ControllerUtils;
 
 /*
  * Copyright 2017 Leidos Biomedical Research, Inc.
@@ -16,7 +20,7 @@ public class AlternateDefinitionCsCsi implements Comparable
     private String type;
     private String context;
     private String language;
-    private String csCsi;
+    private List<String> csCsi;//could be null
    //CDEBROWSER-809
     public AlternateDefinitionCsCsi()
     {
@@ -68,14 +72,47 @@ public class AlternateDefinitionCsCsi implements Comparable
 		this.language = language;
 	}
 
-	public String getCsCsi() {
+	public List<String> getCsCsi() {
 		return csCsi;
 	}
 
-	public void setCsCsi(String csCsi) {
+	public void setCsCsi(List<String> csCsi) {
 		this.csCsi = csCsi;
 	}
 
+	@Override
+	public int compareTo(Object other) {
+		if (other instanceof AlternateDefinitionCsCsi) {
+			AlternateDefinitionCsCsi that = (AlternateDefinitionCsCsi)other;
+			//to avoid null pointer for the values which are never null in our DB
+			String thisName = (this.name != null) ? name : "";
+			String thisType = (this.type != null) ? this.type : "";
+			String thisContext = (this.context != null) ? this.context : "";
+			//Sorting order: empty csCsi, name, type, context
+			if ((ControllerUtils.isArrayEmpty(this.csCsi)) && (ControllerUtils.isArrayNotEmpty(that.csCsi))) {
+				return -1;
+			}
+			else if ((ControllerUtils.isArrayNotEmpty(this.csCsi)) && (ControllerUtils.isArrayEmpty(that.csCsi))) {
+				return 1;
+			}	
+			else if (!(thisName.equals(that.name))) {
+				return StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.name));
+			}
+			else if (!(thisType.equals(that.type))){
+				return thisType.compareTo(that.type);
+			}
+			else {
+				return thisContext.compareTo(that.context);
+			}
+		}
+		else if (other instanceof AlternateDefinition) {
+			return 1;
+		}
+		else {
+			return -1;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "AlternateDefinitionCsCsi [name=" + name + ", type=" + type + ", context=" + context + ", language="
@@ -130,36 +167,5 @@ public class AlternateDefinitionCsCsi implements Comparable
 			return false;
 		return true;
 	}
-	@Override
-	public int compareTo(Object other) {
-		if (other instanceof AlternateDefinitionCsCsi) {
-			AlternateDefinitionCsCsi that = (AlternateDefinitionCsCsi)other;
-			//to avoid null pointer for the values which are never null in our DB
-			String thisName = (this.name != null) ? name : "";
-			String thisType = (this.type != null) ? this.type : "";
-			String thisContext = (this.context != null) ? this.context : "";
-			//Sorting order: empty csCsi, name, type, context
-			if ((StringUtils.isEmpty(this.csCsi)) && (StringUtils.isNotEmpty(that.csCsi))) {
-				return -1;
-			}
-			else if ((StringUtils.isNotEmpty(this.csCsi)) && (StringUtils.isEmpty(that.csCsi))) {
-				return 1;
-			}			
-			else if (!(thisName.equals(that.name))) {
-				return StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.name));
-			}
-			else if (!(thisType.equals(that.type))){
-				return thisType.compareTo(that.type);
-			}
-			else {
-				return thisContext.compareTo(that.context);
-			}
-		}
-		else if (other instanceof AlternateDefinition) {
-			return 1;
-		}
-		else {
-			return -1;
-		}
-	}
+	
 }

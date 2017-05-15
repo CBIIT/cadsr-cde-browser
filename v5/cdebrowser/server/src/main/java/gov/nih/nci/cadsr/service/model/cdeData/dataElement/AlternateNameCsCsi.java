@@ -3,7 +3,11 @@ package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
  * Copyright 2017 Leidos Biomedical Research, Inc.
  */
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
+
+import gov.nih.nci.cadsr.service.restControllers.ControllerUtils;
 
 /**
  * 
@@ -16,7 +20,7 @@ public class AlternateNameCsCsi implements Comparable
     private String type;
     private String context;
     private String language;
-    private String csCsi;
+    private List<String> csCsi;//could be null
     
     public AlternateNameCsCsi()
     {
@@ -70,67 +74,12 @@ public class AlternateNameCsCsi implements Comparable
         this.language = language;
     }
 
-	public String getCsCsi() {
+	public List<String> getCsCsi() {
 		return csCsi;
 	}
 
-	public void setCsCsi(String csCsi) {
+	public void setCsCsi(List<String> csCsi) {
 		this.csCsi = csCsi;
-	}
-
-	@Override
-	public String toString() {
-		return "AlternateNameCsCsi [name=" + name + ", type=" + type + ", context=" + context + ", language=" + language
-				+ ", csCsi=" + csCsi + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((context == null) ? 0 : context.hashCode());
-		result = prime * result + ((csCsi == null) ? 0 : csCsi.hashCode());
-		result = prime * result + ((language == null) ? 0 : language.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AlternateNameCsCsi other = (AlternateNameCsCsi) obj;
-		if (context == null) {
-			if (other.context != null)
-				return false;
-		} else if (!context.equals(other.context))
-			return false;
-		if (csCsi == null) {
-			if (other.csCsi != null)
-				return false;
-		} else if (!csCsi.equals(other.csCsi))
-			return false;
-		if (language == null) {
-			if (other.language != null)
-				return false;
-		} else if (!language.equals(other.language))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
-		return true;
 	}
 	@Override
 	public int compareTo(Object other) {
@@ -141,10 +90,10 @@ public class AlternateNameCsCsi implements Comparable
 			String thisType = (this.type != null) ? this.type : "";
 			String thisContext = (this.context != null) ? this.context : "";
 			//Sorting order: empty csCsi, name, type, context
-			if ((StringUtils.isEmpty(this.csCsi)) && (StringUtils.isNotEmpty(that.csCsi))) {
+			if ((ControllerUtils.isArrayEmpty(this.csCsi)) && (ControllerUtils.isArrayNotEmpty(that.csCsi))) {
 				return -1;
 			}
-			else if ((StringUtils.isNotEmpty(this.csCsi)) && (StringUtils.isEmpty(that.csCsi))) {
+			else if ((ControllerUtils.isArrayNotEmpty(this.csCsi)) && (ControllerUtils.isArrayEmpty(that.csCsi))) {
 				return 1;
 			}			
 			else if (!(thisName.equals(that.name))) {
