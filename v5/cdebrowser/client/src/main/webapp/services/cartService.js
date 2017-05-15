@@ -20,15 +20,26 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// add cde's to cart. checkedItems is just an array of ids hence the need for searchResults //
 	this.addCDE = function(checkedItems, searchResults) {
+		console.log(checkedItems, searchResults)
 		for (var i=0; i<searchResults.length; i++) {
 			if (checkedItems.indexOf(searchResults[i]['deIdseq'])>=0) {
-				if (this.cartData.indexOf(searchResults[i])<0) {
+				if (!this.checkCartForExistingItem(searchResults[i]['deIdseq'])) {
 					var cartItem = searchResults[i];
 					cartItem['unsavedItem'] = true;
-					this.cartData.push(cartItem); 
+					this.cartData.push(cartItem); 					
 				};
 			};
 		};
+	};
+
+	this.checkCartForExistingItem = function(id) {
+		var match = false;
+		for (var x=0; x<this.cartData.length; x++) {
+			if (id == this.cartData[x].deIdseq) {
+				match = true;
+			};
+		};
+		return match;
 	};
 
 	// delete cde's from cart //
