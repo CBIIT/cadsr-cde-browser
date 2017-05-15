@@ -122,8 +122,11 @@ public class ReferenceDocument implements Comparable
 		if (other instanceof ReferenceDocument) {
 			ReferenceDocument that = (ReferenceDocument)other;
 			//to avoid null pointer for the values which are never null in our DB
+			//String class compare methods through exceptions on null parameter
 			String thisName = (this.documentName != null) ? this.documentName : "";
 			String thisDocType = (this.documentType != null) ? this.documentType : "";
+			String thatName = (that.documentName != null) ? that.documentName : "";
+			String thatDocType = (that.documentType != null) ? that.documentType : "";
 			//Preferred Question Text goes first, then "Alternate Question Text", everything else is alphabetized
 			if (("Preferred Question Text".equals(thisDocType)) && (!("Preferred Question Text".equals(that.getDocumentType())))) {
 				return -1;
@@ -132,7 +135,7 @@ public class ReferenceDocument implements Comparable
 				return 1;
 			}
 			else if (("Preferred Question Text".equals(thisDocType)) && ("Preferred Question Text".equals(that.getDocumentType()))) {
-				return (StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.documentName)));
+				return (thisName.compareToIgnoreCase(thatName));
 			}
 			else if (("Alternate Question Text".equals(thisDocType)) && (!("Alternate Question Text".equals(that.getDocumentType())))) {
 				return -1;
@@ -141,14 +144,14 @@ public class ReferenceDocument implements Comparable
 				return 1;
 			}
 			else if (("Alternate Question Text".equals(thisDocType)) && ("Alternate Question Text".equals(that.getDocumentType()))) {
-				return (StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.documentName)));
+				return (thisName.compareToIgnoreCase(thatName));
 			}
 			else {
-				if (thisDocType.equals(that.documentType)) {
-					return (StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.documentName)));
+				if (thisDocType.equals(thatDocType)) {
+					return (thisName.compareToIgnoreCase(thatName));
 				}
 				else {
-					return thisDocType.compareTo(that.documentType);
+					return thisDocType.compareToIgnoreCase(thatDocType);
 				}
 			}
 		}

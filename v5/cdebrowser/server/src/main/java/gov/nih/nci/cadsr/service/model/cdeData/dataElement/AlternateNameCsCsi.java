@@ -86,9 +86,12 @@ public class AlternateNameCsCsi implements Comparable
 		if (other instanceof AlternateNameCsCsi) {
 			AlternateNameCsCsi that = (AlternateNameCsCsi)other;
 			//to avoid null pointer for the values which are never null in our DB
-			String thisName = (this.name != null) ? name : "";
+			String thisName = (this.name != null) ? this.name : "";
 			String thisType = (this.type != null) ? this.type : "";
 			String thisContext = (this.context != null) ? this.context : "";
+			String thatName = (that.name != null) ? that.name : "";
+			String thatType = (that.type != null) ? that.type : "";
+			String thatContext = (that.context != null) ? that.context : "";
 			//Sorting order: empty csCsi, name, type, context
 			if ((ControllerUtils.isArrayEmpty(this.csCsi)) && (ControllerUtils.isArrayNotEmpty(that.csCsi))) {
 				return -1;
@@ -96,14 +99,14 @@ public class AlternateNameCsCsi implements Comparable
 			else if ((ControllerUtils.isArrayNotEmpty(this.csCsi)) && (ControllerUtils.isArrayEmpty(that.csCsi))) {
 				return 1;
 			}			
-			else if (!(thisName.equals(that.name))) {
-				return StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.name));
+			else if (!(thisName.equals(thatName))) {
+				return thisName.compareToIgnoreCase(thatName);
 			}
-			else if (!(thisType.equals(that.type))){
-				return thisType.compareTo(that.type);
+			else if (!(thisType.equals(thatType))){
+				return thisType.compareTo(thatType);
 			}
 			else {
-				return thisContext.compareTo(that.context);
+				return thisContext.compareTo(thatContext);
 			}
 		}
 		else if (other instanceof AlternateName) {
