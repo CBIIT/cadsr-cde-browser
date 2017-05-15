@@ -418,6 +418,7 @@ public class CDEDataController
 			for (String curr : entry.getValue()) {
 				csCsiList.add(curr);
 			}
+			Collections.sort(csCsiList);
 			AlternateNameCsCsi altName = new AlternateNameCsCsi(entry.getKey());
 			altName.setCsCsi(csCsiList);
 			alternateNames.add(altName);
@@ -450,6 +451,7 @@ public class CDEDataController
 			for (String curr : entry.getValue()) {
 				csCsiList.add(curr);
 			}
+			Collections.sort(csCsiList);
 			AlternateDefinitionCsCsi altDef = new AlternateDefinitionCsCsi(entry.getKey());
 			altDef.setCsCsi(csCsiList);
 			alternateDefinitions.add(altDef);
