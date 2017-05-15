@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.service.model.cdeData.dataElement;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ReferenceDocument implements Comparable 
 {
     private String documentName;
@@ -130,7 +132,7 @@ public class ReferenceDocument implements Comparable
 				return 1;
 			}
 			else if (("Preferred Question Text".equals(thisDocType)) && ("Preferred Question Text".equals(that.getDocumentType()))) {
-				return (thisName.compareTo(that.documentName));
+				return (StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.documentName)));
 			}
 			else if (("Alternate Question Text".equals(thisDocType)) && (!("Alternate Question Text".equals(that.getDocumentType())))) {
 				return -1;
@@ -139,11 +141,11 @@ public class ReferenceDocument implements Comparable
 				return 1;
 			}
 			else if (("Alternate Question Text".equals(thisDocType)) && ("Alternate Question Text".equals(that.getDocumentType()))) {
-				return (thisName.compareTo(that.documentName));
+				return (StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.documentName)));
 			}
 			else {
 				if (thisDocType.equals(that.documentType)) {
-					return thisName.compareTo(that.documentName);
+					return (StringUtils.lowerCase(thisName).compareTo(StringUtils.lowerCase(that.documentName)));
 				}
 				else {
 					return thisDocType.compareTo(that.documentType);
