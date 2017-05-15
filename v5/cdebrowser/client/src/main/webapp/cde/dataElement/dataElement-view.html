@@ -142,7 +142,13 @@
     <td class="dataElementValue" ng-bind-html="altDef.type">{{altDef.type}}</td>
     <td class="dataElementValue" ng-bind-html="altDef.context">{{altDef.context}}</td>
     <td class="dataElementValue" ng-bind-html="altDef.language">{{altDef.language}}</td>
-    <td class="dataElementValue" ng-bind-html="altDef.csCsi">{{altDef.csCsi}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.csCsi">
+      <ul ng-if="altDef.csCsi" class="classification">
+        <li ng-repeat="csCsi in altDef.csCsi">
+          {{csCsi}}<span ng-if="!$last">;</span>
+        </li>
+      </ul>
+    </td>
   </tr>
   <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElement.csCsisCdeDetails.alternateDefinitions.length">
 
