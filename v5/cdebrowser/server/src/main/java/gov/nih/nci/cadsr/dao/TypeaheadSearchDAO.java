@@ -5,6 +5,7 @@ package gov.nih.nci.cadsr.dao;
 
 import java.util.List;
 
+import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 /**
  * This is an interface to retrieve data for Typeahead.
@@ -13,7 +14,8 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
  *
  */
 public interface TypeaheadSearchDAO {
-	List<String> getSearchTypeaheadLongName(String pattern);
-	List<String> getSearchTypeaheadLongNameFull(String pattern);
-	List<String> buildSearchTypeaheadByNameAndDomain(SearchCriteria searchCriteria);
+	//TODO remove commented
+//	List<String> getSearchTypeaheadLongName(String pattern);
+//	List<String> getSearchTypeaheadLongNameFull(String pattern);
+	List<String> buildSearchTypeaheadByNameAndDomain(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 }
