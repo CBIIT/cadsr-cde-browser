@@ -3,6 +3,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	
 	var authService = authenticationService; // create instance of auth service //
 	this.statusMessage = ''; // status message for alerting the user what is happening when user clicks on buttons //
+	this.disableSaveButton = false;
 
 	// check session to see if cart service exists, if so set variables to the session values //
 	if (!$sessionStorage['cartService']) {
@@ -100,6 +101,8 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	this.saveCart = function() {
 		var that = this;
 		this.itemsForSave = [];
+		this.disableSaveButton = true;
+		console.log(this.disableSaveButton)
 		for (var i=0; i<this.cartData.length; i++) {
 			if (this.cartData[i]['unsavedItem']==true) {
 				this.itemsForSave.push(this.cartData[i].deIdseq);
@@ -113,11 +116,13 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 					that.cartData[i]['unsavedItem'] = false;
 				};
 				that.statusMessage = '';
+				that.disableSaveButton = false;
 			})
 			.error(function(response) {
 				authService.cameFrom = 'save';
 		        $location.path("/login").replace(); // send user to login page //
 				that.statusMessage = '';
+				that.disableSaveButton = false;
 			});			
 		};
 	};

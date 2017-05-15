@@ -53,7 +53,7 @@
 		CDE Cart is empty.
 	</div>
 	<div style="padding-top:5px">
-		<button ng-click="saveCart()" ng-show="cartService.cartData.length&&cartService.showSaveButton()">Save Cart</button>
+		<button ng-click="saveCart()" ng-disabled="cartService.disableSaveButton" ng-show="cartService.cartData.length&&cartService.showSaveButton()">Save Cart</button>
 		<button ng-click="deleteCDEs()" ng-show="cartService.cartData.length">Delete</button>
 		<button ng-if="authenticationService.userName==''" ng-click="retrieveCart()">Retrieve Saved </button>
 		<button ng-click="goBack()">Return to Search</button>			
