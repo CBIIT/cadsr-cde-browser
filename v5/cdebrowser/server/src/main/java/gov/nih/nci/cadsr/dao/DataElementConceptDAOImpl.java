@@ -202,7 +202,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                 ConceptualDomainModel conceptualDomainModel = getConceptualDomainDAO().getConceptualDomainByIdseq( rs.getString( "CD_IDSEQ" ) );
                 if( conceptualDomainModel != null )
                 {
-                    logger.debug( "conceptualDomainModel.getVersion(): " + conceptualDomainModel.getVersion() );
+                    //logger.debug( "conceptualDomainModel.getVersion(): " + conceptualDomainModel.getVersion() );
                     dataElementConceptModel.setCdIdseq( rs.getString( "CD_IDSEQ" ) );
                     dataElementConceptModel.setCdPublicId( conceptualDomainModel.getCdId() );
                     if( conceptualDomainModel.getPreferredName() != null )
@@ -221,7 +221,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
                     {
                         dataElementConceptModel.setCdContextName( conceptualDomainModel.getContextModel().getName() );
                     }
-                    logger.debug( "dataElementConceptModel: " + dataElementConceptModel.toString() );
+                    logger.debug( "dataElementConceptModel: " + dataElementConceptModel);
                 }
             } catch( EmptyResultDataAccessException ex )
             {

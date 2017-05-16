@@ -82,7 +82,7 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
             representationModel.setConceptDerivationRuleModel( getConceptDerivationRuleDAO().getCDRByIdseq( rs.getString( "CONDR_IDSEQ" ) ) );
 
             logger.debug( "representationModel: " + representationModel );
-            logger.debug( "representationModel ConceptDerivationRule: " + representationModel.getConceptDerivationRuleModel().toString() );
+            logger.debug( "representationModel ConceptDerivationRule: " + representationModel.getConceptDerivationRuleModel());
             return representationModel;
         }
     }

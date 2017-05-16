@@ -359,7 +359,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
                 logger.warn( "No Classif scheme items found for Reference Docs for Data Element with idseq: " + deIdseq );
             }
 
-            logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel() );
+            //logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel() );
             logger.debug( "dataElementModel.getValueDomainModel().getPublicId(): " + dataElementModel.getValueDomainModel().getPublicId() );
 
             return dataElementModel;
