@@ -48,6 +48,14 @@ public class CdeCartController
 			return createErrorNode("Server Error:\nretrieveObjectCart: simulated error", new Exception("this is my test"));
 	}
 	//TODO remove
+	@RequestMapping(method = RequestMethod.GET, value="/internal", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity retrieveObjectCartInternalError(HttpSession mySession) throws AutheticationFailureException {
+	
+		ResponseEntity responseEntity = new ResponseEntity("Test Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
+		return responseEntity;
+	}
+	//TODO remove
 	@RequestMapping( method = RequestMethod.GET, value="/old", produces = "application/json" )
 	@ResponseBody
 	public SearchNode[] retrieveObjectCart(HttpSession mySession) throws AutheticationFailureException
