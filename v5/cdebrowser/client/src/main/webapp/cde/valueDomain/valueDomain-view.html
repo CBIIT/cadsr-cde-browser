@@ -34,6 +34,11 @@
         <td class="dataElementDescription">Workflow Status:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.selectedDataElement.workflowStatus">{{cdeDetails.valueDomain.selectedDataElement.workflowStatus}}</td>
     </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Registration Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
+    </tr>    
+    
 </table>
 <br>
 
@@ -43,7 +48,6 @@
         <th colspan="2" align="left">Value Domain Details</th>
     </tr>
 </table>
-
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription" width="20%">Public ID:</td>
@@ -73,6 +77,10 @@
         <td class="dataElementDescription">Workflow Status:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.workflowStatus">{{cdeDetails.valueDomain.valueDomainDetails.workflowStatus}}</td>
     </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Registration Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.registrationStatus">{{cdeDetails.valueDomain.valueDomainDetails.registrationStatus}}</td>
+    </tr>    
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Data Type:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.dataType">{{cdeDetails.valueDomain.valueDomainDetails.dataType}}</td>
@@ -117,14 +125,6 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Public ID:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.conceptualDomainPublicId">{{cdeDetails.valueDomain.valueDomainDetails.conceptualDomainPublicId}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Conceptual Domain Short Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.conceptualDomainShortName">{{cdeDetails.valueDomain.valueDomainDetails.conceptualDomainShortName}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Conceptual Domain Context Name:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.conceptualDomainContextName">{{cdeDetails.valueDomain.valueDomainDetails.conceptualDomainContextName}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Conceptual Domain Version:</td>

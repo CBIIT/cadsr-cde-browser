@@ -441,6 +441,10 @@ ul.cdeSearchMessage li{
     padding:10px 0px 10px 4px;
 }
 
+#cdeCart div.progressMessage .isError {
+    color:#A52A2A;
+}
+
 #cdeCart div.progressMessage div {
     display:inline-block;
     margin:0px;
