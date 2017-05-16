@@ -33,8 +33,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class CDECartOCImpl implements CDECart, Serializable  {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class CDECartOCImpl implements CDECart, Serializable  {
+	private static Logger logger = LogManager.getLogger(CDECartOCImpl.class.getName());
 	private Cart oCart;
 	private CDECartItemComparator itemComparator;
 	private ObjectCartClient cartClient;
@@ -53,6 +56,7 @@ public class CDECartOCImpl implements CDECart, Serializable  {
 		try {
 			oCart = cartClient.createCart(userId, cartName);
 		} catch (ObjectCartException oce) {
+			logger.error("CDECartOCImpl Constructor received ObjectCartException: " + oce, oce);
 			throw new RuntimeException("Constructor: Error creating the Object Cart ", oce);
 		}
 	}  

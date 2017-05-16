@@ -40,8 +40,15 @@ public class CdeCartController
 
 	public CdeCartController() {
 	}
-
-	@RequestMapping( method = RequestMethod.GET )
+	//TODO remove
+	@RequestMapping(method = RequestMethod.GET, value="/error", produces = "application/json")
+	@ResponseBody
+	public SearchNode[] retrieveObjectCartError(HttpSession mySession) throws AutheticationFailureException {
+	
+			return createErrorNode("Server Error:\nretrieveObjectCart: simulated error", new Exception("this is my test"));
+	}
+	//TODO remove
+	@RequestMapping( method = RequestMethod.GET, value="/old", produces = "application/json" )
 	@ResponseBody
 	public SearchNode[] retrieveObjectCart(HttpSession mySession) throws AutheticationFailureException
 	{
@@ -62,13 +69,44 @@ public class CdeCartController
 
 		try {
 			List<SearchNode> res = cdeCartUtil.findCartNodes(mySession, principalName);
-			logger.debug("Sending OK response of rest call retrieve Object Cart; # of CDEs: " + res.size());			
+			logger.debug("Sending OK response of rest call retrieve Object Cart; # of CDEs: " + res.size());
 			results = res.toArray(new SearchNode[res.size()]);
 		} 
 		catch (Exception e) {
 			return createErrorNode("Server Error:\nretrieveObjectCart: " + principalName + " failed ", e);
 		}
 		return results;
+	}
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity retrieveObjectCartWithException(HttpSession mySession) throws AutheticationFailureException
+	{
+		SearchNode[] results = null;
+		String principalName = null;
+		
+		if (mySession != null) {
+			principalName = (String) mySession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+			logger.warn("In retrieveObjectCart found session for: " + principalName);
+		}
+		
+		if (principalName == null) {
+			logger.error("........No user found in session in retrieveObjectCart");
+			throw new AutheticationFailureException("Authenticated user not found in the session operation retrieve CDE Object Cart");
+		}
+		
+		logger.debug("Received rest call retrieve Object Cart for user: " + principalName);
+		ResponseEntity responseEntity;
+		try {
+			List<SearchNode> res = cdeCartUtil.findCartNodes(mySession, principalName);
+			logger.debug("Sending OK response of rest call retrieve Object Cart; # of CDEs: " + res.size());
+			results = res.toArray(new SearchNode[res.size()]);
+			responseEntity = new ResponseEntity(results, HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			logger.error("Sending INTERNAL_SERVER_ERROR response of rest call retrieve Object Cart; principalName: " + principalName, e);
+			responseEntity = new ResponseEntity(e.toString() + ", user: " + principalName, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return responseEntity;
 	}
     /**
      * This method expects only IDs which are added to the cart.
@@ -179,7 +217,8 @@ public class CdeCartController
 	}
 	public SearchNode[] createErrorNode( String text, Exception e )
     {
-        return createErrorNode( text, e.getMessage() );
+		logger.error( "createErrorNode exception: text" + text + ", e: " + e );
+		return createErrorNode( text, e.getMessage() );
     }
 
     public SearchNode[] createErrorNode( String text )

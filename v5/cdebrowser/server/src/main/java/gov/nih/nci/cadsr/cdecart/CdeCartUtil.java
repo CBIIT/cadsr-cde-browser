@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,19 +246,18 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			log.debug("Nothing to save");
 			return;
 		}
-
-		CDECart sessionCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
-
-		if (sessionCart == null) {
-			sessionCart = findCdeCart(mySession, principalName);
-		}
-
 		String userName = principalName;
 
 		//we shall be after login here, and userName is never null
 		if (userName == null) {
-			log.error("........No user found in session in addToCart");
-			throw new AutheticationFailureException("Authenticated user not found in the session");
+			log.error("........No user found in session in addToCart: " + userName);
+			throw new AutheticationFailureException("Authenticated user not found in the session: " + userName);
+		}
+		
+		CDECart sessionCart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
+
+		if (sessionCart == null) {
+			sessionCart = findCdeCart(mySession, principalName);
 		}
 
 		try {
@@ -273,7 +273,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 
 			ObjectCartClient ocClient = null;
 
-			if (!ocURL.equals(""))
+			if (StringUtils.isNotEmpty(ocURL))
 				ocClient = new ObjectCartClient(ocURL);
 			else
 				ocClient = new ObjectCartClient();
