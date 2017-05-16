@@ -24,9 +24,10 @@ public class UserSessionListener implements HttpSessionListener
 		HttpSession session = sessionEvent.getSession();
 		Object sessionUser = session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 		session.removeAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+		session.removeAttribute(CaDSRConstants.CDE_CART);
 		if (sessionUser != null) {
-			logger.debug("Session attribute " + CaDSRConstants.LOGGEDIN_USER_NAME
-				+ " for username: " + sessionUser + " removed.");
+			logger.debug("Session attributes: " + CaDSRConstants.LOGGEDIN_USER_NAME
+				+ " and "+ CaDSRConstants.CDE_CART + " for username: " + sessionUser + " removed.");
 		}
 	}
 	
