@@ -706,9 +706,6 @@ public class ContextDataController
         for( ClassificationSchemeModel childClassificationSchemeModel : childCsModelList )
         {
 
-            //Is this CS (Classification scheme) for this Context
-            if( childClassificationSchemeModel.getConteIdseq().compareTo( contextId ) == 0 )
-            {
                 ClassificationNode childClassificationSchemeNode = new ClassificationNode();
                 childClassificationSchemeNode.setChildType( CaDSRConstants.EMPTY );
                 childClassificationSchemeNode.setType( CaDSRConstants.FOLDER );
@@ -729,6 +726,10 @@ public class ContextDataController
                 //Get CSI (Classification Scheme Item) list for this CS (Classification Scheme)
                 ////////////////////////////////////////////////
                 String csId = childClassificationSchemeModel.getCsIdseq();
+                if (csCsiNodelList.size() == 0) {
+                	csCsiNodelList = this.csCsiDAO.getCsCsisById(csId);
+                }
+                
                 for( CsCsiModel csCsiModel : csCsiNodelList )
                 {
                     if( csCsiModel.getCsIdseq().compareTo( csId ) == 0 )
@@ -755,7 +756,6 @@ public class ContextDataController
                 }                
                 //Add this CS to the CS Folder
                 classificationsNode.addChildNode( childClassificationSchemeNode );
-            }
         }
        return classificationsNode;
     }        
