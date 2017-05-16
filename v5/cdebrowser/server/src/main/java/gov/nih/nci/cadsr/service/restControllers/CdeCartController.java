@@ -6,11 +6,11 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.WebApplicationException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -48,20 +48,20 @@ public class CdeCartController
 			return createErrorNode("Server Error:\nretrieveObjectCart: simulated error", new Exception("this is my test"));
 	}
 	//TODO remove
-	@RequestMapping(method = RequestMethod.GET, value="/internal")
+	@RequestMapping(method = RequestMethod.GET, value="/internal", produces = "test/plain")
 	@ResponseBody
-	public void retrieveObjectCartInternalError(HttpSession mySession) throws Exception {
+	public ResponseEntity retrieveObjectCartInternalError(HttpSession mySession) throws AutheticationFailureException {
 	
-		WebApplicationException  responseEntity = new WebApplicationException("Test Internal Error");
-		throw responseEntity;
+		ResponseEntity responseEntity = new ResponseEntity("Test Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
+		return responseEntity;
 	}
-	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public SearchNode[] retrieveObjectCartWithException(HttpSession mySession) throws Exception
+	public ResponseEntity retrieveObjectCartWithException(HttpSession mySession) throws AutheticationFailureException
 	{
 		SearchNode[] results = null;
 		String principalName = null;
-		
+		HttpHeaders responseHeaders = new HttpHeaders();
 		if (mySession != null) {
 			principalName = (String) mySession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 			logger.warn("In retrieveObjectCart found session for: " + principalName);
@@ -73,17 +73,20 @@ public class CdeCartController
 		}
 		
 		logger.debug("Received rest call retrieve Object Cart for user: " + principalName);
-
+		ResponseEntity responseEntity;
 		try {
 			List<SearchNode> res = cdeCartUtil.findCartNodes(mySession, principalName);
 			logger.debug("Sending OK response of rest call retrieve Object Cart; # of CDEs: " + res.size());
 			results = res.toArray(new SearchNode[res.size()]);
+			responseHeaders.set("Content-Type", "application/json");
+			responseEntity = new ResponseEntity(results, HttpStatus.OK);
 		} 
 		catch (Exception e) {
 			logger.error("Sending INTERNAL_SERVER_ERROR response of rest call retrieve Object Cart; principalName: " + principalName, e);
-			throw new WebApplicationException("Server error trying to retrieve Object Cart of " + principalName, e);
+			responseHeaders.set("Content-Type", "text/plain");
+			responseEntity = new ResponseEntity(e.toString() + ", user: " + principalName, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return results;
+		return responseEntity;
 	}
     /**
      * This method expects only IDs which are added to the cart.
