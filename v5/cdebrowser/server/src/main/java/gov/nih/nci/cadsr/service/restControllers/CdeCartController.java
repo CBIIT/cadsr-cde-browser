@@ -79,12 +79,12 @@ public class CdeCartController
 			logger.debug("Sending OK response of rest call retrieve Object Cart; # of CDEs: " + res.size());
 			results = res.toArray(new SearchNode[res.size()]);
 			responseHeaders.set("Content-Type", "application/json");
-			responseEntity = new ResponseEntity(results, HttpStatus.OK);
+			responseEntity = new ResponseEntity(results, responseHeaders, HttpStatus.OK);
 		} 
 		catch (Exception e) {
 			logger.error("Sending INTERNAL_SERVER_ERROR response of rest call retrieve Object Cart; principalName: " + principalName, e);
 			responseHeaders.set("Content-Type", "text/plain");
-			responseEntity = new ResponseEntity(e.toString() + ", user: " + principalName, HttpStatus.INTERNAL_SERVER_ERROR);
+			responseEntity = new ResponseEntity(e.toString() + ", user: " + principalName, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
