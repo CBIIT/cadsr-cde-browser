@@ -133,12 +133,26 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				that.retrieveCart();
 
 			})
-			.error(function(response) {
+			.error(function(response, status) {
 				authService.cameFrom = 'save';
+				that.isError = true;
+				that.disableSaveButton = false;
+
+
+			if (status==401) {
 		        $location.path("/login").replace(); // send user to login page //
 				that.statusMessage = '';
-				this.isError = true;
 				that.disableSaveButton = false;
+			}
+			else {
+				if (response.data) {
+					that.statusMessage = response.data;
+				}
+				else {
+					that.statusMessage = response;
+				};
+			};
+
 			});			
 		};
 	};
