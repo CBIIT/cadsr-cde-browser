@@ -1349,6 +1349,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // log the user out //
     $scope.logout = function() {
         $scope.authenticationService.logout();
+        cartService.statusMessage = ""; // remove cart error when logging out //
     };
 
     // add items to compare list //
