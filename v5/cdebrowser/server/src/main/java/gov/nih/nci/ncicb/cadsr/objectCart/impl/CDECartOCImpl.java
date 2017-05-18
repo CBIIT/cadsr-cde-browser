@@ -57,7 +57,7 @@ public class CDECartOCImpl implements CDECart, Serializable  {
 			oCart = cartClient.createCart(userId, cartName);
 		} catch (ObjectCartException oce) {
 			logger.error("CDECartOCImpl Constructor received ObjectCartException: " + oce, oce);
-			throw new RuntimeException("Constructor: Error creating the Object Cart ", oce);
+			throw new RuntimeException("Error creating the Object Cart ", oce);
 		}
 	}  
 	

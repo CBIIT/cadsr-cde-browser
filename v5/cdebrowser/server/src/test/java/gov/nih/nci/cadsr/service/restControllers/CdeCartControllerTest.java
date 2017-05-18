@@ -3,8 +3,7 @@
  */
 package gov.nih.nci.cadsr.service.restControllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,66 +70,78 @@ public class CdeCartControllerTest {
 		
 		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
-	//FIXME rewrite the tests
-//	@Test
-//	public void testRetrieveObjectCartSuccessEmptyResult() throws Exception {
-//		HttpSession mockSession = Mockito.mock(HttpSession.class);
-//		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser");
-//		List<SearchNode> searchNodeList =  new ArrayList<SearchNode>();
-//		Mockito.when(cdeCartUtil.findCartNodes(mockSession, "testUser")).thenReturn(searchNodeList);
-//		//MUT
-//		SearchNode[] received = cdeCartController.retrieveObjectCartWithException(mockSession);
-//		
-//		assertNotNull(received);
-//		assertEquals(0, received.length);
-//		Mockito.verify(cdeCartUtil).findCartNodes(mockSession, "testUser");
-//		Mockito.reset(cdeCartUtil);
-//		Mockito.verifyZeroInteractions(cdeCartUtil);
-//	}
-//	@Test
-//	public void testRetrieveObjectCartSuccess() throws Exception {
-//		HttpSession mockSession = Mockito.mock(HttpSession.class);
-//		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser");
-//		List<SearchNode> searchNodeList =  new ArrayList<SearchNode>();
-//		SearchNode searchNodeExpected1 = new SearchNode();
-//		searchNodeExpected1.setDeIdseq("testSeqId1");
-//		searchNodeExpected1.setLongName("testlongName1");
-//		searchNodeList.add(searchNodeExpected1);
-//		SearchNode searchNodeExpected2 = new SearchNode();
-//		searchNodeExpected1.setDeIdseq("testSeqId2");
-//		searchNodeExpected1.setLongName("testlongName2");
-//		searchNodeList.add(searchNodeExpected2);
-//		Mockito.when(cdeCartUtil.findCartNodes(mockSession, "testUser")).thenReturn(searchNodeList);
-//		//MUT
-//		SearchNode[] received = cdeCartController.retrieveObjectCart(mockSession);
-//		
-//		assertNotNull(received);
-//		assertEquals(2, received.length);
-//		assertEquals(searchNodeExpected1, received[0]);
-//		assertEquals(searchNodeExpected2, received[1]);
-//		Mockito.verify(cdeCartUtil).findCartNodes(mockSession, "testUser");
-//		Mockito.reset(cdeCartUtil);
-//	}
-//	
-//	@Test
-//	public void testRetrieveObjectCartError() throws Exception {
-//		HttpSession mockSession = Mockito.mock(HttpSession.class);
-//		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser3");
-//		
-//		ObjectCartException expectedException = new ObjectCartException("test exception3");
-//		
-//		Mockito.doThrow(expectedException).when(cdeCartUtil).findCartNodes(mockSession, "testUser3");
-//
-//		SearchNode[] errorNodeExpected = cdeCartController.createErrorNode("Server Error:\nretrieveObjectCart: testUser3 failed ", expectedException);
-//		
-//		//MUT
-//		SearchNode[] received = cdeCartController.retrieveObjectCart(mockSession);
-//		
-//		assertNotNull(received);
-//		assertEquals(errorNodeExpected[0], received[0]);
-//		Mockito.verify(cdeCartUtil).findCartNodes(mockSession, "testUser3");
-//		Mockito.reset(cdeCartUtil);
-//	}
+	protected SearchNode[] helperCallRetrieveMUT(HttpSession mockSession) throws Exception{
+		ResponseEntity received = cdeCartController.retrieveObjectCartWithException(mockSession);
+		Object objReceived = received.getBody();
+		assertNotNull(objReceived);
+		assertTrue(objReceived instanceof SearchNode[]);
+		SearchNode[] arrOfNodesReceived = (SearchNode[])objReceived;
+		return arrOfNodesReceived;
+	}
+	@Test
+	public void testRetrieveObjectCartSuccessEmptyResult() throws Exception {
+		HttpSession mockSession = Mockito.mock(HttpSession.class);
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser");
+		List<SearchNode> searchNodeList =  new ArrayList<SearchNode>();
+		Mockito.when(cdeCartUtil.findCartNodes(mockSession, "testUser")).thenReturn(searchNodeList);
+		//MUT
+		SearchNode[] arrOfNodesReceived = helperCallRetrieveMUT(mockSession);
+		assertEquals(0, arrOfNodesReceived.length);
+		Mockito.verify(cdeCartUtil).findCartNodes(mockSession, "testUser");
+		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
+	}
+	@Test
+	public void testRetrieveObjectCartSuccess() throws Exception {
+		HttpSession mockSession = Mockito.mock(HttpSession.class);
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser");
+		List<SearchNode> searchNodeList =  new ArrayList<SearchNode>();
+		SearchNode searchNodeExpected1 = new SearchNode();
+		searchNodeExpected1.setDeIdseq("testSeqId1");
+		searchNodeExpected1.setLongName("testlongName1");
+		searchNodeList.add(searchNodeExpected1);
+		SearchNode searchNodeExpected2 = new SearchNode();
+		searchNodeExpected1.setDeIdseq("testSeqId2");
+		searchNodeExpected1.setLongName("testlongName2");
+		searchNodeList.add(searchNodeExpected2);
+		Mockito.when(cdeCartUtil.findCartNodes(mockSession, "testUser")).thenReturn(searchNodeList);
+		//MUT
+		SearchNode[] received = helperCallRetrieveMUT(mockSession);
+		
+		assertNotNull(received);
+		assertEquals(2, received.length);
+		assertEquals(searchNodeExpected1, received[0]);
+		assertEquals(searchNodeExpected2, received[1]);
+		Mockito.verify(cdeCartUtil).findCartNodes(mockSession, "testUser");
+		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
+	}
+	
+	@Test
+	public void testRetrieveObjectCartError() throws Exception {
+		HttpSession mockSession = Mockito.mock(HttpSession.class);
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser3");
+		
+		ObjectCartException expectedException = new ObjectCartException("test exception3");
+		
+		Mockito.doThrow(expectedException).when(cdeCartUtil).findCartNodes(mockSession, "testUser3");
+
+		String expectedMessage = CdeCartController.buildGetCartErrorMessage(expectedException, "testUser3");
+		//MUT
+		ResponseEntity received = cdeCartController.retrieveObjectCartWithException(mockSession);
+		
+		//check
+		Object objReceived = received.getBody();
+		assertNotNull(objReceived);
+		assertTrue(objReceived instanceof String);
+		String messageReceived = (String)objReceived;
+		
+		assertNotNull(received);
+		assertEquals(expectedMessage, messageReceived);
+		Mockito.verify(cdeCartUtil).findCartNodes(mockSession, "testUser3");
+		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Test(expected=AutheticationFailureException.class)
@@ -141,6 +152,7 @@ public class CdeCartControllerTest {
 		//MUT
 		cdeCartController.saveCart(mockSession, request);
 		
+		Mockito.reset(cdeCartUtil);
 		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	@SuppressWarnings("unchecked")
@@ -159,6 +171,7 @@ public class CdeCartControllerTest {
 		
 		cdeCartController.deleteFromCart(mockSession, null);
 		
+		Mockito.reset(cdeCartUtil);
 		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	
@@ -167,6 +180,7 @@ public class CdeCartControllerTest {
 		//MUT
 		cdeCartController.deleteFromCart(null, null);
 		
+		Mockito.reset(cdeCartUtil);
 		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	@Test 
@@ -183,6 +197,8 @@ public class CdeCartControllerTest {
 		assertNotNull(received);
 		assertEquals("Done", received.getBody());
 		assertEquals(HttpStatus.OK, received.getStatusCode());
+		
+		Mockito.reset(cdeCartUtil);
 		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	
@@ -209,6 +225,7 @@ public class CdeCartControllerTest {
 		assertEquals(HttpStatus.OK, received.getStatusCode());
 		Mockito.verify(cdeCartUtil).deleteCartNodes(mockSession, "testUser1", expected);
 		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	
 	@Test
@@ -220,6 +237,7 @@ public class CdeCartControllerTest {
 		expected1.add("1");
 		expected1.add("2");
 		ObjectCartException expectedException = new ObjectCartException("test exception1");
+		String expectedMessage = CdeCartController.buildGetCartErrorMessage(expectedException, "testUser1");
 		
 		Mockito.doThrow(expectedException).when(cdeCartUtil).deleteCartNodes(mockSession, "testUser1", expected);
 		RequestEntity<List<String>> request = Mockito.mock(RequestEntity.class);
@@ -228,10 +246,11 @@ public class CdeCartControllerTest {
 		ResponseEntity<String> received = cdeCartController.deleteFromCart(mockSession, request);
 		
 		assertNotNull(received);
-		assertEquals(expectedException.toString(), received.getBody());
+		assertEquals(expectedMessage, received.getBody());
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, received.getStatusCode());
 		Mockito.verify(cdeCartUtil).deleteCartNodes(mockSession, "testUser1", expected);
 		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -244,6 +263,7 @@ public class CdeCartControllerTest {
 		expected.add("2");
 
 		ObjectCartException expectedException = new ObjectCartException("test exception2");
+		String expectedMessage = CdeCartController.buildGetCartErrorMessage(expectedException, "testUser1");
 		
 		Mockito.doThrow(expectedException).when(cdeCartUtil).addToCart(mockSession, "testUser1", expected);
 		RequestEntity<List<String>> request = Mockito.mock(RequestEntity.class);
@@ -253,10 +273,11 @@ public class CdeCartControllerTest {
 		ResponseEntity<String> received = cdeCartController.saveCart(mockSession, request);
 		
 		assertNotNull(received);
-		assertEquals(expectedException.toString(), received.getBody());
+		assertEquals(expectedMessage, received.getBody());
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, received.getStatusCode());
 		Mockito.verify(cdeCartUtil).addToCart(mockSession, "testUser1", expected);
 		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -280,6 +301,7 @@ public class CdeCartControllerTest {
 		assertEquals(HttpStatus.OK, received.getStatusCode());
 		Mockito.verify(cdeCartUtil).addToCart(mockSession, "testUser1", expected);
 		Mockito.reset(cdeCartUtil);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -298,6 +320,5 @@ public class CdeCartControllerTest {
 		assertNotNull(received);
 		assertEquals("Done", received.getBody());
 		assertEquals(HttpStatus.OK, received.getStatusCode());
-		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 }

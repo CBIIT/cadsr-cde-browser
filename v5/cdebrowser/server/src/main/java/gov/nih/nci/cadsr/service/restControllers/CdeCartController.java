@@ -30,7 +30,9 @@ public class CdeCartController
 {
 
 	private static Logger logger = LogManager.getLogger( CdeCartController.class.getName() );
-
+	protected final static String CAUSED_BY_IN_MSG = "; caused by: ";
+	protected final static String USER_IN_MSG = "; user: ";
+	
 	@Autowired
 	CdeCartUtilInterface cdeCartUtil;
 
@@ -82,11 +84,32 @@ public class CdeCartController
 			responseEntity = new ResponseEntity(results, responseHeaders, HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			logger.error("Sending INTERNAL_SERVER_ERROR response of rest call retrieve Object Cart; principalName: " + principalName, e);
+			String errorToClient = buildGetCartErrorMessage(e, principalName);
+			logger.error("Sending INTERNAL_SERVER_ERROR response to rest call RETRIEVE Object Cart with errorToClient: " + errorToClient , e);
 			responseHeaders.set("Content-Type", "text/plain");
-			responseEntity = new ResponseEntity(e.toString() + ", user: " + principalName, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+			//CDEBROWSER-821 We return 500 error if we could not get user OC.
+			responseEntity = new ResponseEntity(errorToClient, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
+	}
+	//CDEBROWSER-821 We return 500 error if we could not get user OC.
+	/**
+	 * This function creates a string to send to user if OC GET error happened.
+	 * 
+	 * @param e original OC Exception
+	 * @return String to send to CDE Browser client
+	 */
+	protected static String buildGetCartErrorMessage(final Exception e, String principalName) {
+		StringBuilder sb = new StringBuilder();
+		if (e != null) {
+			sb.append(e.getMessage());
+			Throwable clause = e;
+			while ((clause = clause.getCause()) != null) {
+				sb.append(CAUSED_BY_IN_MSG).append(clause.getMessage());
+			}
+		}
+		sb.append(USER_IN_MSG).append(principalName);
+		return sb.toString();
 	}
     /**
      * This method expects only IDs which are added to the cart.
@@ -129,8 +152,9 @@ public class CdeCartController
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			logger.error("saveCart error: ", e);
-			return new ResponseEntity<String>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+			String errorToClient = buildGetCartErrorMessage(e, principalName);
+			logger.error("Sending INTERNAL_SERVER_ERROR response to rest call SAVE Object Cart with errorToClient: " + errorToClient , e);
+			return new ResponseEntity(errorToClient, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	/**
@@ -180,8 +204,9 @@ public class CdeCartController
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			logger.error("Returning rest call deleteFromCart error: ", e);
-			return new ResponseEntity<String>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+			String errorToClient = buildGetCartErrorMessage(e, principalName);
+			logger.error("Sending INTERNAL_SERVER_ERROR response to rest call DELETE Object Cart with errorToClient: " + errorToClient , e);
+			return new ResponseEntity(errorToClient, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
