@@ -32,6 +32,7 @@ public class ValueDomainModel extends BaseModel
     private Integer decimalPlace;
     private String cdPrefName;
     private String cdContextName;
+    private String cdLongName;    
     private Float cdVersion;
     private int cdPublicId;
     private String vdType;
@@ -267,6 +268,16 @@ public class ValueDomainModel extends BaseModel
     {
         this.cdContextName = cdContextName;
     }
+    
+    public String getCdLongName()
+    {
+        return cdLongName;
+    }
+
+    public void setCdLongName( String cdLongName )
+    {
+        this.cdLongName = cdLongName;
+    }    
 
     public Float getCdVersion()
     {

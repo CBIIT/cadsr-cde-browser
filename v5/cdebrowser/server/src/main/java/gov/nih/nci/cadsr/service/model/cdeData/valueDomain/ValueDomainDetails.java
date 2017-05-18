@@ -25,6 +25,7 @@ public class ValueDomainDetails
     private int conceptualDomainPublicId;
     private String conceptualDomainShortName;
     private String conceptualDomainContextName;
+    private String conceptualDomainLongName;    
     private Float conceptualDomainVersion;
     private String formattedConceptualDomainVersion;
     private String origin;
@@ -224,6 +225,16 @@ public class ValueDomainDetails
     {
         this.conceptualDomainContextName = conceptualDomainContextName;
     }
+    
+    public String getConceptualDomainLongName()
+    {
+        return conceptualDomainLongName;
+    }
+
+    public void setConceptualDomainLongName( String conceptualDomainLongName )
+    {
+        this.conceptualDomainLongName = conceptualDomainLongName;
+    }    
 
     public Float getConceptualDomainVersion()
     {

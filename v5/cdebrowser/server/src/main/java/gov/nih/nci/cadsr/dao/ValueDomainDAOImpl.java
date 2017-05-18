@@ -167,6 +167,10 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
                     {
                         valueDomainModel.setCdContextName( conceptualDomainModel.getContextModel().getName() );
                     }
+                    if( conceptualDomainModel.getLongName() != null)
+                    {
+                        valueDomainModel.setCdLongName( conceptualDomainModel.getLongName() );
+                    }                    
                 }
             } catch( EmptyResultDataAccessException ex )
             {

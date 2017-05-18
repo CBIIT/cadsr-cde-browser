@@ -1138,6 +1138,7 @@ public class CDEDataController
         valueDomainDetails.setConceptualDomainPublicId( dataElementModel.getValueDomainModel().getCdPublicId() );
         valueDomainDetails.setConceptualDomainShortName( dataElementModel.getValueDomainModel().getCdPrefName() );
         valueDomainDetails.setConceptualDomainContextName( dataElementModel.getValueDomainModel().getCdContextName() );
+        valueDomainDetails.setConceptualDomainLongName( dataElementModel.getValueDomainModel().getCdLongName() );
         valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
         valueDomainDetails.setOrigin( dataElementModel.getValueDomainModel().getOrigin() );
         return valueDomainDetails;
