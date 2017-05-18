@@ -25,6 +25,7 @@ public class ValueDomainDetails
     private int conceptualDomainPublicId;
     private String conceptualDomainShortName;
     private String conceptualDomainContextName;
+    private String conceptualDomainLongName;    //CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix
     private Float conceptualDomainVersion;
     private String formattedConceptualDomainVersion;
     private String origin;
@@ -224,7 +225,18 @@ public class ValueDomainDetails
     {
         this.conceptualDomainContextName = conceptualDomainContextName;
     }
+  // CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix - begin  
+    public String getConceptualDomainLongName()
+    {
+        return conceptualDomainLongName;
+    }
 
+    public void setConceptualDomainLongName( String conceptualDomainLongName )
+    {
+        this.conceptualDomainLongName = conceptualDomainLongName;
+    }    
+   // CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix - end
+    
     public Float getConceptualDomainVersion()
     {
         return conceptualDomainVersion;

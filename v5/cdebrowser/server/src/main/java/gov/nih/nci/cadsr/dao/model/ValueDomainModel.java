@@ -32,6 +32,7 @@ public class ValueDomainModel extends BaseModel
     private Integer decimalPlace;
     private String cdPrefName;
     private String cdContextName;
+    private String cdLongName;    // CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix
     private Float cdVersion;
     private int cdPublicId;
     private String vdType;
@@ -267,7 +268,21 @@ public class ValueDomainModel extends BaseModel
     {
         this.cdContextName = cdContextName;
     }
+    
+    // CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix - begin
+    
+    public String getCdLongName()
+    {
+        return cdLongName;
+    }
 
+    public void setCdLongName( String cdLongName )
+    {
+        this.cdLongName = cdLongName;
+    }
+    
+    // CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix - end
+    
     public Float getCdVersion()
     {
         return cdVersion;
