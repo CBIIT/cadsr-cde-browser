@@ -14,7 +14,6 @@ angular.module("cdeCart").controller("CartCtrl", ["$scope","$location","$localSt
 	var cartService = cartService;
 	$scope.$storage = $sessionStorage;
 	$scope.$storage.cartService = cartService;
-
 	if (redirect=='retrieve') { cartService.retrieveCart(); } // checks if user has been redirected after logging in //
 	else if(redirect == 'save') { cartService.saveCart(); }	 // checks if user has been redirected after logging in //
 	else {

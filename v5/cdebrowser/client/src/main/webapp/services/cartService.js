@@ -5,7 +5,6 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	this.statusMessage = ''; // status message for alerting the user what is happening when user clicks on buttons //
 	this.isError = false; // determines if status message is an error //
 	this.disableSaveButton = false;
-
 	// check session to see if cart service exists, if so set variables to the session values //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
@@ -21,7 +20,6 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// add cde's to cart. checkedItems is just an array of ids hence the need for searchResults //
 	this.addCDE = function(checkedItems, searchResults) {
-		console.log(checkedItems, searchResults)
 		for (var i=0; i<searchResults.length; i++) {
 			if (checkedItems.indexOf(searchResults[i]['deIdseq'])>=0) {
 				if (!this.checkCartForExistingItem(searchResults[i]['deIdseq'])) {
@@ -132,6 +130,8 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				};
 				that.statusMessage = '';
 				that.disableSaveButton = false;
+				that.retrieveCart();
+
 			})
 			.error(function(response) {
 				authService.cameFrom = 'save';
@@ -178,14 +178,21 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			        $location.path("/login").replace(); // send user to login page //
 				}
 				else {
+					that.statusMessage = '';
 					that.resetUnsavedStatus();
+			        // $location.path("/login").replace(); // send user to login page //
+					
 				};				
 			}
 			else {
-				that.statusMessage = response.data;
+				console.log(status, response)
+				if (response.data) {
+					that.statusMessage = response.data;
+				}
+				else {
+					that.statusMessage = response;
+				};
 				that.isError = true;
-
-
 			};
 		});
 	};		
