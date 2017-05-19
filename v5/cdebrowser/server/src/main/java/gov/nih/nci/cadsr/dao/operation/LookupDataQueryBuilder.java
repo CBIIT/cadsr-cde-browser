@@ -38,7 +38,7 @@ public class LookupDataQueryBuilder
 		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(ffv.protocol_long_name), UPPER(ffv.long_name)");
 		String resSql = sql.toString();
-		logger.debug("buildProtocolLookupQuery = " + resSql);
+		//logger.debug("buildProtocolLookupQuery = " + resSql);
 		return resSql;
 	}
 	/**
@@ -62,7 +62,7 @@ public class LookupDataQueryBuilder
 		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(csv.cs_long_name), UPPER(csv.csi_name)");
 		String resSql = sql.toString();
-		logger.debug("buildCSLookupQuery = " + resSql);
+		//logger.debug("buildCSLookupQuery = " + resSql);
 		return resSql;
 	}
 	

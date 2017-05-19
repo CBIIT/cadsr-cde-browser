@@ -22,8 +22,8 @@ public class ClassificationSchemeServiceImpl implements ClassificationSchemeServ
 	@Override
 	public List<ClassificationScheme> getClassificationSchemesWithProgramAreaAndContext(String contexIdSeq, String csOrCsCsi)
 	{
-		logger.debug("Fetching the list of all classifications schemes with program area and context idSeq = " + 
-					 contexIdSeq + ", csOrCsCsi = " + csOrCsCsi);
+//		logger.debug("Fetching the list of all classifications schemes with program area and context idSeq = " + 
+//					 contexIdSeq + ", csOrCsCsi = " + csOrCsCsi);
 		
 		List<ClassificationScheme> csList = classificationSchemeDAO.getAllClassificationSchemeWithProgramAreaAndContext(contexIdSeq, csOrCsCsi);
 		if (csList == null)
@@ -31,8 +31,8 @@ public class ClassificationSchemeServiceImpl implements ClassificationSchemeServ
 			csList = new ArrayList<ClassificationScheme>();
 		}
 		
-		logger.debug("Returning the list of all classifications schemes with program area and context idSeq = " + 
-				 contexIdSeq + ", csOrCsCsi = " + csOrCsCsi + ", csList.size = " + csList.size());
+//		logger.debug("Returning the list of all classifications schemes with program area and context idSeq = " + 
+//				 contexIdSeq + ", csOrCsCsi = " + csOrCsCsi + ", csList.size = " + csList.size());
 		
 		return csList;
 	}

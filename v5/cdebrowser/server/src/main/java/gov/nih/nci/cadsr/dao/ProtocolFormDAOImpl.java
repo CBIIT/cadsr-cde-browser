@@ -48,11 +48,11 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
         List<ProtocolFormModel> result;
         String sql = " SELECT DISTINCT * FROM sbrext.fb_forms_view"
                 + " WHERE  conte_idseq = ? AND latest_version_ind = 'Yes' ORDER BY  UPPER(long_name)";
-        logger.debug( "getProtocolFormByContextId" );
+        //logger.debug( "getProtocolFormByContextId" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", ContextId ) );
         result = getAll( sql, ContextId, ProtocolFormModel.class );
         //logger.debug( sql.replace( "?", ContextId ) + " <<<<<<<" );
-        logger.debug( "Done getProtocolFormByContextId\n" );
+        //logger.debug( "Done getProtocolFormByContextId\n" );
 
         return result;
 

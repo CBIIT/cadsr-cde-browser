@@ -204,7 +204,7 @@ public class ContextDataController
                     "," + getProgramAreaByName( model.getPalName() ) +
                     "," + CaDSRConstants.CLASSIFICATIONS_TYPE_FOLDER );
 
-            logger.debug( "Checking for Classification Schemes - " + model.getName() );
+            //logger.debug( "Checking for Classification Schemes - " + model.getName() );
             // Is there at least one classification?
             if( this.classificationSchemeDAO.haveClassificationSchemes( model.getConteIdseq() ) )
             {
@@ -315,12 +315,12 @@ public class ContextDataController
 
             // Populate each Protocol with their ProtocolForms
             initProtocolModels( protocolModelList, protocolFormModelList, parentNode, programArea );
-            try {
-            	logger.debug( "parentNode " + parentNode.getChildren().get( 0 ).getChildren().get( 0 ).toString() );
-            }
-            catch (IndexOutOfBoundsException ex) {
-            	logger.debug( "...parentNode has no children after initProtocolModels");
-            }
+//            try {
+//            	logger.debug( "parentNode " + parentNode.getChildren().get( 0 ).getChildren().get( 0 ).toString() );
+//            }
+//            catch (IndexOutOfBoundsException ex) {
+//            	logger.debug( "...parentNode has no children after initProtocolModels");
+//            }
         }
         // Add Classifications or ProtocolForms to this Context node
         contextNodeParent.addChildNode( parentNode );
@@ -374,7 +374,7 @@ public class ContextDataController
                 if( protoFormId != null && protoFormId.compareTo( protoId ) == 0 )
                 {
                     ProtocolFormNode protocolFormNode = initProtocolFormNode( protocolFormModel, programArea );
-                    logger.debug( "Setting ProtocolForm href: " + protocolFormModel.getQcIdseq() );
+                    //logger.debug( "Setting ProtocolForm href: " + protocolFormModel.getQcIdseq() );
                     protocolFormNode.setHref( appConfig.getCdesByProtocolFormRestServiceName() + "," + protocolFormModel.getQcIdseq() );
 
                     protocolNode.addChildNode( protocolFormNode );

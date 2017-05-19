@@ -42,7 +42,7 @@ public class ControllerUtils {
 		SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer();
 		searchPreferencesServer.initPreferences();
 		httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferencesServer);
-		logger.debug("SearchPreferencesServer adding default to the user HTTP session: " + searchPreferencesServer);
+		//logger.debug("SearchPreferencesServer adding default to the user HTTP session: " + searchPreferencesServer);
 		return searchPreferencesServer;
 	}
 	/**

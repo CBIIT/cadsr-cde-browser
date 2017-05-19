@@ -42,7 +42,7 @@ public class LookupDataController
 	@RequestMapping(value="/workflowstatus", produces = "application/json")
 	public List<String> getWorkflowStatus()
 	{
-		logger.debug("Received request for Workflow Status information.");
+		//logger.debug("Received request for Workflow Status information.");
 		List<String> resList = WorkflowStatusEnum.getAsList();
 		resList.add(0, SearchCriteria.ALL_WORKFLOW_STATUSES);
 		return resList;
@@ -51,7 +51,7 @@ public class LookupDataController
 	@RequestMapping(value="/registrationstatus", produces = "application/json")
 	public List<String> getRegistrationStatus()
 	{
-		logger.debug("Received request for Registration Status information.");
+		//logger.debug("Received request for Registration Status information.");
 		List<String> resList = RegistrationStatusEnum.getAsList();
 		resList.add(0, SearchCriteria.ALL_REGISRTATION_STATUSES);
 		return resList;
@@ -61,7 +61,7 @@ public class LookupDataController
 	public List<String> getAlternateTypes()
 	{
 
-		logger.debug("Received request for Alternate Type(s) information.");
+		//logger.debug("Received request for Alternate Type(s) information.");
 		return designationDAO.getAllDesignationModelTypes();
 	}
 

@@ -30,7 +30,7 @@ public class SearchPreferencesController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public SearchPreferences retrieveSearchPreferences(HttpServletRequest request) {
-		logger.debug("Received request to retrieve search preferences");
+		//logger.debug("Received request to retrieve search preferences");
 		HttpSession httpSession = request.getSession(false);
 		Object obj = null;
 		if (httpSession != null) {
