@@ -103,12 +103,16 @@ public class CdeCartController
 		StringBuilder sb = new StringBuilder();
 		if (e != null) {
 			sb.append(e.getMessage());
+			sb.append(USER_IN_MSG).append(principalName);
 			Throwable clause = e;
 			while ((clause = clause.getCause()) != null) {
 				sb.append(CAUSED_BY_IN_MSG).append(clause.getMessage());
 			}
 		}
-		sb.append(USER_IN_MSG).append(principalName);
+		else {
+			sb.append("Object Cart error");
+			sb.append(USER_IN_MSG).append(principalName);
+		}
 		return sb.toString();
 	}
     /**
