@@ -23,6 +23,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 /**
  * This code is moved from CDEDataController in v. 5.3
  * @author asafievan
@@ -429,7 +430,7 @@ public class ServiceTestUtils {
      * @param altNameType
      * @return AlternateName
      */
-    public static AlternateName builTestdAlternateName (String name, String altNameType) {
+    public static AlternateName buildTestdAlternateName (String name, String altNameType) {
     	AlternateName altName = new AlternateName();
     	altName.setContext("contextTest");
     	altName.setLanguage("en");
@@ -442,5 +443,25 @@ public class ServiceTestUtils {
     		altName.setName("contextTest");
     	}
     	return altName;
+    }
+    public static SearchCriteria buildTestSearchCriteriaAll(String suffix) {
+    	SearchCriteria searchCriteria = new SearchCriteria();
+    	searchCriteria.setContext("context" + suffix);
+    	searchCriteria.setClassification("classification" + suffix);
+    	searchCriteria.setProtocol("protocol" + suffix);
+    	searchCriteria.setName("name" + suffix);
+    	searchCriteria.setCsCsiIdSeq("csCsiIdSeq" + suffix);
+    	searchCriteria.setFormIdSeq("formIdSeq" + suffix);
+		searchCriteria.setFilteredinput(SearchCriteria.ALL_FIELDS);
+		searchCriteria.setWorkFlowStatus(SearchCriteria.ALL_WORKFLOW_STATUSES);
+		searchCriteria.setRegistrationStatus(SearchCriteria.ALL_REGISRTATION_STATUSES);
+		searchCriteria.setAltNameType(SearchCriteria.ALL_ALTNAME_TYPES);
+    	return searchCriteria;
+    }
+    public static SearchCriteria buildTestSearchCriteriaAll(String suffix, String filteredinput) {
+    	SearchCriteria searchCriteria = buildTestSearchCriteriaAll(suffix);
+		searchCriteria.setFilteredinput(filteredinput );
+    	
+    	return searchCriteria;
     }
 }
