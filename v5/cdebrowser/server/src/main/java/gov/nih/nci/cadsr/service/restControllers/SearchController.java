@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import gov.nih.nci.cadsr.common.UsageLog;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +85,6 @@ public class SearchController
     public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result, HttpSession httpSession)
     {
         logger.debug("Received a search request with the following search criteria: " + searchCriteria);
-
         SearchNode[] results;
         if (result.hasErrors())
         {
@@ -100,7 +101,14 @@ public class SearchController
             logger.warn( "Suspect parameter from client." );
             return null;
         }
-
+        
+        //CDEBROWSER-814 We made a client change that all fields cannot be unselected. This change is to make sure on the server.
+        if ((StringUtils.isNotBlank(searchCriteria.getName())) &&
+        		((searchCriteria.getFilteredinput() == null) || (searchCriteria.getFilteredinput().isEmpty()))) {
+        	logger.warn( "Server received filteredinput empty parameter from the client when Search Term is not blank, returning Error");
+        	return createErrorNode( "Client Error: all search fields cannot be unselected when using Search Term field");
+        }
+        
         try
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
