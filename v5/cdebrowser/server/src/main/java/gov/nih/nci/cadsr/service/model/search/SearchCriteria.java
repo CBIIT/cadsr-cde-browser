@@ -84,12 +84,14 @@ public class SearchCriteria implements Serializable
 	protected void preprocessSearchContext() {
 		//CDEBROWSER-801 
 		String classificationSearch = this.getClassification();
-		String protocolSearch = this.getClassification();
+		String protocolSearch = this.getProtocol();
 		String csCsiIdSeq = this.getCsCsiIdSeq();
+		String formIdSeq = this.getFormIdSeq();
 		
-		if ((StringUtils.isNotEmpty(classificationSearch)) || (StringUtils.isNotEmpty(protocolSearch)) || (StringUtils.isNotEmpty(csCsiIdSeq))) {
+		if ((StringUtils.isNotEmpty(classificationSearch)) || (StringUtils.isNotEmpty(protocolSearch)) 
+				|| (StringUtils.isNotEmpty(csCsiIdSeq)) || (StringUtils.isNotEmpty(formIdSeq))) {
 			logger.debug("We ignore programArea parameter: " + getProgramArea() + " and context parameter: " + getContext() +" because we search either classification: " + 
-							classificationSearch +  ", or protocol: " + protocolSearch + ", or csCsiIdSeq: " + csCsiIdSeq);
+							classificationSearch +  ", or protocol: " + protocolSearch + ", or csCsiIdSeq: " + csCsiIdSeq + ", or formIdSeq: " + formIdSeq);
 			this.setProgramArea(null);
 			this.setContext(null);
 		}
