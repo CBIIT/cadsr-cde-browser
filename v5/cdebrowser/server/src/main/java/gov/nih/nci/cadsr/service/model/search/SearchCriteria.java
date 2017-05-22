@@ -479,5 +479,187 @@ public class SearchCriteria implements Serializable
         }
         return  logBuilderString.toString().replaceFirst( ",$", "}" );
     }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((altName == null) ? 0 : altName.hashCode());
+		result = prime * result + ((altNameType == null) ? 0 : altNameType.hashCode());
+		result = prime * result + ((classification == null) ? 0 : classification.hashCode());
+		result = prime * result + ((conceptCode == null) ? 0 : conceptCode.hashCode());
+		result = prime * result + ((conceptInput == null) ? 0 : conceptInput.hashCode());
+		result = prime * result + ((conceptName == null) ? 0 : conceptName.hashCode());
+		result = prime * result + ((conceptQueryType == null) ? 0 : conceptQueryType.hashCode());
+		result = prime * result + ((context == null) ? 0 : context.hashCode());
+		result = prime * result + contextUse;
+		result = prime * result + ((csCsiIdSeq == null) ? 0 : csCsiIdSeq.hashCode());
+		result = prime * result + ((dataElementConcept == null) ? 0 : dataElementConcept.hashCode());
+		result = prime * result + ((derivedDEFlag == null) ? 0 : derivedDEFlag.hashCode());
+		result = prime * result + ((filteredinput == null) ? 0 : filteredinput.hashCode());
+		result = prime * result + ((formIdSeq == null) ? 0 : formIdSeq.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((objectClass == null) ? 0 : objectClass.hashCode());
+		result = prime * result + ((permissibleValue == null) ? 0 : permissibleValue.hashCode());
+		result = prime * result + ((programArea == null) ? 0 : programArea.hashCode());
+		result = prime * result + ((property == null) ? 0 : property.hashCode());
+		result = prime * result + ((protocol == null) ? 0 : protocol.hashCode());
+		result = prime * result + ((publicId == null) ? 0 : publicId.hashCode());
+		result = prime * result + publicIdVersion;
+		result = prime * result + pvQueryType;
+		result = prime * result + queryType;
+		result = prime * result + ((registrationStatus == null) ? 0 : registrationStatus.hashCode());
+		result = prime * result + ((searchMode == null) ? 0 : searchMode.hashCode());
+		result = prime * result + ((valueDomain == null) ? 0 : valueDomain.hashCode());
+		result = prime * result + ((vdTypeFlag == null) ? 0 : vdTypeFlag.hashCode());
+		result = prime * result + versionType;
+		result = prime * result + ((workFlowStatus == null) ? 0 : workFlowStatus.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SearchCriteria other = (SearchCriteria) obj;
+		if (altName == null) {
+			if (other.altName != null)
+				return false;
+		} else if (!altName.equals(other.altName))
+			return false;
+		if (altNameType == null) {
+			if (other.altNameType != null)
+				return false;
+		} else if (!altNameType.equals(other.altNameType))
+			return false;
+		if (classification == null) {
+			if (other.classification != null)
+				return false;
+		} else if (!classification.equals(other.classification))
+			return false;
+		if (conceptCode == null) {
+			if (other.conceptCode != null)
+				return false;
+		} else if (!conceptCode.equals(other.conceptCode))
+			return false;
+		if (conceptInput == null) {
+			if (other.conceptInput != null)
+				return false;
+		} else if (!conceptInput.equals(other.conceptInput))
+			return false;
+		if (conceptName == null) {
+			if (other.conceptName != null)
+				return false;
+		} else if (!conceptName.equals(other.conceptName))
+			return false;
+		if (conceptQueryType == null) {
+			if (other.conceptQueryType != null)
+				return false;
+		} else if (!conceptQueryType.equals(other.conceptQueryType))
+			return false;
+		if (context == null) {
+			if (other.context != null)
+				return false;
+		} else if (!context.equals(other.context))
+			return false;
+		if (contextUse != other.contextUse)
+			return false;
+		if (csCsiIdSeq == null) {
+			if (other.csCsiIdSeq != null)
+				return false;
+		} else if (!csCsiIdSeq.equals(other.csCsiIdSeq))
+			return false;
+		if (dataElementConcept == null) {
+			if (other.dataElementConcept != null)
+				return false;
+		} else if (!dataElementConcept.equals(other.dataElementConcept))
+			return false;
+		if (derivedDEFlag == null) {
+			if (other.derivedDEFlag != null)
+				return false;
+		} else if (!derivedDEFlag.equals(other.derivedDEFlag))
+			return false;
+		if (filteredinput == null) {
+			if (other.filteredinput != null)
+				return false;
+		} else if (!filteredinput.equals(other.filteredinput))
+			return false;
+		if (formIdSeq == null) {
+			if (other.formIdSeq != null)
+				return false;
+		} else if (!formIdSeq.equals(other.formIdSeq))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (objectClass == null) {
+			if (other.objectClass != null)
+				return false;
+		} else if (!objectClass.equals(other.objectClass))
+			return false;
+		if (permissibleValue == null) {
+			if (other.permissibleValue != null)
+				return false;
+		} else if (!permissibleValue.equals(other.permissibleValue))
+			return false;
+		if (programArea == null) {
+			if (other.programArea != null)
+				return false;
+		} else if (!programArea.equals(other.programArea))
+			return false;
+		if (property == null) {
+			if (other.property != null)
+				return false;
+		} else if (!property.equals(other.property))
+			return false;
+		if (protocol == null) {
+			if (other.protocol != null)
+				return false;
+		} else if (!protocol.equals(other.protocol))
+			return false;
+		if (publicId == null) {
+			if (other.publicId != null)
+				return false;
+		} else if (!publicId.equals(other.publicId))
+			return false;
+		if (publicIdVersion != other.publicIdVersion)
+			return false;
+		if (pvQueryType != other.pvQueryType)
+			return false;
+		if (queryType != other.queryType)
+			return false;
+		if (registrationStatus == null) {
+			if (other.registrationStatus != null)
+				return false;
+		} else if (!registrationStatus.equals(other.registrationStatus))
+			return false;
+		if (searchMode == null) {
+			if (other.searchMode != null)
+				return false;
+		} else if (!searchMode.equals(other.searchMode))
+			return false;
+		if (valueDomain == null) {
+			if (other.valueDomain != null)
+				return false;
+		} else if (!valueDomain.equals(other.valueDomain))
+			return false;
+		if (vdTypeFlag == null) {
+			if (other.vdTypeFlag != null)
+				return false;
+		} else if (!vdTypeFlag.equals(other.vdTypeFlag))
+			return false;
+		if (versionType != other.versionType)
+			return false;
+		if (workFlowStatus == null) {
+			if (other.workFlowStatus != null)
+				return false;
+		} else if (!workFlowStatus.equals(other.workFlowStatus))
+			return false;
+		return true;
+	}
 
 }

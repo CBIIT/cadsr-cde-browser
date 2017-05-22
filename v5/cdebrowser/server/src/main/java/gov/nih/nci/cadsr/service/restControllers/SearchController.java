@@ -34,7 +34,8 @@ public class SearchController
 {
 
     private Logger logger = LogManager.getLogger( SearchController.class.getName() );
-
+    protected static final String clientErrorEmptyFilteredInput = "Client Error: all search fields cannot be unselected when using Search Term field";
+    
     @Autowired
     AppConfig appConfig;
 
@@ -106,7 +107,7 @@ public class SearchController
         if ((StringUtils.isNotBlank(searchCriteria.getName())) &&
         		((searchCriteria.getFilteredinput() == null) || (searchCriteria.getFilteredinput().isEmpty()))) {
         	logger.warn( "Server received filteredinput empty parameter from the client when Search Term is not blank, returning Error");
-        	return createErrorNode( "Client Error: all search fields cannot be unselected when using Search Term field");
+        	return createErrorNode(clientErrorEmptyFilteredInput);
         }
         
         try

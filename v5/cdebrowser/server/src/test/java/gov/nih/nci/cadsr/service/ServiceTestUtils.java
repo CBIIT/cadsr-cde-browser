@@ -17,6 +17,7 @@ import gov.nih.nci.cadsr.dao.model.ObjectClassModel;
 import gov.nih.nci.cadsr.dao.model.PropertyModel;
 import gov.nih.nci.cadsr.dao.model.ReferenceDocModel;
 import gov.nih.nci.cadsr.dao.model.RepresentationModel;
+import gov.nih.nci.cadsr.dao.model.SearchModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
@@ -24,6 +25,7 @@ import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElementDetails;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.ReferenceDocument;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
+import gov.nih.nci.cadsr.service.model.search.SearchNode;
 /**
  * This code is moved from CDEDataController in v. 5.3
  * @author asafievan
@@ -463,5 +465,38 @@ public class ServiceTestUtils {
 		searchCriteria.setFilteredinput(filteredinput );
     	
     	return searchCriteria;
+    }
+    public static SearchNode buildTestSearchNode(SearchModel model)
+    {
+        SearchNode searchNode = new SearchNode();
+        searchNode = new SearchNode();
+        searchNode.setLongName( model.getLongName() );
+        searchNode.setOwnedBy( model.getName() );
+        searchNode.setPreferredQuestionText( model.getDocText() );
+        searchNode.setPublicId( model.getDeCdeid() );
+        searchNode.setWorkflowStatus( model.getAslName() );
+        searchNode.setVersion( model.getDeVersion() );
+        searchNode.setDeIdseq( model.getDeIdseq() );
+
+        searchNode.setHref("cdebrowserServer/rest/CDEData");
+
+        //This is so in the client side display table, there will be spaces to allow good line wrapping.
+        if( model.getDeUsedby() != null )
+        {
+            searchNode.setUsedByContext( model.getDeUsedby().replace( ",", ", " ) );
+        }
+
+        searchNode.setRegistrationStatus( model.getRegistrationStatus() );
+        return searchNode;
+    }
+    public static SearchModel buildTestSearchModel(String suffix, int publicId) {
+    	SearchModel searchModel = new SearchModel();
+    	String deIdseq = "29A8FB18-FFF-11D6-A42F-0010A4C1E842";
+    	searchModel.setDeIdseq(deIdseq );
+    	searchModel.setName("testname" + suffix);
+    	searchModel.setDePreferredName("testdePreferredName" + suffix);
+    	searchModel.setAslName("testAslName" + suffix);
+    	searchModel.setDeCdeid(""+publicId);
+		return searchModel;
     }
 }
