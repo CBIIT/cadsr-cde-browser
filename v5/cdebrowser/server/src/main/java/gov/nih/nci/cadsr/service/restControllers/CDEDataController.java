@@ -1147,13 +1147,18 @@ public class CDEDataController
     private Classifications initClassificationsForCompare( DataElementModel dataElementModel )
     {
         Classifications classifications = new Classifications();
+        
+        classifications.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );        
+        
         List<CsCsi> classificationList = new ArrayList<>();
         classifications.setClassificationList( classificationList );
-        if( classificationList.size() < 1 )
+        // commented to fix  CDEBROWSER-729 Classifications table on the CDE compare page is empty
+        
+        /*if( classificationList.size() < 1 )
         {
             logger.debug( "No ReferenceDocuments where returned" );
             classifications = null;
-        }
+        }*/
         for( CsCsiModel csCsiModel : dataElementModel.getClassifications() )
         {
             CsCsi csCsi = new CsCsi( csCsiModel );
