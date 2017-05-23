@@ -105,6 +105,18 @@
     width: 90%;
 }
 
+.dataElementViewTableVM.highlight tr td.dataElementDescriptionLeftVM{
+    background-color:#1a4660;
+    color:#fff;
+}
+
+.dataElementViewTableVM.highlight tr td.dataElementValueVM{
+    background-color:#ddd;
+    color:#000;padding:1px !important;margin:0px !important;
+    text-align:top;
+    vertical-align:top;
+}
+
 
 .dataElementViewTableTrVM {
     border-collapse: collapse;

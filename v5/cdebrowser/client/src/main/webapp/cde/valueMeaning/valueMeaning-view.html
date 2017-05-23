@@ -4,7 +4,7 @@
         <th colspan="2" align="left">Value Meaning <span style="float: right;">(Total number of PVs = {{cdeDetails.valueDomain.valueMeaning.length}})</span></th>
     </tr>
 </table>
-<table id="{{$index + 1}}" class="dataElementViewTableVM" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="p_value in cdeDetails.valueDomain.valueMeaning">
+<table id="{{$index + 1}}" ng-class="{'dataElementViewTableVM highlight': currentHash==$index+1, 'dataElementViewTableVM': currentHash!=$index+1}" align="center" cellpadding="1" cellspacing="1" data-ng-repeat="p_value in cdeDetails.valueDomain.valueMeaning">
     <tr class="dataElementViewTableTrVM">
         <td class="dataElementDescriptionLeftVM" width="20%">PV Meaning</td>
         <td class="dataElementValueVM" rowspan="2">
@@ -47,12 +47,12 @@
     </tr>
     <tr class="dataElementViewTableTrVM">
         <td class="dataElementValueVM">
-        <span ng-class="{bold: currentHash==$index+1}">PV Meaning = <span ng-bind-html="p_value.pvMeaning">{{p_value.pvMeaning}}</span></span><br />
+        PV Meaning = <span ng-bind-html="p_value.pvMeaning">{{p_value.pvMeaning}}</span><br />
         VM Public ID = <span ng-bind-html="p_value.vmPublicId">{{p_value.vmPublicId}}</span><br />
         VM Version = <span ng-bind-html="p_value.vmVersion">{{p_value.vmVersion}}</span><br />
         </td>
     </tr>
-    <tr style="background-color: white;">
+    <tr style="background-color: white !important;">
       <td colspan="2">
         <br />
       </td>
