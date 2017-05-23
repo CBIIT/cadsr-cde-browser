@@ -29,34 +29,10 @@ public class TypeaheadSearchController {
 	@Autowired
     protected TypeaheadSearchDAO typeaheadSearchDAO;
 	
-	@Autowired
-	private SearchQueryBuilder searchQueryBuilder;
-	//TODO remove this method initial attempt
-//	@RequestMapping(value="/longname", produces = "application/json")
-//	public List<String> retrieveTypeaheadSearchLongName(@RequestParam("name") String searchPattern)
-//	{
-//		logger.debug("Received request retrieveTypeaheadSearchLongName searchPattern: " + searchPattern);
-//		String searchFilter = searchPattern.replaceAll("(\\*|\\%)", "");
-//		searchFilter = StringUtilities.sanitizeForSql(searchFilter);
-//		logger.debug("Received request retrieveTypeaheadSearchLongName after sanitize searchFilter: " + searchFilter);
-//		List<String> resList = typeaheadSearchDAO.getSearchTypeaheadLongName(searchFilter);
-//		return resList;
-//	}
-	//TODO remove this method
-//	@RequestMapping(value="/longnamefull", produces = "application/json")
-//	public List<String> retrieveTypeaheadSearchLongNameFull(@RequestParam("name") String searchPattern)
-//	{
-//		logger.debug("Received request retrieveTypeaheadSearchLongName searchPattern: " + searchPattern);
-//		String searchFilter = StringUtilities.removeSqlWildCards(searchPattern);
-//		searchFilter = StringUtilities.sanitizeForSql(searchFilter);
-//		logger.debug("Received request retrieveTypeaheadSearchLongName after sanitize searchFilter: " + searchFilter);
-//		List<String> resList = typeaheadSearchDAO.getSearchTypeaheadLongNameFull(searchFilter);
-//		return resList;
-//	}
 	@RequestMapping(value="/full", produces = "application/json")
 	public List<String> retrieveTypeaheadSearchFull(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
 	{
-		logger.debug("Received request retrieveTypeaheadSearchLongName searchCriteria: " + searchCriteria);
+		//logger.debug("Received request retrieveTypeaheadSearchLongName searchCriteria: " + searchCriteria);
 		List<String> resList;
         if (bindingResult.hasErrors())
         {
@@ -69,5 +45,20 @@ public class TypeaheadSearchController {
 		//logger.debug("Response from retrieveTypeaheadSearchLongName: " + resList);
 		return resList;
 	}
-
+	
+	//CDEBROWSER-506 AC 1: (Advanced Search) Add type ahead to the DEC Field
+	@RequestMapping(value="/dec", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchDEC(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
+	{
+		//logger.debug("Received request retrieveTypeaheadSearchDEC searchCriteria: " + searchCriteria);
+		List<String> resList;
+        if (bindingResult.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors());
+        	return new ArrayList<>();
+        }
+		resList = typeaheadSearchDAO.buildSearchTypeaheadDec(searchCriteria, null);
+		//logger.debug("Response from retrieveTypeaheadSearchDEC: " + resList);
+		return resList;
+	}
 }

@@ -36,7 +36,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	private JdbcTemplate jdbcTemplate;
 	//TODO decide do we need to consider Search Preferences when we generate typeahead results
 	//Do we want to use All words if a filter text contains a space? We use the exact received token now.
-	
+
 	//These are SQLs for final implementation
 	protected static final String ASL_NAME_NOT_USED_BEGIN = " AND de.ASL_NAME NOT IN (";
 	protected static final String ASL_NAME_NOT_USED_END = ")";
@@ -270,61 +270,24 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		}
 		else return CONTEXT_EXCLUDED_NONE;
 	}
+	//CDEBROWSER-506 AC 1: (Advanced Search) Add type ahead to the DEC Field
+	protected static final String sqlRetrieveDecLongName = "select th from (SELECT distinct lower(dec.long_name) th "
+			+ "FROM sbr.data_element_concepts dec WHERE ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(dec.long_name), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+
+	@Override
+	public List<String> buildSearchTypeaheadDec(SearchCriteria searchCriteria,
+			SearchPreferencesServer searchPreferencesServer) {
+		String searchDec = searchCriteria.getDataElementConcept();
+		List<String> decNameList = null;
+		if (searchDec != null) {
+			decNameList = jdbcTemplate.query(sqlRetrieveDecLongName, new Object[] {searchDec}, new StringPropertyMapper(String.class));
+		}
+		if (decNameList == null) {
+			decNameList = new ArrayList<>();
+		}
+		return decNameList;
+	}
 	
-	//TODO Remove when design is finalized SQLs
-	//These are SQLs for a chance we want to restrict returned strings lengths
-//	public static final String sqlRetrieveTypeaheadLongNameStartsWith = "select th from (select distinct substr(lower(long_name), 1, 20) th from sbr.data_elements " + 
-//			"where (substr(lower(long_name), 1, "
-//			+ maxLongNamesToReturn
-//			+ ") like ? ) order by th) where rownum < "
-//			+ maxLongNamesToReturn;
-//	public static final String sqlRetrieveTypeaheadLongName = "select th from (select distinct substr(lower(long_name), 1, 20) th from sbr.data_elements " + 
-//			"where (instr(substr(lower(long_name), 1, "
-//			+ maxLongNamesToReturn
-//			+ "), ?, 1) > 0) order by th) where rownum < "
-//			+ maxLongNamesToReturn;
-//
-//	//These are SQLs to return full length strings - this one is currently used for the client
-//	public static final String sqlRetrieveTypeaheadLongNameStartsWithFull = "select th from (select distinct lower(long_name) th from sbr.data_elements " + 
-//			"where lower(long_name) "
-//			+ "like ? order by th) where rownum < "
-//			+ maxLongNamesToReturn;	
-//	public static final String sqlRetrieveTypeaheadLongNameFull = "select th from (select distinct lower(long_name) th from sbr.data_elements " + 
-//			"where instr(lower(long_name), ?, 1) > 0 order by th) where rownum < "
-//			+ maxLongNamesToReturn;
-	//TODO Remove when design is finalized SQLs - end	
-	//TODO remove commented initial versions
-//	@Override
-//	public List<String> getSearchTypeaheadLongName(String pattern) {
-//		if (StringUtils.isNotEmpty(pattern)) {
-//			List<String> models1 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameStartsWith, new Object[]{pattern.toLowerCase() + '%'}, new StringPropertyMapper(String.class));
-//			if (models1.size() >= 20) {
-//				return models1;
-//			}
-//			
-//			List<String> models2 = jdbcTemplate.query(sqlRetrieveTypeaheadLongName, new Object[]{pattern.toLowerCase()}, new StringPropertyMapper(String.class));
-//			for (int index = 0; (index < models2.size()) && (models1.size() < maxLongNamesToReturn); index++) {
-//				models1.add(models2.get(index));
-//			}
-//			return models1;
-//		}
-//		return new ArrayList<String>();	
-//	}
-	//TODO remove commented initial versions
-//	@Override
-//	public List<String> getSearchTypeaheadLongNameFull(String pattern) {
-//		if (StringUtils.isNotEmpty(pattern)) {
-//			List<String> models1 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameStartsWithFull, new Object[]{pattern.toLowerCase() + '%'}, new StringPropertyMapper(String.class));
-//			if (models1.size() >= maxLongNamesToReturn) {
-//				return models1;
-//			}
-//			
-//			List<String> models2 = jdbcTemplate.query(sqlRetrieveTypeaheadLongNameFull, new Object[]{pattern.toLowerCase()}, new StringPropertyMapper(String.class));
-//			for (int index = 0; (index < models2.size()) && (models1.size() < maxLongNamesToReturn); index++) {
-//				models1.add(models2.get(index));
-//			}
-//			return models1;
-//		}
-//		return new ArrayList<String>();	
-//	}
+
 }

@@ -14,8 +14,6 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
  *
  */
 public interface TypeaheadSearchDAO {
-	//TODO remove commented
-//	List<String> getSearchTypeaheadLongName(String pattern);
-//	List<String> getSearchTypeaheadLongNameFull(String pattern);
 	List<String> buildSearchTypeaheadByNameAndDomain(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
+	List<String> buildSearchTypeaheadDec(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 }
