@@ -1,14 +1,16 @@
 <!-- ng-controller="AdvancedSearchController" -->
 
 <span ng-controller="GenericSearchController">
-
     <div class="advanceSearchLeft">
         <div class="textInputGroup">
              <div>
                 <label class="advancedSearchLabel">Data Element Concept</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept Long Name"
+<!--                 <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept Long Name"
                        id="advancedSearchDEC" name="searchDEC"
-                       ng-model="fs.dataElementVariables.searchDEC"/>
+                       ng-model="fs.dataElementVariables.searchDEC"/> -->
+
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" data-ng-model="fs.dataElementVariables.searchDEC" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept Long Name" uib-typeahead="result for result in typeAhead('dec',$viewValue, 'dataElementConcept')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />    
+
             </div>
 
             <div>

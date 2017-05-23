@@ -3157,7 +3157,7 @@ body {
 .filters .dropdown-toggle:focus {
   outline: 0;
 }
-.filters .dropdown-menu {
+.dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -3177,17 +3177,17 @@ body {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
-.filters .dropdown-menu.pull-right {
+.dropdown-menu.pull-right {
   right: 0;
   left: auto;
 }
-.filters .dropdown-menu .divider {
+.dropdown-menu .divider {
   height: 1px;
   margin: 9px 0;
   overflow: hidden;
   background-color: #e5e5e5;
 }
-.filters .dropdown-menu > li > a {
+.dropdown-menu > li > a {
   display: block;
   padding: 3px 20px;
   clear: both;
@@ -3196,27 +3196,27 @@ body {
   color: #333;
   white-space: nowrap;
 }
-.filters .dropdown-menu > li > a:hover,
-.filters .dropdown-menu > li > a:focus {
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
   color: #262626;
   text-decoration: none;
   background-color: #f5f5f5;
 }
-.filters .dropdown-menu > .active > a,
-.filters .dropdown-menu > .active > a:hover,
-.filters .dropdown-menu > .active > a:focus {
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
   color: #fff;
   text-decoration: none;
   background-color: #428bca;
   outline: 0;
 }
-.filters .dropdown-menu > .disabled > a,
-.filters .dropdown-menu > .disabled > a:hover,
-.filters .dropdown-menu > .disabled > a:focus {
+.dropdown-menu > .disabled > a,
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus {
   color: #999;
 }
-.filters .dropdown-menu > .disabled > a:hover,
-.filters .dropdown-menu > .disabled > a:focus {
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus {
   text-decoration: none;
   cursor: not-allowed;
   background-color: transparent;
@@ -3229,11 +3229,11 @@ body {
 .filters .open > a {
   outline: 0;
 }
-.filters .dropdown-menu-right {
+.dropdown-menu-right {
   right: 0;
   left: auto;
 }
-.filters .dropdown-menu-left {
+.dropdown-menu-left {
   right: auto;
   left: 0;
 }

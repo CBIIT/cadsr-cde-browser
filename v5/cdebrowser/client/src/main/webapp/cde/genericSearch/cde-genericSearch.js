@@ -1,7 +1,6 @@
 angular.module("cdeGenericSearch", []);
 
 angular.module("cdeGenericSearch").controller("GenericSearchController", function ($scope, filterService, $rootScope, $http) {
-
     $scope.fs = filterService;
 
     $scope.$watch('isNode', function () {
@@ -16,16 +15,22 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
  	$scope.fs.dataElementVariables.searchFieldOptions.options = [];
  	$scope.fs.dataElementVariables.searchFieldOptions.options[0] = $scope.options[0];
 
-    // returns list of suggestions based on typed text in name field //
-    $scope.getLocation = function(val) {
+    // returns list of suggestions based on typed text in name field and advanced search field//
+    $scope.typeAhead = function(restURL,val, parameter) {
         if (val.indexOf("*")==-1) {
-            return $http.get('/cdebrowserServer/rest/typeahead/full', {
-              params: {
-                name: val,
-                filteredinput: $scope.fs.dataElementVariables.searchFieldOptions.options.join(","),
-                queryType: $scope.selectedQueryType
-              }
+                var paramObject = {};
+                paramObject[parameter] = val;
+                if (parameter=='name') { //only send fields and query type if this is the generic name search  //
+                    paramObject['filteredinput'] = $scope.fs.dataElementVariables.searchFieldOptions.options.join(",");             
+                    paramObject['queryType'] = $scope.selectedQueryType;
+                };
+
+
+            return $http.get('/cdebrowserServer/rest/typeahead/' + restURL, {
+
+              params: paramObject
             }).then(function(response){
+                console.log(response.data)
                 $scope.vals = response.data;
               return response.data;
             });            

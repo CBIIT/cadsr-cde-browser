@@ -464,6 +464,8 @@ ul.cdeSearchMessage li{
     font-weight: bold;
 }
 
+/*[uib-typeahead-popup].dropdown-menu{display:block;}*/
+
 /* Code clean up below (TO DO)*/
 
 /*-------------------------------------------------------------------*/
