@@ -55,13 +55,15 @@ public class CdeBrowserAuthenticationController
 					if (!StringUtils.equals(currUser, credentials[0]))
 					{
 						logger.debug("Invalidating current session since a new user is loggin in, previous user: " + currUser);
-						session.removeAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
-						session.removeAttribute(CaDSRConstants.CDE_CART);
+						ControllerUtils.removeAllCdeBrowserSessionAttrinutes(session);
 						session.invalidate();
 					}
 				}
 				logger.debug("Setting user in a new session after successful login:" + credentials[0]);
-				request.getSession(true).setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
+				HttpSession sessionOnLogin = request.getSession(true);
+				//remove old attributes for a chance this session is not new in this container
+				ControllerUtils.removeAllCdeBrowserSessionAttrinutes(sessionOnLogin);
+				sessionOnLogin.setAttribute(CaDSRConstants.LOGGEDIN_USER_NAME, credentials[0]);
 			} 
 			catch (Exception e)
 			{
@@ -80,17 +82,16 @@ public class CdeBrowserAuthenticationController
 		{
 			String currUser = (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
 			logger.debug("Received request to logout user: " + currUser);
-			session.removeAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
-			session.removeAttribute(CaDSRConstants.CDE_CART);
+			ControllerUtils.removeAllCdeBrowserSessionAttrinutes(session);
 			session.invalidate();
 		}	
 	}
-	
+
 	@RequestMapping(value="/user", method = RequestMethod.GET, produces = "text/plain")
 	public String getUser(HttpSession session)
 	{
 		String username = (session != null) ? (String) session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME) : "";
-		logger.debug("Request to fetch logged in username.");
+		logger.debug("Request to fetch logged in username: " + username);
 		return username;
 	}
 	

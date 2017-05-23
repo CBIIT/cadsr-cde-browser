@@ -127,7 +127,6 @@ public class CdeCartController
 	@RequestMapping(produces = "text/plain", consumes = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<String> saveCart(HttpSession mySession,
 			RequestEntity<List<String>> request) throws AutheticationFailureException {
-		logger.debug("Received rest call save Object Cart");
 		String principalName = null;
 
 		if (mySession != null) {
@@ -151,8 +150,9 @@ public class CdeCartController
 		}
 		
 		try {
+			logger.debug("Received rest call save Object Cart: " + principalName);
 			cdeCartUtil.addToCart(mySession, principalName, cdeIds);
-			logger.debug("Returning rest call saveCart: OK");
+			logger.debug("Returning rest call saveCart: OK, user:" + principalName);
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class CdeCartController
 			//call delete from cart implementation
 			String[] idItems = cdeIds.toArray(new String[cdeIds.size()]);
 			cdeCartUtil.deleteCartNodes(mySession, principalName, idItems);
-			logger.debug("Returning rest call deleteFromCart OK");
+			logger.debug("Returning rest call deleteFromCart OK, user: " + principalName);
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
 		catch (Exception e) {

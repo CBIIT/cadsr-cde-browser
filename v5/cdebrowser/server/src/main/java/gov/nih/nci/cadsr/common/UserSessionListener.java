@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSessionListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import gov.nih.nci.cadsr.service.restControllers.ControllerUtils;
+
 public class UserSessionListener implements HttpSessionListener
 {
 	private Logger logger = LogManager.getLogger(UserSessionListener.class.getName());	
@@ -22,12 +24,13 @@ public class UserSessionListener implements HttpSessionListener
 	public void sessionDestroyed(HttpSessionEvent sessionEvent)
 	{
 		HttpSession session = sessionEvent.getSession();
-		Object sessionUser = session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
-		session.removeAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
-		session.removeAttribute(CaDSRConstants.CDE_CART);
-		if (sessionUser != null) {
-			logger.debug("Session attributes: " + CaDSRConstants.LOGGEDIN_USER_NAME
-				+ " and "+ CaDSRConstants.CDE_CART + " for username: " + sessionUser + " removed.");
+		if (session != null) {
+			Object sessionUser = session.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);
+			ControllerUtils.removeAllCdeBrowserSessionAttrinutes(session);
+			if (sessionUser != null) {
+				logger.debug("Session attributes: " + CaDSRConstants.LOGGEDIN_USER_NAME
+					+ " and "+ CaDSRConstants.CDE_CART + " for username: " + sessionUser + " removed.");
+			}
 		}
 	}
 	

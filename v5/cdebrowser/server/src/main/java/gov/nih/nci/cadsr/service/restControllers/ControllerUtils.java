@@ -4,6 +4,7 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
 import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
-import gov.nih.nci.cadsr.dao.model.CsCsiDeModelList;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
@@ -174,7 +174,16 @@ public class ControllerUtils {
 	 * @param arr
 	 * @return true if an array is not null and is not empty
 	 */
-	public static boolean isArrayNotEmpty (List<String> arr) {
+	public static boolean isArrayNotEmpty (List arr) {
 		return (arr != null) && (! arr.isEmpty());
+	}
+	
+	public static void removeAllCdeBrowserSessionAttrinutes(HttpSession session) {
+		Enumeration<String> enumAttr = session.getAttributeNames();
+		if (enumAttr != null) {
+			while (enumAttr.hasMoreElements()) {
+				session.removeAttribute(enumAttr.nextElement());
+			}
+		}
 	}
 }
