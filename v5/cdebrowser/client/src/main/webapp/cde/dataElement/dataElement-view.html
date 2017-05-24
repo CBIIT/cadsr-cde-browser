@@ -185,6 +185,76 @@
     <td class="dataElementValue">No reference documents available</td>
   </tr>
 </table>
+<br />
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th align="left">Other Versions</th>
+    </tr>
+
+    <div data-ng-show="cdeDetails.dataElement.otherVersions.length > 0">
+        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" width="100%"
+               data-ng-repeat="(n, other) in cdeDetails.dataElement.otherVersions">
+
+            <tr bgcolor="#fff" data-ng-show="n > 0">
+                <td colspan="6">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td class="dataElementHeading">Version</td>
+                <td class="dataElementHeading">Long Name</td>
+                <td class="dataElementHeading">Workflow Status</td>
+                <td class="dataElementHeading">Registration Status</td>
+                <td class="dataElementHeading">Context</td>
+            </tr>
+            <tr class="dataElementViewTableTr">
+                <td class="dataElementValue" ng-bind-html="other.formattedVersion">{{other.formattedVersion}}</td>
+                <td class="dataElementValue" ng-bind-html="other.longName">{{other.longName}}</td>
+                <td class="dataElementValue" ng-bind-html="other.workFlowStatus">{{other.workFlowStatus}}</td>
+                <td class="dataElementValue" ng-bind-html="other.registrationStatus">{{other.registrationStatus}}</td>
+                <td class="dataElementValue" ng-bind-html="other.context">{{other.context}}</td>
+            </tr>
+
+
+            <tr width="100%">
+                <td colspan="5">
+                    <table cellpadding="1" cellspacing="1" width="100%">
+                        <tr>
+                            <td class="cdeDetailsSubSubHeading" colspan="6">Classifications</td>
+                        </tr>
+                        <tr>
+                            <td class="dataElementHeading">CS Long Name</td>
+                            <td class="dataElementHeading">CS Definition</td>
+                            <td class="dataElementHeading">CS Public ID/Version</td>
+                            <td class="dataElementHeading">CSI Name</td>
+                            <td class="dataElementHeading">CSI Type</td>
+                            <td class="dataElementHeading">CSI Public ID/Version</td>
+                        </tr>
+                        <tr class="dataElementViewTableTr" data-ng-repeat="cscsi in other.csCsis">
+                            <td class="dataElementValue" ng-bind-html="cscsi.csLongName">{{cscsi.csLongName}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csDefinition">{{cscsi.csDefinition}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.formattedCsVersion">{{cscsi.csId}}v{{cscsi.formattedCsVersion}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csiName">{{cscsi.csiName}}</td>
+                            <td class="dataElementValue" ng-bind-html="cscsi.csiType">{{cscsi.csiType}}</td>
+                            <td class="dataElementValue">
+                                <span ng-bind-html="cscsi.csiId">{{cscsi.csiId}}</span>
+                                v
+                                <span ng-bind-html="cscsi.formattedCsiVersion">{{cscsi.formattedCsiVersion}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div data-ng-hide="cdeDetails.dataElement.otherVersions.length > 0">
+        <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+            <tr class="dataElementViewTableTr">
+                <td class="dataElementValue">No other versions available</td>
+            </tr>
+        </table>
+    </div>
+
+</table>
 <script>
   (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
