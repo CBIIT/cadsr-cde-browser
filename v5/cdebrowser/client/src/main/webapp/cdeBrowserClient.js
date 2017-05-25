@@ -1347,6 +1347,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.downloadFactory.downloadToXML($scope.checkedItemsForDownload);
     };
 
+    // downloads template for protocol form //
+    $scope.downloadTemplate = function() {
+        $scope.downloadFactory.downloadTemplate(fs.searchFilter.protocol.formIdSeq)
+    };
+    
     // log the user out //
     $scope.logout = function() {
         $scope.authenticationService.logout();

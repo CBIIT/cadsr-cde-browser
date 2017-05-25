@@ -486,10 +486,12 @@
                     <button label="Download Data Elements as XML" data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
                         Download Data Elements as XML
                     </button>
-                </li>
-                <br />
-                <li>
-                    &nbsp;
+                </li>               
+                <br / ng-if="fs.searchFilter.protocol">
+                <li ng-if="fs.searchFilter.protocol">
+                    <button label="Download Template" data-ng-click="downloadTemplate()">
+                        Download Template
+                    </button>
                 </li>
                 <br />
                 <li>

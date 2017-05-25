@@ -285,6 +285,10 @@
     padding-right: 10px;
 }
 
+ul.cdeDownloadButtons.buttonsPadding li button{
+    margin-bottom: 5px !important;
+}
+
 ul.cdeProgressMessage {
     padding:15px 0px 5px 5px;
     color:#1A4660;
