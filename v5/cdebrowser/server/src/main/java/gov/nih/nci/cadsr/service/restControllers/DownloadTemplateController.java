@@ -55,7 +55,7 @@ public class DownloadTemplateController {
 		if (ParameterValidator.validateIdSeq(formId)) {
 			
 			try {
-				String testXml = "<?xml version=\"1.\0\" encoding=\"UTF-8\"?><test> this is DownloadTemplateController test</test>";
+				String testXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><test> this is DownloadTemplateController test</test>";
 				InputStream inputStream = new ByteArrayInputStream(testXml.getBytes(Charset.defaultCharset()));
 				InputStreamResource isr = new InputStreamResource(inputStream);
 				responseHeaders.set("Content-Type", "text/xml");
