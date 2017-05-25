@@ -59,6 +59,7 @@ public class DownloadTemplateController {
 				InputStream inputStream = new ByteArrayInputStream(testXml.getBytes(Charset.defaultCharset()));
 				InputStreamResource isr = new InputStreamResource(inputStream);
 				responseHeaders.set("Content-Type", "text/xml");
+				responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + ".xml");
 				logger.debug("Sending Template stream for Form ID:" + formId);
 				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
 			}
