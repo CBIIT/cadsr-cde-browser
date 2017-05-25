@@ -13,6 +13,7 @@ public class ValueDomainDetails
     private String context;
     private String definition;
     private String workflowStatus;
+    private String registrationStatus; // CDEBROWSER-832 UI Edits - Value Domain View Details - Backend
     private String dataType;
     private String unitOfMeasure;
     private String displayFormat;
@@ -101,7 +102,17 @@ public class ValueDomainDetails
     {
         this.definition = definition;
     }
-
+ // CDEBROWSER-832 UI Edits - Value Domain View Details - Backend
+    public String getRegistrationStatus()
+    {
+        return registrationStatus;
+    }
+ // CDEBROWSER-832 UI Edits - Value Domain View Details - Backend
+    public void setRegistrationStatus( String registrationStatus )
+    {
+        this.registrationStatus = registrationStatus;
+    }
+    
     public String getWorkflowStatus()
     {
         return workflowStatus;
@@ -110,7 +121,7 @@ public class ValueDomainDetails
     public void setWorkflowStatus( String workflowStatus )
     {
         this.workflowStatus = workflowStatus;
-    }
+    }    
 
     public String getDataType()
     {

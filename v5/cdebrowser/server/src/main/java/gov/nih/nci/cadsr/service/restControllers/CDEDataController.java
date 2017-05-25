@@ -1126,6 +1126,7 @@ public class CDEDataController
 
         valueDomainDetails.setDefinition( dataElementModel.getValueDomainModel().getPreferredDefinition() );
         valueDomainDetails.setWorkflowStatus( dataElementModel.getValueDomainModel().getAslName() );
+        valueDomainDetails.setRegistrationStatus(dataElementModel.getRegistrationStatus()); // CDEBROWSER-832 UI Edits - Value Domain View Details - Backend
         valueDomainDetails.setDataType( dataElementModel.getValueDomainModel().getDatatype() );
         valueDomainDetails.setUnitOfMeasure( dataElementModel.getValueDomainModel().getUom() );
         valueDomainDetails.setDisplayFormat( dataElementModel.getValueDomainModel().getDispFormat() );
@@ -1304,6 +1305,10 @@ public class CDEDataController
         adminInfo.setVdOwnedBy( dataElementModel.getValueDomainModel().getCdContextName() );
         adminInfo.setDecCreatedBy( dataElementModel.getDec().getCreatedBy() );
         adminInfo.setDecOwnedBy( dataElementModel.getDec().getCdContextName() );
+        
+        // "Selected Data Element" of the "Admin Info" Tab
+        adminInfo.setSelectedDataElement( getSelectedDataElement( dataElementModel ) ); // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend
+        
         return adminInfo;
     }
 
