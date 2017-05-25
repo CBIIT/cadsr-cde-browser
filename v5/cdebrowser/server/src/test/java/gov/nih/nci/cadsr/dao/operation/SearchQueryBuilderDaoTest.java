@@ -25,7 +25,7 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
  * @author asafievan
  *
  */
-public class SearchQueryBuilderTest {
+public class SearchQueryBuilderDaoTest {
 	//There is another test file SearchQueryBuilderTest located in test package gov.nih.nci.cadsr.service.search
 	private SearchQueryBuilder searchQueryBuilder;
 	private SearchPreferencesServer searchPreferences;

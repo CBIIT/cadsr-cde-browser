@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import gov.nih.nci.cadsr.common.UsageLog;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.SearchCriteriaValidator;
+import gov.nih.nci.cadsr.common.UsageLog;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.dao.SearchDAO;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
@@ -49,12 +49,8 @@ public class SearchController
     private UsageLog usageLog;
 
     private List<ProgramAreaModel> programAreaModelList = null;
-
-    public SearchController()
-    {
-        // programAreaModelList = restControllerCommon.getProgramAreaList();
-
-    }
+    
+    private SearchCriteriaValidator searchCriteriaValidator = new SearchCriteriaValidator();
 
     @RequestMapping( value = "/testSearch" )
     @ResponseBody
@@ -86,12 +82,14 @@ public class SearchController
     public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result, HttpSession httpSession)
     {
         logger.debug("Received a search request with the following search criteria: " + searchCriteria);
-        SearchNode[] results;
+        searchCriteriaValidator.validate(searchCriteria, result);//SECURITYTEAM-1417
         if (result.hasErrors())
         {
         	logger.error("Error in binding search criteria to the SearchCriteria bean.");
         	return createErrorNode( "Server Error in binding search criteria to a bean. Error count:" +  result.getErrorCount() + "  " + result.getAllErrors().get(0));
         }
+        
+        SearchNode[] results;
 
         // AppScan will try to inject %Hex strings to test our parameter sanitizing.
         if( StringUtilities.checkForBadParameters(searchCriteria.getName(), searchCriteria.getPublicId(), searchCriteria.getProgramArea(), searchCriteria.getContext(),
@@ -121,8 +119,7 @@ public class SearchController
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);
-            //FIXME, this doesn't have the newest advanced search fields yet.
-            return createErrorNode( "Server Error:\nsearch criteria : " + searchCriteria.getName() + ", publicId: " + searchCriteria.getPublicId() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getProgramArea() + " failed ", e );
+            return createErrorNode( "Server Error: " + e.getMessage() + "\n" + searchCriteria + " failed ", e );
         }
         usageLog.log( "search", searchCriteria.toLogString() + " [" + results.length + " results returned]" );
 
@@ -389,4 +386,8 @@ public class SearchController
     {
         this.usageLog = usageLog;
     }
+//    @InitBinder removed this method - it is called on every request
+//    protected void initBinder(WebDataBinder binder) {
+//        binder.addValidators(searchCriteriaValidator);
+//    }
 }

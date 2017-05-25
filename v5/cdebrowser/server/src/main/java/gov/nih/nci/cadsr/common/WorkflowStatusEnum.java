@@ -5,6 +5,8 @@ package gov.nih.nci.cadsr.common;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 /**
  * This class contains workflow status list for a user to see on the client search preferences Web pages.
  * 
@@ -52,5 +54,18 @@ public enum WorkflowStatusEnum
         }
 
         return workflowStatusList;
+    }
+    public static boolean isValidStatus(String workflowStatusOther) {
+        for (WorkflowStatusEnum ws : WorkflowStatusEnum.values()) {
+            if(ws.getWorkflowStatus().equals(workflowStatusOther)) {
+            	return true;
+            }
+        }
+        if (SearchCriteria.ALL_WORKFLOW_STATUSES.equals(workflowStatusOther)) {
+        	return true;
+        }
+        else {
+        	return false;
+        }
     }
 }

@@ -45,4 +45,15 @@ public class ParameterValidator {
 			return false;
 		}
 	}
+	public static final String  regexLettersCommaSeparated = "((\\s+)?([a-zA-Z]),?)+?$";
+	
+	public static boolean validateCommaSeparated(String pattern) {
+		if (StringUtils.isNotBlank(pattern)) {
+			Pattern p = Pattern.compile(regexLettersCommaSeparated);
+			Matcher m = p.matcher(pattern);
+			return m.matches();
+		}
+		return true;
+	}
+	
 }

@@ -38,10 +38,9 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
      */
     public String initSearchQueryBuilder( SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences )
     {
-        logger.debug( "Initializing Search query builder with Search Criteria : " + searchCriteria );
         logger.debug( "Initializing Search query builder with Search Preferences : " + searchPreferences );
-        //searchCriteria.preprocessCriteria();;
-
+        logger.debug( "Initializing Search query builder with Search Criteria : " + searchCriteria );
+        
         String vdFrom = "";
         String deDerivWhere = "";
         String deDerivFrom = "";
@@ -68,7 +67,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String propertyWhere = "";
         String derivedDEWhere = "";
 
-        // This note was in the source coude of the previous version: "release 3.0 updated to add display order for registration status"
+        // This note was in the source code of the previous version: "release 3.0 updated to add display order for registration status"
         String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
 
         String csiFrom = ", sbr.ac_csi_view acs ";
@@ -155,7 +154,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         else
         {
             // Get the DEC_IDSEQ values of any/all of the Data Element Concepts, that matched wild card input in getDataElementConcept
-            List<DataElementConceptModel> dataElementConceptModels = dataElementConceptDAO.getDecByLongNameWildCard( searchCriteria.getDataElementConcept() );
+        	String newSearchStr = StringReplace.strReplace(searchCriteria.getDataElementConcept(), "'", "''");//Escape SQL single quote
+        	List<DataElementConceptModel> dataElementConceptModels = dataElementConceptDAO.getDecByLongNameWildCard(newSearchStr);
             // If there are no matches for the dataElementConcept, than this query can never return results, so we return null right no
             if( dataElementConceptModels.isEmpty() )
             {
@@ -356,7 +356,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
     public String buildObjectClassWhere( String objecClass )
     {
-        String where = "and  de.de_idseq IN " +
+    	objecClass = StringReplace.strReplace(objecClass, "'", "''");//Escape SQL single quote
+    	String where = "and  de.de_idseq IN " +
                 "(select de_idseq from   sbr.data_elements_view where  " +
                 "    dec_idseq IN " +
                 "    (" +
@@ -376,7 +377,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
     public String buildPropertyWhere( String property )
     {
-        String where = "and  de.de_idseq IN " +
+    	property = StringReplace.strReplace(property, "'", "''");//Escape SQL single quote
+    	String where = "and  de.de_idseq IN " +
                 "(select de_idseq from   sbr.data_elements_view where  " +
                 "    dec_idseq IN " +
                 "    (" +
@@ -402,7 +404,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         //Exact phrase
         if( queryType == 0 )
         {
-            where += "    select vd.vd_idseq \n" +
+        	query = StringReplace.strReplace(query, "'", "''");//Escape SQL single quote
+        	where += "    select vd.vd_idseq \n" +
                     "    from sbr.value_domains_view vd , sbr.vd_pvs_view vp, sbr.permissible_values_view pv   \n" +
                     "    where  vd.vd_idseq = vp.vd_idseq  and    pv.pv_idseq = vp.pv_idseq and upper (pv.value) like upper ('" + query + "') \n";
         }
@@ -411,9 +414,10 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             String[] parts = query.split( " " );
             boolean firstFlag = true;
-            for( String term : parts )
+            for( String curr : parts )
             {
-                if( firstFlag )
+            	String term = StringReplace.strReplace(curr, "'", "''");
+            	if( firstFlag )
                 {
                     firstFlag = false;
                 }

@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
+
 public enum RegistrationStatusEnum
 {
 	PREFSTD("Preferred Standard"),	
@@ -43,6 +45,18 @@ public enum RegistrationStatusEnum
 			regStatusList.add(rs.getRegStatus());
 		}
 		return regStatusList;
-	}	
-
+	}
+	public static boolean isValidStatus(String registrationStatus) {
+		for (RegistrationStatusEnum rs : RegistrationStatusEnum.values()) {
+			if(rs.getRegStatus().equals(registrationStatus)) {
+					return true;
+			}
+		}
+		if (SearchCriteria.ALL_REGISRTATION_STATUSES.equals(registrationStatus)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }

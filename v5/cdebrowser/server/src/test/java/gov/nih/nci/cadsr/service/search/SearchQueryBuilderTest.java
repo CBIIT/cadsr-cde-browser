@@ -110,14 +110,14 @@ public class SearchQueryBuilderTest
         searchCriteria.setContext( "Testcontext" );
         searchCriteria.setClassification( "99BA9DC8-84A5-4E69-E034-080020C9C0E0" );
         searchCriteria.setProtocol( "protocol" );
-        searchCriteria.setWorkFlowStatus( "workFlowStatus" );
-        searchCriteria.setRegistrationStatus( "registrationStatus" );
+        searchCriteria.setWorkFlowStatus( "RELEASED" );
+        searchCriteria.setRegistrationStatus( "Standard" );
         searchCriteria.setConceptName( "conceptName" );
         searchCriteria.setConceptCode( "conceptCode" );
         searchCriteria.setDerivedDEFlag("false");
         // With workFlow
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
-        assertTrue( sqlStmt.contains( "asl.asl_name = 'workFlowStatus'" ) );
+        assertTrue( sqlStmt.contains( "asl.asl_name = 'RELEASED'" ) );
     }
 
     @Test
@@ -132,7 +132,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setClassification( "99BA9DC8-84A5-4E69-E034-080020C9C0E0" );
         searchCriteria.setProtocol( "protocol" );
         searchCriteria.setWorkFlowStatus( "" );
-        searchCriteria.setRegistrationStatus( "registrationStatus" );
+        searchCriteria.setRegistrationStatus( "Candidate" );
         searchCriteria.setConceptName( "conceptName" );
         searchCriteria.setConceptCode( "conceptCode" );
         searchCriteria.setDerivedDEFlag("false");

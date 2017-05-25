@@ -3,12 +3,15 @@
  */
 package gov.nih.nci.cadsr.dao.operation;
 
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
@@ -64,12 +67,12 @@ public class SearchQueryBuilderUtils {
 	}
 	
 	public static String buildRegistrationWhere(String paramValue, String tableColumn) {
-		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn);
+		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn, RegistrationStatusEnum.getAsList());
 		return resultWhere;
 	}
 	
 	public static String buildWorkflowWhere(String paramValue, String tableColumn) {
-		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn);
+		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn, WorkflowStatusEnum.getAsList());
 		return resultWhere;
 	}
 	
@@ -140,8 +143,17 @@ public class SearchQueryBuilderUtils {
 		logger.debug("conceptWhere: " + conceptWhere);
 		return conceptWhere;
 	}
-	
-	public static String buildListStatusWhere(String sourceStr, String separator, String allInclusive, String tableFieldName) {
+	/**
+	 * 
+	 * @param sourceStr
+	 * @param separator
+	 * @param allInclusive
+	 * @param tableFieldName
+	 * @param list String list with allowed values
+	 * @return String part of SQL
+	 * @throws RuntimeException if any value is invalid
+	 */
+	public static String buildListStatusWhere(String sourceStr, String separator, String allInclusive, String tableFieldName, List<String> list) {
 		String resultWhere = "";
 		String auxStr = "";
 		
@@ -149,19 +161,33 @@ public class SearchQueryBuilderUtils {
 			return "";
 		
 		String[] arrvalues = StringUtilities.buildArrayFromParameter(sourceStr, separator);
-		
-		if (arrvalues == null || StringUtilities.containsKeyLoop(arrvalues, allInclusive))
-			resultWhere = "";
+
+		if (arrvalues == null || StringUtilities.containsKeyLoop(arrvalues, allInclusive)) {
+		}
 		else if (arrvalues.length == 1) {
 			auxStr = arrvalues[0];
-			resultWhere = " AND " + tableFieldName + " = '" + auxStr + "'";
+			if (list.contains(auxStr)) {//check allowed values
+				resultWhere = " AND " + tableFieldName + " = '" + auxStr + "'";
+			}
+			else {
+				String message = "Received unexpected Status parameter value: " + sourceStr;
+				logger.error(message);
+				throw new RuntimeException(message);
+			}
 		} 
 		else {
 			for (int i = 0; i < arrvalues.length; i++) {
-				if (i == 0)
-					auxStr = "'" + arrvalues[0] + "'";
-				else
-					auxStr = auxStr + "," + "'" + arrvalues[i] + "'";
+				if (list.contains(arrvalues[i])) {//check allowed values
+					if (i == 0)
+						auxStr = "'" + arrvalues[0] + "'";
+					else
+						auxStr = auxStr + "," + "'" + arrvalues[i] + "'";
+				}
+				else {
+					String message = "Received unexpected Status parameter value: " + sourceStr;
+					logger.error(message);
+					throw new RuntimeException(message);
+				}
 			}
 			resultWhere = " AND " + tableFieldName + " IN (" + auxStr + ")";
 		}

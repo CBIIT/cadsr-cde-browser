@@ -85,4 +85,36 @@ public class ParameterValidatorTest {
 	public void testValidateIdSeqWrong4() {
 		assertFalse(ParameterValidator.validateIdSeq("D6C-D723-02FA-6501-E034-000-BA12F5E7"));
 	}
+	@Test
+	public void testValidateCommaSeparatedSuccess() {
+		assertTrue(ParameterValidator.validateCommaSeparated("ALL Workflow Statuses, RELEASED"));
+	}
+	@Test
+	public void testValidateCommaSeparatedSuccess2() {
+		assertTrue(ParameterValidator.validateCommaSeparated("RELEASED ARCHIVED, RELEASED"));
+	}
+	@Test
+	public void testValidateCommaSeparatedSuccess1() {
+		assertTrue(ParameterValidator.validateCommaSeparated("RELEASED ARCHIVED"));
+	}
+	@Test
+	public void testValidateCommaSeparatedSuccess11() {
+		assertTrue(ParameterValidator.validateCommaSeparated("RELEASED"));
+	}
+	@Test
+	public void testValidateCommaSeparatedFailure1() {
+		assertFalse(ParameterValidator.validateCommaSeparated("ALL Work flow Statuses' and 'f'='f"));
+	}
+	@Test
+	public void testValidateCommaSeparatedFailure2() {
+		assertFalse(ParameterValidator.validateCommaSeparated("ALL Work flow Statuses' or 'b'='f"));
+	}
+	@Test
+	public void testValidateCommaSeparatedNull() {
+		assertTrue(ParameterValidator.validateCommaSeparated(null));
+	}
+	@Test
+	public void testValidateCommaSeparatedEmpty() {
+		assertTrue(ParameterValidator.validateCommaSeparated(""));
+	}
 }
