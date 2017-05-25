@@ -1,4 +1,49 @@
 <br />
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Selected Data Element</th>
+    </tr>
+</table>
+
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription" width="20%">Public ID:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.publicId">{{cdeDetails.adminInfo.selectedDataElement.publicId}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Version:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.formattedVersion">{{cdeDetails.adminInfo.selectedDataElement.formattedVersion}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Long Name:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.longName">{{cdeDetails.adminInfo.selectedDataElement.longName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Short Name:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.shortName">{{cdeDetails.adminInfo.selectedDataElement.shortName}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Preferred Question Text:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.preferredQuestionText">{{cdeDetails.adminInfo.selectedDataElement.preferredQuestionText}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Definition:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.definition">{{cdeDetails.adminInfo.selectedDataElement.definition}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Workflow Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.selectedDataElement.workflowStatus">{{cdeDetails.adminInfo.selectedDataElement.workflowStatus}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Registration Status:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.dataElement.dataElementDetails.registrationStatus">{{cdeDetails.dataElement.dataElementDetails.registrationStatus}}</td>
+    </tr>    
+    
+</table>
+<br>
+
+
 
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">

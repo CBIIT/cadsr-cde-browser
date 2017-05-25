@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.service.model.cdeData.adminInfo;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
+import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+
 public class AdminInfo
 {
     private String createdBy;
@@ -14,6 +16,7 @@ public class AdminInfo
     private String decCreatedBy;
     private String decOwnedBy;
     private String organization;
+    private SelectedDataElement selectedDataElement = null;
 
     public String getCreatedBy()
     {
@@ -94,6 +97,16 @@ public class AdminInfo
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
+	
+    public SelectedDataElement getSelectedDataElement()
+    {
+        return selectedDataElement;
+    }
+
+    public void setSelectedDataElement( SelectedDataElement selectedDataElement )
+    {
+        this.selectedDataElement = selectedDataElement;
+    }	
 
 	@Override
 	public String toString() {
