@@ -82,7 +82,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/" + id;
 	            }).
 	            error(function(data, status, headers, config) {
-	            	that.progressMessage = '';
+			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
 	            });
 
 	    };	    
