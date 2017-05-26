@@ -182,6 +182,8 @@ public class CDEDataControllerTest {
 		valueDomainModelToReturn.setVersion(3.3f);
 		valueDomainModelToReturn.setCdVersion(4.8f);
 		valueDomainModelToReturn.setVdContextName(vdContextNameExpected);
+		valueDomainModelToReturn.setDateCreated(new Timestamp(System.currentTimeMillis()));
+		valueDomainModelToReturn.setDateModified(new Timestamp(System.currentTimeMillis()));
 		
 		//mock how DE DAO is implemented we do not call the method below when we mock dataElementDAO
 		//when(valueDomainDAO.getValueDomainByIdseq(Mockito.eq(vdIdseqTest))).thenReturn(valueDomainModelToReturn);
@@ -189,6 +191,8 @@ public class CDEDataControllerTest {
 		DataElementConceptModel decToReturn = new DataElementConceptModel();
 		decToReturn.setVersion(1.0f);
 		decToReturn.setCdVersion(2.2f);
+		decToReturn.setDateCreated(new Timestamp(System.currentTimeMillis()));
+		decToReturn.setDateModified(new Timestamp(System.currentTimeMillis()));
 		dataElementModelToReturn.setDec(decToReturn);
 		dataElementModelToReturn.setValueDomainModel(valueDomainModelToReturn);
 		List<ReferenceDocModel> refDocsToReturn = new ArrayList<>();

@@ -1302,9 +1302,13 @@ public class CDEDataController
         adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
         adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
         adminInfo.setVdCreatedBy( dataElementModel.getValueDomainModel().getCreatedBy() );
-        adminInfo.setVdOwnedBy( dataElementModel.getValueDomainModel().getCdContextName() );
+        adminInfo.setVdOwnedBy( dataElementModel.getValueDomainModel().getVdContextName() );
         adminInfo.setDecCreatedBy( dataElementModel.getDec().getCreatedBy() );
-        adminInfo.setDecOwnedBy( dataElementModel.getDec().getCdContextName() );
+        adminInfo.setDecOwnedBy(dataElementModel.getDec().getConteName() );
+        adminInfo.setVdDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateCreated()));
+        adminInfo.setVdDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateModified()));
+        adminInfo.setDecDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateCreated()));
+        adminInfo.setDecDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateModified()));        
         
         // "Selected Data Element" of the "Admin Info" Tab
         adminInfo.setSelectedDataElement( getSelectedDataElement( dataElementModel ) ); // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend

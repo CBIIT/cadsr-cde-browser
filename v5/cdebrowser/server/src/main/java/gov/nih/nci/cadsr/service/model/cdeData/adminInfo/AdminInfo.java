@@ -12,9 +12,13 @@ public class AdminInfo
     private String modifiedBy;
     private String dateModified;
     private String vdCreatedBy;
-    private String vdOwnedBy;    
+    private String vdOwnedBy;   
+    private String vdDateCreated; // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend
+    private String vdDateModified;   // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend
     private String decCreatedBy;
     private String decOwnedBy;
+    private String decDateCreated; // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend
+    private String decDateModified;   // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend    
     private String organization;
     private SelectedDataElement selectedDataElement = null;
 
@@ -37,6 +41,16 @@ public class AdminInfo
     {
         this.dateCreated = dateCreated;
     }
+    
+    public String getVdDateCreated()
+    {
+        return vdDateCreated;
+    }
+
+    public void setVdDateCreated( String vdDateCreated )
+    {
+        this.vdDateCreated = vdDateCreated;
+    }    
 
     public String getModifiedBy()
     {
@@ -57,6 +71,17 @@ public class AdminInfo
     {
         this.dateModified = dateModified;
     }
+    
+    public String getVdDateModified()
+    {
+        return vdDateModified;
+    }
+
+    public void setVdDateModified( String vdDateModified )
+    {
+        this.vdDateModified = vdDateModified;
+    }    
+    
 
 	public String getVdCreatedBy() {
 		return vdCreatedBy;
@@ -86,6 +111,26 @@ public class AdminInfo
 		return decOwnedBy;
 	}
 
+    public String getDecDateCreated()
+    {
+        return decDateCreated;
+    }
+
+    public void setDecDateCreated( String decDateCreated )
+    {
+        this.decDateCreated = decDateCreated;
+    } 
+    
+    public String getDecDateModified()
+    {
+        return decDateModified;
+    }
+
+    public void setDecDateModified( String decDateModified )
+    {
+        this.decDateModified = decDateModified;
+    }        
+	
 	public void setDecOwnedBy(String decOwnedBy) {
 		this.decOwnedBy = decOwnedBy;
 	}

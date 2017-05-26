@@ -123,6 +123,8 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             valueDomainModel.setVdType( rs.getString( "VD_TYPE_FLAG" ) );
             valueDomainModel.setVdContextName(rs.getString( "VD_CONTEXT_NAME"));//CDEBROWSER-760 Setting here VD Context Name
             valueDomainModel.setCreatedBy( rs.getString( "CREATED_BY" ) );
+            valueDomainModel.setDateCreated( rs.getTimestamp( "DATE_CREATED" ) ); // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend            
+            valueDomainModel.setDateModified( rs.getTimestamp( "DATE_MODIFIED" ) );  // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend
 
             try
             {

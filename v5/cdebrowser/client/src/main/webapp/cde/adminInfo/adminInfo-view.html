@@ -44,7 +44,11 @@
 <br>
 
 
-
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+    <tr class="cdeDetailsSubHeading">
+        <th colspan="2" align="left">Admin Info</th>
+    </tr>
+</table>
 <table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription" width="20%">Created by:</td>
@@ -63,25 +67,37 @@
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.dateModified">{{cdeDetails.adminInfo.dateModified}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Value Domain:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.valueDomain.valueDomainDetails.longName">{{cdeDetails.valueDomain.valueDomainDetails.longName}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Value Domain Creator:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdCreatedBy">{{cdeDetails.adminInfo.vdCreatedBy}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">Value Domain Owner:</td>
-        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdOwnedBy">{{cdeDetails.adminInfo.vdOwnedBy}}</td>
-    </tr>
-    <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">DEC Creator:</td>
+        <td class="dataElementDescription">DEC Created by:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.decCreatedBy">{{cdeDetails.adminInfo.decCreatedBy}}</td>
     </tr>
     <tr class="dataElementViewTableTr">
-        <td class="dataElementDescription">DEC Owner:</td>
+        <td class="dataElementDescription">DEC Context:</td>
         <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.decOwnedBy">{{cdeDetails.adminInfo.decOwnedBy}}</td>
     </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">DEC Date created:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.decDateCreated">{{cdeDetails.adminInfo.decDateCreated}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">DEC Modified Date:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.decDateModified">{{cdeDetails.adminInfo.decDateModified}}</td>
+    </tr>            
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Created by:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdCreatedBy">{{cdeDetails.adminInfo.vdCreatedBy}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Context:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdOwnedBy">{{cdeDetails.adminInfo.vdOwnedBy}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Date created:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdDateCreated">{{cdeDetails.adminInfo.vdDateCreated}}</td>
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Value Domain Modified Date:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.vdDateModified">{{cdeDetails.adminInfo.vdDateModified}}</td>
+    </tr>    
 </table>
 
 <script>
