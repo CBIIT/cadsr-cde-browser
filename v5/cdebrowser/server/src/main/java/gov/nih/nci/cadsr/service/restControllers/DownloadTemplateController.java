@@ -1,14 +1,10 @@
 /*
- * Copyright (C) 2016 Leidos Biomedical Research, Inc. - All rights reserved.
+ * Copyright (C) 2017 Leidos Biomedical Research, Inc. - All rights reserved.
  */
 package gov.nih.nci.cadsr.service.restControllers;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,10 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
-import gov.nih.nci.cadsr.download.XmlDownloadTypes;
-import gov.nih.nci.cadsr.service.ClientException;
+import gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO;
+import gov.nih.nci.cadsr.dao.model.ReferenceDocBlobModel;
 /**
  * This is a MVC RESTful controller to download Form Template based on provided Form IDSEQ.
  * 
@@ -39,55 +34,51 @@ public class DownloadTemplateController {
 	private static Logger logger = LogManager.getLogger(DownloadTemplateController.class.getName());
 	
 	@Autowired
-	private AppConfig appConfig;
+	private ReferenceDocBlobDAO referenceDocBlobDAO;
 
-	/*@Value("${downloadDirectory}")
-	String downloadDirectory;
-	@Value("${downloadFileNamePrefix}")
-	String fileNamePrefix;
-	@Value("${registrationAuthorityIdentifier}")
-	String registrationAuthorityIdentifier;*/
-	//FIXME This is a placeholder implementation
 	@RequestMapping(value = "/{formId}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> retrieveTemplateFile(@PathVariable("formId") String formId) throws Exception {
 		logger.debug("Received RESTful call to Download Template; formId: " + formId);
 		HttpHeaders responseHeaders = new HttpHeaders();
 		if (ParameterValidator.validateIdSeq(formId)) {
-			
 			try {
-				String testXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><test> this is DownloadTemplateController test</test>";
-				InputStream inputStream = new ByteArrayInputStream(testXml.getBytes(Charset.defaultCharset()));
-				InputStreamResource isr = new InputStreamResource(inputStream);
-				responseHeaders.set("Content-Type", "text/xml");
-				responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + ".xml");
-				logger.debug("Sending Template stream for Form ID:" + formId);
-				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
+				ReferenceDocBlobModel referenceDocBlobModel = referenceDocBlobDAO.getReferenceDocBlobByAcIdseq(formId);
+				if (referenceDocBlobModel != null) {
+					responseHeaders.set("Content-Type", referenceDocBlobModel.getMimeType());
+					responseHeaders.set("Content-Disposition", "attachment; filename=" + referenceDocBlobModel.getDocName());
+					logger.debug("Sending Template stream for Form ID: " + formId);
+					InputStream docStream = referenceDocBlobModel.getDocContent();
+					InputStreamResource result = new InputStreamResource(docStream);
+					return new ResponseEntity<InputStreamResource>(result, responseHeaders, HttpStatus.OK);
+				}
+				else {
+					return buildErrorResponse(formId, CLIENT_ERROR_TEMPLATE_NOT_FOUND, responseHeaders, HttpStatus.NOT_FOUND);
+				}
 			}
 			catch (Exception e) {
-				String strMessage = "Error in DownloadTemplateController";
-				logger.error(strMessage + ' ' + e);
-				responseHeaders.set("Content-Type", "text/plain");
-				InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
-				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+				logger.error("Error in DownloadTemplateController " + formId + ' ' + e);
+				return buildErrorResponse(formId, SERVER_ERROR_FORMATTED, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-		
 		}
 		else {
-			String strMessage = String.format("Client Error providing Form ID: %s", formId);
-			logger.error(strMessage);
-			logger.error("Template ID is not valid: " + formId);
-			responseHeaders.set("Content-Type", "text/plain");
-			InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
-			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.BAD_REQUEST);
+			return buildErrorResponse(formId, CLIENT_ERROR_ID_FORMAT_WRONG, responseHeaders, HttpStatus.BAD_REQUEST);
 		}
 	}
+	protected final static String CLIENT_ERROR_TEMPLATE_NOT_FOUND = "Client Error: Template not found using provided Form ID: %s";
+	protected final static String CLIENT_ERROR_ID_FORMAT_WRONG = "Client Error: Unexpected Form ID format: %s";
+	protected final static String SERVER_ERROR_FORMATTED = "Error in DownloadTemplateController on provided Form ID: %s";
 
-	public AppConfig getAppConfig() {
-		return appConfig;
+	protected ResponseEntity<InputStreamResource> buildErrorResponse(String formId, String strMessageFormat, 
+			HttpHeaders responseHeaders, HttpStatus httpStatus) {
+		String errorMessage = String.format(strMessageFormat, formId);
+		logger.error("Response error message: " + errorMessage);
+		responseHeaders.set("Content-Type", "text/plain");
+		InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(errorMessage.getBytes()));
+		return new ResponseEntity<InputStreamResource>(isr, responseHeaders, httpStatus);
 	}
-
-	public void setAppConfig(AppConfig appConfig) {
-		this.appConfig = appConfig;
+	
+	public void setReferenceDocBlobDAO(ReferenceDocBlobDAO referenceDocBlobDAO) {
+		this.referenceDocBlobDAO = referenceDocBlobDAO;
 	}
 
 }

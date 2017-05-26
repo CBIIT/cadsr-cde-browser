@@ -161,8 +161,11 @@
 	<bean id="cdeCartValidValueDAO" class="gov.nih.nci.cadsr.dao.CdeCartValidValueDAOImpl" parent="abstractDao"/>
 	
 	<bean id="typeaheadSearchDAO" class="gov.nih.nci.cadsr.dao.TypeaheadSearchDAOImpl" parent="abstractDao">
-    </bean>
-
+	</bean>
+	
+	<bean id="referenceDocBlobDAO" class="gov.nih.nci.cadsr.dao.ReferenceDocBlobDAOImpl" parent="abstractDao">
+	</bean>
+	
 	<bean id="getExcelDownload" class="gov.nih.nci.cadsr.download.GetExcelDownload">
         <constructor-arg name="dataSource" index="0" ref="dataSource"/>
      </bean>
