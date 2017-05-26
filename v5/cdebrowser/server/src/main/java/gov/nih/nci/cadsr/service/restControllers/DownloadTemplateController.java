@@ -48,50 +48,28 @@ public class DownloadTemplateController {
 	@Value("${registrationAuthorityIdentifier}")
 	String registrationAuthorityIdentifier;*/
 	//FIXME This is a placeholder implementation
-//	@RequestMapping(value = "/{formId}", method = RequestMethod.GET)
-//	public ResponseEntity<InputStreamResource> retrieveTemplateFile(@PathVariable("formId") String formId) throws Exception {
-//		logger.debug("Received RESTful call to Download Template; formId: " + formId);
-//		HttpHeaders responseHeaders = new HttpHeaders();
-//		if (ParameterValidator.validateIdSeq(formId)) {
-//			
-//			try {
-//				String testXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><test> this is DownloadTemplateController test</test>";
-//				InputStream inputStream = new ByteArrayInputStream(testXml.getBytes(Charset.defaultCharset()));
-//				InputStreamResource isr = new InputStreamResource(inputStream);
-//				responseHeaders.set("Content-Type", "text/xml");
-//				responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + ".xml");
-//				logger.debug("Sending Template stream for Form ID:" + formId);
-//				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
-//			}
-//			catch (Exception e) {
-//				String strMessage = "Error in DownloadTemplateController";
-//				logger.error(strMessage + ' ' + e);
-//				responseHeaders.set("Content-Type", "text/plain");
-//				InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
-//				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		
-//		}
-//		else {
-//			String strMessage = String.format("Client Error providing Form ID: %s", formId);
-//			logger.error(strMessage);
-//			logger.error("Template ID is not valid: " + formId);
-//			responseHeaders.set("Content-Type", "text/plain");
-//			InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
-//			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.BAD_REQUEST);
-//		}
-//	}
 	@RequestMapping(value = "/{formId}", method = RequestMethod.GET)
-	public ResponseEntity<InputStreamResource> retrieveTemplateFileError(@PathVariable("formId") String formId) throws Exception {
+	public ResponseEntity<InputStreamResource> retrieveTemplateFile(@PathVariable("formId") String formId) throws Exception {
 		logger.debug("Received RESTful call to Download Template; formId: " + formId);
 		HttpHeaders responseHeaders = new HttpHeaders();
 		if (ParameterValidator.validateIdSeq(formId)) {
 			
-				String strMessage = "Error in DownloadTemplateController - Test";
-				logger.error(strMessage);
+			try {
+				String testXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><test> this is DownloadTemplateController test</test>";
+				InputStream inputStream = new ByteArrayInputStream(testXml.getBytes(Charset.defaultCharset()));
+				InputStreamResource isr = new InputStreamResource(inputStream);
+				responseHeaders.set("Content-Type", "text/xml");
+				responseHeaders.set("Content-Disposition", "attachment; filename=CDEBrowser_SearchResults" + ".xml");
+				logger.debug("Sending Template stream for Form ID:" + formId);
+				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.OK);
+			}
+			catch (Exception e) {
+				String strMessage = "Error in DownloadTemplateController";
+				logger.error(strMessage + ' ' + e);
 				responseHeaders.set("Content-Type", "text/plain");
 				InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(strMessage.getBytes()));
 				return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		
 		}
 		else {
@@ -103,6 +81,7 @@ public class DownloadTemplateController {
 			return new ResponseEntity<InputStreamResource>(isr, responseHeaders, HttpStatus.BAD_REQUEST);
 		}
 	}
+
 	public AppConfig getAppConfig() {
 		return appConfig;
 	}
