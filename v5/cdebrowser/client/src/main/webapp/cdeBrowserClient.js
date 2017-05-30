@@ -14,7 +14,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchderivedDEHOLD = "";
     $scope.valueMeaningHash = "";
     var delimiter = ":::";
-
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
     // change in requirement makes only the count relavent //
     $scope.rslt = [];
@@ -66,6 +65,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (data) {
             fs.serverData = $scope.contextListMaster;
             fs.searchFilter.programArea = 0;
+   
+
         };
     });
 
@@ -183,13 +184,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // When a context is changed, get classifications and protocol forms //
-    $scope.contextSearch = function(contextId) {
-        
+    $scope.contextSearch = function(contextId, isURLSearch) {
+        $scope.classificationProtocolsLoaded = 0;
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
         fs.resetClassificationAndProtocol();
         if (contextId) { // only run if context id has not been reset //
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+            if (isURLSearch) {
+                $scope.classificationProtocolsLoaded = 1;
+            };
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
 
@@ -219,10 +223,17 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
 
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+                console.log(response)
+                console.log(contextId)
+            if (isURLSearch) {
+                $scope.classificationProtocolsLoaded = 2;
+            };
             groupFactory1.fillClassifications(response);
+            console.log(contextId)
             if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
                var finalID = '';
                 if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
+                    console.log(contextId.selectedNode.idSeq, contextId.selectedNode.parentId)
                     $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
                     var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
                     if (fName.length==0) {
@@ -1349,9 +1360,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // downloads template for protocol form //
     $scope.downloadTemplate = function() {
-        $scope.downloadFactory.downloadTemplate(fs.searchFilter.protocol.formIdSeq)
+        $scope.downloadFactory.downloadTemplate(fs.searchFilter.protocol.rdIdseq)
     };
-    
+
     // log the user out //
     $scope.logout = function() {
         $scope.authenticationService.logout();
