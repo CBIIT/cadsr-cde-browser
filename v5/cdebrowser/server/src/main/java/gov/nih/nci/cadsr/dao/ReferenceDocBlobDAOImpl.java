@@ -33,12 +33,19 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 
     private JdbcTemplate jdbcTemplate;
     
-	protected static final String sqlRetrieveReferenceDocBlobByAcIdseq = 
+	protected static final String sqlRetrieveReferenceDocBlobByRdIdseq = 
 		"select rb.RD_IDSEQ, rb.NAME DOC_NAME, rb.MIME_TYPE, rb.BLOB_CONTENT DOC_CONTENT from "
-			+ "REFERENCE_BLOBS rb where rb.RD_IDSEQ = ? "
-			+ "and rb.BLOB_CONTENT is not NULL";
+			+ "sbr.REFERENCE_BLOBS rb where rb.RD_IDSEQ = ? "
+			+ "and rb.BLOB_CONTENT is not NULL order by rb.DATE_CREATED desc";
+	
+	protected static final String sqlDownloadBlobIdseqByAcIdseq = 
+			"select rb.RD_IDSEQ from "
+				+ "sbr.REFERENCE_BLOBS rb where rb.RD_IDSEQ = ? "
+				+ "and rb.BLOB_CONTENT is not NULL";
+	
 	protected static final String sqlRetrieveLatestRdIdseqByAcIdseq = 
 		"SELECT rd_idseq FROM sbr.reference_documents WHERE ac_idseq = ? order by display_order desc";
+
 	ReferenceDocBlobDAO referenceDocBlobDAO;
 	@Autowired
 	ReferenceDocBlobDAOImpl(DataSource dataSource) {
@@ -53,24 +60,90 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 	 */
 	protected ReferenceDocBlobDAOImpl(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
-	}	
+	}
 	
 	/* (non-Javadoc)
-	 * @see gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO#getReferenceDocBlobByAcIdseq(java.lang.String)
+	 * @see gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO#retrieveReferenceDocBlobByRdIdseq(java.lang.String)
 	 */
 	@Override
-	public ReferenceDocBlobModel getReferenceDocBlobByAcIdseq(String acIdseq) {
-		String rdIdseq = getLatestRdIdseqByAcIdseq(acIdseq);
+	public ReferenceDocBlobModel retrieveReferenceDocBlobByRdIdseq(String rdIdseq) {
+		logger.debug("retrieveReferenceDocBlobByRdIdseq by rdIdseq: " + rdIdseq);
 		if (StringUtils.isNotBlank(rdIdseq)) {
-			logger.debug("Found rd_idseq by ac_idseq: " + acIdseq + ", rdIdseq: " + rdIdseq);
 			try {
-				logger.debug(sqlRetrieveReferenceDocBlobByAcIdseq.replace("?", rdIdseq) + " <<<<<<<");
-				ReferenceDocBlobModel referenceDocBlobModel = jdbcTemplate.queryForObject(sqlRetrieveReferenceDocBlobByAcIdseq,
+				logger.debug(sqlRetrieveReferenceDocBlobByRdIdseq.replace("?", rdIdseq) + " <<<<<<<");
+				ReferenceDocBlobModel referenceDocBlobModel = jdbcTemplate.queryForObject(sqlRetrieveReferenceDocBlobByRdIdseq,
 				new Object[] {rdIdseq}, MAPPER_ReferenceDocBlobModel);
 				return referenceDocBlobModel;
 			}
 			catch (EmptyResultDataAccessException e) {
-				logger.info("getReferenceDocBlobByAcIdseq Reference Document Context is not found by rdIdseq: " + rdIdseq);
+				logger.info("retrieveReferenceDocBlobByRdIdseq Reference Document Context is not found by rdIdseq: " + rdIdseq);
+			}
+		}
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO#existReferenceDocBlobByAcIdseq(java.lang.String)
+	 */
+	@Override
+	public String retrieveDownloadBlobIdseqByAcIdseq(String acIdseq) {
+		logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
+		String rdIdseq = retrieveLatestRdIdseqByAcIdseq(acIdseq);
+		String downloadIdseq = null;
+		if (StringUtils.isNotBlank(rdIdseq)) {//check that this rdIdseq has any BLOBs
+			try {
+				logger.debug(sqlDownloadBlobIdseqByAcIdseq.replace("?", rdIdseq) + " <<<<<<<");
+				List<String> rdIdseqList = jdbcTemplate.query(
+						sqlDownloadBlobIdseqByAcIdseq,
+					new Object[] {rdIdseq}, new StringPropertyMapper(String.class));
+				if ((rdIdseqList != null) && (rdIdseqList.size() > 0)) {
+					downloadIdseq = rdIdseqList.get(0);
+				}
+			}
+			catch (EmptyResultDataAccessException e) {
+					logger.info("retrieveDownloadBlobIdseqByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq + ", and rdIdseq: " + rdIdseq);
+			}
+		}
+		return downloadIdseq;
+	}
+	
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO#retrieveLatestRdIdseqByAcIdseq(java.lang.String)
+	 */
+	@Override
+	public String retrieveLatestRdIdseqByAcIdseq(String acIdseq) {
+		logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
+		String referenceDocModelId = null;
+		try {
+			List<String> rdIdSeqList = jdbcTemplate.query(
+					sqlRetrieveLatestRdIdseqByAcIdseq,
+				new Object[] {acIdseq}, new StringPropertyMapper(String.class));
+			if ((rdIdSeqList != null) && (rdIdSeqList.size() > 0)) {
+				return rdIdSeqList.get(0);
+			}
+		}
+		catch (EmptyResultDataAccessException e) {
+				logger.info("retrieveLatestRdIdseqByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq);
+		}
+		return referenceDocModelId;
+	}
+	
+	//This method is not used
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO#retrieveReferenceDocBlobByAcIdseq(java.lang.String)
+	 */
+	@Override
+	public ReferenceDocBlobModel retrieveReferenceDocBlobByAcIdseq(String acIdseq) {
+		String rdIdseq = retrieveLatestRdIdseqByAcIdseq(acIdseq);
+		if (StringUtils.isNotBlank(rdIdseq)) {
+			logger.debug("Found rd_idseq by ac_idseq: " + acIdseq + ", rdIdseq: " + rdIdseq);
+			try {
+				logger.debug(sqlRetrieveReferenceDocBlobByRdIdseq.replace("?", rdIdseq) + " <<<<<<<");
+				ReferenceDocBlobModel referenceDocBlobModel = jdbcTemplate.queryForObject(sqlRetrieveReferenceDocBlobByRdIdseq,
+				new Object[] {rdIdseq}, MAPPER_ReferenceDocBlobModel);
+				return referenceDocBlobModel;
+			}
+			catch (EmptyResultDataAccessException e) {
+				logger.info("retrieveReferenceDocBlobByAcIdseq Reference Document Context is not found by rdIdseq: " + rdIdseq);
 			}
 		}
 		else {
@@ -79,24 +152,6 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 		return null;
 	}
 
-	@Override
-	public String getLatestRdIdseqByAcIdseq(String acIdseq) {
-		logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
-		String referenceDocModelId = null;
-		try {
-			List<String> rdIdSeqList = jdbcTemplate.query(
-        		sqlRetrieveLatestRdIdseqByAcIdseq,
-				new Object[] {acIdseq}, new StringPropertyMapper(String.class));
-			if ((rdIdSeqList != null) && (rdIdSeqList.size() > 0)) {
-				return rdIdSeqList.get(0);
-			}
-		}
-		catch (EmptyResultDataAccessException e) {
-				logger.info("getReferenceDocBlobByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq);
-		}
-		return referenceDocModelId;
-	}
-	
 	protected static final RowMapper<ReferenceDocBlobModel> MAPPER_ReferenceDocBlobModel =
 			(rs, i) -> new ReferenceDocBlobModel
 		(rs.getString("RD_IDSEQ"),
@@ -113,5 +168,6 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 			return rs.getString(1);
 		}
 	}
+
 
 }
