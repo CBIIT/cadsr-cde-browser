@@ -583,7 +583,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 return nameWhere;
             }
         }
-        return " AND de.de_idseq IN " + docWhere;
+        if (StringUtils.isNotBlank(docWhere))
+        	return " AND de.de_idseq IN " + docWhere;
+        else {
+        	logger.error("buildSearchTextWhere error on invalid searchDomain input");
+        	return "";
+        }
     }
 
 

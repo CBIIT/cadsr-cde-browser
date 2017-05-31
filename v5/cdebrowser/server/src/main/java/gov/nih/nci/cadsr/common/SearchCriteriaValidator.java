@@ -36,13 +36,21 @@ public class SearchCriteriaValidator implements Validator {
     public void validate(Object target, Errors errors) {
     	SearchCriteria searchCriteria = (SearchCriteria) target;
     	String curr;
+        if ((StringUtils.isNotBlank(curr = searchCriteria.getFilteredinput())) && (curr.contains("'"))) {
+            logger.warn("Error Validate! SearchCriteria filteredinput malformed: " + curr);
+            errors.reject("Filteredinput:" + curr + ".malformed");
+        }
+        if ((StringUtils.isNotBlank(curr = searchCriteria.getVdTypeFlag())) && (! StringUtils.isNumeric(curr))) {
+            logger.warn("Error Validate! SearchCriteria vdTypeFlag malformed: " + curr);
+            errors.reject("VdTypeFlag:" + curr +".malformed");
+        }
         if ((StringUtils.isNotBlank(curr = searchCriteria.getPublicId())) && (! ParameterValidator.validatePublicIdWIthStar(curr))) {
-            logger.warn("Error Validate! SearchCriteria PublicId malformed: " + searchCriteria.getConceptInput());
-            errors.reject("PublicId:"+searchCriteria.getPublicId()+".malformed");
+            logger.warn("Error Validate! SearchCriteria PublicId malformed: " + curr);
+            errors.reject("PublicId:" + curr + ".malformed");
         }
         if ((StringUtils.isNotBlank(curr = searchCriteria.getClassification())) && (! ParameterValidator.validateIdSeq(curr))) {
             logger.warn("Error Validate! SearchCriteria Classification malformed: " + curr);
-            errors.reject("Classification:"+curr+".malformed");
+            errors.reject("Classification:" + curr + ".malformed");
         }
         if ((StringUtils.isNotBlank(curr = searchCriteria.getCsCsiIdSeq())) && (! ParameterValidator.validateIdSeq(curr))) {
             logger.warn("Error Validate! SearchCriteria CsCsiIdSeq malformed: " + curr);
