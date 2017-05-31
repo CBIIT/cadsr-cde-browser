@@ -6,7 +6,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.dataElementVariables = {selectedQueryType:"2",basicSearchQuery:"",searchDEC:"",searchPV:"",searchPVQueryType:"0",searchVD:"",searchVDTQueryType:"2", searchFieldOptions:{options:["ALL Fields"]}, conceptInput:"", conceptQueryType:"0",
         searchAltName:"", searchAltNameType:[], searchVersions:"0", publicSearchVersions:"0", searchContextUse:"2", searchObjectClass:"", searchProperty:"", derivedDE:"false"}
 
-    this.searchFilter = {};
+    this.searchFilter = {programArea:0};
     this.isAChildNodeSearch = false;
     this.isLeftTreeClick = false; // temporarily set to true when left nav is hit so the watch function doesn't search //
     this.classifications = []; // classification array for context //
@@ -140,6 +140,46 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         };
         return breadcrumbs
     };  
+
+    // sets search filter variables based on url parameters //
+    this.setVariablesFromURLParameters = function(parameters) {
+        var keys = Object.keys(parameters);
+
+        if (keys.indexOf('programArea') > -1) {
+            this.searchFilter.programArea = parseInt(parameters.programArea);
+        };
+
+        if (keys.indexOf('contextId') > -1) {
+            this.searchFilter.context = parameters.contextId;
+        };    
+
+        if (keys.indexOf('classificationSchemeId') > -1) {
+            this.searchFilter.classification = this.selectClassificationById(parameters.classificationSchemeId);
+        };  
+
+        if (keys.indexOf('classificationSchemeItemId') > -1) {
+            this.searchFilter.classification = this.selectClassificationById(parameters.classificationSchemeItemId);
+        };  
+    };
+
+    // gets actual context object using id. useful for parameters //
+    this.selectContextNodeById = function(id) {
+        var contexts = this.serverData[this.searchFilter.programArea].children;
+        for (var x = 0; x < contexts.length; x++) {
+            if (contexts[x].idSeq == id) {
+                return contexts[x];
+            };
+        };
+    };
+
+    // gets actual classification object using id. useful for parameters //
+    this.selectClassificationById = function(id) {
+        for (var x = 0; x < this.classifications.length; x++) {
+          if (id == this.classifications[x].id) {
+            return this.classifications[x];
+          };
+        };     
+    };
 
 
 });
