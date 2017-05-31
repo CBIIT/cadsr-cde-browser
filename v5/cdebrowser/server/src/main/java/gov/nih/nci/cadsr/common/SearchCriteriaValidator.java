@@ -36,10 +36,6 @@ public class SearchCriteriaValidator implements Validator {
     public void validate(Object target, Errors errors) {
     	SearchCriteria searchCriteria = (SearchCriteria) target;
     	String curr;
-        if ((StringUtils.isNotBlank(curr = searchCriteria.getConceptInput())) && (! StringUtils.isAlphanumeric(StringReplace.strReplace(curr, "*", "")))) {
-            logger.warn("Error Validate! SearchCriteria ConceptInput malformed: " + searchCriteria.getConceptInput());
-            errors.reject("ConceptInput:"+searchCriteria.getConceptInput()+".malformed");
-        }
         if ((StringUtils.isNotBlank(curr = searchCriteria.getPublicId())) && (! ParameterValidator.validatePublicIdWIthStar(curr))) {
             logger.warn("Error Validate! SearchCriteria PublicId malformed: " + searchCriteria.getConceptInput());
             errors.reject("PublicId:"+searchCriteria.getPublicId()+".malformed");
