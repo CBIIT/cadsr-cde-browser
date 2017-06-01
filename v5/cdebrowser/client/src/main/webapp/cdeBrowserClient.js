@@ -14,6 +14,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchderivedDEHOLD = "";
     $scope.valueMeaningHash = "";
     var delimiter = ":::";
+    window.filter = $filter;
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
     // change in requirement makes only the count relavent //
     $scope.rslt = [];
@@ -65,7 +66,34 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (data) {
             fs.serverData = $scope.contextListMaster;
             fs.searchFilter.programArea = 0;
-   
+                $scope.$watch('navTree', function() {
+                    var obj = $location.search();
+                    var keys = Object.keys(obj);
+
+                    if (keys.length) {
+                        if (keys.indexOf('contextId')>-1) { // get context object and do context search to get classifications and protocol lists // 
+                            contextObject = fs.selectContextNodeById(obj.contextId);
+                            $scope.contextSearch(contextObject, true);
+                            $scope.$watch('classificationProtocolsLoaded', function() { // wait for data to load //
+                                if ($scope.classificationProtocolsLoaded==2) {
+                                    fs.setVariablesFromURLParameters($location.search());
+                                    if (keys.indexOf('classificationSchemeItemId')>-1) {
+                                        window.gf = groupFactory1;
+                                        var selectedItem = $filter('filter')(fs.myclassifications,{csCsiIdSeq:obj.classificationSchemeItemId});
+                                        window.si = selectedItem;
+                                        var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
+                                        classifications.pop();
+                                        $scope.fs.classifications = classifications;
+                                        $scope.fs.searchFilter.classification = $scope.fs.classifications[0];
+                                    };
+                                $scope.search();
+
+                                };
+
+                            });
+                        };
+                    };
+                });     
 
         };
     });
@@ -186,9 +214,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId, isURLSearch) {
         $scope.classificationProtocolsLoaded = 0;
+        // if ($scope.filterService.searchFilter.classification) {
+        //     var tempClassification = $scope.filterService.searchFilter.classification;
+        // };
         $scope.filterService.searchFilter.classification = "";
         $scope.filterService.searchFilter.protocol = "";
         fs.resetClassificationAndProtocol();
+        // if (!contextId.idSeq) { contextId.idSeq = tempClassification.contextIdSeq };
         if (contextId) { // only run if context id has not been reset //
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
             if (isURLSearch) {
@@ -223,17 +255,16 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         });
 
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-                console.log(response)
-                console.log(contextId)
             if (isURLSearch) {
                 $scope.classificationProtocolsLoaded = 2;
             };
             groupFactory1.fillClassifications(response);
-            console.log(contextId)
             if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
+                // if (!contextId.selectedNode.parentId) { contextId.selectedNode.parentId=tempClassification.csIdSeq } 
+                    // console.log(contextId.selectedNode.parentId, 'this is the tempClassification->',tempClassification)
                var finalID = '';
+
                 if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
-                    console.log(contextId.selectedNode.idSeq, contextId.selectedNode.parentId)
                     $scope.filterService.classifications = groupFactory1.load(contextId.selectedNode.parentId);
                     var fName = $filter('filter')($scope.filterService.classifications,{csCsiIdSeq:contextId.selectedNode.idSeq})
                     if (fName.length==0) {
@@ -548,7 +579,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, publicSearchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
         if ($scope.fs.searchFilter.context&&$scope.fs.searchFilter.context!='') {
-            console.log("CLICKED SEARCH")
             $scope.disp();
         };
         $scope.onClickTab($scope.fs.searchFilter.programArea);
@@ -1172,10 +1202,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $http.get(restService).success(function (response) {
             for( var i = 0; i < response.length; i++)
             {
-            	if( response[i].toolName =="caDSR" )
+                if( response[i].toolName =="caDSR" )
                 {
                     $scope.hhsWarningMsg = response[i].value;
-                }            	
+                }               
             }
         });
     };    
@@ -1617,37 +1647,47 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     "/?contextId=" + parameters[1] +
                     "&programArea=" + parameters[2] +
                     "&folderType=" + parameters[3]).success(function (response) {
-                    console.log("completed")
                     selNode['children'] = response[0]['children'];
-                    // selNode['dataLoaded'] = true;
-                    // var children = selNode['children'];
 
-                    // for (var i=0; i<children.length; i++) {
-                    //   var pid = children[i].href.split(',')[1];
-                    //   var grandChildren = children[i].children;
-                    //   children[i]['parentId']=pid; // classification or protocol //
-                    //   children[i]['contextId']=parameters[1]; // classification or protocol //
-                    //   for (var child=0; child<grandChildren.length; child++) {
-                    //     var gpid = grandChildren[child].href.split(',')[1]
-                    //     grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
-                    //     grandChildren[child]['parentId']=gpid; // classification scheme item //
-                    //     var greatGrandChildren = grandChildren[child].children;
-                    //     for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
-                    //         var ggpid = greatGrandChildren[g_child].href.split(',')[1]
-                    //         if (grandChildren[child].isChildOfContainer) {
-                    //             ggpid = grandChildren[child].idSeq;
-                    //         };
 
-                    //         greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
-                    //         greatGrandChildren[g_child]['parentId']=ggpid; // classification scheme item child //
-                    //         var great_greatGrandChildren = greatGrandChildren[g_child].children;
-                    //         for (var g_g_child=0; g_g_child<great_greatGrandChildren.length; g_g_child++) {
-                    //             great_greatGrandChildren[g_g_child]['contextId']=parameters[1];
-                    //             great_greatGrandChildren[g_g_child]['parentId']=ggpid;
-                    //         };                              
-                    //     };
-                    //   };
-                    // };
+
+
+                    selNode['dataLoaded'] = true;
+                    var children = selNode['children'];
+
+                    for (var i=0; i<children.length; i++) {
+                      var pid = children[i].href.split(',')[1];
+                      var grandChildren = children[i].children;
+                      children[i]['parentId']=pid; // classification or protocol //
+                      children[i]['contextId']=parameters[1]; // classification or protocol //
+                      for (var child=0; child<grandChildren.length; child++) {
+                        // var gpid = grandChildren[child].href.split(',')[1]
+                        var gpid = pid;
+                        grandChildren[child]['contextId']=parameters[1]; // classification scheme item //
+                        grandChildren[child]['parentId']=gpid; // classification scheme item //
+                        var greatGrandChildren = grandChildren[child].children;
+                        for (var g_child=0; g_child<greatGrandChildren.length; g_child++) { 
+                            // var ggpid = greatGrandChildren[g_child].href.split(',')[1]
+                            var ggpid = pid;
+                            if (grandChildren[child].isChildOfContainer) {
+                                ggpid = grandChildren[child].idSeq;
+                            };
+
+                            greatGrandChildren[g_child]['contextId']=parameters[1]; // classification scheme item child //
+                            greatGrandChildren[g_child]['parentId']=ggpid; // classification scheme item child //
+                            var great_greatGrandChildren = greatGrandChildren[g_child].children;
+                            for (var g_g_child=0; g_g_child<great_greatGrandChildren.length; g_g_child++) {
+                                great_greatGrandChildren[g_g_child]['contextId']=parameters[1];
+                                great_greatGrandChildren[g_g_child]['parentId']=ggpid;
+                            };                              
+                        };
+                      };
+                    };
+
+
+
+
+
                     $scope.matchClassificationOrProtocol(type,context); // match classificiation or protocol //
 
                 });
@@ -1659,7 +1699,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         // open current node's folder //
         if (selNode.isParent == 1) {
-            console.log("TEST here")
             $timeout(function () {
                 selNode.collapsed = false;
             });
