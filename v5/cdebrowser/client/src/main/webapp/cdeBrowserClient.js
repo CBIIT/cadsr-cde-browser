@@ -13,6 +13,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchPropertyHOLD = "";
     $scope.searchderivedDEHOLD = "";
     $scope.valueMeaningHash = "";
+    var searchedByURL = false;
     var delimiter = ":::";
     window.filter = $filter;
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
@@ -66,33 +67,33 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         if (data) {
             fs.serverData = $scope.contextListMaster;
             fs.searchFilter.programArea = 0;
-                $scope.$watch('navTree', function() {
-                    var obj = $location.search();
-                    var keys = Object.keys(obj);
+                $scope.$watch('navTree', function() { // wait until navtree is loaded //
+                    if (!searchedByURL) { // only run this once when bookmarked url is loaded //
+                        var obj = $location.search(); // get url parameters //
+                        var keys = Object.keys(obj); // create array of keys //
 
-                    if (keys.length) {
-                        if (keys.indexOf('contextId')>-1) { // get context object and do context search to get classifications and protocol lists // 
-                            contextObject = fs.selectContextNodeById(obj.contextId);
-                            $scope.contextSearch(contextObject, true);
-                            $scope.$watch('classificationProtocolsLoaded', function() { // wait for data to load //
-                                if ($scope.classificationProtocolsLoaded==2) {
-                                    fs.setVariablesFromURLParameters($location.search());
-                                    if (keys.indexOf('classificationSchemeItemId')>-1) {
-                                        window.gf = groupFactory1;
-                                        var selectedItem = $filter('filter')(fs.myclassifications,{csCsiIdSeq:obj.classificationSchemeItemId});
-                                        window.si = selectedItem;
-                                        var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
-                                        classifications.pop();
-                                        $scope.fs.classifications = classifications;
-                                        $scope.fs.searchFilter.classification = $scope.fs.classifications[0];
+                        if (keys.length) {
+                            if (keys.indexOf('contextId')>-1) { // get context object and do context search to get classifications and protocol lists // 
+                                contextObject = fs.selectContextNodeById(obj.contextId);
+                                $scope.contextSearch(contextObject, true); //load classifications and protocols //
+                                $scope.$watch('classificationProtocolsLoaded', function() { // wait for data to load //
+                                    if ($scope.classificationProtocolsLoaded==2) {
+                                        fs.setVariablesFromURLParameters($location.search());
+                                        if (keys.indexOf('classificationSchemeItemId')>-1) {
+                                            var selectedItem = $filter('filter')(fs.myclassifications,{csCsiIdSeq:obj.classificationSchemeItemId});
+                                            var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
+                                            classifications.pop();
+                                            $scope.fs.classifications = classifications;
+                                            $scope.fs.searchFilter.classification = $scope.fs.classifications[0];
+                                        };
+                                    $scope.search();
                                     };
-                                $scope.search();
 
-                                };
-
-                            });
-                        };
+                                });
+                            };
+                        };                        
                     };
+                    searchedByURL = true;
                 });     
 
         };
