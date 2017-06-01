@@ -123,4 +123,19 @@ public class TypeaheadSearchController {
 		//logger.debug("Response from retrieveTypeaheadSearchProperty: " + resList);
 		return resList;
 	}
+	//CDEBROWSER-506 AC 4: (Advanced Search) Add type ahead to the Alternate Name Field
+	@RequestMapping(value="/thdesignation", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchDesignation(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
+	{
+		//logger.debug("Received request retrieveTypeaheadSearchDesignation searchCriteria: " + searchCriteria);
+		List<String> resList;
+        if (bindingResult.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors());
+        	return new ArrayList<>();
+        }
+		resList = typeaheadSearchDAO.buildSearchTypeaheadDesignation(searchCriteria, null);
+		//logger.debug("Response from retrieveTypeaheadSearchDesignation: " + resList);
+		return resList;
+	}
 }

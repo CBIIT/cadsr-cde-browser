@@ -148,14 +148,14 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 	}
 	//Add generation Workflow status excluded for Prepare Statement
 	/**
-	 * The parameter list is never empty, contains at least RETIRED_DELETED.
+	 * The parameter placeholdersAmount shall be more than 0.
 	 * 
-	 * @param workflowStatusExcludedList List<String>
-	 * @return String "?, ?, ...?"
+	 * @param int placeholdersAmount more than 0
+	 * @return String "?, ?, ...?" or "" if placeholdersAmount less than 1
 	 */
-	protected static String generateWorkflowPalceholder(int workflowStatusExcludedAmount) {
+	protected static String generateSqlPlaceholders(int placeholdersAmount) {
 		StringBuilder sb  = new StringBuilder();
-		for (int i = 0; i <  workflowStatusExcludedAmount; i++) {
+		for (int i = 0; i <  placeholdersAmount; i++) {
 			sb.append("?, ");
 		}
 		String res = sb.toString();
@@ -189,7 +189,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 			res = buildAlldDomainSql(searchPreferencesServer);
 		}
 		else {
-			String placeholders = generateWorkflowPalceholder(workflowStatusExcludedAmount);
+			String placeholders = generateSqlPlaceholders(workflowStatusExcludedAmount);
 			for (String curr : searchDomain) {
 				if (curr != null) {
 					String sqlCurr = filterInputSqls.get(curr);
@@ -228,7 +228,7 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		String fornmattedExcludes = String.format(sqlRetrieve_END, excludeContext);
 		StringBuilder sb = new StringBuilder();
 		StringBuilder sbUnion = new StringBuilder();
-		String placeholders = generateWorkflowPalceholder(workflowStatusExcludedAmount);
+		String placeholders = generateSqlPlaceholders(workflowStatusExcludedAmount);
 		//we have 5 groups here
 		sbUnion.append(sqlRetrieveLongName);
 		sbUnion.append(placeholders);
@@ -345,10 +345,54 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 			+ "FROM  sbrext.properties_ext tg WHERE tg.ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(tg.long_name), UPPER(?), 1) > 0 order by th) "
 			+ "where rownum < " + maxLongNamesToReturn;
 	@Override
-	public List<String> buildSearchTypeaheadProperty(SearchCriteria searchCriteria,
-			SearchPreferencesServer searchPreferencesServer) {
+	public List<String> buildSearchTypeaheadProperty(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer) {
 		String searchPattern = searchCriteria.getProperty();
 		return buildSearchTypeaheadEntity(sqlRetrievePropertyLongName, searchPattern);
 	}
+	////////
+	//CDEBROWSER-506 AC 4: (Advanced Search) Add type ahead to the Alternate Name Field
+	protected static final String sqlRetrieveDesignationName = "select th from (SELECT distinct lower(tg.name) th "
+			+ "FROM  sbr.designations tg WHERE instr(UPPER(tg.name), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	protected static final String sqlRetrieveDesignationWithTypeBegin = "select th from (SELECT distinct lower(tg.name) th "
+			+ "FROM  sbr.designations tg WHERE instr(UPPER(tg.name), UPPER(?), 1) > 0 ";
+	protected static final String sqlRetrieveDesignationWithTypeEnd = "order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	@Override
+	public List<String> buildSearchTypeaheadDesignation(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer) {
+		String searchPattern = searchCriteria.getAltName();
+		String altNameTypesStr = searchCriteria.getAltNameType();
+		if (altNameTypesStr != null) {//pre-processing just one part of SearchCriteria
+			if (altNameTypesStr.contains(SearchCriteria.ALL_ALTNAME_TYPES)) {
+				altNameTypesStr = "ALL";
+			}
+		}
+		String[] altNameTypes = StringUtilities.buildArrayFromParameter(altNameTypesStr);
+		if (altNameTypes == null || StringUtilities.containsKeyLoop(altNameTypes, "ALL")) {
+			//logger.debug("No ALtNameTypes: " + sqlRetrieveDesignationName + " " + searchPattern);
+			return buildSearchTypeaheadEntity(sqlRetrieveDesignationName, searchPattern);
+		}
+		else if (StringUtils.isNotBlank(searchPattern)) {
+			String resultSql = sqlRetrieveDesignationWithTypeBegin + generateAltNameTypeSqlPlaceholders(altNameTypes.length) + sqlRetrieveDesignationWithTypeEnd;
+			//logger.debug("With AltNameTypes: " +  resultSql + ", searchPattern: " + searchPattern + ", altNameTypesStr: " + altNameTypesStr);
+			String[] sqlParamsArr = new String[altNameTypes.length + 1];
+			sqlParamsArr[0] = searchPattern;
+			System.arraycopy(altNameTypes, 0, sqlParamsArr, 1, altNameTypes.length);
+			return buildSearchTypeaheadEntity(resultSql, sqlParamsArr);
+		}
+		else {
+			return new ArrayList<>();
+		}
+	}
+	/**
+	 * 
+	 * @param int amount of placeholders shall be more than 0
+	 * @return String
+	 */
 	
+	protected String generateAltNameTypeSqlPlaceholders(int amount) {
+		StringBuilder sb = new StringBuilder("AND tg.detl_name IN (");
+		sb.append(generateSqlPlaceholders(amount)).append(") ");
+		return sb.toString();
+	}
 }

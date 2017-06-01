@@ -20,4 +20,5 @@ public interface TypeaheadSearchDAO {
 	List<String> buildSearchTypeaheadPermissibleValue(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 	List<String> buildSearchTypeaheadObjectClass(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 	List<String> buildSearchTypeaheadProperty(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
+	List<String> buildSearchTypeaheadDesignation(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 }
