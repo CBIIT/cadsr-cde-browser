@@ -9,7 +9,7 @@
                        id="advancedSearchDEC" name="searchDEC"
                        ng-model="fs.dataElementVariables.searchDEC"/> -->
 
-            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" data-ng-model="fs.dataElementVariables.searchDEC" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept Long Name" uib-typeahead="result for result in typeAhead('dec',$viewValue, 'dataElementConcept')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />    
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchDECInput" type="text" data-ng-model="fs.dataElementVariables.searchDEC" ng-keyup="searchKey(e=$event)" placeholder="Data Element Concept Long Name" uib-typeahead="result for result in typeAhead('thdec',$viewValue, 'dataElementConcept')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />    
 
             </div>
 

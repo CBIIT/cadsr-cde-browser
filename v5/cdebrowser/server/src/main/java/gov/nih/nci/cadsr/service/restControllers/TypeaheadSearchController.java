@@ -47,7 +47,7 @@ public class TypeaheadSearchController {
 	}
 	
 	//CDEBROWSER-506 AC 1: (Advanced Search) Add type ahead to the DEC Field
-	@RequestMapping(value="/dec", produces = "application/json")
+	@RequestMapping(value="/thdec", produces = "application/json")
 	public List<String> retrieveTypeaheadSearchDEC(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
 	{
 		//logger.debug("Received request retrieveTypeaheadSearchDEC searchCriteria: " + searchCriteria);
@@ -59,6 +59,68 @@ public class TypeaheadSearchController {
         }
 		resList = typeaheadSearchDAO.buildSearchTypeaheadDec(searchCriteria, null);
 		//logger.debug("Response from retrieveTypeaheadSearchDEC: " + resList);
+		return resList;
+	}
+	
+	//CDEBROWSER-506 AC 2: (Advanced Search) Add type ahead to the VD Field
+	@RequestMapping(value="/thvaluedomain", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchValueDomain(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
+	{
+		//logger.debug("Received request retrieveTypeaheadSearchValueDomain searchCriteria: " + searchCriteria);
+		List<String> resList;
+        if (bindingResult.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors());
+        	return new ArrayList<>();
+        }
+		resList = typeaheadSearchDAO.buildSearchTypeaheadValueDomain(searchCriteria, null);
+		//logger.debug("Response from retrieveTypeaheadSearchValueDomain: " + resList);
+		return resList;
+	}
+	//CDEBROWSER-506 AC 3: (Advanced Search) Add type ahead to the PV (name) Field
+	@RequestMapping(value="/thpermissiblevalue", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchPermissibleValue(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
+	{
+		//logger.debug("Received request retrieveTypeaheadSearchPermissibleValue searchCriteria: " + searchCriteria);
+		List<String> resList;
+        if (bindingResult.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors());
+        	return new ArrayList<>();
+        }
+		resList = typeaheadSearchDAO.buildSearchTypeaheadPermissibleValue(searchCriteria, null);
+		//logger.debug("Response from retrieveTypeaheadSearchPermissibleValue: " + resList);
+		return resList;
+	}
+	
+	//CDEBROWSER-506 AC 5: (Advanced Search) Add type ahead to the OC Field
+	@RequestMapping(value="/thobjectclass", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchObjectClass(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
+	{
+		//logger.debug("Received request buildSearchTypeaheadObjectClass searchCriteria: " + searchCriteria);
+		List<String> resList;
+        if (bindingResult.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors());
+        	return new ArrayList<>();
+        }
+		resList = typeaheadSearchDAO.buildSearchTypeaheadObjectClass(searchCriteria, null);
+		//logger.debug("Response from buildSearchTypeaheadObjectClass: " + resList);
+		return resList;
+	}
+	//CDEBROWSER-506 AC 6: (Advanced Search) Add type ahead to the Property Field
+	@RequestMapping(value="/thproperty", produces = "application/json")
+	public List<String> retrieveTypeaheadSearchProperty(@ModelAttribute SearchCriteria searchCriteria, BindingResult bindingResult, HttpSession httpSession)
+	{
+		//logger.debug("Received request retrieveTypeaheadSearchProperty searchCriteria: " + searchCriteria);
+		List<String> resList;
+        if (bindingResult.hasErrors())
+        {
+        	logger.error("Error in binding search criteria to the SearchCriteria bean." + bindingResult.getErrorCount() + bindingResult.getAllErrors());
+        	return new ArrayList<>();
+        }
+		resList = typeaheadSearchDAO.buildSearchTypeaheadProperty(searchCriteria, null);
+		//logger.debug("Response from retrieveTypeaheadSearchProperty: " + resList);
 		return resList;
 	}
 }

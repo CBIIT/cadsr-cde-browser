@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -89,6 +90,24 @@ public class ValueDomainDAOImplTest {
 		valueDomainModelToReturn.setVdIdseq("AA557316-F69A-05DB-E040-BB89AD436C28");
 		
 		Mockito.when(acRegistrationsDAO.getAcRegistrationByAcIdseq(Mockito.eq("AA557316-F69A-05DB-E040-BB89AD436C28"))).thenReturn(vdRegistrationsModel);
+		Mockito.when(jdbcTemplateMock.queryForObject(Mockito.anyString(), Mockito.eq(new Object[]{"AA557316-F69A-05DB-E040-BB89AD436C28"}),any(RowMapper.class))).thenReturn(valueDomainModelToReturn);
+		//MUT
+		ValueDomainModel valueDomainModelReceived = valueDomainDAO.getValueDomainByIdseq("AA557316-F69A-05DB-E040-BB89AD436C28");
+		Mockito.verify(jdbcTemplateMock).queryForObject(Mockito.anyString(), Mockito.eq(new Object[]{"AA557316-F69A-05DB-E040-BB89AD436C28"}),any(RowMapper.class));
+		assertEquals(valueDomainModelExpected, valueDomainModelReceived);
+		
+	}
+	@Test
+	public void testGetValueDomainByIdseqErrorVdRegStatus() {
+		ValueDomainModel valueDomainModelExpected = new ValueDomainModel();
+		valueDomainModelExpected.setVdContextName("vdContextNameTest");
+		valueDomainModelExpected.setVdIdseq("AA557316-F69A-05DB-E040-BB89AD436C28");
+		
+		ValueDomainModel valueDomainModelToReturn = new ValueDomainModel();
+		valueDomainModelToReturn.setVdContextName("vdContextNameTest");
+		valueDomainModelToReturn.setVdIdseq("AA557316-F69A-05DB-E040-BB89AD436C28");
+		
+		Mockito.when(acRegistrationsDAO.getAcRegistrationByAcIdseq(Mockito.eq("AA557316-F69A-05DB-E040-BB89AD436C28"))).thenThrow(new EmptyResultDataAccessException("test exception", 1));
 		Mockito.when(jdbcTemplateMock.queryForObject(Mockito.anyString(), Mockito.eq(new Object[]{"AA557316-F69A-05DB-E040-BB89AD436C28"}),any(RowMapper.class))).thenReturn(valueDomainModelToReturn);
 		//MUT
 		ValueDomainModel valueDomainModelReceived = valueDomainDAO.getValueDomainByIdseq("AA557316-F69A-05DB-E040-BB89AD436C28");

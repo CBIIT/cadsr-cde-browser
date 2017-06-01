@@ -9,11 +9,15 @@ import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 /**
  * This is an interface to retrieve data for Typeahead.
- * CDEBROWSER-808
+ * CDEBROWSER-808 CDEBROWSER-506
  * @author asafievan
  *
  */
 public interface TypeaheadSearchDAO {
 	List<String> buildSearchTypeaheadByNameAndDomain(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 	List<String> buildSearchTypeaheadDec(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
+	List<String> buildSearchTypeaheadValueDomain(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
+	List<String> buildSearchTypeaheadPermissibleValue(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
+	List<String> buildSearchTypeaheadObjectClass(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
+	List<String> buildSearchTypeaheadProperty(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer);
 }

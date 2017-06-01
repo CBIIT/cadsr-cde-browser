@@ -270,24 +270,85 @@ public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements Typ
 		}
 		else return CONTEXT_EXCLUDED_NONE;
 	}
+	////////
+	//CDEBROWSER-506 below
+	protected List<String> buildSearchTypeaheadEntity(String sqlForEntity, String searchPattern) {
+		List<String> nameList = null;
+		if (searchPattern != null) {
+			nameList = jdbcTemplate.query(sqlForEntity, new Object[] {searchPattern}, new StringPropertyMapper(String.class));
+		}
+		if (nameList == null) {
+			nameList = new ArrayList<>();
+		}
+		return nameList;
+	}
+	protected List<String> buildSearchTypeaheadEntity(String sqlForEntity, Object[] searchPattern) {
+		List<String> nameList = null;
+		if (searchPattern != null) {
+			nameList = jdbcTemplate.query(sqlForEntity, searchPattern, new StringPropertyMapper(String.class));
+		}
+		if (nameList == null) {
+			nameList = new ArrayList<>();
+		}
+		return nameList;
+	}
 	//CDEBROWSER-506 AC 1: (Advanced Search) Add type ahead to the DEC Field
 	protected static final String sqlRetrieveDecLongName = "select th from (SELECT distinct lower(dec.long_name) th "
-			+ "FROM sbr.data_element_concepts dec WHERE ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(dec.long_name), UPPER(?), 1) > 0 order by th) "
+			+ "FROM sbr.data_element_concepts dec WHERE dec.ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(dec.long_name), UPPER(?), 1) > 0 order by th) "
 			+ "where rownum < " + maxLongNamesToReturn;
 
 	@Override
-	public List<String> buildSearchTypeaheadDec(SearchCriteria searchCriteria,
+	public List<String> buildSearchTypeaheadDec(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer) {
+		String searchPattern = searchCriteria.getDataElementConcept();
+		return buildSearchTypeaheadEntity(sqlRetrieveDecLongName, searchPattern);
+	}
+	////////
+	//CDEBROWSER-506 AC 2: (Advanced Search) Add type ahead to the VD Field
+	protected static final String sqlRetrieveVdLongName = "select th from (SELECT distinct lower(vd.long_name) th "
+			+ "FROM sbr.value_domains vd WHERE vd.ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(vd.long_name), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	protected static final String sqlRetrieveVdLongNameWithType = "select th from (SELECT distinct lower(vd.long_name) th "
+			+ "FROM sbr.value_domains vd WHERE vd.VD_TYPE_FLAG = ? AND vd.ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(vd.long_name), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	@Override
+	public List<String> buildSearchTypeaheadValueDomain(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer) {
+		String searchPattern = searchCriteria.getValueDomain();
+		String vdTypeFlag = searchCriteria.getVdTypeFlag();
+		if ((StringUtils.isNotBlank(searchPattern)) && (StringUtils.isNotBlank(vdTypeFlag))) {
+			return buildSearchTypeaheadEntity(sqlRetrieveVdLongNameWithType, new Object[]{vdTypeFlag, searchPattern});
+		}
+		return buildSearchTypeaheadEntity(sqlRetrieveVdLongName, searchPattern);
+	}
+	////////
+	//CDEBROWSER-506 AC 3: (Advanced Search) Add type ahead to the PV (name) Field
+	protected static final String sqlRetrievePvLongName = "select th from (SELECT distinct lower(tg.value) th "
+			+ "FROM sbr.permissible_values tg WHERE instr(UPPER(tg.value), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	
+	public List<String> buildSearchTypeaheadPermissibleValue(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer) {
+		String searchPattern = searchCriteria.getPermissibleValue();
+		return buildSearchTypeaheadEntity(sqlRetrievePvLongName, searchPattern);
+	}
+	////////
+	//CDEBROWSER-506 AC 5: (Advanced Search) Add type ahead to the OC Field
+	protected static final String sqlRetrieveObjectClassLongName = "select th from (SELECT distinct lower(tg.long_name) th "
+			+ "FROM sbrext.object_classes_ext tg WHERE tg.ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(tg.long_name), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	@Override
+	public List<String> buildSearchTypeaheadObjectClass(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferencesServer) {
+		String searchPattern = searchCriteria.getObjectClass();
+		return buildSearchTypeaheadEntity(sqlRetrieveObjectClassLongName, searchPattern);
+	}
+	////////
+	//CDEBROWSER-506 AC 6: (Advanced Search) Add type ahead to the Property Field
+	protected static final String sqlRetrievePropertyLongName = "select th from (SELECT distinct lower(tg.long_name) th "
+			+ "FROM  sbrext.properties_ext tg WHERE tg.ASL_NAME <> 'RETIRED DELETED' AND instr(UPPER(tg.long_name), UPPER(?), 1) > 0 order by th) "
+			+ "where rownum < " + maxLongNamesToReturn;
+	@Override
+	public List<String> buildSearchTypeaheadProperty(SearchCriteria searchCriteria,
 			SearchPreferencesServer searchPreferencesServer) {
-		String searchDec = searchCriteria.getDataElementConcept();
-		List<String> decNameList = null;
-		if (searchDec != null) {
-			decNameList = jdbcTemplate.query(sqlRetrieveDecLongName, new Object[] {searchDec}, new StringPropertyMapper(String.class));
-		}
-		if (decNameList == null) {
-			decNameList = new ArrayList<>();
-		}
-		return decNameList;
+		String searchPattern = searchCriteria.getProperty();
+		return buildSearchTypeaheadEntity(sqlRetrievePropertyLongName, searchPattern);
 	}
 	
-
 }
