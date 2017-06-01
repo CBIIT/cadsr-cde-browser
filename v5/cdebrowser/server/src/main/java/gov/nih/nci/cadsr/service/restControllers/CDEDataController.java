@@ -42,6 +42,7 @@ import gov.nih.nci.cadsr.dao.RepresentationConceptsDAO;
 import gov.nih.nci.cadsr.dao.ToolOptionsDAO;
 import gov.nih.nci.cadsr.dao.ValueDomainConceptDAO;
 import gov.nih.nci.cadsr.dao.ValueMeaningDAO;
+import gov.nih.nci.cadsr.dao.model.AcRegistrationsModel;
 import gov.nih.nci.cadsr.dao.model.CSIRefDocModel;
 import gov.nih.nci.cadsr.dao.model.CSRefDocModel;
 import gov.nih.nci.cadsr.dao.model.ConceptModel;
@@ -1142,6 +1143,10 @@ public class CDEDataController
         valueDomainDetails.setConceptualDomainLongName( dataElementModel.getValueDomainModel().getCdLongName() ); //CDEBROWSER-798 UI Edits and Fixes - Compare Screen Matrix
         valueDomainDetails.setConceptualDomainVersion( dataElementModel.getValueDomainModel().getCdVersion() );
         valueDomainDetails.setOrigin( dataElementModel.getValueDomainModel().getOrigin() );
+        AcRegistrationsModel vdRegModel = dataElementModel.getValueDomainModel().getVdRegistrationsModel();
+        if (vdRegModel != null) {
+        	valueDomainDetails.setVdRegistrationStatus(vdRegModel.getRegistrationStatus());
+        }
         return valueDomainDetails;
     }
 

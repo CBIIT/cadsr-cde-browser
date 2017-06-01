@@ -13,7 +13,7 @@ public class ValueDomainDetails
     private String context;
     private String definition;
     private String workflowStatus;
-    private String registrationStatus; // CDEBROWSER-832 UI Edits - Value Domain View Details - Backend
+    private String registrationStatus; // CDEBROWSER-832 This is DE Registration Status
     private String dataType;
     private String unitOfMeasure;
     private String displayFormat;
@@ -30,6 +30,7 @@ public class ValueDomainDetails
     private Float conceptualDomainVersion;
     private String formattedConceptualDomainVersion;
     private String origin;
+    private String vdRegistrationStatus; // CDEBROWSER-832 Value Domain Registration status
 
     public int getPublicId()
     {
@@ -279,4 +280,29 @@ public class ValueDomainDetails
     {
         this.origin = origin;
     }
+
+	public String getVdRegistrationStatus() {
+		return vdRegistrationStatus;
+	}
+
+	public void setVdRegistrationStatus(String vdRegistrationStatus) {
+		this.vdRegistrationStatus = vdRegistrationStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "ValueDomainDetails [publicId=" + publicId + ", version=" + version + ", formattedVersion="
+				+ formattedVersion + ", longName=" + longName + ", shortName=" + shortName + ", context=" + context
+				+ ", definition=" + definition + ", workflowStatus=" + workflowStatus + ", registrationStatus="
+				+ registrationStatus + ", dataType=" + dataType + ", unitOfMeasure=" + unitOfMeasure
+				+ ", displayFormat=" + displayFormat + ", maximumLength=" + maximumLength + ", minimumLength="
+				+ minimumLength + ", decimalPlace=" + decimalPlace + ", highValue=" + highValue + ", lowValue="
+				+ lowValue + ", valueDomainType=" + valueDomainType + ", conceptualDomainPublicId="
+				+ conceptualDomainPublicId + ", conceptualDomainShortName=" + conceptualDomainShortName
+				+ ", conceptualDomainContextName=" + conceptualDomainContextName + ", conceptualDomainLongName="
+				+ conceptualDomainLongName + ", conceptualDomainVersion=" + conceptualDomainVersion
+				+ ", formattedConceptualDomainVersion=" + formattedConceptualDomainVersion + ", origin=" + origin
+				+ ", vdRegistrationStatus=" + vdRegistrationStatus + "]";
+	}
+
 }

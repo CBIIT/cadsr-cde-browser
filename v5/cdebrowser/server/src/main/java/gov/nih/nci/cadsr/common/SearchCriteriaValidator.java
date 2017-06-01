@@ -44,9 +44,14 @@ public class SearchCriteriaValidator implements Validator {
             logger.warn("Error Validate! SearchCriteria vdTypeFlag malformed: " + curr);
             errors.reject("VdTypeFlag:" + curr +".malformed");
         }
-        if ((StringUtils.isNotBlank(curr = searchCriteria.getPublicId())) && (! ParameterValidator.validatePublicIdWIthStar(curr))) {
+        if ((StringUtils.isNotBlank(curr = searchCriteria.getPublicId())) && (curr.contains("'"))) {
             logger.warn("Error Validate! SearchCriteria PublicId malformed: " + curr);
             errors.reject("PublicId:" + curr + ".malformed");
+        }
+    	//altNameType	Example: "21090 ED Media Type:::21090 INT Max Value:::"
+        if ((StringUtils.isNotBlank(curr = searchCriteria.getAltNameType())) && (curr.contains("'"))) {
+            logger.warn("Error Validate! SearchCriteria altNameType malformed: " + curr);
+            errors.reject("AltNameType:" + curr +".malformed");
         }
         if ((StringUtils.isNotBlank(curr = searchCriteria.getClassification())) && (! ParameterValidator.validateIdSeq(curr))) {
             logger.warn("Error Validate! SearchCriteria Classification malformed: " + curr);
@@ -68,7 +73,7 @@ public class SearchCriteriaValidator implements Validator {
             logger.warn("Error Validate! SearchCriteria Context malformed: " + curr);
             errors.reject("Context:"+curr+".malformed");
         }
-        if ((StringUtils.isNotBlank(curr = searchCriteria.getProgramArea())) && (! StringUtils.isAlphanumeric(curr))) {
+        if ((StringUtils.isNotBlank(curr = searchCriteria.getProgramArea())) && (! StringUtils.isAlphanumericSpace(curr))) {
             logger.warn("Error Validate! SearchCriteria ProgramArea malformed: " + curr);
             errors.reject("ProgramArea:"+curr+".malformed");
         }

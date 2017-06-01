@@ -132,6 +132,7 @@
         <property name="representationDAO" ref="representationDAO"/>
         <property name="conceptDerivationRuleDAO" ref="conceptDerivationRuleDAO"/>
         <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
+        <property name="acRegistrationsDAO" ref="acRegistrationsDAO"/>
     </bean>
     <bean id="dataElementDerivationDAO" class="gov.nih.nci.cadsr.dao.DataElementDerivationDAOImpl"
           parent="abstractDao"/>

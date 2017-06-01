@@ -40,7 +40,8 @@ public class ValueDomainModel extends BaseModel
     private ConceptDerivationRuleModel conceptDerivationRuleModel;
     private String createdBy;
     private String vdContextName;//CDEBROWSER-760 We need VD Context name on DE Details VD Tab; added in v.5.3
-
+    private AcRegistrationsModel vdRegistrationsModel;
+    
 	public ValueDomainModel()
     {
     }
@@ -349,124 +350,233 @@ public class ValueDomainModel extends BaseModel
 		this.vdContextName = vdContextName;
 	}
 
+	public AcRegistrationsModel getVdRegistrationsModel() {
+		return vdRegistrationsModel;
+	}
+
+	public void setVdRegistrationsModel(AcRegistrationsModel vdRegistrationsModel) {
+		this.vdRegistrationsModel = vdRegistrationsModel;
+	}
+
 	@Override
-    public String toString()
-    {
-        return "ValueDomainModel{" +
-                "preferredName='" + preferredName + '\'' +
-                ", preferredDefinition='" + preferredDefinition + '\'' +
-                ", longName='" + longName + '\'' +
-                ", aslName='" + aslName + '\'' +
-                ", version=" + version +
-                ", deletedInd='" + deletedInd + '\'' +
-                ", latestVerInd='" + latestVerInd + '\'' +
-                ", publicId=" + publicId +
-                ", origin='" + origin + '\'' +
-                ", idseq='" + idseq + '\'' +
-                ", vdIdseq='" + vdIdseq + '\'' +
-                ", datatype='" + datatype + '\'' +
-                ", uom='" + uom + '\'' +
-                ", dispFormat='" + dispFormat + '\'' +
-                ", formlName='" + formlName + '\'' +
-                ", maxLength='" + maxLength + '\'' +
-                ", minLength='" + minLength + '\'' +
-                ", highVal='" + highVal + '\'' +
-                ", lowVal='" + lowVal + '\'' +
-                ", charSet='" + charSet + '\'' +
-                ", decimalPlace='" + decimalPlace + '\'' +
-                ", cdPrefName='" + cdPrefName + '\'' +
-                ", cdContextName='" + cdContextName + '\'' +
-                ", cdVersion=" + cdVersion +
-                ", cdPublicId=" + cdPublicId +
-                ", vdType='" + vdType + '\'' +
-                ", vdContextName='" + vdContextName + '\'' +
-                ", representationModel=" + representationModel +
-                ", conceptDerivationRuleModel=" + conceptDerivationRuleModel +
-                '}';
-    }
+	public String toString() {
+		return "ValueDomainModel [preferredName=" + preferredName + ", preferredDefinition=" + preferredDefinition
+				+ ", longName=" + longName + ", aslName=" + aslName + ", version=" + version + ", deletedInd="
+				+ deletedInd + ", latestVerInd=" + latestVerInd + ", publicId=" + publicId + ", origin=" + origin
+				+ ", idseq=" + idseq + ", vdIdseq=" + vdIdseq + ", datatype=" + datatype + ", uom=" + uom
+				+ ", dispFormat=" + dispFormat + ", formlName=" + formlName + ", maxLength=" + maxLength
+				+ ", minLength=" + minLength + ", highVal=" + highVal + ", lowVal=" + lowVal + ", charSet=" + charSet
+				+ ", decimalPlace=" + decimalPlace + ", cdPrefName=" + cdPrefName + ", cdContextName=" + cdContextName
+				+ ", cdLongName=" + cdLongName + ", cdVersion=" + cdVersion + ", cdPublicId=" + cdPublicId + ", vdType="
+				+ vdType + ", representationModel=" + representationModel + ", conceptDerivationRuleModel="
+				+ conceptDerivationRuleModel + ", createdBy=" + createdBy + ", vdContextName=" + vdContextName
+				+ ", vdRegistrationsModel=" + vdRegistrationsModel + ", getDateCreated()=" + getDateCreated()
+				+ ", getModifiedBy()=" + getModifiedBy() + ", getDateModified()=" + getDateModified()
+				+ ", getFormattedVersion()=" + getFormattedVersion() + "]";
+	}
 
-    @Override
-    public boolean equals( Object o )
-    {
-        if( this == o ) return true;
-        if( !( o instanceof ValueDomainModel ) ) return false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aslName == null) ? 0 : aslName.hashCode());
+		result = prime * result + ((cdContextName == null) ? 0 : cdContextName.hashCode());
+		result = prime * result + ((cdLongName == null) ? 0 : cdLongName.hashCode());
+		result = prime * result + ((cdPrefName == null) ? 0 : cdPrefName.hashCode());
+		result = prime * result + cdPublicId;
+		result = prime * result + ((cdVersion == null) ? 0 : cdVersion.hashCode());
+		result = prime * result + ((charSet == null) ? 0 : charSet.hashCode());
+		result = prime * result + ((conceptDerivationRuleModel == null) ? 0 : conceptDerivationRuleModel.hashCode());
+		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
+		result = prime * result + ((datatype == null) ? 0 : datatype.hashCode());
+		result = prime * result + ((decimalPlace == null) ? 0 : decimalPlace.hashCode());
+		result = prime * result + ((deletedInd == null) ? 0 : deletedInd.hashCode());
+		result = prime * result + ((dispFormat == null) ? 0 : dispFormat.hashCode());
+		result = prime * result + ((formlName == null) ? 0 : formlName.hashCode());
+		result = prime * result + ((highVal == null) ? 0 : highVal.hashCode());
+		result = prime * result + ((idseq == null) ? 0 : idseq.hashCode());
+		result = prime * result + ((latestVerInd == null) ? 0 : latestVerInd.hashCode());
+		result = prime * result + ((longName == null) ? 0 : longName.hashCode());
+		result = prime * result + ((lowVal == null) ? 0 : lowVal.hashCode());
+		result = prime * result + ((maxLength == null) ? 0 : maxLength.hashCode());
+		result = prime * result + ((minLength == null) ? 0 : minLength.hashCode());
+		result = prime * result + ((origin == null) ? 0 : origin.hashCode());
+		result = prime * result + ((preferredDefinition == null) ? 0 : preferredDefinition.hashCode());
+		result = prime * result + ((preferredName == null) ? 0 : preferredName.hashCode());
+		result = prime * result + publicId;
+		result = prime * result + ((representationModel == null) ? 0 : representationModel.hashCode());
+		result = prime * result + ((uom == null) ? 0 : uom.hashCode());
+		result = prime * result + ((vdContextName == null) ? 0 : vdContextName.hashCode());
+		result = prime * result + ((vdIdseq == null) ? 0 : vdIdseq.hashCode());
+		result = prime * result + ((vdRegistrationsModel == null) ? 0 : vdRegistrationsModel.hashCode());
+		result = prime * result + ((vdType == null) ? 0 : vdType.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
 
-        ValueDomainModel that = ( ValueDomainModel ) o;
-
-        if( getPublicId() != that.getPublicId() ) return false;
-        if( getMaxLength() != that.getMaxLength() ) return false;
-        if( getMinLength() != that.getMinLength() ) return false;
-        if( getDecimalPlace() != that.getDecimalPlace() ) return false;
-        if( getCdPublicId() != that.getCdPublicId() ) return false;
-        if( getPreferredName() != null ? !getPreferredName().equals( that.getPreferredName() ) : that.getPreferredName() != null )
-            return false;
-        if( getPreferredDefinition() != null ? !getPreferredDefinition().equals( that.getPreferredDefinition() ) : that.getPreferredDefinition() != null )
-            return false;
-        if( getLongName() != null ? !getLongName().equals( that.getLongName() ) : that.getLongName() != null )
-            return false;
-        if( getAslName() != null ? !getAslName().equals( that.getAslName() ) : that.getAslName() != null ) return false;
-        if( getVersion() != null ? !getVersion().equals( that.getVersion() ) : that.getVersion() != null ) return false;
-        if( getDeletedInd() != null ? !getDeletedInd().equals( that.getDeletedInd() ) : that.getDeletedInd() != null )
-            return false;
-        if( getLatestVerInd() != null ? !getLatestVerInd().equals( that.getLatestVerInd() ) : that.getLatestVerInd() != null )
-            return false;
-        if( getOrigin() != null ? !getOrigin().equals( that.getOrigin() ) : that.getOrigin() != null ) return false;
-        if( getIdseq() != null ? !getIdseq().equals( that.getIdseq() ) : that.getIdseq() != null ) return false;
-        if( getVdIdseq() != null ? !getVdIdseq().equals( that.getVdIdseq() ) : that.getVdIdseq() != null ) return false;
-        if( getDatatype() != null ? !getDatatype().equals( that.getDatatype() ) : that.getDatatype() != null )
-            return false;
-        if( getUom() != null ? !getUom().equals( that.getUom() ) : that.getUom() != null ) return false;
-        if( getDispFormat() != null ? !getDispFormat().equals( that.getDispFormat() ) : that.getDispFormat() != null )
-            return false;
-        if( getHighVal() != null ? !getHighVal().equals( that.getHighVal() ) : that.getHighVal() != null ) return false;
-        if( getLowVal() != null ? !getLowVal().equals( that.getLowVal() ) : that.getLowVal() != null ) return false;
-        if( getCharSet() != null ? !getCharSet().equals( that.getCharSet() ) : that.getCharSet() != null ) return false;
-        if( getCdPrefName() != null ? !getCdPrefName().equals( that.getCdPrefName() ) : that.getCdPrefName() != null )
-            return false;
-        if( getCdContextName() != null ? !getCdContextName().equals( that.getCdContextName() ) : that.getCdContextName() != null )
-            return false;
-        if( getCdVersion() != null ? !getCdVersion().equals( that.getCdVersion() ) : that.getCdVersion() != null )
-            return false;
-        if( getVdType() != null ? !getVdType().equals( that.getVdType() ) : that.getVdType() != null ) return false;
-        if( getVdContextName() != null ? !getVdContextName().equals( that.getVdContextName() ) : that.getVdContextName() != null )
-            return false;
-        if( getRepresentationModel() != null ? !getRepresentationModel().equals( that.getRepresentationModel() ) : that.getRepresentationModel() != null )
-            return false;
-        return !( getConceptDerivationRuleModel() != null ? !getConceptDerivationRuleModel().equals( that.getConceptDerivationRuleModel() ) : that.getConceptDerivationRuleModel() != null );
-
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = getPreferredName() != null ? getPreferredName().hashCode() : 0;
-        result = 31 * result + ( getPreferredDefinition() != null ? getPreferredDefinition().hashCode() : 0 );
-        result = 31 * result + ( getLongName() != null ? getLongName().hashCode() : 0 );
-        result = 31 * result + ( getAslName() != null ? getAslName().hashCode() : 0 );
-        result = 31 * result + ( getVersion() != null ? getVersion().hashCode() : 0 );
-        result = 31 * result + ( getDeletedInd() != null ? getDeletedInd().hashCode() : 0 );
-        result = 31 * result + ( getLatestVerInd() != null ? getLatestVerInd().hashCode() : 0 );
-        result = 31 * result + getPublicId();
-        result = 31 * result + ( getOrigin() != null ? getOrigin().hashCode() : 0 );
-        result = 31 * result + ( getIdseq() != null ? getIdseq().hashCode() : 0 );
-        result = 31 * result + ( getVdIdseq() != null ? getVdIdseq().hashCode() : 0 );
-        result = 31 * result + ( getDatatype() != null ? getDatatype().hashCode() : 0 );
-        result = 31 * result + ( getUom() != null ? getUom().hashCode() : 0 );
-        result = 31 * result + ( getDispFormat() != null ? getDispFormat().hashCode() : 0 );
-        result = 31 * result + getMaxLength();
-        result = 31 * result + getMinLength();
-        result = 31 * result + ( getHighVal() != null ? getHighVal().hashCode() : 0 );
-        result = 31 * result + ( getLowVal() != null ? getLowVal().hashCode() : 0 );
-        result = 31 * result + ( getCharSet() != null ? getCharSet().hashCode() : 0 );
-        result = 31 * result + getDecimalPlace();
-        result = 31 * result + ( getCdPrefName() != null ? getCdPrefName().hashCode() : 0 );
-        result = 31 * result + ( getCdContextName() != null ? getCdContextName().hashCode() : 0 );
-        result = 31 * result + ( getCdVersion() != null ? getCdVersion().hashCode() : 0 );
-        result = 31 * result + getCdPublicId();
-        result = 31 * result + ( getVdType() != null ? getVdType().hashCode() : 0 );
-        result = 31 * result + ( getVdContextName() != null ? getVdContextName().hashCode() : 0 );
-        result = 31 * result + ( getRepresentationModel() != null ? getRepresentationModel().hashCode() : 0 );
-        result = 31 * result + ( getConceptDerivationRuleModel() != null ? getConceptDerivationRuleModel().hashCode() : 0 );
-        return result;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ValueDomainModel other = (ValueDomainModel) obj;
+		if (aslName == null) {
+			if (other.aslName != null)
+				return false;
+		} else if (!aslName.equals(other.aslName))
+			return false;
+		if (cdContextName == null) {
+			if (other.cdContextName != null)
+				return false;
+		} else if (!cdContextName.equals(other.cdContextName))
+			return false;
+		if (cdLongName == null) {
+			if (other.cdLongName != null)
+				return false;
+		} else if (!cdLongName.equals(other.cdLongName))
+			return false;
+		if (cdPrefName == null) {
+			if (other.cdPrefName != null)
+				return false;
+		} else if (!cdPrefName.equals(other.cdPrefName))
+			return false;
+		if (cdPublicId != other.cdPublicId)
+			return false;
+		if (cdVersion == null) {
+			if (other.cdVersion != null)
+				return false;
+		} else if (!cdVersion.equals(other.cdVersion))
+			return false;
+		if (charSet == null) {
+			if (other.charSet != null)
+				return false;
+		} else if (!charSet.equals(other.charSet))
+			return false;
+		if (conceptDerivationRuleModel == null) {
+			if (other.conceptDerivationRuleModel != null)
+				return false;
+		} else if (!conceptDerivationRuleModel.equals(other.conceptDerivationRuleModel))
+			return false;
+		if (createdBy == null) {
+			if (other.createdBy != null)
+				return false;
+		} else if (!createdBy.equals(other.createdBy))
+			return false;
+		if (datatype == null) {
+			if (other.datatype != null)
+				return false;
+		} else if (!datatype.equals(other.datatype))
+			return false;
+		if (decimalPlace == null) {
+			if (other.decimalPlace != null)
+				return false;
+		} else if (!decimalPlace.equals(other.decimalPlace))
+			return false;
+		if (deletedInd == null) {
+			if (other.deletedInd != null)
+				return false;
+		} else if (!deletedInd.equals(other.deletedInd))
+			return false;
+		if (dispFormat == null) {
+			if (other.dispFormat != null)
+				return false;
+		} else if (!dispFormat.equals(other.dispFormat))
+			return false;
+		if (formlName == null) {
+			if (other.formlName != null)
+				return false;
+		} else if (!formlName.equals(other.formlName))
+			return false;
+		if (highVal == null) {
+			if (other.highVal != null)
+				return false;
+		} else if (!highVal.equals(other.highVal))
+			return false;
+		if (idseq == null) {
+			if (other.idseq != null)
+				return false;
+		} else if (!idseq.equals(other.idseq))
+			return false;
+		if (latestVerInd == null) {
+			if (other.latestVerInd != null)
+				return false;
+		} else if (!latestVerInd.equals(other.latestVerInd))
+			return false;
+		if (longName == null) {
+			if (other.longName != null)
+				return false;
+		} else if (!longName.equals(other.longName))
+			return false;
+		if (lowVal == null) {
+			if (other.lowVal != null)
+				return false;
+		} else if (!lowVal.equals(other.lowVal))
+			return false;
+		if (maxLength == null) {
+			if (other.maxLength != null)
+				return false;
+		} else if (!maxLength.equals(other.maxLength))
+			return false;
+		if (minLength == null) {
+			if (other.minLength != null)
+				return false;
+		} else if (!minLength.equals(other.minLength))
+			return false;
+		if (origin == null) {
+			if (other.origin != null)
+				return false;
+		} else if (!origin.equals(other.origin))
+			return false;
+		if (preferredDefinition == null) {
+			if (other.preferredDefinition != null)
+				return false;
+		} else if (!preferredDefinition.equals(other.preferredDefinition))
+			return false;
+		if (preferredName == null) {
+			if (other.preferredName != null)
+				return false;
+		} else if (!preferredName.equals(other.preferredName))
+			return false;
+		if (publicId != other.publicId)
+			return false;
+		if (representationModel == null) {
+			if (other.representationModel != null)
+				return false;
+		} else if (!representationModel.equals(other.representationModel))
+			return false;
+		if (uom == null) {
+			if (other.uom != null)
+				return false;
+		} else if (!uom.equals(other.uom))
+			return false;
+		if (vdContextName == null) {
+			if (other.vdContextName != null)
+				return false;
+		} else if (!vdContextName.equals(other.vdContextName))
+			return false;
+		if (vdIdseq == null) {
+			if (other.vdIdseq != null)
+				return false;
+		} else if (!vdIdseq.equals(other.vdIdseq))
+			return false;
+		if (vdRegistrationsModel == null) {
+			if (other.vdRegistrationsModel != null)
+				return false;
+		} else if (!vdRegistrationsModel.equals(other.vdRegistrationsModel))
+			return false;
+		if (vdType == null) {
+			if (other.vdType != null)
+				return false;
+		} else if (!vdType.equals(other.vdType))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
 }

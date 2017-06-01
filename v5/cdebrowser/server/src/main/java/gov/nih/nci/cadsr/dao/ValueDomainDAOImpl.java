@@ -3,6 +3,7 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
+import gov.nih.nci.cadsr.dao.model.AcRegistrationsModel;
 import gov.nih.nci.cadsr.dao.model.ConceptDerivationRuleModel;
 import gov.nih.nci.cadsr.dao.model.ConceptualDomainModel;
 import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
@@ -28,6 +29,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     private RepresentationDAO representationDAO;
     private ConceptDerivationRuleDAO conceptDerivationRuleDAO;
     private ConceptualDomainDAO conceptualDomainDAO;
+    private AcRegistrationsDAO acRegistrationsDAO;
 
     @Autowired
     ValueDomainDAOImpl( DataSource dataSource )
@@ -51,6 +53,14 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
         	+ "WHERE vd.vd_idseq = ?";
         logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
         ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject( sql, new Object[]{ vdIdseq }, new ValueDomainMapper() );
+        try {
+        	AcRegistrationsModel regModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(vdIdseq);
+        	valueDomainModel.setVdRegistrationsModel(regModel);
+        }
+        catch( EmptyResultDataAccessException ex )
+        {
+            logger.debug( "No AcRegistrationsModel found for VD with idseq: " + vdIdseq );
+        }
         return valueDomainModel;
     }
 
@@ -84,7 +94,15 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
         this.conceptualDomainDAO = conceptualDomainDAO;
     }
 
-    public final class ValueDomainMapper extends BeanPropertyRowMapper<ValueDomainModel>
+    public AcRegistrationsDAO getAcRegistrationsDAO() {
+		return acRegistrationsDAO;
+	}
+    
+	public void setAcRegistrationsDAO(AcRegistrationsDAO acRegistrationsDAO) {
+		this.acRegistrationsDAO = acRegistrationsDAO;
+	}
+
+	public final class ValueDomainMapper extends BeanPropertyRowMapper<ValueDomainModel>
     {
         private Logger logger = LogManager.getLogger( ValueDomainMapper.class.getName() );
 
