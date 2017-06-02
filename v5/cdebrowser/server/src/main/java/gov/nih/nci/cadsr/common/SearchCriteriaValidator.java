@@ -40,7 +40,7 @@ public class SearchCriteriaValidator implements Validator {
             logger.warn("Error Validate! SearchCriteria filteredinput malformed: " + curr);
             errors.reject("Filteredinput:" + curr + ".malformed");
         }
-        if ((StringUtils.isNotBlank(curr = searchCriteria.getVdTypeFlag())) && (! StringUtils.isNumeric(curr))) {
+        if ((StringUtils.isNotBlank(curr = searchCriteria.getVdTypeFlag())) && (! SearchCriteria.isVdTypeFlagValid(curr))) {
             logger.warn("Error Validate! SearchCriteria vdTypeFlag malformed: " + curr);
             errors.reject("VdTypeFlag:" + curr +".malformed");
         }

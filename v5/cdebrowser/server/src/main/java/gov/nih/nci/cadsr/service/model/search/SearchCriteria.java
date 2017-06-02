@@ -306,7 +306,11 @@ public class SearchCriteria implements Serializable
 		}
 
 	}
-
+	
+	public static boolean isVdTypeFlagValid(String vdTypeFlag) {
+		return ("E".equals(vdTypeFlag) || "N".equals(vdTypeFlag) || StringUtils.isBlank(vdTypeFlag));
+	}
+	
 	public String getValueDomain() {
 		return valueDomain;
 	}
