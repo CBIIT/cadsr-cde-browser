@@ -25,6 +25,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     // if search is for context or classification, add url parameters //
     displayURLParameters = function() {
         $scope.$watch('contextSearchFinished',function() {
+            $location.search({}); // clean url first //
+
             if ($scope.contextSearchFinished==2) {
 
                 var sf = $scope.fs.searchFilter;
@@ -119,7 +121,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                         if (keys.indexOf('classificationSchemeItemId')>-1) {
                                             var selectedItem = $filter('filter')(fs.myclassifications,{csCsiIdSeq:obj.classificationSchemeItemId});
                                             var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
-                                            classifications.pop();
+                                            console.log(classifications)
+                                            if (classifications.lengh>1) {
+                                                classifications.pop();                                                
+                                            };
+
                                             $scope.fs.classifications = classifications;
                                             // console.log($scope.fs.classifications)
                                             var classification = $filter('filter')($scope.fs.classifications, {'id':obj.classificationSchemeItemId})

@@ -96,6 +96,7 @@ angular.module('cdeBrowserApp')
                   return _.uniqBy(sampledata[0],"csIdSeq");
               }
               else {
+                console.log(id)
                   return sampledata[id];
               }
           },
