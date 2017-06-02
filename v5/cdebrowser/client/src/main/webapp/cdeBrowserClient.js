@@ -23,33 +23,33 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // if search is for context or classification, add url parameters //
     displayURLParameters = function() {
-        $scope.$watch('contextSearchFinished',function() {
-            if ($scope.contextSearchFinished==2) {
+        // $scope.$watch('contextSearchFinished',function() {
+        //     if ($scope.contextSearchFinished==2) {
 
-                var sf = $scope.fs.searchFilter;
-                var urlParams = {'programArea':sf.programArea};
+        //         var sf = $scope.fs.searchFilter;
+        //         var urlParams = {'programArea':sf.programArea};
 
-                if (!sf.protocol) { // 
-                    if (sf.context && sf.context != '') {
-                        urlParams['contextId'] = sf.context;
-                    };
+        //         if (!sf.protocol) { // 
+        //             if (sf.context && sf.context != '') {
+        //                 urlParams['contextId'] = sf.context;
+        //             };
 
-                    if (sf.classification) {
-                        if (sf.classification.csIdSeq == sf.classification.id) { // this is a classificationScheme //
-                            urlParams['classificationSchemeId'] = sf.classification.id;
-                        }
-                        else { // this is a classification scheme item //
-                            urlParams['classificationSchemeItemId'] = sf.classification.id;
-                        };
-                    };
-                    $location.search(urlParams);
-                }   
-                else {
-                    $location.search({}); // if protocol search clean url //
-                }
+        //             if (sf.classification) {
+        //                 if (sf.classification.csIdSeq == sf.classification.id) { // this is a classificationScheme //
+        //                     urlParams['classificationSchemeId'] = sf.classification.id;
+        //                 }
+        //                 else { // this is a classification scheme item //
+        //                     urlParams['classificationSchemeItemId'] = sf.classification.id;
+        //                 };
+        //             };
+        //             $location.search(urlParams);
+        //         }   
+        //         else {
+        //             $location.search({}); // if protocol search clean url //
+        //         }
 
-            };
-        });        
+        //     };
+        // });        
 
     };
 
