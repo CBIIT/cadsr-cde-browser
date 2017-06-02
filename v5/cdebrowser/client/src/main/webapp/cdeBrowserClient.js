@@ -15,7 +15,44 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueMeaningHash = "";
     var searchedByURL = false;
     var delimiter = ":::";
-    window.filter = $filter;
+
+    /* Start of filter service */
+    var fs = filterService // define service instance //
+    $scope.filterService = fs; // set service to scope. Used to interact with view //
+    $scope.fs = filterService;    
+
+    // if search is for context or classification, add url parameters //
+    displayURLParameters = function() {
+        $scope.$watch('contextSearchFinished',function() {
+            if ($scope.contextSearchFinished==2) {
+
+                var sf = $scope.fs.searchFilter;
+                var urlParams = {'programArea':sf.programArea};
+
+                if (!sf.protocol) { // 
+                    if (sf.context && sf.context != '') {
+                        urlParams['contextId'] = sf.context;
+                    };
+
+                    if (sf.classification) {
+                        if (sf.classification.csIdSeq == sf.classification.id) { // this is a classificationScheme //
+                            urlParams['classificationSchemeId'] = sf.classification.id;
+                        }
+                        else { // this is a classification scheme item //
+                            urlParams['classificationSchemeItemId'] = sf.classification.id;
+                        };
+                    };
+                    $location.search(urlParams);
+                }   
+                else {
+                    $location.search({}); // if protocol search clean url //
+                }
+
+            };
+        });        
+
+    };
+
     // create a list with all checked items to display "successfully added to CDE cart/CDE Compare List" message //
     // change in requirement makes only the count relavent //
     $scope.rslt = [];
@@ -54,13 +91,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $location.hash(change);
     }
 
-    /* Start of filter service */
-    var fs = filterService // define service instance //
-    $scope.filterService = fs; // set service to scope. Used to interact with view //
-    $scope.fs = filterService;
 
     var cs = compareService;
     $scope.compareService = cs;
+
+
+
 
 
     $scope.$watch('contextListMaster',function(data) { // gets data for program areas and contexts //
@@ -84,6 +120,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                             var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
                                             classifications.pop();
                                             $scope.fs.classifications = classifications;
+                                            console.log($scope.fs.classifications)
                                             $scope.fs.searchFilter.classification = $scope.fs.classifications[0];
                                         };
                                     $scope.search();
@@ -214,6 +251,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId, isURLSearch) {
+        $scope.contextSearchFinished = 0;
         $scope.classificationProtocolsLoaded = 0;
         // if ($scope.filterService.searchFilter.classification) {
         //     var tempClassification = $scope.filterService.searchFilter.classification;
@@ -224,9 +262,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         // if (!contextId.idSeq) { contextId.idSeq = tempClassification.contextIdSeq };
         if (contextId) { // only run if context id has not been reset //
         $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-            if (isURLSearch) {
-                $scope.classificationProtocolsLoaded = 1;
-            };
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
 
@@ -253,12 +288,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.filterService.protocols = groupFactory.load(0);
 
             }
+            if (isURLSearch) {
+                $scope.classificationProtocolsLoaded += 1;
+            };            
+            $scope.contextSearchFinished+=1;
         });
 
         $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
-            if (isURLSearch) {
-                $scope.classificationProtocolsLoaded = 2;
-            };
             groupFactory1.fillClassifications(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
                 // if (!contextId.selectedNode.parentId) { contextId.selectedNode.parentId=tempClassification.csIdSeq } 
@@ -290,7 +326,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.filterService.classifications = groupFactory1.load(0);
             }
 
-
+            $scope.contextSearchFinished+=1;
+            if (isURLSearch) {
+                $scope.classificationProtocolsLoaded += 1;
+            };
         });
     };
 
@@ -808,10 +847,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 if (searchType=='contextId') {
                     $scope.contextSearch({idSeq:selectedNode.idSeq});
                     $scope.selectFiltersByNode(searchType,id, selectedNode);
+
                 }
                 else if(selectedNode.isChild) {
                     $scope.contextSearch({idSeq:selectedNode.contextId,selectedNode:selectedNode,searchType:searchType,id:id});
-                }
+                };
+
             };
             $scope.isNode  = !$scope.isNode;
         }
@@ -867,7 +908,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.tableParams.reload();
             }
             $timeout(function() {
+                displayURLParameters();
                 $scope.goToAnchor("breadCrumbsAnchor");
+
             }, 1);
         }).error(function (data, status, headers, config) {
             // console.log("Error making call to server: " + url);
