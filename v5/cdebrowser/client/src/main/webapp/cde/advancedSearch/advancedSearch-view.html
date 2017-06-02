@@ -15,22 +15,21 @@
 
             <div>
                 <label class="advancedSearchLabel">Object Class</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Object Class Long Name"
-                       ng-model="fs.dataElementVariables.searchObjectClass"/>
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchOCInput" type="text" data-ng-model="fs.dataElementVariables.searchObjectClass" ng-keyup="searchKey(e=$event)" placeholder="Object Class Long Name" uib-typeahead="result for result in typeAhead('thobjectclass',$viewValue, 'objectClass')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />  
             </div>
 
             <div><!--  class="advanceSearchTextBoxSpacing" -->
                 <label class="advancedSearchLabel">Property</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchPropInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Property Long Name"
-                       ng-model="fs.dataElementVariables.searchProperty"/>
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchPropInput" type="text" data-ng-model="fs.dataElementVariables.searchProperty" ng-keyup="searchKey(e=$event)" placeholder="Property Long Name" uib-typeahead="result for result in typeAhead('thproperty',$viewValue, 'property')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />  
+
             </div>
         </div>
 
         <div class="valueDomainGroup">
             <div>
                 <label class="advancedSearchLabel">Value Domain</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchVDInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Value Domain Long Name" id="advancedSearchVD" name="searchVD"
-                       ng-model="fs.dataElementVariables.searchVD"/>
+            <input ng-disabled="fs.isSearching" class="roundInput advanceSearchVDInput" type="text" data-ng-model="fs.dataElementVariables.searchVD" ng-keyup="searchKey(e=$event)" placeholder="Value Domain Long Name" uib-typeahead="result for result in typeAhead('thvaluedomain',$viewValue, 'valueDomain')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />  
+
             </div>
             <label data-ng-repeat="queryType in searchVDTQueryTypes">
                 <div class="queryTypeRadioButtons">
@@ -47,9 +46,8 @@
         <div class="permissibleValueGroup">
             <div>
                 <label class="advancedSearchLabel">Permissible Value</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchPVInput" type="text" ng-keyup="searchKey(e=$event)" placeholder="Permissible Value"
-                       id="advancedSearchPV" name="searchPV"
-                       ng-model="fs.dataElementVariables.searchPV"/>
+            <input id="advancedSearchPV" ng-disabled="fs.isSearching" class="roundInput advanceSearchPVInput" type="text" data-ng-model="fs.dataElementVariables.searchPV" ng-keyup="searchKey(e=$event)" placeholder="Permissible Value" uib-typeahead="result for result in typeAhead('thpermissiblevalue',$viewValue, 'permissibleValue')" typeahead-on-select="changeQueryType($item, 'searchPVQueryType')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />  
+
             </div>
             <label data-ng-repeat="queryType in searchQueryTypes">
                 <div class="queryTypeRadioButtons">
@@ -68,8 +66,8 @@
         <div class="altNameGroup">
             <div>
                 <label class="advancedSearchLabel">Alternate Name</label>
-                <input ng-disabled="fs.isSearching" class="roundInput advanceSearchANInput" type="text" ng-keyup="searchKey(e=$event)" ng-model="fs.dataElementVariables.searchAltName"
-                       placeholder="CDE Alternate Name" multiple="true"/>
+
+            <input id="advancedSearchPV" ng-disabled="fs.isSearching" class="roundInput advanceSearchANInput" type="text" data-ng-model="fs.dataElementVariables.searchAltName" ng-keyup="searchKey(e=$event)" placeholder="CDE Alternate Name" uib-typeahead="result for result in typeAhead('thdesignation',$viewValue, 'altName')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />  
                 <span>
                     <label class="advancedSearchLabel"></label>
                     <select ng-disabled="fs.isSearching || fs.dataElementVariables.searchAltName==''" ng-model="fs.dataElementVariables.searchAltNameType" multiple="true" ng-change="setSelectedAlt()">

@@ -23,7 +23,11 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
                 if (parameter=='name') { //only send fields and query type if this is the generic name search  //
                     paramObject['filteredinput'] = $scope.fs.dataElementVariables.searchFieldOptions.options.join(",");             
                     paramObject['queryType'] = $scope.selectedQueryType;
-                };
+                };   
+
+                if (parameter=='altName') { //only send fields and query type if this is the generic name search  //
+                    paramObject['altNameType'] = $scope.fs.dataElementVariables.searchAltNameType.join(":::");             
+                };                         
 
 
             return $http.get('/cdebrowserServer/rest/typeahead/' + restURL, {
@@ -42,8 +46,8 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
     };
 
     // if user selects a typeahead suggestion, change query type to all of the words //
-    $scope.changeQueryType = function(item) {
-        $scope.fs.dataElementVariables.selectedQueryType = 1;
+    $scope.changeQueryType = function(item, key) {
+        $scope.fs.dataElementVariables[key] = 1;
     };
 
  	$scope.setSelectedField = function() {
