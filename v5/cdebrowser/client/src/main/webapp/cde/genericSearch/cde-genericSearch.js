@@ -38,7 +38,6 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
 
               params: paramObject
             }).then(function(response){
-                console.log(response.data)
                 $scope.vals = response.data;
               return response.data;
             });            
