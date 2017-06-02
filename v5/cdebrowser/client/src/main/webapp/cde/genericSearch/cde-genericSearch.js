@@ -25,9 +25,13 @@ angular.module("cdeGenericSearch").controller("GenericSearchController", functio
                     paramObject['queryType'] = $scope.selectedQueryType;
                 };   
 
-                if (parameter=='altName') { //only send fields and query type if this is the generic name search  //
+                if (parameter=='altName') { //only send fields if this is the alt name field  //
                     paramObject['altNameType'] = $scope.fs.dataElementVariables.searchAltNameType.join(":::");             
-                };                         
+                };      
+
+                if (parameter=='valueDomain') { //only send fields if this is the value domain field   //
+                    paramObject['vdTypeFlag'] = $scope.fs.dataElementVariables.searchVDTQueryType;             
+                };                                         
 
 
             return $http.get('/cdebrowserServer/rest/typeahead/' + restURL, {
