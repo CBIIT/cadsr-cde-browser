@@ -14,7 +14,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.searchderivedDEHOLD = "";
     $scope.valueMeaningHash = "";
     var searchedByURL = false;
-    var delimiter = ":::";
+    var delimiter = ":::";  
+    window.filter = $filter;
 
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -23,33 +24,33 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // if search is for context or classification, add url parameters //
     displayURLParameters = function() {
-        // $scope.$watch('contextSearchFinished',function() {
-        //     if ($scope.contextSearchFinished==2) {
+        $scope.$watch('contextSearchFinished',function() {
+            if ($scope.contextSearchFinished==2) {
 
-        //         var sf = $scope.fs.searchFilter;
-        //         var urlParams = {'programArea':sf.programArea};
+                var sf = $scope.fs.searchFilter;
+                var urlParams = {'programArea':sf.programArea};
 
-        //         if (!sf.protocol) { // 
-        //             if (sf.context && sf.context != '') {
-        //                 urlParams['contextId'] = sf.context;
-        //             };
+                if (!sf.protocol) { // 
+                    if (sf.context && sf.context != '') {
+                        urlParams['contextId'] = sf.context;
+                    };
 
-        //             if (sf.classification) {
-        //                 if (sf.classification.csIdSeq == sf.classification.id) { // this is a classificationScheme //
-        //                     urlParams['classificationSchemeId'] = sf.classification.id;
-        //                 }
-        //                 else { // this is a classification scheme item //
-        //                     urlParams['classificationSchemeItemId'] = sf.classification.id;
-        //                 };
-        //             };
-        //             $location.search(urlParams);
-        //         }   
-        //         else {
-        //             $location.search({}); // if protocol search clean url //
-        //         }
+                    if (sf.classification) {
+                        if (sf.classification.csIdSeq == sf.classification.id) { // this is a classificationScheme //
+                            urlParams['classificationSchemeId'] = sf.classification.id;
+                        }
+                        else { // this is a classification scheme item //
+                            urlParams['classificationSchemeItemId'] = sf.classification.id;
+                        };
+                    };
+                    $location.search(urlParams);
+                }   
+                else {
+                    $location.search({}); // if protocol search clean url //
+                }
 
-        //     };
-        // });        
+            };
+        });        
 
     };
 
@@ -120,8 +121,11 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                             var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
                                             classifications.pop();
                                             $scope.fs.classifications = classifications;
-                                            console.log($scope.fs.classifications)
-                                            $scope.fs.searchFilter.classification = $scope.fs.classifications[0];
+                                            // console.log($scope.fs.classifications)
+                                            var classification = $filter('filter')($scope.fs.classifications, {'id':obj.classificationSchemeItemId})
+                                            if (classification.length) {
+                                                $scope.fs.searchFilter.classification = classification.pop();
+                                            };
                                         };
                                     $scope.search();
                                     };
