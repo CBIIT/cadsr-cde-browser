@@ -254,7 +254,7 @@
 		    <tr class="dataElementViewTableTr">
 		        <td class="dataElementDescription compareDataElementDescription">Object Class Version:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
-                    {{data.dataElementConcept.objectClass.version}}
+                    {{data.dataElementConcept.objectClass.formattedVersion}}
                 </td>                		        
 		    </tr>                        		                            
 		    <tr class="dataElementViewTableTr">
@@ -289,7 +289,7 @@
 		    <tr class="dataElementViewTableTr">
 		        <td class="dataElementDescription compareDataElementDescription">Property Version:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
-                    {{data.dataElementConcept.property.version}}
+                    {{data.dataElementConcept.property.formattedVersion}}
                 </td>                		        
 		    </tr>                        		    		    		    
 		    <tr class="dataElementViewTableTr">
