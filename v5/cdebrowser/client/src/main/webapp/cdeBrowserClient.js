@@ -127,7 +127,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                             };
 
                                             $scope.fs.classifications = classifications;
-                                            // console.log($scope.fs.classifications)
                                             var classification = $filter('filter')($scope.fs.classifications, {'id':obj.classificationSchemeItemId})
                                             if (classification.length) {
                                                 $scope.fs.searchFilter.classification = classification.pop();

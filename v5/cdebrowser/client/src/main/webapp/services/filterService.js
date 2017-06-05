@@ -102,6 +102,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
         var breadcrumbs = programArea.treePath;
         if (this.searchFilter.context && this.searchFilter.context!="") {
             var contexts = programArea.children;
+            console.log(contexts)
             for (var context=0; context<contexts.length;context++) {
                 if (this.searchFilter.context==contexts[context].idSeq) {
                     breadcrumbs = angular.copy(contexts[context].treePath);
@@ -137,6 +138,9 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
                 breadcrumbs.push(this.searchFilter.protocol.protocolLongName);
                 breadcrumbs.push(this.searchFilter.protocol.name);
             }
+        };
+        if (this.searchFilter.programArea) {
+            breadcrumbs[0] = this.serverData[this.searchFilter.programArea].palNameDescription;
         };
         return breadcrumbs
     };  
