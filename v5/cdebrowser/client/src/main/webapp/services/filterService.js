@@ -145,12 +145,16 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
     this.setVariablesFromURLParameters = function(parameters) {
         var keys = Object.keys(parameters);
 
-        if (keys.indexOf('programArea') > -1) {
-            this.searchFilter.programArea = parseInt(parameters.programArea);
-        };
-
         if (keys.indexOf('contextId') > -1) {
             this.searchFilter.context = parameters.contextId;
+
+            if (keys.indexOf('programArea') > -1) {
+                var parsedProgramArea = parseInt(parameters.programArea);
+                if (parsedProgramArea) {
+                    var programArea = $filter('filter')(this.serverData,parameters.contextId).pop().programArea
+                    this.searchFilter.programArea = programArea;
+                };
+            };            
         };    
 
         if (keys.indexOf('classificationSchemeId') > -1) {
