@@ -44,7 +44,7 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 				+ "and rb.BLOB_CONTENT is not NULL";
 	
 	protected static final String sqlRetrieveLatestRdIdseqByAcIdseq = 
-		"SELECT rd_idseq FROM sbr.reference_documents WHERE ac_idseq = ? order by display_order desc";
+		"SELECT rd_idseq FROM sbr.reference_documents WHERE ac_idseq = ? order by display_order";
 
 	ReferenceDocBlobDAO referenceDocBlobDAO;
 	@Autowired
