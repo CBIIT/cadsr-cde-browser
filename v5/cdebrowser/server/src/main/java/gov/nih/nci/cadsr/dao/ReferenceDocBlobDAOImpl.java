@@ -33,16 +33,19 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 
     private JdbcTemplate jdbcTemplate;
     
+    //This SQL retrieves the latest Ref Doc BLOB BLOB itself
 	protected static final String sqlRetrieveReferenceDocBlobByRdIdseq = 
 		"select rb.RD_IDSEQ, rb.NAME DOC_NAME, rb.MIME_TYPE, rb.BLOB_CONTENT DOC_CONTENT from "
 			+ "sbr.REFERENCE_BLOBS rb where rb.RD_IDSEQ = ? "
 			+ "and rb.BLOB_CONTENT is not NULL order by rb.DATE_CREATED desc";
 	
+	//This SQL is used to check if RD_IDSEQ has any BLOB to download
 	protected static final String sqlDownloadBlobIdseqByAcIdseq = 
 			"select rb.RD_IDSEQ from "
 				+ "sbr.REFERENCE_BLOBS rb where rb.RD_IDSEQ = ? "
 				+ "and rb.BLOB_CONTENT is not NULL";
 	
+	//Used to retrieve a Reference Document of a CDE based on Ref Doc Display Order
 	protected static final String sqlRetrieveLatestRdIdseqByAcIdseq = 
 		"SELECT rd_idseq FROM sbr.reference_documents WHERE ac_idseq = ? order by display_order";
 
@@ -67,16 +70,18 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 	 */
 	@Override
 	public ReferenceDocBlobModel retrieveReferenceDocBlobByRdIdseq(String rdIdseq) {
-		logger.debug("retrieveReferenceDocBlobByRdIdseq by rdIdseq: " + rdIdseq);
+		//logger.debug("retrieveReferenceDocBlobByRdIdseq by rdIdseq: " + rdIdseq);
 		if (StringUtils.isNotBlank(rdIdseq)) {
 			try {
 				logger.debug(sqlRetrieveReferenceDocBlobByRdIdseq.replace("?", rdIdseq) + " <<<<<<<");
-				ReferenceDocBlobModel referenceDocBlobModel = jdbcTemplate.queryForObject(sqlRetrieveReferenceDocBlobByRdIdseq,
+				List<ReferenceDocBlobModel> referenceDocBlobModelList = jdbcTemplate.query(sqlRetrieveReferenceDocBlobByRdIdseq,
 				new Object[] {rdIdseq}, MAPPER_ReferenceDocBlobModel);
-				return referenceDocBlobModel;
+				if ((referenceDocBlobModelList != null) && (referenceDocBlobModelList.size() > 0)) {
+					return referenceDocBlobModelList.get(0);
+				}
 			}
-			catch (EmptyResultDataAccessException e) {
-				logger.info("retrieveReferenceDocBlobByRdIdseq Reference Document Context is not found by rdIdseq: " + rdIdseq);
+			catch (Exception e) {
+				logger.error("retrieveReferenceDocBlobByRdIdseq Reference Document Context is not found by rdIdseq: " + rdIdseq + e);
 			}
 		}
 		return null;
@@ -86,21 +91,23 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 	 */
 	@Override
 	public String retrieveDownloadBlobIdseqByAcIdseq(String acIdseq) {
-		logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
+		//logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
+		//find the reference document with the preferred display order
 		String rdIdseq = retrieveLatestRdIdseqByAcIdseq(acIdseq);
 		String downloadIdseq = null;
 		if (StringUtils.isNotBlank(rdIdseq)) {//check that this rdIdseq has any BLOBs
 			try {
-				logger.debug(sqlDownloadBlobIdseqByAcIdseq.replace("?", rdIdseq) + " <<<<<<<");
-				List<String> rdIdseqList = jdbcTemplate.query(
-						sqlDownloadBlobIdseqByAcIdseq,
+				//logger.debug(sqlDownloadBlobIdseqByAcIdseq.replace("?", rdIdseq) + " <<<<<<<");
+				//check if this Reference Document found above has any BLOB to Download Template. If yes this found rd_idseq will be attached to Protocol Form.
+				//This not-null rd_idseq in Protocol shows that we need to show Download Template button in UI.
+				List<String> rdIdseqList = jdbcTemplate.query(sqlDownloadBlobIdseqByAcIdseq,
 					new Object[] {rdIdseq}, new StringPropertyMapper(String.class));
 				if ((rdIdseqList != null) && (rdIdseqList.size() > 0)) {
-					downloadIdseq = rdIdseqList.get(0);
+					return rdIdseq;
 				}
 			}
-			catch (EmptyResultDataAccessException e) {
-					logger.info("retrieveDownloadBlobIdseqByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq + ", and rdIdseq: " + rdIdseq);
+			catch (Exception e) {
+					logger.debug("retrieveDownloadBlobIdseqByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq + ", and rdIdseq: " + rdIdseq + e);
 			}
 		}
 		return downloadIdseq;
@@ -111,7 +118,7 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 	 */
 	@Override
 	public String retrieveLatestRdIdseqByAcIdseq(String acIdseq) {
-		logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
+		//logger.debug(sqlRetrieveLatestRdIdseqByAcIdseq.replace("?", acIdseq) + " <<<<<<<");
 		String referenceDocModelId = null;
 		try {
 			List<String> rdIdSeqList = jdbcTemplate.query(
@@ -122,7 +129,7 @@ public class ReferenceDocBlobDAOImpl extends AbstractDAOOperations implements Re
 			}
 		}
 		catch (EmptyResultDataAccessException e) {
-				logger.info("retrieveLatestRdIdseqByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq);
+				logger.debug("retrieveLatestRdIdseqByAcIdseq Reference Document IDSEQ is not found by acIdseq: " + acIdseq);
 		}
 		return referenceDocModelId;
 	}
