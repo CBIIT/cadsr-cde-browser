@@ -315,7 +315,7 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                 else {
                     contextId = selNode.idSeq;
                 };
-                scope.highlightNode(selNode,true, contextId);
+                scope.highlightNode(selNode,true, false, contextId);
                 scope.multiTabSelect(contextId);
                 //remove highlight from previous node
                 // if (scope[treeId].currentNode && scope[treeId].currentNode.selected) {

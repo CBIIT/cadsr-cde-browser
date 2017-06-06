@@ -121,7 +121,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                         if (keys.indexOf('classificationSchemeItemId')>-1) {
                                             var selectedItem = $filter('filter')(fs.myclassifications,{csCsiIdSeq:obj.classificationSchemeItemId});
                                             var classifications = groupFactory1.load(selectedItem[0].csIdSeq);
-                                            console.log(classifications)
                                             if (classifications.lengh>1) {
                                                 classifications.pop();                                                
                                             };
@@ -525,8 +524,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.queryField = 0; //Starting selection
 
     //When user clicks on a tree element
-    $scope.displaySelected = function (node, treePath, text, href, hover) {
-        $scope.breadCrumbs = treePath;
+    $scope.displaySelected = function (node, treePath, text, href, hover, isButtonSearch) {
+        if (!isButtonSearch) { $scope.breadCrumbs = treePath; }; // if button search do  not set breadcrumbs here //
         $scope.resetSortOrder();
         $location.path("/search").replace();
 
@@ -875,7 +874,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.isSearching = true;
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
-        // console.log("url: " + url);
 
         $http.get(url).success(function (response) {
 
@@ -922,7 +920,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             }, 1);
         }).error(function (data, status, headers, config) {
-            // console.log("Error making call to server: " + url);
 
             if( status == 400)
             {
@@ -1590,7 +1587,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
         else {
             // this is just a context //
-            $scope.highlightNode(context,false);
+            $scope.highlightNode(context,false, true);
         };
         $scope.multiTabSelect();
 
@@ -1613,14 +1610,14 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         for (var a=0; a<children.length; a++) {
           if ($scope.fs.searchFilter[type].id==children[a][typeId]) {
-            $scope.highlightNode(children[a],false); // highlight level 1 child //
+            $scope.highlightNode(children[a],false, true); // highlight level 1 child //
           }
           else {
             var grandChildren = children[a].children;
             for (var child=0; child<grandChildren.length; child++) {
               if ($scope.fs.searchFilter[type].id==grandChildren[child][typeId]) {
                 children[a].collapsed = false; // open parent of level 2 child //
-                $scope.highlightNode(grandChildren[child],false); //highlight level 2 child //
+                $scope.highlightNode(grandChildren[child],false, true); //highlight level 2 child //
               }
               else {
                 var greatGrandChildren = grandChildren[child].children;
@@ -1628,7 +1625,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                   if ($scope.fs.searchFilter[type].id==greatGrandChildren[g_child].href.split(',')[1]) {
                     children[a].collapsed=false; // open grandparent of level 3 child //
                     grandChildren[child].collapsed=false; // open parent of level 3 child //
-                    $scope.highlightNode(greatGrandChildren[g_child],false); // highlight level 3 child //
+                    $scope.highlightNode(greatGrandChildren[g_child],false, true); // highlight level 3 child //
                   }
                   else {
                     var greatGreatGrandChildren = greatGrandChildren[g_child].children;
@@ -1637,7 +1634,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                             children[a].collapsed=false;
                             grandChildren[child].collapsed=false;
                             greatGrandChildren[g_child].collapsed=false;
-                            $scope.highlightNode(greatGreatGrandChildren[g_g_child], false)
+                            $scope.highlightNode(greatGreatGrandChildren[g_g_child], false, true)
                         };
                     };
                   };                  
@@ -1649,7 +1646,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     // selects tree node and highlights it in blue //
-    $scope.highlightNode = function(selNode, tree, contextId) {
+    $scope.highlightNode = function(selNode, tree, isButtonSearch, contextId) {
         
         if (!contextId) {
             contextId = $scope.fs.searchFilter.context;
@@ -1686,7 +1683,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.navTree.currentNode.selected = undefined;
         };
         selNode.selected = 'selected';
-        $scope.displaySelected(selNode,selNode.treePath,selNode.text,selNode.href,selNode.hover);
+        $scope.displaySelected(selNode,selNode.treePath,selNode.text,selNode.href,selNode.hove, isButtonSearch);
         $scope.navTree.currentNode = selNode;        
     };
 
