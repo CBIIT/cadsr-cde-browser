@@ -71,21 +71,13 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 	    };
 
 
-	    // dowmloads template for protocol form //
+	    // downloads template for protocol form //
 	    this.downloadTemplate = function(id) {
 	    	this.progressMessage = {"status":1,"message":"Downloading Template", "isErrorMessage":0};
 	    	var that = this;
-
-	            $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/'+id}).
-	            success(function(data, status, headers, config) {
-	            	that.progressMessage.status=0;
-	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/" + id;
-	            }).
-	            error(function(data, status, headers, config) {
-			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
-	            });
-
-	    };	    
+        	that.progressMessage.status=0;
+            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/" + id;
+	    };
     };
     return downloadFactory;
 });
