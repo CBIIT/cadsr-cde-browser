@@ -35,8 +35,37 @@ public class DownloadTemplateController {
 	
 	@Autowired
 	private ReferenceDocBlobDAO referenceDocBlobDAO;
-
-	@RequestMapping(value = "/{rdIdseq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/refdocid/{acIdseq}", method = RequestMethod.GET, produces = "text/plain")
+	public ResponseEntity<String> retrieveReferenceDocumentIdseq(@PathVariable("acIdseq") String acIdseq) throws Exception {
+		logger.debug("Received RESTful call retrieveREferenceDocumentIdseq; acIdseq: " + acIdseq);
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "text/plain");
+		if (ParameterValidator.validateIdSeq(acIdseq)) {
+			try {
+				String referenceDocIdseq = referenceDocBlobDAO.retrieveLatestRdIdseqByAcIdseq(acIdseq);
+				if (referenceDocIdseq != null) {
+					logger.debug("Sending referenceDocIdseq: " + referenceDocIdseq);
+					return new ResponseEntity<String>(referenceDocIdseq, HttpStatus.OK);
+				}
+				else {
+					logger.debug("Sending 'null' response NOT_FOUND for acIdseq: " + acIdseq);
+					return new ResponseEntity<String>("null", responseHeaders, HttpStatus.NOT_FOUND);
+				}
+			}
+			catch (Exception e) {
+				String errorResult = String.format(SERVER_ERROR_RETRIEVING_REF_IDSEQ, acIdseq, e.getMessage());
+				logger.error(errorResult, e);
+				return new ResponseEntity<String>(errorResult, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		else {
+			String errorResult = String.format(CLIENT_ERROR_ID_FORMAT_WRONG, acIdseq);
+			logger.error(errorResult);
+			return new ResponseEntity<String>(errorResult, responseHeaders, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/doc/{rdIdseq}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> retrieveTemplateFile(@PathVariable("rdIdseq") String rdIdseq) throws Exception {
 		logger.debug("Received RESTful call to Download Template; rdIdseq: " + rdIdseq);
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -55,8 +84,8 @@ public class DownloadTemplateController {
 					return buildErrorResponse(rdIdseq, CLIENT_ERROR_TEMPLATE_NOT_FOUND, responseHeaders, HttpStatus.NOT_FOUND);
 				}
 			}
-			catch (Exception e) {
-				logger.error("Error in DownloadTemplateController " + rdIdseq + ' ' + e);
+			catch (Exception e) {			
+				logger.error("Error in DownloadTemplateController retrieveTemplateFile rdIdseq: " + rdIdseq, e);
 				return buildErrorResponse(rdIdseq, SERVER_ERROR_FORMATTED, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -64,10 +93,12 @@ public class DownloadTemplateController {
 			return buildErrorResponse(rdIdseq, CLIENT_ERROR_ID_FORMAT_WRONG, responseHeaders, HttpStatus.BAD_REQUEST);
 		}
 	}
-	protected final static String CLIENT_ERROR_TEMPLATE_NOT_FOUND = "Client Error: Template not found using provided Reference Document ID: %s";
-	protected final static String CLIENT_ERROR_ID_FORMAT_WRONG = "Client Error: Unexpected Reference Document ID format: %s";
-	protected final static String SERVER_ERROR_FORMATTED = "Error in DownloadTemplateController on provided Reference Document ID: %s";
-
+	protected final static String CLIENT_ERROR_TEMPLATE_NOT_FOUND = "Client Error: Document Template not found searched by provided Reference Document IDSEQ: %s";
+	protected final static String CLIENT_ERROR_ID_FORMAT_WRONG = "Client Error: Unexpected ID format: %s";
+	protected final static String SERVER_ERROR_FORMATTED = "Error in DownloadTemplateController retrieving Document Template by provided Reference Document IDSEQ: %s";
+	
+	protected final static String SERVER_ERROR_RETRIEVING_REF_IDSEQ = "Error in DownloadTemplateController retrieving Reference Document by provided AC IDSEQ: %s, Message: %s";
+	
 	protected ResponseEntity<InputStreamResource> buildErrorResponse(String rdIdseq, String strMessageFormat, 
 			HttpHeaders responseHeaders, HttpStatus httpStatus) {
 		String errorMessage = String.format(strMessageFormat, rdIdseq);
