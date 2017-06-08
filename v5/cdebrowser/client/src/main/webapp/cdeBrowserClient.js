@@ -1595,7 +1595,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
           else {
             var grandChildren = children[a].children;
             for (var child=0; child<grandChildren.length; child++) {
-              if ($scope.fs.searchFilter[type].id==grandChildren[child][typeId]) {
+              var id = grandChildren[child][typeId];                
+              if (type == 'protocol') { // only run this if protocol //
+                id = grandChildren[child].href.split(',')[1];
+              };  
+
+              if ($scope.fs.searchFilter[type].id==id) {
                 children[a].collapsed = false; // open parent of level 2 child //
                 $scope.highlightNode(grandChildren[child],false, true); //highlight level 2 child //
               }
