@@ -15,7 +15,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.valueMeaningHash = "";
     var searchedByURL = false;
     var delimiter = ":::";  
-    window.filter = $filter;
+
 
     /* Start of filter service */
     var fs = filterService // define service instance //
@@ -26,7 +26,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     displayURLParameters = function() {
         $scope.$watch('contextSearchFinished',function() {
             $location.search({}); // clean url first //
-
             if ($scope.contextSearchFinished==2) {
 
                 var sf = $scope.fs.searchFilter;
@@ -175,7 +174,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         else {
             if (Object.keys(fs.searchFilter).length) {
                 if (Object.keys(fs.searchFilter).length==1) { // dont do a search because only program area is selected //
-                    // console.log("NO SEARCH");
                 }
                 else {
 
@@ -220,7 +218,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // reset filters //
     $scope.resetFilters = function() {
-        // console.log("IN resetFilters");
 
         fs.resetFilters();
         $scope.resetSortOrder();
@@ -232,6 +229,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     };
 
     $scope.search = function() {
+        if (fs.searchFilter.protocol) {
+            $scope.getrdIdseq(); // check for download template and get rdIdseq  //
+        };
+
         $scope.onClickBasicSearch(fs.dataElementVariables.basicSearchQuery,
             'name', fs.dataElementVariables.searchDEC, fs.dataElementVariables.searchPV,
             fs.dataElementVariables.searchPVQueryType, fs.dataElementVariables.selectedQueryType, fs.dataElementVariables.searchVD,
@@ -259,6 +260,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // When a context is changed, get classifications and protocol forms //
     $scope.contextSearch = function(contextId, isURLSearch) {
+        $scope.protocolTemplate = false; // reset protocol template variable //
         $scope.contextSearchFinished = 0;
         $scope.classificationProtocolsLoaded = 0;
         // if ($scope.filterService.searchFilter.classification) {
@@ -287,6 +289,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     var fName = $filter('filter')($scope.filterService.protocols,{protocolLongName:contextId.selectedNode.text})
                 }
                 $scope.selectFiltersByNode(contextId.searchType,contextId.id,fName[0]);
+                $scope.getrdIdseq(); // check for download template and get rdIdseq  //
             }
             else{
 
@@ -306,7 +309,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             groupFactory1.fillClassifications(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
                 // if (!contextId.selectedNode.parentId) { contextId.selectedNode.parentId=tempClassification.csIdSeq } 
-                    // console.log(contextId.selectedNode.parentId, 'this is the tempClassification->',tempClassification)
                var finalID = '';
 
                 if(contextId.selectedNode.idSeq!=contextId.selectedNode.parentId) {
@@ -566,7 +568,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
 
 
-            // console.log($scope.cdeDetails.valueDomain.valueDomainDetails);
 
 
 
@@ -876,7 +877,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.progressMessage.status=0;
 
         $http.get(url).success(function (response) {
-
             fs.isSearching = false;
             $scope.searchResults = response;
             $scope.rslt = []; // clear message //
@@ -923,11 +923,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             if( status == 400)
             {
-                // console.log("HTTP Error 400: The request could not be understood by the server due to malformed syntax.");
             }
             else
             {
-                // console.log("Error: " + status);
             }
 
         });
@@ -1075,32 +1073,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
     }
 
-
-    // $scope.$on('updateTree',function(event,data) {
-    //     // setTimeout(function(){
-    //         $scope.testtrianing=data;
-    //         // console.log($scope.contextListMaster[$scope.currentTab].children)
-    //         var arr=$scope.contextListMaster[$scope.currentTab].children
-    //     var filtered_data = $filter('filter')(arr,function(item,index,array) {
-    //         var search_text=item.text;
-    //         // console.log(item)
-    //         if(search_text.indexOf('Test')!=-1) {
-    //             //console.log(angular.element(document.querySelectorAll("#"+item.idSeq)));
-    //             angular.element(document.getElementById(item.idSeq)).parent().prop('hidden',data.text);
-    //             // angular.element(document.getElementById(item.idSeq)).parent().css("display","none")
-
-    //         }
-    //         else if(search_text.indexOf('Training') !=-1) {
-    //             //console.log(angular.element(document.querySelectorAll("#"+item.idSeq)));
-    //             angular.element(document.getElementById(item.idSeq)).parent().prop('hidden', data.trianing);
-    //             // angular.element(document.getElementById(item.idSeq)).parent().css("display","none")
-    //         }
-    //         return false;
-    //     });
-    //     // console.log(filtered_data)
-    //     // },2000)
-
-    // });
 
     $scope.$on('updateTree',function(event,data) {
         $scope.testtrianing = data;
@@ -1438,10 +1410,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.downloadFactory.downloadToXML($scope.checkedItemsForDownload);
     };
 
+
     // downloads template for protocol form //
     $scope.downloadTemplate = function() {
         $scope.downloadFactory.downloadTemplate(fs.searchFilter.protocol.rdIdseq)
     };
+
+
+   
+    // gets rdIdseq for downloadTemplate function //
+    $scope.getrdIdseq = function() {
+        $scope.downloadFactory.getrdIdseq(fs.searchFilter.protocol)
+    };    
 
     // log the user out //
     $scope.logout = function() {

@@ -1,4 +1,4 @@
-angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
+angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filterService) {
     var downloadFactory = function() {
 		// service to download files //
 		this.progressMessage = {"status":0,"message":"Exporting Data", "isErrorMessage":0}; // download status message //
@@ -71,21 +71,37 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http) {
 	    };
 
 
+	    // checks if template exists //
+	    this.getrdIdseq = function(protocol) {
+	    	var that = this;
+
+            $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/refdocid/'+protocol.formIdSeq}).
+            success(function(data, status, headers, config) {
+            	that.progressMessage.status = 0;
+		    	protocol['rdIdseq'] = data;
+            }).
+            error(function(data, status, headers, config) {
+            	if (status!=404) {
+			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
+            	}
+            });	    	
+	    };	
+
 	    // dowmloads template for protocol form //
 	    this.downloadTemplate = function(id) {
 	    	this.progressMessage = {"status":1,"message":"Downloading Template", "isErrorMessage":0};
 	    	var that = this;
 
-	            $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/'+id}).
+	            $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/doc/'+id}).
 	            success(function(data, status, headers, config) {
 	            	that.progressMessage.status=0;
-	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/" + id;
+	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/doc/" + id;
 	            }).
 	            error(function(data, status, headers, config) {
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
 	            });
 
-	    };	    
+	    };		        
     };
     return downloadFactory;
 });
