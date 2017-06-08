@@ -13,7 +13,7 @@ angular.module('cdeBrowserApp')
             scope.filterService =filterService;
               scope.breadcrumbs = [{ "id": 0, "title": "Protocols" }];
                   scope.loadProtocols=function(searchInput){
-                    if(searchInput.length===3) {
+                    if(searchInput.length>=3) {
         
             $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
             groupFactory.fillProtocols(response);
