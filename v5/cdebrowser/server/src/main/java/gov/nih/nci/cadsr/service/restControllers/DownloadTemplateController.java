@@ -42,7 +42,7 @@ public class DownloadTemplateController {
 		responseHeaders.set("Content-Type", "text/plain");
 		if (ParameterValidator.validateIdSeq(acIdseq)) {
 			try {
-				String referenceDocIdseq = referenceDocBlobDAO.retrieveLatestRdIdseqByAcIdseq(acIdseq);
+				String referenceDocIdseq = referenceDocBlobDAO.retrieveDownloadBlobIdseqByAcIdseq(acIdseq);
 				if (referenceDocIdseq != null) {
 					logger.debug("Sending referenceDocIdseq: " + referenceDocIdseq);
 					return new ResponseEntity<String>(referenceDocIdseq, HttpStatus.OK);
