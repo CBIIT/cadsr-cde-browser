@@ -17,6 +17,7 @@ angular.module('cdeBrowserApp')
         
             $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{protocolOrForm:searchInput}}).success(function(response) {
             groupFactory.fillProtocols(response);
+            scope.breadcrumbs = [{ "id": 0, "title": "Protocols" }] // reset breadcrumbs to prevent double form breadcrumbs //
            scope.filterService.protocols = groupFactory.load(0);
            
             }); 
