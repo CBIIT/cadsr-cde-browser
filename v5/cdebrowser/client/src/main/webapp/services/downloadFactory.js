@@ -84,6 +84,9 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
             	if (status!=404) {
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
             	}
+            	else {
+	            	that.progressMessage.status=0;
+            	}
             });	    	
 	    };	
 
