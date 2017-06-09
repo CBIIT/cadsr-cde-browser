@@ -41,6 +41,7 @@ angular.module('cdeBrowserApp')
         })
 
               scope.loadChildGroupsOf1 = function (group, $select) {
+                console.log(group,$select)
                   $select.search = '';
                   group.title='CSI';
 
