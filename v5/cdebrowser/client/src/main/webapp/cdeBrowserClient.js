@@ -142,9 +142,18 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
         };
     });
-
     $scope.contextCascade = function(selectedInput) {
+
         if (selectedInput!==undefined)
+            window.f = $filter;
+            if (fs.searchFilter.programArea) { // program area is not all, do lookup //
+                var programAreaPalName = selectedInput.programAreaPalName;
+                var contexts = $scope.contextListMaster[fs.searchFilter.programArea].children;
+                var match = $filter('filter')(contexts,{'palName':programAreaPalName}, true); // find match of selected input for current context list //
+                if (!match.length) { // if selected classification or protocol's context is not in current context list reset program area //
+                    $scope.filterService.searchFilter.programArea = 0;
+                };
+            };
             $scope.filterService.searchFilter.context = selectedInput.contextIdSeq;
     };
 
