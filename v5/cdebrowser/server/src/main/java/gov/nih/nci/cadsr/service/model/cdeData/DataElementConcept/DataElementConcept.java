@@ -5,6 +5,8 @@ package gov.nih.nci.cadsr.service.model.cdeData.DataElementConcept;
 
 import gov.nih.nci.cadsr.dao.model.ConceptModel;
 import gov.nih.nci.cadsr.service.model.cdeData.SelectedDataElement;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateDefinitionCsCsi;
+import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateNameCsCsi;
 
 import java.util.List;
 
@@ -16,7 +18,8 @@ public class DataElementConcept
     private List<ConceptModel> objectClassConcepts = null;
     private Property property = null;
     private List<ConceptModel> propertyConcepts = null;
-
+    private List<AlternateNameCsCsi> alternateNames;
+    private List<AlternateDefinitionCsCsi> alternateDefinitions;
 
     public SelectedDataElement getSelectedDataElement()
     {
@@ -77,4 +80,29 @@ public class DataElementConcept
     {
         this.propertyConcepts = propertyConcepts;
     }
+
+	public List<AlternateNameCsCsi> getAlternateNames() {
+		return alternateNames;
+	}
+
+	public void setAlternateNames(List<AlternateNameCsCsi> alternateNames) {
+		this.alternateNames = alternateNames;
+	}
+
+	public List<AlternateDefinitionCsCsi> getAlternateDefinitions() {
+		return alternateDefinitions;
+	}
+
+	public void setAlternateDefinitions(List<AlternateDefinitionCsCsi> alternateDefinitions) {
+		this.alternateDefinitions = alternateDefinitions;
+	}
+
+	@Override
+	public String toString() {
+		return "DataElementConcept [selectedDataElement=" + selectedDataElement + ", dataElementConceptDetails="
+				+ dataElementConceptDetails + ", objectClass=" + objectClass + ", objectClassConcepts="
+				+ objectClassConcepts + ", property=" + property + ", propertyConcepts=" + propertyConcepts
+				+ ", alternateNames=" + alternateNames + ", alternateDefinitions=" + alternateDefinitions + "]";
+	}
+    
 }

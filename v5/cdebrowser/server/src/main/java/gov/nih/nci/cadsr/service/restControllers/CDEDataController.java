@@ -834,10 +834,51 @@ public class CDEDataController
         List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setPropertyConcepts( propertyConcepts );
 
+        //CDEBROWSER-811 add Alternate Names and Definitions to DEC DE tab
+        buildDecAltNamesDefinitions(dataElementConcept);
+
         return dataElementConcept;
     }
-
-    private DataElementConceptDetails getDataElementConceptDetails( DataElementModel dataElementModel )
+    //CDEBROWSER-811 CDEBROWSER-825 CDEBROWSER-803 Add Alternate sections to DEC details
+    protected void buildDecAltNamesDefinitions(DataElementConcept dataElementConcept) {
+		//FIXME implement this is a method stub
+    	List<AlternateNameCsCsi> alternateNames = new ArrayList<>();
+    	List<AlternateDefinitionCsCsi> alternateDefinitions = new ArrayList<>();
+    	List<String> csCsi = new ArrayList<>();
+    	csCsi.add("testCS1/testCSI1");
+    	csCsi.add("testCS2/testCSI2");
+    	AlternateNameCsCsi alternateNameCsCsi = new AlternateNameCsCsi();
+    	alternateNameCsCsi.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
+    	alternateNameCsCsi.setCsCsi(csCsi);
+    	alternateNameCsCsi.setLanguage("English");
+    	alternateNameCsCsi.setName("Alt Designation test 1");
+    	alternateNames.add(alternateNameCsCsi);
+    	AlternateNameCsCsi alternateNameCsCsi1 = new AlternateNameCsCsi();
+    	alternateNameCsCsi1.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
+    	alternateNameCsCsi1.setCsCsi(csCsi);
+    	alternateNameCsCsi1.setLanguage("Spanish");
+    	alternateNameCsCsi1.setType("Previous Designation Type");
+    	alternateNameCsCsi1.setName("Alt Designation test 2");
+    	alternateNames.add(alternateNameCsCsi1);
+    	AlternateDefinitionCsCsi def = new AlternateDefinitionCsCsi();
+    	def.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
+    	def.setCsCsi(csCsi);
+    	def.setType("Previous Definition Type");
+    	def.setLanguage("Spanish");
+    	def.setName("Alt Definition Test 1");
+    	alternateDefinitions.add(def);
+    	AlternateDefinitionCsCsi def1 = new AlternateDefinitionCsCsi();
+    	def1.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
+    	def1.setCsCsi(csCsi); 
+    	def1.setLanguage("English");
+    	def1.setType("HISTORICAL_CDE_ID");
+    	def.setName("Alt Definition Test 2");
+    	alternateDefinitions.add(def1);
+    	
+    	dataElementConcept.setAlternateDefinitions(alternateDefinitions);
+    	dataElementConcept.setAlternateNames(alternateNames);
+	}
+	private DataElementConceptDetails getDataElementConceptDetails( DataElementModel dataElementModel )
     {
         DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();
 
