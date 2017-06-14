@@ -42,6 +42,9 @@ import gov.nih.nci.ncicb.cadsr.common.dto.ValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElementDerivation;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElementDerivationType;
 import gov.nih.nci.ncicb.cadsr.common.resource.DerivedDataElement;
 import gov.nih.nci.ncicb.cadsr.common.resource.Representation;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
@@ -407,14 +410,15 @@ public class CdeCartUtil implements CdeCartUtilInterface {
         de.setUsingContexts(deModel.getUsingContexts());
         de.setRegistrationStatus(deModel.getRegistrationStatus());
         
-        //Add Derivation section 
-        //FIXME this call creates a wrong format of Derived DE
-//        DerivedDataElement derivedDataElement = buildDerivedDataElementTransferObject(deModel.getPublicId());
-//        if (derivedDataElement != null) {
-//        	de.setDerivedDataElement(derivedDataElement);
-//        }
+        //CDEBROWSER-280 Add Derivation section 
+        //this call creates Derived DE section
+        DerivedDataElement derivedDataElement = buildCartDerivedDataElementTransferObject(deModel);
+        if (derivedDataElement != null) {
+        	de.setDerivedDataElement(derivedDataElement);
+        }
         return de;
     }
+    
 	public ValueDomainTransferObject buildValueDomainTransfer(ValueDomainModel modelVm){
 		ValueDomainTransferObject dtoVd = new ValueDomainTransferObject();
     	if (modelVm == null) return dtoVd;
@@ -607,78 +611,68 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     	return representation;
     }
     /**
-     * This method finds CDE Derivation based on CDE Public ID.
-     * 
-     * @param deId Derived element public ID
-     * @return DerivedDataElementTransferObject implementing interface DerivedDataElement
+     * Initialize the Data Elements Derivation.
+     * CDEBROWSER-280
+     *
+     * @param dataElementModel data model from the database
+     * @return Data model for the UI client.
      */
-    
-    public DerivedDataElement buildDerivedDataElementTransferObject(int deId) {
-    	DerivedDataElementTransferObject derivedDto = new DerivedDataElementTransferObject();
-    	DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeId(deId);
-    	if (dataElementDerivationModel == null) {
-    		return null;
-    	}
-    	//make mapping
-    	DataElementDerivationTypeTransferObject dtoType = new DataElementDerivationTypeTransferObject();
-    	dtoType.setName(dataElementDerivationModel.getDerivationType());
-    	derivedDto.setType(dtoType);
-    	derivedDto.setConcatenationCharacter(dataElementDerivationModel.getConcatenationCharacter());
-    	derivedDto.setCreatedBy(dataElementDerivationModel.getCreatedBy());
-    	derivedDto.setDateModified(dataElementDerivationModel.getDateModified());
-    	//FIXME where this Dde ID? This model does not have it???
-    	derivedDto.setDdeIdSeq(null);
-    	derivedDto.setMethods(dataElementDerivationModel.getMethod());
-    	derivedDto.setModifiedBy(dataElementDerivationModel.getModifiedBy());
-    	derivedDto.setRule(dataElementDerivationModel.getRule());
-        List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId(deId);
-        Collection<DataElementDerivationTransferObject> derivedCollection = new ArrayList<>();
-        derivedDto.setDataElementDerivation(derivedCollection);
-        if (dataElementDerivationComponentModels != null) {
-	        DataElementDerivationTransferObject derivedItem;
-	        DataElementTransferObject de;
-	        for (DataElementDerivationComponentModel modelItem : dataElementDerivationComponentModels) {
-	        	derivedItem = new DataElementDerivationTransferObject();
-	        	de = new DataElementTransferObject();
-	        	derivedItem.setDerivedDataElement(de);
-	        	derivedCollection.add(derivedItem);
-	        	derivedItem.setCreatedBy(modelItem.getCreatedBy());
-	        	derivedItem.setDateCreated(modelItem.getDateCreated());
-	        	derivedItem.setDateModified(modelItem.getDateModified());
-	        	//FIXME where CDR ID? This model does not have it???
-	        	derivedItem.setCdrIdSeq(null);
-	        	try {
-	        		int displayOrderValue = Integer.parseInt(modelItem.getDisplayOrder());
-	        		derivedItem.setDisplayOrder(displayOrderValue);
-	        	}
-	        	catch (NumberFormatException e) {
-	        		log.error("Error in DisplayOrder data in " + modelItem, e);
-	        	}
-	        	derivedItem.setModifiedBy(modelItem.getModifiedBy());
-	        	try {
-	        		int publicIdValue = Integer.parseInt(modelItem.getPublicId());
-	        		derivedItem.setDisplayOrder(publicIdValue);
-	        	}
-	        	catch (NumberFormatException e) {
-	        		log.error("Error in publicId data in " + modelItem, e);
-	        	}
-	        	
-	            de.setIdseq(modelItem.getDeIdseq());
-	            de.setLongName(modelItem.getLongName());
-	            de.setAslName(modelItem.getWorkflowStatus());
-	            try {
-	            	de.setVersion(Float.parseFloat(modelItem.getVersion()));
-	            }
-	            catch(NumberFormatException e) {
-	            	log.error("Error in Version data in " + modelItem, e);
-	            }
-	            de.setContextName(modelItem.getContext());
-	            de.setDeIdseq(modelItem.getDeIdseq());
-	        }//for
-	    	//TODO find and map missing data
-        }
-    	return derivedDto;
-    }
+	protected DerivedDataElement buildCartDerivedDataElementTransferObject(DataElementModel dataElementModel) {
+		DerivedDataElement dde = null;
+		DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeIdseq(dataElementModel.getDeIdseq());
+		//If dataElementDerivationModel == null then this CDE is not a derived data element.
+		if (dataElementDerivationModel != null) {
+			dde = createDerivedDataElementTO(dataElementDerivationModel);// new DerivedDataElementTransferObject with DataElementDerivationType
+			log.debug("buildCartDerivedDataElementTransferObject dataElementDerivationModel: " + dataElementDerivationModel);
+			//CDEBROWSER-280
+			//FIXME find a way to store CDE Derivation derived from element list. This way fails on OC API parsing saved XML. 
+			//Tested on  DEV CDE ID 2199956 which has multiple derived from. It appears to work for one derived from.
+			// List<DataElementDerivationComponentModel> dataElementDerivationComponentModelList = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeIdseq(dataElementModel.getDeIdseq());
+			// List<DataElementDerivation> dedList = dedList = createDerivedDataElementList(dataElementDerivationComponentModelList);
+			// dde.setDataElementDerivation(dedList);
+		}
+		return dde;
+	}
+
+	protected static List<DataElementDerivation> createDerivedDataElementList(List<DataElementDerivationComponentModel> dataElementDerivationComponentModels) {
+		List<DataElementDerivation> dedList = null;
+		if (dataElementDerivationComponentModels.size() > 0) {
+			dedList = new ArrayList<>();
+			DataElementDerivation ded;
+			DataElement de;
+			for (DataElementDerivationComponentModel dedcModel : dataElementDerivationComponentModels) {
+				ded = new DataElementDerivationTransferObject();
+				dedList.add(ded);
+				//ded.setCdrIdSeq(dedcModel.getCdrIdseq());
+				ded.setDisplayOrder(Integer.valueOf(dedcModel.getDisplayOrder()));
+				de = new DataElementTransferObject();
+				ded.setDerivedDataElement(de);
+				de.setIdseq(dedcModel.getDeIdseq());//cdr.c_de_idseq
+				de.setLongName(dedcModel.getLongName());
+				de.setCDEId(dedcModel.getPublicId());
+				de.setAslName(dedcModel.getWorkflowStatus());
+				de.setVersion(Float.valueOf(dedcModel.getVersion()));
+				de.setContextName(dedcModel.getContext());
+				de.setDeIdseq(dedcModel.getDeIdseq());
+			}
+		}
+		return dedList;
+	}
+	
+	protected static DerivedDataElement createDerivedDataElementTO(DataElementDerivationModel dataElementDerivationModel) {
+		DerivedDataElement dde = new DerivedDataElementTransferObject();
+		DataElementDerivationType dedt = new DataElementDerivationTypeTransferObject();
+		dde.setConcatenationCharacter(dataElementDerivationModel.getConcatenationCharacter());
+		dde.setCreatedBy(dataElementDerivationModel.getCreatedBy());
+		dde.setDateCreated(dataElementDerivationModel.getDateCreated());
+		dde.setDateModified(dataElementDerivationModel.getDateModified());
+		dde.setMethods(dataElementDerivationModel.getMethod());
+		dde.setModifiedBy(dataElementDerivationModel.getModifiedBy());
+		dde.setRule(dataElementDerivationModel.getRule());
+		dedt.setName(dataElementDerivationModel.getDerivationType());
+		dde.setType(dedt);
+		return dde;
+	}
     /* This is old code from CDE Browser v.4 mapping DED and its internal DE.
     protected Object mapRow(
       ResultSet rs,
@@ -698,7 +692,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
       return ded;
     }
      */
-    /*//CDEBROWSER-280 Derived requirement taking from XML Download. OC and XML Download are not the same XMLs.
+/*//CDEBROWSER-280 Derived requirement taking from XML Download. OC and XML Download are not the same XMLs.
 <ComponentDataElementsList_ITEM>
 <PublicId>2341957</PublicId>
 <LongName>Address Secondary Unit Indicator/Designator Number</LongName>
@@ -709,5 +703,5 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 <ContextName>NCIP</ContextName>
 <DisplayOrder>8</DisplayOrder>
 </ComponentDataElementsList_ITEM>
-     */
+ */
 }

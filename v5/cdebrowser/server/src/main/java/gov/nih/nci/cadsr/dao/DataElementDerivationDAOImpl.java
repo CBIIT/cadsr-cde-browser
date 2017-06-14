@@ -48,7 +48,37 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
 
         return results;
     }
+    
+    @Override
+    public DataElementDerivationModel getDataElementDerivationByCdeIdseq( String deIdseq )
+    {
 
+        String sql = "SELECT CRTL_NAME AS derivation_type, rule, METHODS AS method, CONCAT_CHAR AS concatenationCharacter, "
+        		+ "DATE_MODIFIED, DATE_CREATED, CREATED_BY, MODIFIED_BY " +
+                "FROM SBR.COMPLEX_DATA_ELEMENTS where P_DE_IDSEQ = ?";
+
+        logger.debug( sql.replace("?", deIdseq) + " <<<<<<<");
+
+        DataElementDerivationModel results = query( sql, deIdseq, DataElementDerivationModel.class );
+
+        return results;
+    }
+    
+    @Override
+    public List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeIdseq( String deIdseq )
+    {
+        String sql = "SELECT cdr.cdr_idseq, cdr.display_order, de.long_name, ct.name AS Context, de.cde_id AS public_id, "
+        		+ "de.version, de.asl_name AS workflowStatus, de.de_idseq " +
+                "from sbr.contexts ct, sbr.complex_de_relationships cdr, sbr.data_elements de " +
+                "where de.CONTE_IDSEQ = ct.CONTE_IDSEQ and cdr.c_de_idseq = de.de_idseq and p_de_idseq = ? " +
+                "order by cdr.display_order";
+
+        logger.debug( sql.replace( "?", deIdseq) + " <<<<<<<" );
+        List<DataElementDerivationComponentModel> results = getAll( sql, deIdseq, DataElementDerivationComponentModel.class );
+
+        return results;
+    }
+    
     @Override
     public List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeId( int cdeId )
     {

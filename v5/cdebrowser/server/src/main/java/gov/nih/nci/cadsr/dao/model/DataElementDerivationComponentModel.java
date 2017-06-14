@@ -5,7 +5,8 @@ package gov.nih.nci.cadsr.dao.model;
 
 public class DataElementDerivationComponentModel extends BaseModel
 {
-    private String displayOrder;
+    private String cdrIdseq;
+	private String displayOrder;
     private String longName;
     private String context;
     private String workflowStatus;
@@ -13,7 +14,16 @@ public class DataElementDerivationComponentModel extends BaseModel
     private String version;
     private String deIdseq;
 
-    public String getDisplayOrder()
+    
+    public String getCdrIdseq() {
+		return cdrIdseq;
+	}
+
+	public void setCdrIdseq(String cdrIdseq) {
+		this.cdrIdseq = cdrIdseq;
+	}
+
+	public String getDisplayOrder()
     {
         return displayOrder;
     }
@@ -86,10 +96,10 @@ public class DataElementDerivationComponentModel extends BaseModel
 
 	@Override
 	public String toString() {
-		return "DataElementDerivationComponentModel [displayOrder=" + displayOrder + ", longName=" + longName
-				+ ", context=" + context + ", workflowStatus=" + workflowStatus + ", publicId=" + publicId
-				+ ", version=" + version + ", deIdseq=" + deIdseq + ", getCreatedBy()=" + getCreatedBy()
-				+ ", getDateCreated()=" + getDateCreated() + ", getModifiedBy()=" + getModifiedBy()
+		return "DataElementDerivationComponentModel [cdrIdseq=" + cdrIdseq + ", displayOrder=" + displayOrder
+				+ ", longName=" + longName + ", context=" + context + ", workflowStatus=" + workflowStatus
+				+ ", publicId=" + publicId + ", version=" + version + ", deIdseq=" + deIdseq + ", getCreatedBy()="
+				+ getCreatedBy() + ", getDateCreated()=" + getDateCreated() + ", getModifiedBy()=" + getModifiedBy()
 				+ ", getDateModified()=" + getDateModified() + ", getFormattedVersion()=" + getFormattedVersion() + "]";
 	}
 
@@ -97,6 +107,7 @@ public class DataElementDerivationComponentModel extends BaseModel
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cdrIdseq == null) ? 0 : cdrIdseq.hashCode());
 		result = prime * result + ((context == null) ? 0 : context.hashCode());
 		result = prime * result + ((deIdseq == null) ? 0 : deIdseq.hashCode());
 		result = prime * result + ((displayOrder == null) ? 0 : displayOrder.hashCode());
@@ -116,6 +127,11 @@ public class DataElementDerivationComponentModel extends BaseModel
 		if (getClass() != obj.getClass())
 			return false;
 		DataElementDerivationComponentModel other = (DataElementDerivationComponentModel) obj;
+		if (cdrIdseq == null) {
+			if (other.cdrIdseq != null)
+				return false;
+		} else if (!cdrIdseq.equals(other.cdrIdseq))
+			return false;
 		if (context == null) {
 			if (other.context != null)
 				return false;
@@ -153,5 +169,5 @@ public class DataElementDerivationComponentModel extends BaseModel
 			return false;
 		return true;
 	}
-    
+
 }

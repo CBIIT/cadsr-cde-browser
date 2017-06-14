@@ -12,4 +12,6 @@ public interface DataElementDerivationDAO
 {
     DataElementDerivationModel getDataElementDerivationByCdeId( int cdeId );
     List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeId( int cdeId );
+	DataElementDerivationModel getDataElementDerivationByCdeIdseq(String deIdseq);
+    List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeIdseq(String deIdseq);
 }
