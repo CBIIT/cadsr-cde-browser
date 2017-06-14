@@ -19,6 +19,7 @@ angular.module('cdeBrowserApp')
         if(searchInput.length>=3) {
             $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
             groupFactory1.fillClassifications(response);
+            scope.breadcrumbs = [{ "id": 0, "title": "CS" }]; // reset breadcrumbs to prevent double CSI breadcrumbs //            
             scope.filterService.classifications = groupFactory1.load(0);
             });  
         }
