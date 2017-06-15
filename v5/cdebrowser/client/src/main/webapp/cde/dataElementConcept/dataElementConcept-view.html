@@ -109,70 +109,7 @@
 </table>
 <br>
 
-<!-- alternate names and definitions -->
-<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
-  <tr class="cdeDetailsSubHeading">
-    <th colspan="4" align="left">
-      <br />Alternate Names and Definitions</th>
-  </tr>
-</table>
 
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-  <tr>
-    <td class="dataElementHeading col1">Alternate Names</td>
-    <td class="dataElementHeading col2">Type</td>
-    <td class="dataElementHeading col3">Context</td>
-    <td class="dataElementHeading col4">Language</td>
-    <td class="dataElementHeading col5">Classifications</td>
-  </tr>
-  <tr class="dataElementViewTableTr" data-ng-repeat="altName in cdeDetails.dataElementConcept.alternateNames">
-    <td class="dataElementValue" ng-bind-html="altName.name">{{altName.name}}</td>
-    <td class="dataElementValue" ng-bind-html="altName.type">{{altName.type}}</td>
-    <td class="dataElementValue" ng-bind-html="altName.context">{{altName.context}}</td>
-    <td class="dataElementValue" ng-bind-html="altName.language">{{altName.language}}</td>
-    <td class="dataElementValue">
-      <ul ng-if="altName.csCsi" class="classification">
-        <li ng-repeat="csCsi in altName.csCsi">
-          {{csCsi}}<span ng-if="!$last">;</span>
-        </li>
-      </ul>
-    </td>
-  </tr>
-
-  <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElementConcept.alternateNames.length">
-    <td colspan="5">There are no alternate names for the selected CDE.</td>
-  </tr>
-</table>
-
-<br />
-<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
-  <tr border="0">
-    <td class="dataElementHeading col1">Alternate Definitions</td>
-    <td class="dataElementHeading col2">Type</td>
-    <td class="dataElementHeading col3">Context</td>
-    <td class="dataElementHeading col4">Language</td>
-    <td class="dataElementHeading col5">Classifications</td>
-  </tr>
-  <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeDetails.dataElementConcept.alternateDefinitions">
-    <td class="dataElementValue" ng-bind-html="altDef.name">{{altDef.name}}</td>
-    <td class="dataElementValue" ng-bind-html="altDef.type">{{altDef.type}}</td>
-    <td class="dataElementValue" ng-bind-html="altDef.context">{{altDef.context}}</td>
-    <td class="dataElementValue" ng-bind-html="altDef.language">{{altDef.language}}</td>
-    <td class="dataElementValue">
-      <ul ng-if="altDef.csCsi" class="classification">
-        <li ng-repeat="csCsi in altDef.csCsi">
-          {{csCsi}}<span ng-if="!$last">;</span>
-        </li>
-      </ul>
-    </td>
-  </tr>
-  <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElementConcept.alternateDefinitions.length">
-
-    <td colspan="5">There are no alternate definitions for the selected CDE.</td>
-  </tr>
-</table>
-<br />
-<!-- end alternate names and definitions -->
 
 <table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
     <tr class="cdeDetailsSubHeading">
@@ -293,6 +230,71 @@
     </tr>
 
 </table><br/>
+
+<!-- alternate names and definitions -->
+<table class="cdeDetailsSubHeadingTable" align="center" cellpadding="1" cellspacing="1">
+  <tr class="cdeDetailsSubHeading">
+    <th colspan="4" align="left">
+      <br />Alternate Names and Definitions</th>
+  </tr>
+</table>
+
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+  <tr>
+    <td class="dataElementHeading col1">Alternate Names</td>
+    <td class="dataElementHeading col2">Type</td>
+    <td class="dataElementHeading col3">Context</td>
+    <td class="dataElementHeading col4">Language</td>
+    <td class="dataElementHeading col5">Classifications</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="altName in cdeDetails.dataElementConcept.alternateNames">
+    <td class="dataElementValue" ng-bind-html="altName.name">{{altName.name}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.type">{{altName.type}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.context">{{altName.context}}</td>
+    <td class="dataElementValue" ng-bind-html="altName.language">{{altName.language}}</td>
+    <td class="dataElementValue">
+      <ul ng-if="altName.csCsi" class="classification">
+        <li ng-repeat="csCsi in altName.csCsi">
+          {{csCsi}}<span ng-if="!$last">;</span>
+        </li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElementConcept.alternateNames.length">
+    <td colspan="5">There are no alternate names for the selected CDE.</td>
+  </tr>
+</table>
+
+<br />
+<table class="dataElementViewTable" align="center" cellpadding="1" cellspacing="1" border="0">
+  <tr border="0">
+    <td class="dataElementHeading col1">Alternate Definitions</td>
+    <td class="dataElementHeading col2">Type</td>
+    <td class="dataElementHeading col3">Context</td>
+    <td class="dataElementHeading col4">Language</td>
+    <td class="dataElementHeading col5">Classifications</td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-repeat="altDef in cdeDetails.dataElementConcept.alternateDefinitions">
+    <td class="dataElementValue" ng-bind-html="altDef.name">{{altDef.name}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.type">{{altDef.type}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.context">{{altDef.context}}</td>
+    <td class="dataElementValue" ng-bind-html="altDef.language">{{altDef.language}}</td>
+    <td class="dataElementValue">
+      <ul ng-if="altDef.csCsi" class="classification">
+        <li ng-repeat="csCsi in altDef.csCsi">
+          {{csCsi}}<span ng-if="!$last">;</span>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="dataElementViewTableTr" data-ng-hide="cdeDetails.dataElementConcept.alternateDefinitions.length">
+
+    <td colspan="5">There are no alternate definitions for the selected CDE.</td>
+  </tr>
+</table>
+<br />
+<!-- end alternate names and definitions -->
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
