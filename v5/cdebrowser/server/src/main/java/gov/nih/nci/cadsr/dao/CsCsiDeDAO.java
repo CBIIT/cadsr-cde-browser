@@ -20,7 +20,7 @@ public interface CsCsiDeDAO
 	 * @param deIdseq Value Meaning unique ID
 	 * @return List of CsCsiValueMeaningModel related to Value Meaning with ID deIdseq
 	 */
-	public List<CsCsiDeModel> getCsCsisByDeId(String deIdseq);
-	public List<DesignationModelAlt> getCsCsiDeAltNamesById(String deIdseq, List<CsCsiDeModel> csCsiDeModels);
-	public List<DefinitionModelAlt> getCsCsiDeDefinitionsById(String deIdseq, List<CsCsiDeModel> csCsiDeModels);
+	public List<CsCsiDeModel> getCsCsisByAcId(String deIdseq);
+	public List<DesignationModelAlt> getCsCsiAcAltNamesById(String deIdseq, List<CsCsiDeModel> csCsiDeModels);
+	public List<DefinitionModelAlt> getCsCsiAcDefinitionsById(String deIdseq, List<CsCsiDeModel> csCsiDeModels);
 }

@@ -5,6 +5,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,9 +15,9 @@ import org.apache.logging.log4j.Logger;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
+import gov.nih.nci.cadsr.dao.model.BaseDesignationDefinitionModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
-import gov.nih.nci.cadsr.dao.model.DataElementModel;
 import gov.nih.nci.cadsr.dao.model.DefinitionModelAlt;
 import gov.nih.nci.cadsr.dao.model.DesignationModelAlt;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
@@ -70,21 +71,21 @@ public class ControllerUtils {
      * This auxilary method creates a list of classified Alt names and Definitions.
      * @return List<CsCsi>
      */
-	protected static List<CsCsi> populateCsCsiDeModel(String deIdseq, final CsCsiDeDAO csCsiDeDAO) {
+	protected static List<CsCsi> populateCsCsiModel(String acIdseq, final CsCsiDeDAO csCsiDeDAO) {
 		List<CsCsi> deCsCsis = new ArrayList<>();
-		List<CsCsiDeModel> modelList = csCsiDeDAO.getCsCsisByDeId(deIdseq);
+		List<CsCsiDeModel> modelList = csCsiDeDAO.getCsCsisByAcId(acIdseq);
 		if ((modelList == null) || (modelList.isEmpty())) {
-			logger.debug("There is no classified Alt Names/Definitions for DE ID: " + deIdseq);
+			logger.debug("There is no classified Alt Names/Definitions for AC ID: " + acIdseq);
 			return deCsCsis;
 		}
 		else if (logger.isDebugEnabled()) {
 			logger.debug("modelList size: " + modelList.size() + ", modelList: " + modelList);
 		}
 		// Find all Alt Names related to CsCsiModel
-		List<DesignationModelAlt> altNamesList = csCsiDeDAO.getCsCsiDeAltNamesById(deIdseq, modelList);
+		List<DesignationModelAlt> altNamesList = csCsiDeDAO.getCsCsiAcAltNamesById(acIdseq, modelList);
 		logger.debug("altNamesList size=" + altNamesList.size() + altNamesList);
 		// Find all definitions related to CsCsiModel
-		List<DefinitionModelAlt> definList = csCsiDeDAO.getCsCsiDeDefinitionsById(deIdseq, modelList);
+		List<DefinitionModelAlt> definList = csCsiDeDAO.getCsCsiAcDefinitionsById(acIdseq, modelList);
 		logger.debug("definList size=" + definList.size() + definList);
 
 		String csCsiIdseq;
@@ -139,8 +140,9 @@ public class ControllerUtils {
      * This auxilary method creates a list of unclassified Alt names and Definitions based on pre-populated DataElementModel
      * @return CsCsi with lists of AlternateNames and AlternateDefinitions (not null lists).
      */
-	public static CsCsi populateCsCsiDeUnclassified (DataElementModel dataElementModel) {
-        CsCsi unclassCsCsi = new CsCsi( dataElementModel.getCsCsiData().get( CsCsiModel.UNCLASSIFIED ) );
+	public static CsCsi populateCsCsiUnclassified (BaseDesignationDefinitionModel dataElementModel) {
+		HashMap<String, CsCsiModel> model = dataElementModel.getCsCsiData();
+        CsCsi unclassCsCsi = new CsCsi(model.get( CsCsiModel.UNCLASSIFIED ) );
         ArrayList<AlternateName> unclassAlternateNames = new ArrayList<>();
         if( dataElementModel.getCsCsiDesignations().get( CsCsiModel.UNCLASSIFIED ) != null )
         {

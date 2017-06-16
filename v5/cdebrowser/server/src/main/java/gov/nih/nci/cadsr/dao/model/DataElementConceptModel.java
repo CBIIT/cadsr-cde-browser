@@ -3,7 +3,7 @@ package gov.nih.nci.cadsr.dao.model;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
-public class DataElementConceptModel extends BaseModel
+public class DataElementConceptModel extends BaseDesignationDefinitionModel
 {
 	/**
 	 * 

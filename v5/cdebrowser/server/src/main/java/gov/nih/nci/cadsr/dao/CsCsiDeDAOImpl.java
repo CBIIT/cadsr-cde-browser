@@ -74,10 +74,10 @@ public class CsCsiDeDAOImpl extends AbstractDAOOperations implements CsCsiDeDAO 
 	}
 
 	@Override
-	public List<CsCsiDeModel> getCsCsisByDeId(String deIdseq) {
-		logger.debug("deIdseq: " + deIdseq + "\n, sqlRetrieveCsCsiByDe: " + sqlRetrieveCsCsiByDe);
+	public List<CsCsiDeModel> getCsCsisByAcId(String acIdseq) {
+		logger.debug("acIdseq: " + acIdseq + "\n, sqlRetrieveCsCsiByDe: " + sqlRetrieveCsCsiByDe);
 		List<CsCsiDeModel> models = jdbcTemplate.query(sqlRetrieveCsCsiByDe, 
-			new Object[]{deIdseq}, new CsCsiDeRowMapper());
+			new Object[]{acIdseq}, new CsCsiDeRowMapper());
 		if (models != null) {
 			logger.debug("...found CsCsiDeModel amount: " + models.size());
 			return models;
@@ -88,7 +88,7 @@ public class CsCsiDeDAOImpl extends AbstractDAOOperations implements CsCsiDeDAO 
 	}
 	
 	@Override
-	public List<DesignationModelAlt> getCsCsiDeAltNamesById(String deIdseq, List<CsCsiDeModel> csCsiDeModels) {
+	public List<DesignationModelAlt> getCsCsiAcAltNamesById(String deIdseq, List<CsCsiDeModel> csCsiDeModels) {
 		CsCsiDeModelList csCsiDeModelList = new CsCsiDeModelList(csCsiDeModels);
 		String csCsiIdStr = csCsiDeModelList.buildInSql();
 		String altNamesSql = sqlRetrieveCsCsiAltNamesBegin + csCsiIdStr + sqlRetrieveCsCsiAltNamesEnd;
@@ -103,7 +103,7 @@ public class CsCsiDeDAOImpl extends AbstractDAOOperations implements CsCsiDeDAO 
 	}
 	
 	@Override
-	public List<DefinitionModelAlt> getCsCsiDeDefinitionsById(String deIdseq, List<CsCsiDeModel> csCsiDeModels) {
+	public List<DefinitionModelAlt> getCsCsiAcDefinitionsById(String deIdseq, List<CsCsiDeModel> csCsiDeModels) {
 		CsCsiDeModelList csCsiDeModelList = new CsCsiDeModelList(csCsiDeModels);
 		String csCsiIdStr = csCsiDeModelList.buildInSql();
 		String definSql = sqlRetrieveCsCsiDefinBegin + csCsiIdStr + sqlRetrieveCsCsiDefinEnd;

@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataElementConceptDAOImpl extends AbstractDAOOperations implements DataElementConceptDAO
@@ -28,8 +29,10 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
     private ObjectClassDAO objectClassDAO;
     private ContextDAO contextDAO;
     public ConceptualDomainDAO conceptualDomainDAO;
-
-
+    private DesignationDAO designationDAO;
+    private DefinitionDAO definitionDAO;
+    private CsCsiDAO csCsiDAO;
+    
     @Autowired
     DataElementConceptDAOImpl( DataSource dataSource )
     {
@@ -106,7 +109,33 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
         this.conceptualDomainDAO = conceptualDomainDAO;
     }
 
-    public final class DataElementConceptMapper extends BeanPropertyRowMapper<DataElementConceptModel>
+    public DesignationDAO getDesignationDAO() {
+		return designationDAO;
+	}
+
+	public void setDesignationDAO(DesignationDAO designationDAO) {
+		this.designationDAO = designationDAO;
+	}
+
+	public DefinitionDAO getDefinitionDAO() {
+		return definitionDAO;
+	}
+
+	public void setDefinitionDAO(DefinitionDAO definitionDAO) {
+		this.definitionDAO = definitionDAO;
+	}
+
+	public CsCsiDAO getCsCsiDAO() {
+		return csCsiDAO;
+	}
+
+	public void setCsCsiDAO(CsCsiDAO csCsiDAO) {
+		this.csCsiDAO = csCsiDAO;
+	}
+
+
+
+	public final class DataElementConceptMapper extends BeanPropertyRowMapper<DataElementConceptModel>
     {
         private Logger logger = LogManager.getLogger( DataElementConceptMapper.class.getName() );
 
@@ -129,6 +158,7 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
             dataElementConceptModel.setLatestVerInd( rs.getString( "LATEST_VERSION_IND" ) );
             dataElementConceptModel.setPublicId( rs.getInt( "DEC_ID" ) );
             dataElementConceptModel.setIdseq( rs.getString( "DEC_IDSEQ" ) );
+            String decIdseq = dataElementConceptModel.getIdseq();
 //            dataElementConceptModel.setDecIdseq(rs.getString("DEC_IDSEQ"));
 //            dataElementConceptModel.setCdIdseq(rs.getString("CD_IDSEQ"));
 //            dataElementConceptModel.setProplName(rs.getString("PROPL_NAME"));
@@ -227,7 +257,42 @@ public class DataElementConceptDAOImpl extends AbstractDAOOperations implements 
             {
                 logger.warn( "no dataElementConceptModel found for CD_IDSEQ: " + rs.getString( "CD_IDSEQ" ) );
             }
-
+            try
+            {
+            	List<DesignationModel> res = getDesignationDAO().getDesignationModelsByAcIdseq( decIdseq );
+            	dataElementConceptModel.setDesignationModels(res);
+            	dataElementConceptModel.fillCsCsiDesignations();
+            } catch( EmptyResultDataAccessException ex )
+            {
+                logger.warn( "No Designation Models found for Data Element Concept with idseq: " + decIdseq );
+            }
+            try
+            {
+            	List<DefinitionModel> resFromDb = getDefinitionDAO().getAllDefinitionsByAcIdseq(decIdseq);
+            	dataElementConceptModel.setDefinitionModels(resFromDb);
+            	dataElementConceptModel.fillCsCsiDefinitions();
+            } catch( EmptyResultDataAccessException ex )
+            {
+                logger.warn( "No Definition Models found for Data Element Concept with idseq: " + decIdseq );
+            }
+            try
+            {
+                List<CsCsiModel> csCsiModels = getCsCsiDAO().getAltNamesAndDefsByDataElement( decIdseq );
+                if( csCsiModels != null && csCsiModels.size() > 0 )
+                {
+                	dataElementConceptModel.fillCsCsiData( csCsiModels );
+                }
+                else
+                {
+                    // none found. Call fillCsCsiData() to initalize the "Unclassified" record
+                	dataElementConceptModel.fillCsCsiData( new ArrayList<CsCsiModel>( 0 ) );
+                }
+            } catch( EmptyResultDataAccessException ex )
+            {
+                logger.warn( "No CsCsiModels found for Data Element with idseq: " + decIdseq );
+                // none found. Call fillCsCsiData() to initalize the "Unclassified" record
+                dataElementConceptModel.fillCsCsiData( new ArrayList<CsCsiModel>( 0 ) );
+            }
             return dataElementConceptModel;
         }
     }

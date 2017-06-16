@@ -50,6 +50,7 @@ import gov.nih.nci.cadsr.dao.model.CsCsiModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiValueMeaningModelList;
 import gov.nih.nci.cadsr.dao.model.DEOtherVersionsModel;
+import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
 import gov.nih.nci.cadsr.dao.model.DataElementModel;
@@ -353,12 +354,12 @@ public class CDEDataController
         //now get the unclassified ones 
         ////////////////////////////////////////////////////
         //CDEBROWSER-809 add unclassified first
-        CsCsi unclassCsCsi = ControllerUtils.populateCsCsiDeUnclassified( dataElementModel );
+        CsCsi unclassCsCsi = ControllerUtils.populateCsCsiUnclassified( dataElementModel );
         //CDEBROWSER-809 we change the lists of alternate names
         CsCsiForCdeDetails csCsiForCdeDetails = rearrangeForCdeDetails(unclassCsCsi);
         dataElement.setCsCsisCdeDetails(csCsiForCdeDetails );
         ////////////////////////////////////////////////////
-        List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiDeModel( dataElementModel.getDeIdseq(), csCsiDeDAO );
+        List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiModel( dataElementModel.getDeIdseq(), csCsiDeDAO );
         
         //CDEBROWSER-809 Add Alt Names and Definitions with CS/CSIs listed comma separated 
         List<AlternateNameCsCsi> altNamesWithCsCsi = buildAltNamesWithCsCsi(csCsiClassifiedList);//could be null
@@ -834,50 +835,64 @@ public class CDEDataController
         List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
         dataElementConcept.setPropertyConcepts( propertyConcepts );
 
-        //CDEBROWSER-811 add Alternate Names and Definitions to DEC DE tab
-        buildDecAltNamesDefinitions(dataElementConcept);
+        //CDEBROWSER-811 CDEBROWSER-825 CDEBROWSER-803 add Alternate Names and Definitions to DEC DE tab
+        buildDecAltNamesDefinitions(dataElementModel.getDec(), dataElementConcept);
 
         return dataElementConcept;
     }
+    
     //CDEBROWSER-811 CDEBROWSER-825 CDEBROWSER-803 Add Alternate sections to DEC details
-    protected void buildDecAltNamesDefinitions(DataElementConcept dataElementConcept) {
-		//FIXME implement this is a method stub
-    	List<AlternateNameCsCsi> alternateNames = new ArrayList<>();
-    	List<AlternateDefinitionCsCsi> alternateDefinitions = new ArrayList<>();
-    	List<String> csCsi = new ArrayList<>();
-    	csCsi.add("testCS1/testCSI1");
-    	csCsi.add("testCS2/testCSI2");
-    	AlternateNameCsCsi alternateNameCsCsi = new AlternateNameCsCsi();
-    	alternateNameCsCsi.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
-    	alternateNameCsCsi.setCsCsi(csCsi);
-    	alternateNameCsCsi.setLanguage("English");
-    	alternateNameCsCsi.setName("Alt Designation test 1");
-    	alternateNames.add(alternateNameCsCsi);
-    	AlternateNameCsCsi alternateNameCsCsi1 = new AlternateNameCsCsi();
-    	alternateNameCsCsi1.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
-    	alternateNameCsCsi1.setCsCsi(csCsi);
-    	alternateNameCsCsi1.setLanguage("Spanish");
-    	alternateNameCsCsi1.setType("Previous Designation Type");
-    	alternateNameCsCsi1.setName("Alt Designation test 2");
-    	alternateNames.add(alternateNameCsCsi1);
-    	AlternateDefinitionCsCsi def = new AlternateDefinitionCsCsi();
-    	def.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
-    	def.setCsCsi(csCsi);
-    	def.setType("Previous Definition Type");
-    	def.setLanguage("Spanish");
-    	def.setName("Alt Definition Test 1");
-    	alternateDefinitions.add(def);
-    	AlternateDefinitionCsCsi def1 = new AlternateDefinitionCsCsi();
-    	def1.setContext(dataElementConcept.getDataElementConceptDetails().getContext());
-    	def1.setCsCsi(csCsi); 
-    	def1.setLanguage("English");
-    	def1.setType("HISTORICAL_CDE_ID");
-    	def.setName("Alt Definition Test 2");
-    	alternateDefinitions.add(def1);
-    	
-    	dataElementConcept.setAlternateDefinitions(alternateDefinitions);
-    	dataElementConcept.setAlternateNames(alternateNames);
-	}
+    protected void buildDecAltNamesDefinitions(DataElementConceptModel dataElementConceptModel, DataElementConcept dataElementConcept) {
+	    // add all the cscsi's and their designations and definitions except the unclassified ones
+	    //change for CDEBROWSER-468
+	    //now get the unclassified ones 
+	    ////////////////////////////////////////////////////
+	    //add unclassified first
+    	if (dataElementConceptModel == null)
+    		return;
+    	if (dataElementConceptModel.getCsCsiData() == null) {
+    		return;
+    	}
+    	CsCsiForCdeDetails csCsiForCdeDetails;
+	    CsCsi unclassCsCsi = ControllerUtils.populateCsCsiUnclassified(dataElementConceptModel);
+	    if (unclassCsCsi == null) {
+	    	csCsiForCdeDetails = new CsCsiForCdeDetails();
+	    	csCsiForCdeDetails.setAlternateDefinitions(new ArrayList<>());
+	    	csCsiForCdeDetails.setAlternateNames(new ArrayList<>());
+	    }
+	    else {
+	    	//we change the lists of alternate names
+	    	csCsiForCdeDetails = rearrangeForCdeDetails(unclassCsCsi);
+	    }
+	    ////////////////////////////////////////////////////
+	    List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiModel( dataElementConceptModel.getDecIdseq(), csCsiDeDAO );
+	    
+	    //Add Alt Names and Definitions with CS/CSIs listed comma separated 
+	    List<AlternateNameCsCsi> altNamesWithCsCsi = buildAltNamesWithCsCsi(csCsiClassifiedList);//could be null
+	    List<AlternateNameCsCsi> altNamesWithCsCsiAll = csCsiForCdeDetails.getAlternateNames();//never null
+	    if (altNamesWithCsCsi != null) {
+	        //add classified designations to unclassified
+	        for (AlternateNameCsCsi curr : altNamesWithCsCsi) {
+	        	altNamesWithCsCsiAll.add(curr);
+	        }
+	    }
+	    if (altNamesWithCsCsiAll != null)
+	    	Collections.sort(altNamesWithCsCsiAll);//sort the list
+	    dataElementConcept.setAlternateNames(altNamesWithCsCsiAll);
+	    
+	    List<AlternateDefinitionCsCsi> altDefinitionsWithCsCsiAll = csCsiForCdeDetails.getAlternateDefinitions();//never null
+	    List<AlternateDefinitionCsCsi> definitionsWithCsCsi = buildDefinitionsWithCsCsi(csCsiClassifiedList);//could be null
+	    if (definitionsWithCsCsi != null) {
+	        //add classified definitions to unclassified
+	        for (AlternateDefinitionCsCsi curr : definitionsWithCsCsi) {
+	        	altDefinitionsWithCsCsiAll.add(curr);
+	        }
+	    }
+	    if (altDefinitionsWithCsCsiAll != null)
+	    	Collections.sort(altDefinitionsWithCsCsiAll);//sort the list
+	    dataElementConcept.setAlternateDefinitions(altDefinitionsWithCsCsiAll);
+    }
+    
 	private DataElementConceptDetails getDataElementConceptDetails( DataElementModel dataElementModel )
     {
         DataElementConceptDetails dataElementConceptDetails = new DataElementConceptDetails();

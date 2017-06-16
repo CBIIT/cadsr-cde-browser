@@ -41,9 +41,9 @@ public class ControllerUtilsDEDetailsTest {
 	@Test
 	public void testPopulateCsCsiDeModelNoDesigNorDefs() throws Exception{
 		List<CsCsiDeModel> csCsiDeModelList = prepareDeCsCsiTestList(deIdseq, 3);
-		Mockito.when(csCsiDeDAO.getCsCsisByDeId(deIdseq)).thenReturn(csCsiDeModelList);
-		csCsiDeDAO.getCsCsisByDeId(deIdseq);
-		List<CsCsi> csCsilList = ControllerUtils.populateCsCsiDeModel(deIdseq, csCsiDeDAO);
+		Mockito.when(csCsiDeDAO.getCsCsisByAcId(deIdseq)).thenReturn(csCsiDeModelList);
+		csCsiDeDAO.getCsCsisByAcId(deIdseq);
+		List<CsCsi> csCsilList = ControllerUtils.populateCsCsiModel(deIdseq, csCsiDeDAO);
 		assertEquals(0, csCsilList.size());
 	}
 	//TODO check the data returned by MUT
@@ -137,16 +137,16 @@ public class ControllerUtilsDEDetailsTest {
 
 		deCsCsiDefins = prepareDefins(csCsiDeModelList, DEFIN, csCsiNumToUse, numDefins);
 
-		Mockito.when(csCsiDeDAO.getCsCsisByDeId(deIdseq)).thenReturn(csCsiDeModelList);
-		Mockito.when(csCsiDeDAO.getCsCsiDeAltNamesById(deIdseq, csCsiDeModelList)).thenReturn(deCsCsiAltNames);
-		Mockito.when(csCsiDeDAO.getCsCsiDeDefinitionsById(deIdseq, csCsiDeModelList)).thenReturn(deCsCsiDefins);
+		Mockito.when(csCsiDeDAO.getCsCsisByAcId(deIdseq)).thenReturn(csCsiDeModelList);
+		Mockito.when(csCsiDeDAO.getCsCsiAcAltNamesById(deIdseq, csCsiDeModelList)).thenReturn(deCsCsiAltNames);
+		Mockito.when(csCsiDeDAO.getCsCsiAcDefinitionsById(deIdseq, csCsiDeModelList)).thenReturn(deCsCsiDefins);
 
 		//MUT
-		List<CsCsi> csCsilList = ControllerUtils.populateCsCsiDeModel(deIdseq, csCsiDeDAO);
+		List<CsCsi> csCsilList = ControllerUtils.populateCsCsiModel(deIdseq, csCsiDeDAO);
 		
-		Mockito.verify(csCsiDeDAO).getCsCsisByDeId(deIdseq);
-		Mockito.verify(csCsiDeDAO).getCsCsiDeAltNamesById(deIdseq, csCsiDeModelList);
-		Mockito.verify(csCsiDeDAO).getCsCsiDeDefinitionsById(deIdseq, csCsiDeModelList);
+		Mockito.verify(csCsiDeDAO).getCsCsisByAcId(deIdseq);
+		Mockito.verify(csCsiDeDAO).getCsCsiAcAltNamesById(deIdseq, csCsiDeModelList);
+		Mockito.verify(csCsiDeDAO).getCsCsiAcDefinitionsById(deIdseq, csCsiDeModelList);
 		
 		assertNotNull(csCsilList);
 		assertEquals(csCsiNumToUse, csCsilList.size());

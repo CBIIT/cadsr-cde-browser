@@ -54,6 +54,9 @@
         <property name="objectClassDAO" ref="objectClassDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
         <property name="conceptualDomainDAO" ref="conceptualDomainDAO"/>
+        <property name="definitionDAO" ref="definitionDAO"/>
+        <property name="designationDAO" ref="designationDAO"/>
+        <property name="csCsiDAO" ref="csCsiDAO"/>
     </bean>
 
     <bean id="dataElementDAO" class="gov.nih.nci.cadsr.dao.DataElementDAOImpl" parent="abstractDao">

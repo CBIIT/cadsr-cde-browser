@@ -165,7 +165,7 @@ public class CDEDataControllerTest {
 		List<ValueMeaningUiModel> valueMeaningUiModelToReturn = new ArrayList<>();
 		List<CsCsiDeModel> modelList = new ArrayList<>();
 		//mock
-		when(csCsiDeDAO.getCsCsisByDeId(paramdeIdseq)).thenReturn(modelList);
+		when(csCsiDeDAO.getCsCsisByAcId(paramdeIdseq)).thenReturn(modelList);
 		//mock
 		when(valueMeaningDAO.getUiValueMeanings(Mockito.eq(publicIdToReturn), Mockito.eq(deVersionToReturn))).thenReturn(valueMeaningUiModelToReturn);
 		
