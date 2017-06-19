@@ -6,6 +6,14 @@ angular.module("cdeSearchPreferences").controller("SearchPreferencesController",
     $scope.defaultCheckboxModel = { };
 
      $scope.modifiedModels = { };
+
+    $scope.$watch('authenticationService.loggedIn', function(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        if (newValue==false) {
+          $scope.searchPreferencesResetButton();
+        };
+      };
+    });
      
      function getCategoryExcludedItems(excludeCategory) {
        var res_ctgex = [ ];
