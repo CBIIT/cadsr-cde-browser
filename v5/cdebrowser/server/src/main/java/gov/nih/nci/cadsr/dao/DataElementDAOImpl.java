@@ -7,11 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +48,9 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private DEOtherVersionsDAO deOtherVersionsDAO;
     private CSRefDocDAO csRefDocDAO;
     private CSIRefDocDAO csiRefDocDAO;
-
+    
+    protected static final int oracleIn1000 = 1000;
+    
     @Autowired
     DataElementDAOImpl( DataSource dataSource )
     {
@@ -365,20 +371,50 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             return dataElementModel;
         }
     }
-
+    //Re-implemented this method: it failed before on more than 1000 IDs
 	@Override
-	public List<DataElementModel> getCdeByDeIdseqList(List<String> deIdseqList) throws EmptyResultDataAccessException {
-        if ((deIdseqList != null) && (!(deIdseqList.isEmpty()))) {
-			String sql = "SELECT * FROM data_elements WHERE de_idseq IN (:ids)";
-	        //MapSqlParameterSource parameters = new MapSqlParameterSource();
-	        Map<String, List<String>> param = Collections.singletonMap("ids", deIdseqList);        
-	        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource());
-	        List<DataElementModel> dataElementModel = namedParameterJdbcTemplate.query(sql, param,
-	        		new DataElementMapper(DataElementModel.class));
-	        return dataElementModel;
+	public List<DataElementModel> getCdeByDeIdseqList(List<String> acIdseqList) throws EmptyResultDataAccessException {
+        List<DataElementModel> arrResult = new ArrayList<>();
+        if ((acIdseqList != null) && (!(acIdseqList.isEmpty()))) {
+        	List<String> deIdseqList = cleanUpIdDuplicates(acIdseqList);
+        	List<String> portionOf1000;
+        	List<DataElementModel> arrOf1000;
+        	Iterator<String> iter = deIdseqList.iterator();
+        	while (iter.hasNext()) {
+        		portionOf1000 = new ArrayList<>();
+        		for (int j = 0; ((j < oracleIn1000) & iter.hasNext()); j++) {
+        			portionOf1000.add(iter.next());
+        		}
+        		arrOf1000 = retrieve1000Ids(portionOf1000);
+        		arrResult.addAll(arrOf1000);
+        	}
         }
-        List<DataElementModel> arr = new ArrayList<>();
-        return arr;
+        return arrResult;
 	}
-
+    protected List<DataElementModel> retrieve1000Ids(List<String> deIdseqList) {
+    	List<DataElementModel> dataElementModel;
+    	if ((deIdseqList != null ) && (! deIdseqList.isEmpty())) {
+    		String sql = "SELECT * FROM data_elements WHERE de_idseq IN (:ids)";
+            //MapSqlParameterSource parameters = new MapSqlParameterSource();
+            Map<String, List<String>> param = Collections.singletonMap("ids", deIdseqList); 
+            NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource());
+            dataElementModel = namedParameterJdbcTemplate.query(sql, param,
+            		new DataElementMapper(DataElementModel.class));
+    	}
+    	else {
+    		dataElementModel = new ArrayList<>();
+    	}
+        return dataElementModel;
+    }
+    protected List<String> cleanUpIdDuplicates(List<String> acIdseqList) {
+    	Set<String> acIdseqSet = new HashSet<>();
+    	List<String> resultList = new ArrayList<>();
+        for (String currIdseq : acIdseqList) {
+        	if ((StringUtils.isNotBlank(currIdseq)) && (! acIdseqSet.contains(currIdseq)))  {
+        		resultList.add(currIdseq);
+        		acIdseqSet.add(currIdseq);
+        	}
+        }
+        return resultList;
+    }
 }
