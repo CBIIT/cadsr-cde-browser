@@ -462,12 +462,16 @@ public class CDEDataController
 	}
 	//CDEBROWSER-809 "Separate out the Alternate names of type = "Used_By" into their own sub-table"
     protected static CsCsiForCdeDetails rearrangeForCdeDetails(CsCsi unclassCsCsi) {
+    	return rearrangeForCdeDetails(unclassCsCsi, true);
+    }
+    protected static CsCsiForCdeDetails rearrangeForCdeDetails(CsCsi unclassCsCsi, boolean buildUsedBy) {
     	List<AlternateName> altNameList = unclassCsCsi.getAlternateNames();
     	List<AlternateName> altNameListAll = new ArrayList<>();
     	List<AlternateName> altNameListUsedBy = new ArrayList<>();
     	if (altNameList != null) {
 	    	for (AlternateName alternateName : altNameList) {
-	    		if ((USED_BY.equals(alternateName.getType())) && (alternateName.getName().equals(alternateName.getContext()))) {
+	    		if ((USED_BY.equals(alternateName.getType())) && (alternateName.getName().equals(alternateName.getContext()))
+	    				&& buildUsedBy) {//CDEBROWSER-811 DEC does not have usedByAlternateNames (no DEC have USED_BY Context)
 	    			altNameListUsedBy.add(alternateName);
 	    		}
 	    		else {
@@ -862,7 +866,7 @@ public class CDEDataController
 	    }
 	    else {
 	    	//we change the lists of alternate names
-	    	csCsiForCdeDetails = rearrangeForCdeDetails(unclassCsCsi);
+	    	csCsiForCdeDetails = rearrangeForCdeDetails(unclassCsCsi, false);
 	    }
 	    ////////////////////////////////////////////////////
 	    List<CsCsi> csCsiClassifiedList = ControllerUtils.populateCsCsiModel( dataElementConceptModel.getDecIdseq(), csCsiDeDAO );
