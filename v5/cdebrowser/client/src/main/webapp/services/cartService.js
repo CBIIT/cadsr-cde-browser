@@ -5,6 +5,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 	this.statusMessage = ''; // status message for alerting the user what is happening when user clicks on buttons //
 	this.isError = false; // determines if status message is an error //
 	this.disableSaveButton = false;
+	this.disableDeleteButton = false;
 	// check session to see if cart service exists, if so set variables to the session values //
 	if (!$sessionStorage['cartService']) {
 		this.cartData = []; // all items in the cart //
@@ -43,6 +44,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// delete cde's from cart //
 	this.deleteCDEs = function() {
+		this.disableSaveButton = true;
+		this.disableDeleteButton = true;
+
 		var url = '/cdebrowserServer/rest/cdeCart/delete'; // url for server delete from CDE cart //
 		var c = 0; // keep track of index of checked cart items index //		
 		var that = this;
@@ -72,12 +76,16 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			.success(function(response) { 
 				deleteItems();
 				that.statusMessage = '';
+				that.disableSaveButton = false;
+				that.disableDeleteButton = false;				
 
 			})
 			.error(function(response) { 
 				deleteItems();
 				that.statusMessage = '';
 				this.isError = true;
+				that.disableSaveButton = false;
+				that.disableDeleteButton = false;					
 		});
 	};
 
@@ -115,6 +123,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		var that = this;
 		this.itemsForSave = [];
 		this.disableSaveButton = true;
+		this.disableDeleteButton = true;
 		for (var i=0; i<this.cartData.length; i++) {
 			if (this.cartData[i]['unsavedItem']==true) {
 				this.itemsForSave.push(this.cartData[i].deIdseq);
@@ -130,6 +139,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				};
 				that.statusMessage = '';
 				that.disableSaveButton = false;
+				that.disableDeleteButton = false;
 				that.retrieveCart();
 
 			})
@@ -137,12 +147,14 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				authService.cameFrom = 'save';
 				that.isError = true;
 				that.disableSaveButton = false;
+				that.disableDeleteButton = false;
 
 
 			if (status==401) {
 		        $location.path("/login").replace(); // send user to login page //
 				that.statusMessage = '';
 				that.disableSaveButton = false;
+				that.disableDeleteButton = false;
 			}
 			else {
 				if (response.data) {
@@ -159,6 +171,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 
 	// retrieve the cart. Will call rest service //
 	this.retrieveCart = function(click) {
+		this.disableSaveButton = true;
+		this.disableDeleteButton = true;
+
 		var that = this;
 		if (click) { 
 			this.statusMessage = 'Retrieving Cart'; 
@@ -166,6 +181,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		}; // user has forced retrieve cart //
 		$http.get('/cdebrowserServer/rest/cdeCart')
 		.success(function(response) {
+			that.disableSaveButton = false;
+			that.disableDeleteButton = false;
+
 			var temporaryIds = []; // array of temp ids to compare with retrieved cart items. Prevent looping through two arrays //
 			for (var i=0; i<that.cartData.length;i++) {
 				temporaryIds.push(that.cartData[i].deIdseq);
@@ -186,6 +204,9 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			that.statusMessage = '';
 
 		}).error(function(response, status) {
+			that.disableSaveButton = false;
+			that.disableDeleteButton = false;
+
 			if (status==401) {
 				if (click) { // user has forced retrieve cart //
 					authService.cameFrom = 'retrieve';
