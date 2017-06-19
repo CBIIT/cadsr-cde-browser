@@ -51,6 +51,7 @@ public class SearchCriteria implements Serializable
 	public static final String ALL_REGISRTATION_STATUSES = "ALL Registration Statuses";
 	public static final String ALL_WORKFLOW_STATUSES = "ALL Workflow Statuses";
 	public static final String ALL_ALTNAME_TYPES = "ALL Alternate Name Types";
+	public static final String UNDEFINED_STATUS_FROM_UI = "undefined";//somehow UI sends this status instead of null by times
 	public static final String ALL_FIELDS = "ALL Fields";
 	public static final String delimiter= ":::";//this is a separator used by the client part.
 	/**
@@ -64,9 +65,9 @@ public class SearchCriteria implements Serializable
 			if (altNameType.startsWith(ALL_ALTNAME_TYPES)) //use this one since delimiter separator can be added by client
 				this.altNameType = "ALL";
 		}
-		if (ALL_WORKFLOW_STATUSES.equals(this.workFlowStatus))
+		if ((ALL_WORKFLOW_STATUSES.equals(this.workFlowStatus)) || (UNDEFINED_STATUS_FROM_UI.equals(this.workFlowStatus)))
 			this.workFlowStatus = "ALL";
-		if (ALL_REGISRTATION_STATUSES.equals(this.registrationStatus))
+		if ((ALL_REGISRTATION_STATUSES.equals(this.registrationStatus)) || (UNDEFINED_STATUS_FROM_UI.equals(this.registrationStatus)))
 			this.registrationStatus = "ALL";
 		
 		//if this is public ID search then we shall use version type selected on public ID search view
