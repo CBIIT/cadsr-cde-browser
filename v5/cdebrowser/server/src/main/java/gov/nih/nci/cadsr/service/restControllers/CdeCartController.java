@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
 import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
 
@@ -35,7 +36,9 @@ public class CdeCartController
 	
 	@Autowired
 	CdeCartUtilInterface cdeCartUtil;
-
+	@Autowired
+	DataElementDerivationDAO dataElementDerivationDAO;
+	
 	public void setCdeCartUtil(CdeCartUtilInterface cdeCartUtil) {
 		this.cdeCartUtil = cdeCartUtil;
 	}
@@ -147,6 +150,12 @@ public class CdeCartController
 		}
 		else if (logger.isDebugEnabled()) {
 			logger.debug("ID received to save in Object Cart: " + cdeIds);
+		}
+		//CDEBROWSER-280 Add Derived from
+		List<String> derivedFrom = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);
+		if (!derivedFrom.isEmpty()) {
+			logger.debug("...getDataElementDerivationIdseqList found CDEs: " + derivedFrom.size() + derivedFrom );
+			cdeIds.addAll(derivedFrom);
 		}
 		
 		try {

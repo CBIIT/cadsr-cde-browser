@@ -7,15 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +45,6 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     private DEOtherVersionsDAO deOtherVersionsDAO;
     private CSRefDocDAO csRefDocDAO;
     private CSIRefDocDAO csiRefDocDAO;
-    
-    protected static final int oracleIn1000 = 1000;
     
     @Autowired
     DataElementDAOImpl( DataSource dataSource )
@@ -391,6 +386,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         }
         return arrResult;
 	}
+	
     protected List<DataElementModel> retrieve1000Ids(List<String> deIdseqList) {
     	List<DataElementModel> dataElementModel;
     	if ((deIdseqList != null ) && (! deIdseqList.isEmpty())) {
@@ -406,15 +402,5 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
     	}
         return dataElementModel;
     }
-    protected List<String> cleanUpIdDuplicates(List<String> acIdseqList) {
-    	Set<String> acIdseqSet = new HashSet<>();
-    	List<String> resultList = new ArrayList<>();
-        for (String currIdseq : acIdseqList) {
-        	if ((StringUtils.isNotBlank(currIdseq)) && (! acIdseqSet.contains(currIdseq)))  {
-        		resultList.add(currIdseq);
-        		acIdseqSet.add(currIdseq);
-        	}
-        }
-        return resultList;
-    }
+
 }

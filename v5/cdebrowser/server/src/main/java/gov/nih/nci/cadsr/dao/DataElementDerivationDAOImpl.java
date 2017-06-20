@@ -3,25 +3,32 @@ package gov.nih.nci.cadsr.dao;
  * Copyright 2016 Leidos Biomedical Research, Inc.
  */
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationComponentModel;
 import gov.nih.nci.cadsr.dao.model.DataElementDerivationModel;
 import gov.nih.nci.cadsr.dao.model.PDeIdseqModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import javax.sql.DataSource;
-import java.util.List;
 
 public class DataElementDerivationDAOImpl extends AbstractDAOOperations implements DataElementDerivationDAO
-{
+{    
+
     public DataElementDerivationDAOImpl()
     {
     }
 
-    private Logger logger = LogManager.getLogger( DataElementDerivationDAOImpl.class.getName() );
+    private static Logger logger = LogManager.getLogger( DataElementDerivationDAOImpl.class.getName() );
     private JdbcTemplate jdbcTemplate;
 
 
@@ -105,4 +112,26 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
 
         return results;
     }
+    //CDEBROWSER-280 Add Derived from to OC
+	@Override
+	public List<String> getDataElementDerivationIdseqList(List<String> acIdseqList) {
+        List<String> arrResult = getObjectList(
+        		acIdseqList, 
+        		"select cdr.C_DE_IDSEQ from SBR.COMPLEX_DE_RELATIONSHIPS cdr where cdr.P_DE_IDSEQ IN (:ids)", 
+        		"ids",
+        		new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource()), 
+        		String.class,
+        		new StringPropertyMapper(String.class));
+        arrResult.removeAll(acIdseqList);
+        return arrResult;
+	}
+}
+class StringPropertyMapper extends BeanPropertyRowMapper<String> {
+	public StringPropertyMapper(Class<String> mappedClass) {
+		super(mappedClass);
+	}
+
+	public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return rs.getString(1);
+	}
 }

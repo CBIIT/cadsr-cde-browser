@@ -14,4 +14,5 @@ public interface DataElementDerivationDAO
     List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeId( int cdeId );
 	DataElementDerivationModel getDataElementDerivationByCdeIdseq(String deIdseq);
     List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeIdseq(String deIdseq);
+    List<String> getDataElementDerivationIdseqList(List<String> deIdseq);//CDEBROWSER-280 OC shall have Derived from DE IDs
 }
