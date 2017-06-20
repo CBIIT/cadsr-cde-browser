@@ -26,6 +26,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
 import gov.nih.nci.cadsr.error.AutheticationFailureException;
 import gov.nih.nci.cadsr.service.model.search.SearchNode;
 import gov.nih.nci.objectCart.client.ObjectCartException;
@@ -39,14 +40,12 @@ public class CdeCartControllerTest {
 	CdeCartController cdeCartController;
 	@Autowired
 	CdeCartUtilInterface cdeCartUtil;//this is a mock object
-	
-	@Before
-	public void setup() {
+	@Autowired
+	DataElementDerivationDAO mockDataElementDerivationDAO;
 
-	}
 	@Before
 	public void setUp() throws Exception {
-
+		Mockito.when(mockDataElementDerivationDAO.getDataElementDerivationIdseqList(Mockito.anyList())).thenReturn(new ArrayList<>());
 	}
 
 	@After
@@ -71,7 +70,7 @@ public class CdeCartControllerTest {
 		Mockito.verifyZeroInteractions(cdeCartUtil);
 	}
 	protected SearchNode[] helperCallRetrieveMUT(HttpSession mockSession) throws Exception{
-		ResponseEntity received = cdeCartController.retrieveObjectCartWithException(mockSession);
+		ResponseEntity<?> received = cdeCartController.retrieveObjectCartWithException(mockSession);
 		Object objReceived = received.getBody();
 		assertNotNull(objReceived);
 		assertTrue(objReceived instanceof SearchNode[]);
@@ -128,7 +127,7 @@ public class CdeCartControllerTest {
 
 		String expectedMessage = CdeCartController.buildGetCartErrorMessage(expectedException, "testUser3");
 		//MUT
-		ResponseEntity received = cdeCartController.retrieveObjectCartWithException(mockSession);
+		ResponseEntity<?> received = cdeCartController.retrieveObjectCartWithException(mockSession);
 		
 		//check
 		Object objReceived = received.getBody();

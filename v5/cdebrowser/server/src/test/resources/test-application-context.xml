@@ -28,5 +28,7 @@
 	    <constructor-arg value="gov.nih.nci.cadsr.cdecart.CdeCartUtilInterface" />
 	</bean>
     <bean id="cdeCartController" class="gov.nih.nci.cadsr.service.restControllers.CdeCartController" depends-on="cdeCartUtil"/>
-
+    <bean id="dataElementDerivationDAO" class="org.mockito.Mockito" factory-method="mock">
+	    <constructor-arg value="gov.nih.nci.cadsr.dao.DataElementDerivationDAO" />
+	</bean>
 </beans>

@@ -39,6 +39,11 @@ public class CdeCartController
 	@Autowired
 	DataElementDerivationDAO dataElementDerivationDAO;
 	
+	
+	public void setDataElementDerivationDAO(DataElementDerivationDAO dataElementDerivationDAO) {
+		this.dataElementDerivationDAO = dataElementDerivationDAO;
+	}
+
 	public void setCdeCartUtil(CdeCartUtilInterface cdeCartUtil) {
 		this.cdeCartUtil = cdeCartUtil;
 	}
