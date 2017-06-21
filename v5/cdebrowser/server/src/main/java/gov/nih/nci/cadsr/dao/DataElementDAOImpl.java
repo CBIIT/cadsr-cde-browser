@@ -267,7 +267,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
             try
             {
                 dataElementModel.setValueDomainModel( getValueDomainDAO().getValueDomainByIdseq( rs.getString( "VD_IDSEQ" ) ) );
-                logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel() );
+                //logger.debug( "valueDomainModel.getRepresentationModel: " + dataElementModel.getValueDomainModel().getRepresentationModel() );
 
             } catch( EmptyResultDataAccessException ex )
             {

@@ -60,11 +60,11 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
             return results;
         } catch( DataAccessException e )
         {
-            logger.debug( "Error: [" + e.getMessage() + "]" );
-            logger.debug( "Error: [" + e.toString() + "]" );
+            //logger.debug( "Error: [" + e.getMessage() + "]" );
+            //logger.debug( "Error: [" + e.toString() + "]" );
             if( e.getMessage().compareTo( "Incorrect result size: expected 1, actual 0" ) == 0 )
             {
-                logger.debug( "No results" );
+                //logger.debug( "No results" );
             }
             // FIXME - this is a WORK AROUND FOR SOME BAD DATA - MAKE SURE
             else if( e.getMessage().startsWith( "Incorrect result size: expected 1, actual" ) )
@@ -81,7 +81,7 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
         {
             e.printStackTrace();
         }
-        logger.debug( "Error: returning null." );
+        //logger.debug( "Error: returning null." );
         return null;
     }
 

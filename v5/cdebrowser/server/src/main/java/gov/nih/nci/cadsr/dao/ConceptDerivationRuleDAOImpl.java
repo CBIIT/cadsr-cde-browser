@@ -40,7 +40,7 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
     {
         if( condrIdseq == null)
         {
-        	logger.info("ConceptDerivationRuleDAOImpl.getCDRByIdseq  condrIdseq == null ");
+        	//logger.info("ConceptDerivationRuleDAOImpl.getCDRByIdseq  condrIdseq == null ");
         	return null;
         }
         else {
@@ -58,7 +58,7 @@ public class ConceptDerivationRuleDAOImpl extends AbstractDAOOperations implemen
     public ConceptDerivationRuleModel getCDRByRepId( String repId )
     {
         String sql = "SELECT con_derivation_rules_ext.* FROM sbrext.representations_ext,con_derivation_rules_ext  WHERE sbrext.representations_ext.rep_id = ? AND con_derivation_rules_ext.condr_idseq = sbrext.representations_ext.condr_idseq";
-        logger.debug( ">>>>>>> " + sql.replace( "?", repId ) );
+        //logger.debug( ">>>>>>> " + sql.replace( "?", repId ) );
         ConceptDerivationRuleModel conceptDerivationRuleModel = query( sql, repId, ConceptDerivationRuleModel.class );
         return conceptDerivationRuleModel;
     }

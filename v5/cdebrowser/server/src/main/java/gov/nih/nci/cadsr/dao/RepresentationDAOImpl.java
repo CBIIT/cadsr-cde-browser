@@ -41,7 +41,7 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
         String sql = "SELECT * FROM SBREXT.REPRESENTATIONS_EXT WHERE REP_IDSEQ = ?";
         logger.debug( sql.replace( "?", "" + representationIdseq ) + " << << << <<" );
         RepresentationModel representationModel = jdbcTemplate.queryForObject( sql, new Object[]{ representationIdseq }, new RepresentationMapper() );
-        logger.debug( "representationModel: " + representationModel );
+        //logger.debug( "representationModel: " + representationModel );
         return representationModel;
     }
 
@@ -51,7 +51,7 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
         String sql = "SELECT * FROM SBREXT.REPRESENTATIONS_EXT WHERE REP_ID = ?";
         logger.debug( sql.replace( "?", representationId ) + " << << << <<" );
         RepresentationModel representationModel = jdbcTemplate.queryForObject( sql, new Object[]{ representationId }, new RepresentationMapper() );
-        logger.debug( "representationModel: " + representationModel );
+        //logger.debug( "representationModel: " + representationModel );
         return representationModel;
     }
 
@@ -81,8 +81,8 @@ public class RepresentationDAOImpl extends AbstractDAOOperations implements Repr
             representationModel.setContext( getContextDAO().getContextByIdseq( rs.getString( "CONTE_IDSEQ" ) ) );
             representationModel.setConceptDerivationRuleModel( getConceptDerivationRuleDAO().getCDRByIdseq( rs.getString( "CONDR_IDSEQ" ) ) );
 
-            logger.debug( "representationModel: " + representationModel );
-            logger.debug( "representationModel ConceptDerivationRule: " + representationModel.getConceptDerivationRuleModel());
+            //logger.debug( "representationModel: " + representationModel );
+            //logger.debug( "representationModel ConceptDerivationRule: " + representationModel.getConceptDerivationRuleModel());
             return representationModel;
         }
     }

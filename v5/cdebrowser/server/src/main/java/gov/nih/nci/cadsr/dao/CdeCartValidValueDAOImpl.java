@@ -71,14 +71,11 @@ public class CdeCartValidValueDAOImpl extends AbstractDAOOperations implements C
 	@Override
 	public List<ValidValueCdeCartModel> getValueDomainTransferObjectsById(String vdIdseq) {
 		String sql = RETRIEVE_VALID_VALUES_BY_VD_SQL;
-		// TODO remove this debug log
 		//logger.debug("Searching ValidValueCdeCartModel data for vdIdseq: " + vdIdseq + ", using SQL:  " + sql);
 
 		List<ValidValueCdeCartModel> res = getAll(sql, vdIdseq, ValidValueCdeCartModel.class);
-		logger.debug("Found ValidValueCdeCartModel data for vdIdseq: " + vdIdseq + ", in the amount:  "
-				+ (res != null ? res.size() : "none"));
+		//logger.debug("Found ValidValueCdeCartModel data for vdIdseq: " + vdIdseq + ", in the amount:  " + (res != null ? res.size() : "none"));
 
-		// TODO remove this debug log
 		//logger.debug("List<ValidValueCdeCartModel>: " + res);
 
 		return (res);

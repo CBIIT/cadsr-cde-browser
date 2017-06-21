@@ -51,7 +51,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
     {
         String sql = "SELECT vd.*, ct.NAME VD_CONTEXT_NAME FROM sbr.value_domains vd INNER JOIN SBR.CONTEXTS ct on vd.CONTE_IDSEQ = ct.CONTE_IDSEQ "
         	+ "WHERE vd.vd_idseq = ?";
-        logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", vdIdseq ) + " <<<<<<<" );
         ValueDomainModel valueDomainModel = jdbcTemplate.queryForObject( sql, new Object[]{ vdIdseq }, new ValueDomainMapper() );
         try {
         	AcRegistrationsModel regModel = getAcRegistrationsDAO().getAcRegistrationByAcIdseq(vdIdseq);
@@ -59,7 +59,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
         }
         catch( EmptyResultDataAccessException ex )
         {
-            logger.debug( "No AcRegistrationsModel found for VD with idseq: " + vdIdseq );
+            //logger.debug( "No AcRegistrationsModel found for VD with idseq: " + vdIdseq );
         }
         return valueDomainModel;
     }
@@ -160,7 +160,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
 
             try
             {
-                logger.debug( "rs.getString(\"REP_IDSEQ\"): " + rs.getString( "REP_IDSEQ" ) );
+                //logger.debug( "rs.getString(\"REP_IDSEQ\"): " + rs.getString( "REP_IDSEQ" ) );
                 valueDomainModel.setRepresentationModel( getRepresentationDAO().getRepresentationByIdseq( rs.getString( "REP_IDSEQ" ) ) );
 
             } catch( EmptyResultDataAccessException ex )
@@ -197,7 +197,7 @@ public class ValueDomainDAOImpl extends AbstractDAOOperations implements ValueDo
             {
                 // this isn't a problem, just means there's no associated ConceptualDomainModel
             }
-            logger.debug( "valueDomainModel.getRepresentationModel: " + valueDomainModel.getRepresentationModel() );
+            //logger.debug( "valueDomainModel.getRepresentationModel: " + valueDomainModel.getRepresentationModel() );
 
             return valueDomainModel;
         }

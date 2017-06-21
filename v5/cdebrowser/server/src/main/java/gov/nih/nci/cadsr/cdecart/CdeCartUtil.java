@@ -361,7 +361,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
     public Collection<DataElementTransferObject> buildCartTransferObjects (List<DataElementModel> deList) {
     	ArrayList<DataElementTransferObject> resultModel = new ArrayList<DataElementTransferObject>();
     	if (deList != null) {
-    		log.debug("Data to add to cart amount: " + deList.size() + deList);
+    		log.debug("Data to add to cart amount: " + deList.size());
     		for (DataElementModel deModel : deList) {
     			if (deModel != null) {
     				CDECartItem cdeItem = new CDECartItemTransferObject();
