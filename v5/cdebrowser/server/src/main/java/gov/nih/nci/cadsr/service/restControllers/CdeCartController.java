@@ -136,7 +136,7 @@ public class CdeCartController
 	public ResponseEntity<String> saveCart(HttpSession mySession,
 			RequestEntity<List<String>> request) throws AutheticationFailureException {
 		String principalName = null;
-
+		
 		if (mySession != null) {
 			principalName = (String) mySession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME);			
 			logger.warn("In saveCart found session for: " + principalName);
@@ -153,26 +153,31 @@ public class CdeCartController
 			logger.debug("No ID received to add to Object Cart; returning rest call OK");
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		}
-		else if (logger.isDebugEnabled()) {
-			logger.debug("ID received to save in Object Cart: " + cdeIds);
+		
+		logger.info("ID received to save in Object Cart from user: " + principalName + ",  IDs amount: " + cdeIds.size());
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("ID received to save in Object Cart from user: " + principalName + " in the amount: " + cdeIds.size() + cdeIds);
 		}
+		
 		//CDEBROWSER-280 Add Derived from
 		List<String> derivedFrom = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);//This method never returns null
 		if (!derivedFrom.isEmpty()) {
 			logger.debug("...getDataElementDerivationIdseqList found CDEs: " + derivedFrom.size() + derivedFrom );
 			cdeIds.addAll(derivedFrom);
+			logger.info("IDs to save in Object Cart with Derived for user: " + principalName + ",  total IDs amount: " + cdeIds.size());
 		}
 		
 		try {
-			logger.debug("Received rest call save Object Cart: " + principalName);
+			logger.info("Proceeding with REST call saveCart " + principalName);
 			cdeCartUtil.addToCart(mySession, principalName, cdeIds);
-			logger.debug("Returning rest call saveCart: OK, user:" + principalName);
+			logger.info("Returning rest call saveCart: OK, user:" + principalName);
 			return new ResponseEntity<String>("Done", HttpStatus.OK);
 		} 
 		catch (Exception e) {
 			String errorToClient = buildGetCartErrorMessage(e, principalName);
-			logger.error("Sending INTERNAL_SERVER_ERROR response to rest call SAVE Object Cart with errorToClient: " + errorToClient , e);
-			return new ResponseEntity(errorToClient, HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error("Sending INTERNAL_SERVER_ERROR response to rest call SAVE Object Cart for " + principalName + " with errorToClient: " + errorToClient , e);
+			return new ResponseEntity<String>(errorToClient, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	/**

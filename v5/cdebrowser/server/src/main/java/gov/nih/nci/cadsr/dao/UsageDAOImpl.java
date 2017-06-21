@@ -66,7 +66,7 @@ public class UsageDAOImpl extends AbstractDAOOperations implements UsageDAO
                 " protocol_number" +
                 ", form_name" +
                 ", question_name";
-        logger.debug( sql.replace( "?", deIdseq ) );
+        //logger.debug( sql.replace( "?", deIdseq ) );
         List<UsageModel> usageModels = jdbcTemplate.query( sql, new Object[]{ deIdseq }, new BeanPropertyRowMapper( UsageModel.class ) );
         return usageModels;
     }
