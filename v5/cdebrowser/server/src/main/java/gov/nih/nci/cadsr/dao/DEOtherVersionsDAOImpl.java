@@ -86,7 +86,7 @@ public class DEOtherVersionsDAOImpl extends AbstractDAOOperations implements DEO
             } catch( EmptyResultDataAccessException ex )
             {
                 deOtherVersionsModel.setCsCsiModelList( new ArrayList<CsCsiModel>() );
-                logger.warn( "No CsCsiModels found for Other Version Data Element with idseq: " + rs.getString( "de_idseq" ) );
+                //logger.warn( "No CsCsiModels found for Other Version Data Element with idseq: " + rs.getString( "de_idseq" ) );
             }
             return deOtherVersionsModel;
         }

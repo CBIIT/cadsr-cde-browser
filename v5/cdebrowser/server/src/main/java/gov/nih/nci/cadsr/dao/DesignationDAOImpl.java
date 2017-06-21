@@ -127,7 +127,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
                 designationModel.setContex( getContextDAO().getContextByIdseq( rs.getString( "CONTE_IDSEQ" ) ) );
             } catch( EmptyResultDataAccessException ex )
             {
-                logger.warn( "no Context found for Definition using context idseq: " + rs.getString( "CONTE_IDSEQ" ) );
+                //logger.warn( "no Context found for Definition using context idseq: " + rs.getString( "CONTE_IDSEQ" ) );
             }
 
             try
@@ -153,7 +153,7 @@ public class DesignationDAOImpl extends AbstractDAOOperations implements Designa
                 }
             } catch( EmptyResultDataAccessException ex )
             {
-                logger.warn( "no CSIs found for Definition: " + rs.getString( "DESIG_IDSEQ" ) );
+                //logger.warn( "no CSIs found for Definition: " + rs.getString( "DESIG_IDSEQ" ) );
                 // this designation is unclassified
                 designationModel.setCsiIdseqs( new HashSet<String>( 1 ) );
                 designationModel.getCsiIdseqs().add( CsCsiModel.UNCLASSIFIED );

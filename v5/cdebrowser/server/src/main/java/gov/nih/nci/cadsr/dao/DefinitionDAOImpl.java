@@ -107,7 +107,7 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
                 }
             } catch( EmptyResultDataAccessException ex )
             {
-                logger.warn( "no contextModel found for CONTE_IDSEQ: " + rs.getString( "CONTE_IDSEQ" ) );
+                //logger.warn( "no contextModel found for CONTE_IDSEQ: " + rs.getString( "CONTE_IDSEQ" ) );
             }
 
             try
@@ -133,7 +133,7 @@ public class DefinitionDAOImpl extends AbstractDAOOperations implements Definiti
                 }
             } catch( EmptyResultDataAccessException ex )
             {
-                logger.warn( "no CSIs found for Definition: " + rs.getString( "DEFIN_IDSEQ" ) );
+                //logger.warn( "no CSIs found for Definition: " + rs.getString( "DEFIN_IDSEQ" ) );
                 // this Definition is unclassified
                 definitionModel.setCsiIdseqs( new HashSet<String>( 1 ) );
                 definitionModel.getCsiIdseqs().add( CsCsiModel.UNCLASSIFIED );

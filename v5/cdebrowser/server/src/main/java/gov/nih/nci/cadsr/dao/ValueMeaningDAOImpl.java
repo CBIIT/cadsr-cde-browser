@@ -183,7 +183,7 @@ public class ValueMeaningDAOImpl extends AbstractDAOOperations implements ValueM
                 "AND sbr.vd_pvs.vd_idseq = sbr.data_elements.vd_idseq " +
                 "AND sbr.value_meanings.vm_idseq = sbr.permissible_values.vm_idseq ORDER BY UPPER(sbr.permissible_values.value)";
 
-        logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
         return sql;
     }
 
