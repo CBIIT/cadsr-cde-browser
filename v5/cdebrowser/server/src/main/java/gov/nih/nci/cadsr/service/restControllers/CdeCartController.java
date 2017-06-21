@@ -157,7 +157,7 @@ public class CdeCartController
 			logger.debug("ID received to save in Object Cart: " + cdeIds);
 		}
 		//CDEBROWSER-280 Add Derived from
-		List<String> derivedFrom = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);
+		List<String> derivedFrom = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);//This method never returns null
 		if (!derivedFrom.isEmpty()) {
 			logger.debug("...getDataElementDerivationIdseqList found CDEs: " + derivedFrom.size() + derivedFrom );
 			cdeIds.addAll(derivedFrom);

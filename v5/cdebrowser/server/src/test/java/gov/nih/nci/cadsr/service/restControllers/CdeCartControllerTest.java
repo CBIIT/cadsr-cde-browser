@@ -305,6 +305,45 @@ public class CdeCartControllerTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
+	public void testSaveObjectCartWithDerived() throws Exception {
+		HttpSession mockSession = Mockito.mock(HttpSession.class);
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser1");
+		List<String> given =  new ArrayList<String>();
+		given.add("1");
+		given.add("2");
+		
+		List<String> derivedFromIds = new ArrayList<>();
+		derivedFromIds.add("272D9093-DD6D-2315-E044-0003BA3F9857");
+		derivedFromIds.add("272DB2A0-355C-2D49-E044-0003BA3F9857");
+		derivedFromIds.add("FC7048E5-CBD2-101F-E034-0003BA3F9857");
+		
+		List<String> expected =  new ArrayList<String>();
+		expected.addAll(given);
+		expected.addAll(derivedFromIds);
+		
+		Mockito.reset(mockDataElementDerivationDAO);
+		Mockito.when(mockDataElementDerivationDAO.getDataElementDerivationIdseqList(Mockito.eq(given))).thenReturn(derivedFromIds);
+		
+		Mockito.doNothing().when(cdeCartUtil).addToCart(mockSession, "testUser1", expected);
+		RequestEntity<List<String>> mockRequest = Mockito.mock(RequestEntity.class);
+		Mockito.when(mockRequest.getBody()).thenReturn(given);
+		
+		//MUT
+		ResponseEntity<String> received = cdeCartController.saveCart(mockSession, mockRequest);
+		
+		assertNotNull(received);
+		assertEquals("Done", received.getBody());
+		assertEquals(HttpStatus.OK, received.getStatusCode());
+		Mockito.verify(cdeCartUtil).addToCart(mockSession, "testUser1", expected);
+		Mockito.reset(cdeCartUtil);
+		Mockito.verify(mockDataElementDerivationDAO).getDataElementDerivationIdseqList(given);
+		Mockito.reset(mockDataElementDerivationDAO);
+		Mockito.verifyZeroInteractions(cdeCartUtil);
+		Mockito.verifyZeroInteractions(mockDataElementDerivationDAO);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
 	public void testSaveObjectCartNoIds() throws Exception {
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		Mockito.when(mockSession.getAttribute(CaDSRConstants.LOGGEDIN_USER_NAME)).thenReturn("testUser1");
