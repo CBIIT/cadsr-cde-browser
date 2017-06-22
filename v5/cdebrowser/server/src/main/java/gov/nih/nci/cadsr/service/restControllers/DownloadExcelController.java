@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
 import gov.nih.nci.cadsr.download.ExcelDownloadTypes;
 import gov.nih.nci.cadsr.download.GetExcelDownloadInterface;
 import gov.nih.nci.cadsr.service.ClientException;
@@ -47,6 +48,9 @@ public class DownloadExcelController {
 	
 	@Autowired
 	AppConfig appConfig;
+	
+	@Autowired
+	private DataElementDerivationDAO dataElementDerivationDAO;
 
 	/*@Value("${registrationAuthorityIdentifier}")
 	String registrationAuthorityIdentifier;
@@ -66,7 +70,6 @@ public class DownloadExcelController {
 	public static final String serverErrorMessageStreaming = "Please contact the support group. An error occurred in downloaded document streaming '%s'. Java error message: %s.";
 	public static final String serverErrorBuildingDocument = "unable to build Excel document file.";
 	
-
 	public void setGetExcelDownload(GetExcelDownloadInterface getExcelDownload) {
 		this.getExcelDownload = getExcelDownload;
 	}
@@ -94,6 +97,11 @@ public class DownloadExcelController {
 		String excelFileId = null;
 		try {
 			validateDownloadParameters(cdeIds, source);
+			
+			cdeIds = ControllerUtils.validateAndRemoveIdDuplicates(cdeIds);
+			//CDEBROWSER-800 Add Derived from
+			List<String> cdeIdsDerived = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);//CDEBROWSER-800 Add Derived from to Download
+			cdeIds.addAll(cdeIdsDerived);
 			
 			excelFileId = getExcelDownload.persist(cdeIds, appConfig.getRegistrationAuthorityIdentifier(), source);
 		
@@ -187,6 +195,9 @@ public class DownloadExcelController {
 	public void setAppConfig(AppConfig appConfig) {
 		this.appConfig = appConfig;
 	}
-	
-	
+
+	public void setDataElementDerivationDAO(DataElementDerivationDAO dataElementDerivationDAO) {
+		this.dataElementDerivationDAO = dataElementDerivationDAO;
+	}
+
 }

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
 import gov.nih.nci.cadsr.download.GetXmlDownloadInterface;
 import gov.nih.nci.cadsr.download.XmlDownloadTypes;
 import gov.nih.nci.cadsr.service.ClientException;
@@ -46,6 +47,9 @@ public class DownloadXmlController {
 	
 	@Autowired
 	private AppConfig appConfig;
+	
+	@Autowired
+	private DataElementDerivationDAO dataElementDerivationDAO;
 
 	/*@Value("${downloadDirectory}")
 	String downloadDirectory;
@@ -92,10 +96,15 @@ public class DownloadXmlController {
 	
 		String fileId = null;
 		try {
-			validateDownloadParameters(cdeIds, source);
+			validateDownloadParameters(cdeIds, source);	
+
+			cdeIds = ControllerUtils.validateAndRemoveIdDuplicates(cdeIds);
+			//CDEBROWSER-800 Add Derived from
+			List<String> cdeIdsDerived = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);//CDEBROWSER-800 Add Derived from to Download
+			cdeIds.addAll(cdeIdsDerived);
 
 			fileId = getXmlDownload.persist(cdeIds, appConfig.getRegistrationAuthorityIdentifier(), source);
-		
+
 			if (fileId != null) {
 				HttpHeaders responseHeaders = new HttpHeaders();
 				String location = path + '/'+ fileId;

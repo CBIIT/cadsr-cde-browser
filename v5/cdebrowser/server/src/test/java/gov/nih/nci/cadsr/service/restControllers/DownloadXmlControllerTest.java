@@ -176,7 +176,7 @@ public class DownloadXmlControllerTest {
 		String fileIdExpected = "123";
 	
 		List<String> idList = new ArrayList<>();
-		idList.add("testId1");
+		idList.add("99BA9DC8-2CFA-4E69-E034-080020C9C0E0");
 		String testUriStr = "http://localhost:8080/downloadXml";
 		URI uri = buildTestUri(testUriStr);
 		RequestEntity<List<String>> request = new RequestEntity<>(idList, HttpMethod.POST, uri);

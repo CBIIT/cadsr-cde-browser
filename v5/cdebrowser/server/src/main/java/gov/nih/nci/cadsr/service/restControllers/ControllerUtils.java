@@ -6,7 +6,9 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
 import gov.nih.nci.cadsr.dao.model.BaseDesignationDefinitionModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
@@ -188,4 +191,22 @@ public class ControllerUtils {
 			}
 		}
 	}
+	/**
+	 * This method validates IDSEQ and removes duplicates.
+	 * 
+	 * @param acIdseqList caDSR IDSEQ List
+	 * @return new List<String> duplicates are removed, and any wrong formatted ID is removed
+	 */
+    public static List<String> validateAndRemoveIdDuplicates(final List<String> acIdseqList) {
+    	Set<String> acIdseqSet = new HashSet<>();
+    	List<String> resultList = new ArrayList<>();
+        for (String currIdseq : acIdseqList) {
+        	if ((currIdseq != null) && (! acIdseqSet.contains(currIdseq))
+        			&& ParameterValidator.validateIdSeq(currIdseq)) {
+        		resultList.add(currIdseq);
+        		acIdseqSet.add(currIdseq);
+        	}
+        }
+        return resultList;
+    }
 }

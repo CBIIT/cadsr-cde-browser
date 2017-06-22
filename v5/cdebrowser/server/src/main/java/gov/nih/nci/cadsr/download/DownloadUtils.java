@@ -34,10 +34,8 @@ public class DownloadUtils {
 		String currVal;
 		for (int indx = 0; indx < max; indx++) {
 			if (iter.hasNext()) {
-				currVal = iter.next();
-				if (ParameterValidator.validateIdSeq(currVal)) {
-					sb.append("'" + currVal + "', ");
-				}
+				currVal = iter.next();//CDEBROWSER-800 IDSEQ formats are validated by the controllers
+				sb.append("'" + currVal + "', ");
 			}
 			else break;
 		}
