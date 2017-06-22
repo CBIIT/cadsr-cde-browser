@@ -49,7 +49,7 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
                 " WHERE data_elements.de_idseq = complex_data_elements.p_de_idseq " +
                 " AND data_elements.cde_id = ? ";
 
-        logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
 
         DataElementDerivationModel results = query( sql, cdeId, DataElementDerivationModel.class );
 
@@ -64,7 +64,7 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
         		+ "DATE_MODIFIED, DATE_CREATED, CREATED_BY, MODIFIED_BY " +
                 "FROM SBR.COMPLEX_DATA_ELEMENTS where P_DE_IDSEQ = ?";
 
-        logger.debug( sql.replace("?", deIdseq) + " <<<<<<<");
+        //logger.debug( sql.replace("?", deIdseq) + " <<<<<<<");
 
         DataElementDerivationModel results = query( sql, deIdseq, DataElementDerivationModel.class );
 
@@ -80,7 +80,7 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
                 "where de.CONTE_IDSEQ = ct.CONTE_IDSEQ and cdr.c_de_idseq = de.de_idseq and p_de_idseq = ? " +
                 "order by cdr.display_order";
 
-        logger.debug( sql.replace( "?", deIdseq) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", deIdseq) + " <<<<<<<" );
         List<DataElementDerivationComponentModel> results = getAll( sql, deIdseq, DataElementDerivationComponentModel.class );
 
         return results;
@@ -94,11 +94,11 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
                 " WHERE data_elements.de_idseq = complex_data_elements.p_de_idseq " +
                 " AND data_elements.cde_id = ? ";
 
-        logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", Integer.toString( cdeId ) ) + " <<<<<<<" );
 
         PDeIdseqModel pDeIdseq = query( sql, cdeId, PDeIdseqModel.class );
 
-        logger.debug( "pDeIdseq: " + pDeIdseq.getpDeIdseq() );
+        //logger.debug( "pDeIdseq: " + pDeIdseq.getpDeIdseq() );
 
         sql = "SELECT display_order, data_elements.long_name, sbr.contexts.name AS Context, cde_id AS public_id, data_elements.version, asl_name AS workflowStatus, data_elements.de_idseq " +
                 " FROM complex_de_relationships, data_elements, sbr.contexts " +
@@ -107,7 +107,7 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
                 " AND contexts.conte_idseq = data_elements.conte_idseq" +
                 " ORDER BY display_order";
 
-        logger.debug( sql.replace( "?", pDeIdseq.getpDeIdseq() ) + " <<<<<<<" );
+        //logger.debug( sql.replace( "?", pDeIdseq.getpDeIdseq() ) + " <<<<<<<" );
         List<DataElementDerivationComponentModel> results = getAll( sql, pDeIdseq.getpDeIdseq(), DataElementDerivationComponentModel.class );
 
         return results;
