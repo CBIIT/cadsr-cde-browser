@@ -117,7 +117,7 @@ public class DataElementDerivationDAOImpl extends AbstractDAOOperations implemen
 	public List<String> getDataElementDerivationIdseqList(List<String> acIdseqList) {
         List<String> arrResult = getObjectList(
         		acIdseqList, 
-        		"select cdr.C_DE_IDSEQ from SBR.COMPLEX_DE_RELATIONSHIPS cdr where cdr.P_DE_IDSEQ IN (:ids)", 
+        		"select distinct cdr.C_DE_IDSEQ from SBR.COMPLEX_DE_RELATIONSHIPS cdr where cdr.P_DE_IDSEQ IN (:ids)", 
         		"ids",
         		new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource()), 
         		String.class,

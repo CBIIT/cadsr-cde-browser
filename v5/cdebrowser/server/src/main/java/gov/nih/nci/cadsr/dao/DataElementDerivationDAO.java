@@ -14,5 +14,10 @@ public interface DataElementDerivationDAO
     List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeId( int cdeId );
 	DataElementDerivationModel getDataElementDerivationByCdeIdseq(String deIdseq);
     List<DataElementDerivationComponentModel> getDataElementDerivationComponentsByCdeIdseq(String deIdseq);
-    List<String> getDataElementDerivationIdseqList(List<String> deIdseq);//CDEBROWSER-280 OC shall have Derived from DE IDs
+    /**
+     * 
+     * @param acIdseqList IDSEQ List
+     * @return List<String> - distinct Derived from IDSEQs which does not contain any original IDSEQ
+     */
+    List<String> getDataElementDerivationIdseqList(List<String> acIdseqList);//CDEBROWSER-280 OC shall have Derived from DE IDs
 }

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
+import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
 import gov.nih.nci.cadsr.dao.model.BaseDesignationDefinitionModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
@@ -208,5 +209,24 @@ public class ControllerUtils {
         	}
         }
         return resultList;
+    }
+    /**
+     * Removes duplicates from the list if there is any. 
+     * Add derived from CDE IDs to the original CDE ID list.
+     * 
+     * @param cdeIds can be changed
+     * @param dataElementDerivationDAO
+     */
+    public static List<String> preprocessWithDerivedIdseqList(final List<String> cdeIds, DataElementDerivationDAO dataElementDerivationDAO) {
+    	if (cdeIds != null) {
+    		List<String> resultList = ControllerUtils.validateAndRemoveIdDuplicates(cdeIds);
+    		//CDEBROWSER-800 Add Derived from
+			List<String> cdeIdsDerived = dataElementDerivationDAO.getDataElementDerivationIdseqList(resultList);//CDEBROWSER-800 Add Derived from to Download
+			resultList.addAll(cdeIdsDerived);
+			return resultList;
+    	}
+    	else {
+    		return new ArrayList<>();
+    	}
     }
 }

@@ -98,10 +98,8 @@ public class DownloadExcelController {
 		try {
 			validateDownloadParameters(cdeIds, source);
 			
-			cdeIds = ControllerUtils.validateAndRemoveIdDuplicates(cdeIds);
 			//CDEBROWSER-800 Add Derived from
-			List<String> cdeIdsDerived = dataElementDerivationDAO.getDataElementDerivationIdseqList(cdeIds);//CDEBROWSER-800 Add Derived from to Download
-			cdeIds.addAll(cdeIdsDerived);
+			cdeIds = ControllerUtils.preprocessWithDerivedIdseqList(cdeIds, dataElementDerivationDAO);
 			
 			excelFileId = getExcelDownload.persist(cdeIds, appConfig.getRegistrationAuthorityIdentifier(), source);
 		
