@@ -303,18 +303,18 @@ public class ContextDataController
         }
         else if( folderType == CaDSRConstants.PROTOCOLFORMS_TYPE_FOLDER )
         {
-            // All ProtocolForms for this Context
-            List<ProtocolFormModel> protocolFormModelList = this.protocolFormDAO.getProtocolFormByContextId( contextId );
-
+            List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
             // Last parameter is "Collapsed" should be false
             initProtocolsFormsParentNode( parentNode, programArea, false );
+            
+            //CDEBROWSER-440 find all protocol IDSEQs in this context
+            List<String> protoIdseqList = protocolModelList.stream().map(sc -> sc.getProtoIdseq()).collect(Collectors.toList());
+            
+        	//CDEBROWSER-440 All ProtocolForms for this context's protocol list. We ignore Forms' Context.
+            List<ProtocolFormModel> protocolFormModelList = this.protocolFormDAO.getProtocolFormListByProtoIdseqList(protoIdseqList);
 
-            //////////////////////////////////////////////////
-            //Protocol List for this Context, a Protocol will be a node which contains ProtocolForms
-            List<ProtocolModel> protocolModelList = this.protocolDAO.getProtocolsByContext( model.getConteIdseq() );
-
-            // Populate each Protocol with their ProtocolForms
-            initProtocolModels( protocolModelList, protocolFormModelList, parentNode, programArea );
+            //Populate each Protocol with their ProtocolForms.
+            initProtocolModels(protocolModelList, protocolFormModelList, parentNode, programArea );
 //            try {
 //            	logger.debug( "parentNode " + parentNode.getChildren().get( 0 ).getChildren().get( 0 ).toString() );
 //            }

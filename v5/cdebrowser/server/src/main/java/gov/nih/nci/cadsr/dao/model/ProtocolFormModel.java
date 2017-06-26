@@ -5,9 +5,11 @@ package gov.nih.nci.cadsr.dao.model;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 
-public class ProtocolFormModel extends BaseModel
+public class ProtocolFormModel extends BaseModel implements Comparable
 {
-    private String qcIdseq;
+	private static final long serialVersionUID = 1L;
+	
+	private String qcIdseq;
     private String version;
     private String type;
     private String conteIdseq;
@@ -391,4 +393,14 @@ public class ProtocolFormModel extends BaseModel
         result = 31 * result + ( getAcIdseq() != null ? getAcIdseq().hashCode() : 0 );
         return result;
     }
+
+	@Override
+	public int compareTo(Object o) {
+		if ((o == null) || (!(o instanceof ProtocolFormModel)) || (this.getLongName() == null)) {
+			return -1;
+		}
+		else {
+			return this.getLongName().compareToIgnoreCase(((ProtocolFormModel)o).getLongName());
+		}
+	}
 }

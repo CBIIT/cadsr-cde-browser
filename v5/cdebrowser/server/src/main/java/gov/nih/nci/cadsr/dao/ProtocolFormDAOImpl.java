@@ -8,14 +8,18 @@ import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
+
+import java.util.Collections;
 import java.util.List;
 
 public class ProtocolFormDAOImpl extends AbstractDAOOperations implements ProtocolFormDAO
 {
-    private Logger logger = LogManager.getLogger( ProtocolFormDAOImpl.class.getName() );
+    private static Logger logger = LogManager.getLogger( ProtocolFormDAOImpl.class.getName() );
 
     private JdbcTemplate jdbcTemplate;
 
@@ -64,28 +68,48 @@ public class ProtocolFormDAOImpl extends AbstractDAOOperations implements Protoc
         List<ProtocolFormModel> result;
         String sql = " select distinct * from SBREXT.FB_FORMS_VIEW"
                 + " where LATEST_VERSION_IND = 'Yes' ORDER BY  upper(LONG_NAME)";
-        logger.debug( "getAllProtocolForm" );
+        //logger.debug( "getAllProtocolForm" );
         //logger.debug( ">>>>>>> " + sql );
         result = getAll( sql, ProtocolFormModel.class );
         //logger.debug( sql + " <<<<<<<" );
-        logger.debug( "Done getAllProtocolForm\n" );
+        //logger.debug( "Done getAllProtocolForm\n" );
 
         return result;
 
     }
 
     @Override
-    public List<ProtocolFormModel> getProtocolFormByProtoId( String protoIdseq )
+    public List<ProtocolFormModel> getProtocolFormByProtoIdseq( String protoIdseq )
     {
         List<ProtocolFormModel> result;
         String sql = " select distinct * from SBREXT.FB_FORMS_VIEW"
                 + " where  PROTO_IDSEQ = ? AND LATEST_VERSION_IND = 'Yes' ORDER BY upper(LONG_NAME)";
-        logger.debug( "getProtocolFormByProtoId" );
+        //logger.debug( "getProtocolFormByProtoIdseq" );
         //logger.debug( ">>>>>>> " + sql.replace( "?", protoIdseq ) );
         result = getAll( sql, protoIdseq, ProtocolFormModel.class );
         //logger.debug( sql.replace( "?", protoIdseq ) + " <<<<<<<" );
-        logger.debug( "Done getProtocolFormByProtoId\n" );
+        //logger.debug( "Done getProtocolFormByProtoIdseq\n" );
 
         return result;
     }
+    
+    //CDEBROWSER-440 We retrieve Forms by Protocols in a Context ignoring Forms' Contexts
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.cadsr.dao.ProtocolFormDAO#getProtocolFormListByProtoIdseqList(java.util.List)
+	 */
+	@Override
+	public List<ProtocolFormModel> getProtocolFormListByProtoIdseqList(List<String> protoIdseqList) {
+		String sqlProto = "select distinct * from SBREXT.FB_FORMS_VIEW" 
+                + " where PROTO_IDSEQ IN (:ids) AND LATEST_VERSION_IND = 'Yes' ORDER BY upper(LONG_NAME)";
+		List<ProtocolFormModel> arrResult = getObjectList(protoIdseqList,
+			sqlProto,
+			"ids", new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource()), ProtocolFormModel.class,
+			new BeanPropertyRowMapper<ProtocolFormModel>(ProtocolFormModel.class), false);
+		
+		//sort by Long names case insensitive
+		Collections.sort(arrResult);
+		
+		return arrResult;
+	}
+
 }

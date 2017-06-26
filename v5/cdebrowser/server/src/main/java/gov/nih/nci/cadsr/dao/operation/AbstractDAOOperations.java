@@ -179,25 +179,43 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
         }
         return resultList;
     }
-    
-    protected static <T> List<T> retrieve1000Ids(List<T> deIdseqList, String sqlStmt, String paramName, 
+    /**
+     * 
+     * @param deIdseqList list of IDSEQ contains less than 1000 IDSEQ Strings
+     * @param sqlStmt
+     * @param paramName
+     * @param namedParameterJdbcTemplate
+     * @param clazz
+     * @param rowMapper
+     * @return List<T> could be empty
+     */
+    protected static <T> List<T> retrieve1000Ids(List<String> deIdseqList, String sqlStmt, String paramName, 
     		NamedParameterJdbcTemplate namedParameterJdbcTemplate, 
     		Class<T> clazz,
     		RowMapper<T> rowMapper) {
-    	List<T> idseqList;
-    	if (((deIdseqList != null ) && (! deIdseqList.isEmpty())) && (StringUtils.isNotBlank(paramName)) && (namedParameterJdbcTemplate != null)
-    			&& (rowMapper != null)) {
+        return retrieve1000Entities(deIdseqList, sqlStmt, paramName, namedParameterJdbcTemplate, String.class, clazz, rowMapper);
+    }
+    
+    protected static <K, T> List<T> retrieve1000Entities(List<K> paramList, String sqlStmt, String paramName, 
+    		NamedParameterJdbcTemplate namedParameterJdbcTemplate, 
+    		Class<K> clazzOfParam, Class<T> clazzToReturn,
+    		RowMapper<T> rowMapper) {
+    	List<T> entityList;
+    	if (((paramList != null ) && (! paramList.isEmpty())) && (StringUtils.isNotBlank(paramName)) 
+    		&& (namedParameterJdbcTemplate != null)
+    		&& (rowMapper != null)) {
             //MapSqlParameterSource parameters = new MapSqlParameterSource();
-            Map<String, List<T>> param = Collections.singletonMap(paramName, deIdseqList);
-            idseqList = namedParameterJdbcTemplate.query(sqlStmt, param, rowMapper);
+            Map<String, List<K>> param = Collections.singletonMap(paramName, paramList);
+            entityList = namedParameterJdbcTemplate.query(sqlStmt, param, rowMapper);
     	}
     	else {
     		logger.info("Parameter problems in retrieve1000Ids, returning an empty list");
-    		idseqList = new ArrayList<>();
+    		entityList = new ArrayList<>();
     	}
-        return idseqList;
-    }
-	public <T> List<T> getObjectList(List<T> acIdseqList, String sqlStmt, String paramName, 
+        return entityList;
+    }    
+    
+	public <T> List<T> getObjectList(List<String> acIdseqList, String sqlStmt, String paramName, 
 			NamedParameterJdbcTemplate namedParameterJdbcTemplate, 
 			Class<T> clazz, 
 			RowMapper<T> beanPropertyRowMapper) {
@@ -212,29 +230,37 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
      * @param sqlStmt - SQL Statement with named parameter
      * @return List<T>
      */	
-	public <T> List<T> getObjectList(List<T> acIdseqList, String sqlStmt, String paramName, 
+	public <T> List<T> getObjectList(List<String> acIdseqList, String sqlStmt, String paramName, 
 			NamedParameterJdbcTemplate namedParameterJdbcTemplate, 
-			Class<T> clazz, 
+			Class<T> clazzToReturn, 
+			RowMapper<T> rowMapper, 
+			boolean doFinalDuplicateCleanup) {
+        return getObjectList(acIdseqList, sqlStmt, paramName, namedParameterJdbcTemplate, String.class, clazzToReturn, rowMapper, doFinalDuplicateCleanup);
+	}
+	
+	public <K, T> List<T> getObjectList(List<K> acIdseqList, String sqlStmt, String paramName, 
+			NamedParameterJdbcTemplate namedParameterJdbcTemplate, 
+			Class<K> clazzOfParam, Class<T> clazzToReturn, 
 			RowMapper<T> rowMapper, 
 			boolean doFinalDuplicateCleanup) {
         List<T> arrResult = new ArrayList<>();
         if ((acIdseqList != null) && (!(acIdseqList.isEmpty()))) {
-        	List<T> deIdseqList = cleanUpIdDuplicates(acIdseqList);
-        	List<T> portionOf1000;
+        	List<K> deIdseqList = cleanUpIdDuplicates(acIdseqList);
+        	List<K> portionOf1000;
         	List<T> arrOf1000;
-        	Iterator<T> iter = deIdseqList.iterator();
+        	Iterator<K> iter = deIdseqList.iterator();
         	while (iter.hasNext()) {
         		portionOf1000 = new ArrayList<>();
         		for (int j = 0; ((j < oracleIn1000) & iter.hasNext()); j++) {
         			portionOf1000.add(iter.next());
         		}
-        		arrOf1000 = retrieve1000Ids(portionOf1000, sqlStmt, paramName, namedParameterJdbcTemplate, clazz,
-        	    	rowMapper);
+        		arrOf1000 = retrieve1000Entities(portionOf1000, sqlStmt, paramName, 
+        			namedParameterJdbcTemplate, clazzOfParam, clazzToReturn, rowMapper);
         		arrResult.addAll(arrOf1000);
         	}
-        }
-        if (doFinalDuplicateCleanup) {
-        	arrResult = cleanUpIdDuplicates(arrResult);
+            if (doFinalDuplicateCleanup) {
+            	arrResult = cleanUpIdDuplicates(arrResult);
+            }
         }
         return arrResult;
 	}

@@ -12,5 +12,13 @@ public interface ProtocolFormDAO
     public List<ProtocolFormModel> getProtocolForms( String csidSeq );
     public List<ProtocolFormModel> getProtocolFormByContextId( String ContextId );
     public List<ProtocolFormModel> getAllProtocolForm();
-    public List<ProtocolFormModel> getProtocolFormByProtoId( String protoIdseq );
+    public List<ProtocolFormModel> getProtocolFormByProtoIdseq( String protoIdseq );
+    //CDEBROWSER-440
+    /**
+     * This method returns a list of Protocols based on Protocol IDSEQ List.
+     * 
+     * @param protoIdseqList 
+     * @return sorted List<ProtocolFormModel>
+     */
+    public List<ProtocolFormModel> getProtocolFormListByProtoIdseqList( List<String> protoIdseqList );
 }
