@@ -52,7 +52,7 @@ public enum RegistrationStatusEnum
 					return true;
 			}
 		}
-		if (SearchCriteria.ALL_REGISRTATION_STATUSES.equals(registrationStatus)) {
+		if (SearchCriteria.ALL_REGISTRATION_STATUSES.equals(registrationStatus)) {
 			return true;
 		}
 		else {

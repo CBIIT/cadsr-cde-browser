@@ -3,7 +3,6 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
+import gov.nih.nci.cadsr.dao.DesignationDAO;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
 import gov.nih.nci.cadsr.error.RestControllerException;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ProtocolService;
 import gov.nih.nci.cadsr.service.model.cdeData.Protocol;
 import gov.nih.nci.cadsr.service.model.cdeData.classifications.ClassificationScheme;
-import gov.nih.nci.cadsr.dao.DesignationDAO;
+import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 @RestController
 @RequestMapping("/lookupdata")
@@ -37,6 +37,9 @@ public class LookupDataController
 
     @Autowired
     private DesignationDAO designationDAO;
+    
+    @Autowired
+    private RegistrationStatusDAO registrationStatusDAO;
 
 
 	@RequestMapping(value="/workflowstatus", produces = "application/json")
@@ -51,9 +54,9 @@ public class LookupDataController
 	@RequestMapping(value="/registrationstatus", produces = "application/json")
 	public List<String> getRegistrationStatus()
 	{
-		//logger.debug("Received request for Registration Status information.");
-		List<String> resList = RegistrationStatusEnum.getAsList();
-		resList.add(0, SearchCriteria.ALL_REGISRTATION_STATUSES);
+		//logger.debug("Received request for Registration Status information.");				
+		List<String> resList = registrationStatusDAO.getRegnStatusesAsList();
+		resList.add(0,SearchCriteria.ALL_REGISTRATION_STATUSES);
 		return resList;
 	}
 

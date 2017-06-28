@@ -456,7 +456,7 @@ public class ServiceTestUtils {
     	searchCriteria.setFormIdSeq("formIdSeq" + suffix);
 		searchCriteria.setFilteredinput(SearchCriteria.ALL_FIELDS);
 		searchCriteria.setWorkFlowStatus(SearchCriteria.ALL_WORKFLOW_STATUSES);
-		searchCriteria.setRegistrationStatus(SearchCriteria.ALL_REGISRTATION_STATUSES);
+		searchCriteria.setRegistrationStatus(SearchCriteria.ALL_REGISTRATION_STATUSES);
 		searchCriteria.setAltNameType(SearchCriteria.ALL_ALTNAME_TYPES);
     	return searchCriteria;
     }

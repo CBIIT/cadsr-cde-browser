@@ -81,6 +81,9 @@
         <property name="acAttCsCsiDAO" ref="acAttCsCsiDAO"/>
         <property name="contextDAO" ref="contextDAO"/>
     </bean>
+    
+    <bean id="registrationStatusDAO" class="gov.nih.nci.cadsr.dao.RegistrationStatusDAOImpl" parent="abstractDao" />
+    
     <bean id="deOtherVersionsDAO" class="gov.nih.nci.cadsr.dao.DEOtherVersionsDAOImpl" parent="abstractDao">
         <property name="csCsiDAO" ref="csCsiDAO"/>
     </bean>

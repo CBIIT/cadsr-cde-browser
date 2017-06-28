@@ -28,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import gov.nih.nci.cadsr.dao.ClassificationSchemeDAO;
 import gov.nih.nci.cadsr.dao.ProtocolDAO;
 import gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
 import gov.nih.nci.cadsr.dao.DesignationDAO;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ClassificationSchemeServiceImpl;
@@ -61,6 +62,11 @@ public class LookupDataControllerTest
 		public DesignationDAO designationDAO() {
 			return Mockito.mock(DesignationDAO.class);
 		}
+		
+		@Bean
+		public RegistrationStatusDAO registrationStatusDAO() {
+			return Mockito.mock(RegistrationStatusDAO.class);
+		}		
 
 		@Bean
 		public LookupDataController lookupDataController() {
