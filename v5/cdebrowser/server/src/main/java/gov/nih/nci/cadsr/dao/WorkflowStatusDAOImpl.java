@@ -47,7 +47,7 @@ public class WorkflowStatusDAOImpl extends AbstractDAOOperations implements Work
     @Override
     public List<WorkflowStatusModel> getAllWorkflowStatuses( )
     {
-        String sql = "SELECT * from SBR.AC_STATUS_LOV where display_order IS NOT NULL";
+        String sql = "SELECT * from SBR.AC_STATUS_LOV where display_order IS NOT NULL and asl_name <> 'RETIRED DELETED'";
 
         List<WorkflowStatusModel> workflowStatusModelList = jdbcTemplate.query( sql, new Object[]{ }, new WorkflowStatusMapper(WorkflowStatusModel.class) );
         return workflowStatusModelList;

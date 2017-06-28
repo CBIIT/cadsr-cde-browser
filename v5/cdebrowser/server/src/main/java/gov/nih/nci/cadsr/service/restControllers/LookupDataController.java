@@ -49,7 +49,6 @@ public class LookupDataController
 	public List<String> getWorkflowStatus()
 	{
 		//logger.debug("Received request for Workflow Status information.");
-					//List<String> resList = WorkflowStatusEnum.getAsList();
 		List<String> resList = workflowStatusDAO.getWorkflowStatusesAsList();
 		resList.add(0, SearchCriteria.ALL_WORKFLOW_STATUSES);
 		return resList;
