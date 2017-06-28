@@ -29,6 +29,7 @@ import gov.nih.nci.cadsr.dao.ClassificationSchemeDAO;
 import gov.nih.nci.cadsr.dao.ProtocolDAO;
 import gov.nih.nci.cadsr.dao.ReferenceDocBlobDAO;
 import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.dao.DesignationDAO;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ClassificationSchemeServiceImpl;
@@ -67,6 +68,11 @@ public class LookupDataControllerTest
 		public RegistrationStatusDAO registrationStatusDAO() {
 			return Mockito.mock(RegistrationStatusDAO.class);
 		}		
+		
+		@Bean
+		public WorkflowStatusDAO workflowStatusDAO() {
+			return Mockito.mock(WorkflowStatusDAO.class);
+		}				
 
 		@Bean
 		public LookupDataController lookupDataController() {

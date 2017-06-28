@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.dao.DesignationDAO;
 import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.error.RestControllerException;
 import gov.nih.nci.cadsr.service.ClassificationSchemeService;
 import gov.nih.nci.cadsr.service.ProtocolService;
@@ -40,13 +40,17 @@ public class LookupDataController
     
     @Autowired
     private RegistrationStatusDAO registrationStatusDAO;
+    
+    @Autowired
+    private WorkflowStatusDAO workflowStatusDAO;
 
 
 	@RequestMapping(value="/workflowstatus", produces = "application/json")
 	public List<String> getWorkflowStatus()
 	{
 		//logger.debug("Received request for Workflow Status information.");
-		List<String> resList = WorkflowStatusEnum.getAsList();
+					//List<String> resList = WorkflowStatusEnum.getAsList();
+		List<String> resList = workflowStatusDAO.getWorkflowStatusesAsList();
 		resList.add(0, SearchCriteria.ALL_WORKFLOW_STATUSES);
 		return resList;
 	}
