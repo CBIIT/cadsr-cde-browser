@@ -20,6 +20,13 @@ public class LookupDataQueryBuilder
 						  "FROM sbrext.br_cs_csi_hier_view_ext csv, sbr.contexts c " +
 						  "WHERE csv.cs_asl_name = 'RELEASED' AND csv.cstl_name != 'Publishing' AND csv.cs_conte_idseq = c.conte_idseq " +
 						  "AND csv.csi_level <= 2 ";
+	//CDEBROWSER-843 in typeahead we are interested in Protocols which have referring Forms, and forms which have protocols
+	//the context name returned shall be as in Tree view - Protocol context
+	protected static final String protoTypeAhead = "SELECT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq,  "+
+		"c.name contextName, ffv.proto_idseq protocolIdSeq, ffv.protocol_long_name protocolLongName, "+
+		"ffv.qc_idseq formIdSeq, ffv.long_name formLongName "+
+		"FROM sbrext.fb_forms_view ffv, sbr.contexts c, PROTOCOLS_EXT proto "+
+		"WHERE ffv.proto_idseq = proto.proto_idseq AND proto.conte_idseq = c.conte_idseq AND ffv.latest_version_ind = 'Yes' ";
 	/**
 	 * 
 	 * @param contexIdSeq
@@ -28,13 +35,15 @@ public class LookupDataQueryBuilder
 	 */
 	public String buildProtocolLookupQuery(String contexIdSeq, String protocolOrForm)
 	{
-		StringBuffer sql = new StringBuffer(protocolLookupSql);
+		StringBuffer sql = new StringBuffer();
 		
 		if (StringUtils.isNotBlank(contexIdSeq)) {
+			sql.append(protocolLookupSql);
 			sql.append(" AND c.conte_idseq = ?");
 		}
 		else if (StringUtils.isNotBlank(protocolOrForm)) {
-			sql.append(" AND (UPPER(ffv.protocol_long_name) like UPPER(?) OR UPPER(ffv.long_name) like UPPER(?))");
+			sql.append(protoTypeAhead);
+			sql.append("AND (UPPER(ffv.protocol_long_name) like UPPER(?) OR UPPER(ffv.long_name) like UPPER(?))");
 		}
 		sql.append(" ORDER BY c.pal_name, c.conte_idseq, UPPER(ffv.protocol_long_name), UPPER(ffv.long_name)");
 		String resSql = sql.toString();
