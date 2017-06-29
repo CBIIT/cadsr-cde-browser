@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class LookupDataQueryBuilder 
 {
 	private static Logger logger = LogManager.getLogger( LookupDataQueryBuilder.class.getName() );
-	
+	//TODO Remove replaced with protoTypeAhead
 	private static final String protocolLookupSql = "SELECT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq, " + 
 						 "c.name contextName, ffv.proto_idseq protocolIdSeq, ffv.protocol_long_name protocolLongName, " +
 						 "ffv.qc_idseq formIdSeq, ffv.long_name formLongName " +
@@ -25,8 +25,8 @@ public class LookupDataQueryBuilder
 	protected static final String protoTypeAhead = "SELECT c.pal_name programAreaPalName, c.conte_idseq contextIdSeq,  "+
 		"c.name contextName, ffv.proto_idseq protocolIdSeq, ffv.protocol_long_name protocolLongName, "+
 		"ffv.qc_idseq formIdSeq, ffv.long_name formLongName "+
-		"FROM sbrext.fb_forms_view ffv, sbr.contexts c, PROTOCOLS_EXT proto "+
-		"WHERE ffv.proto_idseq = proto.proto_idseq AND proto.conte_idseq = c.conte_idseq AND ffv.latest_version_ind = 'Yes' ";
+		"FROM sbrext.fb_forms_view ffv, sbr.contexts c, PROTOCOLS_EXT proto1 "+
+		"WHERE ffv.proto_idseq = proto1.proto_idseq AND c.conte_idseq = proto1.conte_idseq AND ffv.latest_version_ind = 'Yes' ";
 	/**
 	 * 
 	 * @param contexIdSeq
@@ -38,7 +38,7 @@ public class LookupDataQueryBuilder
 		StringBuffer sql = new StringBuffer();
 		
 		if (StringUtils.isNotBlank(contexIdSeq)) {
-			sql.append(protocolLookupSql);
+			sql.append(protoTypeAhead);
 			sql.append(" AND c.conte_idseq = ?");
 		}
 		else if (StringUtils.isNotBlank(protocolOrForm)) {
