@@ -1825,14 +1825,15 @@ private String getProperty (String propertyName, String property, List cdeObjLis
         DataElementDerivation dataElementDerivation = new DataElementDerivation();
         dataElementDerivation.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
 
-        DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeId( dataElementModel.getCdeId() );
+        DataElementDerivationModel dataElementDerivationModel = dataElementDerivationDAO.getDataElementDerivationByCdeIdseq(dataElementModel.getDeIdseq());
 
         // If dataElementDerivationModel == null then this Data element is not a derived data element.
         if( dataElementDerivationModel != null )
         {
             logger.debug( "dataElementDerivationModel: " + dataElementDerivationModel.toString() );
             dataElementDerivation.setDataElementDerivationDetails( dataElementDerivationModel );
-            List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeId( dataElementModel.getCdeId() );
+            //CDEBROWSER-837 Using CDE IDSEQ to search; CDE ID is shared by different CDE Versions
+            List<DataElementDerivationComponentModel> dataElementDerivationComponentModels = dataElementDerivationDAO.getDataElementDerivationComponentsByCdeIdseq(dataElementModel.getDeIdseq());
             dataElementDerivation.setDataElementDerivationComponentModels( dataElementDerivationComponentModels );
         }
         return dataElementDerivation;
