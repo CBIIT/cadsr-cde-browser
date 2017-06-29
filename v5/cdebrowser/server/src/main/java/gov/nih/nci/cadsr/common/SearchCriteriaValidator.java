@@ -73,9 +73,5 @@ public class SearchCriteriaValidator implements Validator {
             logger.warn("Error Validate! SearchCriteria Context malformed: " + curr);
             errors.reject("Context:"+curr+".malformed");
         }
-        if ((StringUtils.isNotBlank(curr = searchCriteria.getProgramArea())) && (! StringUtils.isAlphanumericSpace(curr))) {
-            logger.warn("Error Validate! SearchCriteria ProgramArea malformed: " + curr);
-            errors.reject("ProgramArea:"+curr+".malformed");
-        }
     }
 }

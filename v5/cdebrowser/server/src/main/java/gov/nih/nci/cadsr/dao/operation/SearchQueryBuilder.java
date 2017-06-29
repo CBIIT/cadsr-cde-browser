@@ -263,9 +263,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         ///////////////////////////////////////////////////////
         // Filter for only a specific programArea
-        if( StringUtils.isNotBlank( searchCriteria.getProgramArea() ) && (StringUtils.isBlank( searchCriteria.getContext())))
+        String strProgramArea = searchCriteria.getProgramArea();
+        if( StringUtils.isNotBlank(strProgramArea) && (StringUtils.isBlank( searchCriteria.getContext())))
         {
-            programAreaWhere = " conte.pal_name = '" + searchCriteria.getProgramArea() + "' AND ";
+        	strProgramArea = strProgramArea.replaceAll("'", "''");//Escape SQL single quote preventing SQL injection
+        	//We might consider to retrieve all PA from DB
+            programAreaWhere = " conte.pal_name = '" + strProgramArea + "' AND ";
         }
 
 
