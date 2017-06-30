@@ -9,10 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gov.nih.nci.cadsr.dao.DataElementConceptDAO;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.dao.model.DataElementConceptModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
@@ -25,6 +28,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
 
     private DataElementConceptDAO dataElementConceptDAO;
+    
+    @Autowired
+    private RegistrationStatusDAO registrationStatusDAO;
+    
+    @Autowired
+    private WorkflowStatusDAO workflowStatusDAO;	    
 
     public SearchQueryBuilder()
     {
@@ -203,7 +212,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         //This is a criteria which comes from drop down box of the basic search
         if( StringUtils.isNotBlank( searchCriteria.getRegistrationStatus() ) )
         {
-            registrationStatusWhere = SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getRegistrationStatus(), "acr.registration_status" );
+            registrationStatusWhere = SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getRegistrationStatus(), "acr.registration_status" , registrationStatusDAO.getRegnStatusesAsList());
         }
 
         ////////////////////////////////////////////////////
@@ -218,7 +227,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
-            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name" );
+            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name", workflowStatusDAO.getWorkflowStatusesAsList());
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
 

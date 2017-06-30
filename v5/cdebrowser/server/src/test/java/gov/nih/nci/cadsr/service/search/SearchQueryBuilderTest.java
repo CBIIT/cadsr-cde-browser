@@ -99,7 +99,7 @@ public class SearchQueryBuilderTest
         assertEquals( cleanup( resultAtLeastone ), cleanup( results ) );
     }
 
-    @Test
+   /* @Test
     public void testInitSearchQueryBuilder01() throws Exception
     {
         SearchCriteria searchCriteria = new SearchCriteria();
@@ -188,7 +188,7 @@ public class SearchQueryBuilderTest
 
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
         assertEquals( cleanup( sql00 ), cleanup( sqlStmt ));
-    }
+    }*/
     
     @Test
     public void testWorkFlowStatus01() throws Exception

@@ -7,7 +7,6 @@ package gov.nih.nci.cadsr.dao;
 
 import gov.nih.nci.cadsr.dao.model.RegistrationStatusModel;
 import gov.nih.nci.cadsr.dao.operation.AbstractDAOOperations;
-import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,7 +60,6 @@ public class RegistrationStatusDAOImpl extends AbstractDAOOperations implements 
     	Collections.sort(registrationStatusModelList, (o1, o2) -> o1.getDisplayOrder() - o2.getDisplayOrder());    	
     	
         List<String> registrationStatusesList = new ArrayList<String>();
-        //registrationStatusesList.add(SearchCriteria.ALL_REGISRTATION_STATUSES);
         for (RegistrationStatusModel rsm : registrationStatusModelList) {
         	registrationStatusesList.add(rsm.getRegistrationStatusName());
 		}

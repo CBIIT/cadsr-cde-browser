@@ -10,8 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.common.util.StringReplace;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
@@ -66,13 +64,13 @@ public class SearchQueryBuilderUtils {
 		return altWhere;
 	}
 	
-	public static String buildRegistrationWhere(String paramValue, String tableColumn) {
-		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn, RegistrationStatusEnum.getAsList());
+	public static String buildRegistrationWhere(String paramValue, String tableColumn, List<String> regnStatusList) {
+		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn, regnStatusList);
 		return resultWhere;
 	}
 	
-	public static String buildWorkflowWhere(String paramValue, String tableColumn) {
-		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn, WorkflowStatusEnum.getAsList());
+	public static String buildWorkflowWhere(String paramValue, String tableColumn, List<String> workflowStatusList) {
+		String resultWhere = buildListStatusWhere(paramValue, ",", "ALL", tableColumn, workflowStatusList);
 		return resultWhere;
 	}
 	
