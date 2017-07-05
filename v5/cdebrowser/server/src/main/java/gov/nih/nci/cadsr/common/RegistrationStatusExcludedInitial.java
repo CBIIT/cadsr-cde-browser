@@ -43,9 +43,9 @@ public enum RegistrationStatusExcludedInitial
 		List<String> cleanedUp = new ArrayList<String>();
 		if (statusList != null)
 			for (String status : statusList) {
-				if (isRegistrationStatusValid(status)) {
+				// if (isRegistrationStatusValid(status)) { // CDEBROWSER-703 - no more required as the statuses come from the DB instead of ENUM
 					cleanedUp.add(status);
-				}
+				// }
 			}
 		return cleanedUp;
 	}
