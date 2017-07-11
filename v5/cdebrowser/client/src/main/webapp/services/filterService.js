@@ -139,7 +139,7 @@ angular.module("cdeBrowserApp").service('filterService', function($resource,$inj
             }
         };
         if (this.searchFilter.programArea) {
-            breadcrumbs[0] = this.serverData[this.searchFilter.programArea].palNameDescription;
+            breadcrumbs[0] = this.serverData[this.searchFilter.programArea].text;
         };
         return breadcrumbs
     };  
