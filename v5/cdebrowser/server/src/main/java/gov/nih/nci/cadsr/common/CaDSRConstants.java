@@ -98,7 +98,8 @@ public final class CaDSRConstants
     //Session Constants
     public static final String LOGGEDIN_USER_NAME = "loggedInUserName";
     public static final String USER_SEARCH_PREFERENCES = "UserSearchPreferences";
-
+    public static final String USER_SESSION_WORKFLOW_STATUS_LIST = "UserWorkflowStatusInSession";//CDEBROWSER-703 allowed read from DB
+    public static final String USER_SESSION_REGISTRATION_STATUS_LIST = "UserRegistrationStatusInSession";
     
     //TOOL_OPTIONS_EXT Constants
     public static final String TOOL_NAME = "CDEBrowser";

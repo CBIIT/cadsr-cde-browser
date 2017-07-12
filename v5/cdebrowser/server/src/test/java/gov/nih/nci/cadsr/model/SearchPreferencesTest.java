@@ -132,4 +132,22 @@ public class SearchPreferencesTest {
 		assertNotNull(receivedStatusExcluded);
 		assertEquals(0, receivedStatusExcluded.size());
 	}
+	@Test
+	public void testClone() {
+		SearchPreferences searchPreferences = new SearchPreferences();
+		List<String> workflowStatusExcluded = new ArrayList<String> ();
+		searchPreferences.setWorkflowStatusExcluded(workflowStatusExcluded);
+		workflowStatusExcluded.add("element1");
+		workflowStatusExcluded.add("element2");
+		workflowStatusExcluded.add("element3");
+		List<String> regStatusExcluded = new ArrayList<String> ();
+		searchPreferences.setRegistrationStatusExcluded(regStatusExcluded);
+		regStatusExcluded.add("element11");
+		regStatusExcluded.add("element21");
+		regStatusExcluded.add("element31");
+		searchPreferences.setExcludeTest(false);
+		//MUT
+		SearchPreferences searchPreferencesClone = searchPreferences.clone();
+		assertEquals(searchPreferences, searchPreferencesClone);
+		}
 }

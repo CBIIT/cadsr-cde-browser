@@ -3,6 +3,8 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.dao.DesignationDAO;
 import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
@@ -46,19 +49,23 @@ public class LookupDataController
 
 
 	@RequestMapping(value="/workflowstatus", produces = "application/json")
-	public List<String> getWorkflowStatus()
+	public List<String> getWorkflowStatus(HttpSession mySession)
 	{
 		//logger.debug("Received request for Workflow Status information.");
 		List<String> resList = workflowStatusDAO.getWorkflowStatusesAsList();
+		//CDEBROWSER-703 keep in session not to go to DB every time to check parameter validity when we receive search request 
+		mySession.setAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST, resList);
 		resList.add(0, SearchCriteria.ALL_WORKFLOW_STATUSES);
 		return resList;
 	}
 
 	@RequestMapping(value="/registrationstatus", produces = "application/json")
-	public List<String> getRegistrationStatus()
+	public List<String> getRegistrationStatus(HttpSession mySession)
 	{
-		//logger.debug("Received request for Registration Status information.");				
+		//logger.debug("Received request for Registration Status information.");
 		List<String> resList = registrationStatusDAO.getRegnStatusesAsList();
+		//CDEBROWSER-703 keep in session not to go to DB every time to check parameter validity when we receive search request
+		mySession.setAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST, resList);
 		resList.add(0,SearchCriteria.ALL_REGISTRATION_STATUSES);
 		return resList;
 	}

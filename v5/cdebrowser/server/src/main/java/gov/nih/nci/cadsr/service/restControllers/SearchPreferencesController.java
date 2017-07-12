@@ -10,12 +10,15 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.model.SearchPreferences;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 /**
@@ -27,6 +30,26 @@ import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 @RequestMapping("/searchPreferences")
 public class SearchPreferencesController {
 	private static Logger logger = LogManager.getLogger(SearchPreferencesController.class.getName());
+	
+    @Autowired
+    private RegistrationStatusDAO registrationStatusDAO;
+    
+    @Autowired
+    private WorkflowStatusDAO workflowStatusDAO;
+    
+    /**
+	 * @param registrationStatusDAO the registrationStatusDAO to set
+	 */
+	public void setRegistrationStatusDAO(RegistrationStatusDAO registrationStatusDAO) {
+		this.registrationStatusDAO = registrationStatusDAO;
+	}
+
+	/**
+	 * @param workflowStatusDAO the workflowStatusDAO to set
+	 */
+	public void setWorkflowStatusDAO(WorkflowStatusDAO workflowStatusDAO) {
+		this.workflowStatusDAO = workflowStatusDAO;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public SearchPreferences retrieveSearchPreferences(HttpServletRequest request) {
@@ -66,8 +89,14 @@ public class SearchPreferencesController {
 		logger.debug("Received request to save search preferences: " + searchPreferencesClient);
 		HttpSession httpSession = request.getSession(true);
 		if (searchPreferencesClient != null) {//validate the values received
-			searchPreferencesClient.cleanUpClientSearchPreferences();
-			SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer(searchPreferencesClient);
+			//CDEBROWSER-703 Remove session cache on Save operation
+			httpSession.removeAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST);
+			httpSession.removeAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST);
+			List<String> workflowListClientPreferences = ControllerUtils.retriveSessionWorkflowStatusList(httpSession, workflowStatusDAO);
+			List<String> registrationListClientPreferences = ControllerUtils.retriveSessionRegistrationStatusList(httpSession, registrationStatusDAO);
+			
+			SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer(searchPreferencesClient, workflowListClientPreferences, registrationListClientPreferences);
+
 			httpSession.setAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES, searchPreferencesServer);
 			logger.debug("User session search preferences are updated to: " + searchPreferencesClient);
 		}

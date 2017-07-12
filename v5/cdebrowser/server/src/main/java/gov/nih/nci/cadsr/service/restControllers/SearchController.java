@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
+import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.SearchCriteriaValidator;
 import gov.nih.nci.cadsr.common.UsageLog;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.util.StringUtilities;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
 import gov.nih.nci.cadsr.dao.SearchDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.dao.model.ProgramAreaModel;
 import gov.nih.nci.cadsr.dao.model.SearchModel;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
@@ -51,6 +55,26 @@ public class SearchController
     private List<ProgramAreaModel> programAreaModelList = null;
     
     private SearchCriteriaValidator searchCriteriaValidator = new SearchCriteriaValidator();
+    
+	@Autowired
+    private RegistrationStatusDAO registrationStatusDAO;
+	@Autowired
+    private WorkflowStatusDAO workflowStatusDAO;
+	
+    /**
+	 * @param registrationStatusDAO the registrationStatusDAO to set
+	 */
+	public void setRegistrationStatusDAO(RegistrationStatusDAO registrationStatusDAO) {
+		this.registrationStatusDAO = registrationStatusDAO;
+	}
+
+	/**
+	 * @param workflowStatusDAO the workflowStatusDAO to set
+	 */
+	public void setWorkflowStatusDAO(WorkflowStatusDAO workflowStatusDAO) {
+		this.workflowStatusDAO = workflowStatusDAO;
+	}
+
 
     @RequestMapping( value = "/testSearch" )
     @ResponseBody
@@ -61,7 +85,8 @@ public class SearchController
         {
             String searchMode = CaDSRConstants.SEARCH_MODE[searchCriteria.getQueryType()];
             searchCriteria.setSearchMode(searchMode);
-            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession)) );
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession), 
+            	WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList()) );
         } catch( Exception e )
         {
             return createErrorNode( "Server Error:\ntestSearch: " + searchCriteria.getName() + ", " + searchCriteria.getQueryType() + ", " + searchCriteria.getPublicId() + ", " + searchCriteria.getProgramArea() + " failed ", e );
@@ -77,7 +102,8 @@ public class SearchController
      * @param httpSession
      * @return an array of SearchNode
      */
-    @RequestMapping( value = "/search" )
+    @SuppressWarnings("unchecked")
+	@RequestMapping( value = "/search" )
     @ResponseBody
     public SearchNode[] search(@ModelAttribute SearchCriteria searchCriteria, BindingResult result, HttpSession httpSession)
     {
@@ -114,8 +140,11 @@ public class SearchController
             searchCriteria.setSearchMode(searchMode);
 
             searchCriteria.preprocessCriteria();
-
-            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, ControllerUtils.retriveSessionSearchPreferencesServer(httpSession)));
+            List<String> allowedWorkflowStatuses = ControllerUtils.retriveSessionWorkflowStatusList(httpSession, workflowStatusDAO);
+            List<String> allowedRegStatuses = ControllerUtils.retriveSessionRegistrationStatusList(httpSession, registrationStatusDAO);
+            results = buildSearchResultsNodes( searchDAO.getAllContexts(searchCriteria, 
+            	ControllerUtils.retriveSessionSearchPreferencesServer(httpSession), 
+            	allowedWorkflowStatuses, allowedRegStatuses));
         } catch( Exception e )
         {
         	logger.error("Error in searching: ", e);

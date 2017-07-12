@@ -28,24 +28,19 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
     private static Logger logger = LogManager.getLogger( SearchQueryBuilder.class.getName() );
 
     private DataElementConceptDAO dataElementConceptDAO;
-    
-    @Autowired
-    private RegistrationStatusDAO registrationStatusDAO;
-    
-    @Autowired
-    private WorkflowStatusDAO workflowStatusDAO;	    
 
     public SearchQueryBuilder()
     {
 
     }
 
-    /**
+	/**
      * @param searchCriteria
      * @param searchPreferences
-     * @return
+     * @return String SQL
      */
-    public String initSearchQueryBuilder( SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences )
+    public String initSearchQueryBuilder( SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences, 
+    		List<String> allowedWorkflowStatuses, List<String> allowedRegStatuses)
     {
         logger.debug( "Initializing Search query builder with Search Preferences : " + searchPreferences );
         logger.debug( "Initializing Search query builder with Search Criteria : " + searchCriteria );
@@ -201,33 +196,35 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         ////////////////////////////////////////////////////
         // we use selected or excluded Registration Status here
         String registrationExcludeWhere = "";
-
+        //CDEBROWSER-703 Statuses taken from DB
         List<String> registrationStatusExcluded = searchPreferences.getRegistrationStatusExcluded();
         if( !registrationStatusExcluded.isEmpty() )
         {
             String[] excludeRegistrationStatusArr = registrationStatusExcluded.toArray( new String[registrationStatusExcluded.size()] );
-            registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeRegistrationStatusArr );
+            //CDEBROWSER-703 excluded received from search preferences excluded list not from UI
+            registrationExcludeWhere = " AND " + getExcludeWhereClause( "nvl(acr.registration_status,'-1')", excludeRegistrationStatusArr);
         }
 
         //This is a criteria which comes from drop down box of the basic search
         if( StringUtils.isNotBlank( searchCriteria.getRegistrationStatus() ) )
         {
-            registrationStatusWhere = SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getRegistrationStatus(), "acr.registration_status" , registrationStatusDAO.getRegnStatusesAsList());
+            //CDEBROWSER-703 Statuses taken from DB
+            registrationStatusWhere = SearchQueryBuilderUtils.buildRegistrationWhere( searchCriteria.getRegistrationStatus(), "acr.registration_status" , allowedRegStatuses);
         }
 
         ////////////////////////////////////////////////////
         // WorkFlowStatus
-        // If it is empty, use exclude list in search preferences
+        //use exclude list from session search preferences
         String workflowWhere = "";
         List<String> workflowStatusExcluded = searchPreferences.getWorkflowStatusExcluded();
         if( !workflowStatusExcluded.isEmpty() )
         {
-            workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildfExcludedWorkflowSql();
+            workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildExcludedWorkflowSql();
         }
 
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
-            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name", workflowStatusDAO.getWorkflowStatusesAsList());
+            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name", allowedWorkflowStatuses);
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
 
@@ -603,8 +600,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
     }
 
-
-    public String getExcludeWhereClause( String colName, String[] excludeArr )
+    /**
+     * 
+     * @param colName
+     * @param excludeArr list of statuses excluded by SearchPreferences object
+     * @return String SQL fragment
+     */
+    
+    protected String getExcludeWhereClause( String colName, String[] excludeArr )
     {
         String whereClauseStr = null;
         if( ( excludeArr == null ) || ( excludeArr.length < 1 ) )
@@ -614,13 +617,15 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
 
         for( int i = 0; i < excludeArr.length; i++ )
         {
-            if( whereClauseStr == null )
+            String strStatus = excludeArr[i];
+    		strStatus = strStatus.replaceAll("'", "''");//CDEBROWSER-703 this is for SQL single quote escape
+        	if( whereClauseStr == null )
             {
-                whereClauseStr = " " + colName + " NOT IN ('" + excludeArr[i] + "'";
+                whereClauseStr = " " + colName + " NOT IN ('" + strStatus + "'";
             }
             else
             {
-                whereClauseStr = whereClauseStr + " , '" + excludeArr[i] + "'";
+                whereClauseStr = whereClauseStr + " , '" + strStatus + "'";
             }
         }
         whereClauseStr = whereClauseStr + " ) ";
@@ -686,13 +691,14 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         {
             for( int i = 0; i < regStatusList.length; i++ )
             {
-                if( i == 0 )
+                String strStatus = regStatusList[i];
+            	if( i == 0 )
                 {
-                    regStatus = "'" + regStatusList[0] + "'";
+                    regStatus = "'" + strStatus.replaceAll("'", "''") + "'";
                 }
                 else
                 {
-                    regStatus = regStatus + "," + "'" + regStatusList[i] + "'";
+                    regStatus = regStatus + "," + "'" + strStatus.replaceAll("'", "''") + "'";
                 }
             }
             regStatWhere = " AND acr.registration_status IN (" + regStatus + ")";

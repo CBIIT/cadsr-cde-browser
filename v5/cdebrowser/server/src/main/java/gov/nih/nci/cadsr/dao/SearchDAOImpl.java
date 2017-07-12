@@ -27,7 +27,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 
 	private SearchQueryBuilder searchQueryBuilder;
 
-    public SearchDAOImpl()
+	public SearchDAOImpl()
     {
     }
 
@@ -58,9 +58,12 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
      * @param conceptCode
      * @return
      */
-    public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences)
+    public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences,
+    		List<String> allowedWorkflowStatuses, List<String> allowedRegStatuses)
     {
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences);
+        
+    	String sqlStmt = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences, 
+    		allowedWorkflowStatuses, allowedRegStatuses);
 
         List<SearchModel> results;
 
@@ -366,14 +369,14 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
 
 	protected String buildWorkflowStatusExcludedSql(SearchPreferencesServer searchPreferences) {
 		String strList;
-		if ((searchPreferences != null) && ((strList = searchPreferences.buildfExcludedWorkflowSql()) != null)) {
+		if ((searchPreferences != null) && ((strList = searchPreferences.buildExcludedWorkflowSql()) != null)) {
 			return "AND asl.asl_name NOT IN " + strList + "\n";
 		}
 		else return "";
 	}
 	protected String buildRegistrationStatusExcludedSql(SearchPreferencesServer searchPreferences) {
 		String strList;
-		if  ((searchPreferences != null) && ((strList = searchPreferences.buildfExcludedRegistrationSql()) != null))
+		if  ((searchPreferences != null) && ((strList = searchPreferences.buildExcludedRegistrationSql()) != null))
 			return "AND nvl(acr.registration_status,'-1') NOT IN " + strList + "\n";
 		else return "";
 	}

@@ -13,7 +13,8 @@ public interface SearchDAO
 {
 	public List<SearchModel> cdeOwnedAndUsedByContext( String conteId, SearchPreferencesServer searchPreferences );
 	
-	public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences);
+	public List<SearchModel> getAllContexts(SearchCriteria searchCriteria, SearchPreferencesServer searchPreferences,
+		List<String> allowedWorkflowStatuses, List<String> allowedRegStatuses);
 	
 	public List<SearchModel> cdeByContextClassificationSchemeItem( String classificationSchemeItemId, SearchPreferencesServer searchPreferences );
 	

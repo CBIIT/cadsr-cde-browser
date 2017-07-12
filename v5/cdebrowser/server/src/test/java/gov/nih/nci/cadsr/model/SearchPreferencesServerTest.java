@@ -3,7 +3,12 @@
  */
 package gov.nih.nci.cadsr.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -31,7 +36,32 @@ public class SearchPreferencesServerTest {
 		SearchPreferencesServer serverExpected = new SearchPreferencesServer();
 		serverExpected.initPreferences();
 		SearchPreferences clientReceived = serverExpected.buildClientSearchPreferences();
-		System.out.println("clientReceived:" + clientReceived);
 		assertEquals(clientExpected, clientReceived);
+	}
+	@Test
+	public void testExcludedStatusSqlOne() {
+		String expected = " ('" + WorkflowStatusExcludedInitial.CmteSubmtdUsed.getWorkflowStatus() + "') ";
+		List<String> given = new ArrayList<>();
+		given.add(WorkflowStatusExcludedInitial.CmteSubmtdUsed.getWorkflowStatus());
+		String strReceived = SearchPreferencesServer.buildExcludedStatusSql(given);
+		assertEquals(expected, strReceived);
+	}
+	@Test
+	public void testExcludedStatusSqlQuote() {
+		String expected = " ('Test''One') ";
+		List<String> given = new ArrayList<>();
+		given.add("Test'One");
+		String strReceived = SearchPreferencesServer.buildExcludedStatusSql(given);
+		assertEquals(expected, strReceived);
+	}
+	@Test
+	public void testExcludedStatusSqlMix() {
+		String expected = " ('Test''One', 'Test Two', 'Test'' Three') ";
+		List<String> given = new ArrayList<>();
+		given.add("Test'One");
+		given.add("Test Two");
+		given.add("Test' Three");
+		String strReceived = SearchPreferencesServer.buildExcludedStatusSql(given);
+		assertEquals(expected, strReceived);
 	}
 }

@@ -10,21 +10,45 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.model.SearchPreferences;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration("classpath:test-application-context.xml")
 public class SearchPreferencesControllerTest {
-
+	@Autowired
+    private RegistrationStatusDAO registrationStatusDAO;
+	@Autowired
+    private WorkflowStatusDAO workflowStatusDAO;
+	@Before
+	public void setUp() throws Exception
+	{		
+		Mockito.when(registrationStatusDAO.getRegnStatusesAsList()).thenReturn(RegistrationStatusEnum.getAsList());
+		Mockito.when(workflowStatusDAO.getWorkflowStatusesAsList()).thenReturn(WorkflowStatusEnum.getAsList());
+	}
 	@Test
 	public void testSaveGivenSearchPreferences() {
 		HttpServletRequest mockRequest = Mockito.mock(HttpServletRequest.class);
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		SearchPreferencesController searchPreferencesController = new SearchPreferencesController();
+		searchPreferencesController.setRegistrationStatusDAO(registrationStatusDAO);
+		searchPreferencesController.setWorkflowStatusDAO(workflowStatusDAO);
+		
 		SearchPreferences searchPreferencesExpected = new SearchPreferences();
 
 		SearchPreferencesServer searchPreferencesServer = new SearchPreferencesServer();
@@ -32,8 +56,16 @@ public class SearchPreferencesControllerTest {
 		
 		Mockito.when(mockRequest.getSession(true)).thenReturn(mockSession);
 		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServer));
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST)).thenReturn(WorkflowStatusEnum.getAsList());
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST)).thenReturn(RegistrationStatusEnum.getAsList());
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST), Mockito.eq(WorkflowStatusEnum.getAsList()));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST), Mockito.eq(RegistrationStatusEnum.getAsList()));
+		
 		//MUT
 		SearchPreferences received = searchPreferencesController.saveSearchPreferences(mockRequest, searchPreferencesExpected);
+		
 		//check
 		assertEquals(searchPreferencesExpected, received);
 		Mockito.verify(mockRequest).getSession(true);
@@ -68,13 +100,20 @@ public class SearchPreferencesControllerTest {
 		List<String> regList = searchPreferencesExpected.getRegistrationStatusExcluded();
 		regList.add(RegistrationStatusEnum.CANDIDATE.getRegStatus());
 		
-		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(searchPreferencesExpected);
+		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(searchPreferencesExpected, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
 		//stub
 		HttpServletRequest mockRequest = Mockito.mock(HttpServletRequest.class);
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		Mockito.when(mockRequest.getSession(false)).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)).thenReturn(searchPreferencesServerExpected);
 		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST));
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST)).thenReturn(WorkflowStatusEnum.getAsList());
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST)).thenReturn(RegistrationStatusEnum.getAsList());
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST), Mockito.eq(WorkflowStatusEnum.getAsList()));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST), Mockito.eq(RegistrationStatusEnum.getAsList()));
 		//MUT
 		SearchPreferences received = searchPreferencesController.retrieveSearchPreferences(mockRequest);
 		//check
@@ -87,13 +126,20 @@ public class SearchPreferencesControllerTest {
 		SearchPreferencesController searchPreferencesController = new SearchPreferencesController();
 		SearchPreferences searchPreferencesExpected = new SearchPreferences();
 		searchPreferencesExpected.initPreferences();
-		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(searchPreferencesExpected);
+		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(searchPreferencesExpected, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
 		//stub
 		HttpServletRequest mockRequest = Mockito.mock(HttpServletRequest.class);
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		Mockito.when(mockRequest.getSession(true)).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SEARCH_PREFERENCES)).thenReturn(null);
 		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST)).thenReturn(WorkflowStatusEnum.getAsList());
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST)).thenReturn(RegistrationStatusEnum.getAsList());
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST), Mockito.eq(WorkflowStatusEnum.getAsList()));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST), Mockito.eq(RegistrationStatusEnum.getAsList()));
+
 		//MUT
 		SearchPreferences received = searchPreferencesController.retrieveSearchPreferences(mockRequest);
 		//check
@@ -108,7 +154,7 @@ public class SearchPreferencesControllerTest {
 		
 		assertEquals(searchPreferencesExpected, received);
 		Mockito.verify(mockRequest).getSession(true);
-		Mockito.verify(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));;
+		Mockito.verify(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));
 	}
 	@Test
 	public void testRetrieveSearchPreferencesDefault() {
@@ -124,10 +170,16 @@ public class SearchPreferencesControllerTest {
 		SearchPreferencesController searchPreferencesController = new SearchPreferencesController();
 		SearchPreferences expected = new SearchPreferences();
 		expected.initPreferences();
-		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(expected);
+		SearchPreferencesServer searchPreferencesServerExpected = new SearchPreferencesServer(expected, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
 		//stub
 		HttpSession mockSession = Mockito.mock(HttpSession.class);
 		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SEARCH_PREFERENCES), Mockito.eq(searchPreferencesServerExpected));
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST)).thenReturn(WorkflowStatusEnum.getAsList());
+		Mockito.when(mockSession.getAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST)).thenReturn(RegistrationStatusEnum.getAsList());
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).removeAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST), Mockito.eq(WorkflowStatusEnum.getAsList()));
+		Mockito.doNothing().when(mockSession).setAttribute(Mockito.eq(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST), Mockito.eq(RegistrationStatusEnum.getAsList()));
 
 		//MUT
 		SearchPreferences received = searchPreferencesController.resetSearchPreferencesToDefault(mockSession);

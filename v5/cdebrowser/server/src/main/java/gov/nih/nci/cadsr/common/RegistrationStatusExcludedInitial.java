@@ -31,22 +31,4 @@ public enum RegistrationStatusExcludedInitial
 		
 		return regStatusList;
 	}	
-	public static boolean isRegistrationStatusValid(final String param) {
-		RegistrationStatusEnum[] all = RegistrationStatusEnum.values();
-		for (RegistrationStatusEnum curr : all) {
-			if (curr.getRegStatus().equals(param))
-				return true;
-		}
-		return false;
-	}
-	public static List<String> buildValidStatusList(final List<String> statusList) {
-		List<String> cleanedUp = new ArrayList<String>();
-		if (statusList != null)
-			for (String status : statusList) {
-				// if (isRegistrationStatusValid(status)) { // CDEBROWSER-703 - no more required as the statuses come from the DB instead of ENUM
-					cleanedUp.add(status);
-				// }
-			}
-		return cleanedUp;
-	}
 }

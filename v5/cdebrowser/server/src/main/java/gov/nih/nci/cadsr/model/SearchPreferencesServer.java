@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
 import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 /**
@@ -19,6 +22,7 @@ import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
  */
 public class SearchPreferencesServer implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private Logger logger = LogManager.getLogger( SearchPreferencesServer.class.getName() );
 	private boolean excludeTest = true;
 	private boolean excludeTraining = true;
 	private List<String> workflowStatusExcluded = new ArrayList<String>();
@@ -44,17 +48,54 @@ public class SearchPreferencesServer implements Serializable {
 	public SearchPreferencesServer() {
 		addServerExcluded(workflowStatusExcluded);
 	}
-	
+	/**
+	 * 	 * This constructor creates new excluded lists to use on the server.
+	 * 
+	 * @param searchPreferencesClient not null
+	 * @param workflowAllowed not null to check for allowed values
+	 * @param regAllowed not null to check for allowed values
+	 * @return SearchPreferences with allowed values of WorkflowStatus and RegistrationStatus.
+	 */
+	protected SearchPreferences buildValidatedClientSearchPreferences(final SearchPreferences searchPreferencesClient,
+			List<String> workflowAllowed, List<String> regAllowed) {
+		SearchPreferences searchPreferencesClientValid = new SearchPreferences();
+		searchPreferencesClientValid.setExcludeTest(searchPreferencesClient.isExcludeTest());
+		searchPreferencesClientValid.setExcludeTraining(searchPreferencesClient.isExcludeTraining());//we have empty excluded here
+		//these are empty after c'tor
+		List<String> wfs = searchPreferencesClientValid.getWorkflowStatusExcluded();
+		List<String> regs = searchPreferencesClientValid.getRegistrationStatusExcluded();
+		for (String curr : searchPreferencesClient.getWorkflowStatusExcluded()) {
+			if (workflowAllowed.contains(curr)) {
+				wfs.add(curr);
+			}
+			else {
+				logger.info("Received not allowed WorkflowStatusExcluded: " + curr);
+			}
+		}
+		for (String curr : searchPreferencesClient.getRegistrationStatusExcluded()) {
+			if (regAllowed.contains(curr)) {
+				regs.add(curr);
+			}
+			else {
+				logger.info("Received not allowed RegistrationStatusExcluded: " + curr);
+			}
+		}
+		//SearchPreferences contain only allowed values now
+		return searchPreferencesClientValid;
+	}
+
 	/**
 	 * This constructor creates new excluded lists to use on the server.
 	 * 
 	 * @param clientPreferences SearchPreferences received from the client.
 	 */
-	public SearchPreferencesServer(final SearchPreferences clientPreferences) {
-		this.excludeTest = clientPreferences.isExcludeTest();
-		this.excludeTraining = clientPreferences.isExcludeTraining();
+	public SearchPreferencesServer(final SearchPreferences clientPreferences, List<String> workflowStatusAllowed, List<String> registrationStatusAllowed) {
+		//CDEBROWSER-703 we validate received values before Save and use validated instead of received
+		SearchPreferences validatedClientPreferences = buildValidatedClientSearchPreferences(clientPreferences, workflowStatusAllowed, registrationStatusAllowed);
+		this.excludeTest = validatedClientPreferences.isExcludeTest();
+		this.excludeTraining = validatedClientPreferences.isExcludeTraining();
 		
-		List<String> workflowListclientPreferences = clientPreferences.getWorkflowStatusExcluded();
+		List<String> workflowListclientPreferences = validatedClientPreferences.getWorkflowStatusExcluded();
 		List<String> workflowListSelf = new ArrayList<>();
 		for (String str : workflowListclientPreferences) {
 			workflowListSelf.add(str);
@@ -65,7 +106,7 @@ public class SearchPreferencesServer implements Serializable {
 		//none of the status in excluded shall be in client status list
 		this.addServerExcluded();
 
-		List<String> registrationListclientPreferences = clientPreferences.getRegistrationStatusExcluded();
+		List<String> registrationListclientPreferences = validatedClientPreferences.getRegistrationStatusExcluded();
 		List<String> registrationListSelf = new ArrayList<>();
 		for (String str : registrationListclientPreferences) {
 			registrationListSelf.add(str);
@@ -173,29 +214,31 @@ public class SearchPreferencesServer implements Serializable {
 	 * 
 	 * @return SQL-ready String which has a list of string values of excluded statuses as " ('Aa', 'Ba',...,'Xa') ", or null if the list is empty
 	 */
-	public String buildfExcludedWorkflowSql() {
-		return buildfExcludedStatusSql(workflowStatusExcluded);
+	public String buildExcludedWorkflowSql() {
+		return buildExcludedStatusSql(workflowStatusExcluded);
 	}
 	
 	/**
 	 * 
 	 * @return SQL-ready String which has a list of string values of excluded statuses as " ('Aa', 'Ba',...,'Xa') ", or null if the list is empty
 	 */
-	public String buildfExcludedRegistrationSql() {
-		return buildfExcludedStatusSql(registrationStatusExcluded);
+	public String buildExcludedRegistrationSql() {
+		return buildExcludedStatusSql(registrationStatusExcluded);
 	}
 	
 	/**
 	 * 
 	 * @return SQL-ready String which has a list of string values of excluded statuses as " ('Aa', 'Ba',...,'Xa') ", or null if the list is empty
 	 */
-	protected String buildfExcludedStatusSql(List<String> statusExcluded) {
+	protected static String buildExcludedStatusSql(List<String> statusExcluded) {
 		if ((statusExcluded == null) || (statusExcluded.isEmpty()))
 			return null;
 
 		StringBuilder sb = new StringBuilder(" ('");
+		String tmp;
 		for (String curr : statusExcluded) {
-			sb.append(curr + "', '");
+			tmp = curr.replace("'", "''");//CDEBROWSER-703 status comes from DB
+			sb.append(tmp + "', '");
 		}
 		sb.replace(sb.length() - 3, sb.length(), ") ");
 
@@ -215,6 +258,7 @@ public class SearchPreferencesServer implements Serializable {
 			result = CONTEXT_EXCLUDES_TRAINING;
 		return result;
 	}
+	
 	@Override
 	public String toString() {
 		return "SearchPreferencesServer [excludeTest=" + excludeTest + ", excludeTraining=" + excludeTraining

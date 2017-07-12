@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 import gov.nih.nci.cadsr.dao.operation.SearchQueryBuilder;
@@ -27,7 +28,7 @@ public class SearchQueryBuilderTest
         initialSearchPreferences = new SearchPreferencesServer();
         initialSearchPreferences.initPreferences();
     }
-
+	
     @Before
     public void setUp() throws Exception
     {
@@ -208,7 +209,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
         assertEquals( cleanup( sql01 ), cleanup( sqlStmt ) );
     }
     
@@ -231,7 +232,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
         searchCriteria.setVersionType(0);
         searchCriteria.setPublicIdVersion(1);
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
         assertEquals( cleanup( sql01PublicIdAll ), cleanup( sqlStmt ) );
     }
     
@@ -254,7 +255,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
         searchCriteria.setVersionType(0);
         searchCriteria.setPublicIdVersion(0);
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sql01PublicIdLatest ), cleanup( sqlStmt ) );
     }
     
@@ -277,7 +278,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
         searchCriteria.setVersionType(1);
         searchCriteria.setPublicIdVersion(0);
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sql01PublicIdLatest ), cleanup( sqlStmt ) );
     }
     
@@ -300,7 +301,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sqlStmt ), cleanup( sql02 ) );
     }
     
@@ -324,7 +325,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
         searchCriteria.setVersionType(0);
         searchCriteria.setPublicIdVersion(1);
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sql02PublicIdAll ), cleanup( sqlStmt ) );
     }
     
@@ -345,7 +346,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setConceptCode( "" );
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         System.out.println( cleanup( sqlStmt ) );
     }
 
@@ -580,7 +581,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
     }
     
@@ -603,7 +604,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setVersionType(0);
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sqlStmt ), cleanup( protocolSearchQuery ) );
     }
     @Test
@@ -624,7 +625,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setVersionType(1);
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sqlStmt ), cleanup( versionTypeAllQuery ) );
     }
     @Test
@@ -646,7 +647,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setVersionType(1);
         searchCriteria.setDerivedDEFlag("false");
 
-        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
+        String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList() );
         assertEquals( cleanup( sqlStmt ), cleanup( versionTypeAllQuery ) );
     }
     private String cleanup( String s )

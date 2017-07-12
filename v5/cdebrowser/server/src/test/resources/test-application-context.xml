@@ -31,4 +31,10 @@
     <bean id="dataElementDerivationDAO" class="org.mockito.Mockito" factory-method="mock">
 	    <constructor-arg value="gov.nih.nci.cadsr.dao.DataElementDerivationDAO" />
 	</bean>
+	<bean id="registrationStatusDAO" class="org.mockito.Mockito" factory-method="mock">
+	    <constructor-arg value="gov.nih.nci.cadsr.dao.RegistrationStatusDAO" />
+	</bean>
+	<bean id="workflowStatusDAO" class="org.mockito.Mockito" factory-method="mock">
+	    <constructor-arg value="gov.nih.nci.cadsr.dao.WorkflowStatusDAO" />
+	</bean>
 </beans>

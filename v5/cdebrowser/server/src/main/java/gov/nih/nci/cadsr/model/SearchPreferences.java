@@ -5,10 +5,10 @@ package gov.nih.nci.cadsr.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import gov.nih.nci.cadsr.common.RegistrationStatusExcludedInitial;
-import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
 import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
 /**
  * This is a class to represent user session search preferences entity.
@@ -36,6 +36,22 @@ public class SearchPreferences implements Serializable {
 	public SearchPreferences() {
 
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected SearchPreferences clone() {
+		SearchPreferences searchPreferences = new SearchPreferences();
+		searchPreferences.setExcludeTest(this.isExcludeTest());
+		searchPreferences.setExcludeTraining(this.isExcludeTraining());
+		searchPreferences.setRegistrationStatusExcluded(new ArrayList<>(this.getRegistrationStatusExcluded()));
+		searchPreferences.setWorkflowStatusExcluded(new ArrayList<>(this.getWorkflowStatusExcluded()));
+		Collections.copy(searchPreferences.getRegistrationStatusExcluded(), this.getRegistrationStatusExcluded());
+		Collections.copy(searchPreferences.getWorkflowStatusExcluded(), this.getWorkflowStatusExcluded());
+		return searchPreferences;
+	}
+	
 	/**
 	 * This is a deep copy constructor 
 	 * @param other SearchPreferences
@@ -135,17 +151,6 @@ public class SearchPreferences implements Serializable {
 		sb.replace(sb.length() - 3, sb.length(), ") ");
 
 		return sb.toString();
-	}
-	/**
-	 * This method removes any statuses which are not part of status lists.
-	 * 
-	 * @param searchPreferences
-	 */
-	public void cleanUpClientSearchPreferences() {
-		this.setWorkflowStatusExcluded(
-			WorkflowStatusExcludedInitial.buildValidStatusList(this.getWorkflowStatusExcluded()));
-		this.setRegistrationStatusExcluded(
-				RegistrationStatusExcludedInitial.buildValidStatusList(this.getRegistrationStatusExcluded()));
 	}
 	/**
 	 * 

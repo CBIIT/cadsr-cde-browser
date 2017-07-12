@@ -147,7 +147,7 @@ public class SearchQueryBuilderUtils {
 	 * @param separator
 	 * @param allInclusive
 	 * @param tableFieldName
-	 * @param list String list with allowed values
+	 * @param list String list with allowed values which shall not contain nulls
 	 * @return String part of SQL
 	 * @throws RuntimeException if any value is invalid
 	 */
@@ -159,13 +159,13 @@ public class SearchQueryBuilderUtils {
 			return "";
 		
 		String[] arrvalues = StringUtilities.buildArrayFromParameter(sourceStr, separator);
-
 		if (arrvalues == null || StringUtilities.containsKeyLoop(arrvalues, allInclusive)) {
 		}
 		else if (arrvalues.length == 1) {
-			auxStr = arrvalues[0];
-			if (list.contains(auxStr)) {//check allowed values
-				resultWhere = " AND " + tableFieldName + " = '" + auxStr + "'";
+			String strValue = arrvalues[0];
+			if (list.contains(strValue)) {//check allowed values 
+				//CDEBROWSER-703 escape a single quote for SQL
+				resultWhere = " AND " + tableFieldName + " = '" + strValue.replaceAll("'", "''") + "'";
 			}
 			else {
 				String message = "Received unexpected Status parameter value: " + sourceStr;
@@ -175,11 +175,13 @@ public class SearchQueryBuilderUtils {
 		} 
 		else {
 			for (int i = 0; i < arrvalues.length; i++) {
-				if (list.contains(arrvalues[i])) {//check allowed values
+				String strValue = arrvalues[i];
+				if (list.contains(strValue)) {//check allowed values
+					//CDEBROWSER-703 escape a single quote for SQL
 					if (i == 0)
-						auxStr = "'" + arrvalues[0] + "'";
+						auxStr = "'" + strValue.replaceAll("'", "''") + "'";
 					else
-						auxStr = auxStr + "," + "'" + arrvalues[i] + "'";
+						auxStr = auxStr + "," + "'" + strValue.replaceAll("'", "''") + "'";
 				}
 				else {
 					String message = "Received unexpected Status parameter value: " + sourceStr;

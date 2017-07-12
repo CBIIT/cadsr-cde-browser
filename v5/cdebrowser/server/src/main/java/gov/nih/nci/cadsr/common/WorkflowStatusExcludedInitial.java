@@ -48,22 +48,5 @@ public enum WorkflowStatusExcludedInitial
 
         return workflowStatusList;
     }
-	public static boolean isWorkflowStatusValid(final String param) {
-		WorkflowStatusEnum[] all = WorkflowStatusEnum.values();
-		for (WorkflowStatusEnum curr : all) {
-			if (curr.getWorkflowStatus().equals(param))
-				return true;
-		}
-		return false;
-	}
-	public static List<String> buildValidStatusList(final List<String> statusList) {
-		List<String> cleanedUp = new ArrayList<String>();
-		if (statusList != null)
-			for (String status : statusList) {
-				//if (isWorkflowStatusValid(status)) { // CDEBROWSER-703 - no more required as the statuses come from the DB instead of ENUM
-					cleanedUp.add(status);
-				//}
-			}
-		return cleanedUp;
-	}
+
 }

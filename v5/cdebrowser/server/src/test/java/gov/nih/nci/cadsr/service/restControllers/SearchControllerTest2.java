@@ -18,14 +18,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.validation.BindingResult;
 
 import gov.nih.nci.cadsr.common.AppConfig;
+import gov.nih.nci.cadsr.common.RegistrationStatusEnum;
 import gov.nih.nci.cadsr.common.UsageLog;
+import gov.nih.nci.cadsr.common.WorkflowStatusEnum;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
 import gov.nih.nci.cadsr.dao.SearchDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.dao.model.SearchModel;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.ServiceTestUtils;
@@ -44,7 +49,11 @@ public class SearchControllerTest2 {
 	BindingResult mockBindingResult = mock(BindingResult.class);
 	@Mock
 	AppConfig mockAppConfig = mock(AppConfig.class);
-
+	@Autowired
+	WorkflowStatusDAO workflowStatusDAO;
+	@Autowired
+	RegistrationStatusDAO registrationStatusDAO;
+	
 	UsageLog usageLog = new UsageLog();
 	
 	@Before
@@ -53,6 +62,11 @@ public class SearchControllerTest2 {
 		searchController.setSearchDAO(mockSearchDAO);
 		searchController.setAppConfig(mockAppConfig);
 		searchController.setUsageLog(usageLog);
+		searchController.setWorkflowStatusDAO(workflowStatusDAO);
+		searchController.setRegistrationStatusDAO(registrationStatusDAO);
+		
+		Mockito.when(workflowStatusDAO.getWorkflowStatusesAsList()).thenReturn(WorkflowStatusEnum.getAsList());
+		Mockito.when(registrationStatusDAO.getRegnStatusesAsList()).thenReturn(RegistrationStatusEnum.getAsList());
 	}
 
 	@After
@@ -63,6 +77,8 @@ public class SearchControllerTest2 {
 		Mockito.verifyZeroInteractions(mockBindingResult);
 		Mockito.reset(mockAppConfig);
 		Mockito.verifyZeroInteractions(mockAppConfig);
+		Mockito.reset(workflowStatusDAO);
+		Mockito.reset(registrationStatusDAO);
 	}
 
 	@Test
@@ -104,7 +120,8 @@ public class SearchControllerTest2 {
 		searchModelArrGiven[0] = searchModelGiven;
 		List<SearchModel> searchModelListGiven = Arrays.asList(searchModelArrGiven);
 
-		Mockito.when(mockSearchDAO.getAllContexts(Mockito.eq(searchCriteriaGiven), Mockito.any(SearchPreferencesServer.class))).thenReturn(searchModelListGiven);
+		Mockito.when(mockSearchDAO.getAllContexts(Mockito.eq(searchCriteriaGiven), Mockito.any(SearchPreferencesServer.class), 
+				Mockito.eq(WorkflowStatusEnum.getAsList()), Mockito.eq(RegistrationStatusEnum.getAsList()))).thenReturn(searchModelListGiven);
 		Mockito.when(mockAppConfig.getCdeDataRestServiceName()).thenReturn(searchNodeExpected.getHref());
 		
 		//MUT
@@ -113,7 +130,8 @@ public class SearchControllerTest2 {
 		assertEquals(1, received.length);
 		assertEquals(searchNodeExpected, received[0]);
 		Mockito.verify(mockBindingResult).hasErrors();
-		Mockito.verify(mockSearchDAO).getAllContexts(Mockito.eq(searchCriteriaGiven), Mockito.any(SearchPreferencesServer.class));
+		Mockito.verify(mockSearchDAO).getAllContexts(Mockito.eq(searchCriteriaGiven), Mockito.any(SearchPreferencesServer.class),
+				Mockito.eq(WorkflowStatusEnum.getAsList()), Mockito.eq(RegistrationStatusEnum.getAsList()));
 		Mockito.verify(mockAppConfig).getCdeDataRestServiceName();
 	}
 }

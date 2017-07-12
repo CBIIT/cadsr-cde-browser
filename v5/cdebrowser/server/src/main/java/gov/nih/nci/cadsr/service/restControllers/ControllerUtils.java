@@ -19,6 +19,8 @@ import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.ParameterValidator;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
 import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
+import gov.nih.nci.cadsr.dao.RegistrationStatusDAO;
+import gov.nih.nci.cadsr.dao.WorkflowStatusDAO;
 import gov.nih.nci.cadsr.dao.model.BaseDesignationDefinitionModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiDeModel;
 import gov.nih.nci.cadsr.dao.model.CsCsiModel;
@@ -69,6 +71,30 @@ public class ControllerUtils {
 		else {
 			logger.debug("SearchPreferencesServer found in the user HTTP session: " + obj);
 			return (SearchPreferencesServer)obj;
+		}
+	}
+	public static List<String> retriveSessionWorkflowStatusList(HttpSession httpSession,  WorkflowStatusDAO workflowStatusDAO) {
+		Object obj;
+		if (((obj = httpSession.getAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST)) == null) || (!(obj instanceof List<?>))){
+			List<String> allowedWorkflowStatuses = workflowStatusDAO.getWorkflowStatusesAsList();
+			httpSession.setAttribute(CaDSRConstants.USER_SESSION_WORKFLOW_STATUS_LIST, allowedWorkflowStatuses);
+			return allowedWorkflowStatuses;
+		}
+		else {
+			logger.debug("SearchPreferencesServer found in the user HTTP session: " + obj);
+			return (List<String>)obj;
+		}
+	}
+	public static List<String> retriveSessionRegistrationStatusList(HttpSession httpSession,  RegistrationStatusDAO registrationStatusDAO) {
+		Object obj;
+		if (((obj = httpSession.getAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST)) == null) || (!(obj instanceof List<?>))){
+			List<String> allowedStatuses = registrationStatusDAO.getRegnStatusesAsList();
+			httpSession.setAttribute(CaDSRConstants.USER_SESSION_REGISTRATION_STATUS_LIST, allowedStatuses);
+			return allowedStatuses;
+		}
+		else {
+			logger.debug("SearchPreferencesServer found in the user HTTP session: " + obj);
+			return (List<String>)obj;
 		}
 	}
 	/**
