@@ -117,7 +117,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "                sbr.reference_documents_view rd ,\n" +
                 "                sbr.contexts_view conte,\n" +
                 "                sbrext.quest_contents_view_ext qc ,\n" +
-                "                sbr.ac_registrations_view acr ,\n" +
+                "                sbr.ac_registrations_view acr \n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
                 "AND             de.asl_name != 'RETIRED DELETED'\n" +
@@ -308,7 +308,7 @@ public class SearchDAOImpl extends AbstractDAOOperations implements SearchDAO
                 "FROM            sbr.data_elements_view de ,\n" +
                 "                sbr.reference_documents_view rd ,\n" +
                 "                sbr.contexts_view conte ,\n" +
-                "                sbr.ac_registrations_view acr ,\n" +
+                "                sbr.ac_registrations_view acr \n" +
                 "WHERE           de.de_idseq = rd.ac_idseq (+)\n" +
                 "AND             rd.dctl_name (+) = 'Preferred Question Text'\n" +
                 //add excluded Registration status
