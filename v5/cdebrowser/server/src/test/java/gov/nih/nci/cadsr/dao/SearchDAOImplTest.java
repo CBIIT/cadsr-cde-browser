@@ -27,7 +27,8 @@ public class SearchDAOImplTest {
 	
 	String[] expectedFields = {
 			"name", "de_idseq", "de_preferred_name", "long_name", "doc_text", "asl_name", "de_cdeid", "de_version", "de_usedby", "vd_idseq", "dec_idseq", 
-			"conte_idseq", "preferred_definition", "registration_status", "display_order", 
+			"conte_idseq", "preferred_definition", "registration_status", 
+			//CDEBROWSER-616 'rsl.display_order' and 'asl.display_order wkflow_order' used in SQL stmt are not used on 'SearchNode' sent by search REST services as Search results
 			//"workflow_order", //TODO we have wkflow_order in SQL, and workflow_order in model class; why is that? I guess we do not use this field in the model
 			"cdeid"
 			//, "created_by", //this model attribute is not in SQL
@@ -105,7 +106,7 @@ public class SearchDAOImplTest {
 	@Test
 	public void testBuildWorkflowStatusExcludedSql() {
 		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
-		String expected = "AND asl.asl_name NOT IN " + " ('" + WorkflowStatusExcludedInitial.CmteApproved.getWorkflowStatus() + "', '"+ WorkflowStatusExcludedInitial.RetiredWithdrawn.getWorkflowStatus() + "') " + "\n";
+		String expected = "AND de.asl_name NOT IN " + " ('" + WorkflowStatusExcludedInitial.CmteApproved.getWorkflowStatus() + "', '"+ WorkflowStatusExcludedInitial.RetiredWithdrawn.getWorkflowStatus() + "') " + "\n";
 		List<String> workflowStatusExcluded = new ArrayList<>();
 		workflowStatusExcluded.add(WorkflowStatusExcludedInitial.CmteApproved.getWorkflowStatus());
 		workflowStatusExcluded.add(WorkflowStatusExcludedInitial.RetiredWithdrawn.getWorkflowStatus());
@@ -118,7 +119,7 @@ public class SearchDAOImplTest {
 	@Test
 	public void testBuildWorkflowStatusExcludedSqlNone() {
 		SearchDAOImpl searchDAO = new SearchDAOImpl(mockDataSource);
-		String expected = "AND asl.asl_name NOT IN " + " ('" + WorkflowStatusExcludedInitial.RetiredDeleted.getWorkflowStatus() + "') " + "\n";
+		String expected = "AND de.asl_name NOT IN " + " ('" + WorkflowStatusExcludedInitial.RetiredDeleted.getWorkflowStatus() + "') " + "\n";
 		//MUT
 		String received = searchDAO.buildWorkflowStatusExcludedSql(searchPreferences);
 		//check

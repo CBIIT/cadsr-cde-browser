@@ -52,7 +52,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         StringBuilder whereBuffer = new StringBuilder();
         String contextWhere = "";
         String programAreaWhere = "";
-        String wkFlowWhere = "";
         String registrationStatusWhere = "";
         String cdeIdWhere = "";
         String vdWhere = "";
@@ -72,12 +71,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String derivedDEWhere = "";
 
         // This note was in the source code of the previous version: "release 3.0 updated to add display order for registration status"
-        String registrationFrom = " , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl";
+        String registrationFrom = " , sbr.ac_registrations_view acr";
 
         String csiFrom = ", sbr.ac_csi_view acs ";
         String protocolFrom = ", sbrext.quest_contents_view_ext frm, sbrext.protocol_qc_ext ptfrm, sbrext.protocols_view_ext pt, sbrext.quest_contents_view_ext qc ";
         String formFrom = ", sbrext.quest_contents_view_ext qc ";
-        String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) ";
+        String registrationWhere = " AND de.de_idseq = acr.ac_idseq (+)";
 
         if( StringUtils.isBlank( searchCriteria.getClassification() ) )
         {
@@ -219,12 +218,12 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         List<String> workflowStatusExcluded = searchPreferences.getWorkflowStatusExcluded();
         if( !workflowStatusExcluded.isEmpty() )
         {
-            workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildExcludedWorkflowSql();
+            workflowWhere = " AND de.asl_name NOT IN " + searchPreferences.buildExcludedWorkflowSql();
         }
 
         if( !StringUtils.isBlank( searchCriteria.getWorkFlowStatus() ) )
         {
-            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "asl.asl_name", allowedWorkflowStatuses);
+            workflowWhere += SearchQueryBuilderUtils.buildWorkflowWhere( searchCriteria.getWorkFlowStatus(), "de.asl_name", allowedWorkflowStatuses);
         }
         //TODO we can consider to simplify this query workflowWhere. If searchCriteria.workFlowStatus is in excluded list there will be no result anyway
 
@@ -303,7 +302,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
             docWhere = this.buildSearchTextWhere( clientName, searchCriteria.getFilteredinput().split( "\\s*,\\s*" ), searchCriteria.getSearchMode() );
         }
 
-        whereBuffer.append( wkFlowWhere );
         whereBuffer.append( registrationStatusWhere );
         whereBuffer.append( classificationWhere );
         whereBuffer.append( csiWhere );
@@ -339,7 +337,6 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 "sbr.contexts_view conte " +
                 vdFrom + csiFrom + protocolFrom + formFrom +
                 registrationFrom +
-                wkFlowFrom +
                 deDerivFrom +
                 " WHERE " +
 
@@ -348,7 +345,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 versionIndWhere + registrationExcludeWhere + workflowWhere + contextExludeWhere +
                 //" AND de.asl_name != 'RETIRED DELETED' " + //removing this condition from SQL statement. This status is controlled by Search Preferences Server as of release 5.2
                 " AND conte.conte_idseq = de.conte_idseq " +
-                whereClause + registrationWhere + workFlowWhere +
+                whereClause + registrationWhere +
                 contextWhere +
                 deDerivWhere;
 

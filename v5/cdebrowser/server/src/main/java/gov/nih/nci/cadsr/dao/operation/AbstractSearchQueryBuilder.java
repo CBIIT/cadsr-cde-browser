@@ -6,9 +6,10 @@ public abstract class AbstractSearchQueryBuilder
     public static int PUBLIC_ID_FIELD = 1;
 
     public static String REPLACE_TOKEN = "SRCSTR";
-
-    public static String wkFlowFrom = " , sbr.ac_status_lov_view asl ";
-    public static String workFlowWhere = " AND de.asl_name = asl.asl_name (+)";
+    //CDEBROWSER-616 'rsl.display_order' and 'asl.display_order wkflow_order' used in SQL stmt are not used on 'SearchNode' sent by search REST services as Search results
+    //removing joins with two tables "sbr.reg_status_lov_view rsl" and "sbr.ac_status_lov_view asl" which were used to retrieve 'display_order' values only.
+    //public static String wkFlowFrom = " , sbr.ac_status_lov_view asl ";
+    //public static String workFlowWhere = " AND de.asl_name = asl.asl_name (+)";
 
     public static String selectClause = "SELECT DISTINCT de.de_idseq "
             + "      ,de.preferred_name de_preferred_name"
@@ -24,12 +25,10 @@ public abstract class AbstractSearchQueryBuilder
             + "      ,de.conte_idseq "
             + "      ,de.preferred_definition "
             + "      ,acr.registration_status "
-            + "      ,rsl.display_order "
-            + "      ,asl.display_order wkflow_order "
             + "      ,de.cde_id cdeid";
 
 ////////////////////////////////////
-public static String wkFlowDbField = "asl.asl_name";
+//public static String wkFlowDbField = "asl.asl_name";
 
 ////////////////////////////////////
 

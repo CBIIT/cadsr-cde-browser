@@ -96,7 +96,7 @@ public class SearchQueryBuilderDaoTest {
 	//Workflow status tests
 	@Test
 	public void testInitWorkflowNoClientExcluded() {
-		String workflowWhere = " AND asl.asl_name NOT IN  " + SearchPreferencesServer.buildSqlAlwaysExcluded();
+		String workflowWhere = " AND de.asl_name NOT IN  " + SearchPreferencesServer.buildSqlAlwaysExcluded();
 
 		//MUT
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
@@ -109,7 +109,7 @@ public class SearchQueryBuilderDaoTest {
 		workflowStatusExcluded.add(WorkflowStatusEnum.DraftMod.getWorkflowStatus());
 		searchPreferences.setWorkflowStatusExcluded(workflowStatusExcluded);
 
-		String workflowWhere = " AND asl.asl_name NOT IN " + searchPreferences.buildExcludedWorkflowSql();
+		String workflowWhere = " AND de.asl_name NOT IN " + searchPreferences.buildExcludedWorkflowSql();
 
 		//MUT
 		String sqlStmtReceived = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, searchPreferences, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());

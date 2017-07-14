@@ -118,7 +118,7 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
         // With workFlow
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
-        assertTrue( sqlStmt.contains( "asl.asl_name = 'RELEASED'" ) );
+        assertTrue( sqlStmt.contains( "de.asl_name = 'RELEASED'" ) );
     }
 
     @Test
@@ -139,8 +139,8 @@ public class SearchQueryBuilderTest
         searchCriteria.setDerivedDEFlag("false");
         // With out workFlow, make sure workflow is empty, and exclude clause is right
         String sqlStmt = searchQueryBuilder.initSearchQueryBuilder( searchCriteria, initialSearchPreferences );
-        assertTrue( sqlStmt.contains( " asl.asl_name NOT IN  ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED')" ) );
-        assertFalse( sqlStmt.contains( "asl.asl_name =" ) );
+        assertTrue( sqlStmt.contains( " de.asl_name NOT IN  ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED')" ) );
+        assertFalse( sqlStmt.contains( "de.asl_name =" ) );
     }
 
 
@@ -659,11 +659,11 @@ public class SearchQueryBuilderTest
      * This method is to use in unit tests only.
      * The list of excluded workflow status is defined by Search Preferences, and is not defined by this method.
      *
-     * @return The default list of Workflow Status/sbr.ac_status_lov_view.asl_name to be excluded.
+     * @return The default list of Workflow Status/sbr.de.asl_name to be excluded.
      */
     public static String getExcludList()
     {
-        StringBuilder sb = new StringBuilder( " asl.asl_name NOT IN ( '" );
+        StringBuilder sb = new StringBuilder( " de.asl_name NOT IN ( '" );
         sb.append( WorkflowStatusEnum.CmteApproved.getWorkflowStatus() + "' , '" );
         sb.append( WorkflowStatusEnum.CmteSubmtd.getWorkflowStatus() + "' , '" );
         sb.append( WorkflowStatusEnum.CmteSubmtdUsed.getWorkflowStatus() + "' , '" );
@@ -677,11 +677,11 @@ public class SearchQueryBuilderTest
     String protocolSearchQuery = "SELECT DISTINCT de.de_idseq, de.preferred_name de_preferred_name, de.long_name , " +
             "rd.doc_text , conte.NAME ,de.asl_name , To_char(de.cde_id) de_cdeid , de.version de_version , " +
             "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,de.vd_idseq , " +
-            "                de.dec_idseq , de.conte_idseq , de.preferred_definition , acr.registration_status , rsl.display_order , " +
-            "                asl.display_order wkflow_order , de.cde_id cdeid " +
+            "                de.dec_idseq , de.conte_idseq , de.preferred_definition , acr.registration_status , " +
+            "                de.cde_id cdeid " +
             "FROM            sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte, " +
             "                sbrext.quest_contents_view_ext frm , sbrext.protocol_qc_ext ptfrm , sbrext.protocols_view_ext pt , " +
-            "                sbrext.quest_contents_view_ext qc , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl ,  sbr.ac_status_lov_view asl " +
+            "                sbrext.quest_contents_view_ext qc , sbr.ac_registrations_view acr " +
             "WHERE           de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' " +
             "AND de.latest_version_ind = 'Yes' " +
             "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' ) " +
@@ -692,16 +692,16 @@ public class SearchQueryBuilderTest
             "AND             frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF' " +
             "AND             qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' " +
             "AND             qc.de_idseq = de.de_idseq AND pt.proto_idseq = 'B40DD2C8-A047-DBE1-E040-BB89AD437202' " +
-            "AND             de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) AND de.asl_name = asl.asl_name (+)";
+            "AND             de.de_idseq = acr.ac_idseq (+)";
 
     String versionTypeAllQuery = "SELECT DISTINCT de.de_idseq, de.preferred_name de_preferred_name, de.long_name , " +
             "rd.doc_text , conte.NAME ,de.asl_name , To_char(de.cde_id) de_cdeid , de.version de_version , " +
             "                meta_config_mgmt.Get_usedby(de.de_idseq) de_usedby ,de.vd_idseq , " +
-            "                de.dec_idseq , de.conte_idseq , de.preferred_definition , acr.registration_status , rsl.display_order , " +
-            "                asl.display_order wkflow_order , de.cde_id cdeid " +
+            "                de.dec_idseq , de.conte_idseq , de.preferred_definition , acr.registration_status , " +
+            "                de.cde_id cdeid " +
             "FROM            sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte, " +
             "                sbrext.quest_contents_view_ext frm , sbrext.protocol_qc_ext ptfrm , sbrext.protocols_view_ext pt , " +
-            "                sbrext.quest_contents_view_ext qc , sbr.ac_registrations_view acr , sbr.reg_status_lov_view rsl ,  sbr.ac_status_lov_view asl " +
+            "                sbrext.quest_contents_view_ext qc , sbr.ac_registrations_view acr " +
             "WHERE           de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' " +
             "AND             nvl(acr.registration_status,'-1') NOT IN ( 'Retired' ) " +
             "AND             " + getExcludList() +
@@ -711,7 +711,7 @@ public class SearchQueryBuilderTest
             "AND             frm.qc_idseq = ptfrm.qc_idseq AND frm.qtl_name = 'CRF' " +
             "AND             qc.dn_crf_idseq = frm.qc_idseq AND qc.qtl_name = 'QUESTION' " +
             "AND             qc.de_idseq = de.de_idseq AND pt.proto_idseq = 'B40DD2C8-A047-DBE1-E040-BB89AD437202' " +
-            "AND             de.de_idseq = acr.ac_idseq (+) AND acr.registration_status = rsl.registration_status (+) AND de.asl_name = asl.asl_name (+)";
+            "AND             de.de_idseq = acr.ac_idseq (+)";
 
     String sql00 = "SELECT DISTINCT de.de_idseq," +
             "                de.preferred_name de_preferred_name," +
@@ -727,30 +727,24 @@ public class SearchQueryBuilderTest
             "                de.conte_idseq," +
             "                de.preferred_definition," +
             "                acr.registration_status," +
-            "                rsl.display_order," +
-            "                asl.display_order wkflow_order," +
             "                de.cde_id cdeid" +
             " FROM sbr.data_elements_view de," +
             "     sbr.reference_documents_view rd," +
             "     sbr.contexts_view conte," +
-            "     sbr.ac_registrations_view acr," +
-            "     sbr.reg_status_lov_view rsl," +
-            "     sbr.ac_status_lov_view asl" +
+            "     sbr.ac_registrations_view acr" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
             " AND de.latest_version_ind = 'Yes'" +
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired') AND " +
             getExcludList() +
-            "  AND asl.asl_name = 'APPRVD FOR TRIAL USE'" +
+            "  AND de.asl_name = 'APPRVD FOR TRIAL USE'" +
             "  AND conte.name NOT IN ('TEST'," +
             "                         'Training')" +
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
             "  AND ((to_char(de.cde_id) LIKE '25%'))" +
 //            "  AND de.latest_version_ind = 'Yes'" +
-            "  AND de.de_idseq = acr.ac_idseq (+)" +
-            "  AND acr.registration_status = rsl.registration_status (+)" +
-            "  AND de.asl_name = asl.asl_name (+)";
+            "  AND de.de_idseq = acr.ac_idseq (+)";
     
     String sqlPublicIdAll = "SELECT DISTINCT de.de_idseq," +
             "                de.preferred_name de_preferred_name," +
@@ -766,30 +760,24 @@ public class SearchQueryBuilderTest
             "                de.conte_idseq," +
             "                de.preferred_definition," +
             "                acr.registration_status," +
-            "                rsl.display_order," +
-            "                asl.display_order wkflow_order," +
             "                de.cde_id cdeid" +
             " FROM sbr.data_elements_view de," +
             "     sbr.reference_documents_view rd," +
             "     sbr.contexts_view conte," +
-            "     sbr.ac_registrations_view acr," +
-            "     sbr.reg_status_lov_view rsl," +
-            "     sbr.ac_status_lov_view asl" +
+            "     sbr.ac_registrations_view acr" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
             //" AND de.latest_version_ind = 'Yes'" +
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired') AND " +
             getExcludList() +
-            "  AND asl.asl_name = 'APPRVD FOR TRIAL USE'" +
+            "  AND de.asl_name = 'APPRVD FOR TRIAL USE'" +
             "  AND conte.name NOT IN ('TEST'," +
             "                         'Training')" +
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
             "  AND ((to_char(de.cde_id) LIKE '25%'))" +
             //"  AND de.latest_version_ind = 'Yes'" +
-            "  AND de.de_idseq = acr.ac_idseq (+)" +
-            "  AND acr.registration_status = rsl.registration_status (+)" +
-            "  AND de.asl_name = asl.asl_name (+)";
+            "  AND de.de_idseq = acr.ac_idseq (+)";
     
     String sql01 = "SELECT DISTINCT de.de_idseq," +
             "                de.preferred_name de_preferred_name," +
@@ -805,15 +793,11 @@ public class SearchQueryBuilderTest
             "                de.conte_idseq," +
             "                de.preferred_definition," +
             "                acr.registration_status," +
-            "                rsl.display_order," +
-            "                asl.display_order wkflow_order," +
             "                de.cde_id cdeid" +
             " FROM sbr.data_elements_view de," +
             "     sbr.reference_documents_view rd," +
             "     sbr.contexts_view conte," +
-            "     sbr.ac_registrations_view acr," +
-            "     sbr.reg_status_lov_view rsl," +
-            "     sbr.ac_status_lov_view asl" +
+            "     sbr.ac_registrations_view acr" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
             " AND de.latest_version_ind = 'Yes'" +
@@ -824,9 +808,7 @@ public class SearchQueryBuilderTest
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
             "  AND ((to_char(de.cde_id) LIKE '25%'))" +
-            "  AND de.de_idseq = acr.ac_idseq (+)" +
-            "  AND acr.registration_status = rsl.registration_status (+)" +
-            "  AND de.asl_name = asl.asl_name (+)";
+            "  AND de.de_idseq = acr.ac_idseq (+)";
     
     String sql01PublicIdAll = "SELECT DISTINCT de.de_idseq," +
             "                de.preferred_name de_preferred_name," +
@@ -842,15 +824,11 @@ public class SearchQueryBuilderTest
             "                de.conte_idseq," +
             "                de.preferred_definition," +
             "                acr.registration_status," +
-            "                rsl.display_order," +
-            "                asl.display_order wkflow_order," +
             "                de.cde_id cdeid" +
             " FROM sbr.data_elements_view de," +
             "     sbr.reference_documents_view rd," +
             "     sbr.contexts_view conte," +
-            "     sbr.ac_registrations_view acr," +
-            "     sbr.reg_status_lov_view rsl," +
-            "     sbr.ac_status_lov_view asl" +
+            "     sbr.ac_registrations_view acr" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
             "  AND nvl(acr.registration_status,'-1') NOT IN ('Retired')" +
@@ -860,9 +838,7 @@ public class SearchQueryBuilderTest
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
             "  AND ((to_char(de.cde_id) LIKE '25%'))" +
-            "  AND de.de_idseq = acr.ac_idseq (+)" +
-            "  AND acr.registration_status = rsl.registration_status (+)" +
-            "  AND de.asl_name = asl.asl_name (+)";
+            "  AND de.de_idseq = acr.ac_idseq (+)";
     
     String sql01PublicIdLatest = "SELECT DISTINCT de.de_idseq," +
             "                de.preferred_name de_preferred_name," +
@@ -878,15 +854,11 @@ public class SearchQueryBuilderTest
             "                de.conte_idseq," +
             "                de.preferred_definition," +
             "                acr.registration_status," +
-            "                rsl.display_order," +
-            "                asl.display_order wkflow_order," +
             "                de.cde_id cdeid" +
             " FROM sbr.data_elements_view de," +
             "     sbr.reference_documents_view rd," +
             "     sbr.contexts_view conte," +
-            "     sbr.ac_registrations_view acr," +
-            "     sbr.reg_status_lov_view rsl," +
-            "     sbr.ac_status_lov_view asl" +
+            "     sbr.ac_registrations_view acr" +
             " WHERE de.de_idseq = rd.ac_idseq (+)" +
             "  AND rd.dctl_name (+) = 'Preferred Question Text'" +
             " AND de.latest_version_ind = 'Yes'" +
@@ -897,9 +869,7 @@ public class SearchQueryBuilderTest
             //"  AND de.asl_name != 'RETIRED DELETED'"+ //removing this status from SQL statement. This status is added to Search Preferences as of release 5.2
             "  AND conte.conte_idseq = de.conte_idseq" +
             "  AND ((to_char(de.cde_id) LIKE '25%'))" +
-            "  AND de.de_idseq = acr.ac_idseq (+)" +
-            "  AND acr.registration_status = rsl.registration_status (+)" +
-            "  AND de.asl_name = asl.asl_name (+)";
+            "  AND de.de_idseq = acr.ac_idseq (+)";
     
     
     String sql02 = "SELECT DISTINCT " +
@@ -913,21 +883,17 @@ public class SearchQueryBuilderTest
             "           DE.VD_IDSEQ, DE.DEC_IDSEQ," +
             "           DE.CONTE_IDSEQ, DE.PREFERRED_DEFINITION," +
             "           ACR.REGISTRATION_STATUS," +
-            "           RSL.DISPLAY_ORDER," +
-            "           ASL.DISPLAY_ORDER WKFLOW_ORDER," +
             "           DE.CDE_ID CDEID " +
             " FROM " +
             "     SBR.DATA_ELEMENTS_VIEW DE," +
             "     SBR.REFERENCE_DOCUMENTS_VIEW RD," +
             "     SBR.CONTEXTS_VIEW CONTE," +
-            "     SBR.AC_REGISTRATIONS_VIEW ACR," +
-            "     SBR.REG_STATUS_LOV_VIEW RSL," +
-            "     SBR.AC_STATUS_LOV_VIEW ASL " +
+            "     SBR.AC_REGISTRATIONS_VIEW ACR" +
             " WHERE DE.DE_IDSEQ = RD.AC_IDSEQ(+)" +
             " AND RD.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' " +
             " AND DE.LATEST_VERSION_IND = 'YES' " +
             " AND NVL(ACR.REGISTRATION_STATUS, '-1')NOT IN('RETIRED')" +
-            " AND ASL.ASL_NAME NOT IN" +
+            " AND DE.ASL_NAME NOT IN" +
             " (" +
             "     'CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED'" +
             " )" +
@@ -938,8 +904,6 @@ public class SearchQueryBuilderTest
             "AND CONTE.CONTE_IDSEQ = DE.CONTE_IDSEQ " +
             "AND ((TO_CHAR(DE.CDE_ID)LIKE '25%')) " +
             "AND DE.DE_IDSEQ = ACR.AC_IDSEQ(+)" +
-            "AND ACR.REGISTRATION_STATUS = RSL.REGISTRATION_STATUS(+)" +
-            "AND DE.ASL_NAME = ASL.ASL_NAME(+)" +
             "AND DE.DE_IDSEQ IN" +
             "(" +
             "    SELECT " +
@@ -967,21 +931,17 @@ public class SearchQueryBuilderTest
             "           META_CONFIG_MGMT.GET_USEDBY(DE.DE_IDSEQ)DE_USEDBY," +
             "           DE.VD_IDSEQ, DE.DEC_IDSEQ," +
             "           DE.CONTE_IDSEQ, DE.PREFERRED_DEFINITION," +
-            "           ACR.REGISTRATION_STATUS," +
-            "           RSL.DISPLAY_ORDER," +
-            "           ASL.DISPLAY_ORDER WKFLOW_ORDER," +
+            "           ACR.REGISTRATION_STATUS, " +
             "           DE.CDE_ID CDEID " +
             " FROM " +
             "     SBR.DATA_ELEMENTS_VIEW DE," +
             "     SBR.REFERENCE_DOCUMENTS_VIEW RD," +
             "     SBR.CONTEXTS_VIEW CONTE," +
-            "     SBR.AC_REGISTRATIONS_VIEW ACR," +
-            "     SBR.REG_STATUS_LOV_VIEW RSL," +
-            "     SBR.AC_STATUS_LOV_VIEW ASL " +
+            "     SBR.AC_REGISTRATIONS_VIEW ACR" +
             " WHERE DE.DE_IDSEQ = RD.AC_IDSEQ(+)" +
             " AND RD.DCTL_NAME(+)= 'PREFERRED QUESTION TEXT' " +
             " AND NVL(ACR.REGISTRATION_STATUS, '-1')NOT IN('RETIRED')" +
-            " AND ASL.ASL_NAME NOT IN" +
+            " AND DE.ASL_NAME NOT IN" +
             " (" +
             "     'CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED'" +
             " )" +
@@ -992,8 +952,6 @@ public class SearchQueryBuilderTest
             "AND CONTE.CONTE_IDSEQ = DE.CONTE_IDSEQ " +
             "AND ((TO_CHAR(DE.CDE_ID)LIKE '25%')) " +
             "AND DE.DE_IDSEQ = ACR.AC_IDSEQ(+)" +
-            "AND ACR.REGISTRATION_STATUS = RSL.REGISTRATION_STATUS(+)" +
-            "AND DE.ASL_NAME = ASL.ASL_NAME(+)" +
             "AND DE.DE_IDSEQ IN" +
             "(" +
             "    SELECT " +
