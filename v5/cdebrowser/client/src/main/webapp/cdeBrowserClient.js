@@ -110,7 +110,9 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                         var obj = $location.search(); // get url parameters //
                         var keys = Object.keys(obj); // create array of keys //
 
+                        // check url for parameters //
                         if (keys.length) {
+                            // if there is at least a context do search for context, classification or classification sid //
                             if (keys.indexOf('contextId')>-1) { // get context object and do context search to get classifications and protocol lists // 
                                 contextObject = fs.selectContextNodeById(obj.contextId);
                                 $scope.contextSearch(contextObject, true); //load classifications and protocols //
@@ -123,7 +125,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                             if (classifications.lengh>1) {
                                                 classifications.pop();                                                
                                             };
-
                                             $scope.fs.classifications = classifications;
                                             var classification = $filter('filter')($scope.fs.classifications, {'id':obj.classificationSchemeItemId})
                                             if (classification.length) {
@@ -132,8 +133,12 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                         };
                                     $scope.search();
                                     };
-
                                 });
+                            };
+                            // ignore other parameters and search by concept code //
+                            if (keys.indexOf('jspConceptCode')>-1) {
+                                fs.dataElementVariables.conceptInput = obj.jspConceptCode;
+                                $scope.search();
                             };
                         };                        
                     };
