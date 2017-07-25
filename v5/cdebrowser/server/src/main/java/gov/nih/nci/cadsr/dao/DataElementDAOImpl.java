@@ -69,14 +69,28 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
 
     @Override
     public DataElementModel getCdeByDeIdseq( String deIdseq ) throws EmptyResultDataAccessException
-    {
+    {     
         String sql = "SELECT * FROM data_elements WHERE de_idseq = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject( sql, new Object[]{ deIdseq }, new DataElementMapper( DataElementModel.class ) );
-        //logger.debug( "dataElementModel: " + dataElementModel.toString() );
         logger.debug( sql.replace( "?", deIdseq ) + " <<<<<<<" );
-
         return dataElementModel;
     }
+    
+
+    // CDEBROWSER-649 Improve queries for compare screen    
+    @Override
+    public List<DataElementModel> getCdeList(List<String> deIdseqList) throws EmptyResultDataAccessException
+    { 
+        List<DataElementModel> arrResult = new ArrayList<>();
+    	if ((deIdseqList != null ) && (! deIdseqList.isEmpty())) {
+    		String sql = "SELECT * FROM data_elements WHERE de_idseq IN (:ids)";
+            Map<String, List<String>> param = Collections.singletonMap("ids", deIdseqList); 
+            NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getJdbcTemplate().getDataSource());
+            arrResult = namedParameterJdbcTemplate.query(sql, param,
+            		new DataElementMapper(DataElementModel.class));
+    	}
+        return arrResult;
+    }    
 
     @Override
     public List<DataElementModel> getAllCdeByCdeId( Integer cdeId )

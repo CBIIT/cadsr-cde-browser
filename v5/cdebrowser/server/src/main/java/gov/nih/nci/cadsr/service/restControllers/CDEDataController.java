@@ -222,19 +222,25 @@ public class CDEDataController
     {
         logger.debug( "multiCDEDataController: " + deIdseq );
         String[] deIdseqs = deIdseq.split( "," );
-        DataElementModel dataElementModel;
-        List<CdeDetails> arrList = new ArrayList<>();
-        for( String id : deIdseqs )
+        List<String> deIdsList = new ArrayList<String>();
+        for( String id : deIdseqs ) 
         {
         	if (ParameterValidator.validateIdSeq(id = id.trim())) {//This checking is to prevent unexpected IDSEQ values including given on security scan
-	        	dataElementModel = dataElementDAO.getCdeByDeIdseq(id);
-	            logger.debug( dataElementModel.toString() );
-	            arrList.add(buildCdeDetailsForCompare( dataElementModel ));
-        	}
-        	else {
-        		logger.info("Unexpected value of IDSEQ is ignored: " + id);
-        	}
+        			deIdsList.add(id);
+        		}	else {
+            		logger.info("Unexpected value of IDSEQ is ignored: " + id);
+            	}        	
         }
+        List<CdeDetails> arrList = new ArrayList<>();    
+        // CDEBROWSER-649 Improve queries for compare screen
+        if (deIdsList.size()>0) {
+	        List<DataElementModel> dataElementDAOList = dataElementDAO.getCdeList(deIdsList);
+	        for (DataElementModel dataElementModel: dataElementDAOList)
+	        {
+		            arrList.add(buildCdeDetailsForCompare( dataElementModel ));
+	        } 
+        }
+        
         CdeDetails[] cdeDetailsArray = new CdeDetails[arrList.size()];
         cdeDetailsArray = arrList.toArray(cdeDetailsArray);
         usageLog.log( "multiCDEData",  "deIdseq=" + deIdseq + " [" + cdeDetailsArray.length + " results returned]" );
@@ -293,8 +299,7 @@ public class CDEDataController
      */
     private CdeDetails buildCdeDetailsForCompare( DataElementModel dataElementModel )
     {
-        CdeDetails cdeDetails = new CdeDetails();
-
+        CdeDetails cdeDetails = new CdeDetails(); 
         // For the "Data Element" section
         DataElement dataElement = initDataElementForCompare( dataElementModel );
         cdeDetails.setDataElement( dataElement );
@@ -314,12 +319,11 @@ public class CDEDataController
         // For the "Data Elements Derivation" tab
         DataElementDerivation dataElementDerivation = initDataElementDerivationTabData( dataElementModel );
         cdeDetails.setDataElementDerivation( dataElementDerivation );
-
         return cdeDetails;
     }
 
     private DataElement initDataElementForCompare( DataElementModel dataElementModel )
-    {
+    {        	
         DataElement dataElement = getDataElementDetails( dataElementModel );
         /////////////////////////////////////////////////////
         // "Reference Documents" of the "Data Element" Tab
@@ -612,7 +616,7 @@ public class CDEDataController
     }
 
     private DataElementConcept initDataElementConceptForCompare( DataElementModel dataElementModel )
-    {
+    {        	    	
         DataElementConcept dataElementConcept = new DataElementConcept();
         DataElementConceptDetails dataElementConceptDetails = getDataElementConceptDetails( dataElementModel );
         dataElementConcept.setDataElementConceptDetails( dataElementConceptDetails );
@@ -715,7 +719,7 @@ public class CDEDataController
             logger.debug( "dataElementModel.getDec().getDecIdseq() != null: " + dataElementModel.getDec().getDecIdseq() );
         }
         List<ConceptModel> propertyConcepts = propertyConceptDAO.getPropertyConceptByDecIdseq( dataElementModel.getDec().getDecIdseq() );
-        dataElementConcept.setPropertyConcepts( propertyConcepts );                                
+        dataElementConcept.setPropertyConcepts( propertyConcepts );  
         return dataElementConcept;
     }
 
@@ -924,7 +928,7 @@ public class CDEDataController
     }
 
     private ValueDomain initValueDomainForCompare( DataElementModel dataElementModel )
-    {
+    {         	
         ValueDomain valueDomain = new ValueDomain();
         ValueDomainDetails valueDomainDetails = getValueDomainDetails( dataElementModel );
         valueDomain.setValueDomainDetails( valueDomainDetails );
@@ -1212,6 +1216,7 @@ public class CDEDataController
 
     private Classifications initClassificationsForCompare( DataElementModel dataElementModel )
     {
+    	 		
         Classifications classifications = new Classifications();
         
         classifications.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );        
@@ -1329,7 +1334,7 @@ public class CDEDataController
      * @return Data model for the UI client.
      */
     private DataElementDerivation initDataElementDerivationTabData( DataElementModel dataElementModel )
-    {
+    {   	
         DataElementDerivation dataElementDerivation = new DataElementDerivation();
         dataElementDerivation.setSelectedDataElement( getSelectedDataElement( dataElementModel ) );
         //CDEBROWSER-837 Using CDE IDSEQ to search; CDE ID is shared by different CDE Versions
