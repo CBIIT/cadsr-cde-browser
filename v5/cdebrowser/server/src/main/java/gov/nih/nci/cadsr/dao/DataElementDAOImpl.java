@@ -69,7 +69,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
 
     @Override
     public DataElementModel getCdeByDeIdseq( String deIdseq ) throws EmptyResultDataAccessException
-    {     
+    {   
         String sql = "SELECT * FROM data_elements WHERE de_idseq = ?";
         DataElementModel dataElementModel = jdbcTemplate.queryForObject( sql, new Object[]{ deIdseq }, new DataElementMapper( DataElementModel.class ) );
         logger.debug( sql.replace( "?", deIdseq ) + " <<<<<<<" );
@@ -381,6 +381,7 @@ public class DataElementDAOImpl extends AbstractDAOOperations implements DataEle
         }
     }
     //Re-implemented this method: it failed before on more than 1000 IDs
+    // Limits results to a 1000 records max
 	@Override
 	public List<DataElementModel> getCdeByDeIdseqList(List<String> acIdseqList) throws EmptyResultDataAccessException {
         List<DataElementModel> arrResult = new ArrayList<>();
