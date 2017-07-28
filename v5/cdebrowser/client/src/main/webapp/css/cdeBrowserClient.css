@@ -213,7 +213,12 @@ a:hover {
 .searchTips {
     margin-top: 7px;
     margin-bottom: 4px;
-    font-size: 8pt;
+    font-size: 8pt !important;
+}
+
+.searchTips i{
+    font-size:8pt !important;
+    font-weight:bold;
 }
 
 .basicSearchField {
