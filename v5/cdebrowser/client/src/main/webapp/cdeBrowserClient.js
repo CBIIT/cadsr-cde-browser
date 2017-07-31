@@ -136,8 +136,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                                 });
                             };
                             // ignore other parameters and search by concept code //
-                            if (keys.indexOf('jspConceptCode')>-1) {
-                                fs.dataElementVariables.conceptInput = obj.jspConceptCode;
+                            if (keys.indexOf('conceptInput')>-1) {
+                                fs.dataElementVariables.conceptInput = obj.conceptInput;
                                 $scope.search();
                             };
                         };                        
