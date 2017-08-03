@@ -24,7 +24,27 @@ import org.mockito.Mockito;
 import gov.nih.nci.cadsr.download.GetExcelDownload.ColumnInfo;
 
 public class GetExcelDownloadTestHeaders {
-
+	//AssertionError
+	@Test(expected=AssertionError.class)
+	public void testdeSearchWrong() throws Exception {	
+		
+		checkHeaders("CDEBrowser_deSearch_headers_old_4_x.xls", "deSearch");
+	}
+	@Test(expected=AssertionError.class)
+	public void testdeSearchWrong2() throws Exception {	
+		
+		checkHeaders("CDEBrowser_deSearch_headers_old_4_x.xls", "cdeCart");
+	}
+	@Test(expected=AssertionError.class)
+	public void testdeSearchPriorWrongName() throws Exception {	
+		
+		checkHeaders("CDEBrowser_deSearchPrior_headers_wrong_name.xls", "deSearchPrior");
+	}
+	@Test(expected=AssertionError.class)
+	public void testdeSearchPriorWrongColumn() throws Exception {	
+		
+		checkHeaders("CDEBrowser_deSearchPrior_headers_wrong_column.xls", "deSearchPrior");
+	}
 	@Test
 	public void testdeSearch() throws Exception {	
 		

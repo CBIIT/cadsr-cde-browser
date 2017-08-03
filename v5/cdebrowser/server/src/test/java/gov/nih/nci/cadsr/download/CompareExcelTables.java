@@ -99,7 +99,7 @@ public class CompareExcelTables {
 		}
 		
 		int celLastOld = rowOld.getLastCellNum();
-		int celLastNew = rowOld.getLastCellNum();
+		int celLastNew = rowNew.getLastCellNum();
 		if (celLastOld != celLastNew) {
 			System.out.println("different last column number in row old : " + celLastOld + ":" + celLastNew + ", rowIndex: " + rowIndex);
 			return false;

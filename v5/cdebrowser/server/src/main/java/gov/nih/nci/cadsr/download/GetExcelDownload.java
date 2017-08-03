@@ -57,6 +57,9 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	
 	public static final String clientErrorMessageTooManyIDs = "Please select a fewer number of CDEs or remove any CDE with a large number of value domains. Exceeded allowed number of CDE IDs in Excel download. Received number: %d.";
 	public static final int MAX_ROW_NUMBER = 65535; //(2 ^ 16)
+	//CDEBROWSER-279
+	public static final String VIEW_NAME_PRIOR = "SBREXT.DE_CDE_EXCEL_GENERATOR_VIEW DE_CDE_EXCEL_GENERATOR_VIEW ";//prior v.5.3.1
+	public static final String VIEW_NAME_NEW = "SBREXT.DE_CDE_EXCEL_GEN_VIEW_5_3 DE_CDE_EXCEL_GENERATOR_VIEW ";//deSearch or cdeCart
 	
 	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
@@ -103,7 +106,17 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		String excelFilename = localDownloadDirectory + fileNamePrefix + excelFileSuffix + DownloadExcelController.fileExtension;
 		return excelFilename;
 	}
-
+	//CDEBROWSER-279
+	protected static String buildSqlFrom(String source, String RAI) {
+		String sqlStart;
+		if ("deSearch".equals(source) || "cdeCart".equals(source)) {
+			sqlStart =  "SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*, '" + RAI + "' as \"RAI\" FROM " + VIEW_NAME_NEW;
+		}
+		else {
+			sqlStart =  "SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*, '" + RAI + "' as \"RAI\" FROM " + VIEW_NAME_PRIOR;
+		}
+		return sqlStart;
+	}
 	/**
 	 * This method generates Excel file with the given file name.
 	 * 
@@ -156,13 +169,13 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 			
 			String groupWhereInCond;
 			String sqlStmt;
+			//CDEBROWSER-279
+			String sqlStart = buildSqlFrom(source, RAI);
 			
 			for (int groupId = 0; groupId <= lastGroupNumber; groupId++) {
 				groupWhereInCond = DownloadUtils.buildSqlInCondition(iter, maxRecords); //"where DE_IDSEQ IN ('1','2','3',   , '1000')";
-				
-				sqlStmt =
-					"SELECT DE_CDE_EXCEL_GENERATOR_VIEW.*, '" + RAI + "' as \"RAI\" FROM DE_CDE_EXCEL_GENERATOR_VIEW " +
-							groupWhereInCond;
+				//CDEBROWSER-279
+				sqlStmt = sqlStart + groupWhereInCond;
 				//+" ORDER BY PREFERRED_NAME ";
 				if (logger.isTraceEnabled())
 					logger.trace("group SQL Statement: " + sqlStmt);
@@ -690,6 +703,13 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 		columnInfo.add(
 				new ColumnInfo("RAI", "Representation RAI", "String"));//new DE old CL last column
 
+		//CDEBROWSER-279 New columns at the end starting v. 5.3.1 DF-DI
+		if("deSearch".equals(source)|| "cdeCart".equals(source)){
+			columnInfo.add(new ColumnInfo("DEC_WK_FLOW_STATUS", "Data Element Concept Workflow Status", "String"));
+			columnInfo.add(new ColumnInfo("DEC_REG_STATUS", "Data Element Concept Registration Status", "String"));
+			columnInfo.add(new ColumnInfo("VD_WK_FLOW_STATUS", "Value Domain Workflow Status", "String"));
+			columnInfo.add(new ColumnInfo("VD_REG_STATUS", "Value Domain Registration Status", "String"));
+		}
 		return columnInfo;
 	}
 
