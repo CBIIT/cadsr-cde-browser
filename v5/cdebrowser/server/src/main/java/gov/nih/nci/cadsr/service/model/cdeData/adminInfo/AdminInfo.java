@@ -21,6 +21,7 @@ public class AdminInfo
     private String decDateModified;   // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend    
     private String organization;
     private SelectedDataElement selectedDataElement = null;
+    private String changeNote;
 
     public String getCreatedBy()
     {
@@ -152,6 +153,14 @@ public class AdminInfo
     {
         this.selectedDataElement = selectedDataElement;
     }	
+
+	public String getChangeNote() {
+		return changeNote;
+	}
+
+	public void setChangeNote(String changeNote) {
+		this.changeNote = changeNote;
+	}
 
 	@Override
 	public String toString() {

@@ -46,6 +46,7 @@ public class DataElementModel extends BaseDesignationDefinitionModel
     private List<CsCsiModel> classifications;
     private List<CSRefDocModel> csRefDocModels;
     private List<CSIRefDocModel> csiRefDocModels;
+    private String changeNote;
 
     public DataElementModel()
     {
@@ -404,6 +405,15 @@ public class DataElementModel extends BaseDesignationDefinitionModel
     {
         this.csiRefDocModels = csiRefDocModels;
     }
+    
+	public String getChangeNote() {
+		return changeNote;
+	}
+
+	public void setChangeNote(String changeNote) {
+		this.changeNote = changeNote;
+	}
+    
 
 	@Override
 	public String toString() {
@@ -646,5 +656,6 @@ public class DataElementModel extends BaseDesignationDefinitionModel
 			return false;
 		return true;
 	}
+
 	
 }

@@ -1379,7 +1379,9 @@ public class CDEDataController
         adminInfo.setVdDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateCreated()));
         adminInfo.setVdDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateModified()));
         adminInfo.setDecDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateCreated()));
-        adminInfo.setDecDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateModified()));        
+        adminInfo.setDecDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateModified()));
+        adminInfo.setChangeNote(dataElementModel.getChangeNote());
+        
         
         // "Selected Data Element" of the "Admin Info" Tab
         adminInfo.setSelectedDataElement( getSelectedDataElement( dataElementModel ) ); // CDEBROWSER-833 UI Edits and fixes - Admin View Details - Backend

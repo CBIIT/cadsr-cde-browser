@@ -101,7 +101,11 @@
     <tr class="dataElementViewTableTr">
         <td class="dataElementDescription">Context Administrators:</td>
         <td class="dataElementValue"><a href="https://wiki.nci.nih.gov/x/V7yl" target="_blank">See Wiki</a></td>
-    </tr>        
+    </tr>
+    <tr class="dataElementViewTableTr">
+        <td class="dataElementDescription">Change Note:</td>
+        <td class="dataElementValue" ng-bind-html="cdeDetails.adminInfo.changeNote">{{cdeDetails.adminInfo.changeNote}}</td>
+    </tr>
 </table>
 
 <script>
