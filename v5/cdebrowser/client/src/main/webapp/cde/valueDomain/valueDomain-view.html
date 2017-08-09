@@ -262,10 +262,8 @@
             <td width="24px" class="dataElementValue" ng-bind-html="p_value.value">{{p_value.value}}</td>
             <td class="dataElementValue"><a style="text-decoration: underline; color: #18344d;" data-ng-click="goToVM($index + 1)" ng-bind-html="p_value.shortMeaning">{{p_value.shortMeaning}}</a></td>
             <td class="dataElementValue">
-
-                <a style="text-decoration: none;" data-ng-repeat="cCode in p_value.conceptCodeArray" TARGET="_blank"
-                   href="https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus&code={{cCode}}"><span style="text-decoration: underline !important;">{{cCode}}<span ng-show="!$first && $last">(Primary)</span></span><span ng-show="!$last">:</span></a><br />
-
+                <div ng-bind-html="createConceptCodeField(p_value.conceptCodeArray)"><!--Concept Code<--></div>
+                <br />
             </td>
             <td class="dataElementValue" ng-bind-html="p_value.vmDescription">{{p_value.vmDescription}}</td>
             <td class="dataElementValue" ng-bind-html="p_value.beginDateString">{{p_value.beginDateString}}</td>
