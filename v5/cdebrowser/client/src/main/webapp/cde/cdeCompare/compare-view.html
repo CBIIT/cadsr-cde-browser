@@ -84,7 +84,7 @@
                 </td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">Public Id:</td>
+                <td class="dataElementDescription compareDataElementDescription">Public ID:</td>
                 <td class="compareDataElementValue dataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElement.dataElementDetails==null">
                     {{data.dataElement.dataElementDetails.publicId}}
                 </td>
@@ -171,7 +171,7 @@
                 <td ng-repeat="(element, data) in cdeDetails">{{element + 1}}</td>
             </tr>
             <tr class="dataElementViewTableTr">
-                <td class="compareDataElementDescription dataElementDescription">Public Id:</td>
+                <td class="compareDataElementDescription dataElementDescription">Public ID:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.publicId}}
                 </td>
@@ -210,7 +210,7 @@
                 </td>
             </tr>            
             <!-- <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">Public Id:</td>
+                <td class="dataElementDescription compareDataElementDescription">Public ID:</td>
                 <td class="compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.dataElementConceptDetails.publicId}}
                 </td>
@@ -246,7 +246,7 @@
                 </td>
             </tr>
 		    <tr class="dataElementViewTableTr">
-		        <td class="dataElementDescription compareDataElementDescription">Object Class Public Id:</td>
+		        <td class="dataElementDescription compareDataElementDescription">Object Class Public ID:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.objectClass.publicId}}
                 </td>                		        
@@ -281,7 +281,7 @@
                 </td>
 		    </tr>
 		    <tr class="dataElementViewTableTr">
-		        <td class="dataElementDescription compareDataElementDescription">Property Public Id:</td>
+		        <td class="dataElementDescription compareDataElementDescription">Property Public ID:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.dataElementConcept.dataElementConceptDetails==null">
                     {{data.dataElementConcept.property.publicId}}
                 </td>                		        
@@ -343,9 +343,9 @@
                             <td>{{element + 1}}</td>
                         </tr>
                         <tr>
-                            <td class="dataElementHeading compareDataElementColumn0">documentName</td>
-                            <td class="dataElementHeading compareDataElementColumn0">documentType</td>
-                            <td class="dataElementHeading compareDataElementColumn0">documentText</td>
+                            <td class="dataElementHeading compareDataElementColumn0">Document Name</td>
+                            <td class="dataElementHeading compareDataElementColumn0">Document Type</td>
+                            <td class="dataElementHeading compareDataElementColumn0">Document Text</td>
                         </tr>
                         <tr class="dataElementViewTableTr"
                             ng-repeat="(element1, data1) in data.dataElement.referenceDocuments | orderBy:['documentType','documentName']">
@@ -376,7 +376,7 @@
             </tr>
 
             <tr class="dataElementViewTableTr">
-                <td class="dataElementDescription compareDataElementDescription">Public Id:</td>
+                <td class="dataElementDescription compareDataElementDescription">Public ID:</td>
                 <td class="dataElementValue compareDataElementValue" ng-repeat="(element, data) in cdeDetails" ng-hide="data.valueDomain.valueDomainDetails==null">
                     {{data.valueDomain.valueDomainDetails.publicId}}
                 </td>
