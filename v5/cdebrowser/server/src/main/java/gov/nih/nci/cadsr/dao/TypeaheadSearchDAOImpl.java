@@ -32,7 +32,7 @@ import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
 public class TypeaheadSearchDAOImpl extends AbstractDAOOperations implements TypeaheadSearchDAO {
 	private static final Logger logger = LogManager.getLogger(TypeaheadSearchDAOImpl.class.getName());
 	
-	private static final int maxLongNamesToReturn = 21;
+	private static final int maxLongNamesToReturn = 51;
 	private JdbcTemplate jdbcTemplate;
 	//TODO decide do we need to consider Search Preferences when we generate typeahead results
 	//Do we want to use All words if a filter text contains a space? We use the exact received token now.
