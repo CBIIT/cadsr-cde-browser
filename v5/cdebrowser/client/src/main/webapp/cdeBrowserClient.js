@@ -588,6 +588,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.searchResultsMessage = "";
             $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
             $scope.bigSearchResultsMessageClass = false;
+        }).error(function(response, status, headers, config) {
+            $scope.searchResultsMessage = "";
+
+            $scope.downloadFactory.progressMessage = {"status":1,"message":"An internal server error has occurred. If you need assistance, please visit <a href='https://cbiit.nci.nih.gov/support/support'>CBIIT Application Support</a>.", "isErrorMessage":1};
         });
         //TODO in a case of error
     };
@@ -641,6 +645,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Search button
     $scope.onClickBasicSearch = function (query, field, dec, pv, pvType, type, vd, vdtType, conceptInput, publicIdName, searchAltName, searchAltNameType, filteredinput, searchVersions, publicSearchVersions, searchContextUse, searchObjectClass, searchProperty, derivedDE) {
+
         if ($scope.fs.searchFilter.context&&$scope.fs.searchFilter.context!='') {
             $scope.disp();
         };
@@ -852,6 +857,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
     // Basic search query to get search results //
     $scope.searchServerRestCall = function (serverUrl, searchType, id, isNode, isDropdown, selectedNode) {
+            $scope.downloadFactory.progressMessage = $scope.progressMessage;
+
         // if clicking on a node in the left menu set the isNode variable to it's opposite, this will trigger the search box to clear //
         var url = "".concat('/',serverUrl,'?',searchType,'=',id);
 
@@ -934,7 +941,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
 
             }, 1);
         }).error(function (data, status, headers, config) {
-
             if( status == 400)
             {
             }
