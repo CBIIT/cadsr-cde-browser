@@ -27,6 +27,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.sun.media.jfxmedia.logging.Logger;
+
 import gov.nih.nci.cadsr.common.UsageLog;
 import gov.nih.nci.cadsr.dao.ConceptDAO;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
@@ -54,6 +56,7 @@ import gov.nih.nci.cadsr.dao.model.ValueDomainModel;
 import gov.nih.nci.cadsr.dao.model.ValueMeaningUiModel;
 import gov.nih.nci.cadsr.service.ServiceTestUtils;
 import gov.nih.nci.cadsr.service.model.cdeData.CdeDetails;
+import gov.nih.nci.cadsr.service.model.cdeData.adminInfo.AdminInfo;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.AlternateName;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.CsCsi;
 import gov.nih.nci.cadsr.service.model.cdeData.dataElement.DataElement;
@@ -177,14 +180,16 @@ public class CDEDataControllerTest {
 		dataElementModelToReturn.setVersion(deVersionToReturn);
 		dataElementModelToReturn.setDateCreated(new Timestamp(System.currentTimeMillis()));
 		dataElementModelToReturn.setDateModified(new Timestamp(System.currentTimeMillis()));
-		
+		assertNotNull(dataElementModelToReturn.getDateCreated());
+		assertNotNull(dataElementModelToReturn.getDateModified());		
 		ValueDomainModel valueDomainModelToReturn = new ValueDomainModel();
 		valueDomainModelToReturn.setVersion(3.3f);
 		valueDomainModelToReturn.setCdVersion(4.8f);
 		valueDomainModelToReturn.setVdContextName(vdContextNameExpected);
 		valueDomainModelToReturn.setDateCreated(new Timestamp(System.currentTimeMillis()));
 		valueDomainModelToReturn.setDateModified(new Timestamp(System.currentTimeMillis()));
-		
+		assertNotNull(valueDomainModelToReturn);
+
 		//mock how DE DAO is implemented we do not call the method below when we mock dataElementDAO
 		//when(valueDomainDAO.getValueDomainByIdseq(Mockito.eq(vdIdseqTest))).thenReturn(valueDomainModelToReturn);
 		
@@ -216,6 +221,10 @@ public class CDEDataControllerTest {
 		CdeDetails cdedetailsReceived = cdeDataController.retrieveDataElementDetails(paramdeIdseq);
 		//check
 		assertNotNull(cdedetailsReceived);
+		assertNotNull(cdedetailsReceived.getAdminInfo().getDateCreated());
+		assertNotNull(cdedetailsReceived.getAdminInfo().getDateModified());
+		assertNotNull(cdedetailsReceived.getAdminInfo().getVdDateCreated());		
+		assertNotNull(cdedetailsReceived.getAdminInfo().getVdDateModified());
 		assertEquals(vdContextNameExpected, cdedetailsReceived.getValueDomain().getValueDomainDetails().getContext());
 		//verify
 		Mockito.verify(valueMeaningDAO).getUiValueMeanings(publicIdToReturn, deVersionToReturn);
@@ -262,6 +271,69 @@ public class CDEDataControllerTest {
 		for (int index = receivedOther.size(); index < source.size(); index++) {
 			assertTrue(ServiceTestUtils.comparaReferenceDocumentsData(receivedQuestionTexts.get(index - receivedOther.size()), source.get(index)));
 		}
+	}
+	
+	@Test
+	public void testInitAdminInfoData() throws Exception {
+		String paramdeIdseq = "903FF021-F4F5-5A41-E040-BB89AD433D33";
+		String vdIdseqTest = "903FF021-F44B-5A41-E040-BB89AD433D33";
+		float deVersionToReturn = 8.4f;
+		int publicIdToReturn = 123456789;
+		String vdContextNameExpected = "vdContextNameTest";
+		List<ValueMeaningUiModel> valueMeaningUiModelToReturn = new ArrayList<>();
+		List<CsCsiDeModel> modelList = new ArrayList<>();
+		//mock
+		when(csCsiDeDAO.getCsCsisByAcId(paramdeIdseq)).thenReturn(modelList);
+		//mock
+		when(valueMeaningDAO.getUiValueMeanings(Mockito.eq(publicIdToReturn), Mockito.eq(deVersionToReturn))).thenReturn(valueMeaningUiModelToReturn);
+		
+		DataElementModel dataElementModelToReturn = new DataElementModel();
+		dataElementModelToReturn.setVdIdseq(vdIdseqTest);
+		dataElementModelToReturn.setDeIdseq(paramdeIdseq);
+		dataElementModelToReturn.setPublicId(publicIdToReturn);
+		dataElementModelToReturn.setCdeId(publicIdToReturn);
+		dataElementModelToReturn.setVersion(deVersionToReturn);
+		dataElementModelToReturn.setDateCreated(null);
+		dataElementModelToReturn.setDateModified(null);
+		ValueDomainModel valueDomainModelToReturn = new ValueDomainModel();
+		valueDomainModelToReturn.setVersion(3.3f);
+		valueDomainModelToReturn.setCdVersion(4.8f);
+		valueDomainModelToReturn.setVdContextName(vdContextNameExpected);
+		valueDomainModelToReturn.setDateCreated(null);
+		valueDomainModelToReturn.setDateModified(null);
+		assertNotNull(valueDomainModelToReturn);
+
+		//mock how DE DAO is implemented we do not call the method below when we mock dataElementDAO
+		//when(valueDomainDAO.getValueDomainByIdseq(Mockito.eq(vdIdseqTest))).thenReturn(valueDomainModelToReturn);
+		
+		DataElementConceptModel decToReturn = new DataElementConceptModel();
+		decToReturn.setVersion(1.0f);
+		decToReturn.setCdVersion(2.2f);
+		decToReturn.setDateCreated(null);
+		decToReturn.setDateModified(null);
+		dataElementModelToReturn.setDec(decToReturn);
+		dataElementModelToReturn.setValueDomainModel(valueDomainModelToReturn);
+		List<ReferenceDocModel> refDocsToReturn = new ArrayList<>();
+		dataElementModelToReturn.setRefDocs(refDocsToReturn);
+		HashMap<String, CsCsiModel> hashMapToReturn = new HashMap<>();
+		CsCsiModel unclassCsCsiModelToReturn = new CsCsiModel();
+		hashMapToReturn.put(CsCsiModel.UNCLASSIFIED, unclassCsCsiModelToReturn);
+		dataElementModelToReturn.setCsCsiData(hashMapToReturn);
+		dataElementModelToReturn.setClassifications(new ArrayList());
+		dataElementModelToReturn.setCsRefDocModels(new ArrayList());
+		dataElementModelToReturn.setCsiRefDocModels(new ArrayList());
+		HashMap<String, List<String>> csCsiDesignationsToReturn = new HashMap<>();
+		dataElementModelToReturn.setCsCsiDesignations(csCsiDesignationsToReturn);
+		HashMap<String, List<String>> csCsiDefinitionsToReturn = new HashMap<>();
+		dataElementModelToReturn.setCsCsiDefinitions(csCsiDefinitionsToReturn);
+		List<DEOtherVersionsModel> deOtherVersionsModelsToReturn = new ArrayList<>();
+		dataElementModelToReturn.setDeOtherVersionsModels(deOtherVersionsModelsToReturn);
+		//mock
+		when(dataElementDAO.getCdeByDeIdseq(paramdeIdseq)).thenReturn(dataElementModelToReturn);
+		//MUT
+		CdeDetails cdedetailsReceived = cdeDataController.retrieveDataElementDetails(paramdeIdseq);
+		//check
+		assertNotNull(cdedetailsReceived);
 	}
 
 }
