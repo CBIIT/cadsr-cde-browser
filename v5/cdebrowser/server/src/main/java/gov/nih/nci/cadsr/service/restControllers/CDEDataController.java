@@ -1369,17 +1369,23 @@ public class CDEDataController
     {
         AdminInfo adminInfo = new AdminInfo();
         adminInfo.setCreatedBy( dataElementModel.getCreatedBy() );
-        adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateCreated() ) );
+        if (dataElementModel.getDateCreated()!=null)
+        	adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateCreated() ) );
         adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
-        adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
+        if (dataElementModel.getDateModified()!=null)
+        	adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
         adminInfo.setVdCreatedBy( dataElementModel.getValueDomainModel().getCreatedBy() );
         adminInfo.setVdOwnedBy( dataElementModel.getValueDomainModel().getVdContextName() );
         adminInfo.setDecCreatedBy( dataElementModel.getDec().getCreatedBy() );
         adminInfo.setDecOwnedBy(dataElementModel.getDec().getConteName() );
-        adminInfo.setVdDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateCreated()));
-        adminInfo.setVdDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateModified()));
-        adminInfo.setDecDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateCreated()));
-        adminInfo.setDecDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateModified()));
+        if (dataElementModel.getValueDomainModel().getDateCreated()!=null)
+        	adminInfo.setVdDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateCreated()));
+        if (dataElementModel.getValueDomainModel().getDateModified()!=null)
+        	adminInfo.setVdDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getValueDomainModel().getDateModified()));
+        if (dataElementModel.getDec().getDateCreated()!=null)
+        	adminInfo.setDecDateCreated(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateCreated()));
+        if (dataElementModel.getDec().getDateModified()!=null)
+        	adminInfo.setDecDateModified(new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format(dataElementModel.getDec().getDateModified()));
         adminInfo.setChangeNote(dataElementModel.getChangeNote());
         
         
