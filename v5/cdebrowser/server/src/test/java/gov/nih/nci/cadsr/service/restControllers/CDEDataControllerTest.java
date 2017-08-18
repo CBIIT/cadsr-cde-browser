@@ -27,8 +27,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.sun.media.jfxmedia.logging.Logger;
-
 import gov.nih.nci.cadsr.common.UsageLog;
 import gov.nih.nci.cadsr.dao.ConceptDAO;
 import gov.nih.nci.cadsr.dao.CsCsiDeDAO;
@@ -180,8 +178,6 @@ public class CDEDataControllerTest {
 		dataElementModelToReturn.setVersion(deVersionToReturn);
 		dataElementModelToReturn.setDateCreated(new Timestamp(System.currentTimeMillis()));
 		dataElementModelToReturn.setDateModified(new Timestamp(System.currentTimeMillis()));
-		assertNotNull(dataElementModelToReturn.getDateCreated());
-		assertNotNull(dataElementModelToReturn.getDateModified());		
 		ValueDomainModel valueDomainModelToReturn = new ValueDomainModel();
 		valueDomainModelToReturn.setVersion(3.3f);
 		valueDomainModelToReturn.setCdVersion(4.8f);
@@ -221,10 +217,6 @@ public class CDEDataControllerTest {
 		CdeDetails cdedetailsReceived = cdeDataController.retrieveDataElementDetails(paramdeIdseq);
 		//check
 		assertNotNull(cdedetailsReceived);
-		assertNotNull(cdedetailsReceived.getAdminInfo().getDateCreated());
-		assertNotNull(cdedetailsReceived.getAdminInfo().getDateModified());
-		assertNotNull(cdedetailsReceived.getAdminInfo().getVdDateCreated());		
-		assertNotNull(cdedetailsReceived.getAdminInfo().getVdDateModified());
 		assertEquals(vdContextNameExpected, cdedetailsReceived.getValueDomain().getValueDomainDetails().getContext());
 		//verify
 		Mockito.verify(valueMeaningDAO).getUiValueMeanings(publicIdToReturn, deVersionToReturn);
