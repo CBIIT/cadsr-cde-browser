@@ -1851,9 +1851,11 @@ private String getProperty (String propertyName, String property, List cdeObjLis
     {
         AdminInfo adminInfo = new AdminInfo();
         adminInfo.setCreatedBy( dataElementModel.getCreatedBy() );
-        adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateCreated() ) );
+        if (dataElementModel.getDateCreated()!=null)
+        	adminInfo.setDateCreated( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateCreated() ) );
         adminInfo.setModifiedBy( dataElementModel.getModifiedBy() );
-        adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
+        if (dataElementModel.getDateModified()!=null)
+        	adminInfo.setDateModified( new SimpleDateFormat( CaDSRConstants.DATE_FORMAT ).format( dataElementModel.getDateModified() ) );
         adminInfo.setVdCreatedBy(dataElementModel.getValueDomainModel().getCreatedBy());
         adminInfo.setVdOwnedBy(dataElementModel.getValueDomainModel().getCdContextName());
         adminInfo.setDecCreatedBy(dataElementModel.getDec().getCreatedBy());
