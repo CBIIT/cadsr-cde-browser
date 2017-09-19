@@ -730,7 +730,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             connector = c == 0 ? "?" : "&";
             c++;
             url += connector + "altName=" + encodeURIComponent(searchAltName.replace(/%/g, "*"));
-            url += "&altNameType=" + searchAltNameType;
+            url += "&altNameType=" + encodeURIComponent(searchAltNameType);
         }
 
         if (filteredinput != '') {
