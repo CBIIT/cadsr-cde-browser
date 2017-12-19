@@ -178,7 +178,7 @@
 .breadCrumbs {
     padding-left: 5px;
     font-weight: bold;
-    color: #999966;
+    color: #663300;
     font-size:13.3px;
 }
 
@@ -192,7 +192,7 @@
     display:table;
 }
 .sortOrder a {
-    color:#996;
+    color:#663300;
 }
 .sortOrder .left {
     display: table-cell;
@@ -228,7 +228,7 @@
 
     /*margin-top:5px;*/
     /* Push down label - Sort Order: etc.*/
-    color: #999966;
+    color: #663300;
 }
 
 

@@ -53,6 +53,10 @@
 <!-- =============================================================================== -->
 
 <!-- ************ Top header with NCI logo ************ -->
+<div id="skip-link">
+    <a href="#main-content" class="element-focusable">Skip to main content</a>
+</div>
+
 <div class="top-left-logo">
     <a href="https://www.cancer.gov/" target="_blank">
         <img alt="National Cancer Institute, Center for Biomedical Infomatics & Information Technology."
@@ -274,6 +278,10 @@
 
     <!-- =============================================================================== -->
     <!--  Right side,  search and search results.  -->
+
+  <a id="main-content" name="main-content"></a>
+
+
     <div class="resultsDisplay" data-ng-controller="cdeCtrl" data-ng-cloak class="ng-cloak"
          data-ng-style="resizeHeight()"
          resize
@@ -307,7 +315,7 @@
                 <div class="filters" ng-show="activeSearchTab==0" ng-disabled="true">
 
                 <span>
-                <ui-select id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
+                <ui-select title="Program Area" input-id="programArea" ng-disabled="filterService.isSearching" ng-change="filterService.resetContext()" theme="bootstrap" ng-model="filterService.searchFilter.programArea">
                     <ui-select-match placeholder="Program Area">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices repeat="value.programArea as value in filterService.serverData | filter: $select.search">
                         <div ng-bind-html="value.text | highlight: $select.search"></div>
@@ -316,7 +324,7 @@
                 </span>
 
                 <span>
-                <ui-select id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
+                <ui-select title="Context" input-id="context" id="context" ng-change="contextSearch($select.selected)" ng-disabled="filterService.isSearching" theme="bootstrap" ng-model="filterService.searchFilter.context">
                     <ui-select-match allow-clear="true" placeholder="Context">{{$select.selected.text}}</ui-select-match>
                     <ui-select-choices
                     repeat="value.idSeq as value in filterService.serverData[filterService.searchFilter.programArea].children | filter: $select.search | filter:manageOptions"
@@ -335,7 +343,7 @@
                                    ng-disabled="filterService.isSearching||filterService.searchFilter.protocol"
                                    ui-select-focuser1
                                    theme="bootstrap"
-                                   ng-change="contextCascade($select.selected)">
+                                   ng-change="contextCascade($select.selected)" title="Classifications" input-id="Classifications">
                             <ui-select-match placeholder="Classification" allow-clear="true">
                                 {{ $select.selected.name }}
                             </ui-select-match>
@@ -358,6 +366,7 @@
                     </ui-tree-select>
                     <script type="text/ng-template" id="/ui-tree-select.html">
                         <ui-select id="Protocols"
+                                    title="Protocols" input-id="Protocols"
                                    ng-model="filterService.searchFilter.protocol"
                                    ng-disabled="filterService.isSearching||filterService.searchFilter.classification"
                                    ui-select-focuser
@@ -380,20 +389,20 @@
                 </span>
 
                 <span class="wsAndRs">
-                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.workFlowStatus" ng-change="setSelectedWs()">
+                <select aria-label="WorkflowStatus" ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.workFlowStatus" ng-change="setSelectedWs()">
                     <option ng-repeat="r in staticFilters.workflowStatusFilter" value="{{r}}">{{r}}</option>
                 </select>
                 </span>
 
                 <span class="wsAndRs">
-                <select ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.registrationStatus" ng-change="setSelectedRs()">
+                <select aria-label="RegistrationStatus" ng-disabled="fs.isSearching" multiple="true" ng-model="filterService.searchFilter.registrationStatus" ng-change="setSelectedRs()">
                     <option ng-repeat="r in staticFilters.registrationStatusFilter" value="{{r}}">{{r}}</option>
                 </select>
                 </span>
 
                 <span>
-                    <label>Concept</label>
-                    <input ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" ng-keyup="searchKey(e=$event)" placeholder="Concept Name or Concept Code" />
+                    <label for="concept">Concept</label>
+                    <input id="concept" ng-disabled="fs.isSearching" class="roundInput conceptInput" type="text" data-ng-model="fs.dataElementVariables.conceptInput" ng-keyup="searchKey(e=$event)" placeholder="Concept Name or Concept Code" />
                     </label>
                 </span>
 

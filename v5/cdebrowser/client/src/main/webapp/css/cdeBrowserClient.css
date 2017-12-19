@@ -47,9 +47,19 @@ a:hover {
 }
 
 /* Bootstrap Overrides */
-
+*::placeholder {
+    color:#595959;
+}
 .filters label {
     font-weight: normal !important;
+}
+
+.filters .text-muted {
+    color:#595959 !important;
+}
+
+.filters input::placeholder {
+    color:#595959 !important;
 }
 
 /* The initial loading message or error message */
@@ -822,3 +832,27 @@ a:hover {
 }
 
 
+/* skip nav */
+#skip-link {
+    left: 50%;
+    margin-left: -5.25em;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    width: auto;
+    z-index: 1000;
+}
+
+#skip-link a {
+    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+    border-radius: 0 0 2px 2px;
+    color: #ffffff;
+    display: block;
+    font-size: 0.94em;
+    left: -999999px;
+    line-height: 1.7;
+    margin-top: 1px;
+    padding: 2px 10px;
+    position: absolute;
+    text-decoration: none;    
+}

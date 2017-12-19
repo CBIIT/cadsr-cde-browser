@@ -9,9 +9,9 @@
 
                 <div>
                     <label class="publicIdLabel">Version:&nbsp;&nbsp;</label>
-                    <label data-ng-repeat="versionType in searchVersions">
+                    <label data-ng-repeat="versionType in searchVersions" for="searchVersions_{{versionType.id}}">
                         <div class="queryTypePublicRadioButtons">
-                            <input ng-disabled="fs.isSearching"
+                            <input id="searchVersions_{{versionType.id}}" ng-disabled="fs.isSearching"
                                    type="radio"
                                    value="{{versionType.id}}"
                                    data-ng-model="fs.dataElementVariables.publicSearchVersions"/>
@@ -27,7 +27,7 @@
                 <label for="name" class="publicIdLabel">Search Term</label>
                 <input class="basicSearchQuery roundInput publicIdNameInput" id="name" ng-disabled="fs.isSearching || publicIdSearchQuery==''" type="text" data-ng-model="publicIdName" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" />
                 <span class="searchFieldDropDownPublic" ng-show="activeSearchTab==1">
-                    <select ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
+                    <select aria-label="SearchFieldOptions" ng-disabled="filterService.isSearching || publicIdSearchQuery==''" ng-model="fs.dataElementVariables.searchFieldOptions.options" multiple="true" ng-change="setSelected()">
                                 <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
                             </select>
                     <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
@@ -35,10 +35,11 @@
                 </span>
 
                 <div class="queryTypePublicRadioButtons">
-                    <label data-ng-repeat="qType in searchQueryTypes">
+                    <label for="searchQueryTypes_{{qType.id}}" data-ng-repeat="qType in searchQueryTypes">
                         <div class="radioFix">
                             <input  ng-disabled="fs.isSearching || publicIdSearchQuery==''"
                                     name="selectedQueryType1"
+                                    id="searchQueryTypes_{{qType.id}}"
                                     type="radio"
                                     value="{{qType.id}}"
                                     data-ng-model="fs.dataElementVariables.selectedQueryType"/>
