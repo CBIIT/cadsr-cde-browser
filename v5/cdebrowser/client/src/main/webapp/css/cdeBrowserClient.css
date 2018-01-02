@@ -49,6 +49,7 @@ a:hover {
 /* Bootstrap Overrides */
 *::placeholder {
     color:#595959;
+    opacity:1;
 }
 .filters label {
     font-weight: normal !important;
