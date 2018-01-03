@@ -904,6 +904,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.rslt1 = [];
             $scope.rslt2 = [];
             $scope.tableParams.settings({ dataset: response });
+            $scope.statusMessage = undefined; // reset status message //
             if ($scope.searchResults.length > 0) {
 
                 // TODO Quick hack, make status message better when time permits.
@@ -916,7 +917,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     $scope.statusMessage = response[0].longName;
                 }
                 else {
-
                     $scope.setSortOrder();
                     $scope.haveSearchResults = true;
                     $scope.bigSearchResultsMessageClass = false;
