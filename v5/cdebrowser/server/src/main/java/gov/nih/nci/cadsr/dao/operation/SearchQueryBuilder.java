@@ -95,7 +95,8 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
         else
         {
-            csiWhere = " AND acs.cs_csi_idseq = '" + searchCriteria.getCsCsiIdSeq() + "' AND acs.ac_idseq = de.de_idseq";
+            //CDEBRWSER-865 adding a space to the end
+        	csiWhere = " AND acs.cs_csi_idseq = '" + searchCriteria.getCsCsiIdSeq() + "' AND acs.ac_idseq = de.de_idseq ";
         }
 
         if( StringUtils.isBlank( searchCriteria.getProtocol() ) )
@@ -115,7 +116,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         }
         else
         {
-            formWhere = " AND qc.dn_crf_idseq = '" + searchCriteria.getFormIdSeq() + "' AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq";
+            formWhere = " AND qc.dn_crf_idseq = '" + searchCriteria.getFormIdSeq() + "' AND qc.qtl_name = 'QUESTION' AND qc.de_idseq = de.de_idseq ";
         }
 
         if( StringUtils.isBlank( searchCriteria.getPermissibleValue() ) )
@@ -234,7 +235,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
         String excludedContext = searchPreferences.buildContextExclided();
         if( StringUtils.isNotBlank( excludedContext ) )
         {
-            contextExludeWhere = " AND conte.name NOT IN (" + excludedContext + " )";
+            contextExludeWhere = " AND conte.name NOT IN (" + excludedContext + " ) ";
         }
 
         ///////////////////////////////////////////////////////
@@ -341,7 +342,7 @@ public class SearchQueryBuilder extends AbstractSearchQueryBuilder
                 " WHERE " +
 
                 programAreaWhere +
-                " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text'" +
+                " de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' " +
                 versionIndWhere + registrationExcludeWhere + workflowWhere + contextExludeWhere +
                 //" AND de.asl_name != 'RETIRED DELETED' " + //removing this condition from SQL statement. This status is controlled by Search Preferences Server as of release 5.2
                 " AND conte.conte_idseq = de.conte_idseq " +

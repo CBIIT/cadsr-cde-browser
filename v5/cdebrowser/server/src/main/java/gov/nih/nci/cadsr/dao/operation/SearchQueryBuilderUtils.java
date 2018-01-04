@@ -165,7 +165,7 @@ public class SearchQueryBuilderUtils {
 			String strValue = arrvalues[0];
 			if (list.contains(strValue)) {//check allowed values 
 				//CDEBROWSER-703 escape a single quote for SQL
-				resultWhere = " AND " + tableFieldName + " = '" + strValue.replaceAll("'", "''") + "'";
+				resultWhere = " AND " + tableFieldName + " = '" + strValue.replaceAll("'", "''") + "' ";
 			}
 			else {
 				String message = "Received unexpected Status parameter value: " + sourceStr;

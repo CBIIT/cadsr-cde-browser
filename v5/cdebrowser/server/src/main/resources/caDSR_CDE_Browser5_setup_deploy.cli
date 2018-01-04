@@ -48,4 +48,4 @@ deploy --force /local/content/cdebrowser/artifacts/cdebrowserServer.war
 
  
 #/subsystem=datasources/jdbc-driver=mysql:add(driver-module-name=org.mysql,driver-name=mysql,driver-class-name=com.mysql.jdbc.Driver)
-#/subsystem=datasources/data-source=MySQLDS:add(jndi-name=java:jboss/datasources/MySQLDS, driver-name=mysql, connection-url=jdbc:mysql://localhost:3306/as7development,user-name=root,password=admin)
+#/subsystem=datasources/data-source=MySQLDS:add(jndi-name=java:jboss/datasources/MySQLDS, driver-name=mysql, connection-url=jdbc:mysql://localhost:3306/as7development,user-name=placeholder,password=placeholder)

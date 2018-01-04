@@ -968,4 +968,153 @@ public class SearchQueryBuilderTest
             "    WHERE " +
             "        DE1.CONTE_IDSEQ = '99BA9DC8-2095-4E69-E034-080020C9C0E0'" +
             ")";
+    //CDEBROWSER-865
+    @Test
+    public void testSearchQueryWithCsCsiPV() {
+    	SearchCriteria searchCriteria = buildSearchCriteria865PV();
+    	SearchPreferencesServer initialSearch865 = new SearchPreferencesServer();
+    	initialSearch865.initPreferences();
+    	initialSearch865.setExcludeTest(false);
+
+    	String received = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initialSearch865, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
+    	assertEquals(cleanup( received), cleanup(sqlSearchCdeBrowser865PV));
+    }
+    @Test
+    public void testSearchQueryWithCsCsiProp() {
+    	SearchCriteria searchCriteria = buildSearchCriteria865Prop();
+    	SearchPreferencesServer initialSearch865 = new SearchPreferencesServer();
+    	initialSearch865.initPreferences();
+    	initialSearch865.setExcludeTest(false);
+
+    	String received = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initialSearch865, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
+    	assertEquals(cleanup( received), cleanup(sqlSearchCdeBrowser865Prop));
+    }
+    @Test
+    public void testSearchQueryWithCsCsiOC() {
+    	SearchCriteria searchCriteria = buildSearchCriteria865OC();
+    	SearchPreferencesServer initialSearch865 = new SearchPreferencesServer();
+    	initialSearch865.initPreferences();
+    	initialSearch865.setExcludeTest(false);
+
+    	String received = searchQueryBuilder.initSearchQueryBuilder(searchCriteria, initialSearch865, WorkflowStatusEnum.getAsList(), RegistrationStatusEnum.getAsList());
+    	assertEquals(cleanup( received), cleanup(sqlSearchCdeBrowser865OC));
+    }
+    String sqlSearchCdeBrowser865PV = "SELECT DISTINCT de.de_idseq ,de.preferred_name de_preferred_name ,de.long_name ,rd.doc_text ,conte.name ,de.asl_name ,to_char(de.cde_id) de_cdeid ,de.version de_version ,"
+    	+ "meta_config_mgmt.get_usedby(de.de_idseq) de_usedby ,de.vd_idseq ,de.dec_idseq ,de.conte_idseq ,de.preferred_definition ,acr.registration_status ,de.cde_id cdeid "
+    	+ "FROM sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte , sbr.ac_csi_view acs , sbr.ac_registrations_view acr "
+    	+ "WHERE de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' AND de.latest_version_ind = 'Yes' AND nvl(acr.registration_status,'-1') NOT IN ('Retired' ) " 
+    	+ "AND de.asl_name NOT IN ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED') "
+    	+ "AND conte.name NOT IN ('Training' ) AND conte.conte_idseq = de.conte_idseq AND acs.cs_csi_idseq = '5F0D131B-2087-2FA4-E053-246C850AE172' AND acs.ac_idseq = de.de_idseq and de.vd_idseq IN " + 
+    	"( select vd.vd_idseq from sbr.value_domains_view vd , sbr.vd_pvs_view vp, sbr.permissible_values_view pv where vd.vd_idseq = vp.vd_idseq and pv.pv_idseq = vp.pv_idseq and upper (pv.value) like upper ('Brain') ) AND de.de_idseq = acr.ac_idseq (+)";
+    static SearchCriteria buildSearchCriteria865PV()
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "" );
+        searchCriteria.setPublicIdVersion(0);
+        searchCriteria.setSearchMode( "" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "29A8FB18-0AB1-11D6-A42F-0010A4C1E842" );//TEST
+        searchCriteria.setClassification( "" );
+        searchCriteria.setWorkFlowStatus( "ALL Workflow Statuses" );
+        searchCriteria.setRegistrationStatus( "ALL Registration Statuses" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
+        searchCriteria.setCsCsiIdSeq("5F0D131B-2087-2FA4-E053-246C850AE172");
+        searchCriteria.setContextUse(2);
+        searchCriteria.setFilteredinput("ALL Fields");
+        searchCriteria.setPvQueryType(0);
+        searchCriteria.setPermissibleValue("Brain");
+        searchCriteria.preprocessCriteria();
+        return searchCriteria;
+
+    /*CdeBrowser865 request parameters
+	registrationStatus=ALL Registration Statuses
+	&workFlowStatus=ALL Workflow Statuses
+	&permissibleValue=Brain
+	&pvQueryType=0
+	&vdTypeFlag=2
+	&filteredinput=ALL Fields
+	&versionType=0
+	&publicIdVersion=0
+	&contextUse=2
+	&derivedDEFlag=false
+	&context=29A8FB18-0AB1-11D6-A42F-0010A4C1E842
+	&csCsiIdSeq=5F0D131B-2087-2FA4-E053-246C850AE172
+     */
+    }
+    String sqlSearchCdeBrowser865Prop = "SELECT DISTINCT de.de_idseq ,de.preferred_name de_preferred_name ,de.long_name ,"
+    	+ "rd.doc_text ,conte.name ,de.asl_name ,to_char(de.cde_id) de_cdeid ,de.version de_version ,"
+    	+ "meta_config_mgmt.get_usedby(de.de_idseq) de_usedby ,de.vd_idseq ,de.dec_idseq ,de.conte_idseq ,"
+    	+ "de.preferred_definition ,acr.registration_status ,de.cde_id cdeid "
+    	+ "FROM sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte , sbr.ac_csi_view acs , "
+    	+ "sbr.ac_registrations_view acr WHERE de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' "
+    	+ "AND de.latest_version_ind = 'Yes' AND nvl(acr.registration_status,'-1') NOT IN ('Retired' ) AND de.asl_name NOT IN "
+    	+ "('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', "
+    	+ "'RETIRED DELETED') AND conte.name NOT IN ('Training' ) AND conte.conte_idseq = de.conte_idseq "
+    	+ "AND acs.cs_csi_idseq = '5F0D131B-2087-2FA4-E053-246C850AE172' "
+    	+ "AND acs.ac_idseq = de.de_idseq and de.de_idseq IN "
+    	+ "(select de_idseq from sbr.data_elements_view where dec_idseq IN "
+    	+ "( select dec.dec_idseq from sbr.data_element_concepts_view dec, sbrext.properties_view_ext prop "
+    	+ "where prop.prop_idseq = dec.prop_idseq and upper(prop.long_name) like upper('balance test')) ) "
+    	+ "AND de.de_idseq = acr.ac_idseq (+)";
+    static SearchCriteria buildSearchCriteria865Prop()
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "" );
+        searchCriteria.setPublicIdVersion(0);
+        searchCriteria.setSearchMode( "" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "29A8FB18-0AB1-11D6-A42F-0010A4C1E842" );//TEST
+        searchCriteria.setClassification( "" );
+        searchCriteria.setWorkFlowStatus( "ALL Workflow Statuses" );
+        searchCriteria.setRegistrationStatus( "ALL Registration Statuses" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
+        searchCriteria.setCsCsiIdSeq("5F0D131B-2087-2FA4-E053-246C850AE172");
+        searchCriteria.setContextUse(2);
+        searchCriteria.setFilteredinput("ALL Fields");
+        searchCriteria.setProperty("balance test");
+        searchCriteria.preprocessCriteria();
+        return searchCriteria;
+    }
+    String sqlSearchCdeBrowser865OC = "SELECT DISTINCT de.de_idseq ,de.preferred_name de_preferred_name ,de.long_name ,rd.doc_text ,"
+    	+ "conte.name ,de.asl_name ,to_char(de.cde_id) de_cdeid ,de.version de_version ,meta_config_mgmt.get_usedby(de.de_idseq) de_usedby ,"
+    	+ "de.vd_idseq ,de.dec_idseq ,de.conte_idseq ,de.preferred_definition ,acr.registration_status ,de.cde_id cdeid "
+    	+ "FROM sbr.data_elements_view de , sbr.reference_documents_view rd , sbr.contexts_view conte , sbr.ac_csi_view acs , sbr.ac_registrations_view acr "
+    	+ "WHERE de.de_idseq = rd.ac_idseq (+) AND rd.dctl_name (+) = 'Preferred Question Text' AND de.latest_version_ind = 'Yes' "
+    	+ "AND nvl(acr.registration_status,'-1') NOT IN ('Retired' ) AND de.asl_name "
+    	+ "NOT IN ('CMTE APPROVED', 'CMTE SUBMTD', 'CMTE SUBMTD USED', 'RETIRED ARCHIVED', 'RETIRED PHASED OUT', 'RETIRED WITHDRAWN', 'RETIRED DELETED') "
+    	+ "AND conte.name NOT IN ('Training' ) AND conte.conte_idseq = de.conte_idseq AND acs.cs_csi_idseq = '5F0D131B-2087-2FA4-E053-246C850AE172' "
+    	+ "AND acs.ac_idseq = de.de_idseq and de.de_idseq IN (select de_idseq from sbr.data_elements_view where dec_idseq IN "
+    	+ "( select dec.dec_idseq from sbr.data_element_concepts_view dec, sbrext.object_classes_view_ext oc where oc.oc_idseq = dec.oc_idseq and "
+    	+ "upper(oc.long_name) like upper('achievement tests')) ) AND de.de_idseq = acr.ac_idseq (+)";
+    static SearchCriteria buildSearchCriteria865OC()
+    {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setName( "" );
+        searchCriteria.setPublicId( "" );
+        searchCriteria.setPublicIdVersion(0);
+        searchCriteria.setSearchMode( "" );
+        searchCriteria.setProgramArea( "" );
+        searchCriteria.setContext( "29A8FB18-0AB1-11D6-A42F-0010A4C1E842" );//TEST
+        searchCriteria.setClassification( "" );
+        searchCriteria.setWorkFlowStatus( "ALL Workflow Statuses" );
+        searchCriteria.setRegistrationStatus( "ALL Registration Statuses" );
+        searchCriteria.setConceptName( "" );
+        searchCriteria.setConceptCode( "" );
+        searchCriteria.setVersionType(0);
+        searchCriteria.setDerivedDEFlag("false");
+        searchCriteria.setCsCsiIdSeq("5F0D131B-2087-2FA4-E053-246C850AE172");
+        searchCriteria.setContextUse(2);
+        searchCriteria.setFilteredinput("ALL Fields");
+        searchCriteria.setObjectClass("achievement tests");
+        searchCriteria.preprocessCriteria();
+        return searchCriteria;
+    }
 }
