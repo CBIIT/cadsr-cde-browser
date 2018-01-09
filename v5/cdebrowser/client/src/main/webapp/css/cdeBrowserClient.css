@@ -50,6 +50,7 @@ a:hover {
 *::placeholder {
     color:#595959;
     opacity:1;
+    font-style:italic;
 }
 .filters label {
     font-weight: normal !important;
