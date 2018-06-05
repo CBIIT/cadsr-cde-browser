@@ -5,7 +5,7 @@
             <label class="basicSearchName" for="name">Search Term</label>
             <input id="name" ng-disabled="fs.isSearching" class="basicSearchQuery roundInput" type="text" data-ng-model="fs.dataElementVariables.basicSearchQuery" ng-keyup="searchKey(e=$event)" placeholder="Names and Definitions" uib-typeahead="result for result in typeAhead('full',$viewValue, 'name')" typeahead-on-select="changeQueryType($item, 'selectedQueryType')" typeahead-min-length="3" typeahead-focus-first="false" typeahead-loading="loadingLocations" typeahead-no-results="noResults"  />          
             <span class="searchFieldDropDown" aria-label="SearchFieldOptions" ng-show="activeSearchTab==0" ng-disabled="true">
-                <select ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" id="searchOptions" multiple="true" ng-change="setSelectedField()">
+                <select aria-label="SearchFieldOptions" ng-disabled="fs.isSearching" ng-model="fs.dataElementVariables.searchFieldOptions.options" id="searchOptions" multiple="true" ng-change="setSelectedField()">
                     <option ng-repeat="o in options"" value="{{o}}">{{o}}</option>
                 </select>
                 <div class="searchFieldTip"><strong>Tip</strong>: Use Shift or Ctrl to select multiple fields.
