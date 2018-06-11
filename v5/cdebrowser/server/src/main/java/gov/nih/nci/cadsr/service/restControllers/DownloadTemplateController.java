@@ -74,7 +74,7 @@ public class DownloadTemplateController {
 				ReferenceDocBlobModel referenceDocBlobModel = referenceDocBlobDAO.retrieveReferenceDocBlobByRdIdseq(rdIdseq);
 				if (referenceDocBlobModel != null) {
 					responseHeaders.set("Content-Type", referenceDocBlobModel.getMimeType());
-					responseHeaders.set("Content-Disposition", "attachment; filename=" + referenceDocBlobModel.getDocName());
+					responseHeaders.set("Content-Disposition", "attachment; filename=\"" + referenceDocBlobModel.getDocName() + "\"");
 					logger.debug("Sending Template stream for rdIdseq: " + rdIdseq);
 					InputStream docStream = referenceDocBlobModel.getDocContent();
 					InputStreamResource result = new InputStreamResource(docStream);
