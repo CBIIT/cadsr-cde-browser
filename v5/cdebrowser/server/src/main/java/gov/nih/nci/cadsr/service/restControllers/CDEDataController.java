@@ -922,8 +922,9 @@ public class CDEDataController
         dataElementConceptDetails.setConceptualDomainRegStatus( dataElementModel.getDec().getCdRegistrationStatus());//CDEBROWSER-816 add DEC Reg Status
 
         //Conceptual Domain Version
-
-        dataElementConceptDetails.setFormattedConceptualDomainVersion( dataElementModel.getDec().getCdVersion().toString() );
+        String strVersion = dataElementModel.getDec().getCdVersion().toString();
+        dataElementConceptDetails.setConceptualDomainVersion(strVersion);
+        dataElementConceptDetails.setFormattedConceptualDomainVersion(strVersion);
         dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
         return dataElementConceptDetails;
     }

@@ -1450,8 +1450,9 @@ private String getProperty (String propertyName, String property, List cdeObjLis
         dataElementConceptDetails.setConceptualDomainShortName( dataElementModel.getDec().getCdPrefName() );
 
         //Conceptual Domain Version
-
-        dataElementConceptDetails.setFormattedConceptualDomainVersion( dataElementModel.getDec().getCdVersion().toString() );
+        String strVersion = dataElementModel.getDec().getCdVersion().toString();
+        dataElementConceptDetails.setConceptualDomainVersion(strVersion);
+        dataElementConceptDetails.setFormattedConceptualDomainVersion(strVersion);
         dataElementConceptDetails.setOrigin( dataElementModel.getDec().getOrigin() );
         return dataElementConceptDetails;
     }
