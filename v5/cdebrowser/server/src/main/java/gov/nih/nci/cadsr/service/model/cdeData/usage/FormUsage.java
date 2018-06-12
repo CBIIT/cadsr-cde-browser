@@ -19,7 +19,12 @@ public class FormUsage
     private String url;
     private ToolOptionsModel formBuilderOptionsModel;
 
-    public FormUsage( UsageModel usageModel, ToolOptionsModel toolOptionsModel )
+    
+    public FormUsage() {
+		super();
+	}
+
+	public FormUsage( UsageModel usageModel, ToolOptionsModel toolOptionsModel )
     {
         this.formBuilderOptionsModel = toolOptionsModel;
         this.protocolNumber = usageModel.getProtocolNumber();
