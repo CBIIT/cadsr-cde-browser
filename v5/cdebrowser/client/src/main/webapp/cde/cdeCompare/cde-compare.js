@@ -78,7 +78,7 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
             $scope.sortPermissibleValuesByValueThenConceptCode();
 
             for (var i = 0; i < len; i++) {
-                $scope.cdeDetails[i].id = compareService.checkedItemsForCompare[i];
+                $scope.cdeDetails[i].id = $scope.cdeDetails[i].dataElement.dataElementDetails.id;
             }
 
             ////////////////////////////////////////////////////
