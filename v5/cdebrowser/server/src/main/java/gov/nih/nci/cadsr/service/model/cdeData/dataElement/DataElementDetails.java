@@ -19,7 +19,7 @@ public class DataElementDetails
     private String origin;
     private String registrationStatus;
     private String directLink;
-
+    private String id; //CDEBROWSER-868 CDE IDSEQ is required to resolve this error
 
     public int getPublicId()
     {
@@ -162,4 +162,32 @@ public class DataElementDetails
     {
         this.directLink = directLink;
     }
+
+	/**
+	 * @return the id which is is CDE IDSEQ
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id is CDE IDSEQ
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "DataElementDetails [publicId=" + publicId + ", version=" + version + ", formattedVersion="
+				+ formattedVersion + ", longName=" + longName + ", shortName=" + shortName + ", preferredQuestionText="
+				+ preferredQuestionText + ", definition=" + definition + ", valueDomain=" + valueDomain
+				+ ", dataElementConcept=" + dataElementConcept + ", context=" + context + ", workflowStatus="
+				+ workflowStatus + ", origin=" + origin + ", registrationStatus=" + registrationStatus + ", directLink="
+				+ directLink + ", id=" + id + "]";
+	}
+
 }

@@ -146,7 +146,7 @@ public class CDEDataController
     private UsageLog usageLog;
 
 
-    @RequestMapping( value = "/CDEData" )
+    @RequestMapping( value = "/CDEData", produces = "application/json")
     @ResponseBody
     public CdeDetails retrieveDataElementDetails( @RequestParam( "deIdseq" ) String deIdseq ) throws RestControllerException
     {
@@ -177,7 +177,7 @@ public class CDEDataController
 			throw new RestControllerException("Unexpected parameter deIdseq value provided: " + deIdseq);
 		}
 	}
-	@RequestMapping( value = "/CDELink" )
+	@RequestMapping( value = "/CDELink", produces = "application/json" )
     @ResponseBody
     public CdeDetails retrieveDataElementDetailsByLink( @RequestParam( "publicId" ) String publicId, 
     		@RequestParam( "version" ) String versionNumber )
@@ -216,7 +216,7 @@ public class CDEDataController
      * @param deIdseq Comma separated list of deIdseqs
      * @return Array of CdeDetails, to be used by the compare CDE feature.
      */
-    @RequestMapping( value = "/multiCDEData" )
+    @RequestMapping( value = "/multiCDEData", produces = "application/json" )
     @ResponseBody
     public CdeDetails[] multiCDEDataController( @RequestParam( "deIdseq" ) String deIdseq )
     {
@@ -611,6 +611,7 @@ public class CDEDataController
             dataElementDetails.setOrigin( dataElementModel.getOrigin() );
             dataElementDetails.setRegistrationStatus( dataElementModel.getRegistrationStatus() );
             dataElementDetails.setDirectLink( "STILL NEED TO Create rest service and Link" );
+            dataElementDetails.setId(dataElementModel.getDeIdseq());//CDEBROWSER-868
         }
         return dataElement;
     }
