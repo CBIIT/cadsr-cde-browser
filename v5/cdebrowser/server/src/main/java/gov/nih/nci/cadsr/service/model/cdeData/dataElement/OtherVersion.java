@@ -20,7 +20,11 @@ public class OtherVersion
     private List<CsCsi> csCsis;
 
 
-    public OtherVersion( DEOtherVersionsModel deOtherVersionsModel )
+    public OtherVersion() {
+		super();
+	}
+
+	public OtherVersion( DEOtherVersionsModel deOtherVersionsModel )
     {
 
         this.version = deOtherVersionsModel.getVersion();
