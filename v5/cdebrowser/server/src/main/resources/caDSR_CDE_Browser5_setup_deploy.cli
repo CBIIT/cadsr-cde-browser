@@ -15,6 +15,12 @@ if (outcome != success) of /subsystem=datasources/jdbc-driver=oracle:read-resour
 end-if
 
 # is the db connection in standalone.xml?
+# if yes, remove
+if (outcome == success) of /subsystem=datasources/data-source=CDEBrowserDS:read-resource
+	data-source remove --name=CDEBrowserDS
+end-if
+
+# is the db connection in standalone.xml?
 # if not, add
 if (outcome != success) of /subsystem=datasources/data-source=CDEBrowserDS:read-resource
 data-source add \
