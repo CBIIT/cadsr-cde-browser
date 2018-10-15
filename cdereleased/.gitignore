@@ -1,0 +1,14 @@
+/target/
+/repo/
+/log/
+*application-*.properties
+project.properties
+.DS_Store
+*.DS_Store
+.settings
+downloanv*.xml
+*.launch
+readme-dev.txt
+??_?_20??
+??_??_20??
+*.zip
