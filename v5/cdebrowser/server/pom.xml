@@ -8,10 +8,14 @@
     <name>cdebrowser server</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.1.2.RELEASE</spring.version>
+        <spring.version>4.3.20.RELEASE</spring.version>
+        <!--  spring.version>4.2.1.RELEASE</spring.version -->
         <poi.version>3.12</poi.version>
         <mockito.version>1.10.19</mockito.version>
         <objectcart.version>1.0.2</objectcart.version>
+        <classmate.version>1.4.0</classmate.version>
+        <jackson.version>2.9.7</jackson.version>
+        <junit.version>4.12</junit.version>
         <!--<connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>-->
     </properties>
     <parent>
@@ -23,7 +27,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -173,6 +177,22 @@
             <groupId>nih.nci.cadsr</groupId>
             <artifactId>sdk-client-framework</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml</groupId>
+            <artifactId>classmate</artifactId>
+            <version>${classmate.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
         	<groupId>org.mockito</groupId>

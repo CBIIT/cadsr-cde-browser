@@ -1,6 +1,6 @@
 package gov.nih.nci.cadsr.service.restControllers;
 
-import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.nio.charset.Charset;
 import java.sql.SQLException;
@@ -14,21 +14,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import gov.nih.nci.cadsr.dao.UserManagerDAO;
 import gov.nih.nci.cadsr.error.ControllerErrorHandler;
 import gov.nih.nci.cadsr.service.AuthenticationService;
 import gov.nih.nci.cadsr.service.AuthenticationServiceImpl;
 
+@TestExecutionListeners(listeners = {DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration
@@ -37,7 +39,7 @@ public class CdeBrowserAuthenticationControllerTest
 
 	@Configuration
 	@EnableWebMvc
-	static class AuthenticationServiceTestContextConfiguration
+	static class AuthenticationServiceTestContextConfiguration extends WebMvcConfigurationSupport 
 	{
 		@Bean
 		public AuthenticationService authenticationService() {
@@ -68,7 +70,7 @@ public class CdeBrowserAuthenticationControllerTest
 	private WebApplicationContext wac;
 	
 	@Autowired
-	private UserManagerDAO userManagerDAO;
+	private UserManagerDAO userManagerDAO = Mockito.mock(UserManagerDAO.class);
 	
 	private String username = "PURNIMAC";
 	private String password = "purnimac";

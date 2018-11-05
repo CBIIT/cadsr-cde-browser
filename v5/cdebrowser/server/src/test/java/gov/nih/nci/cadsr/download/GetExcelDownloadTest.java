@@ -25,13 +25,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import gov.nih.nci.cadsr.download.GetExcelDownload.ColumnInfo;
-import gov.nih.nci.cadsr.service.ClientException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@TestExecutionListeners(listeners = {DependencyInjectionTestExecutionListener.class})
 @ContextConfiguration("classpath:/test-application-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
 public class GetExcelDownloadTest {
 
 	@Test

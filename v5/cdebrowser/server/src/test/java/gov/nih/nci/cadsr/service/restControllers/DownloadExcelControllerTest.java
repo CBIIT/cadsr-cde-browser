@@ -30,7 +30,9 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.mock.web.MockHttpServletRequest;
 //import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import gov.nih.nci.cadsr.download.DownloadUtilsTest;
@@ -38,9 +40,10 @@ import gov.nih.nci.cadsr.download.GetExcelDownloadInterface;
 import gov.nih.nci.cadsr.download.GetExcelDownloadTestImpl;
 import gov.nih.nci.cadsr.service.ServerException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-application-context.xml")
 @WebAppConfiguration
+@ContextConfiguration("classpath:test-application-context.xml")
+@TestExecutionListeners( {DependencyInjectionTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class DownloadExcelControllerTest {
 //	@Autowired MockHttpServletRequest request;
 //	

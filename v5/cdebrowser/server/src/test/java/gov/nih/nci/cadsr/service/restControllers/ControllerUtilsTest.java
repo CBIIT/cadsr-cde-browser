@@ -16,7 +16,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.dao.DataElementDerivationDAO;
@@ -26,8 +28,9 @@ import gov.nih.nci.cadsr.model.SearchPreferencesServer;
  * @author asafievan
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-application-context.xml")
+@TestExecutionListeners( {DependencyInjectionTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ControllerUtilsTest {
 	SearchPreferencesServer testSearchPreferences;
 	@Autowired

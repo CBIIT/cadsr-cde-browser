@@ -28,9 +28,11 @@ import gov.nih.nci.cadsr.dao.TypeaheadSearchDAO;
 import gov.nih.nci.cadsr.model.SearchPreferencesServer;
 import gov.nih.nci.cadsr.service.ServiceTestUtils;
 import gov.nih.nci.cadsr.service.model.search.SearchCriteria;
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-application-context.xml")
+
+
 @WebAppConfiguration
+@ContextConfiguration("classpath:test-application-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
 public class TypeaheadSearchControllerTest {
 	TypeaheadSearchController typeaheadSearchController;
 	@Mock
