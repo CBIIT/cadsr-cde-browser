@@ -31,7 +31,8 @@ data-source add \
     --user-name=${CADSR_DS_USER} \
     --password=${CADSR_DS_PSWD} \
     --use-ccm=true \
-    --max-pool-size=100 \
+    --max-pool-size=200 \
+    --min-pool-size=8 \
     --blocking-timeout-wait-millis=5000 
 #data-source enable --name=CDEBrowserDS
 end-if
