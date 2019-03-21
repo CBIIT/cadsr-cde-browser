@@ -21,14 +21,21 @@ ENV PATH=/opt/apache-maven/bin:$PATH \
 RUN sudo groupadd -r wildfly && sudo useradd -r -g wildfly -d /opt/wildfly -s /sbin/nologin wildfly \ 
     && wget https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz -P /tmp \
     && tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt/ \
-    && ln -s /opt/wildfly-$WILDFLY_VERSION /opt/wildfly \
-    && chown -RH wildfly: /opt/wildfly
+    && ln -s /opt/wildfly-$WILDFLY_VERSION /opt/wildfly
 
 COPY run.sh /usr/bin/run.sh
-RUN chown -RH wildfly: /usr/bin/run.sh && chmod 700 /usr/bin/run.sh \
-    && mkdir /usr/src/cdebrowser && chown -RH wildfly: /usr/src/cdebrowser
-USER wildfly
-WORKDIR /usr/src/cdebrowser
+COPY resources/standalone.xml /opt/wildfly/standalone/configuration
 
+RUN mkdir -p /local/content/cdebrowser/modules
+COPY resources/ojdbc7-12.1.0.2.0.jar /local/content/cdebrowser/modules
+RUN chown -RH wildfly /local/content/cdebrowser/modules
+
+RUN chown -RH wildfly: /usr/bin/run.sh && chmod 700 /usr/bin/run.sh \
+    && mkdir /usr/src/cdebrowser && chown -RH wildfly: /usr/src/cdebrowser \
+    && chown -RH wildfly: /opt/wildfly
+USER wildfly
+
+WORKDIR /usr/src/cdebrowser
+RUN git clone https://github.com/CBIIT/cadsr-cde-browser 
 EXPOSE 8080
 ENTRYPOINT /usr/bin/run.sh  

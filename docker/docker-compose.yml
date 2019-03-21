@@ -1,7 +1,7 @@
 version: '2'
 services:
   server:
-    container_name: cadsr-cde-browser-server
+    container_name: cadsr-cde-browser
     image: cadsr-cde-browser
     build: ./
     ports:
