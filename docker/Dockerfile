@@ -1,41 +1,46 @@
 from cbiit/centos7_base
+# update packages and install packages for application #
 RUN yum -y update && yum -y install git java-1.8.0-openjdk-devel sudo util-linux wget epel-release \ 
     && yum clean all
 
+# set env variables
+ENV PATH=/opt/apache-maven/bin:$PATH \
+    JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
+    WILDFLY_VERSION=8.2.1.Final
+    
+# change to /tmp directory for code downloads #
 WORKDIR /tmp
-RUN wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.11/bin/apache-tomcat-9.0.11.tar.gz \
-    && mkdir apache-tomcat && tar xvfz apache-tomcat-9.0.11.tar.gz -C ./apache-tomcat --strip-components 1 \
-    && cd apache-tomcat/webapps && rm -rf examples docs host-manager manager ROOT/*  && cd ../.. \
-    && mv apache-tomcat /usr/local/apache-tomcat
-
 RUN wget https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz \
     && tar xvfz apache-maven-3.5.4-bin.tar.gz \
     && mv apache-maven-3.5.4 /opt \
     && ln -s /opt/apache-maven-3.5.4 /opt/apache-maven
-
-
-ENV PATH=/opt/apache-maven/bin:$PATH \
-    JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
-    WILDFLY_VERSION=8.2.1.Final
-
 RUN sudo groupadd -r wildfly && sudo useradd -r -g wildfly -d /opt/wildfly -s /sbin/nologin wildfly \ 
     && wget https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz -P /tmp \
     && tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt/ \
-    && ln -s /opt/wildfly-$WILDFLY_VERSION /opt/wildfly
-
-COPY run.sh /usr/bin/run.sh
-COPY resources/standalone.xml /opt/wildfly/standalone/configuration
-
-RUN mkdir -p /local/content/cdebrowser/modules
-COPY resources/ojdbc7-12.1.0.2.0.jar /local/content/cdebrowser/modules
-RUN chown -RH wildfly /local/content/cdebrowser/modules
-
-RUN chown -RH wildfly: /usr/bin/run.sh && chmod 700 /usr/bin/run.sh \
-    && mkdir /usr/src/cdebrowser && chown -RH wildfly: /usr/src/cdebrowser \
+    && ln -s /opt/wildfly-$WILDFLY_VERSION /opt/wildfly \ 
     && chown -RH wildfly: /opt/wildfly
+
+# copy entrypoint to /usr/bin and chown to wildfly #
+COPY run.sh /usr/bin/run.sh
+RUN chown wildfly /usr/bin/run.sh && chmod 700 /usr/bin/run.sh
+
+# create local content directories, change owner to wildfly #
+RUN mkdir -p /local/content/cdebrowser/modules /local/content/cdebrowser/artifacts \
+    && chown -RH wildfly /local/content/cdebrowser
+
+# make directory for pulling code from github and change owner to wildfly #
+RUN mkdir /usr/src/cdebrowser && chown -RH wildfly: /usr/src/cdebrowser
+
+# change user to wildfly #
 USER wildfly
 
+# replace jboss port 9990 with 19990 #
+RUN sed -i 's/9990/19990/g' /opt/wildfly/standalone/configuration/standalone.xml    
+
+# change to source code workdir #
 WORKDIR /usr/src/cdebrowser
-RUN git clone https://github.com/CBIIT/cadsr-cde-browser 
+RUN git clone https://github.com/CBIIT/cadsr-cde-browser
+WORKDIR /usr/src/cdebrowser/cadsr-cde-browser
+
 EXPOSE 8080
 ENTRYPOINT /usr/bin/run.sh  
