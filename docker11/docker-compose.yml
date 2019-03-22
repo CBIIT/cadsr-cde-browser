@@ -1,0 +1,16 @@
+version: '2'
+services:
+  server:
+    container_name: cadsr-cde-browser
+    image: cadsr-cde-browser
+    build: ./
+    ports:
+     - "8080:8080"
+    environment:
+      CADSR_DS_HOST: $CADSR_DS_HOST
+      CADSR_DS_PORT: $CADSR_DS_PORT
+      CADSR_DS_USER: $CADSR_DS_USER
+      CADSR_DS_PSWD: $CADSR_DS_PSWD
+      CADSR_DS_TNS.ENTRY: $CADSR_DS_TNS_ENTRY
+      tag: $tag
+      tier: $tier
