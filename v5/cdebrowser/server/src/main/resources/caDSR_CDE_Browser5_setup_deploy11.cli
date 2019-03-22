@@ -1,0 +1,59 @@
+#caDSR CDE Browser v5 Wildfly setup scripts
+# Profile ${build-profile}
+
+connect localhost:19990
+
+# configure datasource
+# is the driver in standalone.xml?
+# if not, add
+if (outcome != success) of /subsystem=datasources/jdbc-driver=oracle:read-resource 
+    /subsystem=datasources/jdbc-driver=oracle:add( \
+    driver-name=oracle, \
+    driver-module-name=com.oracle.jdbc7, \
+    driver-class-name=oracle.jdbc.driver.OracleDriver \
+    driver-xa-datasource-class-name=oracle.jdbc.xa.client.OracleXADataSource \
+	) {allow-resource-service-restart=true}
+end-if
+
+# is the db connection in standalone.xml?
+# if yes, remove
+if (outcome == success) of /subsystem=datasources/data-source=CDEBrowserDS:read-resource
+	data-source remove --name=CDEBrowserDS
+end-if
+
+# is the db connection in standalone.xml?
+# if not, add
+if (outcome != success) of /subsystem=datasources/data-source=CDEBrowserDS:read-resource
+data-source add \
+    --name=CDEBrowserDS \
+    --driver-name=oracle \
+    --connection-url=${connection-url} \
+    --jndi-name=java:jboss/datasources/CDEBrowserDS \
+    --user-name=${CADSR_DS_USER} \
+    --password=${CADSR_DS_PSWD} \
+    --use-ccm=true \
+    --max-pool-size=200 \
+    --min-pool-size=8 \
+    --blocking-timeout-wait-millis=5000 
+#data-source enable --name=CDEBrowserDS
+end-if
+
+# configure ports
+# run as ssl
+# not part of this deployment
+
+# deploy war files
+deploy --force /local/content/cdebrowser/artifacts/cdebrowserClient.war
+deploy --force /local/content/cdebrowser/artifacts/cdebrowserServer.war
+
+
+
+
+# References: (http://www.mastertheboss.com/jboss-server/jboss-script/installing-a-jboss-as-7-module-using-the-cli)
+
+#module add --name=[module package. ex: org.mysql] --resources=[source path to jar] --dependencies=[comma separated list of dependencies]
+#module add --name=com.oracle --resources=/local/content/cdebrowser/modules/ojdbc7-12.1.0.2.0.jar --dependencies=javax.api,javax.transaction.api
+
+ 
+#/subsystem=datasources/jdbc-driver=mysql:add(driver-module-name=org.mysql,driver-name=mysql,driver-class-name=com.mysql.jdbc.Driver)
+#/subsystem=datasources/data-source=MySQLDS:add(jndi-name=java:jboss/datasources/MySQLDS, driver-name=mysql, connection-url=jdbc:mysql://localhost:3306/as7development,user-name=placeholder,password=placeholder)

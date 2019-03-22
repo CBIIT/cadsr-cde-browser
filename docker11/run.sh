@@ -20,7 +20,7 @@ mvn -f v5/cdebrowser/server/pom11.xml -DCADSR_DS_USER=${CADSR_DS_USER} -DCADSR_D
 cp v5/cdebrowser/client/target/cdebrowserClient.war \
    v5/cdebrowser/server/target/cdebrowserServer.war \
    v5/cdebrowser/server/target/classes/caDSR_CDE_Browser5_modules.cli \
-   v5/cdebrowser/server/target/classes/caDSR_CDE_Browser5_setup_deploy.cli /local/content/cdebrowser/artifacts
+   v5/cdebrowser/server/target/classes/caDSR_CDE_Browser5_setup_deploy11.cli /local/content/cdebrowser/artifacts
 cp v5/cdebrowser/server/target/cdebrowserServer-v5-Dependencies/ojdbc7-12.1.0.2.0.jar /local/content/cdebrowser/modules
 
 echo "=> starting wildfly in background"
@@ -39,7 +39,7 @@ echo "=> Waiting for the server to reload"
 wait_for_server
 
 echo "=> deploying"
-/opt/wildfly/bin/jboss-cli.sh --file=/local/content/cdebrowser/artifacts/caDSR_CDE_Browser5_setup_deploy.cli
+/opt/wildfly/bin/jboss-cli.sh --file=/local/content/cdebrowser/artifacts/caDSR_CDE_Browser5_setup_deploy11.cli
 
 echo "=> shutting wildfly down"
 /opt/wildfly/bin/jboss-cli.sh --connect controller=localhost:19990 command=:shutdown
