@@ -14,3 +14,5 @@ services:
       CADSR_DS_TNS.ENTRY: $CADSR_DS_TNS_ENTRY
       tag: $tag
       tier: $tier
+      JBOSS_MODULES_SYSTEM_PKGS: $JBOSS_MODULES_SYSTEM_PKGS
+      JAVA_OPTS: $JAVA_OPTS
