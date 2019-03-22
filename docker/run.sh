@@ -1,7 +1,9 @@
 #~/bin/sh
 echo "we are in the /usr/src/cdebrowser/cadsr-cde-browser directory"
 git pull
-git checkout tags/$tag
+if [ $tag != 'origin/master'  ] && [ $tag != 'master' ]; then
+  git checkout tags/$tag
+fi
 
 # Function to check if wildfly is up #
 function wait_for_server() {
