@@ -25,7 +25,7 @@ COPY run.sh /usr/bin/run.sh
 RUN chown wildfly /usr/bin/run.sh && chmod 700 /usr/bin/run.sh
 
 # create local content directories, change owner to wildfly #
-RUN mkdir -p /local/content/cdebrowser/modules /local/content/cdebrowser/artifacts \
+RUN mkdir -p /local/content/cdebrowser/modules /local/content/cdebrowser/artifacts /local/content/cdebrowser/output \
     && chown -RH wildfly /local/content/cdebrowser
 
 # make directory for pulling code from github and change owner to wildfly #
