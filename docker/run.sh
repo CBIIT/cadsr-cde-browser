@@ -12,7 +12,7 @@ function wait_for_server() {
 
 echo "=> build application and copy artifacts to /local/content/cdebrowser"
 
-mvn -f v5/cdebrowser/pom.xml -DCADSR_DS_USER=${CADSR_DS_USER} -DCADSR_DS_PSWD=${CADSR_DS_PSWD} -P AHP -s v5/cdebrowser/settings.xml clean package
+mvn -f v5/cdebrowser/pom.xml -DCADSR_DS_USER=${CADSR_DS_USER} -DCADSR_DS_PSWD=${CADSR_DS_PSWD} -Dtag=${tag} -Dtier=${tier} -P AHP -s v5/cdebrowser/settings.xml clean package
 cp v5/cdebrowser/client/target/cdebrowserClient.war \
    v5/cdebrowser/server/target/cdebrowserServer.war \
    v5/cdebrowser/server/target/classes/caDSR_CDE_Browser5_modules.cli \

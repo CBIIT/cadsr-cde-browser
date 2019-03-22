@@ -13,3 +13,4 @@ services:
       CADSR_DS_PSWD: $CADSR_DS_PSWD
       CADSR_DS_TNS.ENTRY: $CADSR_DS_TNS_ENTRY
       tag: $tag
+      tier: $tier
