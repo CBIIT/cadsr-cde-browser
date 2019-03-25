@@ -25,7 +25,7 @@ L-->
 		<constructor-arg>
 			<map>
 				<entry key="APPLICATION_SERVICE_BEAN" value="objectCartApplicationService"/>
-				<entry key="AUTHENTICATION_SERVICE_BEAN" value-ref="objectCartAuthenticationProvider"/>
+				<!-- entry key="AUTHENTICATION_SERVICE_BEAN" value-ref="objectCartAuthenticationProvider"/ -->
 				<entry key="APPLICATION_SERVICE_URL"  value="http://cbvapp-d1008.nci.nih.gov:19080/objectCart"/>
 				<entry key="APPLICATION_SERVICE_CONFIG"  value-ref="objectCartApplicationServiceConfig"/>
 			</map>
