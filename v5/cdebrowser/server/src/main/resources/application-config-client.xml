@@ -22,10 +22,10 @@ L-->
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- Import the files for each remote service -->
-	<import resource="CADSR_application-config-client.xml"/>
+	<!-- import resource="CADSR_application-config-client.xml"/ -->
 	<import resource="OC_application-config-client.xml"/>
 	
 	<!-- Make an entry for ServiceInfo for each remote service. The default service bean must be called "ServiceInfo" -->
-	<alias alias="ServiceInfo" name="CaDsrServiceInfo"/>
+	<alias alias="ServiceInfo" name="objectCartServiceInfo"/>
 	
 </beans>
