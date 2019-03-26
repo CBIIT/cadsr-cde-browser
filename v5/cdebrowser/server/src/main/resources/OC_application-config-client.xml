@@ -52,7 +52,7 @@ L-->
 		<property name="interfaces" value="gov.nih.nci.objectCart.applicationService.ObjectCartService"/>
 	</bean>	
 	
-	<bean id="objectCartAuthenticationProvider" class="org.acegisecurity.providers.rcp.RemoteAuthenticationProvider">
+	<bean id="objectCartAuthenticationProvider" class="org.acegisecurity.providers.rcp.RemoteAuthenticationProvider" lazy-init="true">
 		<property name="remoteAuthenticationManager">
 			<bean class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 			    <property name="serviceUrl" value="http://cbvapp-d1008.nci.nih.gov:19080/objectCart/http/remoteAuthenticationManager"/>
