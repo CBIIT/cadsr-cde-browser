@@ -15,7 +15,7 @@ function wait_for_server() {
 echo "=> build application and copy artifacts to /local/content/cdebrowser"
 
 mvn -f v5/cdebrowser/client/pom.xml -DCADSR_DS_USER=${CADSR_DS_USER} -DCADSR_DS_PSWD=${CADSR_DS_PSWD} -Dtag=${tag} -Dtier=${tier} -P AHP -s v5/cdebrowser/settings.xml clean package
-mvn -f v5/cdebrowser/server/pom11.xml -DCADSR_DS_USER=${CADSR_DS_USER} -DCADSR_DS_PSWD=${CADSR_DS_PSWD} -Dtag=${tag} -Dtier=${tier} -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl -P AHP -s v5/cdebrowser/settings.xml clean package
+mvn -f v5/cdebrowser/server/pom11.xml -DCADSR_DS_USER=${CADSR_DS_USER} -DCADSR_DS_PSWD=${CADSR_DS_PSWD} -Dtag=${tag} -Dtier=${tier} -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl -Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl -Djavax.xml.transform.TransformerFactory=com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl -P AHP -s v5/cdebrowser/settings.xml clean package
 
 cp v5/cdebrowser/client/target/cdebrowserClient.war \
    v5/cdebrowser/server/target/cdebrowserServer.war \
