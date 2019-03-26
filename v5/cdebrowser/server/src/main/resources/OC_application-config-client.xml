@@ -41,7 +41,7 @@ L-->
 	<bean id="objectCartApplicationService" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="target">
 			<bean class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-				<property name="serviceUrl" value="http://cbvapp-d1008.nci.nih.gov:19080/objectCart/http/applicationService"/>
+				<property name="serviceUrl" value="http://cadsrapi-dev.nci.nih.gov/cadsrapi40/http/applicationService"/>
 				<property name="serviceInterface" value="gov.nih.nci.objectCart.applicationService.ObjectCartService"/>
 				<property name="httpInvokerRequestExecutor">
 					<bean class="org.acegisecurity.context.httpinvoker.AuthenticationSimpleHttpInvokerRequestExecutor"/>
