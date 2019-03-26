@@ -1,8 +1,8 @@
 version: '2'
 services:
   server:
-    container_name: cadsr-cde-browser
-    image: cadsr-cde-browser
+    container_name: cadsr-cde-browser11
+    image: cadsr-cde-browser11
     build: ./
     ports:
      - "8084:8080"
