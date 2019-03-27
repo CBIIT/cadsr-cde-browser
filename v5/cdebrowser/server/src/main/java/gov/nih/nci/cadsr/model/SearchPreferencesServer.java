@@ -22,7 +22,7 @@ import gov.nih.nci.cadsr.common.WorkflowStatusExcludedInitial;
  */
 public class SearchPreferencesServer implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Logger logger = LogManager.getLogger( SearchPreferencesServer.class.getName() );
+	private static Logger logger = LogManager.getLogger( SearchPreferencesServer.class.getName() );
 	private boolean excludeTest = true;
 	private boolean excludeTraining = true;
 	private List<String> workflowStatusExcluded = new ArrayList<String>();

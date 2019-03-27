@@ -12,7 +12,7 @@ public class ClassificationItemNode extends BaseNode
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Logger logger = LogManager.getLogger( ClassificationItemNode.class.getName() );
+	private static Logger logger = LogManager.getLogger( ClassificationItemNode.class.getName() );
 
     public ClassificationItemNode()
     {
