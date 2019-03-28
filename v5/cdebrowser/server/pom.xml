@@ -137,11 +137,11 @@
 			<artifactId>acegi-security</artifactId>
 			<version>1.0.7</version>
 		</dependency>
-        <dependency>
+        <!--dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>3.6.2.Final</version>
-		</dependency>
+		</dependency -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
