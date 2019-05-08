@@ -4,11 +4,10 @@ import java.io.File;
  * Copyright (C) 2018 Leidos Biomedical Research, Inc. - All rights reserved.
  */
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import oracle.jdbc.pool.OracleDataSource;
 
 public abstract class AbstractCDEDumper implements CDEDump {
 	private String dbURL;
@@ -48,15 +47,39 @@ public abstract class AbstractCDEDumper implements CDEDump {
 		this.fileNamePrefix = fileNamePrefix;
 	}
 
+	//This code was for ojdbc4
+//	protected Connection createConnectionJdbc4() throws Exception {
+//		OracleDataSource ds = new OracleDataSource();
+//		ds.setURL(getDbURL());
+//		ds.setUser(getUsername());
+//		ds.setPassword(getPassword());
+//
+//		return ds.getConnection();
+//	}
+
 	protected Connection createConnection() throws Exception {
-		OracleDataSource ds = new OracleDataSource();
-		ds.setURL(getDbURL());
-		ds.setUser(getUsername());
-		ds.setPassword(getPassword());
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection connection = null;
+		connection = DriverManager.getConnection(getDbURL(), getUsername(), getPassword());
 
-		return ds.getConnection();
+		if (connection != null) 
+		{
+			System.out.println("DB Connection is created by AbstractCDEDumper.");
+		} else 
+		{
+			throw new Exception("AbstractCDEDumper: Failed to make connection " + getDbURL() + " for " + getUsername());
+		}
+		return connection;
 	}
-
+	//this one gives springframework error No supported DataSource type found.
+//	protected Connection createConnection() throws Exception {
+//        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
+//        dataSourceBuilder.driverClassName("oracle.jdbc.driver.OracleDriver");
+//        dataSourceBuilder.url(getDbURL());
+//        dataSourceBuilder.username(getUsername());
+//        dataSourceBuilder.password(getPassword());
+//        return dataSourceBuilder.build().getConnection();
+//	}
 	protected String getTimeStr() {
 		Calendar cal = Calendar.getInstance();
 		int date = cal.get(5);
