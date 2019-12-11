@@ -62,6 +62,17 @@
         </profile>
 
         <profile>
+            <id>12cDEV</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}/${CADSR_DS_TNS.ENTRY}</connection-url>
+                <build-profile>12cDEV</build-profile>
+            </properties>
+        </profile>
+
+        <profile>
             <id>QA</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
