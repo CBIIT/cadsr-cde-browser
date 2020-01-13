@@ -62,7 +62,7 @@
         </profile>
 
         <profile>
-            <id>12cDEV</id>
+            <id>12c</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
