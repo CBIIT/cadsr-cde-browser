@@ -68,7 +68,7 @@
             </activation>
             <properties>
                 <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}/${CADSR_DS_TNS.ENTRY}</connection-url>
-                <build-profile>12cDEV</build-profile>
+                <build-profile>12c</build-profile>
             </properties>
         </profile>
 
