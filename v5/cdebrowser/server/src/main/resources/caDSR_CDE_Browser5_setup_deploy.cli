@@ -41,6 +41,27 @@ if (outcome != success) of /subsystem=undertow/servlet-container=default/setting
 /subsystem=undertow/servlet-container=default/setting=session-cookie:add(http-only=true,secure=true)
 end-if
 
+if (outcome == success) of /subsystem=undertow/server=default-server/host=default-host/filter-ref=server-header:read-resource
+#Remove filter-ref=server-header
+/subsystem=undertow/server=default-server/host=default-host/filter-ref=server-header:remove()
+end-if
+
+if (outcome == success) of /subsystem=undertow/server=default-server/host=default-host/filter-ref=x-powered-by-header:read-resource
+#Remove filter-ref=x-powered-by-header
+/subsystem=undertow/server=default-server/host=default-host/filter-ref=x-powered-by-header:remove()
+end-if
+
+if (outcome == success) of /subsystem=undertow/configuration=filter/response-header=server-header:read-resource
+#Remove response-header=server-header
+/subsystem=undertow/configuration=filter/response-header=server-header:remove()
+end-if
+
+if (outcome == success) of /subsystem=undertow/configuration=filter/response-header=x-powered-by-header:read-resource
+#Remove response-header=x-powered-by-header
+/subsystem=undertow/configuration=filter/response-header=x-powered-by-header:remove()
+end-if
+
+
 # configure ports
 # run as ssl
 # not part of this deployment
