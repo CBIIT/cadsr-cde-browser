@@ -37,6 +37,10 @@ data-source add \
 #data-source enable --name=CDEBrowserDS
 end-if
 
+if (outcome != success) of /subsystem=undertow/servlet-container=default/setting=session-cookie:read-resource
+/subsystem=undertow/servlet-container=default/setting=session-cookie:add(http-only=true,secure=true)
+end-if
+
 # configure ports
 # run as ssl
 # not part of this deployment
