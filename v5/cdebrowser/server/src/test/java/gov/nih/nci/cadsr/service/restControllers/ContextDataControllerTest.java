@@ -8,10 +8,15 @@ import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.util.DBUtil;
 import gov.nih.nci.cadsr.dao.ClassificationSchemeDAOImpl;
+import gov.nih.nci.cadsr.dao.ContextDAOImpl;
 import gov.nih.nci.cadsr.dao.model.*;
 import gov.nih.nci.cadsr.common.util.UnitTestCommon;
 import gov.nih.nci.cadsr.service.model.context.*;
 import junit.framework.TestCase;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.*;
@@ -35,7 +40,9 @@ public class ContextDataControllerTest extends TestCase
     private int testMaxHoverTextLen;
     RestControllerCommon mockRestControllerCommon = Mockito.mock(RestControllerCommon.class);
     @Mock
-    private ClassificationSchemeDAOImpl classificationSchemeDAO = mock(ClassificationSchemeDAOImpl.class);    
+    private ClassificationSchemeDAOImpl classificationSchemeDAO = mock(ClassificationSchemeDAOImpl.class);
+    @Mock
+    private ContextDAOImpl contextDAO =  mock(ContextDAOImpl.class);
     
     public void setUp()
     {
@@ -707,5 +714,20 @@ public class ContextDataControllerTest extends TestCase
         csCsiNodelList.add( childeClassificationFolder1 );
         csCsiNodelList.add( childeClassificationFolder2 );
     }
+    
+
+    // Test DB check ok - Database is up
+    public void testMonitorDbCheckOk() {
+    	contextDataController.setContextDAO(contextDAO);
+    	ResponseEntity<String> responseString = contextDataController.monitorDbCheck();
+    	assertEquals("CDEBrowser Status : OK", responseString.getBody());
+    }
+    
+    // Test DB check Error - Database is down
+    public void testMonitorDbCheckError() {
+    	contextDataController.setContextDAO(null);
+    	ResponseEntity<String> responseString = contextDataController.monitorDbCheck();
+    	assertEquals("ERROR", responseString.getBody());
+    }    
 
 }

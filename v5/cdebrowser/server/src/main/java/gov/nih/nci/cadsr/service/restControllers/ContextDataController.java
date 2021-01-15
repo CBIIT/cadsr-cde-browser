@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import gov.nih.nci.cadsr.common.AppConfig;
 import gov.nih.nci.cadsr.common.CaDSRConstants;
 import gov.nih.nci.cadsr.common.UsageLog;
@@ -37,6 +41,8 @@ import gov.nih.nci.cadsr.service.model.context.ContextNode;
 import gov.nih.nci.cadsr.service.model.context.ParentNode;
 import gov.nih.nci.cadsr.service.model.context.ProtocolFormNode;
 import gov.nih.nci.cadsr.service.model.context.ProtocolNode;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class ContextDataController
@@ -70,6 +76,8 @@ public class ContextDataController
     private UsageLog usageLog;
 
     private static final Integer rootLevel = 1;
+
+	private static final String TEXT_PLAIN_MIME_TYPE = null;
 
     @Autowired
     public ContextDataController(RestControllerCommon restControllerCommon)
@@ -147,6 +155,32 @@ public class ContextDataController
         logger.debug( "Done rest call contextData" );
         return contextNodes;
     }
+    
+    
+    
+    /**
+     * Checks database's health status by retrieving the top level tree data
+     * @return ResponseEntity with 'CDEBrowser Status : OK' or 'ERROR' for database availability
+     */    
+    @RequestMapping( value = "/monitordb" )
+    @ResponseBody
+    public ResponseEntity<String> monitorDbCheck()
+    {
+    	ContextNode[] contextNodes;
+		try {
+			contextNodes = getAllTopLevelTreeData();
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.add("Content-Type", ContextDataController.TEXT_PLAIN_MIME_TYPE);
+			return new ResponseEntity<String>("CDEBrowser Status : OK", httpHeaders, HttpStatus.OK);
+		}
+		catch (Exception hcee){
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.add("Content-Type", ContextDataController.TEXT_PLAIN_MIME_TYPE);
+			logger.error("ERROR");
+			return new ResponseEntity<String>("ERROR", httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+		}  	
+    }    
+
     
     /**
      * @param contextId   The one Context who's tree we need to return to the client.
