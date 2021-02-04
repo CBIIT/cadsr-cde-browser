@@ -177,7 +177,7 @@
             <artifactId>sdk-client-framework</artifactId>
             <version>1.0</version>
         </dependency>
-        <dependency>
+  		<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
@@ -288,6 +288,17 @@
             </formats>
             </configuration>
         </plugin>
+		<plugin>
+       		<groupId>org.apache.maven.plugins</groupId>
+       		<artifactId>maven-war-plugin</artifactId>
+       			<configuration>
+          			<archive>
+             			<manifestEntries>
+                			<Dependencies>org.springframework</Dependencies>
+             			</manifestEntries>
+          			</archive>
+       			</configuration>
+     	 </plugin>        
       </plugins>
     </reporting>
     <!-- If we are running in Jenkins use cobertura. -->
