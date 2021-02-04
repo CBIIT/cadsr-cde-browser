@@ -9,8 +9,8 @@ connect localhost:19990
 if (outcome != success) of /subsystem=datasources/jdbc-driver=oracle:read-resource 
     /subsystem=datasources/jdbc-driver=oracle:add( \
     driver-name=oracle, \
-    driver-module-name=com.oracle.jdbc7, \
-    driver-xa-datasource-class-name=oracle.jdbc.OracleDriver \
+    driver-module-name=com.oracle.jdbc7 \
+    #driver-xa-datasource-class-name=oracle.jdbc.OracleDriver \ ##Commented out for Wildfly 22
 	) {allow-resource-service-restart=true}
 end-if
 
