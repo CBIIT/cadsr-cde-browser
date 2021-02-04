@@ -288,17 +288,6 @@
             </formats>
             </configuration>
         </plugin>
-		<plugin>
-       		<groupId>org.apache.maven.plugins</groupId>
-       		<artifactId>maven-war-plugin</artifactId>
-       			<configuration>
-          			<archive>
-             			<manifestEntries>
-                			<Dependencies>org.springframework</Dependencies>
-             			</manifestEntries>
-          			</archive>
-       			</configuration>
-     	 </plugin>        
       </plugins>
     </reporting>
     <!-- If we are running in Jenkins use cobertura. -->

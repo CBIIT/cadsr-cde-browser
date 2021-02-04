@@ -9,9 +9,6 @@
             <module name="com.fasterxml.jackson.core.jackson-annotations"/>
             <module name="com.fasterxml.jackson.datatype.jackson-datatype-jdk8" />
             <module name="com.fasterxml.jackson.datatype.jackson-datatype-jsr310" />
-       </exclusions>
-         <dependencies>  
-              <module name="org.springframework" slot="5.3.3" export="true" meta-inf="export"/> 
-        </dependencies>         
+       </exclusions>       
   </deployment>
 </jboss-deployment-structure>
