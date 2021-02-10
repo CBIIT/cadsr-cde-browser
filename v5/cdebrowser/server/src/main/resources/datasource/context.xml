@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CDE Browser Context XML -->
+<Context>
+
+<Resource name="${CDEBRWSR_DS}" auth="Application"
+              type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"              
+              url="${connection-url}" 
+              username="${CADSR_DS_USER}" password="${CADSR_DS_PSWD}" maxTotal="20" maxIdle="10"
+              maxWaitMillis="-1"/>
+</Context>

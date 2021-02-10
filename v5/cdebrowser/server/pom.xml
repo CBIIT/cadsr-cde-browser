@@ -15,7 +15,7 @@
         <classmate.version>1.4.0</classmate.version>
         <jackson.version>2.12.1</jackson.version>
         <junit.version>4.12</junit.version>
-        <!--<connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>-->
+        <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}/${CADSR_DS_TNS.ENTRY}}</connection-url>
     </properties>
     <dependencies>
         <dependency>
@@ -211,6 +211,29 @@
             </resource>
         </resources>
         <plugins>
+         <!-- Copying datasource for the container -->
+			<plugin>
+		        <artifactId>maven-resources-plugin</artifactId>
+		        <version>3.2.0</version>
+		        <executions>
+		          <execution>
+		            <id>copy-datasource</id>
+		            <phase>validate</phase>
+		            <goals>
+		              <goal>copy-resources</goal>
+		            </goals>
+		            <configuration>
+		              <outputDirectory>src/main/webapp/META-INF</outputDirectory>
+		              <resources>          
+		                <resource>
+		                  <directory>src/main/resources/datasource</directory>
+		                  <filtering>true</filtering>
+		                </resource>
+		              </resources>              
+		            </configuration>            
+		          </execution>
+		        </executions>
+		      </plugin>
             <!-- FIXME - Jeff put this here a while back, I don't think it does anything -->
             <plugin>
                 <artifactId>exec-maven-plugin</artifactId>
