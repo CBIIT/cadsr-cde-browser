@@ -13,7 +13,7 @@ public interface UserManagerDAO
     
     public void getConnection(String username, String password) throws SQLException;
     
-    public void authenticateUser(String username, String password, String jdbcUrl) throws SQLException;
+    public void authenticateUser(String username, String password, String db_url) throws SQLException;
     
     public int incLock(String username);
     

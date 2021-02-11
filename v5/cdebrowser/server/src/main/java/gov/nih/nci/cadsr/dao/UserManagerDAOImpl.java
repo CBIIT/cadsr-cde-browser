@@ -101,11 +101,11 @@ public class UserManagerDAOImpl extends AbstractDAOOperations implements UserMan
 	 * Method to authenticate login credentials, to overcome the issue with getConnection(username, password) method and Tomcat DBCP
 	 * This method retrieves the jdbcUrl from context.xml via controller
 	 */
-	public void authenticateUser(String username, String password, String jdbcUrl) throws SQLException {
+	public void authenticateUser(String username, String password, String db_url) throws SQLException {
 	    Properties connectionProps = new Properties();
 	    connectionProps.put("user", username);
 	    connectionProps.put("password", password);		
-	    Connection conn = DriverManager.getConnection(jdbcUrl, connectionProps);
+	    Connection conn = DriverManager.getConnection(db_url, connectionProps);
 		conn.close();
 	}
 

@@ -40,7 +40,7 @@ public class CdeBrowserAuthenticationController
 		logger.debug("Processing login request for user: " + credentials[0]);
 
 		ServletContext tomcatServletContext = request.getServletContext();
-		String jdbcUrl = tomcatServletContext.getInitParameter("jdbc_url");
+		String db_url = tomcatServletContext.getInitParameter("db_url");
 
 		if (credentials == null || credentials.length != 2 || StringUtils.isBlank(credentials[0]) || StringUtils.isBlank(credentials[1]))
 			throw new AutheticationFailureException("Authentication failed for user because username or password is null:" + credentials[0]);
@@ -50,7 +50,7 @@ public class CdeBrowserAuthenticationController
 			{
 				//we use upper cased user name further
 				credentials[0] = credentials[0].toUpperCase(); //credentials[0] is not null at this point
-				authenticationService.validateUserCredentials(credentials[0], credentials[1], jdbcUrl);
+				authenticationService.validateUserCredentials(credentials[0], credentials[1], db_url);
 				HttpSession session = request.getSession(false);
 				if (session != null)
 				{

@@ -16,7 +16,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 	UserManagerDAO userManagerDAO;
 	
 	@Override
-	public boolean validateUserCredentials(String loginUsername, String credential, String jdbcUrl) throws Exception 
+	public boolean validateUserCredentials(String loginUsername, String credential, String db_url) throws Exception 
 	{
 		logger.debug("Validating user credentials for: " + loginUsername);
 		boolean valid = true;
@@ -26,7 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     		if (numOfProperties == 2)
     		{
     			try {
-					userManagerDAO.authenticateUser(loginUsername, credential, jdbcUrl);
+					userManagerDAO.authenticateUser(loginUsername, credential, db_url);
 				} catch (Exception e) {
 					logger.error("Error in validating user credentials for : " + loginUsername, e);
 					

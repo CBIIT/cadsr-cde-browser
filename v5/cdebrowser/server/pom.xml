@@ -15,7 +15,7 @@
         <classmate.version>1.4.0</classmate.version>
         <jackson.version>2.12.1</jackson.version>
         <junit.version>4.12</junit.version>
-        <connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}/${CADSR_DS_TNS.ENTRY}}</connection-url>
+        <db_url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}/${CADSR_DS_TNS.ENTRY}</db_url>
     </properties>
     <dependencies>
         <dependency>

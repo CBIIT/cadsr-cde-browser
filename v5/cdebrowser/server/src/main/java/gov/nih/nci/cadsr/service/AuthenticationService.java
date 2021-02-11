@@ -2,5 +2,5 @@ package gov.nih.nci.cadsr.service;
 
 public interface AuthenticationService 
 {
-	public boolean validateUserCredentials(String loginUsername, String credential, String jdbcUrl) throws Exception;
+	public boolean validateUserCredentials(String loginUsername, String credential, String db_url) throws Exception;
 }
