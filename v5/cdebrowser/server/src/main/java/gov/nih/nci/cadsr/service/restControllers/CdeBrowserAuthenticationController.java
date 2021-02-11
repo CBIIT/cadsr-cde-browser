@@ -3,6 +3,7 @@ package gov.nih.nci.cadsr.service.restControllers;
 import java.nio.charset.Charset;
 import java.util.Base64;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -37,7 +38,10 @@ public class CdeBrowserAuthenticationController
 		final String[] credentials = decodeAuthorizationHeader(authorization);
 		
 		logger.debug("Processing login request for user: " + credentials[0]);
-		
+
+		ServletContext tomcatServletContext = request.getServletContext();
+		String jdbcUrl = tomcatServletContext.getInitParameter("jdbc_url");
+
 		if (credentials == null || credentials.length != 2 || StringUtils.isBlank(credentials[0]) || StringUtils.isBlank(credentials[1]))
 			throw new AutheticationFailureException("Authentication failed for user because username or password is null:" + credentials[0]);
 		else
@@ -46,7 +50,7 @@ public class CdeBrowserAuthenticationController
 			{
 				//we use upper cased user name further
 				credentials[0] = credentials[0].toUpperCase(); //credentials[0] is not null at this point
-				authenticationService.validateUserCredentials(credentials[0], credentials[1]);
+				authenticationService.validateUserCredentials(credentials[0], credentials[1], jdbcUrl);
 				HttpSession session = request.getSession(false);
 				if (session != null)
 				{

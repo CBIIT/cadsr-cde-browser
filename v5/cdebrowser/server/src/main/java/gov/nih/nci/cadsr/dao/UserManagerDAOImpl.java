@@ -1,6 +1,7 @@
 package gov.nih.nci.cadsr.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -90,6 +91,21 @@ public class UserManagerDAOImpl extends AbstractDAOOperations implements UserMan
 	@Override
 	public void getConnection(String username, String password) throws SQLException {
 		Connection conn = this.getDataSource().getConnection(username, password);
+		// The above will have issues with Tomcat DBCP, use the below statement instead.
+		//Connection conn = this.getDataSource().getConnection();
+		conn.close();
+	}
+	
+	/*
+	 * author santhanamv
+	 * Method to authenticate login credentials, to overcome the issue with getConnection(username, password) method and Tomcat DBCP
+	 * This method retrieves the jdbcUrl from context.xml via controller
+	 */
+	public void authenticateUser(String username, String password, String jdbcUrl) throws SQLException {
+	    Properties connectionProps = new Properties();
+	    connectionProps.put("user", username);
+	    connectionProps.put("password", password);		
+	    Connection conn = DriverManager.getConnection(jdbcUrl, connectionProps);
 		conn.close();
 	}
 

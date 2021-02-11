@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- CDE Browser Context XML -->
 <Context>
-
+<Parameter name="jdbc_url" value="${connection-url}" />
 <Resource name="${CDEBRWSR_DS}" auth="Application"
               type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"              
               url="${connection-url}" 
