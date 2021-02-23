@@ -74,6 +74,7 @@ public class CdeBrowserAuthenticationControllerTest
 	
 	private String username = "PURNIMAC";
 	private String password = "purnimac";
+	private String db_url = "";
 
 	@Before
 	public void setup() throws SQLException
@@ -114,9 +115,8 @@ public class CdeBrowserAuthenticationControllerTest
 	public void testInvalidLogin() throws Exception
 	{		
 		password = "abcd";
-		
-		Mockito.doThrow(new SQLException("Invalid username/password")).when(userManagerDAO).getConnection(username, password);
-		
+		username = "";
+		Mockito.doThrow(new SQLException("Invalid username/password")).when(userManagerDAO).authenticateUser(username, password, db_url);		
 		mockMvc.perform(post("/login")
 				.header("Authorization", "Basic " + createEncodedText(username, password)))
 				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
