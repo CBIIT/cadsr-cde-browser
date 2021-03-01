@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngRoute/directive/ngView.js?message=docs(ngView)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngRoute/directive/ngView.js?message=docs(ngView)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ngRoute/directive/ngView.js#L7' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngRoute/directive/ngView.js#L7' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -27,6 +27,19 @@ Every time the current route changes, the included view changes with it accordin
 configuration of the <code>$route</code> service.</p>
 <p>Requires the <a href="api/ngRoute"><code>ngRoute</code></a> module to be installed.</p>
 
+</div>
+
+
+
+<h2 id="known-issues">Known Issues</h2>
+<div class="known-issue">
+  <p>If <code>ngView</code> is contained in an asynchronously loaded template (e.g. in another
+            directive&#39;s templateUrl or in a template loaded using <code>ngInclude</code>), then you need to
+            make sure that <code>$route</code> is instantiated in time to capture the initial
+            <code>$locationChangeStart</code> event and load the appropriate view. One way to achieve this
+            is to have it as a dependency in a <code>.run</code> block:
+            <code>myModule.run([&#39;$route&#39;, function() {}]);</code></p>
+  
 </div>
 
 
@@ -63,8 +76,24 @@ configuration of the <code>$route</code> service.</p>
   </div>
   
   <h2 id="animations">Animations</h2>
-  <p>enter - animation is used to bring new content into the browser.
-leave - animation is used to animate existing content away.</p>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#enter">enter</a></td>
+<td>when the new element is inserted to the DOM</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#leave">leave</a></td>
+<td>when the old element is removed from to the DOM</td>
+</tr>
+</tbody>
+</table>
 <p>The enter and leave animation occur concurrently.</p>
 
   <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
@@ -146,9 +175,7 @@ leave - animation is used to animate existing content away.</p>
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-ngView-directive', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ngView-directive"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-ngView-directive"
@@ -191,14 +218,14 @@ leave - animation is used to animate existing content away.</p>
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;ngViewExample&#39;, [&#39;ngRoute&#39;, &#39;ngAnimate&#39;])&#10;.config([&#39;$routeProvider&#39;, &#39;$locationProvider&#39;,&#10;  function($routeProvider, $locationProvider) {&#10;    $routeProvider&#10;      .when(&#39;/Book/:bookId&#39;, {&#10;        templateUrl: &#39;book.html&#39;,&#10;        controller: &#39;BookCtrl&#39;,&#10;        controllerAs: &#39;book&#39;&#10;      })&#10;      .when(&#39;/Book/:bookId/ch/:chapterId&#39;, {&#10;        templateUrl: &#39;chapter.html&#39;,&#10;        controller: &#39;ChapterCtrl&#39;,&#10;        controllerAs: &#39;chapter&#39;&#10;      });&#10;&#10;    $locationProvider.html5Mode(true);&#10;}])&#10;.controller(&#39;MainCtrl&#39;, [&#39;$route&#39;, &#39;$routeParams&#39;, &#39;$location&#39;,&#10;  function($route, $routeParams, $location) {&#10;    this.$route = $route;&#10;    this.$location = $location;&#10;    this.$routeParams = $routeParams;&#10;}])&#10;.controller(&#39;BookCtrl&#39;, [&#39;$routeParams&#39;, function($routeParams) {&#10;  this.name = &quot;BookCtrl&quot;;&#10;  this.params = $routeParams;&#10;}])&#10;.controller(&#39;ChapterCtrl&#39;, [&#39;$routeParams&#39;, function($routeParams) {&#10;  this.name = &quot;ChapterCtrl&quot;;&#10;  this.params = $routeParams;&#10;}]);</code></pre>
+      <pre><code>angular.module(&#39;ngViewExample&#39;, [&#39;ngRoute&#39;, &#39;ngAnimate&#39;])&#10;.config([&#39;$routeProvider&#39;, &#39;$locationProvider&#39;,&#10;  function($routeProvider, $locationProvider) {&#10;    $routeProvider&#10;      .when(&#39;/Book/:bookId&#39;, {&#10;        templateUrl: &#39;book.html&#39;,&#10;        controller: &#39;BookCtrl&#39;,&#10;        controllerAs: &#39;book&#39;&#10;      })&#10;      .when(&#39;/Book/:bookId/ch/:chapterId&#39;, {&#10;        templateUrl: &#39;chapter.html&#39;,&#10;        controller: &#39;ChapterCtrl&#39;,&#10;        controllerAs: &#39;chapter&#39;&#10;      });&#10;&#10;    $locationProvider.html5Mode(true);&#10;}])&#10;.controller(&#39;MainCtrl&#39;, [&#39;$route&#39;, &#39;$routeParams&#39;, &#39;$location&#39;,&#10;  function MainCtrl($route, $routeParams, $location) {&#10;    this.$route = $route;&#10;    this.$location = $location;&#10;    this.$routeParams = $routeParams;&#10;}])&#10;.controller(&#39;BookCtrl&#39;, [&#39;$routeParams&#39;, function BookCtrl($routeParams) {&#10;  this.name = &#39;BookCtrl&#39;;&#10;  this.params = $routeParams;&#10;}])&#10;.controller(&#39;ChapterCtrl&#39;, [&#39;$routeParams&#39;, function ChapterCtrl($routeParams) {&#10;  this.name = &#39;ChapterCtrl&#39;;&#10;  this.params = $routeParams;&#10;}]);</code></pre>
     </div>
   
     <div class="runnable-example-file" 
       name="protractor.js"
       type="protractor"
       language="js">
-      <pre><code>it(&#39;should load and compile correct template&#39;, function() {&#10;  element(by.linkText(&#39;Moby: Ch1&#39;)).click();&#10;  var content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller\: ChapterCtrl/);&#10;  expect(content).toMatch(/Book Id\: Moby/);&#10;  expect(content).toMatch(/Chapter Id\: 1/);&#10;&#10;  element(by.partialLinkText(&#39;Scarlet&#39;)).click();&#10;&#10;  content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller\: BookCtrl/);&#10;  expect(content).toMatch(/Book Id\: Scarlet/);&#10;});</code></pre>
+      <pre><code>it(&#39;should load and compile correct template&#39;, function() {&#10;  element(by.linkText(&#39;Moby: Ch1&#39;)).click();&#10;  var content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller: ChapterCtrl/);&#10;  expect(content).toMatch(/Book Id: Moby/);&#10;  expect(content).toMatch(/Chapter Id: 1/);&#10;&#10;  element(by.partialLinkText(&#39;Scarlet&#39;)).click();&#10;&#10;  content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller: BookCtrl/);&#10;  expect(content).toMatch(/Book Id: Scarlet/);&#10;});</code></pre>
     </div>
   
 

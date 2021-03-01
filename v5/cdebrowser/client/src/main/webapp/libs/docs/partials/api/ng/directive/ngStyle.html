@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngStyle.js?message=docs(ngStyle)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngStyle.js?message=docs(ngStyle)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngStyle.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngStyle.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -22,6 +22,16 @@
 <div class="api-profile-description">
   <p>The <code>ngStyle</code> directive allows you to set CSS style on an HTML element conditionally.</p>
 
+</div>
+
+
+
+<h2 id="known-issues">Known Issues</h2>
+<div class="known-issue">
+  <p>You should not use <a href="guide/interpolation">interpolation</a> in the value of the <code>style</code>
+attribute, when using the <code>ngStyle</code> directive on the same element.
+See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
+  
 </div>
 
 
@@ -96,12 +106,11 @@ See the &#39;background-color&#39; style in the example below.</p>
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example93', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-style"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example93">
+      path="examples/example-ng-style"
+      name="ng-style">
 
   
     <div class="runnable-example-file" 
@@ -126,7 +135,7 @@ See the &#39;background-color&#39; style in the example below.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example93/index.html" name="example-example93"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-style/index.html" name="example-ng-style"></iframe>
   </div>
 </div>
 

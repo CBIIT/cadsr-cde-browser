@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/form.js?message=docs(form.FormController)%3A%20describe%20your%20change...#L20' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/form.js?message=docs(form.FormController)%3A%20describe%20your%20change...#L20' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/form.js#L20' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/form.js#L20' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -30,10 +30,12 @@ of <code>FormController</code>.</p>
 
 
 
+
+
 <div>
   
 
-    
+  
 
   
 
@@ -53,7 +55,7 @@ a form that uses <code>ng-model-options</code> to pend updates.</p>
     
 
     
-    
+
     
 
   </li>
@@ -71,7 +73,7 @@ usually handles calling this in response to input events.</p>
     
 
     
-    
+
     
 
   </li>
@@ -87,7 +89,7 @@ is not an issue with normal use, as freshly compiled and linked controls are in 
 state.</p>
 <p>However, if the method is used programmatically, for example by adding dynamically created controls,
 or controls that have been previously removed without destroying their corresponding DOM element,
-it&#39;s the developers responsiblity to make sure the current state propagates to the parent form.</p>
+it&#39;s the developers responsibility to make sure the current state propagates to the parent form.</p>
 <p>For example, if an input control is added that is already <code>$dirty</code> and has <code>$error</code> properties,
 calling <code>$setDirty()</code> and <code>$validate()</code> afterwards will propagate the state to the parent form.</p>
 </div>
@@ -128,7 +130,7 @@ calling <code>$setDirty()</code> and <code>$validate()</code> afterwards will pr
     
 
     
-    
+
     
 
   </li>
@@ -181,7 +183,7 @@ may not mean that the form is still <code>$dirty</code>.</p>
     
 
     
-    
+
     
 
   </li>
@@ -197,7 +199,7 @@ may not mean that the form is still <code>$dirty</code>.</p>
     
 
     
-    
+
     
 
   </li>
@@ -214,7 +216,7 @@ state (ng-dirty class). This method will also propagate to parent forms.</p>
     
 
     
-    
+
     
 
   </li>
@@ -224,9 +226,10 @@ state (ng-dirty class). This method will also propagate to parent forms.</p>
 
 </h3>
     <div><p>Sets the form to its pristine state.</p>
-<p>This method can be called to remove the &#39;ng-dirty&#39; class and set the form to its pristine
-state (ng-pristine class). This method will also propagate to all the controls contained
-in this form.</p>
+<p>This method sets the form&#39;s <code>$pristine</code> state to true, the <code>$dirty</code> state to false, removes
+the <code>ng-dirty</code> class and adds the <code>ng-pristine</code> class. Additionally, it sets the <code>$submitted</code>
+state to false.</p>
+<p>This method will also propagate to all the controls contained in this form.</p>
 <p>Setting a form back to a pristine state is often useful when we want to &#39;reuse&#39; a form after
 saving or resetting it.</p>
 </div>
@@ -234,7 +237,7 @@ saving or resetting it.</p>
     
 
     
-    
+
     
 
   </li>
@@ -253,7 +256,7 @@ back to its pristine state.</p>
     
 
     
-    
+
     
 
   </li>
@@ -268,7 +271,7 @@ back to its pristine state.</p>
     
 
     
-    
+
     
 
   </li>

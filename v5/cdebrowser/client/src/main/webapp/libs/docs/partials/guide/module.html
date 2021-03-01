@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/guide/module.ngdoc?message=docs(guide%2FModules)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/module.ngdoc?message=docs(guide%2FModules)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="what-is-a-module-">What is a Module?</h1>
@@ -21,13 +21,12 @@ should be bootstrapped. There are several advantages to this approach:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example40', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-module-hello-world"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example40"
-      ng-app-included="true">
+      path="examples/example-module-hello-world"
+      ng-app-included="true"
+      name="module-hello-world">
 
   
     <div class="runnable-example-file" 
@@ -52,7 +51,7 @@ should be bootstrapped. There are several advantages to this approach:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example40/index.html" name="example-example40"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-module-hello-world/index.html" name="example-module-hello-world"></iframe>
   </div>
 </div>
 
@@ -75,18 +74,18 @@ that you break your application to multiple modules like this:</p>
 <li>And an application level module which depends on the above modules and contains any
 initialization code.</li>
 </ul>
-<p>You can find a community<br><a href="https://github.com/johnpapa/angular-styleguide">style guide</a> to help yourself when application grows.</p>
+<p>You can find a community <a href="https://github.com/johnpapa/angular-styleguide">style guide</a> to help
+yourself when application grows.</p>
 <p>The above is a suggestion. Tailor it to your needs.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example41', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-module-suggested-layout"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example41"
-      module="xmpl">
+      path="examples/example-module-suggested-layout"
+      module="xmpl"
+      name="module-suggested-layout">
 
   
     <div class="runnable-example-file" 
@@ -100,7 +99,7 @@ initialization code.</li>
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;xmpl.service&#39;, [])&#10;&#10;  .value(&#39;greeter&#39;, {&#10;    salutation: &#39;Hello&#39;,&#10;    localize: function(localization) {&#10;      this.salutation = localization.salutation;&#10;    },&#10;    greet: function(name) {&#10;      return this.salutation + &#39; &#39; + name + &#39;!&#39;;&#10;    }&#10;  })&#10;&#10;  .value(&#39;user&#39;, {&#10;    load: function(name) {&#10;      this.name = name;&#10;    }&#10;  });&#10;&#10;angular.module(&#39;xmpl.directive&#39;, []);&#10;&#10;angular.module(&#39;xmpl.filter&#39;, []);&#10;&#10;angular.module(&#39;xmpl&#39;, [&#39;xmpl.service&#39;, &#39;xmpl.directive&#39;, &#39;xmpl.filter&#39;])&#10;&#10;  .run(function(greeter, user) {&#10;    // This is effectively part of the main method initialization code&#10;    greeter.localize({&#10;      salutation: &#39;Bonjour&#39;&#10;    });&#10;    user.load(&#39;World&#39;);&#10;  })&#10;&#10;  .controller(&#39;XmplController&#39;, function($scope, greeter, user){&#10;    $scope.greeting = greeter.greet(user.name);&#10;  });</code></pre>
+      <pre><code>angular.module(&#39;xmpl.service&#39;, [])&#10;&#10;  .value(&#39;greeter&#39;, {&#10;    salutation: &#39;Hello&#39;,&#10;    localize: function(localization) {&#10;      this.salutation = localization.salutation;&#10;    },&#10;    greet: function(name) {&#10;      return this.salutation + &#39; &#39; + name + &#39;!&#39;;&#10;    }&#10;  })&#10;&#10;  .value(&#39;user&#39;, {&#10;    load: function(name) {&#10;      this.name = name;&#10;    }&#10;  });&#10;&#10;angular.module(&#39;xmpl.directive&#39;, []);&#10;&#10;angular.module(&#39;xmpl.filter&#39;, []);&#10;&#10;angular.module(&#39;xmpl&#39;, [&#39;xmpl.service&#39;, &#39;xmpl.directive&#39;, &#39;xmpl.filter&#39;])&#10;&#10;  .run(function(greeter, user) {&#10;    // This is effectively part of the main method initialization code&#10;    greeter.localize({&#10;      salutation: &#39;Bonjour&#39;&#10;    });&#10;    user.load(&#39;World&#39;);&#10;  })&#10;&#10;  .controller(&#39;XmplController&#39;, function($scope, greeter, user) {&#10;    $scope.greeting = greeter.greet(user.name);&#10;  });</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -111,7 +110,7 @@ initialization code.</li>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example41/index.html" name="example-example41"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-module-suggested-layout/index.html" name="example-module-suggested-layout"></iframe>
   </div>
 </div>
 

@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/interpolate.js?message=docs($interpolate)%3A%20describe%20your%20change...#L123' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/interpolate.js?message=docs($interpolate)%3A%20describe%20your%20change...#L141' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/interpolate.js#L123' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/interpolate.js#L141' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -69,12 +69,11 @@ when otherwise untrusted data is used by a directive.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example108', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-interpolation"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example108">
+      path="examples/example-interpolation"
+      name="interpolation">
 
   
     <div class="runnable-example-file" 
@@ -85,13 +84,38 @@ when otherwise untrusted data is used by a directive.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example108/index.html" name="example-example108"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-interpolation/index.html" name="example-interpolation"></iframe>
   </div>
 </div>
 
 
 </p>
 
+</div>
+
+
+
+<h2 id="known-issues">Known Issues</h2>
+<div class="known-issue">
+  <p>It is currently not possible for an interpolated expression to contain the interpolation end
+symbol. For example, <code>{{ &#39;}}&#39; }}</code> will be incorrectly interpreted as <code>{{ &#39; }}</code> + <code>&#39; }}</code>, i.e.
+an interpolated expression consisting of a single-quote (<code>&#39;</code>) and the <code>&#39; }}</code> string.</p>
+  <hr>
+</div>
+<div class="known-issue">
+  <p>All directives and components must use the standard <code>{{</code> <code>}}</code> interpolation symbols
+in their templates. If you change the application interpolation symbols the <a href="api/ng/service/$compile"><code>$compile</code></a>
+service will attempt to denormalize the standard symbols to the custom symbols.
+The denormalization process is not clever enough to know not to replace instances of the standard
+symbols where they would not normally be treated as interpolation symbols. For example in the following
+code snippet the closing braces of the literal object will get incorrectly denormalized:</p>
+<pre><code>&lt;div data-context=&#39;{&quot;context&quot;:{&quot;id&quot;:3,&quot;type&quot;:&quot;page&quot;}}&quot;&gt;
+</code></pre>
+<p>The workaround is to ensure that such instances are separated by whitespace:</p>
+<pre><code>&lt;div data-context=&#39;{&quot;context&quot;:{&quot;id&quot;:3,&quot;type&quot;:&quot;page&quot;} }&quot;&gt;
+</code></pre>
+<p>See <a href="https://github.com/angular/angular.js/pull/14610#issuecomment-219401099">https://github.com/angular/angular.js/pull/14610#issuecomment-219401099</a> for more information.</p>
+  
 </div>
 
 
@@ -105,7 +129,7 @@ when otherwise untrusted data is used by a directive.</p>
   </ul>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -231,7 +255,7 @@ the symbol.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -257,7 +281,7 @@ the symbol.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">

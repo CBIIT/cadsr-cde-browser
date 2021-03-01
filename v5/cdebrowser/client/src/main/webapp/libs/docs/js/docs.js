@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('docsApp', [
   'ngRoute',
   'ngCookies',
@@ -19,6 +21,8 @@ angular.module('docsApp', [
 .config(['$locationProvider', function($locationProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
 }]);
+
+'use strict';
 
 angular.module('directives', [])
 
@@ -69,15 +73,15 @@ angular.module('directives', [])
   };
 });
 
+'use strict';
+
 angular.module('DocsController', [])
 
 .controller('DocsController', [
-          '$scope', '$rootScope', '$location', '$window', '$cookies', 'openPlunkr',
+          '$scope', '$rootScope', '$location', '$window', '$cookies',
               'NG_PAGES', 'NG_NAVIGATION', 'NG_VERSION',
-  function($scope, $rootScope, $location, $window, $cookies, openPlunkr,
+  function($scope, $rootScope, $location, $window, $cookies,
               NG_PAGES, NG_NAVIGATION, NG_VERSION) {
-
-  $scope.openPlunkr = openPlunkr;
 
   $scope.docsVersion = NG_VERSION.isSnapshot ? 'snapshot' : NG_VERSION.version;
 
@@ -100,9 +104,9 @@ angular.module('DocsController', [])
 
     path = path.replace(/^\/?(.+?)(\/index)?\/?$/, '$1');
 
-    currentPage = $scope.currentPage = NG_PAGES[path];
+    var currentPage = $scope.currentPage = NG_PAGES[path];
 
-    if ( currentPage ) {
+    if (currentPage) {
       $scope.partialPath = 'partials/' + path + '.html';
       $scope.currentArea = NG_NAVIGATION[currentPage.area];
       var pathParts = currentPage.path.split('/');
@@ -110,7 +114,7 @@ angular.module('DocsController', [])
       var breadcrumbPath = '';
       angular.forEach(pathParts, function(part) {
         breadcrumbPath += part;
-        breadcrumb.push({ name: (NG_PAGES[breadcrumbPath]&&NG_PAGES[breadcrumbPath].name) || part, url: breadcrumbPath });
+        breadcrumb.push({ name: (NG_PAGES[breadcrumbPath] && NG_PAGES[breadcrumbPath].name) || part, url: breadcrumbPath });
         breadcrumbPath += '/';
       });
     } else {
@@ -125,7 +129,7 @@ angular.module('DocsController', [])
    ***********************************/
 
   $scope.versionNumber = angular.version.full;
-  $scope.version = angular.version.full + "  " + angular.version.codeName;
+  $scope.version = angular.version.full + '  ' + angular.version.codeName;
   $scope.loading = 0;
 
 
@@ -136,26 +140,28 @@ angular.module('DocsController', [])
 
 }]);
 
+'use strict';
+
 angular.module('errors', ['ngSanitize'])
 
-.filter('errorLink', ['$sanitize', function ($sanitize) {
-  var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s\.\;\,\(\)\{\}<>]/g,
+.filter('errorLink', ['$sanitize', function($sanitize) {
+  var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s\.;,\(\)\{\}<>]/g,
       MAILTO_REGEXP = /^mailto:/,
       STACK_TRACE_REGEXP = /:\d+:\d+$/;
 
-  var truncate = function (text, nchars) {
+  var truncate = function(text, nchars) {
     if (text.length > nchars) {
       return text.substr(0, nchars - 3) + '...';
     }
     return text;
   };
 
-  return function (text, target) {
+  return function(text, target) {
     if (!text) return text;
 
     var targetHtml = target ? ' target="' + target + '"' : '';
 
-    return $sanitize(text.replace(LINKY_URL_REGEXP, function (url) {
+    return $sanitize(text.replace(LINKY_URL_REGEXP, function(url) {
       if (STACK_TRACE_REGEXP.test(url)) {
         return url;
       }
@@ -163,7 +169,7 @@ angular.module('errors', ['ngSanitize'])
       // if we did not match ftp/http/mailto then assume mailto
       if (!/^((ftp|https?):\/\/|mailto:)/.test(url)) url = 'mailto:' + url;
 
-      return '<a' + targetHtml + ' href="' + url +'">' +
+      return '<a' + targetHtml + ' href="' + url + '">' +
                 truncate(url.replace(MAILTO_REGEXP, ''), 60) +
               '</a>';
     }));
@@ -171,33 +177,33 @@ angular.module('errors', ['ngSanitize'])
 }])
 
 
-.directive('errorDisplay', ['$location', 'errorLinkFilter', function ($location, errorLinkFilter) {
-  var encodeAngleBrackets = function (text) {
+.directive('errorDisplay', ['$location', 'errorLinkFilter', function($location, errorLinkFilter) {
+  var encodeAngleBrackets = function(text) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   };
 
-  var interpolate = function (formatString) {
+  var interpolate = function(formatString) {
     var formatArgs = arguments;
-    return formatString.replace(/\{\d+\}/g, function (match) {
+    return formatString.replace(/\{\d+\}/g, function(match) {
       // Drop the braces and use the unary plus to convert to an integer.
       // The index will be off by one because of the formatString.
       var index = +match.slice(1, -1);
       if (index + 1 >= formatArgs.length) {
         return match;
       }
-      return formatArgs[index+1];
+      return formatArgs[index + 1];
     });
   };
 
   return {
-    link: function (scope, element, attrs) {
+    link: function(scope, element, attrs) {
       var search = $location.search(),
         formatArgs = [attrs.errorDisplay],
         formattedText,
         i;
 
-      for (i = 0; angular.isDefined(search['p'+i]); i++) {
-        formatArgs.push(search['p'+i]);
+      for (i = 0; angular.isDefined(search['p' + i]); i++) {
+        formatArgs.push(search['p' + i]);
       }
 
       formattedText = encodeAngleBrackets(interpolate.apply(null, formatArgs));
@@ -206,11 +212,12 @@ angular.module('errors', ['ngSanitize'])
   };
 }]);
 
+'use strict';
+
 angular.module('examples', [])
 
-.directive('runnableExample', ['$templateCache', '$document', function($templateCache, $document) {
+.directive('runnableExample', [function() {
   var exampleClassNameSelector = '.runnable-example-file';
-  var doc = $document[0];
   var tpl =
     '<nav class="runnable-example-tabs" ng-if="tabs">' +
     '  <a ng-class="{active:$index==activeTabIndex}"' +
@@ -237,12 +244,12 @@ angular.module('examples', [])
       return function(scope, element) {
         var node = element[0];
         var examples = node.querySelectorAll(exampleClassNameSelector);
-        var tabs = [], now = Date.now();
+        var tabs = [];
         angular.forEach(examples, function(child, index) {
           tabs.push(child.getAttribute('name'));
         });
 
-        if(tabs.length > 0) {
+        if (tabs.length > 0) {
           scope.tabs = tabs;
           scope.$on('tabChange', function(e, index, title) {
             angular.forEach(examples, function(child) {
@@ -280,28 +287,109 @@ angular.module('examples', [])
   };
 }])
 
+.factory('createCopyrightNotice', function() {
+    var COPYRIGHT = 'Copyright ' + (new Date()).getFullYear() + ' Google Inc. All Rights Reserved.\n'
+     + 'Use of this source code is governed by an MIT-style license that\n'
+     + 'can be found in the LICENSE file at http://angular.io/license';
+    var COPYRIGHT_JS_CSS = '\n\n/*\n' + COPYRIGHT + '\n*/';
+    var COPYRIGHT_HTML = '\n\n<!-- \n' + COPYRIGHT + '\n-->';
 
-.factory('openPlunkr', ['formPostData', '$http', '$q', function(formPostData, $http, $q) {
-  return function(exampleFolder, clickEvent) {
+    return function getCopyright(filename) {
+      switch (filename.substr(filename.lastIndexOf('.'))) {
+        case '.html':
+          return COPYRIGHT_HTML;
+        case '.js':
+        case '.css':
+          return COPYRIGHT_JS_CSS;
+        case '.md':
+          return COPYRIGHT;
+      }
+      return '';
+    };
+})
 
-    var exampleName = 'AngularJS Example';
-    var newWindow = clickEvent.ctrlKey || clickEvent.metaKey;
+.directive('plnkrOpener', ['$q', 'getExampleData', 'formPostData', 'createCopyrightNotice', function($q, getExampleData, formPostData, createCopyrightNotice) {
+  return {
+    scope: {},
+    bindToController: {
+      'examplePath': '@'
+    },
+    controllerAs: 'plnkr',
+    template: '<button ng-click="plnkr.open($event)" class="btn pull-right"> <i class="glyphicon glyphicon-edit">&nbsp;</i> Edit in Plunker</button> ',
+    controller: [function PlnkrOpenerCtrl() {
+      var ctrl = this;
 
+      ctrl.example = {
+        path: ctrl.examplePath,
+        manifest: undefined,
+        files: undefined,
+        name: 'AngularJS Example'
+      };
+
+      ctrl.prepareExampleData = function() {
+        if (ctrl.example.manifest) {
+          return $q.when(ctrl.example);
+        }
+
+        return getExampleData(ctrl.examplePath).then(function(data) {
+          ctrl.example.files = data.files;
+          ctrl.example.manifest = data.manifest;
+
+          // Build a pretty title for the Plunkr
+          var exampleNameParts = data.manifest.name.split('-');
+          exampleNameParts.unshift('AngularJS');
+          angular.forEach(exampleNameParts, function(part, index) {
+            exampleNameParts[index] = part.charAt(0).toUpperCase() + part.substr(1);
+          });
+          ctrl.example.name = exampleNameParts.join(' - ');
+
+          return ctrl.example;
+        });
+      };
+
+      ctrl.open = function(clickEvent) {
+
+        var newWindow = clickEvent.ctrlKey || clickEvent.metaKey;
+
+        var postData = {
+          'tags[0]': 'angularjs',
+          'tags[1]': 'example',
+          'private': true
+        };
+
+        // Make sure the example data is available.
+        // If an XHR must be made, this might break some pop-up blockers when
+        // new window is requested
+        ctrl.prepareExampleData()
+          .then(function() {
+            angular.forEach(ctrl.example.files, function(file) {
+              postData['files[' + file.name + ']'] = file.content + createCopyrightNotice(file.name);
+            });
+
+            postData.description = ctrl.example.name;
+
+            formPostData('https://plnkr.co/edit/?p=preview', newWindow, postData);
+          });
+
+      };
+
+      // Initialize the example data, so it's ready when clicking the open button.
+      // Otherwise pop-up blockers will prevent a new window from opening
+      ctrl.prepareExampleData(ctrl.example.path);
+
+    }]
+  };
+}])
+
+.factory('getExampleData', ['$http', '$q', function($http, $q) {
+  return function(exampleFolder) {
     // Load the manifest for the example
-    $http.get(exampleFolder + '/manifest.json')
+    return $http.get(exampleFolder + '/manifest.json')
       .then(function(response) {
         return response.data;
       })
       .then(function(manifest) {
         var filePromises = [];
-
-        // Build a pretty title for the Plunkr
-        var exampleNameParts = manifest.name.split('-');
-        exampleNameParts.unshift('AngularJS');
-        angular.forEach(exampleNameParts, function(part, index) {
-          exampleNameParts[index] = part.charAt(0).toUpperCase() + part.substr(1);
-        });
-        exampleName = exampleNameParts.join(' - ');
 
         angular.forEach(manifest.files, function(filename) {
           filePromises.push($http.get(exampleFolder + '/' + filename, { transformResponse: [] })
@@ -309,8 +397,8 @@ angular.module('examples', [])
 
               // The manifests provide the production index file but Plunkr wants
               // a straight index.html
-              if (filename === "index-production.html") {
-                filename = "index.html"
+              if (filename === 'index-production.html') {
+                filename = 'index.html';
               }
 
               return {
@@ -319,24 +407,16 @@ angular.module('examples', [])
               };
             }));
         });
-        return $q.all(filePromises);
-      })
-      .then(function(files) {
-        var postData = {};
 
-        angular.forEach(files, function(file) {
-          postData['files[' + file.name + ']'] = file.content;
+        return $q.all({
+          manifest: manifest,
+          files: $q.all(filePromises)
         });
-
-        postData['tags[0]'] = "angularjs";
-        postData['tags[1]'] = "example";
-        postData.private = true;
-        postData.description = exampleName;
-
-        formPostData('http://plnkr.co/edit/?p=preview', newWindow, postData);
       });
   };
 }]);
+
+'use strict';
 
 angular.module('search', [])
 
@@ -349,34 +429,38 @@ angular.module('search', [])
 
   $scope.search = function(q) {
     var MIN_SEARCH_LENGTH = 2;
-    if(q.length >= MIN_SEARCH_LENGTH) {
+    if (q.length >= MIN_SEARCH_LENGTH) {
       docsSearch(q).then(function(hits) {
-        var results = {};
+        // Make sure the areas are always in the same order
+        var results = {
+          api: [],
+          guide: [],
+          tutorial: [],
+          error: [],
+          misc: []
+        };
+
         angular.forEach(hits, function(hit) {
           var area = hit.area;
 
-          var limit = (area == 'api') ? 40 : 14;
+          var limit = (area === 'api') ? 40 : 14;
           results[area] = results[area] || [];
-          if(results[area].length < limit) {
+          if (results[area].length < limit) {
             results[area].push(hit);
           }
         });
 
-        var totalAreas = 0;
-        for(var i in results) {
-          ++totalAreas;
-        }
-        if(totalAreas > 0) {
+        var totalAreas = Object.keys(results).length;
+        if (totalAreas > 0) {
           $scope.colClassName = 'cols-' + totalAreas;
         }
         $scope.hasResults = totalAreas > 0;
         $scope.results = results;
       });
-    }
-    else {
+    } else {
       clearResults();
     }
-    if(!$scope.$$phase) $scope.$apply();
+    if (!$scope.$$phase) $scope.$apply();
   };
 
   $scope.submit = function() {
@@ -384,14 +468,14 @@ angular.module('search', [])
     if ($scope.results.api) {
       result = $scope.results.api[0];
     } else {
-      for(var i in $scope.results) {
+      for (var i in $scope.results) {
         result = $scope.results[i][0];
-        if(result) {
+        if (result) {
           break;
         }
       }
     }
-    if(result) {
+    if (result) {
       $location.path(result.path);
       $scope.hideResults();
     }
@@ -424,10 +508,12 @@ angular.module('search', [])
   // It should only be used where the browser does not support WebWorkers
   function localSearchFactory($http, $timeout, NG_PAGES) {
 
-    console.log('Using Local Search Index');
+    if (window.console && window.console.log) {
+      window.console.log('Using Local Search Index');
+    }
 
     // Create the lunr index
-    var index = lunr(function() {
+    var index = lunr(/** @this */ function() {
       this.ref('path');
       this.field('titleWords', {boost: 50});
       this.field('members', { boost: 40});
@@ -468,12 +554,14 @@ angular.module('search', [])
   // It should only be used where the browser does support WebWorkers
   function webWorkerSearchFactory($q, $rootScope, NG_PAGES) {
 
-    console.log('Using WebWorker Search Index')
+    if (window.console && window.console.log) {
+      window.console.log('Using WebWorker Search Index');
+    }
 
     var searchIndex = $q.defer();
     var results;
 
-    var worker = new Worker('js/search-worker.js');
+    var worker = new window.Worker('js/search-worker.js');
 
     // The worker will send us a message in two situations:
     // - when the index has been built, ready to run a query
@@ -481,7 +569,7 @@ angular.module('search', [])
     worker.onmessage = function(oEvent) {
       $rootScope.$apply(function() {
 
-        switch(oEvent.data.e) {
+        switch (oEvent.data.e) {
           case 'index-ready':
             searchIndex.resolve();
             break;
@@ -538,7 +626,7 @@ angular.module('search', [])
         FORWARD_SLASH_KEYCODE = 191;
     angular.element($document[0].body).on('keydown', function(event) {
       var input = element[0];
-      if(event.keyCode == FORWARD_SLASH_KEYCODE && document.activeElement != input) {
+      if (event.keyCode === FORWARD_SLASH_KEYCODE && window.document.activeElement !== input) {
         event.stopPropagation();
         event.preventDefault();
         input.focus();
@@ -546,7 +634,7 @@ angular.module('search', [])
     });
 
     element.on('keydown', function(event) {
-      if(event.keyCode == ESCAPE_KEY_KEYCODE) {
+      if (event.keyCode === ESCAPE_KEY_KEYCODE) {
         event.stopPropagation();
         event.preventDefault();
         scope.$apply(function() {
@@ -557,6 +645,8 @@ angular.module('search', [])
   };
 }]);
 
+'use strict';
+
 angular.module('tutorials', [])
 
 .directive('docTutorialNav', function() {
@@ -564,20 +654,22 @@ angular.module('tutorials', [])
     '',
     'step_00', 'step_01', 'step_02', 'step_03', 'step_04',
     'step_05', 'step_06', 'step_07', 'step_08', 'step_09',
-    'step_10', 'step_11', 'step_12', 'the_end'
+    'step_10', 'step_11', 'step_12', 'step_13', 'step_14',
+    'the_end'
   ];
   return {
     scope: {},
     template:
       '<a ng-href="tutorial/{{prev}}"><li class="btn btn-primary"><i class="glyphicon glyphicon-step-backward"></i> Previous</li></a>\n' +
-      '<a ng-href="https://github.com/angular/angular-phonecat/compare/1.4-step-{{diffLo}}...1.4-step-{{diffHi}}"><li class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Code Diff</li></a>\n' +
+      '<a ng-href="http://angular.github.io/angular-phonecat/step-{{seq}}/app"><li class="btn btn-primary"><i class="glyphicon glyphicon-play"></i> Live Demo</li></a>\n' +
+      '<a ng-href="https://github.com/angular/angular-phonecat/compare/step-{{diffLo}}...step-{{diffHi}}"><li class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Code Diff</li></a>\n' +
       '<a ng-href="tutorial/{{next}}"><li class="btn btn-primary">Next <i class="glyphicon glyphicon-step-forward"></i></li></a>',
     link: function(scope, element, attrs) {
       var seq = 1 * attrs.docTutorialNav;
       scope.seq = seq;
       scope.prev = pages[seq];
       scope.next = pages[2 + seq];
-      scope.diffLo = seq ? (seq - 1): '0~1';
+      scope.diffLo = seq ? (seq - 1) : '0~1';
       scope.diffHi = seq;
 
       element.addClass('btn-group');
@@ -596,16 +688,17 @@ angular.module('tutorials', [])
       '<p><button class="btn" ng-click="show=!show">Workspace Reset Instructions  ➤</button></p>\n' +
       '<div class="alert alert-info" ng-show="show">\n' +
       '  <p>Reset the workspace to step {{step}}.</p>' +
-      '  <p><pre>git checkout -f 1.4-step-{{step}}</pre></p>\n' +
-      '  <p>Refresh your browser to see the changes.</p>\n' +
+      '  <p><pre>git checkout -f step-{{step}}</pre></p>\n' +
+      '  <p>Refresh your browser or check out this step online: ' +
+          '<a href="http://angular.github.io/angular-phonecat/step-{{step}}/app">Step {{step}} Live Demo</a>.</p>\n' +
       '</div>\n' +
       '<p>The most important changes are listed below. You can see the full diff on ' +
-        '<a ng-href="https://github.com/angular/angular-phonecat/compare/1.4-step-{{step ? (step - 1) : \'0~1\'}}...1.4-step-{{step}}" title="See diff on Github">GitHub</a>\n' +
+        '<a ng-href="https://github.com/angular/angular-phonecat/compare/step-{{step ? (step - 1): \'0~1\'}}...step-{{step}}" title="See diff on Github">GitHub</a>.\n' +
       '</p>'
   };
 });
 
-"use strict";
+'use strict';
 
 angular.module('versions', [])
 
@@ -613,7 +706,7 @@ angular.module('versions', [])
   $scope.docs_version  = NG_VERSIONS[0];
   $scope.docs_versions = NG_VERSIONS;
 
-  for(var i=0, minor = NaN; i < NG_VERSIONS.length; i++) {
+  for (var i = 0, minor = NaN; i < NG_VERSIONS.length; i++) {
     var version = NG_VERSIONS[i];
     // NaN will give false here
     if (minor <= version.minor) {
@@ -632,7 +725,7 @@ angular.module('versions', [])
         url = '';
     if (version.isOldDocsUrl) {
       url = version.docsUrl;
-    }else{
+    } else {
       url = version.docsUrl + currentPagePath;
     }
     $window.location = url;

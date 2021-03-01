@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngEventDirs.js?message=docs(ngSubmit)%3A%20describe%20your%20change...#L317' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngEventDirs.js?message=docs(ngSubmit)%3A%20describe%20your%20change...#L317' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngEventDirs.js#L317' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngEventDirs.js#L317' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -35,6 +35,8 @@ for a detailed discussion of when <code>ngSubmit</code> may be triggered.
 
 
 
+
+
 <div>
   
 
@@ -51,6 +53,11 @@ for a detailed discussion of when <code>ngSubmit</code> may be triggered.
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-submit&#10;  ng-submit=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-submit&gt;</code></pre>
+      </li>
     <li>as attribute:
         <pre><code>&lt;form&#10;  ng-submit=&quot;expression&quot;&gt;&#10;...&#10;&lt;/form&gt;</code></pre>
       </li>
@@ -98,13 +105,12 @@ for a detailed discussion of when <code>ngSubmit</code> may be triggered.
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example79', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-submit"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example79"
-      module="submitExample">
+      path="examples/example-ng-submit"
+      module="submitExample"
+      name="ng-submit">
 
   
     <div class="runnable-example-file" 
@@ -122,7 +128,7 @@ for a detailed discussion of when <code>ngSubmit</code> may be triggered.
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example79/index.html" name="example-example79"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-submit/index.html" name="example-ng-submit"></iframe>
   </div>
 </div>
 

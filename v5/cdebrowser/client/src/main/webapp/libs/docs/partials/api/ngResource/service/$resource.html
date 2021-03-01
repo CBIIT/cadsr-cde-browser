@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngResource/resource.js?message=docs($resource)%3A%20describe%20your%20change...#L62' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngResource/resource.js?message=docs($resource)%3A%20describe%20your%20change...#L76' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ngResource/resource.js#L62' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngResource/resource.js#L76' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -11,7 +11,9 @@
   <h1 class="api-profile-header-heading">$resource</h1>
   <ol class="api-profile-header-structure naked-list step-list">
     
-  
+  <li>
+    <a href="api/ngResource/provider/$resourceProvider">- $resourceProvider</a>
+  </li>
 
     <li>
       - service in module <a href="api/ngResource">ngResource</a>
@@ -42,15 +44,17 @@ this:</p>
 
 
 
+
+
 <div>
   
   <h2 id="dependencies">Dependencies</h2>
   <ul>
-    <li><a href="api/ng/service/$http"><code>$http</code></a></li>
+    <li><a href="api/ng/service/$http"><code>$http</code></a></li><li><a href="api/ng/service/$log"><code>$log</code></a></li><li><a href="api/ng/service/$q"><code>$q</code></a></li><li><a href="api/ng/service/$timeout"><code>$timeout</code></a></li>
   </ul>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -108,16 +112,20 @@ this:</p>
       </td>
       <td>
         <p>Default values for <code>url</code> parameters. These can be overridden in
-  <code>actions</code> methods. If a parameter value is a function, it will be executed every time
-  when a param value needs to be obtained for a request (unless the param was overridden).</p>
+  <code>actions</code> methods. If a parameter value is a function, it will be called every time
+  a param value needs to be obtained for a request (unless the param was overridden). The function
+  will be passed the current data value as an argument.</p>
 <p>  Each key value in the parameter object is first bound to url template if present and then any
   excess keys are appended to the url search query after the <code>?</code>.</p>
 <p>  Given a template <code>/path/:verb</code> and parameter <code>{verb:&#39;greet&#39;, salutation:&#39;Hello&#39;}</code> results in
   URL <code>/path/greet?salutation=Hello</code>.</p>
-<p>  If the parameter value is prefixed with <code>@</code> then the value for that parameter will be extracted
-  from the corresponding property on the <code>data</code> object (provided when calling an action method).  For
-  example, if the <code>defaultParam</code> object is <code>{someParam: &#39;@someProp&#39;}</code> then the value of <code>someParam</code>
-  will be <code>data.someProp</code>.</p>
+<p>  If the parameter value is prefixed with <code>@</code>, then the value for that parameter will be
+  extracted from the corresponding property on the <code>data</code> object (provided when calling a
+  &quot;non-GET&quot; action method).
+  For example, if the <code>defaultParam</code> object is <code>{someParam: &#39;@someProp&#39;}</code> then the value of
+  <code>someParam</code> will be <code>data.someProp</code>.
+  Note that the parameter will be ignored, when calling a &quot;GET&quot; action method (i.e. an action
+  method that does not accept a request body)</p>
 
         
       </td>
@@ -146,8 +154,9 @@ your resource object.</li>
 <li><strong><code>method</code></strong> – {string} – Case insensitive HTTP method (e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>,
 <code>DELETE</code>, <code>JSONP</code>, etc).</li>
 <li><strong><code>params</code></strong> – {Object=} – Optional set of pre-bound parameters for this action. If any of
-the parameter value is a function, it will be executed every time when a param value needs to
-be obtained for a request (unless the param was overridden).</li>
+the parameter value is a function, it will be called every time when a param value needs to
+be obtained for a request (unless the param was overridden). The function will be passed the
+current data value as an argument.</li>
 <li><strong><code>url</code></strong> – {string} – action specific <code>url</code> override. The url templating is supported just
 like for the resource-level urls.</li>
 <li><strong><code>isArray</code></strong> – {boolean=} – If true then the returned object for this action is an array,
@@ -163,9 +172,9 @@ an object and serializes to using <code>angular.toJson</code>. To prevent this b
 <code>{function(data, headersGetter)|Array.&lt;function(data, headersGetter)&gt;}</code> –
 transform function or an array of such functions. The transform function takes the http
 response body and headers and returns its transformed (typically deserialized) version.
-By default, transformResponse will contain one function that checks if the response looks like
-a JSON string and deserializes it using <code>angular.fromJson</code>. To prevent this behavior, set
-<code>transformResponse</code> to an empty array: <code>transformResponse: []</code></li>
+By default, transformResponse will contain one function that checks if the response looks
+like a JSON string and deserializes it using <code>angular.fromJson</code>. To prevent this behavior,
+set <code>transformResponse</code> to an empty array: <code>transformResponse: []</code></li>
 <li><strong><code>cache</code></strong> – <code>{boolean|Cache}</code> – If true, a default $http cache will be used to cache the
 GET request, otherwise if a cache instance built with
 <a href="api/ng/service/$cacheFactory">$cacheFactory</a>, this cache will be used for
@@ -173,8 +182,11 @@ caching.</li>
 <li><strong><code>timeout</code></strong> – <code>{number}</code> – timeout in milliseconds.<br />
 <strong>Note:</strong> In contrast to <a href="api/ng/service/$http#usage">$http.config</a>, <a href="api/ng/service/$q">promises</a> are
 <strong>not</strong> supported in $resource, because the same value would be used for multiple requests.
-If you need support for cancellable $resource actions, you should upgrade to version 1.5 or
-higher.</li>
+If you are looking for a way to cancel requests, you should use the <code>cancellable</code> option.</li>
+<li><strong><code>cancellable</code></strong> – <code>{boolean}</code> – if set to true, the request made by a &quot;non-instance&quot; call
+will be cancelled (if not already completed) by calling <code>$cancelRequest()</code> on the call&#39;s
+return value. Calling <code>$cancelRequest()</code> for a non-cancellable or an already
+completed/cancelled request will have no effect.<br /></li>
 <li><strong><code>withCredentials</code></strong> - <code>{boolean}</code> - whether to set the <code>withCredentials</code> flag on the
 XHR object. See
 <a href="https://developer.mozilla.org/en/http_access_control#section_5">requests with credentials</a>
@@ -201,11 +213,13 @@ with <code>http response</code> object. See <a href="api/ng/service/$http">$http
       </td>
       <td>
         <p>Hash with custom settings that should extend the
-  default <code>$resourceProvider</code> behavior.  The only supported option is</p>
-<p>  Where:</p>
+  default <code>$resourceProvider</code> behavior.  The supported options are:</p>
 <ul>
 <li><strong><code>stripTrailingSlashes</code></strong> – {boolean} – If true then the trailing
 slashes from any calculated URL will be stripped. (Defaults to true.)</li>
+<li><strong><code>cancellable</code></strong> – {boolean} – If true, the request made by a &quot;non-instance&quot; call will be
+cancelled (if not already completed) by calling <code>$cancelRequest()</code> on the call&#39;s return value.
+This can be overwritten per action. (Defaults to false.)</li>
 </ul>
 
         
@@ -259,7 +273,7 @@ var user = User.get({userId:123}, function() {
   with (httpResponse) argument.</p>
 <p>  Class actions return empty instance (with additional properties below).
   Instance actions return promise of the action.</p>
-<p>  The Resource instances and collection have these additional properties:</p>
+<p>  The Resource instances and collections have these additional properties:</p>
 <ul>
 <li><p><code>$promise</code>: the <a href="api/ng/service/$q">promise</a> of the original server interaction that created this
 instance or collection.</p>
@@ -275,6 +289,17 @@ returned by the interceptor.</p>
 <li><p><code>$resolved</code>: <code>true</code> after first server interaction is completed (either with success or
  rejection), <code>false</code> before that. Knowing if the Resource has been resolved is useful in
  data-binding.</p>
+<p>The Resource instances and collections have these additional methods:</p>
+</li>
+<li><p><code>$cancelRequest</code>: If there is a cancellable, pending request related to the instance or
+ collection, calling this method will abort the request.</p>
+<p>The Resource instances have these additional methods:</p>
+</li>
+<li><p><code>toJSON</code>: It returns a simple object without any of the extra properties added as part of
+the Resource API. This object can be serialized through <a href="api/ng/function/angular.toJson"><code>angular.toJson</code></a> safely
+without attaching Angular-specific fields. Notice that <code>JSON.stringify</code> (and
+<code>angular.toJson</code>) automatically use this method when serializing a Resource instance
+(see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON(">MDN</a>_behavior)).</p>
 </li>
 </ul>
 </td>
@@ -325,8 +350,9 @@ expect(newCard.id).toEqual(789);
 <p>The object returned from this function execution is a resource &quot;class&quot; which has &quot;static&quot; method
 for each action in the definition.</p>
 <p>Calling these methods invoke <code>$http</code> on the <code>url</code> template with the given <code>method</code>, <code>params</code> and
-<code>headers</code>.
-When the data is returned from the server then the object is an instance of the resource type and
+<code>headers</code>.</p>
+<h1 id="user-resource">User resource</h1>
+<p>When the data is returned from the server then the object is an instance of the resource type and
 all of the non-GET methods are available with <code>$</code> prefix. This allows you to easily support CRUD
 operations (create, read, update, delete) on server-side data.</p>
 <pre><code class="lang-js">var User = $resource(&#39;/user/:userId&#39;, {userId:&#39;@id&#39;});
@@ -339,10 +365,10 @@ User.get({userId:123}, function(user) {
 in the response that came from the server as well as $http header getter function, so one
 could rewrite the above example and get access to http headers as:</p>
 <pre><code class="lang-js">var User = $resource(&#39;/user/:userId&#39;, {userId:&#39;@id&#39;});
-User.get({userId:123}, function(u, getResponseHeaders){
-  u.abc = true;
-  u.$save(function(u, putResponseHeaders) {
-    //u =&gt; saved user object
+User.get({userId:123}, function(user, getResponseHeaders){
+  user.abc = true;
+  user.$save(function(user, putResponseHeaders) {
+    //user =&gt; saved user object
     //putResponseHeaders =&gt; $http header getter
   });
 });
@@ -380,6 +406,27 @@ Notes.update({ id:$id }, note);
 
 // This will PUT /notes/ID with the note object in the request payload
 }]);
+</code></pre>
+<h1 id="cancelling-requests">Cancelling requests</h1>
+<p>If an action&#39;s configuration specifies that it is cancellable, you can cancel the request related
+to an instance or collection (as long as it is a result of a &quot;non-instance&quot; call):</p>
+<pre><code class="lang-js">// ...defining the `Hotel` resource...
+var Hotel = $resource(&#39;/api/hotel/:id&#39;, {id: &#39;@id&#39;}, {
+  // Let&#39;s make the `query()` method cancellable
+  query: {method: &#39;get&#39;, isArray: true, cancellable: true}
+});
+
+// ...somewhere in the PlanVacationController...
+...
+this.onDestinationChanged = function onDestinationChanged(destination) {
+  // We don&#39;t care about any pending request for hotels
+  // in a different destination any more
+  this.availableHotels.$cancelRequest();
+
+  // Let&#39;s query for hotels in &#39;&lt;destination&gt;&#39;
+  // (calls: /api/hotel?location=&lt;destination&gt;)
+  this.availableHotels = Hotel.query({location: destination});
+};
 </code></pre>
 
 </div>

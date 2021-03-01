@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/guide/scope.ngdoc?message=docs(guide%2FScopes)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/scope.ngdoc?message=docs(guide%2FScopes)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="what-are-scopes-">What are Scopes?</h1>
@@ -38,13 +38,12 @@ the applications.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example42', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-scope-data-model"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example42"
-      module="scopeExample">
+      path="examples/example-scope-data-model"
+      module="scopeExample"
+      name="scope-data-model">
 
   
     <div class="runnable-example-file" 
@@ -62,7 +61,7 @@ the applications.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example42/index.html" name="example-example42"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-scope-data-model/index.html" name="example-scope-data-model"></iframe>
   </div>
 </div>
 
@@ -118,13 +117,12 @@ a diagram depicting the scope boundaries.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example43', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-scope-hierarchies"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example43"
-      module="scopeExample">
+      path="examples/example-scope-hierarchies"
+      module="scopeExample"
+      name="scope-hierarchies">
 
   
     <div class="runnable-example-file" 
@@ -149,7 +147,7 @@ a diagram depicting the scope boundaries.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example43/index.html" name="example-example43"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-scope-hierarchies/index.html" name="example-scope-hierarchies"></iframe>
   </div>
 </div>
 
@@ -185,13 +183,12 @@ variable.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example44', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-scope-events-propagation"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example44"
-      module="eventExample">
+      path="examples/example-scope-events-propagation"
+      module="eventExample"
+      name="scope-events-propagation">
 
   
     <div class="runnable-example-file" 
@@ -209,7 +206,7 @@ variable.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example44/index.html" name="example-example44"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-scope-events-propagation/index.html" name="example-scope-events-propagation"></iframe>
   </div>
 </div>
 
@@ -340,7 +337,7 @@ each event.</li>
 <li>The <a href="api/ng/type/$rootScope.Scope#$watch">$watch</a> list is a set of expressions
 which may have changed since last iteration. If a change is detected then the <code>$watch</code>
 function is called which typically updates the DOM with the new value.</li>
-<li>Once the Angular <a href="api/ng/type/$rootScope.Scope#$digest">$digest</a> loop finishes, 
+<li>Once the Angular <a href="api/ng/type/$rootScope.Scope#$digest">$digest</a> loop finishes,
 the execution leaves the Angular and JavaScript context. This is followed by the browser
 re-rendering the DOM to reflect any changes.</li>
 </ol>

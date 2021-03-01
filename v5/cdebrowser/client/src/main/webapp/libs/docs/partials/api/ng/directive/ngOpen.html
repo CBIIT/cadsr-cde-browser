@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/attrs.js?message=docs(ngOpen)%3A%20describe%20your%20change...#L295' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/attrs.js?message=docs(ngOpen)%3A%20describe%20your%20change...#L304' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/attrs.js#L295' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/attrs.js#L304' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,8 +23,13 @@
   <p>Sets the <code>open</code> attribute on the element, if the expression inside <code>ngOpen</code> is truthy.</p>
 <p>A special directive is necessary because we cannot use interpolation inside the <code>open</code>
 attribute. See the <a href="guide/interpolation">interpolation guide</a> for more info.</p>
+<h2 id="a-note-about-browser-compatibility">A note about browser compatibility</h2>
+<p>Edge, Firefox, and Internet Explorer do not support the <code>details</code> element, it is
+recommended to use <a href="api/ng/directive/ngShow"><code>ngShow</code></a> and <a href="api/ng/directive/ngHide"><code>ngHide</code></a> instead.</p>
 
 </div>
+
+
 
 
 
@@ -92,12 +97,11 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example58', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-open"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example58">
+      path="examples/example-ng-open"
+      name="ng-open">
 
   
     <div class="runnable-example-file" 
@@ -115,7 +119,7 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example58/index.html" name="example-example58"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-open/index.html" name="example-ng-open"></iframe>
   </div>
 </div>
 

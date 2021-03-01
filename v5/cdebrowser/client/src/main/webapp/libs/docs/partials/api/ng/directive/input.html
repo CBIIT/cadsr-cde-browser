@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/input.js?message=docs(input)%3A%20describe%20your%20change...#L1569' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/input.js?message=docs(input)%3A%20describe%20your%20change...#L1902' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/input.js#L1569' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/input.js#L1902' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -28,6 +28,8 @@ Input control follows HTML5 input types and polyfills the HTML5 validation behav
 Specifically, data binding and event handling via <code>ng-model</code> is unsupported for <code>input[file]</code>.
 </div>
 </div>
+
+
 
 
 
@@ -178,8 +180,8 @@ Specifically, data binding and event handling via <code>ng-model</code> is unsup
         <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Sets <code>pattern</code> validation error key if the ngModel value does not match
-   a RegExp found by evaluating the Angular expression given in the attribute value.
+        <p>Sets <code>pattern</code> validation error key if the ngModel <a href="api/ng/type/ngModel.NgModelController#$viewValue">$viewValue</a>
+   value does not match a RegExp found by evaluating the Angular expression given in the attribute value.
    If the expression evaluates to a RegExp object, then this is used directly.
    If the expression evaluates to a string, then it will be converted to a RegExp
    after wrapping it in <code>^</code> and <code>$</code> characters. For instance, <code>&quot;abc&quot;</code> will be converted to
@@ -238,9 +240,7 @@ Specifically, data binding and event handling via <code>ng-model</code> is unsup
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-input-directive', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-input-directive"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-input-directive"

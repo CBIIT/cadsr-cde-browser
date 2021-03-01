@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/guide/directive.ngdoc?message=docs(guide%2FDirectives)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/directive.ngdoc?message=docs(guide%2FDirectives)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="creating-custom-directives">Creating Custom Directives</h1>
@@ -60,13 +60,12 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example10', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-bind"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example10"
-      module="docsBindExample">
+      path="examples/example-directive-bind"
+      module="docsBindExample"
+      name="directive-bind">
 
   
     <div class="runnable-example-file" 
@@ -91,7 +90,7 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example10/index.html" name="example-example10"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-bind/index.html" name="example-directive-bind"></iframe>
   </div>
 </div>
 
@@ -140,11 +139,6 @@ options to tell <code>$compile</code> how the directive should behave when match
 initialization work here. The function is invoked using
 <a href="api/auto/service/$injector#invoke">$injector.invoke</a> which makes it injectable just like a
 controller.</p>
-<div class="alert alert-success">
-<strong>Best Practice:</strong> Prefer using the definition object over returning a function.
-</div>
-
-
 <p>We&#39;ll go over a few common examples of directives, then dive deep into the different options
 and compilation process.</p>
 <div class="alert alert-success">
@@ -164,13 +158,12 @@ several others. This is a good opportunity to use a directive to simplify your t
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example11', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-simple"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example11"
-      module="docsSimpleDirective">
+      path="examples/example-directive-simple"
+      module="docsSimpleDirective"
+      name="directive-simple">
 
   
     <div class="runnable-example-file" 
@@ -188,7 +181,7 @@ several others. This is a good opportunity to use a directive to simplify your t
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example11/index.html" name="example-example11"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-simple/index.html" name="example-directive-simple"></iframe>
   </div>
 </div>
 
@@ -211,13 +204,12 @@ using <code>templateUrl</code> instead:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example12', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-template-url"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example12"
-      module="docsTemplateUrlDirective">
+      path="examples/example-directive-template-url"
+      module="docsTemplateUrlDirective"
+      name="directive-template-url">
 
   
     <div class="runnable-example-file" 
@@ -242,7 +234,7 @@ using <code>templateUrl</code> instead:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example12/index.html" name="example-example12"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-template-url/index.html" name="example-directive-template-url"></iframe>
   </div>
 </div>
 
@@ -259,20 +251,19 @@ function, since the template is requested before the scope is initialized.
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example13', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-template-url-fn"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example13"
-      module="docsTemplateUrlDirective">
+      path="examples/example-directive-template-url-fn"
+      module="docsTemplateUrlDirective"
+      name="directive-template-url-fn">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsTemplateUrlDirective&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.customer = {&#10;    name: &#39;Naomi&#39;,&#10;    address: &#39;1600 Amphitheatre&#39;&#10;  };&#10;}])&#10;.directive(&#39;myCustomer&#39;, function() {&#10;  return {&#10;    templateUrl: function(elem, attr){&#10;      return &#39;customer-&#39;+attr.type+&#39;.html&#39;;&#10;    }&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsTemplateUrlDirective&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.customer = {&#10;    name: &#39;Naomi&#39;,&#10;    address: &#39;1600 Amphitheatre&#39;&#10;  };&#10;}])&#10;.directive(&#39;myCustomer&#39;, function() {&#10;  return {&#10;    templateUrl: function(elem, attr) {&#10;      return &#39;customer-&#39; + attr.type + &#39;.html&#39;;&#10;    }&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -297,7 +288,7 @@ function, since the template is requested before the scope is initialized.
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example13/index.html" name="example-example13"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-template-url-fn/index.html" name="example-directive-template-url-fn"></iframe>
   </div>
 </div>
 
@@ -323,13 +314,12 @@ create directives that are triggered by class name, you need to use the <code>re
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example14', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-restrict"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example14"
-      module="docsRestrictDirective">
+      path="examples/example-directive-restrict"
+      module="docsRestrictDirective"
+      name="directive-restrict">
 
   
     <div class="runnable-example-file" 
@@ -354,7 +344,7 @@ create directives that are triggered by class name, you need to use the <code>re
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example14/index.html" name="example-example14"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-restrict/index.html" name="example-directive-restrict"></iframe>
   </div>
 </div>
 
@@ -384,13 +374,12 @@ re-use such a directive:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example15', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-scope-problem"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example15"
-      module="docsScopeProblemExample">
+      path="examples/example-directive-scope-problem"
+      module="docsScopeProblemExample"
+      name="directive-scope-problem">
 
   
     <div class="runnable-example-file" 
@@ -415,7 +404,7 @@ re-use such a directive:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example15/index.html" name="example-example15"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-scope-problem/index.html" name="example-directive-scope-problem"></iframe>
   </div>
 </div>
 
@@ -428,13 +417,12 @@ we call an <strong>isolate scope</strong>. To do this, we can use a <a href="api
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example16', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-isolate"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example16"
-      module="docsIsolateScopeDirective">
+      path="examples/example-directive-isolate"
+      module="docsIsolateScopeDirective"
+      name="directive-isolate">
 
   
     <div class="runnable-example-file" 
@@ -459,7 +447,7 @@ we call an <strong>isolate scope</strong>. To do this, we can use a <a href="api
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example16/index.html" name="example-example16"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-isolate/index.html" name="example-directive-isolate"></iframe>
   </div>
 </div>
 
@@ -503,13 +491,12 @@ within our directive&#39;s template:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example17', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-isolate-2"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example17"
-      module="docsIsolationExample">
+      path="examples/example-directive-isolate-2"
+      module="docsIsolationExample"
+      name="directive-isolate-2">
 
   
     <div class="runnable-example-file" 
@@ -534,7 +521,7 @@ within our directive&#39;s template:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example17/index.html" name="example-example17"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-isolate-2/index.html" name="example-directive-isolate-2"></iframe>
   </div>
 </div>
 
@@ -586,13 +573,12 @@ We also want to remove the <code>$interval</code> if the directive is deleted so
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example18', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-link"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example18"
-      module="docsTimeDirective">
+      path="examples/example-directive-link"
+      module="docsTimeDirective"
+      name="directive-link">
 
   
     <div class="runnable-example-file" 
@@ -610,7 +596,7 @@ We also want to remove the <code>$interval</code> if the directive is deleted so
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example18/index.html" name="example-example18"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-link/index.html" name="example-directive-link"></iframe>
   </div>
 </div>
 
@@ -644,13 +630,12 @@ wrap any arbitrary content.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example19', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-transclude"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example19"
-      module="docsTransclusionDirective">
+      path="examples/example-directive-transclude"
+      module="docsTransclusionDirective"
+      name="directive-transclude">
 
   
     <div class="runnable-example-file" 
@@ -675,7 +660,7 @@ wrap any arbitrary content.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example19/index.html" name="example-example19"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-transclude/index.html" name="example-directive-transclude"></iframe>
   </div>
 </div>
 
@@ -688,20 +673,19 @@ that redefines <code>name</code> as <code>Jeff</code>. What do you think the <co
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example20', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-transclusion"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example20"
-      module="docsTransclusionExample">
+      path="examples/example-directive-transclusion"
+      module="docsTransclusionExample"
+      name="directive-transclusion">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsTransclusionExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    templateUrl: &#39;my-dialog.html&#39;,&#10;    link: function (scope) {&#10;      scope.name = &#39;Jeff&#39;;&#10;    }&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsTransclusionExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    templateUrl: &#39;my-dialog.html&#39;,&#10;    link: function(scope) {&#10;      scope.name = &#39;Jeff&#39;;&#10;    }&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -719,7 +703,7 @@ that redefines <code>name</code> as <code>Jeff</code>. What do you think the <co
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example20/index.html" name="example-example20"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-transclusion/index.html" name="example-directive-transclusion"></iframe>
   </div>
 </div>
 
@@ -745,20 +729,19 @@ own behavior to it.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example21', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-transclusion-scope"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example21"
-      module="docsIsoFnBindExample">
+      path="examples/example-directive-transclusion-scope"
+      module="docsIsoFnBindExample"
+      name="directive-transclusion-scope">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsIsoFnBindExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, &#39;$timeout&#39;, function($scope, $timeout) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;  $scope.message = &#39;&#39;;&#10;  $scope.hideDialog = function (message) {&#10;    $scope.message = message;&#10;    $scope.dialogIsHidden = true;&#10;    $timeout(function () {&#10;      $scope.message = &#39;&#39;;&#10;      $scope.dialogIsHidden = false;&#10;    }, 2000);&#10;  };&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      &#39;close&#39;: &#39;&amp;onClose&#39;&#10;    },&#10;    templateUrl: &#39;my-dialog-close.html&#39;&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsIsoFnBindExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, &#39;$timeout&#39;, function($scope, $timeout) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;  $scope.message = &#39;&#39;;&#10;  $scope.hideDialog = function(message) {&#10;    $scope.message = message;&#10;    $scope.dialogIsHidden = true;&#10;    $timeout(function() {&#10;      $scope.message = &#39;&#39;;&#10;      $scope.dialogIsHidden = false;&#10;    }, 2000);&#10;  };&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      &#39;close&#39;: &#39;&amp;onClose&#39;&#10;    },&#10;    templateUrl: &#39;my-dialog-close.html&#39;&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -776,7 +759,7 @@ own behavior to it.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example21/index.html" name="example-example21"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-transclusion-scope/index.html" name="example-directive-transclusion-scope"></iframe>
   </div>
 </div>
 
@@ -813,13 +796,12 @@ element?</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example22', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-drag"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example22"
-      module="dragModule">
+      path="examples/example-directive-drag"
+      module="dragModule"
+      name="directive-drag">
 
   
     <div class="runnable-example-file" 
@@ -837,7 +819,7 @@ element?</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example22/index.html" name="example-example22"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-drag/index.html" name="example-directive-drag"></iframe>
   </div>
 </div>
 
@@ -851,20 +833,19 @@ to which tab is active.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example23', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-tabs"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example23"
-      module="docsTabsExample">
+      path="examples/example-directive-tabs"
+      module="docsTabsExample"
+      name="directive-tabs">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsTabsExample&#39;, [])&#10;.directive(&#39;myTabs&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    controller: [&#39;$scope&#39;, function($scope) {&#10;      var panes = $scope.panes = [];&#10;&#10;      $scope.select = function(pane) {&#10;        angular.forEach(panes, function(pane) {&#10;          pane.selected = false;&#10;        });&#10;        pane.selected = true;&#10;      };&#10;&#10;      this.addPane = function(pane) {&#10;        if (panes.length === 0) {&#10;          $scope.select(pane);&#10;        }&#10;        panes.push(pane);&#10;      };&#10;    }],&#10;    templateUrl: &#39;my-tabs.html&#39;&#10;  };&#10;})&#10;.directive(&#39;myPane&#39;, function() {&#10;  return {&#10;    require: &#39;^^myTabs&#39;,&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      title: &#39;@&#39;&#10;    },&#10;    link: function(scope, element, attrs, tabsCtrl) {&#10;      tabsCtrl.addPane(scope);&#10;    },&#10;    templateUrl: &#39;my-pane.html&#39;&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsTabsExample&#39;, [])&#10;.directive(&#39;myTabs&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    controller: [&#39;$scope&#39;, function MyTabsController($scope) {&#10;      var panes = $scope.panes = [];&#10;&#10;      $scope.select = function(pane) {&#10;        angular.forEach(panes, function(pane) {&#10;          pane.selected = false;&#10;        });&#10;        pane.selected = true;&#10;      };&#10;&#10;      this.addPane = function(pane) {&#10;        if (panes.length === 0) {&#10;          $scope.select(pane);&#10;        }&#10;        panes.push(pane);&#10;      };&#10;    }],&#10;    templateUrl: &#39;my-tabs.html&#39;&#10;  };&#10;})&#10;.directive(&#39;myPane&#39;, function() {&#10;  return {&#10;    require: &#39;^^myTabs&#39;,&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      title: &#39;@&#39;&#10;    },&#10;    link: function(scope, element, attrs, tabsCtrl) {&#10;      tabsCtrl.addPane(scope);&#10;    },&#10;    templateUrl: &#39;my-pane.html&#39;&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -889,7 +870,7 @@ to which tab is active.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example23/index.html" name="example-example23"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-tabs/index.html" name="example-directive-tabs"></iframe>
   </div>
 </div>
 

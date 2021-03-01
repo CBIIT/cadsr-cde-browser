@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngInclude.js?message=docs(ngInclude)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngInclude.js?message=docs(ngInclude)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngInclude.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngInclude.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -33,6 +33,8 @@ For example, <code>ngInclude</code> won&#39;t work for cross-domain requests on 
 access on some browsers.</p>
 
 </div>
+
+
 
 
 
@@ -68,8 +70,24 @@ access on some browsers.</p>
   </div>
   
   <h2 id="animations">Animations</h2>
-  <p>enter - animation is used to bring new content into the browser.
-leave - animation is used to animate existing content away.</p>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#enter">enter</a></td>
+<td>when the expression changes, on the new include</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#leave">leave</a></td>
+<td>when the expression changes, on the old include</td>
+</tr>
+</tbody>
+</table>
 <p>The enter and leave animation occur concurrently.</p>
 
   <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
@@ -348,15 +366,14 @@ leave - animation is used to animate existing content away.</p>
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example84', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-include"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example84"
+      path="examples/example-ng-include"
       module="includeExample"
       deps="angular-animate.js"
-      animations="true">
+      animations="true"
+      name="ng-include">
 
   
     <div class="runnable-example-file" 
@@ -370,7 +387,7 @@ leave - animation is used to animate existing content away.</p>
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;includeExample&#39;, [&#39;ngAnimate&#39;])&#10;.controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.templates =&#10;    [ { name: &#39;template1.html&#39;, url: &#39;template1.html&#39;},&#10;      { name: &#39;template2.html&#39;, url: &#39;template2.html&#39;} ];&#10;  $scope.template = $scope.templates[0];&#10;}]);</code></pre>
+      <pre><code>angular.module(&#39;includeExample&#39;, [&#39;ngAnimate&#39;])&#10;.controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.templates =&#10;    [{ name: &#39;template1.html&#39;, url: &#39;template1.html&#39;},&#10;     { name: &#39;template2.html&#39;, url: &#39;template2.html&#39;}];&#10;  $scope.template = $scope.templates[0];&#10;}]);</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -398,11 +415,11 @@ leave - animation is used to animate existing content away.</p>
       name="protractor.js"
       type="protractor"
       language="js">
-      <pre><code>var templateSelect = element(by.model(&#39;template&#39;));&#10;var includeElem = element(by.css(&#39;[ng-include]&#39;));&#10;&#10;it(&#39;should load template1.html&#39;, function() {&#10;  expect(includeElem.getText()).toMatch(/Content of template1.html/);&#10;});&#10;&#10;it(&#39;should load template2.html&#39;, function() {&#10;  if (browser.params.browser == &#39;firefox&#39;) {&#10;    // Firefox can&#39;t handle using selects&#10;    // See https://github.com/angular/protractor/issues/480&#10;    return;&#10;  }&#10;  templateSelect.click();&#10;  templateSelect.all(by.css(&#39;option&#39;)).get(2).click();&#10;  expect(includeElem.getText()).toMatch(/Content of template2.html/);&#10;});&#10;&#10;it(&#39;should change to blank&#39;, function() {&#10;  if (browser.params.browser == &#39;firefox&#39;) {&#10;    // Firefox can&#39;t handle using selects&#10;    return;&#10;  }&#10;  templateSelect.click();&#10;  templateSelect.all(by.css(&#39;option&#39;)).get(0).click();&#10;  expect(includeElem.isPresent()).toBe(false);&#10;});</code></pre>
+      <pre><code>var templateSelect = element(by.model(&#39;template&#39;));&#10;var includeElem = element(by.css(&#39;[ng-include]&#39;));&#10;&#10;it(&#39;should load template1.html&#39;, function() {&#10;  expect(includeElem.getText()).toMatch(/Content of template1.html/);&#10;});&#10;&#10;it(&#39;should load template2.html&#39;, function() {&#10;  if (browser.params.browser === &#39;firefox&#39;) {&#10;    // Firefox can&#39;t handle using selects&#10;    // See https://github.com/angular/protractor/issues/480&#10;    return;&#10;  }&#10;  templateSelect.click();&#10;  templateSelect.all(by.css(&#39;option&#39;)).get(2).click();&#10;  expect(includeElem.getText()).toMatch(/Content of template2.html/);&#10;});&#10;&#10;it(&#39;should change to blank&#39;, function() {&#10;  if (browser.params.browser === &#39;firefox&#39;) {&#10;    // Firefox can&#39;t handle using selects&#10;    return;&#10;  }&#10;  templateSelect.click();&#10;  templateSelect.all(by.css(&#39;option&#39;)).get(0).click();&#10;  expect(includeElem.isPresent()).toBe(false);&#10;});</code></pre>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example84/index.html" name="example-example84"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-include/index.html" name="example-ng-include"></iframe>
   </div>
 </div>
 

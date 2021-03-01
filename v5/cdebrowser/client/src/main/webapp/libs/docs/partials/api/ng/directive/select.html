@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/select.js?message=docs(select)%3A%20describe%20your%20change...#L150' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/select.js?message=docs(select)%3A%20describe%20your%20change...#L152' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/select.js#L150' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/select.js#L152' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -31,7 +31,7 @@ the content of the <code>value</code> attribute or the textContent of the <code>
 If you want dynamic value attributes, you can use interpolation inside the value attribute.</p>
 <div class="alert alert-warning">
 Note that the value of a <code>select</code> directive used without <code>ngOptions</code> is always a string.
-When the model needs to be bound to a non-string value, you must either explictly convert it
+When the model needs to be bound to a non-string value, you must either explicitly convert it
 using a directive (see example below) or use <code>ngOptions</code> to specify the set of options.
 This is because an option element can only be bound to string values at present.
 </div>
@@ -48,6 +48,8 @@ comprehension expression, and additionally in reducing memory and increasing spe
 a new scope for each repeated instance.
 </div>
 </div>
+
+
 
 
 
@@ -218,9 +220,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-static-select', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-static-select"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-static-select"
@@ -239,7 +239,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
       name="app.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;staticSelect&#39;, [])&#10; .controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;   $scope.data = {&#10;    singleSelect: null,&#10;    multipleSelect: [],&#10;    option1: &#39;option-1&#39;,&#10;   };&#10;&#10;   $scope.forceUnknownOption = function() {&#10;     $scope.data.singleSelect = &#39;nonsense&#39;;&#10;   };&#10;}]);</code></pre>
+      <pre><code>angular.module(&#39;staticSelect&#39;, [])&#10; .controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;   $scope.data = {&#10;    singleSelect: null,&#10;    multipleSelect: [],&#10;    option1: &#39;option-1&#39;&#10;   };&#10;&#10;   $scope.forceUnknownOption = function() {&#10;     $scope.data.singleSelect = &#39;nonsense&#39;;&#10;   };&#10;}]);</code></pre>
     </div>
   
 
@@ -253,9 +253,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-ngrepeat-select', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ngrepeat-select"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-ngrepeat-select"
@@ -274,7 +272,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
       name="app.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;ngrepeatSelect&#39;, [])&#10; .controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;   $scope.data = {&#10;    repeatSelect: null,&#10;    availableOptions: [&#10;      {id: &#39;1&#39;, name: &#39;Option A&#39;},&#10;      {id: &#39;2&#39;, name: &#39;Option B&#39;},&#10;      {id: &#39;3&#39;, name: &#39;Option C&#39;}&#10;    ],&#10;   };&#10;}]);</code></pre>
+      <pre><code>angular.module(&#39;ngrepeatSelect&#39;, [])&#10; .controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;   $scope.data = {&#10;    repeatSelect: null,&#10;    availableOptions: [&#10;      {id: &#39;1&#39;, name: &#39;Option A&#39;},&#10;      {id: &#39;2&#39;, name: &#39;Option B&#39;},&#10;      {id: &#39;3&#39;, name: &#39;Option C&#39;}&#10;    ]&#10;   };&#10;}]);</code></pre>
     </div>
   
 
@@ -289,9 +287,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-select-with-default-values', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-select-with-default-values"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-select-with-default-values"
@@ -324,9 +320,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-select-with-non-string-options', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-select-with-non-string-options"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-select-with-non-string-options"
@@ -352,7 +346,7 @@ set on the model on selection. See <a href="api/ng/directive/ngOptions"><code>ng
       name="protractor.js"
       type="protractor"
       language="js">
-      <pre><code>it(&#39;should initialize to model&#39;, function() {&#10;  var select = element(by.css(&#39;select&#39;));&#10;  expect(element(by.model(&#39;model.id&#39;)).$(&#39;option:checked&#39;).getText()).toEqual(&#39;Two&#39;);&#10;});</code></pre>
+      <pre><code>it(&#39;should initialize to model&#39;, function() {&#10;  expect(element(by.model(&#39;model.id&#39;)).$(&#39;option:checked&#39;).getText()).toEqual(&#39;Two&#39;);&#10;});</code></pre>
     </div>
   
 

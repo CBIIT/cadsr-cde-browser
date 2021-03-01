@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/Angular.js?message=docs(ngApp)%3A%20describe%20your%20change...#L1387' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/Angular.js?message=docs(ngApp)%3A%20describe%20your%20change...#L1476' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/Angular.js#L1387' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/Angular.js#L1476' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,10 +23,19 @@
   <p>Use this directive to <strong>auto-bootstrap</strong> an AngularJS application. The <code>ngApp</code> directive
 designates the <strong>root element</strong> of the application and is typically placed near the root element
 of the page - e.g. on the <code>&lt;body&gt;</code> or <code>&lt;html&gt;</code> tags.</p>
-<p>Only one AngularJS application can be auto-bootstrapped per HTML document. The first <code>ngApp</code>
+<p>There are a few things to keep in mind when using <code>ngApp</code>:</p>
+<ul>
+<li>only one AngularJS application can be auto-bootstrapped per HTML document. The first <code>ngApp</code>
 found in the document will be used to define the root element to auto-bootstrap as an
 application. To run multiple applications in an HTML document you must manually bootstrap them using
-<a href="api/ng/function/angular.bootstrap"><code>angular.bootstrap</code></a> instead. AngularJS applications cannot be nested within each other.</p>
+<a href="api/ng/function/angular.bootstrap"><code>angular.bootstrap</code></a> instead.</li>
+<li>AngularJS applications cannot be nested within each other.</li>
+<li>Do not use a directive that uses <a href="api/ng/service/$compile#transclusion">transclusion</a> on the same element as <code>ngApp</code>.
+This includes directives such as <a href="api/ng/directive/ngIf"><code>ngIf</code></a>, <a href="api/ng/directive/ngInclude"><code>ngInclude</code></a> and
+<a href="api/ngRoute/directive/ngView"><code>ngView</code></a>.
+Doing this misplaces the app <a href="api/ng/service/$rootElement"><code>$rootElement</code></a> and the app&#39;s <a href="api/auto/service/$injector">injector</a>,
+causing animations to stop working and making the injector inaccessible from outside the app.</li>
+</ul>
 <p>You can specify an <strong>AngularJS module</strong> to be used as the root module for the application.  This
 module will be loaded into the <a href="api/auto/service/$injector"><code>$injector</code></a> when the application is bootstrapped. It
 should contain the application code needed or have dependencies on other modules that will
@@ -38,13 +47,12 @@ would not be resolved to <code>3</code>.</p>
 <p> 
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example47', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-app"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example47"
-      module="ngAppDemo">
+      path="examples/example-ng-app"
+      module="ngAppDemo"
+      name="ng-app">
 
   
     <div class="runnable-example-file" 
@@ -62,7 +70,7 @@ would not be resolved to <code>3</code>.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example47/index.html" name="example-example47"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-app/index.html" name="example-ng-app"></iframe>
   </div>
 </div>
 
@@ -72,13 +80,12 @@ would not be resolved to <code>3</code>.</p>
 <p> 
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example48', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-strict-di"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example48"
-      ng-app-included="true">
+      path="examples/example-strict-di"
+      ng-app-included="true"
+      name="strict-di">
 
   
     <div class="runnable-example-file" 
@@ -92,7 +99,7 @@ would not be resolved to <code>3</code>.</p>
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;ngAppStrictDemo&#39;, [])&#10;// BadController will fail to instantiate, due to relying on automatic function annotation,&#10;// rather than an explicit annotation&#10;.controller(&#39;BadController&#39;, function($scope) {&#10;  $scope.a = 1;&#10;  $scope.b = 2;&#10;})&#10;// Unlike BadController, GoodController1 and GoodController2 will not fail to be instantiated,&#10;// due to using explicit annotations using the array style and $inject property, respectively.&#10;.controller(&#39;GoodController1&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.a = 1;&#10;  $scope.b = 2;&#10;}])&#10;.controller(&#39;GoodController2&#39;, GoodController2);&#10;function GoodController2($scope) {&#10;  $scope.name = &quot;World&quot;;&#10;}&#10;GoodController2.$inject = [&#39;$scope&#39;];</code></pre>
+      <pre><code>angular.module(&#39;ngAppStrictDemo&#39;, [])&#10;// BadController will fail to instantiate, due to relying on automatic function annotation,&#10;// rather than an explicit annotation&#10;.controller(&#39;BadController&#39;, function($scope) {&#10;  $scope.a = 1;&#10;  $scope.b = 2;&#10;})&#10;// Unlike BadController, GoodController1 and GoodController2 will not fail to be instantiated,&#10;// due to using explicit annotations using the array style and $inject property, respectively.&#10;.controller(&#39;GoodController1&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.a = 1;&#10;  $scope.b = 2;&#10;}])&#10;.controller(&#39;GoodController2&#39;, GoodController2);&#10;function GoodController2($scope) {&#10;  $scope.name = &#39;World&#39;;&#10;}&#10;GoodController2.$inject = [&#39;$scope&#39;];</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -103,7 +110,7 @@ would not be resolved to <code>3</code>.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example48/index.html" name="example-example48"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-strict-di/index.html" name="example-strict-di"></iframe>
   </div>
 </div>
 
@@ -111,6 +118,8 @@ would not be resolved to <code>3</code>.</p>
 </p>
 
 </div>
+
+
 
 
 
@@ -131,6 +140,11 @@ would not be resolved to <code>3</code>.</p>
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-app&#10;  ng-app=&quot;angular.Module&quot;&#10;  [ng-strict-di=&quot;boolean&quot;]&gt;&#10;...&#10;&lt;/ng-app&gt;</code></pre>
+      </li>
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-app=&quot;angular.Module&quot;&#10;  [ng-strict-di=&quot;boolean&quot;]&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>

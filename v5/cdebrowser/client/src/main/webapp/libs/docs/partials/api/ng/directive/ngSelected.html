@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/attrs.js?message=docs(ngSelected)%3A%20describe%20your%20change...#L259' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/attrs.js?message=docs(ngSelected)%3A%20describe%20your%20change...#L261' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/attrs.js#L259' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/attrs.js#L261' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,8 +23,15 @@
   <p>Sets the <code>selected</code> attribute on the element, if the expression inside <code>ngSelected</code> is truthy.</p>
 <p>A special directive is necessary because we cannot use interpolation inside the <code>selected</code>
 attribute. See the <a href="guide/interpolation">interpolation guide</a> for more info.</p>
-
+<div class="alert alert-warning">
+  <strong>Note:</strong> <code>ngSelected</code> does not interact with the <code>select</code> and <code>ngModel</code> directives, it only
+  sets the <code>selected</code> attribute on the element. If you are using <code>ngModel</code> on the select, you
+  should not use <code>ngSelected</code> on the options, as <code>ngModel</code> will set the select value and
+  selected options.
 </div>
+</div>
+
+
 
 
 
@@ -92,12 +99,11 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example57', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-selected"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example57">
+      path="examples/example-ng-selected"
+      name="ng-selected">
 
   
     <div class="runnable-example-file" 
@@ -115,7 +121,7 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example57/index.html" name="example-example57"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-selected/index.html" name="example-ng-selected"></iframe>
   </div>
 </div>
 

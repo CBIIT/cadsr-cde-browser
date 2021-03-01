@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngBind.js?message=docs(ngBindTemplate)%3A%20describe%20your%20change...#L71' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngBind.js?message=docs(ngBindTemplate)%3A%20describe%20your%20change...#L71' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngBind.js#L71' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngBind.js#L71' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -32,6 +32,8 @@ expressions. This directive is needed since some HTML elements
 
 
 
+
+
 <div>
   
 
@@ -48,6 +50,11 @@ expressions. This directive is needed since some HTML elements
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-bind-template&#10;  ng-bind-template=&quot;string&quot;&gt;&#10;...&#10;&lt;/ng-bind-template&gt;</code></pre>
+      </li>
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-bind-template=&quot;string&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -96,13 +103,12 @@ expressions. This directive is needed since some HTML elements
    
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example61', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-bind-template"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example61"
-      module="bindExample">
+      path="examples/example-ng-bind-template"
+      module="bindExample"
+      name="ng-bind-template">
 
   
     <div class="runnable-example-file" 
@@ -120,7 +126,7 @@ expressions. This directive is needed since some HTML elements
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example61/index.html" name="example-example61"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-bind-template/index.html" name="example-ng-bind-template"></iframe>
   </div>
 </div>
 

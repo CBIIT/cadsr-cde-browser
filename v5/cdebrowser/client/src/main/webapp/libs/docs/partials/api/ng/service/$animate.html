@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/animate.js?message=docs($animate)%3A%20describe%20your%20change...#L266' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/animate.js?message=docs($animate)%3A%20describe%20your%20change...#L280' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/animate.js#L266' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/animate.js#L280' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -42,10 +42,12 @@ their DOM-related operations (enter, leave and move). Other directives such as <
 
 
 
+
+
 <div>
   
 
-    
+  
 
   
 
@@ -140,7 +142,7 @@ their DOM-related operations (enter, leave and move). Other directives such as <
     
 
     
-    
+
     
 
   </li>
@@ -154,11 +156,14 @@ can be used in three different ways depending on the arguments:</p>
 <pre><code class="lang-js">// remove all the animation event listeners listening for `enter`
 $animate.off(&#39;enter&#39;);
 
+// remove listeners for all animation events from the container element
+$animate.off(container);
+
 // remove all the animation event listeners listening for `enter` on the given element and its children
 $animate.off(&#39;enter&#39;, container);
 
-// remove the event listener function provided by `listenerFn` that is set
-// to listen for `enter` on the given `element` as well as its children
+// remove the event listener function provided by `callback` that is set
+// to listen for `enter` on the given `container` as well as its children
 $animate.off(&#39;enter&#39;, container, callback);
 </code></pre>
 </div>
@@ -179,14 +184,16 @@ $animate.off(&#39;enter&#39;, container, callback);
     <tr>
       <td>
         event
-        
+        | container
         
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-string">string</a>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-domelement">DOMElement</a>
       </td>
       <td>
-        <p>the animation event (e.g. enter, leave, move, addClass, removeClass, etc...)</p>
+        <p>the animation event (e.g. enter, leave, move,
+addClass, removeClass, etc...), or the container element. If it is the element, all other
+arguments are ignored.</p>
 
         
       </td>
@@ -230,7 +237,7 @@ $animate.off(&#39;enter&#39;, container, callback);
     
 
     
-    
+
     
 
   </li>
@@ -299,7 +306,7 @@ $animate.off(&#39;enter&#39;, container, callback);
     
 
     
-    
+
     
 
   </li>
@@ -377,7 +384,7 @@ $animate.enabled(element, false);
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -433,7 +440,7 @@ $animate.enabled(element, false);
     
 
     
-    
+
     
 
   </li>
@@ -520,7 +527,14 @@ $animate.enabled(element, false);
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -532,7 +546,7 @@ $animate.enabled(element, false);
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -628,7 +642,14 @@ $animate.enabled(element, false);
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -640,7 +661,7 @@ $animate.enabled(element, false);
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -702,7 +723,14 @@ digest once the animation has completed.</p>
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -714,7 +742,7 @@ digest once the animation has completed.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -795,7 +823,14 @@ digest once the animation has completed.</p>
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -807,7 +842,7 @@ digest once the animation has completed.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -888,7 +923,14 @@ digest once the animation has completed.</p>
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -900,7 +942,7 @@ digest once the animation has completed.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -997,7 +1039,14 @@ digest once the animation has completed.</p>
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -1009,7 +1058,7 @@ digest once the animation has completed.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1029,7 +1078,7 @@ digest once the animation has completed.</p>
 </h3>
     <div><p>Performs an inline animation on the element which applies the provided to and from CSS styles to the element.
 If any detected CSS transition, keyframe or JavaScript matches the provided className value, then the animation will take
-on the provided styles. For example, if a transition animation is set for the given className, then the provided <code>from</code> and
+on the provided styles. For example, if a transition animation is set for the given classNamem, then the provided <code>from</code> and
 <code>to</code> styles will be applied alongside the given transition. If the CSS style provided in <code>from</code> does not have a corresponding
 style in <code>to</code>, the style in <code>from</code> is applied immediately, and no animation is run.
 If a JavaScript animation is detected then the provided styles will be given in as function parameters into the <code>animate</code>
@@ -1118,7 +1167,7 @@ method (or as part of the <code>options</code> parameter):</p>
       <td>
         <p>an optional CSS class that will be applied to the element for the duration of the animation. If
    this value is left as empty then a CSS class of <code>ng-inline-animate</code> will be applied to the element.
-   (Note that if no animation is detected then this value will not be appplied to the element.)</p>
+   (Note that if no animation is detected then this value will not be applied to the element.)</p>
 
         
       </td>
@@ -1134,7 +1183,14 @@ method (or as part of the <code>options</code> parameter):</p>
         <a href="" class="label type-hint type-hint-object">object</a>
       </td>
       <td>
-        <p>an optional collection of options/styles that will be applied to the element</p>
+        <p>an optional collection of options/styles that will be applied to the element.
+  The object can have the following properties:</p>
+<ul>
+<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
+<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
+</ul>
 
         
       </td>
@@ -1146,7 +1202,7 @@ method (or as part of the <code>options</code> parameter):</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">

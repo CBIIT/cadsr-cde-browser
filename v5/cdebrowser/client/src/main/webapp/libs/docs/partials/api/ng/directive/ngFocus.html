@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngEventDirs.js?message=docs(ngFocus)%3A%20describe%20your%20change...#L380' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngEventDirs.js?message=docs(ngFocus)%3A%20describe%20your%20change...#L380' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngEventDirs.js#L380' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngEventDirs.js#L380' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -30,6 +30,8 @@ during an <code>$apply</code> to ensure a consistent state.</p>
 
 
 
+
+
 <div>
   
 
@@ -46,6 +48,11 @@ during an <code>$apply</code> to ensure a consistent state.</p>
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-focus&#10;  ng-focus=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-focus&gt;</code></pre>
+      </li>
     <li>as attribute:
         <pre><code>&lt;window, input, select, textarea, a&#10;  ng-focus=&quot;expression&quot;&gt;&#10;...&#10;&lt;/window, input, select, textarea, a&gt;</code></pre>
       </li>

@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/sce.js?message=docs($sce)%3A%20describe%20your%20change...#L399' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/sce.js?message=docs($sce)%3A%20describe%20your%20change...#L408' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/sce.js#L399' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/sce.js#L408' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -36,7 +36,7 @@ one to execute arbitrary javascript by the use of the expression() syntax.  Refe
 <http://blogs.msdn.com/b/ie/archive/2008/10/16/ending-expressions.aspx> to learn more about them.
 You can ensure your document is in standards mode and not quirks mode by adding <code>&lt;!doctype html&gt;</code>
 to the top of your HTML document.</p>
-<p>SCE assists in writing code in way that (a) is secure by default and (b) makes auditing for
+<p>SCE assists in writing code in a way that (a) is secure by default and (b) makes auditing for
 security vulnerabilities such as XSS, clickjacking, etc. a lot easier.</p>
 <p>Here&#39;s an example of a binding in a privileged context:</p>
 <pre><code>&lt;input ng-model=&quot;userHtml&quot; aria-label=&quot;User input&quot;&gt;
@@ -129,7 +129,7 @@ security onto an application later.</p>
 </tr>
 <tr>
 <td><code>$sce.RESOURCE_URL</code></td>
-<td>For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include <code>ng-include</code>, <code>src</code> / <code>ngSrc</code> bindings for tags other than <code>IMG</code> (e.g. <code>IFRAME</code>, <code>OBJECT</code>, etc.)  <br><br>Note that <code>$sce.RESOURCE_URL</code> makes a stronger statement about the URL than <code>$sce.URL</code> does and therefore contexts requiring values trusted for <code>$sce.RESOURCE_URL</code> can be used anywhere that values trusted for <code>$sce.URL</code> are required.</td>
+<td>For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include <code>ng-include</code>, <code>src</code> / <code>ngSrc</code> bindings for tags other than <code>IMG</code>, <code>VIDEO</code>, <code>AUDIO</code>, <code>SOURCE</code>, and <code>TRACK</code> (e.g. <code>IFRAME</code>, <code>OBJECT</code>, etc.)  <br><br>Note that <code>$sce.RESOURCE_URL</code> makes a stronger statement about the URL than <code>$sce.URL</code> does and therefore contexts requiring values trusted for <code>$sce.RESOURCE_URL</code> can be used anywhere that values trusted for <code>$sce.URL</code> are required.</td>
 </tr>
 <tr>
 <td><code>$sce.JS</code></td>
@@ -191,14 +191,13 @@ Closure library&#39;s <a href="http://docs.closure-library.googlecode.com/git/cl
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example111', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-sce-service"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example111"
+      path="examples/example-sce-service"
       module="mySceApp"
-      deps="angular-sanitize.js">
+      deps="angular-sanitize.js"
+      name="sce-service">
 
   
     <div class="runnable-example-file" 
@@ -212,7 +211,7 @@ Closure library&#39;s <a href="http://docs.closure-library.googlecode.com/git/cl
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;mySceApp&#39;, [&#39;ngSanitize&#39;])&#10;.controller(&#39;AppController&#39;, [&#39;$http&#39;, &#39;$templateCache&#39;, &#39;$sce&#39;,&#10;  function($http, $templateCache, $sce) {&#10;    var self = this;&#10;    $http.get(&quot;test_data.json&quot;, {cache: $templateCache}).success(function(userComments) {&#10;      self.userComments = userComments;&#10;    });&#10;    self.explicitlyTrustedHtml = $sce.trustAsHtml(&#10;        &#39;&lt;span onmouseover=&quot;this.textContent=&amp;quot;Explicitly trusted HTML bypasses &#39; +&#10;        &#39;sanitization.&amp;quot;&quot;&gt;Hover over this text.&lt;/span&gt;&#39;);&#10;  }]);</code></pre>
+      <pre><code>angular.module(&#39;mySceApp&#39;, [&#39;ngSanitize&#39;])&#10;.controller(&#39;AppController&#39;, [&#39;$http&#39;, &#39;$templateCache&#39;, &#39;$sce&#39;,&#10;  function AppController($http, $templateCache, $sce) {&#10;    var self = this;&#10;    $http.get(&#39;test_data.json&#39;, {cache: $templateCache}).success(function(userComments) {&#10;      self.userComments = userComments;&#10;    });&#10;    self.explicitlyTrustedHtml = $sce.trustAsHtml(&#10;        &#39;&lt;span onmouseover=&quot;this.textContent=&amp;quot;Explicitly trusted HTML bypasses &#39; +&#10;        &#39;sanitization.&amp;quot;&quot;&gt;Hover over this text.&lt;/span&gt;&#39;);&#10;  }]);</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -226,11 +225,11 @@ Closure library&#39;s <a href="http://docs.closure-library.googlecode.com/git/cl
       name="protractor.js"
       type="protractor"
       language="js">
-      <pre><code>describe(&#39;SCE doc demo&#39;, function() {&#10;  it(&#39;should sanitize untrusted values&#39;, function() {&#10;    expect(element.all(by.css(&#39;.htmlComment&#39;)).first().getInnerHtml())&#10;        .toBe(&#39;&lt;span&gt;Is &lt;i&gt;anyone&lt;/i&gt; reading this?&lt;/span&gt;&#39;);&#10;  });&#10;&#10;  it(&#39;should NOT sanitize explicitly trusted values&#39;, function() {&#10;    expect(element(by.id(&#39;explicitlyTrustedHtml&#39;)).getInnerHtml()).toBe(&#10;        &#39;&lt;span onmouseover=&quot;this.textContent=&amp;quot;Explicitly trusted HTML bypasses &#39; +&#10;        &#39;sanitization.&amp;quot;&quot;&gt;Hover over this text.&lt;/span&gt;&#39;);&#10;  });&#10;});</code></pre>
+      <pre><code>describe(&#39;SCE doc demo&#39;, function() {&#10;  it(&#39;should sanitize untrusted values&#39;, function() {&#10;    expect(element.all(by.css(&#39;.htmlComment&#39;)).first().getAttribute(&#39;innerHTML&#39;))&#10;        .toBe(&#39;&lt;span&gt;Is &lt;i&gt;anyone&lt;/i&gt; reading this?&lt;/span&gt;&#39;);&#10;  });&#10;&#10;  it(&#39;should NOT sanitize explicitly trusted values&#39;, function() {&#10;    expect(element(by.id(&#39;explicitlyTrustedHtml&#39;)).getAttribute(&#39;innerHTML&#39;)).toBe(&#10;        &#39;&lt;span onmouseover=&quot;this.textContent=&amp;quot;Explicitly trusted HTML bypasses &#39; +&#10;        &#39;sanitization.&amp;quot;&quot;&gt;Hover over this text.&lt;/span&gt;&#39;);&#10;  });&#10;});</code></pre>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example111/index.html" name="example-example111"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-sce-service/index.html" name="example-sce-service"></iframe>
   </div>
 </div>
 
@@ -255,10 +254,12 @@ you&#39;re migrating them a module at a time.</p>
 
 
 
+
+
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -284,7 +285,7 @@ you&#39;re migrating them a module at a time.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -359,7 +360,7 @@ wraps the expression in a call to <a href="api/ng/service/$sce#getTrusted">$sce.
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -443,7 +444,7 @@ escaping.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -501,7 +502,7 @@ where Angular expects a $sce.trustAs() return value.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -560,7 +561,7 @@ where Angular expects a $sce.trustAs() return value.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -619,7 +620,7 @@ where Angular expects a $sce.trustAs() return value.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -678,7 +679,7 @@ where Angular expects a $sce.trustAs() return value.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -756,7 +757,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -815,7 +816,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -872,7 +873,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -929,7 +930,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -986,7 +987,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1043,7 +1044,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1100,7 +1101,7 @@ If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1163,7 +1164,7 @@ are evaluated against (typically a scope object).</li>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1226,7 +1227,7 @@ are evaluated against (typically a scope object).</li>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1289,7 +1290,7 @@ are evaluated against (typically a scope object).</li>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -1352,7 +1353,7 @@ are evaluated against (typically a scope object).</li>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">

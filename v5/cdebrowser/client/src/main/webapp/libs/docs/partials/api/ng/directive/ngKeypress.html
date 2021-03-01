@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngEventDirs.js?message=docs(ngKeypress)%3A%20describe%20your%20change...#L295' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngEventDirs.js?message=docs(ngKeypress)%3A%20describe%20your%20change...#L295' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngEventDirs.js#L295' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngEventDirs.js#L295' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -27,6 +27,8 @@
 
 
 
+
+
 <div>
   
 
@@ -43,6 +45,11 @@
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-keypress&#10;  ng-keypress=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-keypress&gt;</code></pre>
+      </li>
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-keypress=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -91,12 +98,11 @@ and can be interrogated for keyCode, altKey, etc.)</p>
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example78', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-keypress"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example78">
+      path="examples/example-ng-keypress"
+      name="ng-keypress">
 
   
     <div class="runnable-example-file" 
@@ -107,7 +113,7 @@ and can be interrogated for keyCode, altKey, etc.)</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example78/index.html" name="example-example78"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-keypress/index.html" name="example-ng-keypress"></iframe>
   </div>
 </div>
 

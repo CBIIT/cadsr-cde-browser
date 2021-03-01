@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngSwitch.js?message=docs(ngSwitch)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngSwitch.js?message=docs(ngSwitch)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngSwitch.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngSwitch.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -42,6 +42,8 @@ value of the expression <code>$scope.someVal</code>.
 
 
 
+
+
 <div>
   
 
@@ -68,8 +70,24 @@ value of the expression <code>$scope.someVal</code>.
   </div>
   
   <h2 id="animations">Animations</h2>
-  <p>enter - happens after the ngSwitch contents change and the matched child element is placed inside the container
-leave - happens just after the ngSwitch contents change and just before the former contents are removed from the DOM</p>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#enter">enter</a></td>
+<td>after the ngSwitch contents change and the matched child element is placed inside the container</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#leave">leave</a></td>
+<td>after the ngSwitch contents change and just before the former contents are removed from the DOM</td>
+</tr>
+</tbody>
+</table>
 
   <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 <section class="api-section">
@@ -121,15 +139,14 @@ case match.</li>
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example94', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-switch"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example94"
+      path="examples/example-ng-switch"
       module="switchExample"
       deps="angular-animate.js"
-      animations="true">
+      animations="true"
+      name="ng-switch">
 
   
     <div class="runnable-example-file" 
@@ -161,7 +178,7 @@ case match.</li>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example94/index.html" name="example-example94"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-switch/index.html" name="example-ng-switch"></iframe>
   </div>
 </div>
 

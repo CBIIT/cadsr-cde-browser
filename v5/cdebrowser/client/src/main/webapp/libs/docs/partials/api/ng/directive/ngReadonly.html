@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/attrs.js?message=docs(ngReadonly)%3A%20describe%20your%20change...#L225' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/attrs.js?message=docs(ngReadonly)%3A%20describe%20your%20change...#L225' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/attrs.js#L225' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/attrs.js#L225' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -20,11 +20,15 @@
 
 
 <div class="api-profile-description">
-  <p>Sets the <code>readOnly</code> attribute on the element, if the expression inside <code>ngReadonly</code> is truthy.</p>
-<p>A special directive is necessary because we cannot use interpolation inside the <code>readOnly</code>
+  <p>Sets the <code>readonly</code> attribute on the element, if the expression inside <code>ngReadonly</code> is truthy.
+Note that <code>readonly</code> applies only to <code>input</code> elements with specific types. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-readonly">See the input docs on
+MDN</a> for more information.</p>
+<p>A special directive is necessary because we cannot use interpolation inside the <code>readonly</code>
 attribute. See the <a href="guide/interpolation">interpolation guide</a> for more info.</p>
 
 </div>
+
+
 
 
 
@@ -92,12 +96,11 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example56', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-readonly"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example56">
+      path="examples/example-ng-readonly"
+      name="ng-readonly">
 
   
     <div class="runnable-example-file" 
@@ -115,7 +118,7 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example56/index.html" name="example-example56"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-readonly/index.html" name="example-ng-readonly"></iframe>
   </div>
 </div>
 

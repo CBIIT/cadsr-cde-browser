@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngRoute/route.js?message=docs($route)%3A%20describe%20your%20change...#L254' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngRoute/route.js?message=docs($route)%3A%20describe%20your%20change...#L277' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ngRoute/route.js#L254' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngRoute/route.js#L277' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -37,6 +37,8 @@ It watches <code>$location.url()</code> and tries to map the path to an existing
 
 
 
+
+
 <div>
   
   <h2 id="dependencies">Dependencies</h2>
@@ -45,7 +47,7 @@ It watches <code>$location.url()</code> and tries to map the path to an existing
   </ul>
   
 
-    
+  
 
   
 
@@ -65,7 +67,7 @@ creates new scope and reinstantiates the controller.</p>
     
 
     
-    
+
     
 
   </li>
@@ -116,7 +118,7 @@ remaining properties will be treated as query params.</p>
     
 
     
-    
+
     
 
   </li>
@@ -464,7 +466,7 @@ instance of the Controller.</p>
     <td><p>Reference to the current route definition.
 The route definition contains:</p>
 <ul>
-<li><code>controller</code>: The controller constructor as define in route definition.</li>
+<li><code>controller</code>: The controller constructor as defined in the route definition.</li>
 <li><p><code>locals</code>: A map of locals which is used by <a href="api/ng/service/$controller">$controller</a> service for
 controller instantiation. The <code>locals</code> contain
 the resolved values of the <code>resolve</code> map. Additionally the <code>locals</code> also contain:</p>
@@ -472,6 +474,9 @@ the resolved values of the <code>resolve</code> map. Additionally the <code>loca
 <li><code>$scope</code> - The current route scope.</li>
 <li><code>$template</code> - The current route template HTML.</li>
 </ul>
+<p>The <code>locals</code> will be assigned to the route scope&#39;s <code>$resolve</code> property. You can override
+the property name, using <code>resolveAs</code> in the route definition. See
+<a href="api/ngRoute/provider/$routeProvider">$routeProvider</a> for more info.</p>
 </li>
 </ul>
 </td>
@@ -499,9 +504,7 @@ URL, and the <code>ngView</code> pulls in the partial.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-$route-service', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-$route-service"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-$route-service"
@@ -536,14 +539,14 @@ URL, and the <code>ngView</code> pulls in the partial.</p>
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;ngRouteExample&#39;, [&#39;ngRoute&#39;])&#10;&#10; .controller(&#39;MainController&#39;, function($scope, $route, $routeParams, $location) {&#10;     $scope.$route = $route;&#10;     $scope.$location = $location;&#10;     $scope.$routeParams = $routeParams;&#10; })&#10;&#10; .controller(&#39;BookController&#39;, function($scope, $routeParams) {&#10;     $scope.name = &quot;BookController&quot;;&#10;     $scope.params = $routeParams;&#10; })&#10;&#10; .controller(&#39;ChapterController&#39;, function($scope, $routeParams) {&#10;     $scope.name = &quot;ChapterController&quot;;&#10;     $scope.params = $routeParams;&#10; })&#10;&#10;.config(function($routeProvider, $locationProvider) {&#10;  $routeProvider&#10;   .when(&#39;/Book/:bookId&#39;, {&#10;    templateUrl: &#39;book.html&#39;,&#10;    controller: &#39;BookController&#39;,&#10;    resolve: {&#10;      // I will cause a 1 second delay&#10;      delay: function($q, $timeout) {&#10;        var delay = $q.defer();&#10;        $timeout(delay.resolve, 1000);&#10;        return delay.promise;&#10;      }&#10;    }&#10;  })&#10;  .when(&#39;/Book/:bookId/ch/:chapterId&#39;, {&#10;    templateUrl: &#39;chapter.html&#39;,&#10;    controller: &#39;ChapterController&#39;&#10;  });&#10;&#10;  // configure html5 to get links working on jsfiddle&#10;  $locationProvider.html5Mode(true);&#10;});</code></pre>
+      <pre><code>angular.module(&#39;ngRouteExample&#39;, [&#39;ngRoute&#39;])&#10;&#10; .controller(&#39;MainController&#39;, function($scope, $route, $routeParams, $location) {&#10;     $scope.$route = $route;&#10;     $scope.$location = $location;&#10;     $scope.$routeParams = $routeParams;&#10; })&#10;&#10; .controller(&#39;BookController&#39;, function($scope, $routeParams) {&#10;     $scope.name = &#39;BookController&#39;;&#10;     $scope.params = $routeParams;&#10; })&#10;&#10; .controller(&#39;ChapterController&#39;, function($scope, $routeParams) {&#10;     $scope.name = &#39;ChapterController&#39;;&#10;     $scope.params = $routeParams;&#10; })&#10;&#10;.config(function($routeProvider, $locationProvider) {&#10;  $routeProvider&#10;   .when(&#39;/Book/:bookId&#39;, {&#10;    templateUrl: &#39;book.html&#39;,&#10;    controller: &#39;BookController&#39;,&#10;    resolve: {&#10;      // I will cause a 1 second delay&#10;      delay: function($q, $timeout) {&#10;        var delay = $q.defer();&#10;        $timeout(delay.resolve, 1000);&#10;        return delay.promise;&#10;      }&#10;    }&#10;  })&#10;  .when(&#39;/Book/:bookId/ch/:chapterId&#39;, {&#10;    templateUrl: &#39;chapter.html&#39;,&#10;    controller: &#39;ChapterController&#39;&#10;  });&#10;&#10;  // configure html5 to get links working on jsfiddle&#10;  $locationProvider.html5Mode(true);&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
       name="protractor.js"
       type="protractor"
       language="js">
-      <pre><code>it(&#39;should load and compile correct template&#39;, function() {&#10;  element(by.linkText(&#39;Moby: Ch1&#39;)).click();&#10;  var content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller\: ChapterController/);&#10;  expect(content).toMatch(/Book Id\: Moby/);&#10;  expect(content).toMatch(/Chapter Id\: 1/);&#10;&#10;  element(by.partialLinkText(&#39;Scarlet&#39;)).click();&#10;&#10;  content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller\: BookController/);&#10;  expect(content).toMatch(/Book Id\: Scarlet/);&#10;});</code></pre>
+      <pre><code>it(&#39;should load and compile correct template&#39;, function() {&#10;  element(by.linkText(&#39;Moby: Ch1&#39;)).click();&#10;  var content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller: ChapterController/);&#10;  expect(content).toMatch(/Book Id: Moby/);&#10;  expect(content).toMatch(/Chapter Id: 1/);&#10;&#10;  element(by.partialLinkText(&#39;Scarlet&#39;)).click();&#10;&#10;  content = element(by.css(&#39;[ng-view]&#39;)).getText();&#10;  expect(content).toMatch(/controller: BookController/);&#10;  expect(content).toMatch(/Book Id: Scarlet/);&#10;});</code></pre>
     </div>
   
 

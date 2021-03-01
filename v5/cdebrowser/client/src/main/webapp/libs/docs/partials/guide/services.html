@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/guide/services.ngdoc?message=docs(guide%2FServices)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/services.ngdoc?message=docs(guide%2FServices)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="services">Services</h1>
@@ -26,13 +26,12 @@ subsystem takes care of the rest.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example45', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-services-usage"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example45"
-      module="myServiceModule">
+      path="examples/example-services-usage"
+      module="myServiceModule"
+      name="services-usage">
 
   
     <div class="runnable-example-file" 
@@ -46,7 +45,7 @@ subsystem takes care of the rest.</p>
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.&#10;module(&#39;myServiceModule&#39;, []).&#10; controller(&#39;MyController&#39;, [&#39;$scope&#39;,&#39;notify&#39;, function ($scope, notify) {&#10;   $scope.callNotify = function(msg) {&#10;     notify(msg);&#10;   };&#10; }]).&#10;factory(&#39;notify&#39;, [&#39;$window&#39;, function(win) {&#10;   var msgs = [];&#10;   return function(msg) {&#10;     msgs.push(msg);&#10;     if (msgs.length == 3) {&#10;       win.alert(msgs.join(&quot;\n&quot;));&#10;       msgs = [];&#10;     }&#10;   };&#10; }]);</code></pre>
+      <pre><code>angular.&#10;module(&#39;myServiceModule&#39;, []).&#10; controller(&#39;MyController&#39;, [&#39;$scope&#39;, &#39;notify&#39;, function($scope, notify) {&#10;   $scope.callNotify = function(msg) {&#10;     notify(msg);&#10;   };&#10; }]).&#10;factory(&#39;notify&#39;, [&#39;$window&#39;, function(win) {&#10;   var msgs = [];&#10;   return function(msg) {&#10;     msgs.push(msg);&#10;     if (msgs.length === 3) {&#10;       win.alert(msgs.join(&#39;\n&#39;));&#10;       msgs = [];&#10;     }&#10;   };&#10; }]);</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -57,7 +56,7 @@ subsystem takes care of the rest.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example45/index.html" name="example-example45"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-services-usage/index.html" name="example-services-usage"></iframe>
   </div>
 </div>
 

@@ -1,37 +1,36 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngMock/angular-mocks.js?message=docs(ngMock)%3A%20describe%20your%20change...#L1959' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngMock/angular-mocks.js?message=docs(ngMock)%3A%20describe%20your%20change...#L2277' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>
   <code>ngMock</code>
 </h1>
 
+<h2>Installation</h2>
 
-  <h2>Installation</h2>
+  <p>First, download the file:</p>
+<ul>
+<li><a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a> e.g.
+<code>&quot;//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-mocks.js&quot;</code></li>
+<li><a href="https://www.npmjs.com/">NPM</a> e.g. <code>npm install angular-mocks@X.Y.Z</code></li>
+<li><a href="http://bower.io">Bower</a> e.g. <code>bower install angular-mocks#X.Y.Z</code></li>
+<li><a href="https://code.angularjs.org/">code.angularjs.org</a> (discouraged for production use)  e.g.
+<code>&quot;//code.angularjs.org/X.Y.Z/angular-mocks.js&quot;</code></li>
+</ul>
+<p>where X.Y.Z is the AngularJS version you are running.</p>
+<p>Then, configure your test runner to load <code>angular-mocks.js</code> after <code>angular.js</code>.
+This example uses <a href="http://karma-runner.github.io/">Karma</a>:</p>
+<pre><code>config.set({
+  files: [
+    &#39;build/angular.js&#39;, // and other module files you need
+    &#39;build/angular-mocks.js&#39;,
+    &#39;&lt;path/to/application/files&gt;&#39;,
+    &#39;&lt;path/to/spec/files&gt;&#39;
+  ]
+});
+</code></pre>
+<p>Including the <code>angular-mocks.js</code> file automatically adds the <code>ngMock</code> module, so your tests
+ are ready to go!</p>
 
-  <p>First include <code>angular-mocks.js</code> in your HTML:</p>
-
-  <pre><code>&lt;script src=&quot;angular.js&quot;&gt;&#10;&lt;script src=&quot;angular-mocks.js&quot;&gt;</code></pre>
-
-  <p>You can download this file from the following places:</p>
-  <ul>
-    <li>
-      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
-      e.g. <code>//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-mocks.js</code>
-    </li>
-    <li>
-      <a href="http://bower.io">Bower</a><br>
-      e.g. <pre><code>bower install angular-mocks@X.Y.Z</code></pre>
-    </li>
-    <li>
-      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
-      e.g. <pre><code>&quot;//code.angularjs.org/X.Y.Z/angular-mocks.js&quot;</code></pre>
-    </li>
-  </ul>
-  <p>where X.Y.Z is the AngularJS version you are running.</p>
-  <p>Then load the module in your application by adding it as a dependent module:</p>
-  <pre><code>angular.module(&#39;app&#39;, [&#39;ngMock&#39;]);</code></pre>
-
-  <p>With that you&apos;re ready to get started!</p>
 
 
 <h1 id="ngmock">ngMock</h1>
@@ -39,6 +38,10 @@
 In addition, ngMock also extends various core ng services such that they can be
 inspected and controlled in a synchronous manner within test code.</p>
 <div doc-module-components="ngMock"></div>
+
+
+
+
 
 <div class="component-breakdown">
   <h2>Module Components</h2>
@@ -136,6 +139,16 @@ controllers of directives that use <a href="api/ng/service/$compile#-bindtocontr
 </td>
       </tr>
       
+      <tr>
+        <td><a href="api/ngMock/service/$componentController">$componentController</a></td>
+        <td><p>A service that can be used to create instances of component controllers.</p>
+<div class="alert alert-info">
+Be aware that the controller will be instantiated and attached to the scope as specified in
+the component definition object. If you do not provide a <code>$scope</code> object in the <code>locals</code> param
+then the helper will create a new isolated scope as a child of <code>$rootScope</code>.
+</div></td>
+      </tr>
+      
     </table>
   </div>
   
@@ -174,7 +187,7 @@ methods are automatically available on any <a href="api/ng/type/$rootScope.Scope
       
       <tr>
         <td><a href="api/ngMock/function/angular.mock.dump">angular.mock.dump</a></td>
-        <td><p><em>NOTE</em>: this is not an injectable instance, just a globally available function.</p>
+        <td><p><em>NOTE</em>: This is not an injectable instance, just a globally available function.</p>
 </td>
       </tr>
       
@@ -182,6 +195,12 @@ methods are automatically available on any <a href="api/ng/type/$rootScope.Scope
         <td><a href="api/ngMock/function/angular.mock.module">angular.mock.module</a></td>
         <td><p><em>NOTE</em>: This function is also published on window for easy access.<br>
 <em>NOTE</em>: This function is declared ONLY WHEN running tests with jasmine or mocha</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ngMock/function/angular.mock.module.sharedInjector">angular.mock.module.sharedInjector</a></td>
+        <td><p><em>NOTE</em>: This function is declared ONLY WHEN running tests with jasmine or mocha</p>
 </td>
       </tr>
       
@@ -196,6 +215,7 @@ methods are automatically available on any <a href="api/ng/type/$rootScope.Scope
   </div>
   
 </div>
+
 
 
 

@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/filter/filters.js?message=docs(json)%3A%20describe%20your%20change...#L626' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/filter/filters.js?message=docs(json)%3A%20describe%20your%20change...#L652' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/filter/filters.js#L626' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/filter/filters.js#L652' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -25,6 +25,8 @@
   the binding is automatically converted to JSON.</p>
 
 </div>
+
+
 
 
 
@@ -107,12 +109,11 @@
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example102', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-filter-json"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example102">
+      path="examples/example-filter-json"
+      name="filter-json">
 
   
     <div class="runnable-example-file" 
@@ -126,11 +127,11 @@
       name="protractor.js"
       type="protractor"
       language="js">
-      <pre><code>it(&#39;should jsonify filtered objects&#39;, function() {&#10;  expect(element(by.id(&#39;default-spacing&#39;)).getText()).toMatch(/\{\n  &quot;name&quot;: ?&quot;value&quot;\n}/);&#10;  expect(element(by.id(&#39;custom-spacing&#39;)).getText()).toMatch(/\{\n    &quot;name&quot;: ?&quot;value&quot;\n}/);&#10;});</code></pre>
+      <pre><code>it(&#39;should jsonify filtered objects&#39;, function() {&#10;  expect(element(by.id(&#39;default-spacing&#39;)).getText()).toMatch(/\{\n {2}&quot;name&quot;: ?&quot;value&quot;\n}/);&#10;  expect(element(by.id(&#39;custom-spacing&#39;)).getText()).toMatch(/\{\n {4}&quot;name&quot;: ?&quot;value&quot;\n}/);&#10;});</code></pre>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example102/index.html" name="example-example102"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-filter-json/index.html" name="example-filter-json"></iframe>
   </div>
 </div>
 

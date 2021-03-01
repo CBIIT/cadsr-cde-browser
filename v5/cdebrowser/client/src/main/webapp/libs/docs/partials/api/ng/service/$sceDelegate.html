@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/sce.js?message=docs($sceDelegate)%3A%20describe%20your%20change...#L67' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/sce.js?message=docs($sceDelegate)%3A%20describe%20your%20change...#L69' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/sce.js#L67' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/sce.js#L69' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -43,10 +43,12 @@ templates.  Refer <a href="api/ng/provider/$sceDelegateProvider#resourceUrlWhite
 
 
 
+
+
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -125,7 +127,7 @@ See <a href="api/ng/service/$sce">$sce</a> for enabling strict contextual escapi
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -184,7 +186,7 @@ where Angular expects a $sce.trustAs() return value.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -206,7 +208,10 @@ where Angular expects a $sce.trustAs() return value.</p>
     <div><p>Takes the result of a <a href="api/ng/service/$sceDelegate#trustAs"><code>$sceDelegate.trustAs</code></a> call and
 returns the originally supplied value if the queried context type is a supertype of the
 created type.  If this condition isn&#39;t satisfied, throws an exception.</p>
-</div>
+<div class="alert alert-danger">
+Disabling auto-escaping is extremely dangerous, it usually creates a Cross Site Scripting
+(XSS) vulnerability in your application.
+</div></div>
 
     
     <h4>Parameters</h4>
@@ -259,7 +264,7 @@ created type.  If this condition isn&#39;t satisfied, throws an exception.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">

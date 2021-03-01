@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/error/$rootScope/inprog.ngdoc?message=docs(error%2Finprog)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/error/$rootScope/inprog.ngdoc?message=docs(error%2Finprog)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>Error: $rootScope:inprog
@@ -181,9 +181,7 @@ value of its attribute becomes true.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-error-$rootScope-inprog', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-error-$rootScope-inprog"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-error-$rootScope-inprog"
@@ -202,7 +200,7 @@ value of its attribute becomes true.</p>
       name="app.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;app&#39;, []).directive(&#39;setFocusIf&#39;, function() {&#10;  return function link($scope, $element, $attr) {&#10;    $scope.$watch($attr.setFocusIf, function(value) {&#10;      if ( value ) { $element[0].focus(); }&#10;    });&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;app&#39;, []).directive(&#39;setFocusIf&#39;, function() {&#10;  return function link($scope, $element, $attr) {&#10;    $scope.$watch($attr.setFocusIf, function(value) {&#10;      if (value) { $element[0].focus(); }&#10;    });&#10;  };&#10;});</code></pre>
     </div>
   
 

@@ -1,31 +1,59 @@
+'use strict';
+
 // Meta data used by the AngularJS docs app
 angular.module('versionsData', [])
   .value('NG_VERSION', {
-  "raw": "v1.4.14",
+  "raw": "v1.5.9",
   "major": 1,
-  "minor": 4,
-  "patch": 14,
+  "minor": 5,
+  "patch": 9,
   "prerelease": [],
   "build": [],
-  "version": "1.4.14",
-  "codeName": "material-distinction",
-  "full": "1.4.14",
-  "branch": "v1.4.x",
-  "commitSHA": "6a7d715944b9b6f8fc3de2968c479fec3b7695d7"
+  "version": "1.5.9",
+  "codeName": "timeturning-lockdown",
+  "full": "1.5.9",
+  "branch": "v1.5.x",
+  "commitSHA": "7fa2fdba3b22b1a99f80eebafe4fa4464149fb9a"
 })
   .value('NG_VERSIONS', [
   {
-    "raw": "v1.4.14",
+    "raw": "v1.5.9",
     "major": 1,
-    "minor": 4,
-    "patch": 14,
+    "minor": 5,
+    "patch": 9,
     "prerelease": [],
     "build": [],
-    "version": "1.4.14",
-    "codeName": "material-distinction",
-    "full": "1.4.14",
-    "branch": "v1.4.x",
-    "commitSHA": "6a7d715944b9b6f8fc3de2968c479fec3b7695d7"
+    "version": "1.5.9",
+    "codeName": "timeturning-lockdown",
+    "full": "1.5.9",
+    "branch": "v1.5.x",
+    "commitSHA": "7fa2fdba3b22b1a99f80eebafe4fa4464149fb9a"
+  },
+  {
+    "raw": "v1.6.0-rc.1",
+    "major": 1,
+    "minor": 6,
+    "patch": 0,
+    "prerelease": [
+      "rc",
+      1
+    ],
+    "build": [],
+    "version": "1.6.0-rc.1",
+    "docsUrl": "http://code.angularjs.org/1.6.0-rc.1/docs"
+  },
+  {
+    "raw": "v1.6.0-rc.0",
+    "major": 1,
+    "minor": 6,
+    "patch": 0,
+    "prerelease": [
+      "rc",
+      0
+    ],
+    "build": [],
+    "version": "1.6.0-rc.0",
+    "docsUrl": "http://code.angularjs.org/1.6.0-rc.0/docs"
   },
   {
     "raw": "v1.5.8",
@@ -194,6 +222,16 @@ angular.module('versionsData', [])
     "build": [],
     "version": "1.5.0-beta.0",
     "docsUrl": "http://code.angularjs.org/1.5.0-beta.0/docs"
+  },
+  {
+    "raw": "v1.4.14",
+    "major": 1,
+    "minor": 4,
+    "patch": 14,
+    "prerelease": [],
+    "build": [],
+    "version": "1.4.14",
+    "docsUrl": "http://code.angularjs.org/1.4.14/docs"
   },
   {
     "raw": "v1.4.13",

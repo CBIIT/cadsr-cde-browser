@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/compile.js?message=docs($compile)%3A%20describe%20your%20change...#L32' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/compile.js?message=docs($compile)%3A%20describe%20your%20change...#L32' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/compile.js#L32' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/compile.js#L32' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -37,8 +37,9 @@ see the <a href="guide/directive">directive guide</a>.
 <h2 id="comprehensive-directive-api">Comprehensive Directive API</h2>
 <p>There are many different options for a directive.</p>
 <p>The difference resides in the return value of the factory function.
-You can either return a &quot;Directive Definition Object&quot; (see below) that defines the directive properties,
-or just the <code>postLink</code> function (all other properties will have the default values).</p>
+You can either return a <a href="api/ng/service/$compile#directive-definition-object">Directive Definition Object (see below)</a>
+that defines the directive properties, or just the <code>postLink</code> function (all other properties will have
+the default values).</p>
 <div class="alert alert-success">
 <strong>Best Practice:</strong> It&#39;s recommended to use the &quot;directive definition object&quot; form.
 </div>
@@ -95,13 +96,124 @@ myModule.directive(&#39;directiveName&#39;, function factory(injectables) {
   // return function postLink(scope, iElement, iAttrs) { ... }
 });
 </code></pre>
+<h3 id="life-cycle-hooks">Life-cycle hooks</h3>
+<p>Directive controllers can provide the following methods that are called by Angular at points in the life-cycle of the
+directive:</p>
+<ul>
+<li><code>$onInit()</code> - Called on each controller after all the controllers on an element have been constructed and
+had their bindings initialized (and before the pre &amp; post linking functions for the directives on
+this element). This is a good place to put initialization code for your controller.</li>
+<li><code>$onChanges(changesObj)</code> - Called whenever one-way (<code>&lt;</code>) or interpolation (<code>@</code>) bindings are updated. The
+<code>changesObj</code> is a hash whose keys are the names of the bound properties that have changed, and the values are an
+object of the form <code>{ currentValue, previousValue, isFirstChange() }</code>. Use this hook to trigger updates within a
+component such as cloning the bound value to prevent accidental mutation of the outer value.</li>
+<li><code>$doCheck()</code> - Called on each turn of the digest cycle. Provides an opportunity to detect and act on
+changes. Any actions that you wish to take in response to the changes that you detect must be
+invoked from this hook; implementing this has no effect on when <code>$onChanges</code> is called. For example, this hook
+could be useful if you wish to perform a deep equality check, or to check a Date object, changes to which would not
+be detected by Angular&#39;s change detector and thus not trigger <code>$onChanges</code>. This hook is invoked with no arguments;
+if detecting changes, you must store the previous value(s) for comparison to the current values.</li>
+<li><code>$onDestroy()</code> - Called on a controller when its containing scope is destroyed. Use this hook for releasing
+external resources, watches and event handlers. Note that components have their <code>$onDestroy()</code> hooks called in
+the same order as the <code>$scope.$broadcast</code> events are triggered, which is top down. This means that parent
+components will have their <code>$onDestroy()</code> hook called before child components.</li>
+<li><code>$postLink()</code> - Called after this controller&#39;s element and its children have been linked. Similar to the post-link
+function this hook can be used to set up DOM event handlers and do direct DOM manipulation.
+Note that child elements that contain <code>templateUrl</code> directives will not have been compiled and linked since
+they are waiting for their template to load asynchronously and their own compilation and linking has been
+suspended until that occurs.</li>
+</ul>
+<h4 id="comparison-with-angular-2-life-cycle-hooks">Comparison with Angular 2 life-cycle hooks</h4>
+<p>Angular 2 also uses life-cycle hooks for its components. While the Angular 1 life-cycle hooks are similar there are
+some differences that you should be aware of, especially when it comes to moving your code from Angular 1 to Angular 2:</p>
+<ul>
+<li>Angular 1 hooks are prefixed with <code>$</code>, such as <code>$onInit</code>. Angular 2 hooks are prefixed with <code>ng</code>, such as <code>ngOnInit</code>.</li>
+<li>Angular 1 hooks can be defined on the controller prototype or added to the controller inside its constructor.
+In Angular 2 you can only define hooks on the prototype of the Component class.</li>
+<li>Due to the differences in change-detection, you may get many more calls to <code>$doCheck</code> in Angular 1 than you would to
+<code>ngDoCheck</code> in Angular 2</li>
+<li>Changes to the model inside <code>$doCheck</code> will trigger new turns of the digest loop, which will cause the changes to be
+propagated throughout the application.
+Angular 2 does not allow the <code>ngDoCheck</code> hook to trigger a change outside of the component. It will either throw an
+error or do nothing depending upon the state of <code>enableProdMode()</code>.</li>
+</ul>
+<h4 id="life-cycle-hook-examples">Life-cycle hook examples</h4>
+<p>This example shows how you can check for mutations to a Date object even though the identity of the object
+has not changed.</p>
+<p>
+
+<div>
+  <plnkr-opener example-path="examples/example-doCheckDateExample"></plnkr-opener>
+
+  <div class="runnable-example"
+      path="examples/example-doCheckDateExample"
+      name="doCheckDateExample"
+      module="do-check-module">
+
+  
+    <div class="runnable-example-file" 
+      name="app.js"
+      language="js"
+      type="js">
+      <pre><code>angular.module(&#39;do-check-module&#39;, [])&#10;.component(&#39;app&#39;, {&#10;  template:&#10;    &#39;Month: &lt;input ng-model=&quot;$ctrl.month&quot; ng-change=&quot;$ctrl.updateDate()&quot;&gt;&#39; +&#10;    &#39;Date: {{ $ctrl.date }}&#39; +&#10;    &#39;&lt;test date=&quot;$ctrl.date&quot;&gt;&lt;/test&gt;&#39;,&#10;  controller: function() {&#10;    this.date = new Date();&#10;    this.month = this.date.getMonth();&#10;    this.updateDate = function() {&#10;      this.date.setMonth(this.month);&#10;    };&#10;  }&#10;})&#10;.component(&#39;test&#39;, {&#10;  bindings: { date: &#39;&lt;&#39; },&#10;  template:&#10;    &#39;&lt;pre&gt;{{ $ctrl.log | json }}&lt;/pre&gt;&#39;,&#10;  controller: function() {&#10;    var previousValue;&#10;    this.log = [];&#10;    this.$doCheck = function() {&#10;      var currentValue = this.date &amp;&amp; this.date.valueOf();&#10;      if (previousValue !== currentValue) {&#10;        this.log.push(&#39;doCheck: date mutated: &#39; + this.date);&#10;        previousValue = currentValue;&#10;      }&#10;    };&#10;  }&#10;});</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" 
+      name="index.html"
+      language="html"
+      type="html">
+      <pre><code>&lt;app&gt;&lt;/app&gt;</code></pre>
+    </div>
+  
+
+    <iframe class="runnable-example-frame" src="examples/example-doCheckDateExample/index.html" name="example-doCheckDateExample"></iframe>
+  </div>
+</div>
+
+
+</p>
+<p>This example show how you might use <code>$doCheck</code> to trigger changes in your component&#39;s inputs even if the
+actual identity of the component doesn&#39;t change. (Be aware that cloning and deep equality checks on large
+arrays or objects can have a negative impact on your application performance)</p>
+<p>
+
+<div>
+  <plnkr-opener example-path="examples/example-doCheckArrayExample"></plnkr-opener>
+
+  <div class="runnable-example"
+      path="examples/example-doCheckArrayExample"
+      name="doCheckArrayExample"
+      module="do-check-module">
+
+  
+    <div class="runnable-example-file" 
+      name="index.html"
+      language="html"
+      type="html">
+      <pre><code>&lt;div ng-init=&quot;items = []&quot;&gt;&#10;  &lt;button ng-click=&quot;items.push(items.length)&quot;&gt;Add Item&lt;/button&gt;&#10;  &lt;button ng-click=&quot;items = []&quot;&gt;Reset Items&lt;/button&gt;&#10;  &lt;pre&gt;{{ items }}&lt;/pre&gt;&#10;  &lt;test items=&quot;items&quot;&gt;&lt;/test&gt;&#10;&lt;/div&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" 
+      name="app.js"
+      language="js"
+      type="js">
+      <pre><code>angular.module(&#39;do-check-module&#39;, [])&#10;.component(&#39;test&#39;, {&#10;  bindings: { items: &#39;&lt;&#39; },&#10;  template:&#10;    &#39;&lt;pre&gt;{{ $ctrl.log | json }}&lt;/pre&gt;&#39;,&#10;  controller: function() {&#10;    this.log = [];&#10;&#10;    this.$doCheck = function() {&#10;      if (this.items_ref !== this.items) {&#10;        this.log.push(&#39;doCheck: items changed&#39;);&#10;        this.items_ref = this.items;&#10;      }&#10;      if (!angular.equals(this.items_clone, this.items)) {&#10;        this.log.push(&#39;doCheck: items mutated&#39;);&#10;        this.items_clone = angular.copy(this.items);&#10;      }&#10;    };&#10;  }&#10;});</code></pre>
+    </div>
+  
+
+    <iframe class="runnable-example-frame" src="examples/example-doCheckArrayExample/index.html" name="example-doCheckArrayExample"></iframe>
+  </div>
+</div>
+
+
+</p>
 <h3 id="directive-definition-object">Directive Definition Object</h3>
 <p>The directive definition object provides instructions to the <a href="api/ng/service/$compile">compiler</a>. The attributes are:</p>
 <h4 id="-multielement-"><code>multiElement</code></h4>
 <p>When this property is set to true, the HTML compiler will collect DOM nodes between
 nodes with the attributes <code>directive-name-start</code> and <code>directive-name-end</code>, and group them
 together as the directive elements. It is recommended that this feature be used on directives
-which are not strictly behavioural (such as <a href="api/ng/directive/ngClick"><code>ngClick</code></a>), and which
+which are not strictly behavioral (such as <a href="api/ng/directive/ngClick"><code>ngClick</code></a>), and which
 do not manipulate or replace child nodes (such as <a href="api/ng/directive/ngInclude"><code>ngInclude</code></a>).</p>
 <h4 id="-priority-"><code>priority</code></h4>
 <p>When there are multiple directives defined on a single DOM element, sometimes it
@@ -160,6 +272,30 @@ However, if an object literal or an array literal is passed as the binding expre
 equality check is done by value (using the <a href="api/ng/function/angular.equals"><code>angular.equals</code></a> function). It&#39;s also possible
 to watch the evaluated value shallowly with <a href="api/ng/type/$rootScope.Scope#$watchCollection"><code>$watchCollection</code></a>: use <code>=*</code> or <code>=*attr</code> (<code>=*?</code> or <code>=*?attr</code> if the attribute is optional).</p>
 </li>
+<li><p><code>&lt;</code> or <code>&lt;attr</code> - set up a one-way (one-directional) binding between a local scope property and an
+expression passed via the attribute <code>attr</code>. The expression is evaluated in the context of the
+parent scope. If no <code>attr</code> name is specified then the attribute name is assumed to be the same as the
+local name. You can also make the binding optional by adding <code>?</code>: <code>&lt;?</code> or <code>&lt;?attr</code>.</p>
+<p>For example, given <code>&lt;my-component my-attr=&quot;parentModel&quot;&gt;</code> and directive definition of
+<code>scope: { localModel:&#39;&lt;myAttr&#39; }</code>, then the isolated scope property <code>localModel</code> will reflect the
+value of <code>parentModel</code> on the parent scope. Any changes to <code>parentModel</code> will be reflected
+in <code>localModel</code>, but changes in <code>localModel</code> will not reflect in <code>parentModel</code>. There are however
+two caveats:</p>
+<ol>
+<li>one-way binding does not copy the value from the parent to the isolate scope, it simply
+sets the same value. That means if your bound value is an object, changes to its properties
+in the isolated scope will be reflected in the parent scope (because both reference the same object).</li>
+<li>one-way binding watches changes to the <strong>identity</strong> of the parent value. That means the
+<a href="api/ng/type/$rootScope.Scope#$watch"><code>$watch</code></a> on the parent value only fires if the reference
+to the value has changed. In most cases, this should not be of concern, but can be important
+to know if you one-way bind to an object, and then replace that object in the isolated scope.
+If you now change a property of the object in your parent scope, the change will not be
+propagated to the isolated scope, because the identity of the object on the parent scope
+has not changed. Instead you must assign a new object.</li>
+</ol>
+<p>One-way binding is useful if you do not plan to propagate changes to your isolated scope bindings
+back to the parent. However, it does not make this completely impossible.</p>
+</li>
 <li><p><code>&amp;</code> or <code>&amp;attr</code> - provides a way to execute an expression in the context of the parent scope. If
 no <code>attr</code> name is specified then the attribute name is assumed to be the same as the local name.
 Given <code>&lt;my-component my-attr=&quot;count = count + value&quot;&gt;</code> and the isolate scope definition <code>scope: {
@@ -190,8 +326,17 @@ cannot be applied to the same element.</li>
 alias must be set, either by using <code>controllerAs: &#39;myAlias&#39;</code> or by specifying the alias in the controller
 definition: <code>controller: &#39;myCtrl as myAlias&#39;</code>.</p>
 <p>When an isolate scope is used for a directive (see above), <code>bindToController: true</code> will
-allow a component to have its properties bound to the controller, rather than to scope. When the controller
-is instantiated, the initial values of the isolate scope bindings are already available.</p>
+allow a component to have its properties bound to the controller, rather than to scope.</p>
+<p>After the controller is instantiated, the initial values of the isolate scope bindings will be bound to the controller
+properties. You can access these bindings once they have been initialized by providing a controller method called
+<code>$onInit</code>, which is called after all the controllers on an element have been constructed and had their bindings
+initialized.</p>
+<div class="alert alert-warning">
+<strong>Deprecation warning:</strong> although bindings for non-ES6 class controllers are currently
+bound to <code>this</code> before the controller constructor is called, this use is now deprecated. Please place initialization
+code that relies upon bindings inside a <code>$onInit</code> method on the controller, instead.
+</div>
+
 <p>It is also possible to set <code>bindToController</code> to an object hash with the same format as the <code>scope</code> property.
 This will set up the scope bindings to the controller directly. Note that <code>scope</code> can still be used
 to define which kind of scope is created. By default, no scope is created. Use <code>scope: {}</code> to create an isolate
@@ -207,10 +352,10 @@ each other&#39;s behavior. The controller is injectable (and supports bracket no
 <li><code>$element</code> - Current element</li>
 <li><code>$attrs</code> - Current attributes object for the element</li>
 <li><code>$transclude</code> - A transclude linking function pre-bound to the correct transclusion scope:
-<code>function([scope], cloneLinkingFn, futureParentElement)</code>.<ul>
-<li><code>scope</code>: optional argument to override the scope.</li>
-<li><code>cloneLinkingFn</code>: optional argument to create clones of the original transcluded content.</li>
-<li><code>futureParentElement</code>:<ul>
+<code>function([scope], cloneLinkingFn, futureParentElement, slotName)</code>:<ul>
+<li><code>scope</code>: (optional) override the scope.</li>
+<li><code>cloneLinkingFn</code>: (optional) argument to create clones of the original transcluded content.</li>
+<li><code>futureParentElement</code> (optional):<ul>
 <li>defines the parent to which the <code>cloneLinkingFn</code> will add the cloned elements.</li>
 <li>default: <code>$element.parent()</code> resp. <code>$element</code> for <code>transclude:&#39;element&#39;</code> resp. <code>transclude:true</code>.</li>
 <li>only needed for transcludes that are allowed to contain non html elements (e.g. SVG elements)
@@ -220,15 +365,33 @@ usual containers (e.g. like <code>&lt;svg&gt;</code>).</li>
 <li>See also the <code>directive.templateNamespace</code> property.</li>
 </ul>
 </li>
+<li><code>slotName</code>: (optional) the name of the slot to transclude. If falsy (e.g. <code>null</code>, <code>undefined</code> or <code>&#39;&#39;</code>)
+then the default translusion is provided.
+The <code>$transclude</code> function also has a method on it, <code>$transclude.isSlotFilled(slotName)</code>, which returns
+<code>true</code> if the specified slot contains content (i.e. one or more DOM nodes).</li>
 </ul>
 </li>
 </ul>
 <h4 id="-require-"><code>require</code></h4>
 <p>Require another directive and inject its controller as the fourth argument to the linking function. The
-<code>require</code> takes a string name (or array of strings) of the directive(s) to pass in. If an array is used, the
-injected argument will be an array in corresponding order. If no such directive can be
-found, or if the directive does not have a controller, then an error is raised (unless no link function
-is specified, in which case error checking is skipped). The name can be prefixed with:</p>
+<code>require</code> property can be a string, an array or an object:</p>
+<ul>
+<li>a <strong>string</strong> containing the name of the directive to pass to the linking function</li>
+<li>an <strong>array</strong> containing the names of directives to pass to the linking function. The argument passed to the
+linking function will be an array of controllers in the same order as the names in the <code>require</code> property</li>
+<li>an <strong>object</strong> whose property values are the names of the directives to pass to the linking function. The argument
+passed to the linking function will also be an object with matching keys, whose values will hold the corresponding
+controllers.</li>
+</ul>
+<p>If the <code>require</code> property is an object and <code>bindToController</code> is truthy, then the required controllers are
+bound to the controller using the keys of the <code>require</code> property. This binding occurs after all the controllers
+have been constructed but before <code>$onInit</code> is called.
+If the name of the required controller is the same as the local name (the key), the name can be
+omitted. For example, <code>{parentDir: &#39;^^&#39;}</code> is equivalent to <code>{parentDir: &#39;^^parentDir&#39;}</code>.
+See the <a href="api/ng/provider/$compileProvider#component"><code>$compileProvider</code></a> helper for an example of how this can be used.
+If no such required directive(s) can be found, or if the directive does not have a controller, then an error is
+raised (unless no link function is specified and the required controllers are not being bound to the directive
+controller, in which case error checking is skipped). The name can be prefixed with:</p>
 <ul>
 <li>(no prefix) - Locate the required controller on the current element. Throw an error if not found.</li>
 <li><code>?</code> - Attempt to locate the required controller or pass <code>null</code> to the <code>link</code> fn if not found.</li>
@@ -305,14 +468,6 @@ the main one being reusable custom components that are used within SVG contexts
 <p>Extract the contents of the element where the directive appears and make it available to the directive.
 The contents are compiled and provided to the directive as a <strong>transclusion function</strong>. See the
 <a href="api/ng/service/$compile#transclusion">Transclusion</a> section below.</p>
-<p>There are two kinds of transclusion depending upon whether you want to transclude just the contents of the
-directive&#39;s element or the entire element:</p>
-<ul>
-<li><code>true</code> - transclude the content (i.e. the child nodes) of the directive&#39;s element.</li>
-<li><code>&#39;element&#39;</code> - transclude the whole of the directive&#39;s element including any directives on this
-element that defined at a lower priority than this directive. When used, the <code>template</code>
-property is ignored.</li>
-</ul>
 <h4 id="-compile-"><code>compile</code></h4>
 <pre><code class="lang-js">function compile(tElement, tAttrs, transclude) { ... }
 </code></pre>
@@ -393,8 +548,8 @@ otherwise the <a href="error/$compile/ctreq">Missing Required Controller</a> err
 any other controller.</p>
 </li>
 <li><p><code>transcludeFn</code> - A transclude linking function pre-bound to the correct transclusion scope.
-This is the same as the <code>$transclude</code>
-parameter of directive controllers, see there for details.
+This is the same as the <code>$transclude</code> parameter of directive controllers,
+see <a href="api/ng/service/$compile#-controller-">the controller section for details</a>.
 <code>function([scope], cloneLinkingFn, futureParentElement)</code>.</p>
 </li>
 </ul>
@@ -425,6 +580,27 @@ content has access to its originating scope.</p>
 DOM fragment that is being compiled. See <a href="guide/unit-testing#testing-transclusion-directives">Testing Transclusion Directives</a>.
 </div>
 
+<p>There are three kinds of transclusion depending upon whether you want to transclude just the contents of the
+directive&#39;s element, the entire element or multiple parts of the element contents:</p>
+<ul>
+<li><code>true</code> - transclude the content (i.e. the child nodes) of the directive&#39;s element.</li>
+<li><code>&#39;element&#39;</code> - transclude the whole of the directive&#39;s element including any directives on this
+element that defined at a lower priority than this directive. When used, the <code>template</code>
+property is ignored.</li>
+<li><strong><code>{...}</code> (an object hash):</strong> - map elements of the content onto transclusion &quot;slots&quot; in the template.</li>
+</ul>
+<p><strong>Mult-slot transclusion</strong> is declared by providing an object for the <code>transclude</code> property.</p>
+<p>This object is a map where the keys are the name of the slot to fill and the value is an element selector
+used to match the HTML to the slot. The element selector should be in normalized form (e.g. <code>myElement</code>)
+and will match the standard element variants (e.g. <code>my-element</code>, <code>my:element</code>, <code>data-my-element</code>, etc).</p>
+<p>For further information check out the guide on <a href="guide/directive#matching-directives">Matching Directives</a></p>
+<p>If the element selector is prefixed with a <code>?</code> then that slot is optional.</p>
+<p>For example, the transclude object <code>{ slotA: &#39;?myCustomElement&#39; }</code> maps <code>&lt;my-custom-element&gt;</code> elements to
+the <code>slotA</code> slot, which can be accessed via the <code>$transclude</code> function or via the <a href="api/ng/directive/ngTransclude"><code>ngTransclude</code></a> directive.</p>
+<p>Slots that are not marked as optional (<code>?</code>) will trigger a compile time error if there are no matching elements
+in the transclude content. If you wish to know if an optional slot was filled with content, then you can call
+<code>$transclude.isSlotFilled(slotName)</code> on the transclude function passed to the directive&#39;s link function and
+injectable into the directive&#39;s controller.</p>
 <h4 id="transclusion-functions">Transclusion Functions</h4>
 <p>When a directive requests transclusion, the compiler extracts its contents and provides a <strong>transclusion
 function</strong> to the directive&#39;s <code>link</code> function and <code>controller</code>. This transclusion function is a special
@@ -441,7 +617,7 @@ object that contains the compiled DOM, which is linked to the correct transclusi
 two parameters, <code>function(clone, scope) { ... }</code>, where the <code>clone</code> is a fresh compiled copy of your transcluded
 content and the <code>scope</code> is the newly created transclusion scope, to which the clone is bound.</p>
 <div class="alert alert-info">
-<strong>Best Practice</strong>: Always provide a <code>cloneFn</code> (clone attach function) when you call a translude function
+<strong>Best Practice</strong>: Always provide a <code>cloneFn</code> (clone attach function) when you call a transclude function
 since you then get a fresh clone of the original DOM and also have access to the new transclusion scope.
 </div>
 
@@ -467,7 +643,7 @@ then you are also responsible for calling <code>$destroy</code> on the transclus
 </div>
 
 <p>The built-in DOM manipulation directives, such as <a href="api/ng/directive/ngIf"><code>ngIf</code></a>, <a href="api/ng/directive/ngSwitch"><code>ngSwitch</code></a> and <a href="api/ng/directive/ngRepeat"><code>ngRepeat</code></a>
-automatically destroy their transluded clones as necessary so you do not need to worry about this if
+automatically destroy their transcluded clones as necessary so you do not need to worry about this if
 you are simply using <a href="api/ng/directive/ngTransclude"><code>ngTransclude</code></a> to inject the transclusion into your directive.</p>
 <h4 id="transclusion-scopes">Transclusion Scopes</h4>
 <p>When you call a transclude function it returns a DOM fragment that is pre-bound to a <strong>transclusion
@@ -536,13 +712,12 @@ to illustrate how <code>$compile</code> works.
 <p> 
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example52', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-compile"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example52"
-      module="compileExample">
+      path="examples/example-compile"
+      module="compileExample"
+      name="compile">
 
   
     <div class="runnable-example-file" 
@@ -560,7 +735,7 @@ to illustrate how <code>$compile</code> works.
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example52/index.html" name="example-example52"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-compile/index.html" name="example-compile"></iframe>
   </div>
 </div>
 
@@ -572,10 +747,12 @@ to illustrate how <code>$compile</code> works.
 
 
 
+
+
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     

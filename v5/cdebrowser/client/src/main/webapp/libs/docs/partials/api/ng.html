@@ -1,10 +1,13 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/Angular.js?message=docs(ng)%3A%20describe%20your%20change...#L101' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/Angular.js?message=docs(ng)%3A%20describe%20your%20change...#L102' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>
   <code>ng</code>
 </h1>
 
+<h2>Installation</h2>
+
+  
 
 
 <h1 id="ng-core-module-">ng (core module)</h1>
@@ -13,6 +16,103 @@ contains the essential components for an AngularJS application to function. The 
 lists a high level breakdown of each of the services/factories, filters, directives and testing
 components available within this core module.</p>
 <div doc-module-components="ng"></div>
+
+
+<div class="known-issues">
+  <h2 id="known-issues">Known Issues</h2>
+  <table class="definition-table">
+  <tr><th>Name</th><th>Description</th></tr>
+  <tr>
+    <td><a href="api/ng/function/angular.toJson">angular.toJson</a></td>
+    <td>
+    <p>The Safari browser throws a <code>RangeError</code> instead of returning <code>null</code> when it tries to stringify a <code>Date</code>
+object with an invalid date value. The only reliable way to prevent this is to monkeypatch the
+<code>Date.prototype.toJSON</code> method as follows:</p>
+<pre><code>var _DatetoJSON = Date.prototype.toJSON;
+Date.prototype.toJSON = function() {
+  try {
+    return _DatetoJSON.call(this);
+  } catch(e) {
+    if (e instanceof RangeError) {
+      return null;
+    }
+    throw e;
+  }
+};
+</code></pre>
+<p>See <a href="https://github.com/angular/angular.js/pull/14221">https://github.com/angular/angular.js/pull/14221</a> for more information.</p>
+ 
+    </td>
+  </tr>
+  <tr>
+    <td><a href="api/ng/function/angular.element">angular.element</a></td>
+    <td>
+    <p>You cannot spy on <code>angular.element</code> if you are using Jasmine version 1.x. See
+<a href="https://github.com/angular/angular.js/issues/14251">https://github.com/angular/angular.js/issues/14251</a> for more information.</p>
+ 
+    </td>
+  </tr>
+  <tr>
+    <td><a href="api/ng/directive/textarea">textarea</a></td>
+    <td>
+    <p>When specifying the <code>placeholder</code> attribute of <code>&lt;textarea&gt;</code>, Internet Explorer will temporarily
+insert the placeholder value as the textarea&#39;s content. If the placeholder value contains
+interpolation (<code>{{ ... }}</code>), an error will be logged in the console when Angular tries to update
+the value of the by-then-removed text node. This doesn&#39;t affect the functionality of the
+textarea, but can be undesirable.</p>
+<p>You can work around this Internet Explorer issue by using <code>ng-attr-placeholder</code> instead of
+<code>placeholder</code> on textareas, whenever you need interpolation in the placeholder value. You can
+find more details on <code>ngAttr</code> in the
+<a href="guide/interpolation#-ngattr-for-binding-to-arbitrary-attributes">Interpolation</a> section of the
+Developer Guide.</p>
+ 
+    </td>
+  </tr>
+  <tr>
+    <td><a href="api/ng/directive/ngClass">ngClass</a></td>
+    <td>
+    <p>You should not use <a href="guide/interpolation">interpolation</a> in the value of the <code>class</code>
+attribute, when using the <code>ngClass</code> directive on the same element.
+See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
+ 
+    </td>
+  </tr>
+  <tr>
+    <td><a href="api/ng/directive/ngStyle">ngStyle</a></td>
+    <td>
+    <p>You should not use <a href="guide/interpolation">interpolation</a> in the value of the <code>style</code>
+attribute, when using the <code>ngStyle</code> directive on the same element.
+See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
+ 
+    </td>
+  </tr>
+  <tr>
+    <td><a href="api/ng/service/$interpolate">$interpolate</a></td>
+    <td>
+    <p>It is currently not possible for an interpolated expression to contain the interpolation end
+symbol. For example, <code>{{ &#39;}}&#39; }}</code> will be incorrectly interpreted as <code>{{ &#39; }}</code> + <code>&#39; }}</code>, i.e.
+an interpolated expression consisting of a single-quote (<code>&#39;</code>) and the <code>&#39; }}</code> string.</p>
+ <hr>
+    <p>All directives and components must use the standard <code>{{</code> <code>}}</code> interpolation symbols
+in their templates. If you change the application interpolation symbols the <a href="api/ng/service/$compile"><code>$compile</code></a>
+service will attempt to denormalize the standard symbols to the custom symbols.
+The denormalization process is not clever enough to know not to replace instances of the standard
+symbols where they would not normally be treated as interpolation symbols. For example in the following
+code snippet the closing braces of the literal object will get incorrectly denormalized:</p>
+<pre><code>&lt;div data-context=&#39;{&quot;context&quot;:{&quot;id&quot;:3,&quot;type&quot;:&quot;page&quot;}}&quot;&gt;
+</code></pre>
+<p>The workaround is to ensure that such instances are separated by whitespace:</p>
+<pre><code>&lt;div data-context=&#39;{&quot;context&quot;:{&quot;id&quot;:3,&quot;type&quot;:&quot;page&quot;} }&quot;&gt;
+</code></pre>
+<p>See <a href="https://github.com/angular/angular.js/pull/14610#issuecomment-219401099">https://github.com/angular/angular.js/pull/14610#issuecomment-219401099</a> for more information.</p>
+ 
+    </td>
+  </tr>
+  </table>
+</div>
+
+
+
 
 <div class="component-breakdown">
   <h2>Module Components</h2>
@@ -23,18 +123,6 @@ components available within this core module.</p>
       <tr>
         <th>Name</th>
         <th>Description</th>
-      </tr>
-      
-      <tr>
-        <td><a href="api/ng/function/angular.lowercase">angular.lowercase</a></td>
-        <td><p>Converts the specified string to lowercase.</p>
-</td>
-      </tr>
-      
-      <tr>
-        <td><a href="api/ng/function/angular.uppercase">angular.uppercase</a></td>
-        <td><p>Converts the specified string to uppercase.</p>
-</td>
       </tr>
       
       <tr>
@@ -284,7 +372,9 @@ text <code>{{hash}}</code> until Angular replaces the expression inside
       
       <tr>
         <td><a href="api/ng/directive/ngReadonly">ngReadonly</a></td>
-        <td><p>Sets the <code>readOnly</code> attribute on the element, if the expression inside <code>ngReadonly</code> is truthy.</p>
+        <td><p>Sets the <code>readonly</code> attribute on the element, if the expression inside <code>ngReadonly</code> is truthy.
+Note that <code>readonly</code> applies only to <code>input</code> elements with specific types. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-readonly">See the input docs on
+MDN</a> for more information.</p>
 </td>
       </tr>
       
@@ -879,6 +969,12 @@ that the URLs used for sourcing Angular templates are safe.  Refer <a href="api/
 </td>
       </tr>
       
+      <tr>
+        <td><a href="api/ng/provider/$templateRequestProvider">$templateRequestProvider</a></td>
+        <td><p>Used to configure the options passed to the <a href="api/ng/service/$http"><code>$http</code></a> service when making a template request.</p>
+</td>
+      </tr>
+      
     </table>
   </div>
   
@@ -1016,6 +1112,14 @@ milliseconds.</p>
       </tr>
       
       <tr>
+        <td><a href="api/ng/service/$jsonpCallbacks">$jsonpCallbacks</a></td>
+        <td><p>This service handles the lifecycle of callbacks to handle JSONP requests.
+Override this service if you wish to customise where the callbacks are stored and
+how they vary compared to the requested url.</p>
+</td>
+      </tr>
+      
+      <tr>
         <td><a href="api/ng/service/$locale">$locale</a></td>
         <td><p>$locale service provides localization rules for various Angular components. As of right now the
 only public api is:</p>
@@ -1149,7 +1253,7 @@ local datetime format (yyyy-MM-ddTHH:mm:ss), for example: <code>2010-12-28T14:57
       <tr>
         <td><a href="api/ng/input/input[time]">input[time]</a></td>
         <td><p>Input with time validation and transformation. In browsers that do not yet support
-the HTML5 date input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
+the HTML5 time input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
 local time format (HH:mm:ss), for example: <code>14:57:00</code>. Model must be a Date object. This binding will always output a
 Date object to the model of January 1, 1970, or local date <code>new Date(1970, 0, 1, HH, mm, ss)</code>.</p>
 </td>
@@ -1195,6 +1299,12 @@ address.</p>
       <tr>
         <td><a href="api/ng/input/input[radio]">input[radio]</a></td>
         <td><p>HTML radio button.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ng/input/input[range]">input[range]</a></td>
+        <td><p>Native range input with validation and transformation.</p>
 </td>
       </tr>
       
@@ -1260,18 +1370,18 @@ symbol for current locale is used.</p>
       
       <tr>
         <td><a href="api/ng/filter/limitTo">limitTo</a></td>
-        <td><p>Creates a new array or string containing only a specified number of elements. The elements
-are taken from either the beginning or the end of the source array, string or number, as specified by
-the value and sign (positive or negative) of <code>limit</code>. If a number is used as input, it is
-converted to a string.</p>
+        <td><p>Creates a new array or string containing only a specified number of elements. The elements are
+taken from either the beginning or the end of the source array, string or number, as specified by
+the value and sign (positive or negative) of <code>limit</code>. Other array-like objects are also supported
+(e.g. array subclasses, NodeLists, jqLite/jQuery collections etc). If a number is used as input,
+it is converted to a string.</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/filter/orderBy">orderBy</a></td>
-        <td><p>Orders a specified <code>array</code> by the <code>expression</code> predicate. It is ordered alphabetically
-for strings and numerically for numbers. Note: if you notice numbers are not being sorted
-as expected, make sure they are actually being saved as numbers and not strings.</p>
+        <td><p>Returns an array containing the items from the specified <code>collection</code>, ordered by a <code>comparator</code>
+function based on the values computed using the <code>expression</code> predicate.</p>
 </td>
       </tr>
       
@@ -1279,6 +1389,7 @@ as expected, make sure they are actually being saved as numbers and not strings.
   </div>
   
 </div>
+
 
 
 

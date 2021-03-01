@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/exceptionHandler.js?message=docs($exceptionHandler)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/exceptionHandler.js?message=docs($exceptionHandler)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/exceptionHandler.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/exceptionHandler.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -28,15 +28,18 @@ the browser console.</p>
 <p>In unit tests, if <code>angular-mocks.js</code> is loaded, this service is overridden by
 <a href="api/ngMock/service/$exceptionHandler">mock $exceptionHandler</a> which aids in testing.</p>
 <h2 id="example-">Example:</h2>
-<pre><code class="lang-js">angular.module(&#39;exceptionOverride&#39;, []).factory(&#39;$exceptionHandler&#39;, function() {
-  return function(exception, cause) {
-    exception.message += &#39; (caused by &quot;&#39; + cause + &#39;&quot;)&#39;;
-    throw exception;
-  };
-});
+<p>The example below will overwrite the default <code>$exceptionHandler</code> in order to (a) log uncaught
+errors to the backend for later inspection by the developers and (b) to use <code>$log.warn()</code> instead
+of <code>$log.error()</code>.</p>
+<pre><code class="lang-js">angular.
+  module(&#39;exceptionOverwrite&#39;, []).
+  factory(&#39;$exceptionHandler&#39;, [&#39;$log&#39;, &#39;logErrorsToBackend&#39;, function($log, logErrorsToBackend) {
+    return function myExceptionHandler(exception, cause) {
+      logErrorsToBackend(exception, cause);
+      $log.warn(exception, cause);
+    };
+  }]);
 </code></pre>
-<p>This example will override the normal action of <code>$exceptionHandler</code>, to make angular
-exceptions fail hard when they happen, instead of just logging to the console.</p>
 <p><hr />
 Note, that code executed in event-listeners (even those registered using jqLite&#39;s <code>on</code>/<code>bind</code>
 methods) does not delegate exceptions to the <a href="api/ng/service/$exceptionHandler">$exceptionHandler</a>
@@ -49,6 +52,8 @@ methods) does not delegate exceptions to the <a href="api/ng/service/$exceptionH
 
 
 
+
+
 <div>
   
   <h2 id="dependencies">Dependencies</h2>
@@ -57,7 +62,7 @@ methods) does not delegate exceptions to the <a href="api/ng/service/$exceptionH
   </ul>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -106,7 +111,7 @@ methods) does not delegate exceptions to the <a href="api/ng/service/$exceptionH
         <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>optional information about the context in which
+        <p>Optional information about the context in which
       the error was thrown.</p>
 
         

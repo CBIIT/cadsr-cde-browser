@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/guide/controller.ngdoc?message=docs(guide%2FControllers)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/controller.ngdoc?message=docs(guide%2FControllers)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="understanding-controllers">Understanding Controllers</h1>
@@ -100,13 +100,12 @@ string &quot;very&quot;. Depending on which button is clicked, the <code>spice</
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example7', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-controller-spicy-1"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example7"
-      module="spicyApp1">
+      path="examples/example-controller-spicy-1"
+      module="spicyApp1"
+      name="controller-spicy-1">
 
   
     <div class="runnable-example-file" 
@@ -124,7 +123,7 @@ string &quot;very&quot;. Depending on which button is clicked, the <code>spice</
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example7/index.html" name="example-example7"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-controller-spicy-1/index.html" name="example-controller-spicy-1"></iframe>
   </div>
 </div>
 
@@ -147,13 +146,12 @@ previous example.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example8', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-controller-spicy-2"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example8"
-      module="spicyApp2">
+      path="examples/example-controller-spicy-2"
+      module="spicyApp2"
+      name="controller-spicy-2">
 
   
     <div class="runnable-example-file" 
@@ -167,11 +165,11 @@ previous example.</p>
       name="app.js"
       language="js"
       type="js">
-      <pre><code>var myApp = angular.module(&#39;spicyApp2&#39;, []);&#10;&#10;myApp.controller(&#39;SpicyController&#39;, [&#39;$scope&#39;, function($scope) {&#10;    $scope.customSpice = &quot;wasabi&quot;;&#10;    $scope.spice = &#39;very&#39;;&#10;&#10;    $scope.spicy = function(spice) {&#10;        $scope.spice = spice;&#10;    };&#10;}]);</code></pre>
+      <pre><code>var myApp = angular.module(&#39;spicyApp2&#39;, []);&#10;&#10;myApp.controller(&#39;SpicyController&#39;, [&#39;$scope&#39;, function($scope) {&#10;    $scope.customSpice = &#39;wasabi&#39;;&#10;    $scope.spice = &#39;very&#39;;&#10;&#10;    $scope.spicy = function(spice) {&#10;        $scope.spice = spice;&#10;    };&#10;}]);</code></pre>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example8/index.html" name="example-example8"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-controller-spicy-2/index.html" name="example-controller-spicy-2"></iframe>
   </div>
 </div>
 
@@ -191,13 +189,12 @@ more information about scope inheritance.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example9', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-controller-scope-inheritance"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example9"
-      module="scopeInheritance">
+      path="examples/example-controller-scope-inheritance"
+      module="scopeInheritance"
+      name="controller-scope-inheritance">
 
   
     <div class="runnable-example-file" 
@@ -222,7 +219,7 @@ more information about scope inheritance.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example9/index.html" name="example-example9"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-controller-scope-inheritance/index.html" name="example-controller-scope-inheritance"></iframe>
   </div>
 </div>
 

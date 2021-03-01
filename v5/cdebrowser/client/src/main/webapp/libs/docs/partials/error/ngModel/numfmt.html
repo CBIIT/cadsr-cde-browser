@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/error/ngModel/numfmt.ngdoc?message=docs(error%2Fnumfmt)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/error/ngModel/numfmt.ngdoc?message=docs(error%2Fnumfmt)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>Error: ngModel:numfmt
@@ -11,7 +11,8 @@
 
 <h2>Description</h2>
 <div class="description">
-  <p>The number input directive <code>&lt;input type=&quot;number&quot;&gt;</code> requires the model to be a <code>number</code>.</p>
+  <p>The <code>input[type=&quot;number&quot;]</code> and <code>input[type=&quot;range&quot;][ng-input-range]</code> directives require the model to
+be a <code>number</code>.</p>
 <p>If the model is something else, this error will be thrown.</p>
 <p>Angular does not set validation errors on the <code>&lt;input&gt;</code> in this case
 as this error is caused by incorrect application logic and not by bad input from the user.</p>
@@ -20,17 +21,16 @@ to use a directive that will do the conversion in the <code>ngModel</code> <code
 pipeline.</p>
 <h2 id="example">Example</h2>
 <p>In this example, our model stores the number as a string, so we provide the <code>stringToNumber</code>
-directive to convert it into the format the <code>input[number]</code> directive expects.</p>
+directive to convert it into the format the <code>input[type=&quot;number&quot;]</code> directive expects.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-number-format-error"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example"
-      module="numfmt-error-module">
+      path="examples/example-number-format-error"
+      module="numfmt-error-module"
+      name="number-format-error">
 
   
     <div class="runnable-example-file" 
@@ -44,11 +44,11 @@ directive to convert it into the format the <code>input[number]</code> directive
       name="app.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;numfmt-error-module&#39;, [])&#10;&#10;.run(function($rootScope) {&#10;  $rootScope.typeOf = function(value) {&#10;    return typeof value;&#10;  };&#10;})&#10;&#10;.directive(&#39;stringToNumber&#39;, function() {&#10;  return {&#10;    require: &#39;ngModel&#39;,&#10;    link: function(scope, element, attrs, ngModel) {&#10;      ngModel.$parsers.push(function(value) {&#10;        return &#39;&#39; + value;&#10;      });&#10;      ngModel.$formatters.push(function(value) {&#10;        return parseFloat(value, 10);&#10;      });&#10;    }&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;numfmt-error-module&#39;, [])&#10;&#10;.run(function($rootScope) {&#10;  $rootScope.typeOf = function(value) {&#10;    return typeof value;&#10;  };&#10;})&#10;&#10;.directive(&#39;stringToNumber&#39;, function() {&#10;  return {&#10;    require: &#39;ngModel&#39;,&#10;    link: function(scope, element, attrs, ngModel) {&#10;      ngModel.$parsers.push(function(value) {&#10;        return &#39;&#39; + value;&#10;      });&#10;      ngModel.$formatters.push(function(value) {&#10;        return parseFloat(value);&#10;      });&#10;    }&#10;  };&#10;});</code></pre>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example/index.html" name="example-example"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-number-format-error/index.html" name="example-number-format-error"></iframe>
   </div>
 </div>
 

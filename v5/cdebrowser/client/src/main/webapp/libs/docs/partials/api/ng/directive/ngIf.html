@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngIf.js?message=docs(ngIf)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngIf.js?message=docs(ngIf)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngIf.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngIf.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -47,6 +47,8 @@ and <code>leave</code> effects.</p>
 
 
 
+
+
 <div>
   
 
@@ -70,8 +72,24 @@ and <code>leave</code> effects.</p>
   </div>
   
   <h2 id="animations">Animations</h2>
-  <p>enter - happens just after the <code>ngIf</code> contents change and a new DOM element is created and injected into the <code>ngIf</code> container
-leave - happens just before the <code>ngIf</code> contents are removed from the DOM</p>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#enter">enter</a></td>
+<td>just after the <code>ngIf</code> contents change and a new DOM element is created and injected into the <code>ngIf</code> container</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#leave">leave</a></td>
+<td>just before the <code>ngIf</code> contents are removed from the DOM</td>
+</tr>
+</tbody>
+</table>
 
   <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 <section class="api-section">
@@ -116,15 +134,14 @@ leave - happens just before the <code>ngIf</code> contents are removed from the 
   <h2 id="example">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example83', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-if"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example83"
+      path="examples/example-ng-if"
       module="ngAnimate"
       deps="angular-animate.js"
-      animations="true">
+      animations="true"
+      name="ng-if">
 
   
     <div class="runnable-example-file" 
@@ -142,7 +159,7 @@ leave - happens just before the <code>ngIf</code> contents are removed from the 
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example83/index.html" name="example-example83"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-if/index.html" name="example-ng-if"></iframe>
   </div>
 </div>
 
