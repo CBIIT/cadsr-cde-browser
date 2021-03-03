@@ -17,7 +17,8 @@ angular.module('cdeBrowserApp')
                   scope.loadClassifications = function(searchInput) {
        
         if(searchInput.length>=3) {
-            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).success(function(response) {
+            $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{csOrCsCsi:searchInput}}).then(function(response) {
+            response=response['data'];
             groupFactory1.fillClassifications(response);
             scope.breadcrumbs = [{ "id": 0, "title": "CS" }]; // reset breadcrumbs to prevent double CSI breadcrumbs //            
             scope.filterService.classifications = groupFactory1.load(0);

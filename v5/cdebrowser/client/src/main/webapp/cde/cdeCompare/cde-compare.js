@@ -71,7 +71,8 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
 
     // function that gets the data returned for CDE details //
     $scope.getCdeDetailRestCall = function (serverUrl) {
-        $http.get(serverUrl).success(function (response) {
+        $http.get(serverUrl).then(function (response) {
+            response=response['data'];
             var len = compareService.checkedItemsForCompare.length;
             $scope.cdeDetails = response;
 
@@ -137,7 +138,8 @@ angular.module("cdeCompare").controller("cdeCompareController", ["$scope", "$htt
     }
 
     $scope.dataLoad = function (dataSource) {
-        $http.get(dataSource).success(function (response) {
+        $http.get(dataSource).then(function (response) {
+            response=response['data'];
             $scope.cdeDetails = response;
         });
 
