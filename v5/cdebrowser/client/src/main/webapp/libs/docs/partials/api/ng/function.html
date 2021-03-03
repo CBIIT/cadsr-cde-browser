@@ -161,6 +161,15 @@ This takes precedence over a call to <code>$compileProvider.debugInfoEnabled(fal
       </tr>
       
       <tr>
+        <td><a href="api/ng/function/angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement">angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement</a></td>
+        <td><p>Restores the pre-1.8 behavior of jqLite that turns XHTML-like strings like
+<code>&lt;div /&gt;&lt;span /&gt;</code> to <code>&lt;div&gt;&lt;/div&gt;&lt;span&gt;&lt;/span&gt;</code> instead of <code>&lt;div&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</code>.
+The new behavior is a security fix. Thus, if you need to call this function, please try to adjust
+your code for this change and remove your use of this function as soon as possible.</p>
+</td>
+      </tr>
+      
+      <tr>
         <td><a href="api/ng/function/angular.injector">angular.injector</a></td>
         <td><p>Creates an injector object that can be used for retrieving services as well as for
 dependency injection (see <a href="guide/di">dependency injection</a>).</p>
