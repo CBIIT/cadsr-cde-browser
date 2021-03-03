@@ -22,8 +22,8 @@ function getVF(n, opt_precision) {
 $provide.value("$locale", {
   "DATETIME_FORMATS": {
     "AMPMS": [
-      "de la ma\u00f1ana",
-      "de la tarde"
+      "AM",
+      "PM"
     ],
     "DAY": [
       "domingu",
@@ -35,11 +35,11 @@ $provide.value("$locale", {
       "s\u00e1badu"
     ],
     "ERANAMES": [
-      "enantes de Cristu",
-      "despu\u00e9s de Cristu"
+      "a.C.",
+      "d.C."
     ],
     "ERAS": [
-      "e.C.",
+      "a.C.",
       "d.C."
     ],
     "FIRSTDAYOFWEEK": 0,
@@ -61,10 +61,10 @@ $provide.value("$locale", {
       "dom",
       "llu",
       "mar",
-      "mi\u00e9",
+      "mie",
       "xue",
       "vie",
-      "s\u00e1b"
+      "sab"
     ],
     "SHORTMONTH": [
       "xin",

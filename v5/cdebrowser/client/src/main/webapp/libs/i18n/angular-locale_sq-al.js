@@ -4,8 +4,8 @@ var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "
 $provide.value("$locale", {
   "DATETIME_FORMATS": {
     "AMPMS": [
-      "e paradites",
-      "e pasdites"
+      "paradite",
+      "pasdite"
     ],
     "DAY": [
       "e diel",
@@ -17,12 +17,12 @@ $provide.value("$locale", {
       "e shtun\u00eb"
     ],
     "ERANAMES": [
-      "para Krishtit",
-      "mbas Krishtit"
+      "para er\u00ebs s\u00eb re",
+      "er\u00ebs s\u00eb re"
     ],
     "ERAS": [
-      "p.K.",
-      "mb.K."
+      "p.e.r.",
+      "e.r."
     ],
     "FIRSTDAYOFWEEK": 0,
     "MONTH": [
@@ -49,18 +49,18 @@ $provide.value("$locale", {
       "Sht"
     ],
     "SHORTMONTH": [
-      "jan",
-      "shk",
-      "mar",
-      "pri",
-      "maj",
-      "qer",
-      "kor",
-      "gsh",
-      "sht",
-      "tet",
-      "n\u00ebn",
-      "dhj"
+      "Jan",
+      "Shk",
+      "Mar",
+      "Pri",
+      "Maj",
+      "Qer",
+      "Kor",
+      "Gsh",
+      "Sht",
+      "Tet",
+      "N\u00ebn",
+      "Dhj"
     ],
     "STANDALONEMONTH": [
       "Janar",
@@ -82,12 +82,12 @@ $provide.value("$locale", {
     ],
     "fullDate": "EEEE, d MMMM y",
     "longDate": "d MMMM y",
-    "medium": "d MMM y h:mm:ss a",
+    "medium": "d MMM y HH:mm:ss",
     "mediumDate": "d MMM y",
-    "mediumTime": "h:mm:ss a",
-    "short": "d.M.yy h:mm a",
+    "mediumTime": "HH:mm:ss",
+    "short": "d.M.yy HH:mm",
     "shortDate": "d.M.yy",
-    "shortTime": "h:mm a"
+    "shortTime": "HH:mm"
   },
   "NUMBER_FORMATS": {
     "CURRENCY_SYM": "Lek",
@@ -108,8 +108,8 @@ $provide.value("$locale", {
       {
         "gSize": 3,
         "lgSize": 3,
-        "maxFrac": 0,
-        "minFrac": 0,
+        "maxFrac": 2,
+        "minFrac": 2,
         "minInt": 1,
         "negPre": "-",
         "negSuf": "\u00a0\u00a4",

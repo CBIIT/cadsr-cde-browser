@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/interpolate.js?message=docs($interpolateProvider)%3A%20describe%20your%20change...#L15' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/interpolate.js?message=docs($interpolateProvider)%3A%20describe%20your%20change...#L15' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/interpolate.js#L15' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/interpolate.js#L15' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,19 +23,18 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Used for configuring the interpolation markup. Defaults to <code>{{</code> and <code>}}</code>.</p>
 <div class="alert alert-danger">
-This feature is sometimes used to mix different markup languages, e.g. to wrap an AngularJS
+This feature is sometimes used to mix different markup languages, e.g. to wrap an Angular
 template within a Python Jinja template (or any other template language). Mixing templating
-languages is <strong>very dangerous</strong>. The embedding template language will not safely escape AngularJS
+languages is <strong>very dangerous</strong>. The embedding template language will not safely escape Angular
 expressions, so any user-controlled values in the template will cause Cross Site Scripting (XSS)
 security bugs!
 </div>
 </div>
+
+
 
 
 
@@ -48,16 +47,14 @@ security bugs!
   
 
   
-<h2 id="$interpolateProvider-methods">Methods</h2>
+<h2>Methods</h2>
 <ul class="methods">
-  <li>
-    <h3 id="startSymbol"><p><code>startSymbol([value]);</code></p>
+  <li id="startSymbol">
+    <h3><p><code>startSymbol([value]);</code></p>
 
 </h3>
     <div><p>Symbol to denote start of expression in the interpolated string. Defaults to <code>{{</code>.</p>
 </div>
-
-    
 
     
     <h4>Parameters</h4>
@@ -104,16 +101,16 @@ security bugs!
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="endSymbol"><p><code>endSymbol([value]);</code></p>
+  <li id="endSymbol">
+    <h3><p><code>endSymbol([value]);</code></p>
 
 </h3>
     <div><p>Symbol to denote the end of expression in the interpolated string. Defaults to <code>}}</code>.</p>
 </div>
-
-    
 
     
     <h4>Parameters</h4>
@@ -160,7 +157,9 @@ security bugs!
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   </ul>
   
   
@@ -168,7 +167,7 @@ security bugs!
 
 
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-custom-interpolation-markup"></plnkr-opener>

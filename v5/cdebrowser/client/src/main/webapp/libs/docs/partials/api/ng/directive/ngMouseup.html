@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngEventDirs.js?message=docs(ngMouseup)%3A%20describe%20your%20change...#L130' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngEventDirs.js?message=docs(ngMouseup)%3A%20describe%20your%20change...#L127' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngEventDirs.js#L130' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngEventDirs.js#L127' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,13 +19,12 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Specify custom behavior on mouseup event.</p>
 
 </div>
+
+
 
 
 
@@ -34,7 +33,7 @@
   
 
   
-  <h2 id="ngMouseup-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -47,8 +46,10 @@
   
     <ul>
     
-
-    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-mouseup&#10;  ng-mouseup=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-mouseup&gt;</code></pre>
+      </li>
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-mouseup=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -56,7 +57,7 @@
   </div>
   
 <section class="api-section">
-  <h3 id="ngMouseup-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -91,8 +92,9 @@ mouseup. (<a href="guide/expression#-event-">Event object is available as <code>
 </section>
   
 
+
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-mouseup"></plnkr-opener>

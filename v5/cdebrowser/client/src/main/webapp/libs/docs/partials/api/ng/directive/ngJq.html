@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/Angular.js?message=docs(ngJq)%3A%20describe%20your%20change...#L1175' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/Angular.js?message=docs(ngJq)%3A%20describe%20your%20change...#L1099' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/Angular.js#L1175' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/Angular.js#L1099' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,14 +19,11 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Use this directive to force the angular.element library.  This should be
 used to force either jqLite by leaving ng-jq blank or setting the name of
 the jquery variable under window (eg. jQuery).</p>
-<p>Since AngularJS looks for this directive when it is loaded (doesn&#39;t wait for the
+<p>Since angular looks for this directive when it is loaded (doesn&#39;t wait for the
 DOMContentLoaded event), it must be placed on an element that comes before the script
 which loads angular. Also, only the first instance of <code>ng-jq</code> will be used and all
 others ignored.</p>
@@ -36,11 +33,13 @@ others ignored.</p>
 
 
 
+
+
 <div>
   
 
   
-  <h2 id="ngJq-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -54,11 +53,9 @@ others ignored.</p>
     <ul>
     
       <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
       <pre><code>&lt;ng-jq&#10;  [ng-jq=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ng-jq&gt;</code></pre>
       </li>
-    
-
-    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  [ng-jq=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -66,7 +63,7 @@ others ignored.</p>
   </div>
   
 <section class="api-section">
-  <h3 id="ngJq-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -101,8 +98,9 @@ to be used for angular.element</p>
 </section>
   
 
+
   
-  <h2 id="examples">Examples</h2><p>This example shows how to force jqLite using the <code>ngJq</code> directive to the <code>html</code> tag.</p>
+  <h2 id="example">Example</h2><p>This example shows how to force jqLite using the <code>ngJq</code> directive to the <code>html</code> tag.</p>
 <pre><code class="lang-html">&lt;!doctype html&gt;
 &lt;html ng-app ng-jq&gt;
 ...

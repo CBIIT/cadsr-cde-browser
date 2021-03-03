@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngRoute/directive/ngView.js?message=docs(ngView)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngRoute/directive/ngView.js?message=docs(ngView)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngRoute/directive/ngView.js#L7' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngRoute/directive/ngView.js#L7' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,11 +19,9 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
-  <p><code>ngView</code> is a directive that complements the <a href="api/ngRoute/service/$route">$route</a> service by
+  <h1 id="overview">Overview</h1>
+<p><code>ngView</code> is a directive that complements the <a href="api/ngRoute/service/$route">$route</a> service by
 including the rendered template of the current route into the main layout (<code>index.html</code>) file.
 Every time the current route changes, the included view changes with it according to the
 configuration of the <code>$route</code> service.</p>
@@ -33,12 +31,25 @@ configuration of the <code>$route</code> service.</p>
 
 
 
+<h2 id="known-issues">Known Issues</h2>
+<div class="known-issue">
+  <p>If <code>ngView</code> is contained in an asynchronously loaded template (e.g. in another
+            directive&#39;s templateUrl or in a template loaded using <code>ngInclude</code>), then you need to
+            make sure that <code>$route</code> is instantiated in time to capture the initial
+            <code>$locationChangeStart</code> event and load the appropriate view. One way to achieve this
+            is to have it as a dependency in a <code>.run</code> block:
+            <code>myModule.run([&#39;$route&#39;, function() {}]);</code></p>
+  
+</div>
+
+
+
 
 <div>
   
 
   
-  <h2 id="ngView-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     <li>This directive creates new scope.</li>
     <li>This directive executes at priority level 400.</li>
@@ -52,23 +63,42 @@ configuration of the <code>$route</code> service.</p>
     <ul>
     
       <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
       <pre><code>&lt;ng-view&#10;  [onload=&quot;string&quot;]&#10;  [autoscroll=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ng-view&gt;</code></pre>
       </li>
-    
-
-    
-    
     <li>as attribute:
-        <pre><code>&lt;ANY&#10;  ng-view&#10;  [onload=&quot;string&quot;]&#10;  [autoscroll=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
+        <pre><code>&lt;ANY&#10;  [onload=&quot;string&quot;]&#10;  [autoscroll=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
     <li>as CSS class:
-        <pre><code>&lt;ANY class=&quot;ng-view [onload: string;] [autoscroll: string;]&quot;&gt; ... &lt;/ANY&gt;</code></pre>
+        <pre><code>&lt;ANY class=&quot;[onload: string;] [autoscroll: string;]&quot;&gt; ... &lt;/ANY&gt;</code></pre>
       </li>
     
   </div>
   
+  <h2 id="animations">Animations</h2>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#enter">enter</a></td>
+<td>when the new element is inserted to the DOM</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#leave">leave</a></td>
+<td>when the old element is removed from to the DOM</td>
+</tr>
+</tbody>
+</table>
+<p>The enter and leave animation occur concurrently.</p>
+
+  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 <section class="api-section">
-  <h3 id="ngView-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -122,14 +152,12 @@ configuration of the <code>$route</code> service.</p>
 
 </section>
   
-<h2 id="events">Events</h2>
+<h2>Events</h2>
 <ul class="events">
   <li id="$viewContentLoaded">
-    <h3 id="event-$viewContentLoaded">$viewContentLoaded</h3>
+    <h3>$viewContentLoaded</h3>
     <div><p>Emitted every time the ngView content is reloaded.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">emit</div>
@@ -141,31 +169,10 @@ configuration of the <code>$route</code> service.</p>
     </li>
   </ul>
 
-  <h2 id="animations">Animations</h2>
-  <table>
-<thead>
-<tr>
-<th>Animation</th>
-<th>Occurs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="api/ng/service/$animate#enter">enter</a></td>
-<td>when the new element is inserted to the DOM</td>
-</tr>
-<tr>
-<td><a href="api/ng/service/$animate#leave">leave</a></td>
-<td>when the old element is removed from to the DOM</td>
-</tr>
-</tbody>
-</table>
-<p>The enter and leave animation occur concurrently.</p>
 
-  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ngView-directive"></plnkr-opener>

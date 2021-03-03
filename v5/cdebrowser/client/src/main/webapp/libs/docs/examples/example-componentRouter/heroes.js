@@ -38,7 +38,7 @@ angular.module('heroes', [])
 
 
 function HeroService($q) {
-  var heroesPromise = $q.resolve([
+  var heroesPromise = $q.when([
     { id: 11, name: 'Mr. Nice' },
     { id: 12, name: 'Narco' },
     { id: 13, name: 'Bombasto' },

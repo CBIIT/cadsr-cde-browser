@@ -22,8 +22,8 @@ function getVF(n, opt_precision) {
 $provide.value("$locale", {
   "DATETIME_FORMATS": {
     "AMPMS": [
-      "AM",
-      "PM"
+      "ulloqeqqata-tungaa",
+      "ulloqeqqata-kingorna"
     ],
     "DAY": [
       "sabaat",
@@ -35,12 +35,12 @@ $provide.value("$locale", {
       "arfininngorneq"
     ],
     "ERANAMES": [
-      "BCE",
-      "CE"
+      "Kristusip inunngornerata siornagut",
+      "Kristusip inunngornerata kingornagut"
     ],
     "ERAS": [
-      "BCE",
-      "CE"
+      "Kr.in.si.",
+      "Kr.in.king."
     ],
     "FIRSTDAYOFWEEK": 0,
     "MONTH": [
@@ -98,17 +98,17 @@ $provide.value("$locale", {
       5,
       6
     ],
-    "fullDate": "y MMMM d, EEEE",
-    "longDate": "y MMMM d",
-    "medium": "y MMM d HH:mm:ss",
-    "mediumDate": "y MMM d",
-    "mediumTime": "HH:mm:ss",
-    "short": "y-MM-dd HH:mm",
+    "fullDate": "EEEE dd MMMM y",
+    "longDate": "dd MMMM y",
+    "medium": "MMM dd, y h:mm:ss a",
+    "mediumDate": "MMM dd, y",
+    "mediumTime": "h:mm:ss a",
+    "short": "y-MM-dd h:mm a",
     "shortDate": "y-MM-dd",
-    "shortTime": "HH:mm"
+    "shortTime": "h:mm a"
   },
   "NUMBER_FORMATS": {
-    "CURRENCY_SYM": "kr.",
+    "CURRENCY_SYM": "kr",
     "DECIMAL_SEP": ",",
     "GROUP_SEP": ".",
     "PATTERNS": [

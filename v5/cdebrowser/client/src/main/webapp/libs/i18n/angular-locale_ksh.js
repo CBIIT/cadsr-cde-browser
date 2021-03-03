@@ -27,7 +27,7 @@ $provide.value("$locale", {
     ],
     "DAY": [
       "Sunndaach",
-      "Mohndaach",
+      "Moondaach",
       "Dinnsdaach",
       "Metwoch",
       "Dunnersdaach",
@@ -35,8 +35,8 @@ $provide.value("$locale", {
       "Samsdaach"
     ],
     "ERANAMES": [
-      "v\u00fcr Krestos",
-      "noh Krestos"
+      "v\u00fcr Chrestus",
+      "noh Chrestus"
     ],
     "ERAS": [
       "v. Chr.",
@@ -48,12 +48,12 @@ $provide.value("$locale", {
       "F\u00e4browa",
       "M\u00e4\u00e4z",
       "Aprell",
-      "Mai",
+      "M\u00e4i",
       "Juuni",
       "Juuli",
       "Oujo\u00df",
       "Sept\u00e4mber",
-      "Oktohber",
+      "Oktoober",
       "Nov\u00e4mber",
       "Dez\u00e4mber"
     ],
@@ -71,7 +71,7 @@ $provide.value("$locale", {
       "F\u00e4b",
       "M\u00e4z",
       "Apr",
-      "Mai",
+      "M\u00e4i",
       "Jun",
       "Jul",
       "Ouj",
@@ -85,12 +85,12 @@ $provide.value("$locale", {
       "F\u00e4browa",
       "M\u00e4\u00e4z",
       "Aprell",
-      "Mai",
+      "M\u00e4i",
       "Juuni",
       "Juuli",
       "Oujo\u00df",
       "Sept\u00e4mber",
-      "Oktohber",
+      "Oktoober",
       "Nov\u00e4mber",
       "Dez\u00e4mber"
     ],

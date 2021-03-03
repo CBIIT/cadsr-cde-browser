@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngController.js?message=docs(ngController)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngController.js?message=docs(ngController)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngController.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngController.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,10 +19,7 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>The <code>ngController</code> directive attaches a controller class to the view. This is a key aspect of how angular
 supports the principles behind the Model-View-Controller design pattern.</p>
 <p>MVC components in angular:</p>
@@ -43,11 +40,13 @@ and executed twice.</p>
 
 
 
+
+
 <div>
   
 
   
-  <h2 id="ngController-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     <li>This directive creates new scope.</li>
     <li>This directive executes at priority level 500.</li>
@@ -61,11 +60,9 @@ and executed twice.</p>
     <ul>
     
       <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
       <pre><code>&lt;ng-controller&#10;  ng-controller=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-controller&gt;</code></pre>
       </li>
-    
-
-    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-controller=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -73,7 +70,7 @@ and executed twice.</p>
   </div>
   
 <section class="api-section">
-  <h3 id="ngController-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -102,7 +99,7 @@ that on the current scope evaluates to a constructor function.</p>
 <code>ng-controller=&quot;as propertyName&quot;</code>.</p>
 <p>If the current <code>$controllerProvider</code> is configured to use globals (via
 <a href="api/ng/provider/$controllerProvider#allowGlobals"><code>$controllerProvider.allowGlobals()</code></a>), this may
-also be the name of a globally accessible constructor function (deprecated, not recommended).</p>
+also be the name of a globally accessible constructor function (not recommended).</p>
 
         
       </td>
@@ -114,10 +111,11 @@ also be the name of a globally accessible constructor function (deprecated, not 
 </section>
   
 
+
   
-  <h2 id="examples">Example</h2><p>Here is a simple form for editing user contact information. Adding, removing, clearing, and
+  <h2 id="example">Example</h2><p>Here is a simple form for editing user contact information. Adding, removing, clearing, and
 greeting are methods declared on the controller (see source tab). These methods can
-easily be called from the AngularJS markup. Any changes to the data are automatically reflected
+easily be called from the angular markup. Any changes to the data are automatically reflected
 in the View without the need for a manual update.</p>
 <p>Two different declaration styles are included below:</p>
 <ul>
@@ -126,7 +124,7 @@ in the View without the need for a manual update.</p>
 <li>one injects <code>$scope</code> into the controller:
 <code>ng-controller=&quot;SettingsController2&quot;</code></li>
 </ul>
-<p>The second option is more common in the AngularJS community, and is generally used in boilerplates
+<p>The second option is more common in the Angular community, and is generally used in boilerplates
 and in this guide. However, there are advantages to binding properties directly to the controller
 and avoiding scope.</p>
 <ul>

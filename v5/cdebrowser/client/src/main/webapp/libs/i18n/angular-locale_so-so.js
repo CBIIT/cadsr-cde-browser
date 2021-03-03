@@ -35,8 +35,8 @@ $provide.value("$locale", {
       "Sabti"
     ],
     "ERANAMES": [
-      "CK",
-      "CD"
+      "Ciise ka hor (CS)",
+      "Ciise ka dib (CS)"
     ],
     "ERAS": [
       "CK",
@@ -126,8 +126,8 @@ $provide.value("$locale", {
       {
         "gSize": 3,
         "lgSize": 3,
-        "maxFrac": 0,
-        "minFrac": 0,
+        "maxFrac": 2,
+        "minFrac": 2,
         "minInt": 1,
         "negPre": "-\u00a4",
         "negSuf": "",

@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngBind.js?message=docs(ngBindHtml)%3A%20describe%20your%20change...#L139' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngBind.js?message=docs(ngBindHtml)%3A%20describe%20your%20change...#L139' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngBind.js#L139' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngBind.js#L139' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,13 +19,10 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Evaluates the expression and inserts the resulting HTML into the element in a secure way. By default,
 the resulting HTML content will be sanitized using the <a href="api/ngSanitize/service/$sanitize">$sanitize</a> service.
-To utilize this functionality, ensure that <code>$sanitize</code> is available, for example, by including <a href="api/ngSanitize"><code>ngSanitize</code></a> in your module&#39;s dependencies (not in core AngularJS). In order to use <a href="api/ngSanitize"><code>ngSanitize</code></a>
+To utilize this functionality, ensure that <code>$sanitize</code> is available, for example, by including <a href="api/ngSanitize"><code>ngSanitize</code></a> in your module&#39;s dependencies (not in core Angular). In order to use <a href="api/ngSanitize"><code>ngSanitize</code></a>
 in your module&#39;s dependencies, you need to include &quot;angular-sanitize.js&quot; in your application.</p>
 <p>You may also bypass sanitization for values you know are safe. To do so, bind to
 an explicitly trusted value via <a href="api/ng/service/$sce#trustAsHtml">$sce.trustAsHtml</a>.  See the example
@@ -38,11 +35,13 @@ will have an exception (instead of an exploit.)</p>
 
 
 
+
+
 <div>
   
 
   
-  <h2 id="ngBindHtml-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -56,11 +55,9 @@ will have an exception (instead of an exploit.)</p>
     <ul>
     
       <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
       <pre><code>&lt;ng-bind-html&#10;  ng-bind-html=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-bind-html&gt;</code></pre>
       </li>
-    
-
-    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-bind-html=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -68,7 +65,7 @@ will have an exception (instead of an exploit.)</p>
   </div>
   
 <section class="api-section">
-  <h3 id="ngBindHtml-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -102,8 +99,9 @@ will have an exception (instead of an exploit.)</p>
 </section>
   
 
+
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-bind-html"></plnkr-opener>

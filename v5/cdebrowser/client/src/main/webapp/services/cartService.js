@@ -73,15 +73,14 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		};	
 
 		$http({method: 'POST',url:url, data:itemArray})
-			.then(function(response) { 
-				response=response['data'];
+			.success(function(response) { 
 				deleteItems();
 				that.statusMessage = '';
 				that.disableSaveButton = false;
 				that.disableDeleteButton = false;				
 
 			})
-			.catch(function(response) { 
+			.error(function(response) { 
 				deleteItems();
 				that.statusMessage = '';
 				this.isError = true;
@@ -134,8 +133,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 		if (this.itemsForSave.length) { //only make call if there are unsaved items //
 			this.statusMessage = 'Saving Cart';
 			this.isError = false;
-			$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).then(function(response) {
-				response=response['data'];
+			$http({method: 'POST',url:'/cdebrowserServer/rest/cdeCart', data:this.itemsForSave}).success(function(response) {
 				for (var i=0; i<that.cartData.length; i++) {
 					that.cartData[i]['unsavedItem'] = false;
 				};
@@ -145,7 +143,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 				that.retrieveCart();
 
 			})
-			.catch(function(response, status) {
+			.error(function(response, status) {
 				authService.cameFrom = 'save';
 				that.isError = true;
 				that.disableSaveButton = false;
@@ -182,8 +180,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			this.isError = false;
 		}; // user has forced retrieve cart //
 		$http.get('/cdebrowserServer/rest/cdeCart')
-		.then(function(response) {
-			response=response['data'];
+		.success(function(response) {
 			that.disableSaveButton = false;
 			that.disableDeleteButton = false;
 
@@ -206,7 +203,7 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			};
 			that.statusMessage = '';
 
-		}).catch(function(response, status) {
+		}).error(function(response, status) {
 			that.disableSaveButton = false;
 			that.disableDeleteButton = false;
 

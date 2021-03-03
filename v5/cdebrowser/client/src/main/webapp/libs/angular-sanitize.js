@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.6.9
- * (c) 2010-2018 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.5.9
+ * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {'use strict';
@@ -23,7 +23,6 @@ var forEach;
 var isDefined;
 var lowercase;
 var noop;
-var nodeContains;
 var htmlParser;
 var htmlSanitizeWriter;
 
@@ -32,7 +31,12 @@ var htmlSanitizeWriter;
  * @name ngSanitize
  * @description
  *
+ * # ngSanitize
+ *
  * The `ngSanitize` module provides functionality to sanitize HTML.
+ *
+ *
+ * <div doc-module-components="ngSanitize"></div>
  *
  * See {@link ngSanitize.$sanitize `$sanitize`} for usage.
  */
@@ -219,11 +223,6 @@ function $SanitizeProvider() {
   htmlParser = htmlParserImpl;
   htmlSanitizeWriter = htmlSanitizeWriterImpl;
 
-  nodeContains = window.Node.prototype.contains || /** @this */ function(arg) {
-    // eslint-disable-next-line no-bitwise
-    return !!(this.compareDocumentPosition(arg) & 16);
-  };
-
   // Regular Expressions for parsing tags and attributes
   var SURROGATE_PAIR_REGEXP = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g,
     // Match everything outside of normal chars and " (quote character)
@@ -274,7 +273,7 @@ function $SanitizeProvider() {
                                      optionalEndTagElements);
 
   //Attributes that have href and hence need to be sanitized
-  var uriAttrs = toMap('background,cite,href,longdesc,src,xlink:href,xml:base');
+  var uriAttrs = toMap('background,cite,href,longdesc,src,xlink:href');
 
   var htmlAttrs = toMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
       'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
@@ -313,78 +312,27 @@ function $SanitizeProvider() {
     return obj;
   }
 
-  /**
-   * Create an inert document that contains the dirty HTML that needs sanitizing
-   * Depending upon browser support we use one of three strategies for doing this.
-   * Support: Safari 10.x -> XHR strategy
-   * Support: Firefox -> DomParser strategy
-   */
-  var getInertBodyElement /* function(html: string): HTMLBodyElement */ = (function(window, document) {
-    var inertDocument;
-    if (document && document.implementation) {
-      inertDocument = document.implementation.createHTMLDocument('inert');
+  var inertBodyElement;
+  (function(window) {
+    var doc;
+    if (window.document && window.document.implementation) {
+      doc = window.document.implementation.createHTMLDocument('inert');
     } else {
       throw $sanitizeMinErr('noinert', 'Can\'t create an inert html document');
     }
-    var inertBodyElement = (inertDocument.documentElement || inertDocument.getDocumentElement()).querySelector('body');
+    var docElement = doc.documentElement || doc.getDocumentElement();
+    var bodyElements = docElement.getElementsByTagName('body');
 
-    // Check for the Safari 10.1 bug - which allows JS to run inside the SVG G element
-    inertBodyElement.innerHTML = '<svg><g onload="this.parentNode.remove()"></g></svg>';
-    if (!inertBodyElement.querySelector('svg')) {
-      return getInertBodyElement_XHR;
+    // usually there should be only one body element in the document, but IE doesn't have any, so we need to create one
+    if (bodyElements.length === 1) {
+      inertBodyElement = bodyElements[0];
     } else {
-      // Check for the Firefox bug - which prevents the inner img JS from being sanitized
-      inertBodyElement.innerHTML = '<svg><p><style><img src="</style><img src=x onerror=alert(1)//">';
-      if (inertBodyElement.querySelector('svg img')) {
-        return getInertBodyElement_DOMParser;
-      } else {
-        return getInertBodyElement_InertDocument;
-      }
+      var html = doc.createElement('html');
+      inertBodyElement = doc.createElement('body');
+      html.appendChild(inertBodyElement);
+      doc.appendChild(html);
     }
-
-    function getInertBodyElement_XHR(html) {
-      // We add this dummy element to ensure that the rest of the content is parsed as expected
-      // e.g. leading whitespace is maintained and tags like `<meta>` do not get hoisted to the `<head>` tag.
-      html = '<remove></remove>' + html;
-      try {
-        html = encodeURI(html);
-      } catch (e) {
-        return undefined;
-      }
-      var xhr = new window.XMLHttpRequest();
-      xhr.responseType = 'document';
-      xhr.open('GET', 'data:text/html;charset=utf-8,' + html, false);
-      xhr.send(null);
-      var body = xhr.response.body;
-      body.firstChild.remove();
-      return body;
-    }
-
-    function getInertBodyElement_DOMParser(html) {
-      // We add this dummy element to ensure that the rest of the content is parsed as expected
-      // e.g. leading whitespace is maintained and tags like `<meta>` do not get hoisted to the `<head>` tag.
-      html = '<remove></remove>' + html;
-      try {
-        var body = new window.DOMParser().parseFromString(html, 'text/html').body;
-        body.firstChild.remove();
-        return body;
-      } catch (e) {
-        return undefined;
-      }
-    }
-
-    function getInertBodyElement_InertDocument(html) {
-      inertBodyElement.innerHTML = html;
-
-      // Support: IE 9-11 only
-      // strip custom-namespaced attributes on IE<=11
-      if (document.documentMode) {
-        stripCustomNsAttrs(inertBodyElement);
-      }
-
-      return inertBodyElement;
-    }
-  })(window, window.document);
+  })(window);
 
   /**
    * @example
@@ -404,9 +352,7 @@ function $SanitizeProvider() {
     } else if (typeof html !== 'string') {
       html = '' + html;
     }
-
-    var inertBodyElement = getInertBodyElement(html);
-    if (!inertBodyElement) return '';
+    inertBodyElement.innerHTML = html;
 
     //mXSS protection
     var mXSSAttempts = 5;
@@ -416,9 +362,12 @@ function $SanitizeProvider() {
       }
       mXSSAttempts--;
 
-      // trigger mXSS if it is going to happen by reading and writing the innerHTML
-      html = inertBodyElement.innerHTML;
-      inertBodyElement = getInertBodyElement(html);
+      // strip custom-namespaced attributes on IE<=11
+      if (window.document.documentMode) {
+        stripCustomNsAttrs(inertBodyElement);
+      }
+      html = inertBodyElement.innerHTML; //trigger mXSS
+      inertBodyElement.innerHTML = html;
     } while (html !== inertBodyElement.innerHTML);
 
     var node = inertBodyElement.firstChild;
@@ -434,16 +383,16 @@ function $SanitizeProvider() {
 
       var nextNode;
       if (!(nextNode = node.firstChild)) {
-        if (node.nodeType === 1) {
+      if (node.nodeType === 1) {
           handler.end(node.nodeName.toLowerCase());
         }
-        nextNode = getNonDescendant('nextSibling', node);
+        nextNode = node.nextSibling;
         if (!nextNode) {
           while (nextNode == null) {
-            node = getNonDescendant('parentNode', node);
+            node = node.parentNode;
             if (node === inertBodyElement) break;
-            nextNode = getNonDescendant('nextSibling', node);
-            if (node.nodeType === 1) {
+            nextNode = node.nextSibling;
+          if (node.nodeType === 1) {
               handler.end(node.nodeName.toLowerCase());
             }
           }
@@ -555,36 +504,28 @@ function $SanitizeProvider() {
    * @param node Root element to process
    */
   function stripCustomNsAttrs(node) {
-    while (node) {
-      if (node.nodeType === window.Node.ELEMENT_NODE) {
-        var attrs = node.attributes;
-        for (var i = 0, l = attrs.length; i < l; i++) {
-          var attrNode = attrs[i];
-          var attrName = attrNode.name.toLowerCase();
-          if (attrName === 'xmlns:ns1' || attrName.lastIndexOf('ns1:', 0) === 0) {
-            node.removeAttributeNode(attrNode);
-            i--;
-            l--;
-          }
+    if (node.nodeType === window.Node.ELEMENT_NODE) {
+      var attrs = node.attributes;
+      for (var i = 0, l = attrs.length; i < l; i++) {
+        var attrNode = attrs[i];
+        var attrName = attrNode.name.toLowerCase();
+        if (attrName === 'xmlns:ns1' || attrName.lastIndexOf('ns1:', 0) === 0) {
+          node.removeAttributeNode(attrNode);
+          i--;
+          l--;
         }
       }
-
-      var nextNode = node.firstChild;
-      if (nextNode) {
-        stripCustomNsAttrs(nextNode);
-      }
-
-      node = getNonDescendant('nextSibling', node);
     }
-  }
 
-  function getNonDescendant(propName, node) {
-    // An element is clobbered if its `propName` property points to one of its descendants
-    var nextNode = node[propName];
-    if (nextNode && nodeContains.call(node, nextNode)) {
-      throw $sanitizeMinErr('elclob', 'Failed to sanitize html because the element is clobbered: {0}', node.outerHTML || node.outerText);
+    var nextNode = node.firstChild;
+    if (nextNode) {
+      stripCustomNsAttrs(nextNode);
     }
-    return nextNode;
+
+    nextNode = node.nextSibling;
+    if (nextNode) {
+      stripCustomNsAttrs(nextNode);
+    }
   }
 }
 
@@ -597,9 +538,7 @@ function sanitizeText(chars) {
 
 
 // define ngSanitize module and register $sanitize service
-angular.module('ngSanitize', [])
-  .provider('$sanitize', $SanitizeProvider)
-  .info({ angularVersion: '1.6.9' });
+angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
 
 /**
  * @ngdoc filter
@@ -607,13 +546,13 @@ angular.module('ngSanitize', [])
  * @kind function
  *
  * @description
- * Finds links in text input and turns them into html links. Supports `http/https/ftp/sftp/mailto` and
+ * Finds links in text input and turns them into html links. Supports `http/https/ftp/mailto` and
  * plain email address links.
  *
  * Requires the {@link ngSanitize `ngSanitize`} module to be installed.
  *
  * @param {string} text Input text.
- * @param {string} [target] Window (`_blank|_self|_parent|_top`) or named frame to open links in.
+ * @param {string} target Window (`_blank|_self|_parent|_top`) or named frame to open links in.
  * @param {object|function(url)} [attributes] Add custom attributes to the link element.
  *
  *    Can be one of:
@@ -730,7 +669,7 @@ angular.module('ngSanitize', [])
  */
 angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
   var LINKY_URL_REGEXP =
-        /((s?ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i,
+        /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i,
       MAILTO_REGEXP = /^mailto:/i;
 
   var linkyMinErr = angular.$$minErr('linky');

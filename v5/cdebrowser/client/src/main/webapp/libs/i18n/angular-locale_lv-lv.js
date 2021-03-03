@@ -58,13 +58,13 @@ $provide.value("$locale", {
       "decembris"
     ],
     "SHORTDAY": [
-      "sv\u0113td.",
-      "pirmd.",
-      "otrd.",
-      "tre\u0161d.",
-      "ceturtd.",
-      "piektd.",
-      "sestd."
+      "Sv",
+      "Pr",
+      "Ot",
+      "Tr",
+      "Ce",
+      "Pk",
+      "Se"
     ],
     "SHORTMONTH": [
       "janv.",
@@ -81,18 +81,18 @@ $provide.value("$locale", {
       "dec."
     ],
     "STANDALONEMONTH": [
-      "janv\u0101ris",
-      "febru\u0101ris",
-      "marts",
-      "apr\u012blis",
-      "maijs",
-      "j\u016bnijs",
-      "j\u016blijs",
-      "augusts",
-      "septembris",
-      "oktobris",
-      "novembris",
-      "decembris"
+      "Janv\u0101ris",
+      "Febru\u0101ris",
+      "Marts",
+      "Apr\u012blis",
+      "Maijs",
+      "J\u016bnijs",
+      "J\u016blijs",
+      "Augusts",
+      "Septembris",
+      "Oktobris",
+      "Novembris",
+      "Decembris"
     ],
     "WEEKENDRANGE": [
       5,
@@ -124,15 +124,15 @@ $provide.value("$locale", {
         "posSuf": ""
       },
       {
-        "gSize": 3,
-        "lgSize": 3,
+        "gSize": 0,
+        "lgSize": 0,
         "maxFrac": 2,
         "minFrac": 2,
         "minInt": 1,
-        "negPre": "-",
-        "negSuf": "\u00a0\u00a4",
-        "posPre": "",
-        "posSuf": "\u00a0\u00a4"
+        "negPre": "-\u00a4",
+        "negSuf": "",
+        "posPre": "\u00a4",
+        "posSuf": ""
       }
     ]
   },

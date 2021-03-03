@@ -6,6 +6,7 @@ angular.module('docsApp', [
   'ngSanitize',
   'ngAnimate',
   'DocsController',
+  'versionsData',
   'pagesData',
   'navData',
   'directives',
@@ -23,9 +24,8 @@ angular.module('docsApp', [
 
 'use strict';
 
-var directivesModule = angular.module('directives', []);
+angular.module('directives', [])
 
-directivesModule
 /**
  * backToTop Directive
  * @param  {Function} $anchorScroll
@@ -71,146 +71,19 @@ directivesModule
       }
     }
   };
-})
-
-.directive('tocCollector', ['$rootScope', function($rootScope) {
-  return {
-    controller: ['$element', function($element) {
-      /* eslint-disable no-invalid-this */
-      var ctrl = this;
-
-      $rootScope.$on('$includeContentRequested', function() {
-        ctrl.hs = [];
-        ctrl.root = [];
-      });
-
-      this.hs = [];
-      this.root = [];
-      this.element = $element;
-
-      this.register = function(h) {
-        var previousLevel;
-
-        for (var i = ctrl.hs.length - 1; i >= 0; i--) {
-          if (ctrl.hs[i].level === (h.level - 1)) {
-            previousLevel = ctrl.hs[i];
-            break;
-          }
-        }
-
-        if (previousLevel) {
-          previousLevel.children.push(h);
-        } else {
-          this.root.push(h);
-        }
-
-        ctrl.hs.push(h);
-        /* eslint-enable no-invalid-this */
-      };
-    }]
-  };
-}])
-
-.component('tocTree', {
-  template: '<ul>' +
-      '<li ng-repeat="item in $ctrl.items">' +
-        '<a ng-href="#{{item.fragment}}">{{item.title}}</a>' +
-        '<toc-tree ng-if="::item.children.length > 0" items="item.children"></toc-tree>' +
-      '</li>' +
-    '</ul>',
-  bindings: {
-    items: '<'
-  }
-})
-.directive('tocContainer', function() {
-  return {
-    scope: true,
-    restrict: 'E',
-    require: {
-      tocContainer: '',
-      tocCollector: '^^'
-    },
-    controller: function() {
-      this.showToc = true;
-      this.items = [];
-    },
-    controllerAs: '$ctrl',
-    link: function(scope, element, attrs, ctrls) {
-      ctrls.tocContainer.items = ctrls.tocCollector.root;
-    },
-    template: '<div ng-if="::$ctrl.items.length > 1">' +
-      '<b>Contents</b>' +
-      '<button class="btn" ng-click="$ctrl.showToc = !$ctrl.showToc">{{$ctrl.showToc ? \'Hide\' : \'Show\'}}</button><br>' +
-      '<toc-tree items="$ctrl.items" ng-show="$ctrl.showToc"></toc-tree>' +
-      '</div>'
-  };
-})
-.directive('header', function() {
-  return {
-    restrict: 'E',
-    controller: ['$element', function($element) {
-      // eslint-disable-next-line no-invalid-this
-      this.element = $element;
-    }]
-  };
-})
-.directive('h1', ['$compile', function($compile) {
-  return {
-    restrict: 'E',
-    require: {
-      tocCollector: '^^?',
-      header: '^^?'
-    },
-    link: function(scope, element, attrs, ctrls) {
-      if (!ctrls.tocCollector) return;
-
-      var tocContainer = angular.element('<toc-container></toc-container>');
-      var containerElement = ctrls.header ? ctrls.header.element : element;
-
-      containerElement.after(tocContainer);
-      $compile(tocContainer)(scope);
-    }
-  };
-}]);
-
-for (var i = 2; i <= 5; i++) {
-  registerHDirective(i);
-}
-
-function registerHDirective(i) {
-  directivesModule.directive('h' + i, function() {
-    return {
-      restrict: 'E',
-      require: {
-        'tocCollector': '^^?'
-      },
-      link: function(scope, element, attrs, ctrls) {
-        var toc = ctrls.tocCollector;
-
-        if (!toc || !attrs.id) return;
-
-        toc.register({
-          level: i,
-          fragment: attrs.id,
-          title: element.text(),
-          children: []
-        });
-
-      }
-    };
-  });
-}
-
+});
 
 'use strict';
 
-angular.module('DocsController', ['currentVersionData'])
+angular.module('DocsController', [])
 
 .controller('DocsController', [
           '$scope', '$rootScope', '$location', '$window', '$cookies',
-              'NG_PAGES', 'NG_NAVIGATION', 'CURRENT_NG_VERSION',
+              'NG_PAGES', 'NG_NAVIGATION', 'NG_VERSION',
   function($scope, $rootScope, $location, $window, $cookies,
-              NG_PAGES, NG_NAVIGATION, CURRENT_NG_VERSION) {
+              NG_PAGES, NG_NAVIGATION, NG_VERSION) {
+
+  $scope.docsVersion = NG_VERSION.isSnapshot ? 'snapshot' : NG_VERSION.version;
 
   $scope.navClass = function(navItem) {
     return {
@@ -225,11 +98,6 @@ angular.module('DocsController', ['currentVersionData'])
   $scope.$on('$includeContentLoaded', function() {
     var pagePath = $scope.currentPage ? $scope.currentPage.path : $location.path();
     $window._gaq.push(['_trackPageview', pagePath]);
-    $scope.loading = false;
-  });
-
-  $scope.$on('$includeContentError', function() {
-    $scope.loading = false;
   });
 
   $scope.$watch(function docsPathWatch() {return $location.path(); }, function docsPathWatchAction(path) {
@@ -237,8 +105,6 @@ angular.module('DocsController', ['currentVersionData'])
     path = path.replace(/^\/?(.+?)(\/index)?\/?$/, '$1');
 
     var currentPage = $scope.currentPage = NG_PAGES[path];
-
-    $scope.loading = true;
 
     if (currentPage) {
       $scope.partialPath = 'partials/' + path + '.html';
@@ -262,12 +128,12 @@ angular.module('DocsController', ['currentVersionData'])
    Initialize
    ***********************************/
 
-  $scope.versionNumber = CURRENT_NG_VERSION.full;
-  $scope.version = CURRENT_NG_VERSION.full + ' ' + CURRENT_NG_VERSION.codeName;
+  $scope.versionNumber = angular.version.full;
+  $scope.version = angular.version.full + '  ' + angular.version.codeName;
   $scope.loading = 0;
 
 
-  var INDEX_PATH = /^(\/|\/index[^.]*.html)$/;
+  var INDEX_PATH = /^(\/|\/index[^\.]*.html)$/;
   if (!$location.path() || INDEX_PATH.test($location.path())) {
     $location.path('/api').replace();
   }
@@ -279,7 +145,7 @@ angular.module('DocsController', ['currentVersionData'])
 angular.module('errors', ['ngSanitize'])
 
 .filter('errorLink', ['$sanitize', function($sanitize) {
-  var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>]/g,
+  var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s\.;,\(\)\{\}<>]/g,
       MAILTO_REGEXP = /^mailto:/,
       STACK_TRACE_REGEXP = /:\d+:\d+$/;
 
@@ -462,7 +328,7 @@ angular.module('examples', [])
 
       ctrl.prepareExampleData = function() {
         if (ctrl.example.manifest) {
-          return $q.resolve(ctrl.example);
+          return $q.when(ctrl.example);
         }
 
         return getExampleData(ctrl.examplePath).then(function(data) {
@@ -507,11 +373,10 @@ angular.module('examples', [])
 
       };
 
-      ctrl.$onInit = function() {
-        // Initialize the example data, so it's ready when clicking the open button.
-        // Otherwise pop-up blockers will prevent a new window from opening
-        ctrl.prepareExampleData(ctrl.example.path);
-      };
+      // Initialize the example data, so it's ready when clicking the open button.
+      // Otherwise pop-up blockers will prevent a new window from opening
+      ctrl.prepareExampleData(ctrl.example.path);
+
     }]
   };
 }])
@@ -620,18 +485,12 @@ angular.module('search', [])
     clearResults();
     $scope.q = '';
   };
-
-  $scope.handleResultClicked = function($event) {
-    if ($event.which === 1 && !$event.ctrlKey && !$event.metaKey) {
-      $scope.hideResults();
-    }
-  };
 }])
 
 
 .controller('Error404SearchCtrl', ['$scope', '$location', 'docsSearch',
         function($scope, $location, docsSearch) {
-  docsSearch($location.path().split(/[/.:]/).pop()).then(function(results) {
+  docsSearch($location.path().split(/[\/\.:]/).pop()).then(function(results) {
     $scope.results = {};
     angular.forEach(results, function(result) {
       var area = $scope.results[result.area] || [];
@@ -761,13 +620,13 @@ angular.module('search', [])
   };
 })
 
-.directive('docsSearchInput', ['$document', function($document) {
+.directive('docsSearchInput', ['$document',function($document) {
   return function(scope, element, attrs) {
     var ESCAPE_KEY_KEYCODE = 27,
         FORWARD_SLASH_KEYCODE = 191;
     angular.element($document[0].body).on('keydown', function(event) {
       var input = element[0];
-      if (event.keyCode === FORWARD_SLASH_KEYCODE && $document[0].activeElement !== input) {
+      if (event.keyCode === FORWARD_SLASH_KEYCODE && window.document.activeElement !== input) {
         event.stopPropagation();
         event.preventDefault();
         input.focus();
@@ -840,50 +699,35 @@ angular.module('tutorials', [])
 });
 
 'use strict';
-/* global console */
 
-angular.module('versions', ['currentVersionData', 'allVersionsData'])
+angular.module('versions', [])
 
-.directive('versionPicker', function() {
-  return {
-    restrict: 'E',
-    scope: true,
-    controllerAs: '$ctrl',
-    controller: ['$location', '$window', 'CURRENT_NG_VERSION', 'ALL_NG_VERSIONS',
-            /** @this VersionPickerController */
-            function VersionPickerController($location, $window, CURRENT_NG_VERSION, ALL_NG_VERSIONS) {
+.controller('DocsVersionsCtrl', ['$scope', '$location', '$window', 'NG_VERSIONS', function($scope, $location, $window, NG_VERSIONS) {
+  $scope.docs_version  = NG_VERSIONS[0];
+  $scope.docs_versions = NG_VERSIONS;
 
-      var versionStr = CURRENT_NG_VERSION.version;
+  for (var i = 0, minor = NaN; i < NG_VERSIONS.length; i++) {
+    var version = NG_VERSIONS[i];
+    // NaN will give false here
+    if (minor <= version.minor) {
+      continue;
+    }
+    version.isLatest = true;
+    minor = version.minor;
+  }
 
-      if (CURRENT_NG_VERSION.isSnapshot) {
-        versionStr = CURRENT_NG_VERSION.distTag === 'latest' ? 'snapshot-stable' : 'snapshot';
-      }
-
-      this.versions  = ALL_NG_VERSIONS;
-      this.selectedVersion = find(ALL_NG_VERSIONS, function(value) {
-        return value.version.version === versionStr;
-      });
-
-      this.jumpToDocsVersion = function(value) {
-        var currentPagePath = $location.path().replace(/\/$/, '');
-        $window.location = value.docsUrl + currentPagePath;
-      };
-    }],
-    template:
-      '<div class="picker version-picker">' +
-      '  <select ng-options="v as v.label group by v.group for v in $ctrl.versions"' +
-      '          ng-model="$ctrl.selectedVersion"' +
-      '          ng-change="$ctrl.jumpToDocsVersion($ctrl.selectedVersion)"' +
-      '          class="docs-version-jump">' +
-      '  </select>' +
-      '</div>'
+  $scope.getGroupName = function(v) {
+    return v.isLatest ? 'Latest' : ('v' + v.major + '.' + v.minor + '.x');
   };
 
-  function find(collection, matcherFn) {
-    for (var i = 0, ii = collection.length; i < ii; ++i) {
-      if (matcherFn(collection[i])) {
-        return collection[i];
-      }
+  $scope.jumpToDocsVersion = function(version) {
+    var currentPagePath = $location.path().replace(/\/$/, ''),
+        url = '';
+    if (version.isOldDocsUrl) {
+      url = version.docsUrl;
+    } else {
+      url = version.docsUrl + currentPagePath;
     }
-  }
-});
+    $window.location = url;
+  };
+}]);

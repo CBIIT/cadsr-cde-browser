@@ -5,7 +5,7 @@
   <title>Example - example-ngModelOptions-directive-blur-production</title>
   
 
-  <script src="//code.angularjs.org/1.6.9/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
   <script src="app.js"></script>
   
 
@@ -14,19 +14,18 @@
 <body ng-app="optionsExample">
   <div ng-controller="ExampleController">
   <form name="userForm">
-    <label>
-      Name:
+    <label>Name:
       <input type="text" name="userName"
              ng-model="user.name"
              ng-model-options="{ updateOn: 'blur' }"
              ng-keyup="cancel($event)" />
     </label><br />
-    <label>
-      Other data:
+    <label>Other data:
       <input type="text" ng-model="user.data" />
     </label><br />
   </form>
   <pre>user.name = <span ng-bind="user.name"></span></pre>
+  <pre>user.data = <span ng-bind="user.data"></span></pre>
 </div>
 </body>
 </html>

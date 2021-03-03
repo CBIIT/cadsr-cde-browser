@@ -1,13 +1,11 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngMessages/messages.js?message=docs(ngMessages)%3A%20describe%20your%20change...#L8' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngMessages/messages.js?message=docs(ngMessages)%3A%20describe%20your%20change...#L8' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>
   <code>ngMessages</code>
 </h1>
 
-
-
-<h2 id="module-installation">Installation</h2>
+<h2>Installation</h2>
 
 
   <p>First, get the file:</p>
@@ -18,9 +16,7 @@
     </li>
     <li>
       <a href="https://www.npmjs.com/">NPM</a> e.g.
-      <pre><code>npm install --save angular-messages@X.Y.Z</code></pre>
-      or
-      <pre><code>yarn add angular-messages@X.Y.Z</code></pre>
+      <pre><code>npm install angular-messages@X.Y.Z</code></pre>
     </li>
     <li>
       <a href="http://bower.io">Bower</a> e.g.
@@ -52,7 +48,7 @@ show and hide error messages specific to the state of an input field, the <code>
 sequencing based on the order of how the messages are defined in the template.</p>
 <p>Currently, the ngMessages module only contains the code for the <code>ngMessages</code>, <code>ngMessagesInclude</code>
 <code>ngMessage</code> and <code>ngMessageExp</code> directives.</p>
-<h2 id="usage">Usage</h2>
+<h1 id="usage">Usage</h1>
 <p>The <code>ngMessages</code> directive allows keys in a key/value collection to be associated with a child element
 (or &#39;message&#39;) that will show or hide based on the truthiness of that key&#39;s value in the collection. A common use
 case for <code>ngMessages</code> is to display error messages for inputs using the <code>$error</code> object exposed by the
@@ -87,7 +83,7 @@ is no value present for the required field <code>myField</code> (because the key
 <p>By default, <code>ngMessages</code> will only display one message for a particular key/value collection at any time. If more
 than one message (or error) key is currently true, then which message is shown is determined by the order of messages
 in the HTML template code (messages declared first are prioritised). This mechanism means the developer does not have
-to prioritize messages using custom JavaScript code.</p>
+to prioritise messages using custom JavaScript code.</p>
 <p>Given the following error object for our example (which informs us that the field <code>myField</code> currently has both the
 <code>required</code> and <code>email</code> errors):</p>
 <pre><code class="lang-javascript">&lt;!-- keep in mind that ngModel automatically sets these error flags --&gt;
@@ -197,7 +193,7 @@ that multiple errors can be associated with a single error message:</p>
 </code></pre>
 <p>Feel free to use other structural directives such as ng-if and ng-switch to further control
 what messages are active and when. Be careful, if you place ng-message on the same element
-as these structural directives, AngularJS may not be able to determine if a message is active
+as these structural directives, Angular may not be able to determine if a message is active
 or not. Therefore it is best to place the ng-message on a child element of the structural
 directive.</p>
 <pre><code class="lang-html">&lt;div ng-messages=&quot;myForm.myEmail.$error&quot; role=&quot;alert&quot;&gt;
@@ -252,7 +248,7 @@ and leave animation is triggered for each particular element bound to the <code>
 
 
 <div class="component-breakdown">
-  <h2 id="module-components">Module Components</h2>
+  <h2>Module Components</h2>
   
   <div>
     <h3 class="component-heading" id="directive">Directive</h3>
@@ -291,8 +287,10 @@ of the provided key/value map that <code>ngMessages</code> listens on.</p>
       
       <tr>
         <td><a href="api/ngMessages/directive/ngMessageExp">ngMessageExp</a></td>
-        <td><p><code>ngMessageExp</code> is the same as <a href="api/ngMessages/directive/ngMessage"><code>ngMessage</code></a>, but instead of a static
-value, it accepts an expression to be evaluated for the message key.</p>
+        <td><p><code>ngMessageExp</code> is a directive with the purpose to show and hide a particular message.
+For <code>ngMessageExp</code> to operate, a parent <code>ngMessages</code> directive on a parent DOM element
+must be situated since it determines which messages are visible based on the state
+of the provided key/value map that <code>ngMessages</code> listens on.</p>
 </td>
       </tr>
       

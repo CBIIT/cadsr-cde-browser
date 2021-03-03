@@ -17,30 +17,30 @@ $provide.value("$locale", {
       "shanba"
     ],
     "ERANAMES": [
-      "miloddan avvalgi",
-      "milodiy"
+      "M.A.",
+      "E"
     ],
     "ERAS": [
-      "m.a.",
-      "milodiy"
+      "M.A.",
+      "E"
     ],
     "FIRSTDAYOFWEEK": 0,
     "MONTH": [
-      "yanvar",
-      "fevral",
-      "mart",
-      "aprel",
-      "may",
-      "iyun",
-      "iyul",
-      "avgust",
-      "sentabr",
-      "oktabr",
-      "noyabr",
-      "dekabr"
+      "Yanvar",
+      "Fevral",
+      "Mart",
+      "Aprel",
+      "May",
+      "Iyun",
+      "Iyul",
+      "Avgust",
+      "Sentabr",
+      "Oktabr",
+      "Noyabr",
+      "Dekabr"
     ],
     "SHORTDAY": [
-      "Yak",
+      "Yaksh",
       "Dush",
       "Sesh",
       "Chor",
@@ -49,18 +49,18 @@ $provide.value("$locale", {
       "Shan"
     ],
     "SHORTMONTH": [
-      "yan",
-      "fev",
-      "mar",
-      "apr",
-      "may",
-      "iyn",
-      "iyl",
-      "avg",
-      "sen",
-      "okt",
-      "noy",
-      "dek"
+      "Yanv",
+      "Fev",
+      "Mar",
+      "Apr",
+      "May",
+      "Iyun",
+      "Iyul",
+      "Avg",
+      "Sen",
+      "Okt",
+      "Noya",
+      "Dek"
     ],
     "STANDALONEMONTH": [
       "Yanvar",
@@ -80,13 +80,13 @@ $provide.value("$locale", {
       5,
       6
     ],
-    "fullDate": "EEEE, d-MMMM, y",
-    "longDate": "d-MMMM, y",
-    "medium": "d-MMM, y HH:mm:ss",
-    "mediumDate": "d-MMM, y",
+    "fullDate": "EEEE, y MMMM dd",
+    "longDate": "y MMMM d",
+    "medium": "y MMM d HH:mm:ss",
+    "mediumDate": "y MMM d",
     "mediumTime": "HH:mm:ss",
-    "short": "dd/MM/yy HH:mm",
-    "shortDate": "dd/MM/yy",
+    "short": "yy/MM/dd HH:mm",
+    "shortDate": "yy/MM/dd",
     "shortTime": "HH:mm"
   },
   "NUMBER_FORMATS": {
@@ -111,10 +111,10 @@ $provide.value("$locale", {
         "maxFrac": 2,
         "minFrac": 2,
         "minInt": 1,
-        "negPre": "-",
-        "negSuf": "\u00a0\u00a4",
-        "posPre": "",
-        "posSuf": "\u00a0\u00a4"
+        "negPre": "-\u00a4\u00a0",
+        "negSuf": "",
+        "posPre": "\u00a4\u00a0",
+        "posSuf": ""
       }
     ]
   },

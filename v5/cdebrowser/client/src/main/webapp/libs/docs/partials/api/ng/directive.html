@@ -29,17 +29,17 @@ of the page - e.g. on the <code>&lt;body&gt;</code> or <code>&lt;html&gt;</code>
       
       <tr>
         <td><a href="api/ng/directive/a">a</a></td>
-        <td><p>Modifies the default behavior of the html a tag so that the default action is prevented when
+        <td><p>Modifies the default behavior of the html A tag so that the default action is prevented when
 the href attribute is empty.</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/directive/ngHref">ngHref</a></td>
-        <td><p>Using AngularJS markup like <code>{{hash}}</code> in an href attribute will
+        <td><p>Using Angular markup like <code>{{hash}}</code> in an href attribute will
 make the link go to the wrong URL if the user clicks it before
-AngularJS has a chance to replace the <code>{{hash}}</code> markup with its
-value. Until AngularJS replaces the markup the link will be broken
+Angular has a chance to replace the <code>{{hash}}</code> markup with its
+value. Until Angular replaces the markup the link will be broken
 and will most likely return a 404 error. The <code>ngHref</code> directive
 solves this problem.</p>
 </td>
@@ -47,26 +47,25 @@ solves this problem.</p>
       
       <tr>
         <td><a href="api/ng/directive/ngSrc">ngSrc</a></td>
-        <td><p>Using AngularJS markup like <code>{{hash}}</code> in a <code>src</code> attribute doesn&#39;t
+        <td><p>Using Angular markup like <code>{{hash}}</code> in a <code>src</code> attribute doesn&#39;t
 work right: The browser will fetch from the URL with the literal
-text <code>{{hash}}</code> until AngularJS replaces the expression inside
+text <code>{{hash}}</code> until Angular replaces the expression inside
 <code>{{hash}}</code>. The <code>ngSrc</code> directive solves this problem.</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/directive/ngSrcset">ngSrcset</a></td>
-        <td><p>Using AngularJS markup like <code>{{hash}}</code> in a <code>srcset</code> attribute doesn&#39;t
+        <td><p>Using Angular markup like <code>{{hash}}</code> in a <code>srcset</code> attribute doesn&#39;t
 work right: The browser will fetch from the URL with the literal
-text <code>{{hash}}</code> until AngularJS replaces the expression inside
+text <code>{{hash}}</code> until Angular replaces the expression inside
 <code>{{hash}}</code>. The <code>ngSrcset</code> directive solves this problem.</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/directive/ngDisabled">ngDisabled</a></td>
-        <td><p>This directive sets the <code>disabled</code> attribute on the element (typically a form control,
-e.g. <code>input</code>, <code>button</code>, <code>select</code> etc.) if the
+        <td><p>This directive sets the <code>disabled</code> attribute on the element if the
 <a href="guide/expression">expression</a> inside <code>ngDisabled</code> evaluates to truthy.</p>
 </td>
       </tr>
@@ -114,7 +113,7 @@ sub-group of controls needs to be determined.</p>
       
       <tr>
         <td><a href="api/ng/directive/textarea">textarea</a></td>
-        <td><p>HTML textarea element control with AngularJS data-binding. The data-binding and validation
+        <td><p>HTML textarea element control with angular data-binding. The data-binding and validation
 properties of this element are exactly the same as those of the
 <a href="api/ng/directive/input">input element</a>.</p>
 </td>
@@ -130,13 +129,15 @@ Input control follows HTML5 input types and polyfills the HTML5 validation behav
       
       <tr>
         <td><a href="api/ng/directive/ngValue">ngValue</a></td>
-        <td><p>Binds the given expression to the value of the element.</p>
+        <td><p>Binds the given expression to the value of <code>&lt;option&gt;</code> or <a href="api/ng/input/input[radio]"><code>input[radio]</code></a>,
+so that when the element is selected, the <a href="api/ng/directive/ngModel"><code>ngModel</code></a> of that element is set to
+the bound value.</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/directive/ngBind">ngBind</a></td>
-        <td><p>The <code>ngBind</code> attribute tells AngularJS to replace the text content of the specified HTML element
+        <td><p>The <code>ngBind</code> attribute tells Angular to replace the text content of the specified HTML element
 with the value of a given expression, and to update the text content when the value of that
 expression changes.</p>
 </td>
@@ -157,7 +158,7 @@ expressions. This directive is needed since some HTML elements
         <td><a href="api/ng/directive/ngBindHtml">ngBindHtml</a></td>
         <td><p>Evaluates the expression and inserts the resulting HTML into the element in a secure way. By default,
 the resulting HTML content will be sanitized using the <a href="api/ngSanitize/service/$sanitize">$sanitize</a> service.
-To utilize this functionality, ensure that <code>$sanitize</code> is available, for example, by including <a href="api/ngSanitize"><code>ngSanitize</code></a> in your module&#39;s dependencies (not in core AngularJS). In order to use <a href="api/ngSanitize"><code>ngSanitize</code></a>
+To utilize this functionality, ensure that <code>$sanitize</code> is available, for example, by including <a href="api/ngSanitize"><code>ngSanitize</code></a> in your module&#39;s dependencies (not in core Angular). In order to use <a href="api/ngSanitize"><code>ngSanitize</code></a>
 in your module&#39;s dependencies, you need to include &quot;angular-sanitize.js&quot; in your application.</p>
 </td>
       </tr>
@@ -196,7 +197,7 @@ conjunction with <code>ngRepeat</code> and take effect only on odd (even) rows.<
       
       <tr>
         <td><a href="api/ng/directive/ngCloak">ngCloak</a></td>
-        <td><p>The <code>ngCloak</code> directive is used to prevent the AngularJS html template from being briefly
+        <td><p>The <code>ngCloak</code> directive is used to prevent the Angular html template from being briefly
 displayed by the browser in its raw (uncompiled) form while your application is loading. Use this
 directive to avoid the undesirable flicker effect caused by the html template display.</p>
 </td>
@@ -211,7 +212,7 @@ supports the principles behind the Model-View-Controller design pattern.</p>
       
       <tr>
         <td><a href="api/ng/directive/ngCsp">ngCsp</a></td>
-        <td><p>AngularJS has some features that can conflict with certain restrictions that are applied when using
+        <td><p>Angular has some features that can break certain
 <a href="https://developer.mozilla.org/en/Security/CSP">CSP (Content Security Policy)</a> rules.</p>
 </td>
       </tr>
@@ -285,7 +286,7 @@ an element is clicked.</p>
       
       <tr>
         <td><a href="api/ng/directive/ngSubmit">ngSubmit</a></td>
-        <td><p>Enables binding AngularJS expressions to onsubmit events.</p>
+        <td><p>Enables binding angular expressions to onsubmit events.</p>
 </td>
       </tr>
       
@@ -359,19 +360,18 @@ which is created and exposed by this directive.</p>
       
       <tr>
         <td><a href="api/ng/directive/ngModelOptions">ngModelOptions</a></td>
-        <td><p>This directive allows you to modify the behaviour of <a href="api/ng/directive/ngModel"><code>ngModel</code></a> directives within your
-application. You can specify an <code>ngModelOptions</code> directive on any element. All <a href="api/ng/directive/ngModel"><code>ngModel</code></a>
-directives will use the options of their nearest <code>ngModelOptions</code> ancestor.</p>
+        <td><p>Allows tuning how model updates are done. Using <code>ngModelOptions</code> you can specify a custom list of
+events that will trigger a model update and/or a debouncing delay so that the actual update only
+takes place when a timer expires; this timer will be reset after another change takes place.</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/directive/ngNonBindable">ngNonBindable</a></td>
-        <td><p>The <code>ngNonBindable</code> directive tells AngularJS not to compile or bind the contents of the current
-DOM element, including directives on the element itself that have a lower priority than
-<code>ngNonBindable</code>. This is useful if the element contains what appears to be AngularJS directives
-and bindings but which should be ignored by AngularJS. This could be the case if you have a site
-that displays snippets of code, for instance.</p>
+        <td><p>The <code>ngNonBindable</code> directive tells Angular not to compile or bind the contents of the current
+DOM element. This is useful if the element contains what appears to be Angular directives and
+bindings but which should be ignored by Angular. This could be the case if you have a site that
+displays snippets of code, for instance.</p>
 </td>
       </tr>
       
@@ -387,7 +387,7 @@ elements for the <code>&lt;select&gt;</code> element using the array or object o
         <td><a href="api/ng/directive/ngPluralize">ngPluralize</a></td>
         <td><p><code>ngPluralize</code> is a directive that displays messages according to en-US localization rules.
 These rules are bundled with angular.js, but can be overridden
-(see <a href="guide/i18n">AngularJS i18n</a> dev guide). You configure ngPluralize directive
+(see <a href="guide/i18n">Angular i18n</a> dev guide). You configure ngPluralize directive
 by specifying the mappings between
 <a href="http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html">plural categories</a>
 and the strings to be displayed.</p>
@@ -404,15 +404,21 @@ and <code>$index</code> is set to the item index or key.</p>
       
       <tr>
         <td><a href="api/ng/directive/ngShow">ngShow</a></td>
-        <td><p>The <code>ngShow</code> directive shows or hides the given HTML element based on the expression provided to
-the <code>ngShow</code> attribute.</p>
+        <td><p>The <code>ngShow</code> directive shows or hides the given HTML element based on the expression
+provided to the <code>ngShow</code> attribute. The element is shown or hidden by removing or adding
+the <code>.ng-hide</code> CSS class onto the element. The <code>.ng-hide</code> CSS class is predefined
+in AngularJS and sets the display style to none (using an !important flag).
+For CSP mode please add <code>angular-csp.css</code> to your html file (see <a href="api/ng/directive/ngCsp">ngCsp</a>).</p>
 </td>
       </tr>
       
       <tr>
         <td><a href="api/ng/directive/ngHide">ngHide</a></td>
-        <td><p>The <code>ngHide</code> directive shows or hides the given HTML element based on the expression provided to
-the <code>ngHide</code> attribute.</p>
+        <td><p>The <code>ngHide</code> directive shows or hides the given HTML element based on the expression
+provided to the <code>ngHide</code> attribute. The element is shown or hidden by removing or adding
+the <code>ng-hide</code> CSS class onto the element. The <code>.ng-hide</code> CSS class is predefined
+in AngularJS and sets the display style to none (using an !important flag).
+For CSP mode please add <code>angular-csp.css</code> to your html file (see <a href="api/ng/directive/ngCsp">ngCsp</a>).</p>
 </td>
       </tr>
       
@@ -448,7 +454,7 @@ assigned through the element&#39;s <code>id</code>, which can then be used as a 
       
       <tr>
         <td><a href="api/ng/directive/select">select</a></td>
-        <td><p>HTML <code>select</code> element with AngularJS data-binding.</p>
+        <td><p>HTML <code>SELECT</code> element with angular data-binding.</p>
 </td>
       </tr>
       

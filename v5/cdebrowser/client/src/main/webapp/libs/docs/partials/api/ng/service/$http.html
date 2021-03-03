@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/http.js?message=docs($http)%3A%20describe%20your%20change...#L409' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/http.js?message=docs($http)%3A%20describe%20your%20change...#L405' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/http.js#L409' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/http.js#L405' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,11 +23,8 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
-  <p>The <code>$http</code> service is a core AngularJS service that facilitates communication with the remote
+  <p>The <code>$http</code> service is a core Angular service that facilitates communication with the remote
 HTTP servers via the browser&#39;s <a href="https://developer.mozilla.org/en/xmlhttprequest">XMLHttpRequest</a>
 object or via <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>.</p>
 <p>For unit testing applications that use <code>$http</code> service, see
@@ -59,7 +56,6 @@ functions.</li>
 <li><strong>headers</strong> – <code>{function([headerName])}</code> – Header getter function.</li>
 <li><strong>config</strong> – <code>{Object}</code> – The configuration object that was used to generate the request.</li>
 <li><strong>statusText</strong> – <code>{string}</code> – HTTP status text of the response.</li>
-<li><strong>xhrStatus</strong> – <code>{string}</code> – Status of the XMLHttpRequest (<code>complete</code>, <code>error</code>, <code>timeout</code> or <code>abort</code>).</li>
 </ul>
 <p>A response status code between 200 and 299 is considered a success status and will result in
 the success callback being called. Any response status code outside of that range is
@@ -93,13 +89,21 @@ request using trained responses.</p>
 $http.get(...);
 $httpBackend.flush();
 </code></pre>
+<h2 id="deprecation-notice">Deprecation Notice</h2>
+<div class="alert alert-danger">
+  The <code>$http</code> legacy promise methods <code>success</code> and <code>error</code> have been deprecated.
+  Use the standard <code>then</code> method instead.
+  If <a href="api/ng/provider/$httpProvider#useLegacyPromiseExtensions"><code>$httpProvider.useLegacyPromiseExtensions</code></a> is set to
+  <code>false</code> then these methods will throw <a href="error/$http/legacy"><code>$http/legacy</code></a> error.
+</div>
+
 <h2 id="setting-http-headers">Setting HTTP Headers</h2>
 <p>The $http service will automatically add certain HTTP headers to all requests. These defaults
 can be fully configured by accessing the <code>$httpProvider.defaults.headers</code> configuration
 object, which currently contains this default configuration:</p>
 <ul>
 <li><code>$httpProvider.defaults.headers.common</code> (headers that are common for all requests):<ul>
-<li><code>Accept: application/json, text/plain, *&#65279;/&#65279;*</code></li>
+<li><code>Accept: application/json, text/plain, * / *</code></li>
 </ul>
 </li>
 <li><code>$httpProvider.defaults.headers.post</code>: (header defaults for POST requests)<ul>
@@ -142,7 +146,7 @@ and <code>transformResponse</code>. These properties can be a single function th
 the transformed value (<code>function(data, headersGetter, status)</code>) or an array of such transformation functions,
 which allows you to <code>push</code> or <code>unshift</code> a new transformation function into the transformation chain.</p>
 <div class="alert alert-warning">
-<strong>Note:</strong> AngularJS does not make a copy of the <code>data</code> parameter before it is passed into the <code>transformRequest</code> pipeline.
+<strong>Note:</strong> Angular does not make a copy of the <code>data</code> parameter before it is passed into the <code>transformRequest</code> pipeline.
 That means changes to the properties of <code>data</code> are not local to the transform function (since Javascript passes objects by reference).
 For example, when calling <code>$http.get(url, $scope.myObject)</code>, modifications to the object&#39;s properties in a transformRequest
 function will be reflected on the scope and in any templates where the object is data-bound.
@@ -156,19 +160,16 @@ If you need to modify properties, it is recommended to make a copy of the data, 
 then these will be applied.</p>
 <p>You can augment or replace the default transformations by modifying these properties by adding to or
 replacing the array.</p>
-<p>AngularJS provides the following default transformations:</p>
-<p>Request transformations (<code>$httpProvider.defaults.transformRequest</code> and <code>$http.defaults.transformRequest</code>) is
-an array with one function that does the following:</p>
+<p>Angular provides the following default transformations:</p>
+<p>Request transformations (<code>$httpProvider.defaults.transformRequest</code> and <code>$http.defaults.transformRequest</code>):</p>
 <ul>
 <li>If the <code>data</code> property of the request configuration object contains an object, serialize it
 into JSON format.</li>
 </ul>
-<p>Response transformations (<code>$httpProvider.defaults.transformResponse</code> and <code>$http.defaults.transformResponse</code>) is
-an array with one function that does the following:</p>
+<p>Response transformations (<code>$httpProvider.defaults.transformResponse</code> and <code>$http.defaults.transformResponse</code>):</p>
 <ul>
 <li>If XSRF prefix is detected, strip it (see Security Considerations section below).</li>
-<li>If the <code>Content-Type</code> is <code>application/json</code> or the response looks like JSON,
-  deserialize it using a JSON parser.</li>
+<li>If JSON response is detected, deserialize it using a JSON parser.</li>
 </ul>
 <h3 id="overriding-the-default-transformations-per-request">Overriding the Default Transformations Per Request</h3>
 <p>If you wish to override the request/response transformations only for a single request then provide
@@ -306,7 +307,7 @@ $httpProvider.interceptors.push(function($q, dependency1, dependency2) {
 <li><a href="http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx">JSON vulnerability</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">XSRF</a></li>
 </ul>
-<p>Both server and the client must cooperate in order to eliminate these threats. AngularJS comes
+<p>Both server and the client must cooperate in order to eliminate these threats. Angular comes
 pre-configured with strategies that address these issues, but for this to work backend server
 cooperation is required.</p>
 <h3 id="json-vulnerability-protection">JSON Vulnerability Protection</h3>
@@ -314,7 +315,7 @@ cooperation is required.</p>
 allows third party website to turn your JSON resource URL into
 <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> request under some conditions. To
 counter this your server can prefix all JSON requests with following string <code>&quot;)]}&#39;,\n&quot;</code>.
-AngularJS will automatically strip the prefix before processing it as JSON.</p>
+Angular will automatically strip the prefix before processing it as JSON.</p>
 <p>For example if your server needs to return:</p>
 <pre><code class="lang-js">[&#39;one&#39;,&#39;two&#39;]
 </code></pre>
@@ -322,11 +323,11 @@ AngularJS will automatically strip the prefix before processing it as JSON.</p>
 <pre><code class="lang-js">)]}&#39;,
 [&#39;one&#39;,&#39;two&#39;]
 </code></pre>
-<p>AngularJS will strip the prefix, before processing the JSON.</p>
+<p>Angular will strip the prefix, before processing the JSON.</p>
 <h3 id="cross-site-request-forgery-xsrf-protection">Cross Site Request Forgery (XSRF) Protection</h3>
 <p><a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">XSRF</a> is an attack technique by
 which the attacker can trick an authenticated user into unknowingly executing actions on your
-website. AngularJS provides a mechanism to counter XSRF. When performing XHR requests, the
+website. Angular provides a mechanism to counter XSRF. When performing XHR requests, the
 $http service reads a token from a cookie (by default, <code>XSRF-TOKEN</code>) and sets it as an HTTP
 header (<code>X-XSRF-TOKEN</code>). Since only JavaScript that runs on your domain could read the
 cookie, your server can be assured that the XHR came from JavaScript running on your domain.
@@ -342,10 +343,12 @@ for added security.</p>
 <p>The name of the headers can be specified using the xsrfHeaderName and xsrfCookieName
 properties of either $httpProvider.defaults at config-time, $http.defaults at run-time,
 or the per-request config object.</p>
-<p>In order to prevent collisions in environments where multiple AngularJS apps share the
+<p>In order to prevent collisions in environments where multiple Angular apps share the
 same domain or subdomain, we recommend that each application uses unique cookie name.</p>
 
 </div>
+
+
 
 
 
@@ -369,7 +372,7 @@ same domain or subdomain, we recommend that each application uses unique cookie 
 
     
 <section class="api-section">
-  <h3 id="$http-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -395,8 +398,7 @@ same domain or subdomain, we recommend that each application uses unique cookie 
    processed. The object has following properties:</p>
 <ul>
 <li><strong>method</strong> – <code>{string}</code> – HTTP method (e.g. &#39;GET&#39;, &#39;POST&#39;, etc)</li>
-<li><strong>url</strong> – <code>{string|TrustedObject}</code> – Absolute or relative URL of the resource that is being requested;
-or an object created by a call to <code>$sce.trustAsResourceUrl(url)</code>.</li>
+<li><strong>url</strong> – <code>{string}</code> – Absolute or relative URL of the resource that is being requested.</li>
 <li><strong>params</strong> – <code>{Object.&lt;string|Object&gt;}</code> – Map of strings or objects which will be serialized
 with the <code>paramSerializer</code> and appended as GET parameters.</li>
 <li><strong>data</strong> – <code>{string|Object}</code> – Data to be sent as the request message data.</li>
@@ -449,7 +451,7 @@ for more information.</li>
 
 </section>
     
-    <h3 id="$http-returns">Returns</h3>
+    <h3>Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
@@ -460,18 +462,16 @@ for more information.</li>
 </table>
 
   
-<h2 id="$http-methods">Methods</h2>
+<h2>Methods</h2>
 <ul class="methods">
-  <li>
-    <h3 id="get"><p><code>get(url, [config]);</code></p>
+  <li id="get">
+    <h3><p><code>get(url, [config]);</code></p>
 
 </h3>
     <div><p>Shortcut method to perform <code>GET</code> request.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -491,11 +491,10 @@ for more information.</li>
         
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-trustedobject">TrustedObject</a>
+        <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Absolute or relative URL of the resource that is being requested;
-                                  or an object created by a call to <code>$sce.trustAsResourceUrl(url)</code>.</p>
+        <p>Relative or absolute URL specifying the destination of the request</p>
 
         
       </td>
@@ -511,7 +510,7 @@ for more information.</li>
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -533,18 +532,18 @@ for more information.</li>
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="delete"><p><code>delete(url, [config]);</code></p>
+  <li id="delete">
+    <h3><p><code>delete(url, [config]);</code></p>
 
 </h3>
     <div><p>Shortcut method to perform <code>DELETE</code> request.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -564,11 +563,10 @@ for more information.</li>
         
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-trustedobject">TrustedObject</a>
+        <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Absolute or relative URL of the resource that is being requested;
-                                  or an object created by a call to <code>$sce.trustAsResourceUrl(url)</code>.</p>
+        <p>Relative or absolute URL specifying the destination of the request</p>
 
         
       </td>
@@ -584,7 +582,7 @@ for more information.</li>
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -606,18 +604,18 @@ for more information.</li>
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="head"><p><code>head(url, [config]);</code></p>
+  <li id="head">
+    <h3><p><code>head(url, [config]);</code></p>
 
 </h3>
     <div><p>Shortcut method to perform <code>HEAD</code> request.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -637,11 +635,10 @@ for more information.</li>
         
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-trustedobject">TrustedObject</a>
+        <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Absolute or relative URL of the resource that is being requested;
-                                  or an object created by a call to <code>$sce.trustAsResourceUrl(url)</code>.</p>
+        <p>Relative or absolute URL specifying the destination of the request</p>
 
         
       </td>
@@ -657,7 +654,7 @@ for more information.</li>
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -679,40 +676,20 @@ for more information.</li>
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="jsonp"><p><code>jsonp(url, [config]);</code></p>
+  <li id="jsonp">
+    <h3><p><code>jsonp(url, [config]);</code></p>
 
 </h3>
-    <div><p>Shortcut method to perform <code>JSONP</code> request.</p>
-<p>Note that, since JSONP requests are sensitive because the response is given full access to the browser,
-the url must be declared, via <a href="api/ng/service/$sce"><code>$sce</code></a> as a trusted resource URL.
-You can trust a URL by adding it to the whitelist via
-<a href="api/ng/provider/$sceDelegateProvider#resourceUrlWhitelist"><code>$sceDelegateProvider.resourceUrlWhitelist</code></a> or
-by explicitly trusting the URL via <a href="api/ng/service/$sce#trustAsResourceUrl"><code>$sce.trustAsResourceUrl(url)</code></a>.</p>
-<p>You should avoid generating the URL for the JSONP request from user provided data.
-Provide additional query parameters via <code>params</code> property of the <code>config</code> parameter, rather than
-modifying the URL itself.</p>
-<p>JSONP requests must specify a callback to be used in the response from the server. This callback
-is passed as a query parameter in the request. You must specify the name of this parameter by
-setting the <code>jsonpCallbackParam</code> property on the request config object.</p>
-<pre><code>$http.jsonp(&#39;some/trusted/url&#39;, {jsonpCallbackParam: &#39;callback&#39;})
-</code></pre>
-<p>You can also specify a default callback parameter name in <code>$http.defaults.jsonpCallbackParam</code>.
-Initially this is set to <code>&#39;callback&#39;</code>.</p>
-<div class="alert alert-danger">
-You can no longer use the <code>JSON_CALLBACK</code> string as a placeholder for specifying where the callback
-parameter value should go.
-</div>
-
-<p>If you would like to customise where and how the callbacks are stored then try overriding
+    <div><p>Shortcut method to perform <code>JSONP</code> request.
+If you would like to customise where and how the callbacks are stored then try overriding
 or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks</code></a> service.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -732,11 +709,11 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
         
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-trustedobject">TrustedObject</a>
+        <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Absolute or relative URL of the resource that is being requested;
-                                  or an object created by a call to <code>$sce.trustAsResourceUrl(url)</code>.</p>
+        <p>Relative or absolute URL specifying the destination of the request.
+                    The name of the callback should be the string <code>JSON_CALLBACK</code>.</p>
 
         
       </td>
@@ -752,7 +729,7 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -774,18 +751,18 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="post"><p><code>post(url, data, [config]);</code></p>
+  <li id="post">
+    <h3><p><code>post(url, data, [config]);</code></p>
 
 </h3>
     <div><p>Shortcut method to perform <code>POST</code> request.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -840,7 +817,7 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -862,18 +839,18 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="put"><p><code>put(url, data, [config]);</code></p>
+  <li id="put">
+    <h3><p><code>put(url, data, [config]);</code></p>
 
 </h3>
     <div><p>Shortcut method to perform <code>PUT</code> request.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -928,7 +905,7 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -950,18 +927,18 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   
-  <li>
-    <h3 id="patch"><p><code>patch(url, data, [config]);</code></p>
+  <li id="patch">
+    <h3><p><code>patch(url, data, [config]);</code></p>
 
 </h3>
     <div><p>Shortcut method to perform <code>PATCH</code> request.</p>
 </div>
 
     
-
-    
     <h4>Parameters</h4>
     
 <table class="variables-matrix input-arguments">
@@ -1016,7 +993,7 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
         <a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Optional configuration object. See <a href="https://docs.angularjs.org/api/ng/service/$http#usage">https://docs.angularjs.org/api/ng/service/$http#usage</a></p>
+        <p>Optional configuration object</p>
 
         
       </td>
@@ -1038,14 +1015,16 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
 </td>
   </tr>
 </table>
-    </li>
+    
+
+  </li>
   </ul>
   
   
-<h2 id="$http-properties">Properties</h2>
+<h2>Properties</h2>
 <ul class="properties">
-  <li>
-    <h3 id="pendingRequests"><code>pendingRequests</code></h3>
+  <li id="pendingRequests">
+    <h3><code>pendingRequests</code></h3>
     <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-array">Array.&lt;Object&gt;</a></td>
@@ -1054,11 +1033,10 @@ or decorating the <a href="api/ng/service/$jsonpCallbacks"><code>$jsonpCallbacks
 </td>
   </tr>
 </table>
-    
   </li>
   
-  <li>
-    <h3 id="defaults"><code>defaults</code></h3>
+  <li id="defaults">
+    <h3><code>defaults</code></h3>
     <table class="variables-matrix return-arguments">
   <tr>
     <td></td>
@@ -1068,14 +1046,13 @@ default headers, withCredentials as well as request and response transformations
 </td>
   </tr>
 </table>
-    
   </li>
   </ul>
 
 
 
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-http-service"></plnkr-opener>
@@ -1090,14 +1067,14 @@ default headers, withCredentials as well as request and response transformations
       name="index.html"
       language="html"
       type="html">
-      <pre><code>&lt;div ng-controller=&quot;FetchController&quot;&gt;&#10;  &lt;select ng-model=&quot;method&quot; aria-label=&quot;Request method&quot;&gt;&#10;    &lt;option&gt;GET&lt;/option&gt;&#10;    &lt;option&gt;JSONP&lt;/option&gt;&#10;  &lt;/select&gt;&#10;  &lt;input type=&quot;text&quot; ng-model=&quot;url&quot; size=&quot;80&quot; aria-label=&quot;URL&quot; /&gt;&#10;  &lt;button id=&quot;fetchbtn&quot; ng-click=&quot;fetch()&quot;&gt;fetch&lt;/button&gt;&lt;br&gt;&#10;  &lt;button id=&quot;samplegetbtn&quot; ng-click=&quot;updateModel(&#39;GET&#39;, &#39;http-hello.html&#39;)&quot;&gt;Sample GET&lt;/button&gt;&#10;  &lt;button id=&quot;samplejsonpbtn&quot;&#10;    ng-click=&quot;updateModel(&#39;JSONP&#39;,&#10;                  &#39;https://angularjs.org/greet.php?name=Super%20Hero&#39;)&quot;&gt;&#10;    Sample JSONP&#10;  &lt;/button&gt;&#10;  &lt;button id=&quot;invalidjsonpbtn&quot;&#10;    ng-click=&quot;updateModel(&#39;JSONP&#39;, &#39;https://angularjs.org/doesntexist&#39;)&quot;&gt;&#10;      Invalid JSONP&#10;    &lt;/button&gt;&#10;  &lt;pre&gt;http status code: {{status}}&lt;/pre&gt;&#10;  &lt;pre&gt;http response data: {{data}}&lt;/pre&gt;&#10;&lt;/div&gt;</code></pre>
+      <pre><code>&lt;div ng-controller=&quot;FetchController&quot;&gt;&#10;  &lt;select ng-model=&quot;method&quot; aria-label=&quot;Request method&quot;&gt;&#10;    &lt;option&gt;GET&lt;/option&gt;&#10;    &lt;option&gt;JSONP&lt;/option&gt;&#10;  &lt;/select&gt;&#10;  &lt;input type=&quot;text&quot; ng-model=&quot;url&quot; size=&quot;80&quot; aria-label=&quot;URL&quot; /&gt;&#10;  &lt;button id=&quot;fetchbtn&quot; ng-click=&quot;fetch()&quot;&gt;fetch&lt;/button&gt;&lt;br&gt;&#10;  &lt;button id=&quot;samplegetbtn&quot; ng-click=&quot;updateModel(&#39;GET&#39;, &#39;http-hello.html&#39;)&quot;&gt;Sample GET&lt;/button&gt;&#10;  &lt;button id=&quot;samplejsonpbtn&quot;&#10;    ng-click=&quot;updateModel(&#39;JSONP&#39;,&#10;                  &#39;https://angularjs.org/greet.php?callback=JSON_CALLBACK&amp;name=Super%20Hero&#39;)&quot;&gt;&#10;    Sample JSONP&#10;  &lt;/button&gt;&#10;  &lt;button id=&quot;invalidjsonpbtn&quot;&#10;    ng-click=&quot;updateModel(&#39;JSONP&#39;, &#39;https://angularjs.org/doesntexist&amp;callback=JSON_CALLBACK&#39;)&quot;&gt;&#10;      Invalid JSONP&#10;    &lt;/button&gt;&#10;  &lt;pre&gt;http status code: {{status}}&lt;/pre&gt;&#10;  &lt;pre&gt;http response data: {{data}}&lt;/pre&gt;&#10;&lt;/div&gt;</code></pre>
     </div>
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;httpExample&#39;, [])&#10;.config([&#39;$sceDelegateProvider&#39;, function($sceDelegateProvider) {&#10;  // We must whitelist the JSONP endpoint that we are using to show that we trust it&#10;  $sceDelegateProvider.resourceUrlWhitelist([&#10;    &#39;self&#39;,&#10;    &#39;https://angularjs.org/**&#39;&#10;  ]);&#10;}])&#10;.controller(&#39;FetchController&#39;, [&#39;$scope&#39;, &#39;$http&#39;, &#39;$templateCache&#39;,&#10;  function($scope, $http, $templateCache) {&#10;    $scope.method = &#39;GET&#39;;&#10;    $scope.url = &#39;http-hello.html&#39;;&#10;&#10;    $scope.fetch = function() {&#10;      $scope.code = null;&#10;      $scope.response = null;&#10;&#10;      $http({method: $scope.method, url: $scope.url, cache: $templateCache}).&#10;        then(function(response) {&#10;          $scope.status = response.status;&#10;          $scope.data = response.data;&#10;        }, function(response) {&#10;          $scope.data = response.data || &#39;Request failed&#39;;&#10;          $scope.status = response.status;&#10;      });&#10;    };&#10;&#10;    $scope.updateModel = function(method, url) {&#10;      $scope.method = method;&#10;      $scope.url = url;&#10;    };&#10;  }]);</code></pre>
+      <pre><code>angular.module(&#39;httpExample&#39;, [])&#10;.controller(&#39;FetchController&#39;, [&#39;$scope&#39;, &#39;$http&#39;, &#39;$templateCache&#39;,&#10;  function($scope, $http, $templateCache) {&#10;    $scope.method = &#39;GET&#39;;&#10;    $scope.url = &#39;http-hello.html&#39;;&#10;&#10;    $scope.fetch = function() {&#10;      $scope.code = null;&#10;      $scope.response = null;&#10;&#10;      $http({method: $scope.method, url: $scope.url, cache: $templateCache}).&#10;        then(function(response) {&#10;          $scope.status = response.status;&#10;          $scope.data = response.data;&#10;        }, function(response) {&#10;          $scope.data = response.data || &#39;Request failed&#39;;&#10;          $scope.status = response.status;&#10;      });&#10;    };&#10;&#10;    $scope.updateModel = function(method, url) {&#10;      $scope.method = method;&#10;      $scope.url = url;&#10;    };&#10;  }]);</code></pre>
     </div>
   
     <div class="runnable-example-file" 

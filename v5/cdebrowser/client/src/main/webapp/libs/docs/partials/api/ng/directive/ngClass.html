@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngClass.js?message=docs(ngClass)%3A%20describe%20your%20change...#L185' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngClass.js?message=docs(ngClass)%3A%20describe%20your%20change...#L136' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngClass.js#L185' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngClass.js#L136' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,10 +19,7 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>The <code>ngClass</code> directive allows you to dynamically set CSS classes on an HTML element by databinding
 an expression that represents all classes to be added.</p>
 <p>The directive operates in three different ways, depending on which of three types the expression
@@ -52,15 +49,17 @@ new classes added.</p>
   <p>You should not use <a href="guide/interpolation">interpolation</a> in the value of the <code>class</code>
 attribute, when using the <code>ngClass</code> directive on the same element.
 See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
-
+  
 </div>
+
+
 
 
 <div>
   
 
   
-  <h2 id="ngClass-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -72,9 +71,6 @@ See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
   <div class="usage">
   
     <ul>
-    
-
-    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-class=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -84,8 +80,29 @@ See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
     
   </div>
   
+  <h2 id="animations">Animations</h2>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#addClass">addClass</a></td>
+<td>just before the class is applied to the element</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#removeClass">removeClass</a></td>
+<td>just before the class is removed from the element</td>
+</tr>
+</tbody>
+</table>
+
+  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 <section class="api-section">
-  <h3 id="ngClass-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -122,37 +139,11 @@ See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
 
 </section>
   
-  <h2 id="animations">Animations</h2>
-  <table>
-<thead>
-<tr>
-<th>Animation</th>
-<th>Occurs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="api/ng/service/$animate#addClass">addClass</a></td>
-<td>just before the class is applied to the element</td>
-</tr>
-<tr>
-<td><a href="api/ng/service/$animate#removeClass">removeClass</a></td>
-<td>just before the class is removed from the element</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ngclass-and-pre-existing-css3-transitions-animations">ngClass and pre-existing CSS3 Transitions/Animations</h3>
-<p>   The ngClass directive still supports CSS3 Transitions/Animations even if they do not follow the ngAnimate CSS naming structure.
-   Upon animation ngAnimate will apply supplementary CSS classes to track the start and end of an animation, but this will not hinder
-   any pre-existing CSS transitions already on the element. To get an idea of what happens during a class-based animation, be sure
-   to view the step by step details of <a href="api/ng/service/$animate#addClass">$animate.addClass</a> and
-   <a href="api/ng/service/$animate#removeClass">$animate.removeClass</a>.</p>
 
-  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 
   
-  <h2 id="examples">Examples</h2><h3 id="basic">Basic</h3>
-<p>   
+  <h2 id="example">Example</h2><p>Example that demonstrates basic bindings via ngClass directive.
+   
 
 <div>
   <plnkr-opener example-path="examples/example-ng-class"></plnkr-opener>
@@ -190,7 +181,7 @@ See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
 
 
 </p>
-<h3 id="animations">Animations</h3>
+<h2 id="animations">Animations</h2>
 <p>   The example below demonstrates how to perform animations using ngClass.</p>
 <p>   
 
@@ -233,6 +224,12 @@ See <a href="guide/interpolation#known-issues">here</a> for more info.</p>
 
 
 </p>
+<h2 id="ngclass-and-pre-existing-css3-transitions-animations">ngClass and pre-existing CSS3 Transitions/Animations</h2>
+<p>   The ngClass directive still supports CSS3 Transitions/Animations even if they do not follow the ngAnimate CSS naming structure.
+   Upon animation ngAnimate will apply supplementary CSS classes to track the start and end of an animation, but this will not hinder
+   any pre-existing CSS transitions already on the element. To get an idea of what happens during a class-based animation, be sure
+   to view the step by step details of <a href="api/ng/service/$animate#addClass">$animate.addClass</a> and
+   <a href="api/ng/service/$animate#removeClass">$animate.removeClass</a>.</p>
 
 </div>
 

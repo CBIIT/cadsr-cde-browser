@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngTouch/directive/ngClick.js?message=docs(ngClick)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngTouch/directive/ngClick.js?message=docs(ngClick)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngTouch/directive/ngClick.js#L7' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngTouch/directive/ngClick.js#L7' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,25 +19,16 @@
 
 
 
-<div class="alert alert-danger deprecation">
-  <div class="title"><strong>Deprecated:</strong>
-    <span class="since">(since v1.5.0) </span>
-    
-  </div>
-  <p>This directive is deprecated and <strong>disabled</strong> by default.
+<div class="api-profile-description">
+  <p><div class="alert alert-danger">
+<strong>DEPRECATION NOTICE</strong>: Beginning with Angular 1.5, this directive is deprecated and by default <strong>disabled</strong>.
 The directive will receive no further support and might be removed from future releases.
 If you need the directive, you can enable it with the <a href="api/ngTouch/provider/$touchProvider">$touchProvider#ngClickOverrideEnabled</a>
 function. We also recommend that you migrate to <a href="https://github.com/ftlabs/fastclick">FastClick</a>.
 To learn more about the 300ms delay, this <a href="http://developer.telerik.com/featured/300-ms-click-delay-ios-8/">Telerik article</a>
-gives a good overview.</p>
-
+gives a good overview.
 </div>
-
-
-
-<div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
-  <p>A more powerful replacement for the default ngClick designed to be used on touchscreen
+A more powerful replacement for the default ngClick designed to be used on touchscreen
 devices. Most mobile browsers wait about 300ms after a tap-and-release before sending
 the click event. This version handles them immediately, and then prevents the
 following click event from propagating.</p>
@@ -52,11 +43,13 @@ down (by a mouse click or touch) so you can restyle the depressed element if you
 
 
 
+
+
 <div>
   
 
   
-  <h2 id="ngClick-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -70,11 +63,9 @@ down (by a mouse click or touch) so you can restyle the depressed element if you
     <ul>
     
       <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
       <pre><code>&lt;ng-click&#10;  ng-click=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-click&gt;</code></pre>
       </li>
-    
-
-    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-click=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -82,7 +73,7 @@ down (by a mouse click or touch) so you can restyle the depressed element if you
   </div>
   
 <section class="api-section">
-  <h3 id="ngClick-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -117,8 +108,9 @@ upon tap. (Event object is available as <code>$event</code>)</p>
 </section>
   
 
+
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-touch-ng-click"></plnkr-opener>

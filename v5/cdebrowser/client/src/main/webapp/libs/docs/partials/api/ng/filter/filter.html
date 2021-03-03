@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/filter/filter.js?message=docs(filter)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/filter/filter.js?message=docs(filter)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/filter/filter.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/filter/filter.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,13 +19,12 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Selects a subset of items from <code>array</code> and returns it as a new array.</p>
 
 </div>
+
+
 
 
 
@@ -34,7 +33,7 @@
   
 
   
-  <h2 id="usage">Usage</h2>
+  <h2>Usage</h2>
   <h3>In HTML Template Binding</h3>
   
     <pre><code>{{ filter_expression | filter : expression : comparator : anyPropertyKey}}</code></pre>
@@ -45,7 +44,7 @@
 
   
 <section class="api-section">
-  <h3 id="filter-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -68,9 +67,7 @@
       </td>
       <td>
         <p>The source array.</p>
-<div class="alert alert-info">
-  <strong>Note</strong>: If the array contains objects that reference themselves, filtering is not possible.
-</div>
+
         
       </td>
     </tr>
@@ -124,16 +121,15 @@ the entire array itself as arguments.</p>
       <td>
         comparator
         
-        <div><em>(optional)</em></div>
+        
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-function">function(actual, expected)</a><a href="" class="label type-hint type-hint-true">true</a><a href="" class="label type-hint type-hint-false">false</a>
+        <a href="" class="label type-hint type-hint-function">function(actual, expected)</a><a href="" class="label type-hint type-hint-true">true</a><a href="" class="label type-hint type-hint-undefined">undefined</a>
       </td>
       <td>
         <p>Comparator which is used in
-    determining if values retrieved using <code>expression</code> (when it is not a function) should be
-    considered a match based on the expected value (from the filter expression) and actual
-    value (from the object in the array).</p>
+    determining if the expected value (from the filter expression) and actual value (from
+    the object in the array) should be considered a match.</p>
 <p>  Can be one of:</p>
 <ul>
 <li><p><code>function(actual, expected)</code>:
@@ -143,12 +139,12 @@ should return true if both values should be considered equal.</p>
 <li><p><code>true</code>: A shorthand for <code>function(actual, expected) { return angular.equals(actual, expected)}</code>.
 This is essentially strict comparison of expected and actual.</p>
 </li>
-<li><p><code>false</code>: A short hand for a function which will look for a substring match in a case
-insensitive way. Primitive values are converted to strings. Objects are not compared against
-primitives, unless they have a custom <code>toString</code> method (e.g. <code>Date</code> objects).</p>
+<li><p><code>false|undefined</code>: A short hand for a function which will look for a substring match in case
+insensitive way.</p>
+<p>Primitive values are converted to strings. Objects are not compared against primitives,
+unless they have a custom <code>toString</code> method (e.g. <code>Date</code> objects).</p>
 </li>
 </ul>
-<p>  Defaults to <code>false</code>.</p>
 
         
       </td>
@@ -180,7 +176,7 @@ primitives, unless they have a custom <code>toString</code> method (e.g. <code>D
 
 
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-filter-filter"></plnkr-opener>

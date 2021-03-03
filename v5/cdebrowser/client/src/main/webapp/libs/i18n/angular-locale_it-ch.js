@@ -35,12 +35,12 @@ $provide.value("$locale", {
       "sabato"
     ],
     "ERANAMES": [
-      "avanti Cristo",
-      "dopo Cristo"
-    ],
-    "ERAS": [
       "a.C.",
       "d.C."
+    ],
+    "ERAS": [
+      "aC",
+      "dC"
     ],
     "FIRSTDAYOFWEEK": 0,
     "MONTH": [
@@ -81,18 +81,18 @@ $provide.value("$locale", {
       "dic"
     ],
     "STANDALONEMONTH": [
-      "gennaio",
-      "febbraio",
-      "marzo",
-      "aprile",
-      "maggio",
-      "giugno",
-      "luglio",
-      "agosto",
-      "settembre",
-      "ottobre",
-      "novembre",
-      "dicembre"
+      "Gennaio",
+      "Febbraio",
+      "Marzo",
+      "Aprile",
+      "Maggio",
+      "Giugno",
+      "Luglio",
+      "Agosto",
+      "Settembre",
+      "Ottobre",
+      "Novembre",
+      "Dicembre"
     ],
     "WEEKENDRANGE": [
       5,
@@ -100,8 +100,8 @@ $provide.value("$locale", {
     ],
     "fullDate": "EEEE, d MMMM y",
     "longDate": "d MMMM y",
-    "medium": "d MMM y HH:mm:ss",
-    "mediumDate": "d MMM y",
+    "medium": "d-MMM-y HH:mm:ss",
+    "mediumDate": "d-MMM-y",
     "mediumTime": "HH:mm:ss",
     "short": "dd.MM.yy HH:mm",
     "shortDate": "dd.MM.yy",
@@ -110,7 +110,7 @@ $provide.value("$locale", {
   "NUMBER_FORMATS": {
     "CURRENCY_SYM": "CHF",
     "DECIMAL_SEP": ".",
-    "GROUP_SEP": "\u2019",
+    "GROUP_SEP": "'",
     "PATTERNS": [
       {
         "gSize": 3,

@@ -10,23 +10,21 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 
 	        if (param) { // download to prior excel
 	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: items}).
-	            then(function(data, status, headers, config) {
-					data=data['data'];
+	            success(function(data, status, headers, config) {
 	            	that.progressMessage.status=0;
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
 	            }).
-	            catch(function(data, status, headers, config) {
+	            error(function(data, status, headers, config) {
 	            	that.progressMessage = '';
 	            });
 	        }
 	        else { // download to excel
 	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: items}).
-	            then(function(data, status, headers, config) {
-					data=data['data'];
+	            success(function(data, status, headers, config) {
 	            	that.progressMessage.status=0;
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
 	            }).
-	            catch(function(data, status, headers, config) {
+	            error(function(data, status, headers, config) {
 	            	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
 	            });
 	        }
@@ -39,12 +37,11 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	     	var that = this;
 
 	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadCdeCompare',data: items}).
-	            then(function(data, status, headers, config) {
-				data=data['data'];
+	            success(function(data, status, headers, config) {
 	           	that.progressMessage.status=0;
 	                 window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadCdeCompare/" + data;
 	             }).
-	             catch(function(data, status, headers, config) {
+	             error(function(data, status, headers, config) {
 	             	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
 	             });
 
@@ -55,12 +52,11 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	    	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
 	    	var that = this;
 	        $http({method: 'POST', url: '/cdebrowserServer/rest/downloadXml?src=deSearch',data: items}).
-	        then(function(data) {
-				data=data['data'];
+	        success(function(data) {
 	        	that.progressMessage.status=0;
 	            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data;
 	        }).
-	        catch(function(data, status, headers, config) {
+	        error(function(data, status, headers, config) {
 	        	that.progressMessage = '';
 	        });
 	    };	
@@ -80,12 +76,11 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	    	var that = this;
 
             $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/refdocid/'+protocol.formIdSeq}).
-            then(function(data, status, headers, config) {
-				data=data['data'];
+            success(function(data, status, headers, config) {
             	that.progressMessage.status = 0;
 		    	protocol['rdIdseq'] = data;
             }).
-            catch(function(data, status, headers, config) {
+            error(function(data, status, headers, config) {
             	if (status!=404) {
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
             	}
@@ -101,12 +96,11 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	    	var that = this;
 
 	            $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/doc/'+id}).
-	            then(function(data, status, headers, config) {
-					data=data['data'];
+	            success(function(data, status, headers, config) {
 	            	that.progressMessage.status=0;
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/doc/" + id;
 	            }).
-	            catch(function(data, status, headers, config) {
+	            error(function(data, status, headers, config) {
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
 	            });
 

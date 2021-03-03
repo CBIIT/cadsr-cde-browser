@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngModel.js?message=docs(ngModel)%3A%20describe%20your%20change...#L1124' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngModel.js?message=docs(ngModel)%3A%20describe%20your%20change...#L896' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngModel.js#L1124' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngModel.js#L896' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,10 +19,7 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>The <code>ngModel</code> directive binds an <code>input</code>,<code>select</code>, <code>textarea</code> (or custom form control) to a
 property on the scope using <a href="api/ng/type/ngModel.NgModelController">NgModelController</a>,
 which is created and exposed by this directive.</p>
@@ -62,7 +59,7 @@ implicitly and added to the scope.</p>
 <li><a href="api/ng/directive/select">select</a></li>
 <li><a href="api/ng/directive/textarea">textarea</a></li>
 </ul>
-<h2 id="complex-models-objects-or-collections-">Complex Models (objects or collections)</h2>
+<h1 id="complex-models-objects-or-collections-">Complex Models (objects or collections)</h1>
 <p>By default, <code>ngModel</code> watches the model by reference, not value. This is important to know when
 binding inputs to models that are objects (e.g. <code>Date</code>) or collections (e.g. arrays). If only properties of the
 object or collection change, <code>ngModel</code> will not be notified and so the input will not be  re-rendered.</p>
@@ -75,7 +72,7 @@ if the select is given the <code>multiple</code> attribute.</li>
 <p>The <code>$watchCollection()</code> method only does a shallow comparison, meaning that changing properties deeper than the
 first level of the object (or only changing the properties of an item in the collection if it&#39;s an array) will still
 not trigger a re-rendering of the model.</p>
-<h2 id="css-classes">CSS classes</h2>
+<h1 id="css-classes">CSS classes</h1>
 <p>The following CSS classes are added and removed on the associated input/select/textarea element
 depending on the validity of the model.</p>
 <ul>
@@ -93,73 +90,8 @@ depending on the validity of the model.</p>
 <li><code>ng-not-empty</code>: the view contains a non-empty value</li>
 </ul>
 <p>Keep in mind that ngAnimate can detect each of these classes when added and removed.</p>
-
-</div>
-
-
-
-
-<div>
-  
-
-  
-  <h2 id="ngModel-info">Directive Info</h2>
-  <ul>
-    
-    <li>This directive executes at priority level 1.</li>
-    
-  </ul>
-
-  
-  <h2 id="usage">Usage</h2>
-  <div class="usage">
-  
-    <ul>
-    
-
-    
-    <li>as attribute:
-        <pre><code>&lt;ANY&#10;  ng-model=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
-      </li>
-    
-  </div>
-  
-<section class="api-section">
-  <h3 id="ngModel-arguments">Arguments</h3>
-
-<table class="variables-matrix input-arguments">
-  <thead>
-    <tr>
-      <th>Param</th>
-      <th>Type</th>
-      <th>Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    <tr>
-      <td>
-        ngModel
-        
-        
-      </td>
-      <td>
-        <a href="" class="label type-hint type-hint-expression">expression</a>
-      </td>
-      <td>
-        <p>assignable <a href="guide/expression">Expression</a> to bind to.</p>
-
-        
-      </td>
-    </tr>
-    
-  </tbody>
-</table>
-
-</section>
-  
-  <h2 id="animations">Animations</h2>
-  <p>Animations within models are triggered when any of the associated CSS classes are added and removed
+<h2 id="animation-hooks">Animation Hooks</h2>
+<p>Animations within models are triggered when any of the associated CSS classes are added and removed
 on the input element which is attached to the model. These classes include: <code>.ng-pristine</code>, <code>.ng-dirty</code>,
 <code>.ng-invalid</code> and <code>.ng-valid</code> as well as any other validations that are performed on the model itself.
 The animations that are triggered within ngModel are similar to how they work in ngClass and
@@ -178,11 +110,45 @@ that has been rendered as invalid after it has been validated:</p>
   color:white;
 }
 </pre>
-  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
+</div>
+
+
+
+
+
+
+<div>
+  
 
   
-  <h2 id="examples">Examples</h2><h3 id="basic-usage">Basic Usage</h3>
-<p>
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 1.</li>
+    
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-model&gt;&#10;...&#10;&lt;/ng-model&gt;</code></pre>
+      </li>
+    <li>as attribute:
+        <pre><code>&lt;input&gt;&#10;...&#10;&lt;/input&gt;</code></pre>
+      </li>
+    
+  </div>
+  
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-model"></plnkr-opener>
@@ -210,14 +176,14 @@ that has been rendered as invalid after it has been validated:</p>
 
 
 </p>
-<h3 id="binding-to-a-getter-setter">Binding to a getter/setter</h3>
+<h2 id="binding-to-a-getter-setter">Binding to a getter/setter</h2>
 <p>Sometimes it&#39;s helpful to bind <code>ngModel</code> to a getter/setter function.  A getter/setter is a
 function that returns a representation of the model when called with zero arguments, and sets
 the internal state of a model when called with an argument. It&#39;s sometimes useful to use this
 for models that have an internal representation that&#39;s different from what the model exposes
 to the view.</p>
 <div class="alert alert-success">
-<strong>Best Practice:</strong> It&#39;s best to keep getters fast because AngularJS is likely to call them more
+<strong>Best Practice:</strong> It&#39;s best to keep getters fast because Angular is likely to call them more
 frequently than other parts of your code.
 </div>
 

@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngRoute/route.js?message=docs($route)%3A%20describe%20your%20change...#L355' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngRoute/route.js?message=docs($route)%3A%20describe%20your%20change...#L277' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngRoute/route.js#L355' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngRoute/route.js#L277' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,10 +23,7 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p><code>$route</code> is used for deep-linking URLs to controllers and views (HTML partials).
 It watches <code>$location.url()</code> and tries to map the path to an existing route definition.</p>
 <p>Requires the <a href="api/ngRoute"><code>ngRoute</code></a> module to be installed.</p>
@@ -36,6 +33,8 @@ It watches <code>$location.url()</code> and tries to map the path to an existing
 <a href="api/ngRoute/service/$routeParams"><code>$routeParams</code></a> service.</p>
 
 </div>
+
+
 
 
 
@@ -53,10 +52,10 @@ It watches <code>$location.url()</code> and tries to map the path to an existing
   
 
   
-<h2 id="$route-methods">Methods</h2>
+<h2>Methods</h2>
 <ul class="methods">
-  <li>
-    <h3 id="reload"><p><code>reload();</code></p>
+  <li id="reload">
+    <h3><p><code>reload();</code></p>
 
 </h3>
     <div><p>Causes <code>$route</code> service to reload the current route even if
@@ -71,10 +70,10 @@ creates new scope and reinstantiates the controller.</p>
 
     
 
-    </li>
+  </li>
   
-  <li>
-    <h3 id="updateParams"><p><code>updateParams(newParams);</code></p>
+  <li id="updateParams">
+    <h3><p><code>updateParams(newParams);</code></p>
 
 </h3>
     <div><p>Causes <code>$route</code> service to update the current URL, replacing
@@ -83,8 +82,6 @@ Provided property names that match the route&#39;s path segment
 definitions will be interpolated into the location&#39;s path, while
 remaining properties will be treated as query params.</p>
 </div>
-
-    
 
     
     <h4>Parameters</h4>
@@ -122,13 +119,15 @@ remaining properties will be treated as query params.</p>
 
     
 
-    </li>
+    
+
+  </li>
   </ul>
   
-<h2 id="events">Events</h2>
+<h2>Events</h2>
 <ul class="events">
   <li id="$routeChangeStart">
-    <h3 id="event-$routeChangeStart">$routeChangeStart</h3>
+    <h3>$routeChangeStart</h3>
     <div><p>Broadcasted before a route change. At this  point the route services starts
 resolving all of the dependencies needed for the route change to occur.
 Typically this involves fetching the view template as well as any dependencies
@@ -138,8 +137,6 @@ defined in <code>resolve</code> route property. Once  all of the dependencies ar
 by calling <code>preventDefault</code> method of the event. See <a href="api/ng/type/$rootScope.Scope#$on"><code>$rootScope.Scope</code></a>
 for more details about event object.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">broadcast</div>
@@ -150,7 +147,7 @@ for more details about event object.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -216,14 +213,12 @@ for more details about event object.</p>
     </section></li>
   
   <li id="$routeChangeSuccess">
-    <h3 id="event-$routeChangeSuccess">$routeChangeSuccess</h3>
+    <h3>$routeChangeSuccess</h3>
     <div><p>Broadcasted after a route change has happened successfully.
 The <code>resolve</code> dependencies are now available in the <code>current.locals</code> property.</p>
 <p><a href="api/ngRoute/directive/ngView">ngView</a> listens for the directive
 to instantiate the controller and render the view.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">broadcast</div>
@@ -234,7 +229,7 @@ to instantiate the controller and render the view.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -301,12 +296,9 @@ first route entered.</p>
     </section></li>
   
   <li id="$routeChangeError">
-    <h3 id="event-$routeChangeError">$routeChangeError</h3>
-    <div><p>Broadcasted if a redirection function fails or any redirection or resolve promises are
-rejected.</p>
+    <h3>$routeChangeError</h3>
+    <div><p>Broadcasted if any of the resolve promises are rejected.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">broadcast</div>
@@ -317,7 +309,7 @@ rejected.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -387,8 +379,7 @@ rejected.</p>
         <a href="" class="label type-hint type-hint-route">Route</a>
       </td>
       <td>
-        <p>The thrown error or the rejection reason of the promise. Usually
-the rejection reason is the error that caused the promise to get rejected.</p>
+        <p>Rejection of the promise. Usually the error of the failed promise.</p>
 
         
       </td>
@@ -400,12 +391,10 @@ the rejection reason is the error that caused the promise to get rejected.</p>
     </section></li>
   
   <li id="$routeUpdate">
-    <h3 id="event-$routeUpdate">$routeUpdate</h3>
+    <h3>$routeUpdate</h3>
     <div><p>The <code>reloadOnSearch</code> property has been set to false, and we are reusing the same
 instance of the Controller.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">broadcast</div>
@@ -416,7 +405,7 @@ instance of the Controller.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -467,10 +456,10 @@ instance of the Controller.</p>
   </ul>
 
   
-<h2 id="$route-properties">Properties</h2>
+<h2>Properties</h2>
 <ul class="properties">
-  <li>
-    <h3 id="current"><code>current</code></h3>
+  <li id="current">
+    <h3><code>current</code></h3>
     <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-object">Object</a></td>
@@ -493,11 +482,10 @@ the property name, using <code>resolveAs</code> in the route definition. See
 </td>
   </tr>
 </table>
-    
   </li>
   
-  <li>
-    <h3 id="routes"><code>routes</code></h3>
+  <li id="routes">
+    <h3><code>routes</code></h3>
     <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-object">Object</a></td>
@@ -505,14 +493,13 @@ the property name, using <code>resolveAs</code> in the route definition. See
 </td>
   </tr>
 </table>
-    
   </li>
   </ul>
 
 
 
   
-  <h2 id="examples">Example</h2><p>This example shows how changing the URL hash causes the <code>$route</code> to match a route against the
+  <h2 id="example">Example</h2><p>This example shows how changing the URL hash causes the <code>$route</code> to match a route against the
 URL, and the <code>ngView</code> pulls in the partial.</p>
 <p>
 

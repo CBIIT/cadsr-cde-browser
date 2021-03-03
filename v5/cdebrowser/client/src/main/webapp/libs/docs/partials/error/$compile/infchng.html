@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/docs/content/error/$compile/infchng.ngdoc?message=docs(error%2Finfchng)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/error/$compile/infchng.ngdoc?message=docs(error%2Finfchng)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>Error: $compile:infchng
@@ -11,11 +11,11 @@
 </pre>
 </div>
 
-<h2 id="description">Description</h2>
+<h2>Description</h2>
 <div class="description">
   <p>This error occurs when the application&#39;s model becomes unstable because some <code>$onChanges</code> hooks are causing updates which then trigger
 further calls to <code>$onChanges</code> that can never complete.
-AngularJS detects this situation and prevents an infinite loop from causing the browser to become unresponsive.</p>
+Angular detects this situation and prevents an infinite loop from causing the browser to become unresponsive.</p>
 <p>For example, the situation can occur by setting up a <code>$onChanges()</code> hook which triggers an event on the component, which subsequently
 triggers the component&#39;s bound inputs to be updated:</p>
 <pre><code class="lang-html">&lt;c1 prop=&quot;a&quot; on-change=&quot;a = -a&quot;&gt;&lt;/c1&gt;

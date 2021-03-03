@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngChange.js?message=docs(ngChange)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngChange.js?message=docs(ngChange)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngChange.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngChange.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,10 +19,7 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Evaluate the given expression when the user changes the input.
 The expression is evaluated immediately, unlike the JavaScript onchange event
 which only triggers at the end of a change (usually, when the user leaves the
@@ -42,11 +39,13 @@ a new value to be committed to the model.</p>
 
 
 
+
+
 <div>
   
 
   
-  <h2 id="ngChange-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -59,16 +58,18 @@ a new value to be committed to the model.</p>
   
     <ul>
     
-
-    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-change&#10;  ng-change=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-change&gt;</code></pre>
+      </li>
     <li>as attribute:
-        <pre><code>&lt;ANY&#10;  ng-change=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
+        <pre><code>&lt;input&#10;  ng-change=&quot;expression&quot;&gt;&#10;...&#10;&lt;/input&gt;</code></pre>
       </li>
     
   </div>
   
 <section class="api-section">
-  <h3 id="ngChange-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -103,8 +104,9 @@ in input value.</p>
 </section>
   
 
+
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ngChange-directive"></plnkr-opener>

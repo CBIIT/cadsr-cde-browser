@@ -57,24 +57,24 @@ $provide.value("$locale", {
       "jun.",
       "jul.",
       "ago.",
-      "sep.",
+      "sept.",
       "oct.",
       "nov.",
       "dic."
     ],
     "STANDALONEMONTH": [
-      "enero",
-      "febrero",
-      "marzo",
-      "abril",
-      "mayo",
-      "junio",
-      "julio",
-      "agosto",
-      "septiembre",
-      "octubre",
-      "noviembre",
-      "diciembre"
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
     ],
     "WEEKENDRANGE": [
       5,
@@ -90,7 +90,7 @@ $provide.value("$locale", {
     "shortTime": "h:mm a"
   },
   "NUMBER_FORMATS": {
-    "CURRENCY_SYM": "RD$",
+    "CURRENCY_SYM": "$",
     "DECIMAL_SEP": ".",
     "GROUP_SEP": ",",
     "PATTERNS": [

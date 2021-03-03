@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngList.js?message=docs(ngList)%3A%20describe%20your%20change...#L4' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngList.js?message=docs(ngList)%3A%20describe%20your%20change...#L4' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngList.js#L4' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngList.js#L4' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,10 +19,7 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Text input that converts between a delimited string and an array of strings. The default
 delimiter is a comma followed by a space - equivalent to <code>ng-list=&quot;, &quot;</code>. You can specify a custom
 delimiter as the value of the <code>ngList</code> attribute - for example, <code>ng-list=&quot; | &quot;</code>.</p>
@@ -36,74 +33,7 @@ tab or newline character.</li>
 when joining the list items back together) and whitespace around each list item is stripped
 before it is added to the model.</li>
 </ul>
-
-</div>
-
-
-
-
-<div>
-  
-
-  
-  <h2 id="ngList-info">Directive Info</h2>
-  <ul>
-    
-    <li>This directive executes at priority level 100.</li>
-    
-  </ul>
-
-  
-  <h2 id="usage">Usage</h2>
-  <div class="usage">
-  
-    <ul>
-    
-
-    
-    <li>as attribute:
-        <pre><code>&lt;ANY&#10;  [ng-list=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
-      </li>
-    
-  </div>
-  
-<section class="api-section">
-  <h3 id="ngList-arguments">Arguments</h3>
-
-<table class="variables-matrix input-arguments">
-  <thead>
-    <tr>
-      <th>Param</th>
-      <th>Type</th>
-      <th>Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    <tr>
-      <td>
-        ngList
-        
-        <div><em>(optional)</em></div>
-      </td>
-      <td>
-        <a href="" class="label type-hint type-hint-string">string</a>
-      </td>
-      <td>
-        <p>optional delimiter that should be used to split the value.</p>
-
-        
-      </td>
-    </tr>
-    
-  </tbody>
-</table>
-
-</section>
-  
-
-  
-  <h2 id="examples">Examples</h2><h3 id="validation">Validation</h3>
+<h3 id="example-with-validation">Example with Validation</h3>
 <p>
 
 <div>
@@ -143,7 +73,7 @@ before it is added to the model.</li>
 
 
 </p>
-<h3 id="splitting-on-newline">Splitting on newline</h3>
+<h3 id="example-splitting-on-newline">Example - splitting on newline</h3>
 <p>
 
 <div>
@@ -176,6 +106,77 @@ before it is added to the model.</li>
 
 </p>
 
+</div>
+
+
+
+
+
+
+<div>
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+    
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
+      <pre><code>&lt;ng-list&#10;  [ng-list=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ng-list&gt;</code></pre>
+      </li>
+    <li>as attribute:
+        <pre><code>&lt;input&#10;  [ng-list=&quot;string&quot;]&gt;&#10;...&#10;&lt;/input&gt;</code></pre>
+      </li>
+    
+  </div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngList
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>optional delimiter that should be used to split the value.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
 </div>
 
 

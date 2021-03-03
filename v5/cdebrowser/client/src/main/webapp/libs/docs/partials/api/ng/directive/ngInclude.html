@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngInclude.js?message=docs(ngInclude)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngInclude.js?message=docs(ngInclude)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngInclude.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngInclude.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,15 +19,12 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Fetches, compiles and includes an external HTML fragment.</p>
 <p>By default, the template URL is restricted to the same domain and protocol as the
 application document. This is done by calling <a href="api/ng/service/$sce#getTrustedResourceUrl">$sce.getTrustedResourceUrl</a> on it. To load templates from other domains or protocols
 you may either <a href="api/ng/provider/$sceDelegateProvider#resourceUrlWhitelist">whitelist them</a> or
-<a href="api/ng/service/$sce#trustAsResourceUrl">wrap them</a> as trusted values. Refer to AngularJS&#39;s <a href="api/ng/service/$sce">Strict Contextual Escaping</a>.</p>
+<a href="api/ng/service/$sce#trustAsResourceUrl">wrap them</a> as trusted values. Refer to Angular&#39;s <a href="api/ng/service/$sce">Strict Contextual Escaping</a>.</p>
 <p>In addition, the browser&#39;s
 <a href="https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest">Same Origin Policy</a>
 and <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing (CORS)</a>
@@ -40,14 +37,16 @@ access on some browsers.</p>
 
 
 
+
+
 <div>
   
 
   
-  <h2 id="ngInclude-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     <li>This directive creates new scope.</li>
-    <li>This directive executes at priority level -400.</li>
+    <li>This directive executes at priority level 400.</li>
     
   </ul>
 
@@ -58,13 +57,9 @@ access on some browsers.</p>
     <ul>
     
       <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
       <pre><code>&lt;ng-include&#10;  src=&quot;string&quot;&#10;  [onload=&quot;string&quot;]&#10;  [autoscroll=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ng-include&gt;</code></pre>
       </li>
-    
-
-    
-    
-    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-include=&quot;string&quot;&#10;  [onload=&quot;string&quot;]&#10;  [autoscroll=&quot;string&quot;]&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -74,8 +69,30 @@ access on some browsers.</p>
     
   </div>
   
+  <h2 id="animations">Animations</h2>
+  <table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Occurs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="api/ng/service/$animate#enter">enter</a></td>
+<td>when the expression changes, on the new include</td>
+</tr>
+<tr>
+<td><a href="api/ng/service/$animate#leave">leave</a></td>
+<td>when the expression changes, on the old include</td>
+</tr>
+</tbody>
+</table>
+<p>The enter and leave animation occur concurrently.</p>
+
+  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 <section class="api-section">
-  <h3 id="ngInclude-arguments">Arguments</h3>
+  <h3>Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -97,7 +114,7 @@ access on some browsers.</p>
         <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>AngularJS expression evaluating to URL. If the source is a string constant,
+        <p>angular expression evaluating to URL. If the source is a string constant,
                 make sure you wrap it in <strong>single</strong> quotes, e.g. <code>src=&quot;&#39;myPartialTemplate.html&#39;&quot;</code>.</p>
 
         
@@ -151,14 +168,12 @@ access on some browsers.</p>
 
 </section>
   
-<h2 id="events">Events</h2>
+<h2>Events</h2>
 <ul class="events">
   <li id="$includeContentRequested">
-    <h3 id="event-$includeContentRequested">$includeContentRequested</h3>
+    <h3>$includeContentRequested</h3>
     <div><p>Emitted every time the ngInclude content is requested.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">emit</div>
@@ -169,7 +184,7 @@ access on some browsers.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -219,11 +234,9 @@ access on some browsers.</p>
     </section></li>
   
   <li id="$includeContentLoaded">
-    <h3 id="event-$includeContentLoaded">$includeContentLoaded</h3>
+    <h3>$includeContentLoaded</h3>
     <div><p>Emitted every time the ngInclude content is reloaded.</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">emit</div>
@@ -234,7 +247,7 @@ access on some browsers.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -284,11 +297,9 @@ access on some browsers.</p>
     </section></li>
   
   <li id="$includeContentError">
-    <h3 id="event-$includeContentError">$includeContentError</h3>
+    <h3>$includeContentError</h3>
     <div><p>Emitted when a template HTTP request yields an erroneous response (status &lt; 200 || status &gt; 299)</p>
 </div>
-
-    
     <div class="inline">
       <h4>Type:</h4>
       <div class="type">emit</div>
@@ -299,7 +310,7 @@ access on some browsers.</p>
     </div>
     
     <section class="api-section">
-      <h4>Parameters</h4>
+      <h3>Parameters</h3>
       
 <table class="variables-matrix input-arguments">
   <thead>
@@ -349,31 +360,10 @@ access on some browsers.</p>
     </section></li>
   </ul>
 
-  <h2 id="animations">Animations</h2>
-  <table>
-<thead>
-<tr>
-<th>Animation</th>
-<th>Occurs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="api/ng/service/$animate#enter">enter</a></td>
-<td>when the expression changes, on the new include</td>
-</tr>
-<tr>
-<td><a href="api/ng/service/$animate#leave">leave</a></td>
-<td>when the expression changes, on the old include</td>
-</tr>
-</tbody>
-</table>
-<p>The enter and leave animation occur concurrently.</p>
 
-  <a href="api/ngAnimate/service/$animate">Click here</a> to learn more about the steps involved in the animation.
 
   
-  <h2 id="examples">Example</h2><p>
+  <h2 id="example">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-include"></plnkr-opener>

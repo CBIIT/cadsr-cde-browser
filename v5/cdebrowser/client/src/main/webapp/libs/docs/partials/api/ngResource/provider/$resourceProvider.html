@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngResource/resource.js?message=docs($resourceProvider)%3A%20describe%20your%20change...#L57' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngResource/resource.js?message=docs($resourceProvider)%3A%20describe%20your%20change...#L62' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngResource/resource.js#L57' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngResource/resource.js#L62' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,16 +23,15 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
   <p>Use <code>$resourceProvider</code> to change the default behavior of the <a href="api/ngResource/service/$resource"><code>$resource</code></a>
 service.</p>
 <h2 id="dependencies">Dependencies</h2>
 <p>Requires the <a href="api/ngResource"><code>ngResource</code></a> module to be installed.</p>
 
 </div>
+
+
 
 
 
@@ -47,10 +46,10 @@ service.</p>
   
   
   
-<h2 id="$resourceProvider-properties">Properties</h2>
+<h2>Properties</h2>
 <ul class="properties">
-  <li>
-    <h3 id="defaults"><code>defaults</code></h3>
+  <li id="defaults">
+    <h3><code>defaults</code></h3>
     <table class="variables-matrix return-arguments">
   <tr>
     <td></td>
@@ -86,18 +85,18 @@ The default actions are:<pre><code class="lang-js">{
 <p>For example, you can specify a new <code>update</code> action that uses the <code>PUT</code> HTTP verb:</p>
 <pre><code class="lang-js">angular.
   module(&#39;myApp&#39;).
-  config([&#39;$resourceProvider&#39;, function ($resourceProvider) {
+  config([&#39;resourceProvider&#39;, function ($resourceProvider) {
     $resourceProvider.defaults.actions.update = {
       method: &#39;PUT&#39;
     };
-  }]);
+  });
 </code></pre>
 <p>Or you can even overwrite the whole <code>actions</code> list and specify your own:</p>
 <pre><code class="lang-js">angular.
   module(&#39;myApp&#39;).
-  config([&#39;$resourceProvider&#39;, function ($resourceProvider) {
+  config([&#39;resourceProvider&#39;, function ($resourceProvider) {
     $resourceProvider.defaults.actions = {
-      create: {method: &#39;POST&#39;},
+      create: {method: &#39;POST&#39;}
       get:    {method: &#39;GET&#39;},
       getAll: {method: &#39;GET&#39;, isArray:true},
       update: {method: &#39;PUT&#39;},
@@ -108,7 +107,6 @@ The default actions are:<pre><code class="lang-js">{
 </td>
   </tr>
 </table>
-    
   </li>
   </ul>
 

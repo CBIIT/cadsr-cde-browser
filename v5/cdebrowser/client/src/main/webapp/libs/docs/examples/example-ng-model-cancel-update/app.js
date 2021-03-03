@@ -3,7 +3,7 @@
 angular.module('cancel-update-example', [])
 
 .controller('CancelUpdateController', ['$scope', function($scope) {
-  $scope.model = {value1: '', value2: ''};
+  $scope.model = {};
 
   $scope.setEmpty = function(e, value, rollback) {
     if (e.keyCode === 27) {

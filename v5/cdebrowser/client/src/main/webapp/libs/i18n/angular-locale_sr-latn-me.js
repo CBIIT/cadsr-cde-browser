@@ -22,21 +22,21 @@ function getVF(n, opt_precision) {
 $provide.value("$locale", {
   "DATETIME_FORMATS": {
     "AMPMS": [
-      "prije podne",
+      "pre podne",
       "po podne"
     ],
     "DAY": [
-      "nedjelja",
+      "nedelja",
       "ponedeljak",
       "utorak",
-      "srijeda",
+      "sreda",
       "\u010detvrtak",
       "petak",
       "subota"
     ],
     "ERANAMES": [
-      "prije nove ere",
-      "nove ere"
+      "Pre nove ere",
+      "Nove ere"
     ],
     "ERAS": [
       "p. n. e.",
@@ -58,27 +58,27 @@ $provide.value("$locale", {
       "decembar"
     ],
     "SHORTDAY": [
-      "ned.",
-      "pon.",
-      "ut.",
-      "sr.",
-      "\u010det.",
-      "pet.",
-      "sub."
+      "ned",
+      "pon",
+      "uto",
+      "sre",
+      "\u010det",
+      "pet",
+      "sub"
     ],
     "SHORTMONTH": [
-      "jan.",
-      "feb.",
-      "mart",
-      "apr.",
+      "jan",
+      "feb",
+      "mar",
+      "apr",
       "maj",
       "jun",
       "jul",
-      "avg.",
-      "sept.",
-      "okt.",
-      "nov.",
-      "dec."
+      "avg",
+      "sep",
+      "okt",
+      "nov",
+      "dec"
     ],
     "STANDALONEMONTH": [
       "januar",
@@ -100,12 +100,12 @@ $provide.value("$locale", {
     ],
     "fullDate": "EEEE, dd. MMMM y.",
     "longDate": "dd. MMMM y.",
-    "medium": "dd.MM.y. HH:mm:ss",
+    "medium": "dd.MM.y. HH.mm.ss",
     "mediumDate": "dd.MM.y.",
-    "mediumTime": "HH:mm:ss",
-    "short": "d.M.yy. HH:mm",
+    "mediumTime": "HH.mm.ss",
+    "short": "d.M.yy. HH.mm",
     "shortDate": "d.M.yy.",
-    "shortTime": "HH:mm"
+    "shortTime": "HH.mm"
   },
   "NUMBER_FORMATS": {
     "CURRENCY_SYM": "\u20ac",

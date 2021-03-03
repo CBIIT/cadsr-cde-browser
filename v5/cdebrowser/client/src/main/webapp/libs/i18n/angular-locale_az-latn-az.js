@@ -18,11 +18,11 @@ $provide.value("$locale", {
     ],
     "ERANAMES": [
       "eram\u0131zdan \u0259vv\u0259l",
-      "yeni era"
+      "bizim eram\u0131z\u0131n"
     ],
     "ERAS": [
       "e.\u0259.",
-      "y.e."
+      "b.e."
     ],
     "FIRSTDAYOFWEEK": 0,
     "MONTH": [
@@ -90,7 +90,7 @@ $provide.value("$locale", {
     "shortTime": "HH:mm"
   },
   "NUMBER_FORMATS": {
-    "CURRENCY_SYM": "\u20bc",
+    "CURRENCY_SYM": "man.",
     "DECIMAL_SEP": ",",
     "GROUP_SEP": ".",
     "PATTERNS": [

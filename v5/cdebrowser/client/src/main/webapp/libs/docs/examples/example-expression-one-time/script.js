@@ -1,6 +1,6 @@
 (function(angular) {
   'use strict';
-angular.module('oneTimeBindingExampleApp', []).
+angular.module('oneTimeBidingExampleApp', []).
   controller('EventController', ['$scope', function($scope) {
     var counter = 0;
     var names = ['Igor', 'Misko', 'Chirayu', 'Lucas'];

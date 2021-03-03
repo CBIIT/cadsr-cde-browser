@@ -82,12 +82,12 @@ $provide.value("$locale", {
     ],
     "fullDate": "EEEE\u060c d MMMM\u060c y",
     "longDate": "d MMMM\u060c y",
-    "medium": "dd\u200f/MM\u200f/y H:mm:ss",
+    "medium": "dd\u200f/MM\u200f/y h:mm:ss a",
     "mediumDate": "dd\u200f/MM\u200f/y",
-    "mediumTime": "H:mm:ss",
-    "short": "d\u200f/M\u200f/y H:mm",
+    "mediumTime": "h:mm:ss a",
+    "short": "d\u200f/M\u200f/y h:mm a",
     "shortDate": "d\u200f/M\u200f/y",
-    "shortTime": "H:mm"
+    "shortTime": "h:mm a"
   },
   "NUMBER_FORMATS": {
     "CURRENCY_SYM": "\u20aa",
@@ -111,10 +111,10 @@ $provide.value("$locale", {
         "maxFrac": 2,
         "minFrac": 2,
         "minInt": 1,
-        "negPre": "-",
-        "negSuf": "\u00a0\u00a4",
-        "posPre": "",
-        "posSuf": "\u00a0\u00a4"
+        "negPre": "-\u00a4\u00a0",
+        "negSuf": "",
+        "posPre": "\u00a4\u00a0",
+        "posSuf": ""
       }
     ]
   },

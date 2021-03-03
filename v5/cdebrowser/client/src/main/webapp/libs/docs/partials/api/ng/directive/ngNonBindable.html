@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngNonBindable.js?message=docs(ngNonBindable)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngNonBindable.js?message=docs(ngNonBindable)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngNonBindable.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngNonBindable.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,17 +19,15 @@
 
 
 
-
-
 <div class="api-profile-description">
-  <h2 id="overview">Overview</h2>
-  <p>The <code>ngNonBindable</code> directive tells AngularJS not to compile or bind the contents of the current
-DOM element, including directives on the element itself that have a lower priority than
-<code>ngNonBindable</code>. This is useful if the element contains what appears to be AngularJS directives
-and bindings but which should be ignored by AngularJS. This could be the case if you have a site
-that displays snippets of code, for instance.</p>
+  <p>The <code>ngNonBindable</code> directive tells Angular not to compile or bind the contents of the current
+DOM element. This is useful if the element contains what appears to be Angular directives and
+bindings but which should be ignored by Angular. This could be the case if you have a site that
+displays snippets of code, for instance.</p>
 
 </div>
+
+
 
 
 
@@ -38,7 +36,7 @@ that displays snippets of code, for instance.</p>
   
 
   
-  <h2 id="ngNonBindable-info">Directive Info</h2>
+  <h2>Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 1000.</li>
@@ -50,23 +48,22 @@ that displays snippets of code, for instance.</p>
   <div class="usage">
   
     <ul>
-    
-
     <li>as attribute:
-        <pre><code>&lt;ANY&#10;  ng-non-bindable&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
+        <pre><code>&lt;ANY&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
     <li>as CSS class:
-        <pre><code>&lt;ANY class=&quot;ng-non-bindable&quot;&gt; ... &lt;/ANY&gt;</code></pre>
+        <pre><code>&lt;ANY class=&quot;&quot;&gt; ... &lt;/ANY&gt;</code></pre>
       </li>
     
   </div>
   
   
 
+
   
-  <h2 id="examples">Example</h2><p>In this example there are two locations where a simple interpolation binding (<code>{{}}</code>) is present,
+  <h2 id="example">Example</h2><p>In this example there are two locations where a simple interpolation binding (<code>{{}}</code>) is present,
 but the one wrapped in <code>ngNonBindable</code> is left alone.</p>
-<p>  
+<p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-non-bindable"></plnkr-opener>

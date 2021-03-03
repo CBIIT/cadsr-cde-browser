@@ -35,8 +35,8 @@ $provide.value("$locale", {
       "sobota"
     ],
     "ERANAMES": [
-      "przed nasz\u0105 er\u0105",
-      "naszej ery"
+      "p.n.e.",
+      "n.e."
     ],
     "ERAS": [
       "p.n.e.",
@@ -100,8 +100,8 @@ $provide.value("$locale", {
     ],
     "fullDate": "EEEE, d MMMM y",
     "longDate": "d MMMM y",
-    "medium": "d MMM y HH:mm:ss",
-    "mediumDate": "d MMM y",
+    "medium": "dd.MM.y HH:mm:ss",
+    "mediumDate": "dd.MM.y",
     "mediumTime": "HH:mm:ss",
     "short": "dd.MM.y HH:mm",
     "shortDate": "dd.MM.y",

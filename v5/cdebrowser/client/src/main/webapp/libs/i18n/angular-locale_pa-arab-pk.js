@@ -21,10 +21,10 @@ $provide.value("$locale", {
       "\u0633\u06ba"
     ],
     "ERAS": [
-      "\u0627\u064a\u0633\u0627\u067e\u0648\u0631\u0648",
-      "\u0633\u06ba"
+      "BCE",
+      "CE"
     ],
-    "FIRSTDAYOFWEEK": 6,
+    "FIRSTDAYOFWEEK": 0,
     "MONTH": [
       "\u062c\u0646\u0648\u0631\u06cc",
       "\u0641\u0631\u0648\u0631\u06cc",
@@ -108,8 +108,8 @@ $provide.value("$locale", {
       {
         "gSize": 3,
         "lgSize": 3,
-        "maxFrac": 0,
-        "minFrac": 0,
+        "maxFrac": 2,
+        "minFrac": 2,
         "minInt": 1,
         "negPre": "-\u00a4\u00a0",
         "negSuf": "",

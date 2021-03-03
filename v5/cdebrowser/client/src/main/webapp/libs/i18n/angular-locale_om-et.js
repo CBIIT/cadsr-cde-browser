@@ -35,14 +35,14 @@ $provide.value("$locale", {
       "Sanbata"
     ],
     "ERANAMES": [
-      "Dheengadda Jeesu",
-      "CE"
+      "KD",
+      "KB"
     ],
     "ERAS": [
-      "BCE",
-      "CE"
+      "KD",
+      "KB"
     ],
-    "FIRSTDAYOFWEEK": 6,
+    "FIRSTDAYOFWEEK": 0,
     "MONTH": [
       "Amajjii",
       "Guraandhala",
