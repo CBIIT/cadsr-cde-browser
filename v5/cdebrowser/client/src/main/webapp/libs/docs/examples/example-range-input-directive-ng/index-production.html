@@ -5,7 +5,7 @@
   <title>Example - example-range-input-directive-ng-production</title>
   
 
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="//code.angularjs.org/1.6.9/angular.min.js"></script>
   
 
   
@@ -20,7 +20,7 @@
     }]);
 </script>
 <form name="myForm" ng-controller="ExampleController">
-  Model as range: <input type="range" ng-input-range name="range" ng-model="value" ng-min="min" ng-max="max">
+  Model as range: <input type="range" name="range" ng-model="value" ng-min="min" ng-max="max">
   <hr>
   Model as number: <input type="number" ng-model="value"><br>
   Min: <input type="number" ng-model="min"><br>

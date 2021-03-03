@@ -82,7 +82,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         }
     };
 
-    $http.get('/cdebrowserServer/rest/programAreaNames').success(function(response) {
+    $http.get('/cdebrowserServer/rest/programAreaNames').then(function(response) {
+        response=response['data'];
         $scope.programAreaTabs = response;
     });
 
@@ -285,7 +286,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         fs.resetClassificationAndProtocol();
         // if (!contextId.idSeq) { contextId.idSeq = tempClassification.contextIdSeq };
         if (contextId) { // only run if context id has not been reset //
-        $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+        $http.get('/cdebrowserServer/rest/lookupdata/protocol',{params:{contextIdSeq:contextId.idSeq}}).then(function(response) {
+            response=response['data'];
             groupFactory.fillProtocols(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType=='protocolId'||contextId.searchType=='id')) {
 
@@ -319,7 +321,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.contextSearchFinished+=1;
         });
 
-        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).success(function(response) {
+        $http.get('/cdebrowserServer/rest/lookupdata/classificationscheme',{params:{contextIdSeq:contextId.idSeq}}).then(function(response) {
+            response=response['data'];
             groupFactory1.fillClassifications(response);
             if(contextId.selectedNode!=undefined && (contextId.searchType!=='protocolId'&&contextId.searchType!=='id')) {
                 // if (!contextId.selectedNode.parentId) { contextId.selectedNode.parentId=tempClassification.csIdSeq } 
@@ -574,7 +577,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.getCdeDetailRestCall = function (serverUrl) {
         $scope.searchResultsMessage = "Searching";
         $scope.bigSearchResultsMessageClass = true;
-        $http.get(serverUrl).success(function (response) {
+        $http.get(serverUrl).then(function (response) {
+            response=response['data'];
             $scope.tabsDisabled = false;
             // Change to "Data Element" tab
             $scope.changeView(1, $scope.tabs[1]);
@@ -588,7 +592,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.searchResultsMessage = "";
             $scope.searchResultsCount = "Results: " + $scope.searchResults.length;
             $scope.bigSearchResultsMessageClass = false;
-        }).error(function(response, status, headers, config) {
+        }).catch(function(response, status, headers, config) {
             $scope.searchResultsMessage = "";
 
             $scope.downloadFactory.progressMessage = {"status":1,"message":"An internal server error has occurred. If you need assistance, please visit <a href='https://cbiit.nci.nih.gov/support/support'>CBIIT Application Support</a>.", "isErrorMessage":1};
@@ -897,7 +901,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.bigSearchResultsMessageClass = true;
         $scope.progressMessage.status=0;
 
-        $http.get(url).success(function (response) {
+        $http.get(url).then(function (response) {
+            response=response['data'];
             fs.isSearching = false;
             $scope.searchResults = response;
             $scope.rslt = []; // clear message //
@@ -940,7 +945,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                 $scope.goToAnchor("breadCrumbsAnchor");
 
             }, 1);
-        }).error(function (data, status, headers, config) {
+        }).catch(function (data, status, headers, config) {
             if( status == 400)
             {
             }
@@ -1127,7 +1132,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.waitMessage = "    Loading";
         $scope.messageClass = $scope.cssClasses["BIG"];
         angular.element(document.getElementById("allHTML")).removeClass("allHTML");
-        $http.get(dataSource).success(function (response) {
+        $http.get(dataSource).then(function (response) {
+            response=response['data'];
 
             if (response[0].status == $scope.ERROR) {
                 $scope.waitMessage = response[0].text.replace(/(?:\r\n|\r|\n)/g, "\n<br>");
@@ -1167,7 +1173,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.getToolHosts = function () {
         var restService = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/getAllToolHost"
 
-        $http.get(restService).success(function (response) {
+        $http.get(restService).then(function (response) {
+            response=response['data'];
 
             for( var i = 0; i < response.length; i++)
             {
@@ -1241,7 +1248,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     $scope.getHhsWarning = function () {
         var restService = window.location.protocol + "//" +  window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/getHhsWarningMessage"
 
-        $http.get(restService).success(function (response) {
+        $http.get(restService).then(function (response) {
+            response=response['data'];
             for( var i = 0; i < response.length; i++)
             {
                 if( response[i].toolName =="caDSR" )
@@ -1254,7 +1262,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     
 
     $scope.versionData = function() {
-        $http.get("version.json").success(function (response) {
+        $http.get("version.json").then(function (response) {
+            response=response['data'];
             $scope.versionPopover = response;
             $scope.versionPopover.templateUrl = 'versionPopoverTemplate.html';
             $scope.versionPopover.title2 = 'CDE Browser';
@@ -1701,7 +1710,8 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
                     "/" + parameters[0] +
                     "/?contextId=" + parameters[1] +
                     "&programArea=" + parameters[2] +
-                    "&folderType=" + parameters[3]).success(function (response) {
+                    "&folderType=" + parameters[3]).then(function (response) {
+                    response=response['data'];
                     selNode['children'] = response[0]['children'];
 
 

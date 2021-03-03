@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/parse.js?message=docs($parse)%3A%20describe%20your%20change...#L1811' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/parse.js?message=docs($parse)%3A%20describe%20your%20change...#L1676' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/parse.js#L1811' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/parse.js#L1676' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,22 +23,23 @@
 
 
 
+
+
 <div class="api-profile-description">
-  <p>Converts Angular <a href="guide/expression">expression</a> into a function.</p>
+  <h2 id="overview">Overview</h2>
+  <p>Converts AngularJS <a href="guide/expression">expression</a> into a function.</p>
 <pre><code class="lang-js">var getter = $parse(&#39;user.name&#39;);
 var setter = getter.assign;
-var context = {user:{name:&#39;angular&#39;}};
+var context = {user:{name:&#39;AngularJS&#39;}};
 var locals = {user:{name:&#39;local&#39;}};
 
-expect(getter(context)).toEqual(&#39;angular&#39;);
+expect(getter(context)).toEqual(&#39;AngularJS&#39;);
 setter(context, &#39;newValue&#39;);
 expect(context.user.name).toEqual(&#39;newValue&#39;);
 expect(getter(context, locals)).toEqual(&#39;local&#39;);
 </code></pre>
 
 </div>
-
-
 
 
 
@@ -57,7 +58,7 @@ expect(getter(context, locals)).toEqual(&#39;local&#39;);
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="$parse-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -90,7 +91,7 @@ expect(getter(context, locals)).toEqual(&#39;local&#39;);
 
 </section>
     
-    <h3>Returns</h3>
+    <h3 id="$parse-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-function">function(context, locals)</a></td>

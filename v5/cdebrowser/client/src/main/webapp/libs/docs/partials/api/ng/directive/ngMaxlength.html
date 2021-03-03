@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/validators.js?message=docs(ngMaxlength)%3A%20describe%20your%20change...#L186' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/validators.js?message=docs(ngMaxlength)%3A%20describe%20your%20change...#L196' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/validators.js#L186' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/validators.js#L196' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,11 +19,14 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>ngMaxlength adds the maxlength <a href="api/ng/type/ngModel.NgModelController#$validators"><code>validator</code></a> to <a href="api/ng/directive/ngModel"><code>ngModel</code></a>.
 It is most often used for text-based <a href="api/ng/directive/input"><code>input</code></a> controls, but can also be applied to custom text-based controls.</p>
 <p>The validator sets the <code>maxlength</code> error key if the <a href="api/ng/type/ngModel.NgModelController#$viewValue"><code>ngModel.$viewValue</code></a>
-is longer than the integer obtained by evaluating the Angular expression given in the
+is longer than the integer obtained by evaluating the AngularJS expression given in the
 <code>ngMaxlength</code> attribute value.</p>
 <div class="alert alert-info">
 <strong>Note:</strong> This directive is also added when the plain <code>maxlength</code> attribute is used, with two
@@ -44,13 +47,11 @@ differences:
 
 
 
-
-
 <div>
   
 
   
-  <h2>Directive Info</h2>
+  <h2 id="ngMaxlength-info">Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -63,21 +64,53 @@ differences:
   
     <ul>
     
-      <li>as element:
-      (This directive can be used as custom element, but be aware of <a href="guide/ie">IE restrictions</a>).
-      <pre><code>&lt;ng-maxlength&gt;&#10;...&#10;&lt;/ng-maxlength&gt;</code></pre>
-      </li>
+
+    
     <li>as attribute:
-        <pre><code>&lt;ANY&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
+        <pre><code>&lt;ANY&#10;  ng-maxlength=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
     
   </div>
   
+<section class="api-section">
+  <h3 id="ngMaxlength-arguments">Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngMaxlength
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p>AngularJS expression that must evaluate to a <code>Number</code> or <code>String</code>
+                                parsable into a <code>Number</code>. Used as value for the <code>maxlength</code>
+                                <a href="api/ng/type/ngModel.NgModelController#$validators">validator</a>.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
   
 
-
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ngMaxlengthDirective"></plnkr-opener>

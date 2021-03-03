@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/Angular.js?message=docs(angular.bootstrap)%3A%20describe%20your%20change...#L1644' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/Angular.js?message=docs(angular.bootstrap)%3A%20describe%20your%20change...#L1748' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/Angular.js#L1644' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/Angular.js#L1748' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,13 +19,16 @@
 
 
 
+
+
 <div class="api-profile-description">
-  <p>Use this function to manually start up angular application.</p>
+  <h2 id="overview">Overview</h2>
+  <p>Use this function to manually start up AngularJS application.</p>
 <p>For more information, see the <a href="guide/bootstrap">Bootstrap guide</a>.</p>
-<p>Angular will detect if it has been loaded into the browser more than once and only allow the
+<p>AngularJS will detect if it has been loaded into the browser more than once and only allow the
 first loaded script to be bootstrapped and will report a warning to the browser console for
 each of the subsequent scripts. This prevents strange results in applications, where otherwise
-multiple instances of Angular try to work on the DOM.</p>
+multiple instances of AngularJS try to work on the DOM.</p>
 <div class="alert alert-warning">
 <strong>Note:</strong> Protractor based end-to-end tests cannot use this function to bootstrap manually.
 They must use <a href="api/ng/directive/ngApp">ngApp</a>.
@@ -62,8 +65,6 @@ causing animations to stop working and making the injector inaccessible from out
 
 
 
-
-
 <div>
   
 
@@ -78,7 +79,7 @@ causing animations to stop working and making the injector inaccessible from out
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="angular.bootstrap-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -100,7 +101,7 @@ causing animations to stop working and making the injector inaccessible from out
         <a href="" class="label type-hint type-hint-domelement">DOMElement</a>
       </td>
       <td>
-        <p>DOM element which is the root of angular application.</p>
+        <p>DOM element which is the root of AngularJS application.</p>
 
         
       </td>
@@ -151,7 +152,7 @@ assist in finding bugs which break minified code. Defaults to <code>false</code>
 
 </section>
     
-    <h3>Returns</h3>
+    <h3 id="angular.bootstrap-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-auto">auto.$injector</a></td>

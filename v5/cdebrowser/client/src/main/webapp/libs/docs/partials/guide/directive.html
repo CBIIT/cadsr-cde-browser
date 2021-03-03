@@ -1,11 +1,12 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/directive.ngdoc?message=docs(guide%2FDirectives)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/docs/content/guide/directive.ngdoc?message=docs(guide%2FDirectives)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="creating-custom-directives">Creating Custom Directives</h1>
 <div class="alert alert-warning">
 <strong>Note:</strong> this guide is targeted towards developers who are already familiar with AngularJS basics.
 If you&#39;re just getting started, we recommend the <a href="tutorial/">tutorial</a> first.
-If you&#39;re looking for the <strong>directives API</strong>, we recently moved it to <a href="api/ng/service/$compile"><code>$compile</code></a>.
+If you&#39;re looking for the <strong>directives API</strong>, you can find it in the
+<a href="api/ng/service/$compile"><code>$compile</code> API docs</a>.
 </div>
 
 
@@ -16,9 +17,9 @@ how to implement them.</p>
 name, comment or CSS class) that tell AngularJS&#39;s <strong>HTML compiler</strong> (<a href="api/ng/service/$compile"><code>$compile</code></a>)
 to attach a specified behavior to that DOM element (e.g. via event listeners), or even to transform
 the DOM element and its children.</p>
-<p>Angular comes with a set of these directives built-in, like <code>ngBind</code>, <code>ngModel</code>, and <code>ngClass</code>.
-Much like you create controllers and services, you can create your own directives for Angular to use.
-When Angular <a href="guide/bootstrap">bootstraps</a> your application, the
+<p>AngularJS comes with a set of these directives built-in, like <code>ngBind</code>, <code>ngModel</code>, and <code>ngClass</code>.
+Much like you create controllers and services, you can create your own directives for AngularJS to use.
+When AngularJS <a href="guide/bootstrap">bootstraps</a> your application, the
 <a href="guide/compiler">HTML compiler</a> traverses the DOM matching directives against the DOM elements.</p>
 <div class="alert alert-info">
 <strong>What does it mean to &quot;compile&quot; an HTML template?</strong>
@@ -31,7 +32,7 @@ mirrors the process of compiling source code in
 
 
 <h2 id="matching-directives">Matching Directives</h2>
-<p>Before we can write a directive, we need to know how Angular&#39;s <a href="guide/compiler">HTML compiler</a>
+<p>Before we can write a directive, we need to know how AngularJS&#39;s <a href="guide/compiler">HTML compiler</a>
 determines when to use a given directive.</p>
 <p>Similar to the terminology used when an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element.matches">element <strong>matches</strong> a selector</a>, we say an element <strong>matches</strong> a
 directive when the directive is part of its declaration.</p>
@@ -41,15 +42,15 @@ directive when the directive is part of its declaration.</p>
 <p>The following <code>&lt;input&gt;</code> element also <strong>matches</strong> <code>ngModel</code>:</p>
 <pre><code class="lang-html">&lt;input data-ng-model=&quot;foo&quot;&gt;
 </code></pre>
-<p>And the following <person> element <strong>matches</strong> the <code>person</code> directive:</p>
+<p>And the following <code>&lt;person&gt;</code> element <strong>matches</strong> the <code>person</code> directive:</p>
 <pre><code class="lang-html">&lt;person&gt;{{name}}&lt;/person&gt;
 </code></pre>
 <h3 id="normalization">Normalization</h3>
-<p>Angular <strong>normalizes</strong> an element&#39;s tag and attribute name to determine which elements match which
+<p>AngularJS <strong>normalizes</strong> an element&#39;s tag and attribute name to determine which elements match which
 directives. We typically refer to directives by their case-sensitive
 <a href="http://en.wikipedia.org/wiki/CamelCase">camelCase</a> <strong>normalized</strong> name (e.g. <code>ngModel</code>).
 However, since HTML is case-insensitive, we refer to directives in the DOM by lower-case
-forms, typically using <a href="http://en.wikipedia.org/wiki/Letter_case#Computers">dash-delimited</a>
+forms, typically using <a href="https://en.wikipedia.org/wiki/Letter_case#Special_case_styles">dash-delimited</a>
 attributes on DOM elements (e.g. <code>ng-model</code>).</p>
 <p>The <strong>normalization</strong> process is as follows:</p>
 <ol>
@@ -104,15 +105,19 @@ The other forms shown above are accepted for legacy reasons but we advise you to
 </div>
 
 <h3 id="directive-types">Directive types</h3>
-<p><code>$compile</code> can match directives based on element names, attributes, class names, as well as comments.</p>
-<p>All of the Angular-provided directives match attribute name, tag name, comments, or class name.
-The following demonstrates the various ways a directive (<code>myDir</code> in this case) can be referenced
-from within a template:</p>
+<p><code>$compile</code> can match directives based on element names (E), attributes (A), class names (C),
+and comments (M).</p>
+<p>The built-in AngularJS directives show in their documentation page which type of matching they support.</p>
+<p>The following demonstrates the various ways a directive that matches all 4 types
+(<code>myDir</code> in this case) can be referenced from within a template.</p>
 <pre><code class="lang-html">&lt;my-dir&gt;&lt;/my-dir&gt;
 &lt;span my-dir=&quot;exp&quot;&gt;&lt;/span&gt;
 &lt;!-- directive: my-dir exp --&gt;
 &lt;span class=&quot;my-dir: exp;&quot;&gt;&lt;/span&gt;
 </code></pre>
+<p>A directive can specify which of the 4 matching types it supports in the
+<a href="api/ng/service/$compile#-restrict-"><code>restrict</code></a> property of the directive definition object.
+The default is <code>EA</code>.</p>
 <div class="alert alert-success">
 <strong>Best Practice:</strong> Prefer using directives via tag name and attributes over comment and class names.
 Doing so generally makes it easier to determine what directives a given element matches.
@@ -146,7 +151,7 @@ and compilation process.</p>
 directive names. For instance, if you created a <code>&lt;carousel&gt;</code> directive, it would be problematic if HTML7
 introduced the same element. A two or three letter prefix (e.g. <code>btfCarousel</code>) works well. Similarly, do
 not prefix your own directives with <code>ng</code> or they might conflict with directives included in a future
-version of Angular.
+version of AngularJS.
 </div>
 
 <p>For the following examples, we&#39;ll use the prefix <code>my</code> (e.g. <code>myCustomer</code>).</p>
@@ -241,7 +246,7 @@ using <code>templateUrl</code> instead:</p>
 
 </p>
 <p><code>templateUrl</code> can also be a function which returns the URL of an HTML template to be loaded and
-used for the directive. Angular will call the <code>templateUrl</code> function with two parameters: the
+used for the directive. AngularJS will call the <code>templateUrl</code> function with two parameters: the
 element that the directive was called on, and an <code>attr</code> object associated with that element.</p>
 <div class="alert alert-warning">
 <strong>Note:</strong> You do not currently have the ability to access scope variables from the <code>templateUrl</code>
@@ -350,9 +355,7 @@ create directives that are triggered by class name, you need to use the <code>re
 
 
 </p>
-<p>For more on the
-<a href="api/ng/service/$compile#directive-definition-object"><code>restrict</code></a>
-property, see the
+<p>For more on the <code>restrict</code> property, see the
 <a href="api/ng/service/$compile#directive-definition-object">API docs</a>.</p>
 <div class="alert alert-info">
 <strong>When should I use an attribute versus an element?</strong>
@@ -465,8 +468,8 @@ scope: {
 <p>The <strong>scope option</strong> is an object that contains a property for each isolate scope binding.  In this
 case it has just one property:</p>
 <ul>
-<li>Its name (<code>customerInfo</code>) corresponds to the
-directive&#39;s <strong>isolate scope</strong> property <code>customerInfo</code>.</li>
+<li>Its name (<code>customerInfo</code>) corresponds to the directive&#39;s <strong>isolate scope</strong> property,
+<code>customerInfo</code>.</li>
 <li>Its value (<code>=info</code>) tells <code>$compile</code> to bind to the <code>info</code> attribute.</li>
 </ul>
 <div class="alert alert-warning">
@@ -535,7 +538,8 @@ components because it prevents a component from changing your model state except
 that you explicitly pass in.</p>
 <div class="alert alert-warning">
 <strong>Note:</strong> Normally, a scope prototypically inherits from its parent. An isolated scope does not.
-See the <a href="api/ng/service/$compile#directive-definition-object">&quot;Directive Definition Object - scope&quot;</a> section for more information about isolate scopes.
+See the <a href="api/ng/service/$compile#directive-definition-object">&quot;Directive Definition Object - scope&quot;</a> section
+for more information about isolate scopes.
 </div>
 
 <div class="alert alert-success">
@@ -553,7 +557,7 @@ directive logic will be put.</p>
 <p> <code>link</code> takes a function with the following signature,
 <code>function link(scope, element, attrs, controller, transcludeFn) { ... }</code>, where:</p>
 <ul>
-<li><code>scope</code> is an Angular scope object.</li>
+<li><code>scope</code> is an AngularJS scope object.</li>
 <li><code>element</code> is the jqLite-wrapped element that this directive matches.</li>
 <li><code>attrs</code> is a hash object with key-value pairs of normalized attribute names and their
 corresponding attribute values.</li>
@@ -608,7 +612,7 @@ injected. Because of this, we can use <code>$interval</code> and <code>dateFilte
 function.</p>
 <p>We register an event <code>element.on(&#39;$destroy&#39;, ...)</code>. What fires this <code>$destroy</code> event?</p>
 <p>There are a few special events that AngularJS emits. When a DOM node that has been compiled
-with Angular&#39;s compiler is destroyed, it emits a <code>$destroy</code> event. Similarly, when an AngularJS
+with AngularJS&#39;s compiler is destroyed, it emits a <code>$destroy</code> event. Similarly, when an AngularJS
 scope is destroyed, it broadcasts a <code>$destroy</code> event to listening scopes.</p>
 <p>By listening to this event, you can remove event listeners that might cause memory leaks.
 Listeners registered to scopes and elements are automatically cleaned up when they are destroyed,
@@ -920,7 +924,7 @@ controllers using <code>require</code>.</p>
 Otherwise use <code>link</code>.
 </div>
 
-<h3 id="summary">Summary</h3>
+<h2 id="summary">Summary</h2>
 <p>Here we&#39;ve seen the main use cases for directives. Each of these samples acts as a good starting
 point for creating your own directives.</p>
 <p>You might also be interested in an in-depth explanation of the compilation process that&#39;s

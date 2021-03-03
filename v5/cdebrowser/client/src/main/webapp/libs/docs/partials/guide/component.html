@@ -1,27 +1,26 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/component.ngdoc?message=docs(guide%2FComponents)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/docs/content/guide/component.ngdoc?message=docs(guide%2FComponents)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="understanding-components">Understanding Components</h1>
-<p>In Angular, a Component is a special kind of <a href="guide/directive">directive</a> that uses a simpler
+<p>In AngularJS, a Component is a special kind of <a href="guide/directive">directive</a> that uses a simpler
 configuration which is suitable for a component-based application structure.</p>
-<p>This makes it easier to write an app in a way that&#39;s similar to using Web Components or using Angular
-2&#39;s style of application architecture.</p>
+<p>This makes it easier to write an app in a way that&#39;s similar to using Web Components or using the new Angular&#39;s
+style of application architecture.</p>
 <p>Advantages of Components:</p>
 <ul>
 <li>simpler configuration than plain directives</li>
 <li>promote sane defaults and best practices</li>
 <li>optimized for component-based architecture</li>
-<li>writing component directives will make it easier to upgrade to Angular 2</li>
+<li>writing component directives will make it easier to upgrade to Angular</li>
 </ul>
 <p>When not to use Components:</p>
 <ul>
-<li>for directives that rely on DOM manipulation, adding event listeners etc, because the compile
-and link functions are unavailable</li>
+<li>for directives that need to perform actions in compile and pre-link functions, because they aren&#39;t available</li>
 <li>when you need advanced directive definition options like priority, terminal, multi-element</li>
 <li>when you want a directive that is triggered by an attribute or CSS class, rather than an element</li>
 </ul>
 <h2 id="creating-and-configuring-a-component">Creating and configuring a Component</h2>
-<p>Components can be registered using the <code>.component()</code> method of an Angular module (returned by <a href="guide/module"><code>angular.module()</code></a>). The method takes two arguments:</p>
+<p>Components can be registered using the <code>.component()</code> method of an AngularJS module (returned by <a href="guide/module"><code>angular.module()</code></a>). The method takes two arguments:</p>
 <ul>
 <li>The name of the Component (as string).</li>
 <li>The Component config object. (Note that, unlike the <code>.directive()</code> method, this method does <strong>not</strong> take a factory function.)</li>
@@ -48,7 +47,7 @@ and link functions are unavailable</li>
       name="heroDetail.js"
       language="js"
       type="js">
-      <pre><code>function HeroDetailController() {&#10;&#10;}&#10;&#10;angular.module(&#39;heroApp&#39;).component(&#39;heroDetail&#39;, {&#10;  templateUrl: &#39;heroDetail.html&#39;,&#10;  controller: HeroDetailController,&#10;  bindings: {&#10;    hero: &#39;=&#39;&#10;  }&#10;});</code></pre>
+      <pre><code>angular.module(&#39;heroApp&#39;).component(&#39;heroDetail&#39;, {&#10;  templateUrl: &#39;heroDetail.html&#39;,&#10;  bindings: {&#10;    hero: &#39;=&#39;&#10;  }&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -124,6 +123,11 @@ and link functions are unavailable</li>
 <td>No</td>
 </tr>
 <tr>
+<td>replace</td>
+<td>Yes (deprecated)</td>
+<td>No</td>
+</tr>
+<tr>
 <td>require</td>
 <td>Yes</td>
 <td>Yes</td>
@@ -171,14 +175,14 @@ a component-based architecture. But what makes a component beyond the options th
 the component helper has?</p>
 <ul>
 <li><p><strong>Components only control their own View and Data:</strong>
-Components should never modify any data or DOM that is out of their own scope. Normally, in Angular
+Components should never modify any data or DOM that is out of their own scope. Normally, in AngularJS
 it is possible to modify data anywhere in the application through scope inheritance and watches. This
 is practical, but can also lead to problems when it is not clear which part of the application is
 responsible for modifying the data. That is why component directives use an isolate scope, so a whole
 class of scope manipulation is not possible.</p>
 </li>
 <li><p><strong>Components have a well-defined public API - Inputs and Outputs:</strong>
-However, scope isolation only goes so far, because Angular uses two-way binding. So if you pass
+However, scope isolation only goes so far, because AngularJS uses two-way binding. So if you pass
 an object to a component like this - <code>bindings: {item: &#39;=&#39;}</code>, and modify one of its properties, the
 change will be reflected in the parent component. For components however, only the component that owns
 the data should modify it, to make it easy to reason about what data is changed, and when. For that reason,
@@ -236,7 +240,7 @@ cloning the bound value to prevent accidental mutation of the outer value.</li>
 changes. Any actions that you wish to take in response to the changes that you detect must be
 invoked from this hook; implementing this has no effect on when <code>$onChanges</code> is called. For example, this hook
 could be useful if you wish to perform a deep equality check, or to check a Date object, changes to which would not
-be detected by Angular&#39;s change detector and thus not trigger <code>$onChanges</code>. This hook is invoked with no arguments;
+be detected by AngularJS&#39;s change detector and thus not trigger <code>$onChanges</code>. This hook is invoked with no arguments;
 if detecting changes, you must store the previous value(s) for comparison to the current values.</li>
 <li><code>$onDestroy()</code> - Called on a controller when its containing scope is destroyed. Use this hook for releasing
 external resources, watches and event handlers.</li>
@@ -245,8 +249,8 @@ function this hook can be used to set up DOM event handlers and do direct DOM ma
 Note that child elements that contain <code>templateUrl</code> directives will not have been compiled and linked since
 they are waiting for their template to load asynchronously and their own compilation and linking has been
 suspended until that occurs.
-This hook can be considered analogous to the <code>ngAfterViewInit</code> and <code>ngAfterContentInit</code> hooks in Angular 2.
-Since the compilation process is rather different in Angular 1 there is no direct mapping and care should
+This hook can be considered analogous to the <code>ngAfterViewInit</code> and <code>ngAfterContentInit</code> hooks in Angular.
+Since the compilation process is rather different in AngularJS there is no direct mapping and care should
 be taken when upgrading.</li>
 </ul>
 </li>
@@ -439,29 +443,20 @@ but they are guaranteed to be available just before the <code>$onInit</code> met
 
 
 </p>
-<h1 id="unit-testing-component-controllers">Unit-testing Component Controllers</h1>
+<h2 id="unit-testing-component-controllers">Unit-testing Component Controllers</h2>
 <p>The easiest way to unit-test a component controller is by using the
 <a href="api/ngMock/service/$componentController">$componentController</a> that is included in <a href="api/ngMock"><code>ngMock</code></a>. The
 advantage of this method is that you do not have to create any DOM elements. The following example
 shows how to do this for the <code>heroDetail</code> component from above.</p>
 <p>The examples use the <a href="http://jasmine.github.io/">Jasmine</a> testing framework.</p>
 <p><strong>Controller Test:</strong></p>
-<pre><code class="lang-js">describe(&#39;component: heroDetail&#39;, function() {
+<pre><code class="lang-js">describe(&#39;HeroDetailController&#39;, function() {
   var $componentController;
 
   beforeEach(module(&#39;heroApp&#39;));
   beforeEach(inject(function(_$componentController_) {
     $componentController = _$componentController_;
   }));
-
-  it(&#39;should expose a `hero` object&#39;, function() {
-    // Here we are passing actual bindings to the component
-    var bindings = {hero: {name: &#39;Wolverine&#39;}};
-    var ctrl = $componentController(&#39;heroDetail&#39;, null, bindings);
-
-    expect(ctrl.hero).toBeDefined();
-    expect(ctrl.hero.name).toBe(&#39;Wolverine&#39;);
-  });
 
   it(&#39;should call the `onDelete` binding, when deleting the hero&#39;, function() {
     var onDeleteSpy = jasmine.createSpy(&#39;onDelete&#39;);

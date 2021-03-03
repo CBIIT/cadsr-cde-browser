@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/input.js?message=docs(input[url])%3A%20describe%20your%20change...#L765' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/input.js?message=docs(input[url])%3A%20describe%20your%20change...#L775' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/input.js#L765' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/input.js#L775' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,7 +19,10 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Text input with URL validation. Sets the <code>url</code> validation error key if the content is not a
 valid URL.</p>
 <div class="alert alert-warning">
@@ -32,13 +35,11 @@ the built-in validators (see the <a href="guide/forms">Forms guide</a>)
 
 
 
-
-
 <div>
   
 
   
-  <h2>Directive Info</h2>
+  <h2 id="input[url]-info">Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -50,7 +51,7 @@ the built-in validators (see the <a href="guide/forms">Forms guide</a>)
   <pre><code>&lt;input type=&quot;url&quot;&#10;       ng-model=&quot;string&quot;&#10;       [name=&quot;string&quot;]&#10;       [required=&quot;string&quot;]&#10;       [ng-required=&quot;string&quot;]&#10;       [ng-minlength=&quot;number&quot;]&#10;       [ng-maxlength=&quot;number&quot;]&#10;       [pattern=&quot;string&quot;]&#10;       [ng-pattern=&quot;string&quot;]&#10;       [ng-change=&quot;string&quot;]&gt;</code></pre>
 
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="input[url]-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -72,7 +73,7 @@ the built-in validators (see the <a href="guide/forms">Forms guide</a>)
         <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Assignable angular expression to data-bind to.</p>
+        <p>Assignable AngularJS expression to data-bind to.</p>
 
         
       </td>
@@ -192,7 +193,7 @@ the built-in validators (see the <a href="guide/forms">Forms guide</a>)
       </td>
       <td>
         <p>Sets <code>pattern</code> validation error key if the ngModel <a href="api/ng/type/ngModel.NgModelController#$viewValue">$viewValue</a>
-   does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+   does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
    If the expression evaluates to a RegExp object, then this is used directly.
    If the expression evaluates to a string, then it will be converted to a RegExp
    after wrapping it in <code>^</code> and <code>$</code> characters. For instance, <code>&quot;abc&quot;</code> will be converted to
@@ -215,7 +216,7 @@ the built-in validators (see the <a href="guide/forms">Forms guide</a>)
         <a href="" class="label type-hint type-hint-string">string</a>
       </td>
       <td>
-        <p>Angular expression to be executed when input changes due to user
+        <p>AngularJS expression to be executed when input changes due to user
    interaction with the input element.</p>
 
         
@@ -228,9 +229,8 @@ the built-in validators (see the <a href="guide/forms">Forms guide</a>)
 </section>
   
 
-
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-url-input-directive"></plnkr-opener>

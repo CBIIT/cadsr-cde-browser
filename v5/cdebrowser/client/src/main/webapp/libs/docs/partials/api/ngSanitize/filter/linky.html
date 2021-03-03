@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngSanitize/filter/linky.js?message=docs(linky)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngSanitize/filter/linky.js?message=docs(linky)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngSanitize/filter/linky.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngSanitize/filter/linky.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,8 +19,11 @@
 
 
 
+
+
 <div class="api-profile-description">
-  <p>Finds links in text input and turns them into html links. Supports <code>http/https/ftp/mailto</code> and
+  <h2 id="overview">Overview</h2>
+  <p>Finds links in text input and turns them into html links. Supports <code>http/https/ftp/sftp/mailto</code> and
 plain email address links.</p>
 <p>Requires the <a href="api/ngSanitize"><code>ngSanitize</code></a> module to be installed.</p>
 
@@ -29,13 +32,11 @@ plain email address links.</p>
 
 
 
-
-
 <div>
   
 
   
-  <h2>Usage</h2>
+  <h2 id="usage">Usage</h2>
   <h3>In HTML Template Binding</h3>
   
     <code>&lt;span ng-bind-html=&quot;linky_expression | linky&quot;&gt;&lt;/span&gt;</code>
@@ -46,7 +47,7 @@ plain email address links.</p>
 
   
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="linky-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -78,7 +79,7 @@ plain email address links.</p>
       <td>
         target
         
-        
+        <div><em>(optional)</em></div>
       </td>
       <td>
         <a href="" class="label type-hint type-hint-string">string</a>
@@ -119,7 +120,7 @@ the target parameter.</p>
 
 </section>
   
-  <h3>Returns</h3>
+  <h3 id="linky-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-string">string</a></td>
@@ -130,7 +131,7 @@ the target parameter.</p>
 
 
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-linky-filter"></plnkr-opener>

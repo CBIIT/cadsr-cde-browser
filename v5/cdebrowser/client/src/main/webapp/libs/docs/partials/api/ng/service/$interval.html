@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/interval.js?message=docs($interval)%3A%20describe%20your%20change...#L10' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/interval.js?message=docs($interval)%3A%20describe%20your%20change...#L10' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/interval.js#L10' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/interval.js#L10' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -21,8 +21,11 @@
 
 
 
+
+
 <div class="api-profile-description">
-  <p>Angular&#39;s wrapper for <code>window.setInterval</code>. The <code>fn</code> function is executed every <code>delay</code>
+  <h2 id="overview">Overview</h2>
+  <p>AngularJS&#39;s wrapper for <code>window.setInterval</code>. The <code>fn</code> function is executed every <code>delay</code>
 milliseconds.</p>
 <p>The return value of registering an interval function is a promise. This promise will be
 notified upon each tick of the interval, and will be resolved after <code>count</code> iterations, or
@@ -44,8 +47,6 @@ appropriate moment.  See the example below for more details on how and when to d
 
 
 
-
-
 <div>
   
 
@@ -60,7 +61,7 @@ appropriate moment.  See the example below for more details on how and when to d
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="$interval-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -82,7 +83,8 @@ appropriate moment.  See the example below for more details on how and when to d
         <a href="" class="label type-hint type-hint-function">function()</a>
       </td>
       <td>
-        <p>A function that should be called repeatedly.</p>
+        <p>A function that should be called repeatedly. If no additional arguments
+  are passed (see below), the function is called with the current iteration count.</p>
 
         
       </td>
@@ -159,24 +161,26 @@ appropriate moment.  See the example below for more details on how and when to d
 
 </section>
     
-    <h3>Returns</h3>
+    <h3 id="$interval-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-promise">promise</a></td>
-    <td><p>A promise which will be notified on each iteration.</p>
+    <td><p>A promise which will be notified on each iteration. It will resolve once all iterations of the interval complete.</p>
 </td>
   </tr>
 </table>
 
   
-<h2>Methods</h2>
+<h2 id="$interval-methods">Methods</h2>
 <ul class="methods">
-  <li id="cancel">
-    <h3><p><code>cancel([promise]);</code></p>
+  <li>
+    <h3 id="cancel"><p><code>cancel([promise]);</code></p>
 
 </h3>
     <div><p>Cancels a task associated with the <code>promise</code>.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -223,9 +227,7 @@ appropriate moment.  See the example below for more details on how and when to d
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   </ul>
   
   
@@ -233,7 +235,7 @@ appropriate moment.  See the example below for more details on how and when to d
 
 
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-interval-service"></plnkr-opener>

@@ -1,11 +1,13 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngCookies/cookies.js?message=docs(ngCookies)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngCookies/cookies.js?message=docs(ngCookies)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>
   <code>ngCookies</code>
 </h1>
 
-<h2>Installation</h2>
+
+
+<h2 id="module-installation">Installation</h2>
 
 
   <p>First, get the file:</p>
@@ -16,7 +18,9 @@
     </li>
     <li>
       <a href="https://www.npmjs.com/">NPM</a> e.g.
-      <pre><code>npm install angular-cookies@X.Y.Z</code></pre>
+      <pre><code>npm install --save angular-cookies@X.Y.Z</code></pre>
+      or
+      <pre><code>yarn add angular-cookies@X.Y.Z</code></pre>
     </li>
     <li>
       <a href="http://bower.io">Bower</a> e.g.
@@ -40,10 +44,7 @@
   <p>With that you&apos;re ready to get started!</p>
 
 
-<h1 id="ngcookies">ngCookies</h1>
 <p>The <code>ngCookies</code> module provides a convenient wrapper for reading and writing browser cookies.</p>
-<div doc-module-components="ngCookies"></div>
-
 <p>See <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a> for usage.</p>
 
 
@@ -52,7 +53,7 @@
 
 
 <div class="component-breakdown">
-  <h2>Module Components</h2>
+  <h2 id="module-components">Module Components</h2>
   
   <div>
     <h3 class="component-heading" id="provider">Provider</h3>
@@ -89,7 +90,7 @@
         <td><a href="api/ngCookies/service/$cookieStore">$cookieStore</a></td>
         <td><p>Provides a key-value (string-object) storage, that is backed by session cookies.
 Objects put or retrieved from this storage are automatically serialized or
-deserialized by angular&#39;s toJson/fromJson.</p>
+deserialized by AngularJS&#39;s <code>toJson</code>/<code>fromJson</code>.</p>
 </td>
       </tr>
       

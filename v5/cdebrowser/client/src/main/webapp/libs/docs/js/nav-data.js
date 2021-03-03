@@ -43,6 +43,11 @@ angular.module('navData', [])
             "type": "function"
           },
           {
+            "name": "angular.errorHandlingConfig",
+            "href": "api/ng/function/angular.errorHandlingConfig",
+            "type": "function"
+          },
+          {
             "name": "angular.extend",
             "href": "api/ng/function/angular.extend",
             "type": "function"
@@ -113,6 +118,11 @@ angular.module('navData', [])
             "type": "function"
           },
           {
+            "name": "angular.lowercase",
+            "href": "api/ng/function/angular.lowercase",
+            "type": "function"
+          },
+          {
             "name": "angular.merge",
             "href": "api/ng/function/angular.merge",
             "type": "function"
@@ -135,6 +145,11 @@ angular.module('navData', [])
           {
             "name": "angular.toJson",
             "href": "api/ng/function/angular.toJson",
+            "type": "function"
+          },
+          {
+            "name": "angular.uppercase",
+            "href": "api/ng/function/angular.uppercase",
             "type": "function"
           },
           {
@@ -553,6 +568,11 @@ angular.module('navData', [])
             "type": "type"
           },
           {
+            "name": "ModelOptions",
+            "href": "api/ng/type/ModelOptions",
+            "type": "type"
+          },
+          {
             "name": "angular.Module",
             "href": "api/ng/type/angular.Module",
             "type": "type"
@@ -625,6 +645,11 @@ angular.module('navData', [])
           {
             "name": "$parseProvider",
             "href": "api/ng/provider/$parseProvider",
+            "type": "provider"
+          },
+          {
+            "name": "$qProvider",
+            "href": "api/ng/provider/$qProvider",
             "type": "provider"
           },
           {
@@ -1186,6 +1211,11 @@ angular.module('navData', [])
             "name": "angular.mock.module.sharedInjector",
             "href": "api/ngMock/function/angular.mock.module.sharedInjector",
             "type": "function"
+          },
+          {
+            "name": "browserTrigger",
+            "href": "api/ngMock/function/browserTrigger",
+            "type": "function"
           }
         ]
       },
@@ -1387,8 +1417,8 @@ angular.module('navData', [])
             "type": "section"
           },
           {
-            "name": "nocb",
-            "href": "error/$animate/nocb",
+            "name": "nongcls",
+            "href": "error/$animate/nongcls",
             "type": "error"
           },
           {
@@ -1417,6 +1447,11 @@ angular.module('navData', [])
             "type": "error"
           },
           {
+            "name": "badrestrict",
+            "href": "error/$compile/badrestrict",
+            "type": "error"
+          },
+          {
             "name": "ctreq",
             "href": "error/$compile/ctreq",
             "type": "error"
@@ -1432,8 +1467,18 @@ angular.module('navData', [])
             "type": "error"
           },
           {
+            "name": "missingattr",
+            "href": "error/$compile/missingattr",
+            "type": "error"
+          },
+          {
             "name": "multidir",
             "href": "error/$compile/multidir",
+            "type": "error"
+          },
+          {
+            "name": "multilink",
+            "href": "error/$compile/multilink",
             "type": "error"
           },
           {
@@ -1447,13 +1492,13 @@ angular.module('navData', [])
             "type": "error"
           },
           {
-            "name": "noident",
-            "href": "error/$compile/noident",
+            "name": "nonassign",
+            "href": "error/$compile/nonassign",
             "type": "error"
           },
           {
-            "name": "nonassign",
-            "href": "error/$compile/nonassign",
+            "name": "noslot",
+            "href": "error/$compile/noslot",
             "type": "error"
           },
           {
@@ -1492,6 +1537,11 @@ angular.module('navData', [])
             "type": "error"
           },
           {
+            "name": "ctrlreg",
+            "href": "error/$controller/ctrlreg",
+            "type": "error"
+          },
+          {
             "name": "noscp",
             "href": "error/$controller/noscp",
             "type": "error"
@@ -1502,13 +1552,18 @@ angular.module('navData', [])
             "type": "section"
           },
           {
-            "name": "badreq",
-            "href": "error/$http/badreq",
+            "name": "baddata",
+            "href": "error/$http/baddata",
             "type": "error"
           },
           {
-            "name": "legacy",
-            "href": "error/$http/legacy",
+            "name": "badjsonp",
+            "href": "error/$http/badjsonp",
+            "type": "error"
+          },
+          {
+            "name": "badreq",
+            "href": "error/$http/badreq",
             "type": "error"
           },
           {
@@ -1677,41 +1732,6 @@ angular.module('navData', [])
             "type": "section"
           },
           {
-            "name": "isecaf",
-            "href": "error/$parse/isecaf",
-            "type": "error"
-          },
-          {
-            "name": "isecdom",
-            "href": "error/$parse/isecdom",
-            "type": "error"
-          },
-          {
-            "name": "isecff",
-            "href": "error/$parse/isecff",
-            "type": "error"
-          },
-          {
-            "name": "isecfld",
-            "href": "error/$parse/isecfld",
-            "type": "error"
-          },
-          {
-            "name": "isecfn",
-            "href": "error/$parse/isecfn",
-            "type": "error"
-          },
-          {
-            "name": "isecobj",
-            "href": "error/$parse/isecobj",
-            "type": "error"
-          },
-          {
-            "name": "isecwindow",
-            "href": "error/$parse/isecwindow",
-            "type": "error"
-          },
-          {
             "name": "lexerr",
             "href": "error/$parse/lexerr",
             "type": "error"
@@ -1785,6 +1805,11 @@ angular.module('navData', [])
             "name": "$sanitize",
             "href": "error/$sanitize",
             "type": "section"
+          },
+          {
+            "name": "elclob",
+            "href": "error/$sanitize/elclob",
+            "type": "error"
           },
           {
             "name": "noinert",
@@ -1880,6 +1905,11 @@ angular.module('navData', [])
             "name": "ng",
             "href": "error/ng",
             "type": "section"
+          },
+          {
+            "name": "aobj",
+            "href": "error/ng/aobj",
+            "type": "error"
           },
           {
             "name": "areq",
@@ -2243,7 +2273,7 @@ angular.module('navData', [])
             "type": "tutorial"
           },
           {
-            "name": "2 - Angular Templates",
+            "name": "2 - AngularJS Templates",
             "step": 2,
             "href": "tutorial/step_02",
             "type": "tutorial"
