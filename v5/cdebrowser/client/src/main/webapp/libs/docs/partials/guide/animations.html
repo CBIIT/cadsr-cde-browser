@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/docs/content/guide/animations.ngdoc?message=docs(guide%2FAnimations)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.7.x/docs/content/guide/animations.ngdoc?message=docs(guide%2FAnimations)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="animations">Animations</h1>
@@ -213,27 +213,11 @@ triggered:</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="api/ng/directive/ngRepeat#animations">ngRepeat</a></td>
-<td>enter, leave, and move</td>
+<td><a href="api/ng/directive/form#animations">form / ngForm</a></td>
+<td>add and remove (<a href="api/ng/directive/form#css-classes">various classes</a>)</td>
 </tr>
 <tr>
-<td><a href="api/ng/directive/ngIf#animations">ngIf</a></td>
-<td>enter and leave</td>
-</tr>
-<tr>
-<td><a href="api/ng/directive/ngSwitch#animations">ngSwitch</a></td>
-<td>enter and leave</td>
-</tr>
-<tr>
-<td><a href="api/ng/directive/ngInclude#animations">ngInclude</a></td>
-<td>enter and leave</td>
-</tr>
-<tr>
-<td><a href="api/ngRoute/directive/ngView#animations">ngView</a></td>
-<td>enter and leave</td>
-</tr>
-<tr>
-<td><a href="api/ngMessages#animations">ngMessage / ngMessageExp</a></td>
+<td><a href="api/ngAnimate/directive/ngAnimateSwap#animations">ngAnimateSwap</a></td>
 <td>enter and leave</td>
 </tr>
 <tr>
@@ -241,7 +225,11 @@ triggered:</p>
 <td>add and remove</td>
 </tr>
 <tr>
-<td><a href="api/ng/directive/ngClass#animations">ngClassEven / ngClassOdd</a></td>
+<td><a href="api/ng/directive/ngClassEven#animations">ngClassEven</a></td>
+<td>add and remove</td>
+</tr>
+<tr>
+<td><a href="api/ng/directive/ngClassOdd#animations">ngClassOdd</a></td>
 <td>add and remove</td>
 </tr>
 <tr>
@@ -249,25 +237,46 @@ triggered:</p>
 <td>add and remove (the <code>ng-hide</code> class)</td>
 </tr>
 <tr>
-<td><a href="api/ng/directive/ngShow#animations">ngShow</a></td>
-<td>add and remove (the <code>ng-hide</code> class)</td>
+<td><a href="api/ng/directive/ngIf#animations">ngIf</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="api/ng/directive/ngInclude#animations">ngInclude</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="api/ngMessages#animations">ngMessage / ngMessageExp</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="api/ngMessages#animations">ngMessages</a></td>
+<td>add and remove (the <code>ng-active</code>/<code>ng-inactive</code> classes)</td>
 </tr>
 <tr>
 <td><a href="api/ng/directive/ngModel#animations">ngModel</a></td>
 <td>add and remove (<a href="api/ng/directive/ngModel#css-classes">various classes</a>)</td>
 </tr>
 <tr>
-<td><a href="api/ng/directive/form#animations">form / ngForm</a></td>
-<td>add and remove (<a href="api/ng/directive/form#css-classes">various classes</a>)</td>
+<td><a href="api/ng/directive/ngRepeat#animations">ngRepeat</a></td>
+<td>enter, leave, and move</td>
 </tr>
 <tr>
-<td><a href="api/ngMessages#animations">ngMessages</a></td>
-<td>add and remove (the <code>ng-active</code>/<code>ng-inactive</code> classes)</td>
+<td><a href="api/ng/directive/ngShow#animations">ngShow</a></td>
+<td>add and remove (the <code>ng-hide</code> class)</td>
+</tr>
+<tr>
+<td><a href="api/ng/directive/ngSwitch#animations">ngSwitch</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="api/ngRoute/directive/ngView#animations">ngView</a></td>
+<td>enter and leave</td>
 </tr>
 </tbody>
 </table>
+<p>(More information can be found by visiting the documentation associated with each directive.)</p>
 <p>For a full breakdown of the steps involved during each animation event, refer to the
-<a href="api/ng/service/$animate">API docs</a>.</p>
+<a href="api/ng/service/$animate"><code>$animate</code> API docs</a>.</p>
 <h2 id="how-do-i-use-animations-in-my-own-directives-">How do I use animations in my own directives?</h2>
 <p>Animations within custom directives can also be established by injecting <code>$animate</code> directly into
 your directive and making calls to it when needed.</p>
@@ -437,7 +446,7 @@ case of the spinner, this would be:</p>
 higher priority than any styles that are not related to <code>ngAnimate</code>.</p>
 <p>You can also use one of the other
 <a href="guide/animations#how-to-selectively-enable-disable-and-skip-animations">strategies to disable animations</a>.</p>
-<h3 id="enable-animations-for-elements-outside-of-the-angularjs-application-dom-tree-link-ng-animate-pin-animate-pin-">Enable animations for elements outside of the AngularJS application DOM tree: <a href="api/ng/service/$animate#pin">$animate.pin()</a></h3>
+<h2 id="enable-animations-outside-of-the-application-dom-tree-link-ng-animate-pin-animate-pin-">Enable animations outside of the application DOM tree: <a href="api/ng/service/$animate#pin">$animate.pin()</a></h2>
 <p>Before animating, <code>ngAnimate</code> checks if the animated element is inside the application DOM tree. If
 not, no animation is run. Usually, this is not a problem since most apps use the <code>html</code> or <code>body</code>
 elements as their root.</p>

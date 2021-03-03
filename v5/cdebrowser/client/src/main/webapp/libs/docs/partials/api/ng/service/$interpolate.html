@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/interpolate.js?message=docs($interpolate)%3A%20describe%20your%20change...#L124' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.7.x/src/ng/interpolate.js?message=docs($interpolate)%3A%20describe%20your%20change...#L122' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/interpolate.js#L124' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.7.9/src/ng/interpolate.js#L122' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -33,7 +33,7 @@ HTML <a href="api/ng/service/$compile">$compile</a> service for data binding. Se
 interpolation markup.</p>
 <pre><code class="lang-js">var $interpolate = ...; // injected
 var exp = $interpolate(&#39;Hello {{name | uppercase}}!&#39;);
-expect(exp({name:&#39;AngularJS&#39;})).toEqual(&#39;Hello ANGULAR!&#39;);
+expect(exp({name:&#39;AngularJS&#39;})).toEqual(&#39;Hello ANGULARJS!&#39;);
 </code></pre>
 <p><code>$interpolate</code> takes an optional fourth argument, <code>allOrNothing</code>. If <code>allOrNothing</code> is
 <code>true</code>, the interpolation function will return <code>undefined</code> unless all embedded expressions
@@ -228,6 +228,7 @@ code snippet the closing braces of the literal object will get incorrectly denor
 
 </section>
     
+
     <h3 id="$interpolate-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>

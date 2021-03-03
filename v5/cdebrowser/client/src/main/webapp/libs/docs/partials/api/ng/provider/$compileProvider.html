@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/compile.js?message=docs($compileProvider)%3A%20describe%20your%20change...#L969' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.7.x/src/ng/compile.js?message=docs($compileProvider)%3A%20describe%20your%20change...#L1372' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/compile.js#L969' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.7.9/src/ng/compile.js#L1372' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -75,9 +75,9 @@
         <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-object">Object</a>
       </td>
       <td>
-        <p>Name of the directive in camel-case (i.e. <code>ngBind</code> which
-   will match as <code>ng-bind</code>), or an object map of directives where the keys are the
-   names and the values are the factories.</p>
+        <p>Name of the directive in camel-case (i.e. <code>ngBind</code> which will match
+   as <code>ng-bind</code>), or an object map of directives where the keys are the names and the values
+   are the factories.</p>
 
         
       </td>
@@ -458,84 +458,15 @@ current debugInfoEnabled state</p>
     </li>
   
   <li>
-    <h3 id="preAssignBindingsEnabled"><p><code>preAssignBindingsEnabled([enabled]);</code></p>
-
-</h3>
-    <div><p>Call this method to enable/disable whether directive controllers are assigned bindings before
-calling the controller&#39;s constructor.
-If enabled (true), the compiler assigns the value of each of the bindings to the
-properties of the controller object before the constructor of this object is called.</p>
-<p>If disabled (false), the compiler calls the constructor first before assigning bindings.</p>
-<p>The default value is false.</p>
-</div>
-
-    
-<div class="alert alert-danger deprecation">
-  <div class="title"><strong>Deprecated:</strong>
-    <span class="since">(since 1.6.0) </span>
-    <span class="remove">(to be removed in 1.7.0) </span>
-  </div>
-  <p>This method and the option to assign the bindings before calling the controller&#39;s constructor
-will be removed in v1.7.0.</p>
-
-</div>
-
-
-    
-    <h4>Parameters</h4>
-    
-<table class="variables-matrix input-arguments">
-  <thead>
-    <tr>
-      <th>Param</th>
-      <th>Type</th>
-      <th>Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    <tr>
-      <td>
-        enabled
-        
-        <div><em>(optional)</em></div>
-      </td>
-      <td>
-        <a href="" class="label type-hint type-hint-boolean">boolean</a>
-      </td>
-      <td>
-        <p>update the preAssignBindingsEnabled state if provided, otherwise just return the
-current preAssignBindingsEnabled state</p>
-
-        
-      </td>
-    </tr>
-    
-  </tbody>
-</table>
-
-    
-
-    
-
-    
-    <h4>Returns</h4>
-    <table class="variables-matrix return-arguments">
-  <tr>
-    <td><a href="" class="label type-hint type-hint-object">*</a></td>
-    <td><p>current value if used as getter or itself (chaining) if used as setter</p>
-</td>
-  </tr>
-</table>
-    </li>
-  
-  <li>
     <h3 id="strictComponentBindingsEnabled"><p><code>strictComponentBindingsEnabled([enabled]);</code></p>
 
 </h3>
-    <div><p>Call this method to enable/disable strict component bindings check. If enabled, the compiler will enforce that
-for all bindings of a component that are not set as optional with <code>?</code>, an attribute needs to be provided
-on the component&#39;s HTML tag.</p>
+    <div><p>Call this method to enable / disable the strict component bindings check. If enabled, the
+compiler will enforce that all scope / controller bindings of a
+<a href="api/ng/provider/$compileProvider#directive">directive</a> / <a href="api/ng/provider/$compileProvider#component">component</a>
+that are not set as optional with <code>?</code>, must be provided when the directive is instantiated.
+If not provided, the compiler will throw the
+<a href="error/$compile/missingattr">$compile:missingattr error</a>.</p>
 <p>The default value is false.</p>
 </div>
 
@@ -564,8 +495,8 @@ on the component&#39;s HTML tag.</p>
         <a href="" class="label type-hint type-hint-boolean">boolean</a>
       </td>
       <td>
-        <p>update the strictComponentBindingsEnabled state if provided, otherwise just return the
-current strictComponentBindingsEnabled state</p>
+        <p>update the strictComponentBindingsEnabled state if provided,
+otherwise return the current strictComponentBindingsEnabled state.</p>
 
         
       </td>
@@ -775,6 +706,94 @@ the application (including any 3rd party directives).</p>
   <tr>
     <td><a href="" class="label type-hint type-hint-boolean">boolean</a><a href="" class="label type-hint type-hint-object">object</a></td>
     <td><p>the current value (or <code>this</code> if called as a setter for chaining)</p>
+</td>
+  </tr>
+</table>
+    </li>
+  
+  <li>
+    <h3 id="addPropertySecurityContext"><p><code>addPropertySecurityContext(elementName, propertyName, ctx);</code></p>
+
+</h3>
+    <div><p>Defines the security context for DOM properties bound by ng-prop-*.</p>
+</div>
+
+    
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        elementName
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The element name or &#39;*&#39; to match any element.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        propertyName
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The DOM property name.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ctx
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The <a href="api/ng/service/$sce"><code>$sce</code></a> security context in which this value is safe for use, e.g. <code>$sce.URL</code></p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tr>
+    <td><a href="" class="label type-hint type-hint-object">object</a></td>
+    <td><p><code>this</code> for chaining</p>
 </td>
   </tr>
 </table>

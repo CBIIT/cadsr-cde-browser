@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/animate.js?message=docs($animate)%3A%20describe%20your%20change...#L332' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.7.x/src/ng/animate.js?message=docs($animate)%3A%20describe%20your%20change...#L332' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/animate.js#L332' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.7.9/src/ng/animate.js#L332' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -68,7 +68,22 @@ their DOM-related operations (enter, leave and move). Other directives such as <
    }
 );
 </code></pre>
-</div>
+<div class="alert alert-warning">
+<strong>Note</strong>: Generally, the events that are fired correspond 1:1 to <code>$animate</code> method names,
+e.g. <a href="api/ng/service/$animate#addClass">addClass()</a> will fire <code>addClass</code>, and <a href="api/ng/directive/ngClass"><code>ngClass</code></a>
+will fire <code>addClass</code> if classes are added, and <code>removeClass</code> if classes are removed.
+However, there are two exceptions:
+
+<ul>
+  <li>if both an <a href="api/ng/service/$animate#addClass">addClass()</a> and a
+  <a href="api/ng/service/$animate#removeClass">removeClass()</a> action are performed during the same
+  animation, the event fired will be <code>setClass</code>. This is true even for <code>ngClass</code>.</li>
+  <li>an <a href="api/ng/service/$animate#animate">animate()</a> call that adds and removes classes will fire
+  the <code>setClass</code> event, but if it either removes or adds classes,
+  it will fire <code>animate</code> instead.</li>
+</ul>
+
+</div></div>
 
     
 
@@ -128,12 +143,21 @@ their DOM-related operations (enter, leave and move). Other directives such as <
         <a href="" class="label type-hint type-hint-function">Function</a>
       </td>
       <td>
-        <p>the callback function that will be fired when the listener is triggered</p>
+        <p>the callback function that will be fired when the listener is triggered.</p>
 <p>The arguments present in the callback function are:</p>
 <ul>
 <li><code>element</code> - The captured DOM element that the animation was fired on.</li>
 <li><code>phase</code> - The phase of the animation. The two possible phases are <strong>start</strong> (when the animation starts) and <strong>close</strong> (when it ends).</li>
+<li><code>data</code> - an object with these properties:<ul>
+<li>addClass - <code>{string|null}</code> - space-separated CSS classes to add to the element</li>
+<li>removeClass - <code>{string|null}</code> - space-separated CSS classes to remove from the element</li>
+<li>from - <code>{Object|null}</code> - CSS properties &amp; values at the beginning of the animation</li>
+<li>to - <code>{Object|null}</code> - CSS properties &amp; values at the end of the animation</li>
 </ul>
+</li>
+</ul>
+<p>Note that the callback does not trigger a scope digest. Wrap your call into a
+<a href="api/ng/type/$rootScope.Scope#$apply">scope.$apply</a> to propagate changes to the scope.</p>
 
         
       </td>
@@ -400,10 +424,12 @@ $animate.enabled(element, false);
     </li>
   
   <li>
-    <h3 id="cancel"><p><code>cancel(animationPromise);</code></p>
+    <h3 id="cancel"><p><code>cancel(animationRunner);</code></p>
 
 </h3>
-    <div><p>Cancels the provided animation.</p>
+    <div><p>Cancels the provided animation and applies the end state of the animation.
+Note that this does not cancel the underlying operation, e.g. the setting of classes or
+adding the element to the DOM.</p>
 </div>
 
     
@@ -423,15 +449,15 @@ $animate.enabled(element, false);
     
     <tr>
       <td>
-        animationPromise
+        animationRunner
         
         
       </td>
       <td>
-        <a href="" class="label type-hint type-hint-promise">Promise</a>
+        <a href="" class="label type-hint type-hint-animationrunner">animationRunner</a>
       </td>
       <td>
-        <p>The animation promise that is returned when an animation is started.</p>
+        <p>An animation runner returned by an $animate function.</p>
 
         
       </td>
@@ -444,7 +470,56 @@ $animate.enabled(element, false);
 
     
 
-    </li>
+    
+    <h4 id="$animate.cancel-examples">Example</h4><p>
+
+<div>
+  <plnkr-opener example-path="examples/example-animate-cancel"></plnkr-opener>
+
+  <div class="runnable-example"
+      path="examples/example-animate-cancel"
+      module="animationExample"
+      deps="angular-animate.js"
+      animations="true"
+      name="animate-cancel">
+
+  
+    <div class="runnable-example-file" 
+      name="app.js"
+      language="js"
+      type="js">
+      <pre><code>angular.module(&#39;animationExample&#39;, [&#39;ngAnimate&#39;]).component(&#39;cancelExample&#39;, {&#10;  templateUrl: &#39;template.html&#39;,&#10;  controller: function($element, $animate) {&#10;    this.runner = null;&#10;&#10;    this.addClass = function() {&#10;      this.runner = $animate.addClass($element.find(&#39;div&#39;), &#39;red&#39;);&#10;      var ctrl = this;&#10;      this.runner.finally(function() {&#10;        ctrl.runner = null;&#10;      });&#10;    };&#10;&#10;    this.removeClass = function() {&#10;      this.runner = $animate.removeClass($element.find(&#39;div&#39;), &#39;red&#39;);&#10;      var ctrl = this;&#10;      this.runner.finally(function() {&#10;        ctrl.runner = null;&#10;      });&#10;    };&#10;&#10;    this.cancel = function() {&#10;      $animate.cancel(this.runner);&#10;    };&#10;  }&#10;});</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" 
+      name="template.html"
+      language="html"
+      type="html">
+      <pre><code>&lt;p&gt;&#10;  &lt;button id=&quot;add&quot; ng-click=&quot;$ctrl.addClass()&quot;&gt;Add&lt;/button&gt;&#10;  &lt;button ng-click=&quot;$ctrl.removeClass()&quot;&gt;Remove&lt;/button&gt;&#10;  &lt;br&gt;&#10;  &lt;button id=&quot;cancel&quot; ng-click=&quot;$ctrl.cancel()&quot; ng-disabled=&quot;!$ctrl.runner&quot;&gt;Cancel&lt;/button&gt;&#10;  &lt;br&gt;&#10;  &lt;div id=&quot;target&quot;&gt;CSS-Animated Text&lt;/div&gt;&#10;&lt;/p&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" 
+      name="index.html"
+      language="html"
+      type="html">
+      <pre><code>&lt;cancel-example&gt;&lt;/cancel-example&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" 
+      name="style.css"
+      language="css"
+      type="css">
+      <pre><code>.red-add, .red-remove {&#10;  transition: all 4s cubic-bezier(0.250, 0.460, 0.450, 0.940);&#10;}&#10;&#10;.red,&#10;.red-add.red-add-active {&#10;  color: #FF0000;&#10;  font-size: 40px;&#10;}&#10;&#10;.red-remove.red-remove-active {&#10;  font-size: 10px;&#10;  color: black;&#10;}</code></pre>
+    </div>
+  
+
+    <iframe class="runnable-example-frame" src="examples/example-animate-cancel/index.html" name="example-animate-cancel"></iframe>
+  </div>
+</div>
+
+
+</p>
+</li>
   
   <li>
     <h3 id="enter"><p><code>enter(element, parent, [after], [options]);</code></p>
@@ -554,8 +629,8 @@ $animate.enabled(element, false);
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>the animation runner</p>
 </td>
   </tr>
 </table>
@@ -669,8 +744,8 @@ $animate.enabled(element, false);
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>the animation runner</p>
 </td>
   </tr>
 </table>
@@ -750,8 +825,8 @@ digest once the animation has completed.</p>
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>the animation runner</p>
 </td>
   </tr>
 </table>
@@ -829,9 +904,8 @@ digest once the animation has completed.</p>
         <p>an optional collection of options/styles that will be applied to the element.
   The object can have the following properties:</p>
 <ul>
-<li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
-<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
 <li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
 <li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
 </ul>
 
@@ -850,8 +924,8 @@ digest once the animation has completed.</p>
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>animationRunner the animation runner</p>
 </td>
   </tr>
 </table>
@@ -931,7 +1005,6 @@ digest once the animation has completed.</p>
 <ul>
 <li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
 <li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
-<li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
 <li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
 </ul>
 
@@ -950,8 +1023,8 @@ digest once the animation has completed.</p>
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>the animation runner</p>
 </td>
   </tr>
 </table>
@@ -1046,8 +1119,8 @@ digest once the animation has completed.</p>
   The object can have the following properties:</p>
 <ul>
 <li><strong>addClass</strong> - <code>{string}</code> - space-separated CSS classes to add to element</li>
-<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
 <li><strong>removeClass</strong> - <code>{string}</code> - space-separated CSS classes to remove from element</li>
+<li><strong>from</strong> - <code>{Object}</code> - CSS properties &amp; values at the beginning of animation. Must have matching <code>to</code></li>
 <li><strong>to</strong> - <code>{Object}</code> - CSS properties &amp; values at end of animation. Must have matching <code>from</code></li>
 </ul>
 
@@ -1066,8 +1139,8 @@ digest once the animation has completed.</p>
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>the animation runner</p>
 </td>
   </tr>
 </table>
@@ -1210,8 +1283,8 @@ method (or as part of the <code>options</code> parameter):</p>
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
   <tr>
-    <td><a href="" class="label type-hint type-hint-promise">Promise</a></td>
-    <td><p>the animation callback promise</p>
+    <td><a href="" class="label type-hint type-hint-runner">Runner</a></td>
+    <td><p>the animation runner</p>
 </td>
   </tr>
 </table>

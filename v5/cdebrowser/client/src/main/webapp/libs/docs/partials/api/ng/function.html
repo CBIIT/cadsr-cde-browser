@@ -12,18 +12,6 @@
       </tr>
       
       <tr>
-        <td><a href="api/ng/function/angular.lowercase">angular.lowercase</a></td>
-        <td><p>Converts the specified string to lowercase.</p>
-</td>
-      </tr>
-      
-      <tr>
-        <td><a href="api/ng/function/angular.uppercase">angular.uppercase</a></td>
-        <td><p>Converts the specified string to uppercase.</p>
-</td>
-      </tr>
-      
-      <tr>
         <td><a href="api/ng/function/angular.forEach">angular.forEach</a></td>
         <td><p>Invokes the <code>iterator</code> function once for each item in <code>obj</code> collection, which can be either an
 object or an array. The <code>iterator</code> function is invoked with <code>iterator(value, key, obj)</code>, where <code>value</code>
@@ -106,7 +94,7 @@ considered to be objects. Note that JavaScript arrays are objects.</p>
       
       <tr>
         <td><a href="api/ng/function/angular.isArray">angular.isArray</a></td>
-        <td><p>Determines if a reference is an <code>Array</code>. Alias of Array.isArray.</p>
+        <td><p>Determines if a reference is an <code>Array</code>.</p>
 </td>
       </tr>
       
@@ -124,7 +112,9 @@ considered to be objects. Note that JavaScript arrays are objects.</p>
       
       <tr>
         <td><a href="api/ng/function/angular.copy">angular.copy</a></td>
-        <td><p>Creates a deep copy of <code>source</code>, which should be an object or an array.</p>
+        <td><p>Creates a deep copy of <code>source</code>, which should be an object or an array. This functions is used
+internally, mostly in the change-detection code. It is not intended as an all-purpose copy
+function, and has several limitations (see below).</p>
 </td>
       </tr>
       

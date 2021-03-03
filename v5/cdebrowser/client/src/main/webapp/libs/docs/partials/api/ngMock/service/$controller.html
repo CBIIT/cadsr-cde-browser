@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngMock/angular-mocks.js?message=docs($controller)%3A%20describe%20your%20change...#L2220' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.7.x/src/ngMock/angular-mocks.js?message=docs($controller)%3A%20describe%20your%20change...#L2430' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngMock/angular-mocks.js#L2220' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.7.9/src/ngMock/angular-mocks.js#L2430' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -27,9 +27,6 @@
   <h2 id="overview">Overview</h2>
   <p>A decorator for <a href="api/ng/service/$controller"><code>$controller</code></a> with additional <code>bindings</code> parameter, useful when testing
 controllers of directives that use <a href="api/ng/service/$compile#-bindtocontroller-"><code>bindToController</code></a>.</p>
-<p>Depending on the value of
-<a href="api/ng/provider/$compileProvider#preAssignBindingsEnabled"><code>preAssignBindingsEnabled()</code></a>, the properties
-will be bound before or after invoking the constructor.</p>
 <h2 id="example">Example</h2>
 <pre><code class="lang-js">// Directive definition ...
 
@@ -111,9 +108,7 @@ describe(&#39;myDirectiveController&#39;, function() {
    to retrieve the controller constructor using the following steps:</p>
 <ul>
 <li>check if a controller with given name is registered via <code>$controllerProvider</code></li>
-<li>check if evaluating the string on the current scope returns a constructor</li>
-<li><p>if $controllerProvider#allowGlobals, check <code>window[constructor]</code> on the global
-<code>window</code> object (deprecated, not recommended)</p>
+<li><p>check if evaluating the string on the current scope returns a constructor</p>
 <p>The string can use the <code>controller as property</code> syntax, where the controller instance is published
 as the specified property on the <code>scope</code>; the <code>scope</code> must be injected into <code>locals</code> param for this
 to work correctly.</p>
@@ -162,6 +157,7 @@ to work correctly.</p>
 
 </section>
     
+
     <h3 id="$controller-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
