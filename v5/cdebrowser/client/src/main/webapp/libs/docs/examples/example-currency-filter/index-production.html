@@ -5,7 +5,7 @@
   <title>Example - example-currency-filter-production</title>
   
 
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="//code.angularjs.org/1.6.9/angular.min.js"></script>
   
 
   
@@ -20,7 +20,7 @@
 <div ng-controller="ExampleController">
   <input type="number" ng-model="amount" aria-label="amount"> <br>
   default currency symbol ($): <span id="currency-default">{{amount | currency}}</span><br>
-  custom currency identifier (USD$): <span id="currency-custom">{{amount | currency:"USD$"}}</span>
+  custom currency identifier (USD$): <span id="currency-custom">{{amount | currency:"USD$"}}</span><br>
   no fractions (0): <span id="currency-no-fractions">{{amount | currency:"USD$":0}}</span>
 </div>
 </body>

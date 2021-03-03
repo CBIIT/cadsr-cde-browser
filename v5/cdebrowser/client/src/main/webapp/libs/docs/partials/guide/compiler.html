@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/docs/content/guide/compiler.ngdoc?message=docs(guide%2FHTML Compiler)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/docs/content/guide/compiler.ngdoc?message=docs(guide%2FHTML Compiler)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="html-compiler">HTML Compiler</h1>
@@ -7,14 +7,14 @@
 
 If you&#39;re just getting started, we recommend the <a href="tutorial/">tutorial</a> first.
 If you just want to create custom directives, we recommend the <a href="guide/directive">directives guide</a>.
-If you want a deeper look into Angular&#39;s compilation process, you&#39;re in the right place.
+If you want a deeper look into AngularJS&#39;s compilation process, you&#39;re in the right place.
 </div>
 
 
 <h2 id="overview">Overview</h2>
-<p>Angular&#39;s <a href="api/ng/service/$compile">HTML compiler</a> allows the developer to teach the
+<p>AngularJS&#39;s <a href="api/ng/service/$compile">HTML compiler</a> allows the developer to teach the
 browser new HTML syntax. The compiler allows you to attach behavior to any HTML element or attribute
-and even create new HTML elements or attributes with custom behavior. Angular calls these behavior
+and even create new HTML elements or attributes with custom behavior. AngularJS calls these behavior
 extensions <a href="api/ng/provider/$compileProvider#directive">directives</a>.</p>
 <p>HTML has a lot of constructs for formatting the HTML for static documents in a declarative fashion.
 For example if something needs to be centered, there is no need to provide instructions to the
@@ -24,13 +24,13 @@ element to achieve the desired behavior. Such is the power of declarative langua
 <p>However, the declarative language is also limited, as it does not allow you to teach the browser new
 syntax. For example, there is no easy way to get the browser to align the text at 1/3 the position
 instead of 1/2. What is needed is a way to teach the browser new HTML syntax.</p>
-<p>Angular comes pre-bundled with common directives which are useful for building any app. We also
+<p>AngularJS comes pre-bundled with common directives which are useful for building any app. We also
 expect that you will create directives that are specific to your app. These extensions become a
 Domain Specific Language for building your application.</p>
 <p>All of this compilation takes place in the web browser; no server side or pre-compilation step is
 involved.</p>
 <h2 id="compiler">Compiler</h2>
-<p>Compiler is an Angular service which traverses the DOM looking for attributes. The compilation
+<p>Compiler is an AngularJS service which traverses the DOM looking for attributes. The compilation
 process happens in two phases.</p>
 <ol>
 <li><p><strong>Compile:</strong> traverse the DOM and collect all of the directives. The result is a linking
@@ -104,19 +104,19 @@ an element.</p>
 <li>managing the whole update process</li>
 <li>lack of behavior expressiveness</li>
 </ol>
-<p>Angular is different. The Angular compiler consumes the DOM, not string templates.
+<p>AngularJS is different. The AngularJS compiler consumes the DOM, not string templates.
 The result is a linking function, which when combined with a scope model results in a live view. The
 view and scope model bindings are transparent. The developer does not need to make any special calls to update
 the view. And because <code>innerHTML</code> is not used, you won&#39;t accidentally clobber user input.
-Furthermore, Angular directives can contain not just text bindings, but behavioral constructs as
+Furthermore, AngularJS directives can contain not just text bindings, but behavioral constructs as
 well.</p>
 <p><img src="img/Two_Way_Data_Binding.png"></p>
-<p>The Angular approach produces a stable DOM. The DOM element instance bound to a model
+<p>The AngularJS approach produces a stable DOM. The DOM element instance bound to a model
 item instance does not change for the lifetime of the binding. This means that the code can get
 hold of the elements and register event handlers and know that the reference will not be destroyed
 by template data merge.</p>
 <h2 id="how-directives-are-compiled">How directives are compiled</h2>
-<p>It&#39;s important to note that Angular operates on DOM nodes rather than strings. Usually, you don&#39;t
+<p>It&#39;s important to note that AngularJS operates on DOM nodes rather than strings. Usually, you don&#39;t
 notice this restriction because when a page loads, the web browser parses HTML into the DOM automatically.</p>
 <p>HTML compilation happens in three phases:</p>
 <ol>
@@ -139,7 +139,7 @@ as each directive is configured to do.</p>
 <p>The result of this is a live binding between the scope and the DOM. So at this point, a change in
 a model on the compiled scope will be reflected in the DOM.</p>
 <p>Below is the corresponding code using the <code>$compile</code> service.
-This should help give you an idea of what Angular does internally.</p>
+This should help give you an idea of what AngularJS does internally.</p>
 <pre><code class="lang-js">var $compile = ...; // injected into your code
 var scope = ...;
 var parent = ...; // DOM element where the compiled template can be appended
@@ -288,6 +288,93 @@ scope: {
 },
 restrict: &#39;E&#39;,
 replace: true
+</code></pre>
+<h3 id="double-compilation-and-how-to-avoid-it">Double Compilation, and how to avoid it</h3>
+<p>Double compilation occurs when an already compiled part of the DOM gets compiled again. This is an
+undesired effect and can lead to misbehaving directives, performance issues, and memory
+leaks.
+A common scenario where this happens is a directive that calls <code>$compile</code> in a directive link
+function on the directive element. In the following <strong>faulty example</strong>, a directive adds a mouseover behavior
+to a button with <code>ngClick</code> on it:</p>
+<pre><code>angular.module(&#39;app&#39;).directive(&#39;addMouseover&#39;, function($compile) {
+  return {
+    link: function(scope, element, attrs) {
+      var newEl = angular.element(&#39;&lt;span ng-show=&quot;showHint&quot;&gt; My Hint&lt;/span&gt;&#39;);
+      element.on(&#39;mouseenter mouseleave&#39;, function() {
+        scope.$apply(&#39;showHint = !showHint&#39;);
+      });
+
+      attrs.$set(&#39;addMouseover&#39;, null); // To stop infinite compile loop
+      element.append(newEl);
+      $compile(element)(scope); // Double compilation
+    }
+  }
+})
+</code></pre>
+<p>At first glance, it looks like removing the original <code>addMouseover</code> attribute is all there is needed
+to make this example work.
+However, if the directive element or its children have other directives attached, they will be compiled and
+linked again, because the compiler doesn&#39;t keep track of which directives have been assigned to which
+elements.</p>
+<p>This can cause unpredictable behavior, e.g. <code>ngClick</code> or other event handlers will be attached
+again. It can also degrade performance, as watchers for text interpolation are added twice to the scope.</p>
+<p>Double compilation should therefore be avoided. In the above example, only the new element should
+be compiled:</p>
+<pre><code>angular.module(&#39;app&#39;).directive(&#39;addMouseover&#39;, function($compile) {
+  return {
+    link: function(scope, element, attrs) {
+      var newEl = angular.element(&#39;&lt;span ng-show=&quot;showHint&quot;&gt; My Hint&lt;/span&gt;&#39;);
+      element.on(&#39;mouseenter mouseleave&#39;, function() {
+        scope.$apply(&#39;showHint = !showHint&#39;);
+      });
+
+      element.append(newEl);
+      $compile(newEl)(scope); // Only compile the new element
+    }
+  }
+})
+</code></pre>
+<p>Another scenario is adding a directive programmatically to a compiled element and then executing
+compile again. See the following <strong>faulty example</strong>:</p>
+<pre><code class="lang-html">&lt;input ng-model=&quot;$ctrl.value&quot; add-options&gt;
+</code></pre>
+<pre><code>angular.module(&#39;app&#39;).directive(&#39;addOptions&#39;, function($compile) {
+  return {
+    link: function(scope, element, attrs) {
+      attrs.$set(&#39;addOptions&#39;, null) // To stop infinite compile loop
+      attrs.$set(&#39;ngModelOptions&#39;, &#39;{debounce: 1000}&#39;);
+      $compile(element)(scope); // Double compilation
+    }
+  }
+});
+</code></pre>
+<p>In that case, it is necessary to intercept the <em>initial</em> compilation of the element:</p>
+<ol>
+<li>Give your directive the <code>terminal</code> property and a higher priority than directives
+that should not be compiled twice. In the example, the compiler will only compile directives
+which have a priority of 100 or higher.</li>
+<li>Inside this directive&#39;s compile function, add any other directive attributes to the template.</li>
+<li>Compile the element, but restrict the maximum priority, so that any already compiled directives
+(including the <code>addOptions</code> directive) are not compiled again.</li>
+<li>In the link function, link the compiled element with the element&#39;s scope.</li>
+</ol>
+<pre><code>angular.module(&#39;app&#39;).directive(&#39;addOptions&#39;, function($compile) {
+  return {
+    priority: 100, // ngModel has priority 1
+    terminal: true,
+    compile: function(templateElement, templateAttributes) {
+      templateAttributes.$set(&#39;ngModelOptions&#39;, &#39;{debounce: 1000}&#39;);
+
+      // The third argument is the max priority. Only directives with priority &lt; 100 will be compiled,
+      // therefore we don&#39;t need to remove the attribute
+      var compiled = $compile(templateElement, null, 100);
+
+      return function linkFn(scope) {
+        compiled(scope) // Link compiled element to scope
+      }
+    }
+  }
+});
 </code></pre>
 
 

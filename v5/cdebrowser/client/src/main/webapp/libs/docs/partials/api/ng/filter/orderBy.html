@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/filter/orderBy.js?message=docs(orderBy)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/filter/orderBy.js?message=docs(orderBy)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/filter/orderBy.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/filter/orderBy.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,7 +19,10 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Returns an array containing the items from the specified <code>collection</code>, ordered by a <code>comparator</code>
 function based on the values computed using the <code>expression</code> predicate.</p>
 <p>For example, <code>[{id: &#39;foo&#39;}, {id: &#39;bar&#39;}] | orderBy:&#39;id&#39;</code> would result in
@@ -27,7 +30,7 @@ function based on the values computed using the <code>expression</code> predicat
 <p>The <code>collection</code> can be an Array or array-like object (e.g. NodeList, jQuery object, TypedArray,
 String, etc).</p>
 <p>The <code>expression</code> can be a single predicate, or a list of predicates each serving as a tie-breaker
-for the preceeding one. The <code>expression</code> is evaluated against each item and the output is used
+for the preceding one. The <code>expression</code> is evaluated against each item and the output is used
 for comparing with other items.</p>
 <p>You can change the sorting order by setting <code>reverse</code> to <code>true</code>. By default, items are sorted in
 ascending order.</p>
@@ -57,6 +60,8 @@ second, or <code>1</code> otherwise.</p>
 specified predicates can distinguish between two items, <code>orderBy</code> will automatically introduce a
 dummy predicate that returns the item&#39;s index as <code>value</code>.
 (If you are using a custom comparator, make sure it can handle this predicate as well.)</p>
+<p>If a custom comparator still can&#39;t distinguish between two items, then they will be sorted based
+on their index using the built-in comparator.</p>
 <p>Finally, in an attempt to simplify things, if a predicate returns an object as the extracted
 value for an item, <code>orderBy</code> will try to convert that object to a primitive value, before passing
 it to the comparator. The following rules govern the conversion:</p>
@@ -89,11 +94,12 @@ locale-insensitive way.</li>
 </li>
 </ol>
 <p><strong>Note:</strong> If you notice numbers not being sorted as expected, make sure they are actually being
-          saved as numbers and not strings.</p>
+          saved as numbers and not strings.
+<strong>Note:</strong> For the purpose of sorting, <code>null</code> values are treated as the string <code>&#39;null&#39;</code> (i.e.
+          <code>type: &#39;string&#39;</code>, <code>value: &#39;null&#39;</code>). This may cause unexpected sort order relative to
+          other values.</p>
 
 </div>
-
-
 
 
 
@@ -102,7 +108,7 @@ locale-insensitive way.</li>
   
 
   
-  <h2>Usage</h2>
+  <h2 id="usage">Usage</h2>
   <h3>In HTML Template Binding</h3>
   
     <pre><code>{{ orderBy_expression | orderBy : expression : reverse : comparator}}</code></pre>
@@ -113,7 +119,7 @@ locale-insensitive way.</li>
 
   
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="orderBy-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -157,7 +163,7 @@ locale-insensitive way.</li>
 <ul>
 <li><code>Function</code>: A getter function. This function will be called with each item as argument and
 the return value will be used for sorting.</li>
-<li><code>string</code>: An Angular expression. This expression will be evaluated against each item and the
+<li><code>string</code>: An AngularJS expression. This expression will be evaluated against each item and the
 result will be used for sorting. For example, use <code>&#39;label&#39;</code> to sort by a property called
 <code>label</code> or <code>&#39;label.substring(0, 3)&#39;</code> to sort by the first 3 characters of the <code>label</code>
 property.<br />
@@ -214,7 +220,7 @@ relative order of two items, the next predicate is used as a tie-breaker.</li>
 
 </section>
   
-  <h3>Returns</h3>
+  <h3 id="orderBy-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-array">Array</a></td>
@@ -227,7 +233,7 @@ relative order of two items, the next predicate is used as a tie-breaker.</li>
 
 
   
-  <h2 id="example">Example</h2><h3 id="ordering-a-table-with-ngrepeat-">Ordering a table with <code>ngRepeat</code></h3>
+  <h2 id="examples">Examples</h2><h3 id="ordering-a-table-with-ngrepeat-">Ordering a table with <code>ngRepeat</code></h3>
 <p>The example below demonstrates a simple <a href="api/ng/directive/ngRepeat">ngRepeat</a>, where the data is sorted by
 age in descending order (expression is set to <code>&#39;-age&#39;</code>). The <code>comparator</code> is not set, which means
 it defaults to the built-in comparator.</p>

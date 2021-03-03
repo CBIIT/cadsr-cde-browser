@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/interpolate.js?message=docs($interpolate)%3A%20describe%20your%20change...#L141' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/interpolate.js?message=docs($interpolate)%3A%20describe%20your%20change...#L124' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/interpolate.js#L141' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/interpolate.js#L124' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,14 +23,17 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Compiles a string with markup into an interpolation function. This service is used by the
 HTML <a href="api/ng/service/$compile">$compile</a> service for data binding. See
 <a href="api/ng/provider/$interpolateProvider">$interpolateProvider</a> for configuring the
 interpolation markup.</p>
 <pre><code class="lang-js">var $interpolate = ...; // injected
 var exp = $interpolate(&#39;Hello {{name | uppercase}}!&#39;);
-expect(exp({name:&#39;Angular&#39;})).toEqual(&#39;Hello ANGULAR!&#39;);
+expect(exp({name:&#39;AngularJS&#39;})).toEqual(&#39;Hello ANGULAR!&#39;);
 </code></pre>
 <p><code>$interpolate</code> takes an optional fourth argument, <code>allOrNothing</code>. If <code>allOrNothing</code> is
 <code>true</code>, the interpolation function will return <code>undefined</code> unless all embedded expressions
@@ -45,8 +48,8 @@ expect(exp(context)).toEqual(&#39;Hello !&#39;);
 // &quot;allOrNothing&quot; mode
 exp = $interpolate(&#39;{{greeting}} {{name}}!&#39;, false, null, true);
 expect(exp(context)).toBeUndefined();
-context.name = &#39;Angular&#39;;
-expect(exp(context)).toEqual(&#39;Hello Angular!&#39;);
+context.name = &#39;AngularJS&#39;;
+expect(exp(context)).toEqual(&#39;Hello AngularJS!&#39;);
 </code></pre>
 <p><code>allOrNothing</code> is useful for interpolating URLs. <code>ngSrc</code> and <code>ngSrcset</code> use this behavior.</p>
 <h4 id="escaped-interpolation">Escaped Interpolation</h4>
@@ -100,7 +103,7 @@ when otherwise untrusted data is used by a directive.</p>
   <p>It is currently not possible for an interpolated expression to contain the interpolation end
 symbol. For example, <code>{{ &#39;}}&#39; }}</code> will be incorrectly interpreted as <code>{{ &#39; }}</code> + <code>&#39; }}</code>, i.e.
 an interpolated expression consisting of a single-quote (<code>&#39;</code>) and the <code>&#39; }}</code> string.</p>
-  <hr>
+
 </div>
 <div class="known-issue">
   <p>All directives and components must use the standard <code>{{</code> <code>}}</code> interpolation symbols
@@ -115,10 +118,8 @@ code snippet the closing braces of the literal object will get incorrectly denor
 <pre><code>&lt;div data-context=&#39;{&quot;context&quot;:{&quot;id&quot;:3,&quot;type&quot;:&quot;page&quot;} }&quot;&gt;
 </code></pre>
 <p>See <a href="https://github.com/angular/angular.js/pull/14610#issuecomment-219401099">https://github.com/angular/angular.js/pull/14610#issuecomment-219401099</a> for more information.</p>
-  
+
 </div>
-
-
 
 
 <div>
@@ -140,7 +141,7 @@ code snippet the closing braces of the literal object will get incorrectly denor
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="$interpolate-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -227,7 +228,7 @@ code snippet the closing braces of the literal object will get incorrectly denor
 
 </section>
     
-    <h3>Returns</h3>
+    <h3 id="$interpolate-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-function">function(context)</a></td>
@@ -241,16 +242,18 @@ code snippet the closing braces of the literal object will get incorrectly denor
 </table>
 
   
-<h2>Methods</h2>
+<h2 id="$interpolate-methods">Methods</h2>
 <ul class="methods">
-  <li id="startSymbol">
-    <h3><p><code>startSymbol();</code></p>
+  <li>
+    <h3 id="startSymbol"><p><code>startSymbol();</code></p>
 
 </h3>
     <div><p>Symbol to denote the start of expression in the interpolated string. Defaults to <code>{{</code>.</p>
 <p>Use <a href="api/ng/provider/$interpolateProvider#startSymbol"><code>$interpolateProvider.startSymbol</code></a> to change
 the symbol.</p>
 </div>
+
+    
 
     
 
@@ -265,18 +268,18 @@ the symbol.</p>
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   
-  <li id="endSymbol">
-    <h3><p><code>endSymbol();</code></p>
+  <li>
+    <h3 id="endSymbol"><p><code>endSymbol();</code></p>
 
 </h3>
     <div><p>Symbol to denote the end of expression in the interpolated string. Defaults to <code>}}</code>.</p>
 <p>Use <a href="api/ng/provider/$interpolateProvider#endSymbol"><code>$interpolateProvider.endSymbol</code></a> to change
 the symbol.</p>
 </div>
+
+    
 
     
 
@@ -291,9 +294,7 @@ the symbol.</p>
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   </ul>
   
   

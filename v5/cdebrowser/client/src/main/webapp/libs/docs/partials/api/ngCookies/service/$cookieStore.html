@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngCookies/cookieStore.js?message=docs($cookieStore)%3A%20describe%20your%20change...#L4' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngCookies/cookieStore.js?message=docs($cookieStore)%3A%20describe%20your%20change...#L4' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ngCookies/cookieStore.js#L4' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ngCookies/cookieStore.js#L4' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -21,18 +21,25 @@
 
 
 
+<div class="alert alert-danger deprecation">
+  <div class="title"><strong>Deprecated:</strong>
+    <span class="since">(since v1.4.0) </span>
+    
+  </div>
+  <p>Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a> service instead.</p>
+
+</div>
+
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Provides a key-value (string-object) storage, that is backed by session cookies.
 Objects put or retrieved from this storage are automatically serialized or
-deserialized by angular&#39;s toJson/fromJson.</p>
+deserialized by AngularJS&#39;s <code>toJson</code>/<code>fromJson</code>.</p>
 <p>Requires the <a href="api/ngCookies"><code>ngCookies</code></a> module to be installed.</p>
-<div class="alert alert-danger">
-<strong>Note:</strong> The $cookieStore service is <strong>deprecated</strong>.
-Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a> service instead.
-</div>
-</div>
 
-
+</div>
 
 
 
@@ -50,14 +57,16 @@ Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a
   
 
   
-<h2>Methods</h2>
+<h2 id="$cookieStore-methods">Methods</h2>
 <ul class="methods">
-  <li id="get">
-    <h3><p><code>get(key);</code></p>
+  <li>
+    <h3 id="get"><p><code>get(key);</code></p>
 
 </h3>
     <div><p>Returns the value of given cookie key</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -104,16 +113,16 @@ Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   
-  <li id="put">
-    <h3><p><code>put(key, value);</code></p>
+  <li>
+    <h3 id="put"><p><code>put(key, value);</code></p>
 
 </h3>
     <div><p>Sets a value for given cookie key</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -167,16 +176,16 @@ Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a
 
     
 
-    
-
-  </li>
+    </li>
   
-  <li id="remove">
-    <h3><p><code>remove(key);</code></p>
+  <li>
+    <h3 id="remove"><p><code>remove(key);</code></p>
 
 </h3>
     <div><p>Remove given cookie</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -214,9 +223,7 @@ Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a
 
     
 
-    
-
-  </li>
+    </li>
   </ul>
   
   
@@ -224,7 +231,7 @@ Please use the <a href="api/ngCookies/service/$cookies"><code>$cookies</code></a
 
 
   
-  <h2 id="example">Example</h2><pre><code class="lang-js">angular.module(&#39;cookieStoreExample&#39;, [&#39;ngCookies&#39;])
+  <h2 id="examples">Example</h2><pre><code class="lang-js">angular.module(&#39;cookieStoreExample&#39;, [&#39;ngCookies&#39;])
 .controller(&#39;ExampleController&#39;, [&#39;$cookieStore&#39;, function($cookieStore) {
   // Put cookie
   $cookieStore.put(&#39;myFavorite&#39;,&#39;oatmeal&#39;);

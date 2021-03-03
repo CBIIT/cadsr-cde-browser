@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/auto/injector.js?message=docs($provide)%3A%20describe%20your%20change...#L325' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/auto/injector.js?message=docs($provide)%3A%20describe%20your%20change...#L381' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/auto/injector.js#L325' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/auto/injector.js#L381' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -21,11 +21,14 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>The <a href="api/auto/service/$provide">$provide</a> service has a number of methods for registering components
 with the <a href="api/auto/service/$injector">$injector</a>. Many of these functions are also exposed on
 <a href="api/ng/type/angular.Module"><code>angular.Module</code></a>.</p>
-<p>An Angular <strong>service</strong> is a singleton object created by a <strong>service factory</strong>.  These <strong>service
+<p>An AngularJS <strong>service</strong> is a singleton object created by a <strong>service factory</strong>.  These <strong>service
 factories</strong> are functions which, in turn, are created by a <strong>service provider</strong>.
 The <strong>service providers</strong> are constructor functions. When instantiated they must contain a
 property called <code>$get</code>, which holds the <strong>service factory</strong> function.</p>
@@ -59,8 +62,6 @@ services without specifying a provider.</p>
 
 
 
-
-
 <div>
   
 
@@ -69,10 +70,10 @@ services without specifying a provider.</p>
   
 
   
-<h2>Methods</h2>
+<h2 id="$provide-methods">Methods</h2>
 <ul class="methods">
-  <li id="provider">
-    <h3><p><code>provider(name, provider);</code></p>
+  <li>
+    <h3 id="provider"><p><code>provider(name, provider);</code></p>
 
 </h3>
     <div><p>Register a <strong>provider function</strong> with the <a href="api/auto/service/$injector">$injector</a>. Provider functions
@@ -87,7 +88,11 @@ method, or how that service will act. For example, the <a href="api/ng/provider/
 method <a href="api/ng/provider/$logProvider#debugEnabled">debugEnabled</a>
 which lets you specify whether the <a href="api/ng/service/$log">$log</a> service will log debug messages to the
 console or not.</p>
+<p>It is possible to inject other providers into the provider function,
+but the injected provider must have been defined before the one that requires it.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -158,11 +163,69 @@ console or not.</p>
   </tr>
 </table>
     
+    <h4 id="$provide.provider-examples">Example</h4><p>The following example shows how to create a simple event tracking service and register it using
+<a href="api/auto/service/$provide#provider">$provide.provider()</a>.</p>
+<pre><code class="lang-js">// Define the eventTracker provider
+function EventTrackerProvider() {
+  var trackingUrl = &#39;/track&#39;;
 
-  </li>
+  // A provider method for configuring where the tracked events should been saved
+  this.setTrackingUrl = function(url) {
+    trackingUrl = url;
+  };
+
+  // The service factory function
+  this.$get = [&#39;$http&#39;, function($http) {
+    var trackedEvents = {};
+    return {
+      // Call this to track an event
+      event: function(event) {
+        var count = trackedEvents[event] || 0;
+        count += 1;
+        trackedEvents[event] = count;
+        return count;
+      },
+      // Call this to save the tracked events to the trackingUrl
+      save: function() {
+        $http.post(trackingUrl, trackedEvents);
+      }
+    };
+  }];
+}
+
+describe(&#39;eventTracker&#39;, function() {
+  var postSpy;
+
+  beforeEach(module(function($provide) {
+    // Register the eventTracker provider
+    $provide.provider(&#39;eventTracker&#39;, EventTrackerProvider);
+  }));
+
+  beforeEach(module(function(eventTrackerProvider) {
+    // Configure eventTracker provider
+    eventTrackerProvider.setTrackingUrl(&#39;/custom-track&#39;);
+  }));
+
+  it(&#39;tracks events&#39;, inject(function(eventTracker) {
+    expect(eventTracker.event(&#39;login&#39;)).toEqual(1);
+    expect(eventTracker.event(&#39;login&#39;)).toEqual(2);
+  }));
+
+  it(&#39;saves to the tracking url&#39;, inject(function(eventTracker, $http) {
+    postSpy = spyOn($http, &#39;post&#39;);
+    eventTracker.event(&#39;login&#39;);
+    eventTracker.save();
+    expect(postSpy).toHaveBeenCalled();
+    expect(postSpy.mostRecentCall.args[0]).not.toEqual(&#39;/track&#39;);
+    expect(postSpy.mostRecentCall.args[0]).toEqual(&#39;/custom-track&#39;);
+    expect(postSpy.mostRecentCall.args[1]).toEqual({ &#39;login&#39;: 1 });
+  }));
+});
+</code></pre>
+</li>
   
-  <li id="factory">
-    <h3><p><code>factory(name, $getFn);</code></p>
+  <li>
+    <h3 id="factory"><p><code>factory(name, $getFn);</code></p>
 
 </h3>
     <div><p>Register a <strong>service factory</strong>, which will be called to return the service instance.
@@ -171,6 +234,8 @@ which is the given service factory function.
 You should use <a href="api/auto/service/$provide#factory">$provide.factory(getFn)</a> if you do not need to
 configure your service in a provider.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -235,11 +300,22 @@ configure your service in a provider.</p>
   </tr>
 </table>
     
-
-  </li>
+    <h4 id="$provide.factory-examples">Example</h4><p>Here is an example of registering a service</p>
+<pre><code class="lang-js">$provide.factory(&#39;ping&#39;, [&#39;$http&#39;, function($http) {
+  return function ping() {
+    return $http.send(&#39;/ping&#39;);
+  };
+}]);
+</code></pre>
+<p>You would then inject and use this service like this:</p>
+<pre><code class="lang-js">someModule.controller(&#39;Ctrl&#39;, [&#39;ping&#39;, function(ping) {
+  ping();
+}]);
+</code></pre>
+</li>
   
-  <li id="service">
-    <h3><p><code>service(name, constructor);</code></p>
+  <li>
+    <h3 id="service"><p><code>service(name, constructor);</code></p>
 
 </h3>
     <div><p>Register a <strong>service constructor</strong>, which will be invoked with <code>new</code> to create the service
@@ -257,6 +333,8 @@ function.</p>
 <p>You should use <a href="api/auto/service/$provide#service">$provide.service(class)</a> if you define your service
 as a type/class.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -321,11 +399,28 @@ as a type/class.</p>
   </tr>
 </table>
     
+    <h4 id="$provide.service-examples">Example</h4><p>Here is an example of registering a service using
+<a href="api/auto/service/$provide#service">$provide.service(class)</a>.</p>
+<pre><code class="lang-js">var Ping = function($http) {
+  this.$http = $http;
+};
 
-  </li>
+Ping.$inject = [&#39;$http&#39;];
+
+Ping.prototype.send = function() {
+  return this.$http.get(&#39;/ping&#39;);
+};
+$provide.service(&#39;ping&#39;, Ping);
+</code></pre>
+<p>You would then inject and use this service like this:</p>
+<pre><code class="lang-js">someModule.controller(&#39;Ctrl&#39;, [&#39;ping&#39;, function(ping) {
+  ping.send();
+}]);
+</code></pre>
+</li>
   
-  <li id="value">
-    <h3><p><code>value(name, value);</code></p>
+  <li>
+    <h3 id="value"><p><code>value(name, value);</code></p>
 
 </h3>
     <div><p>Register a <strong>value service</strong> with the <a href="api/auto/service/$injector">$injector</a>, such as a string, a
@@ -334,8 +429,10 @@ provider&#39;s <code>$get</code> property is a factory function that takes no ar
 service</strong>. That also means it is not possible to inject other services into a value service.</p>
 <p>Value services are similar to constant services, except that they cannot be injected into a
 module configuration function (see <a href="api/ng/type/angular.Module#config"><code>angular.Module</code></a>) but they can be overridden by
-an Angular <a href="api/auto/service/$provide#decorator">decorator</a>.</p>
+an AngularJS <a href="api/auto/service/$provide#decorator">decorator</a>.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -399,11 +496,19 @@ an Angular <a href="api/auto/service/$provide#decorator">decorator</a>.</p>
   </tr>
 </table>
     
+    <h4 id="$provide.value-examples">Example</h4><p>Here are some examples of creating value services.</p>
+<pre><code class="lang-js">$provide.value(&#39;ADMIN_USER&#39;, &#39;admin&#39;);
 
-  </li>
+$provide.value(&#39;RoleLookup&#39;, { admin: 0, writer: 1, reader: 2 });
+
+$provide.value(&#39;halfOf&#39;, function(value) {
+  return value / 2;
+});
+</code></pre>
+</li>
   
-  <li id="constant">
-    <h3><p><code>constant(name, value);</code></p>
+  <li>
+    <h3 id="constant"><p><code>constant(name, value);</code></p>
 
 </h3>
     <div><p>Register a <strong>constant service</strong> with the <a href="api/auto/service/$injector">$injector</a>, such as a string,
@@ -411,8 +516,10 @@ a number, an array, an object or a function. Like the <a href="api/auto/service/
 possible to inject other services into a constant.</p>
 <p>But unlike <a href="api/auto/service/$provide#value">value</a>, a constant can be
 injected into a module configuration function (see <a href="api/ng/type/angular.Module#config"><code>angular.Module</code></a>) and it cannot
-be overridden by an Angular <a href="api/auto/service/$provide#decorator">decorator</a>.</p>
+be overridden by an AngularJS <a href="api/auto/service/$provide#decorator">decorator</a>.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -476,11 +583,19 @@ be overridden by an Angular <a href="api/auto/service/$provide#decorator">decora
   </tr>
 </table>
     
+    <h4 id="$provide.constant-examples">Example</h4><p>Here a some examples of creating constants:</p>
+<pre><code class="lang-js">$provide.constant(&#39;SHARD_HEIGHT&#39;, 306);
 
-  </li>
+$provide.constant(&#39;MY_COLOURS&#39;, [&#39;red&#39;, &#39;blue&#39;, &#39;grey&#39;]);
+
+$provide.constant(&#39;double&#39;, function(value) {
+  return value * 2;
+});
+</code></pre>
+</li>
   
-  <li id="decorator">
-    <h3><p><code>decorator(name, decorator);</code></p>
+  <li>
+    <h3 id="decorator"><p><code>decorator(name, decorator);</code></p>
 
 </h3>
     <div><p>Register a <strong>decorator function</strong> with the <a href="api/auto/service/$injector">$injector</a>. A decorator function
@@ -489,6 +604,8 @@ service. The return value of the decorator function may be the original service,
 that replaces (or wraps and delegates to) the original service.</p>
 <p>You can find out more about using decorators in the <a href="guide/decorators">decorators</a> guide.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -550,8 +667,14 @@ decorated or delegated to.</li>
     
 
     
-
-  </li>
+    <h4 id="$provide.decorator-examples">Example</h4><p>Here we decorate the <a href="api/ng/service/$log">$log</a> service to convert warnings to errors by intercepting
+calls to <a href="api/ng/service/$log#error">$log.warn()</a>.</p>
+<pre><code class="lang-js">$provide.decorator(&#39;$log&#39;, [&#39;$delegate&#39;, function($delegate) {
+  $delegate.warn = $delegate.error;
+  return $delegate;
+}]);
+</code></pre>
+</li>
   </ul>
   
   

@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/directive/ngInit.js?message=docs(ngInit)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/directive/ngInit.js?message=docs(ngInit)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/directive/ngInit.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/directive/ngInit.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,15 +19,24 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>The <code>ngInit</code> directive allows you to evaluate an expression in the
 current scope.</p>
 <div class="alert alert-danger">
 This directive can be abused to add unnecessary amounts of logic into your templates.
-There are only a few appropriate uses of <code>ngInit</code>, such as for aliasing special properties of
-<a href="api/ng/directive/ngRepeat"><code>ngRepeat</code></a>, as seen in the demo below; and for injecting data via
-server side scripting. Besides these few cases, you should use <a href="guide/controller">controllers</a>
-rather than <code>ngInit</code> to initialize values on a scope.
+There are only a few appropriate uses of <code>ngInit</code>:
+<ul>
+  <li>aliasing special properties of <a href="api/ng/directive/ngRepeat"><code>ngRepeat</code></a>,
+    as seen in the demo below.</li>
+  <li>initializing data during development, or for examples, as seen throughout these docs.</li>
+  <li>injecting data via server side scripting.</li>
+</ul>
+
+Besides these few cases, you should use <a href="guide/component">Components</a> or
+<a href="guide/controller">Controllers</a> rather than <code>ngInit</code> to initialize values on a scope.
 </div>
 
 <div class="alert alert-warning">
@@ -42,13 +51,11 @@ sure you have parentheses to ensure correct operator precedence:
 
 
 
-
-
 <div>
   
 
   
-  <h2>Directive Info</h2>
+  <h2 id="ngInit-info">Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 450.</li>
@@ -60,6 +67,9 @@ sure you have parentheses to ensure correct operator precedence:
   <div class="usage">
   
     <ul>
+    
+
+    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-init=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -70,7 +80,7 @@ sure you have parentheses to ensure correct operator precedence:
   </div>
   
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="ngInit-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -104,9 +114,8 @@ sure you have parentheses to ensure correct operator precedence:
 </section>
   
 
-
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
   <plnkr-opener example-path="examples/example-ng-init"></plnkr-opener>

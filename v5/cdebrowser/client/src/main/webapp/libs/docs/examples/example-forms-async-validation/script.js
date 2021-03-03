@@ -2,7 +2,7 @@
   'use strict';
 var app = angular.module('form-example1', []);
 
-var INTEGER_REGEXP = /^\-?\d+$/;
+var INTEGER_REGEXP = /^-?\d+$/;
 app.directive('integer', function() {
   return {
     require: 'ngModel',
@@ -35,7 +35,7 @@ app.directive('username', function($q, $timeout) {
 
         if (ctrl.$isEmpty(modelValue)) {
           // consider empty model valid
-          return $q.when();
+          return $q.resolve();
         }
 
         var def = $q.defer();

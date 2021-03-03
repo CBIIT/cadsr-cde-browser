@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ng/compile.js?message=docs($compile.directive.Attributes)%3A%20describe%20your%20change...#L3528' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ng/compile.js?message=docs($compile.directive.Attributes)%3A%20describe%20your%20change...#L3679' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.5.9/src/ng/compile.js#L3528' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.6.9/src/ng/compile.js#L3679' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,16 +19,17 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>A shared object between directive compile / linking functions which contains normalized DOM
 element attributes. The values reflect current binding state <code>{{ }}</code>. The normalization is
-needed since all of these are treated as equivalent in Angular:</p>
+needed since all of these are treated as equivalent in AngularJS:</p>
 <pre><code>&lt;span ng:bind=&quot;a&quot; ng-bind=&quot;a&quot; data-ng-bind=&quot;a&quot; x-ng-bind=&quot;a&quot;&gt;
 </code></pre>
 
 </div>
-
-
 
 
 
@@ -41,10 +42,10 @@ needed since all of these are treated as equivalent in Angular:</p>
   
 
   
-<h2>Methods</h2>
+<h2 id="$compile.directive.Attributes-methods">Methods</h2>
 <ul class="methods">
-  <li id="$normalize">
-    <h3><p><code>$normalize(name);</code></p>
+  <li>
+    <h3 id="$normalize"><p><code>$normalize(name);</code></p>
 
 </h3>
     <div><p>Converts an attribute name (e.g. dash/colon/underscore-delimited string, optionally prefixed with <code>x-</code> or
@@ -52,6 +53,8 @@ needed since all of these are treated as equivalent in Angular:</p>
 <p>Also there is special case for Moz prefix starting with upper case letter.</p>
 <p>For further information check out the guide on <a href="guide/directive#matching-directives">Matching Directives</a></p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -89,17 +92,17 @@ needed since all of these are treated as equivalent in Angular:</p>
 
     
 
-    
-
-  </li>
+    </li>
   
-  <li id="$addClass">
-    <h3><p><code>$addClass(classVal);</code></p>
+  <li>
+    <h3 id="$addClass"><p><code>$addClass(classVal);</code></p>
 
 </h3>
     <div><p>Adds the CSS class value specified by the classVal parameter to the element. If animations
 are enabled then an animation will be triggered for the class addition.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -137,17 +140,17 @@ are enabled then an animation will be triggered for the class addition.</p>
 
     
 
-    
-
-  </li>
+    </li>
   
-  <li id="$removeClass">
-    <h3><p><code>$removeClass(classVal);</code></p>
+  <li>
+    <h3 id="$removeClass"><p><code>$removeClass(classVal);</code></p>
 
 </h3>
     <div><p>Removes the CSS class value specified by the classVal parameter from the element. If
 animations are enabled then an animation will be triggered for the class removal.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -185,17 +188,17 @@ animations are enabled then an animation will be triggered for the class removal
 
     
 
-    
-
-  </li>
+    </li>
   
-  <li id="$updateClass">
-    <h3><p><code>$updateClass(newClasses, oldClasses);</code></p>
+  <li>
+    <h3 id="$updateClass"><p><code>$updateClass(newClasses, oldClasses);</code></p>
 
 </h3>
     <div><p>Adds and removes the appropriate CSS class values to the element based on the difference
 between the new and old CSS class values (specified as newClasses and oldClasses).</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -249,12 +252,10 @@ between the new and old CSS class values (specified as newClasses and oldClasses
 
     
 
-    
-
-  </li>
+    </li>
   
-  <li id="$observe">
-    <h3><p><code>$observe(key, fn);</code></p>
+  <li>
+    <h3 id="$observe"><p><code>$observe(key, fn);</code></p>
 
 </h3>
     <div><p>Observes an interpolated attribute.</p>
@@ -262,6 +263,8 @@ between the new and old CSS class values (specified as newClasses and oldClasses
 compilation. The observer is then invoked whenever the interpolated value
 changes.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -327,16 +330,16 @@ changes.</p>
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   
-  <li id="$set">
-    <h3><p><code>$set(name, value);</code></p>
+  <li>
+    <h3 id="$set"><p><code>$set(name, value);</code></p>
 
 </h3>
     <div><p>Set DOM element attribute value.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -392,16 +395,14 @@ changes.</p>
 
     
 
-    
-
-  </li>
+    </li>
   </ul>
   
   
-<h2>Properties</h2>
+<h2 id="$compile.directive.Attributes-properties">Properties</h2>
 <ul class="properties">
-  <li id="$attr">
-    <h3><code>$attr</code></h3>
+  <li>
+    <h3 id="$attr"><code>$attr</code></h3>
     <table class="variables-matrix return-arguments">
   <tr>
     <td></td>
@@ -410,6 +411,7 @@ needed to do reverse lookup from normalized name back to actual name.</p>
 </td>
   </tr>
 </table>
+    
   </li>
   </ul>
 

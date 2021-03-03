@@ -1,11 +1,13 @@
-<a href='https://github.com/angular/angular.js/edit/v1.5.x/src/ngTouch/touch.js?message=docs(ngTouch)%3A%20describe%20your%20change...#L5' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.6.x/src/ngTouch/touch.js?message=docs(ngTouch)%3A%20describe%20your%20change...#L5' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>
   <code>ngTouch</code>
 </h1>
 
-<h2>Installation</h2>
+
+
+<h2 id="module-installation">Installation</h2>
 
 
   <p>First, get the file:</p>
@@ -16,7 +18,9 @@
     </li>
     <li>
       <a href="https://www.npmjs.com/">NPM</a> e.g.
-      <pre><code>npm install angular-touch@X.Y.Z</code></pre>
+      <pre><code>npm install --save angular-touch@X.Y.Z</code></pre>
+      or
+      <pre><code>yarn add angular-touch@X.Y.Z</code></pre>
     </li>
     <li>
       <a href="http://bower.io">Bower</a> e.g.
@@ -40,19 +44,18 @@
   <p>With that you&apos;re ready to get started!</p>
 
 
-<h1 id="ngtouch">ngTouch</h1>
-<p>The <code>ngTouch</code> module provides touch events and other helpers for touch-enabled devices.
+<p>The <code>ngTouch</code> module provides helpers for touch-enabled devices.
 The implementation is based on jQuery Mobile touch event handling
-(<a href="http://jquerymobile.com/">jquerymobile.com</a>).</p>
+(<a href="http://jquerymobile.com/">jquerymobile.com</a>). *</p>
 <p>See <a href="api/ngTouch/service/$swipe"><code>$swipe</code></a> for usage.</p>
-<div doc-module-components="ngTouch"></div>
+
 
 
 
 
 
 <div class="component-breakdown">
-  <h2>Module Components</h2>
+  <h2 id="module-components">Module Components</h2>
   
   <div>
     <h3 class="component-heading" id="directive">Directive</h3>
@@ -64,15 +67,7 @@ The implementation is based on jQuery Mobile touch event handling
       
       <tr>
         <td><a href="api/ngTouch/directive/ngClick">ngClick</a></td>
-        <td><p><div class="alert alert-danger">
-<strong>DEPRECATION NOTICE</strong>: Beginning with Angular 1.5, this directive is deprecated and by default <strong>disabled</strong>.
-The directive will receive no further support and might be removed from future releases.
-If you need the directive, you can enable it with the <a href="api/ngTouch/provider/$touchProvider">$touchProvider#ngClickOverrideEnabled</a>
-function. We also recommend that you migrate to <a href="https://github.com/ftlabs/fastclick">FastClick</a>.
-To learn more about the 300ms delay, this <a href="http://developer.telerik.com/featured/300-ms-click-delay-ios-8/">Telerik article</a>
-gives a good overview.
-</div>
-A more powerful replacement for the default ngClick designed to be used on touchscreen
+        <td><p>A more powerful replacement for the default ngClick designed to be used on touchscreen
 devices. Most mobile browsers wait about 300ms after a tap-and-release before sending
 the click event. This version handles them immediately, and then prevents the
 following click event from propagating.</p>
