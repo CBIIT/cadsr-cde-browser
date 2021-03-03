@@ -208,8 +208,8 @@ angular.module("cdeBrowserApp").service('cartService', function($sessionStorage,
 			that.statusMessage = '';
 
 		}).catch(function(response, status) {
-			response=response['data'];
 			status=response['status'];
+			response=response['data'];
 			that.disableSaveButton = false;
 			that.disableDeleteButton = false;
 
