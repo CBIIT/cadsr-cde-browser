@@ -223,7 +223,7 @@ public class LookupDataControllerTest
 		MvcResult result = mockMvc.perform(get("/lookupdata/classificationscheme").param("contextIdSeq", contextIdSeq).param("csOrCsCsi", ""))
 				//.andDo(print())
 				.andExpect(status().isOk()).andReturn();
-
+		//TODO: Fix this commented block for this test
 		/*Object responseObj = result.getModelAndView().getModel().get("classificationSchemeList");
 		Assert.notNull(responseObj);
 		Assert.isTrue(responseObj.getClass() == java.util.ArrayList.class);
@@ -247,7 +247,7 @@ public class LookupDataControllerTest
 		MvcResult result = mockMvc.perform(get("/lookupdata/protocol").param("contextIdSeq", contextIdSeq).param("protocolOrForm", ""))
 				//.andDo(print())
 				.andExpect(status().isOk()).andReturn();
-
+		//TODO: Fix this commented block for this test
 		/*Object responseObj = result.getModelAndView().getModel().get("protocolList");
 		Assert.notNull(responseObj);
 		Assert.isTrue(responseObj.getClass() == java.util.ArrayList.class);

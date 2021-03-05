@@ -102,11 +102,18 @@ public class UserManagerDAOImpl extends AbstractDAOOperations implements UserMan
 	 * This method retrieves the jdbcUrl from context.xml via controller
 	 */
 	public void authenticateUser(String username, String password, String db_url) throws SQLException {
-	    Properties connectionProps = new Properties();
+		Connection conn = null;
+		Properties connectionProps = new Properties();
 	    connectionProps.put("user", username);
 	    connectionProps.put("password", password);		
-	    Connection conn = DriverManager.getConnection(db_url, connectionProps);
-		conn.close();
+		try {
+			conn = DriverManager.getConnection(db_url, connectionProps);
+		} catch (SQLException sqle) {
+			throw sqle;
+		} finally {
+			if (conn!=null)
+				conn.close();
+		}
 	}
 
 	@Override
