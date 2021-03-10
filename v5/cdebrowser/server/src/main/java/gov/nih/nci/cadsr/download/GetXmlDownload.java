@@ -31,7 +31,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import gov.nih.nci.cadsr.common.util.StringUtilities;
-import gov.nih.nci.cadsr.service.ClientException;
 import oracle.jdbc.OracleConnection;
 import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
 import oracle.xml.sql.query.OracleXMLQuery;
@@ -223,7 +222,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		return xmlToUpdate;
 	}
 	
-	public String getXMLString(Connection oracleConn, String sqlQuery, boolean showNull) throws Exception {
+	public String getXMLString(OracleConnection oracleConn, String sqlQuery, boolean showNull) throws Exception {
 
 		String xmlString = "";
 		OracleXMLDataSetExtJdbc dset = null;
@@ -232,6 +231,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			if (logger.isTraceEnabled()) {
 				logger.trace("Sql Stmt: " + sqlQuery);
 			}
+			if (oracleConn == null)
+				logger.debug("Oracle connection null");
 			//This is another way of creating OracleXMLQuery object; I keep it here for our information
 			dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
 			xmlQuery = new OracleXMLQuery(dset);
@@ -267,6 +268,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		} 
 		catch (Exception e) {
 			logger.error("getXMLString() error: ", e);
+			e.printStackTrace();
 			throw e;
 		} 
 		finally {
