@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
@@ -31,7 +32,8 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import gov.nih.nci.cadsr.common.util.StringUtilities;
 import gov.nih.nci.cadsr.service.ClientException;
-//import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
+import oracle.jdbc.OracleConnection;
+import oracle.xml.sql.dataset.OracleXMLDataSetExtJdbc;
 import oracle.xml.sql.query.OracleXMLQuery;
 
 public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInterface  {
@@ -93,7 +95,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		String xmlString = null;
 		String fileSuffix = "";
 		String filename = "";
-		Connection cn = null;
+		Connection nativeConn = null;
 		
 		DownloadUtils.checkInCondition(itemIds);
 		
@@ -103,9 +105,18 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			String fromStmt = String.format(stmtFormat, RAI);
 			
 			// Get Oracle Native Connection
-			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
+			nativeConn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned			
+			OracleConnection oracleConnection = null;
+			// Unwrap the connection
+			try {
+			    if (nativeConn.isWrapperFor(OracleConnection.class)) {
+			        oracleConnection = nativeConn.unwrap(OracleConnection.class);
+			    }
+			} catch (SQLException ex) {
+				logger.debug("Error in unwrapping the native oracle connection, for generating XML: " + ex.getMessage());
+			    ex.printStackTrace();
+			}
 			
-			Connection oracleConn = cn.getMetaData().getConnection();//get underlying Oracle connection
 			
 			filename = buildDownloadAbsoluteFileName(fileSuffix = generateXmlFileId());
 			
@@ -123,7 +134,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				
 				stmt = fromStmt + groupWhereInCond;
 				
-				xmlString = getXMLString(oracleConn, stmt, true);
+				xmlString = getXMLString(oracleConnection, stmt, true);
 				
 				if (groupId != lastGroupNumber) {
 					xmlString = trimClosingXmlElement(xmlString);
@@ -149,8 +160,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				bw.flush();
 				bw.close();
 			}
-			if (cn != null) {
-				releaseConnection(cn);
+			if (nativeConn != null) {
+				releaseConnection(nativeConn);
 			}
 		}
 	}
@@ -215,17 +226,21 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 	public String getXMLString(Connection oracleConn, String sqlQuery, boolean showNull) throws Exception {
 
 		String xmlString = "";
-		//OracleXMLDataSetExtJdbc dset = null;
+		OracleXMLDataSetExtJdbc dset = null;
 		OracleXMLQuery xmlQuery = null;
 		try {
 			if (logger.isTraceEnabled()) {
 				logger.trace("Sql Stmt: " + sqlQuery);
 			}
 			//This is another way of creating OracleXMLQuery object; I keep it here for our information
-			//dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
-			//xmlQuery = new OracleXMLQuery(dset);
+			dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
+			xmlQuery = new OracleXMLQuery(dset);
 			
-			xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
+			/* Doesnt work with Tomcat anymore - generates the XML with the following error message
+			 	"oracle.xml.sql.Oracle XML SQLException: getStruct MetaData: this method 
+			 	is not supported by 'Oracle XMLDataSetGen Jdbc' class. 
+			 	Please use 'OracleXMLDataSetExtJdbc' instead."  */ 
+			//xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
 			
 			//We still decide if we want to use default Date format, or to make it custom
 			//This is a format whioch we have in CDE Browser v4.0.5
@@ -255,14 +270,14 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			throw e;
 		} 
 		finally {
-//			try {
-//				if (dset != null) {
-//					dset.close();
-//				}				
-//			}
-//			catch (Exception e) {
-//				logger.debug("Error when closing OracleXMLDataSetExtJdbc: " + e.getMessage());
-//			}
+			try {
+				if (dset != null) {
+					dset.close();
+				}				
+			}
+			catch (Exception e) {
+				logger.debug("Error when closing OracleXMLDataSetExtJdbc: " + e.getMessage());
+			}
 			try {
 				if (xmlQuery != null) {
 					xmlQuery.close();
