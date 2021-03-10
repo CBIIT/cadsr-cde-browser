@@ -27,6 +27,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
 	            }).
 	            catch(function(data, status, headers, config) {
+					data = data['data'];
 	            	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
 	            });
 	        }
@@ -45,6 +46,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	                 window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadCdeCompare/" + data;
 	             }).
 	             catch(function(data, status, headers, config) {
+					 data = data['data'];
 	             	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
 	             });
 
@@ -87,6 +89,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
             }).
             catch(function(data, status, headers, config) {
             	if (status!=404) {
+					data = data['data'];
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
             	}
             	else {
@@ -107,6 +110,7 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/doc/" + id;
 	            }).
 	            catch(function(data, status, headers, config) {
+					data = data['data'];
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
 	            });
 
