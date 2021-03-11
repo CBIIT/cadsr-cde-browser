@@ -95,6 +95,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		String fileSuffix = "";
 		String filename = "";
 		Connection nativeConn = null;
+		Connection cn = null;
 		
 		DownloadUtils.checkInCondition(itemIds);
 		
@@ -104,7 +105,10 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			String fromStmt = String.format(stmtFormat, RAI);
 			
 			// Get Oracle Native Connection
-			nativeConn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned			
+			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
+			
+			//nativeConn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
+			nativeConn = cn.getMetaData().getConnection();//get underlying Oracle connection
 			OracleConnection oracleConnection = null;
 			// Unwrap the connection
 			try {
@@ -162,8 +166,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				bw.flush();
 				bw.close();
 			}
-			if (nativeConn != null) {
-				releaseConnection(nativeConn);
+			if (cn != null) {
+				releaseConnection(cn);
 			}
 		}
 	}
