@@ -109,6 +109,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			// Unwrap the connection
 			try {
 			    if (nativeConn.isWrapperFor(OracleConnection.class)) {
+			    	logger.debug("Oracle Connection Unwrap");
 			        oracleConnection = nativeConn.unwrap(OracleConnection.class);
 			    }
 			} catch (SQLException ex) {
@@ -133,6 +134,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				
 				stmt = fromStmt + groupWhereInCond;
 				
+				if (oracleConnection == null)
+					logger.debug("Oracle Connection null ***** 1");
 				xmlString = getXMLString(oracleConnection, stmt, true);
 				
 				if (groupId != lastGroupNumber) {
@@ -232,9 +235,9 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				logger.trace("Sql Stmt: " + sqlQuery);
 			}
 			if (oracleConn == null)
-				logger.debug("Oracle connection null");
+				logger.debug("Oracle Connection null ***** 2");
 			//This is another way of creating OracleXMLQuery object; I keep it here for our information
-			dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
+			dset = new OracleXMLDataSetExtJdbc((Connection) oracleConn, sqlQuery);
 			xmlQuery = new OracleXMLQuery(dset);
 			
 			/* Doesnt work with Tomcat anymore - generates the XML with the following error message
