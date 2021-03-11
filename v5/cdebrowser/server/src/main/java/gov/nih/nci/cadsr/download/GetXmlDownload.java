@@ -95,7 +95,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		String fileSuffix = "";
 		String filename = "";
 		Connection nativeConn = null;
-		Connection cn = null;
 		
 		DownloadUtils.checkInCondition(itemIds);
 		
@@ -105,15 +104,11 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			String fromStmt = String.format(stmtFormat, RAI);
 			
 			// Get Oracle Native Connection
-			cn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
-			
-			//nativeConn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned
-			nativeConn = cn.getMetaData().getConnection();//get underlying Oracle connection
+			nativeConn = getConnection();// we either get a connection, or an Exception is thrown; no null is returned			
 			OracleConnection oracleConnection = null;
 			// Unwrap the connection
 			try {
 			    if (nativeConn.isWrapperFor(OracleConnection.class)) {
-			    	logger.debug("Oracle Connection Unwrap");
 			        oracleConnection = nativeConn.unwrap(OracleConnection.class);
 			    }
 			} catch (SQLException ex) {
@@ -138,8 +133,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				
 				stmt = fromStmt + groupWhereInCond;
 				
-				if (oracleConnection == null)
-					logger.debug("Oracle Connection null ***** 1");
 				xmlString = getXMLString(oracleConnection, stmt, true);
 				
 				if (groupId != lastGroupNumber) {
@@ -166,8 +159,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 				bw.flush();
 				bw.close();
 			}
-			if (cn != null) {
-				releaseConnection(cn);
+			if (nativeConn != null) {
+				releaseConnection(nativeConn);
 			}
 		}
 	}
@@ -229,7 +222,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		return xmlToUpdate;
 	}
 	
-	public String getXMLString(OracleConnection oracleConn, String sqlQuery, boolean showNull) throws Exception {
+	public String getXMLString(Connection oracleConn, String sqlQuery, boolean showNull) throws Exception {
 
 		String xmlString = "";
 		OracleXMLDataSetExtJdbc dset = null;
@@ -238,10 +231,8 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 			if (logger.isTraceEnabled()) {
 				logger.trace("Sql Stmt: " + sqlQuery);
 			}
-			if (oracleConn == null)
-				logger.debug("Oracle Connection null ***** 2");
 			//This is another way of creating OracleXMLQuery object; I keep it here for our information
-			dset = new OracleXMLDataSetExtJdbc((Connection) oracleConn, sqlQuery);
+			dset = new OracleXMLDataSetExtJdbc(oracleConn, sqlQuery);
 			xmlQuery = new OracleXMLQuery(dset);
 			
 			/* Doesnt work with Tomcat anymore - generates the XML with the following error message
@@ -275,7 +266,6 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		} 
 		catch (Exception e) {
 			logger.error("getXMLString() error: ", e);
-			e.printStackTrace();
 			throw e;
 		} 
 		finally {
