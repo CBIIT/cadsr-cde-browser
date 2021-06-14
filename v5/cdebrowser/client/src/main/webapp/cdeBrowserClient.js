@@ -21,7 +21,6 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
     var fs = filterService // define service instance //
     $scope.filterService = fs; // set service to scope. Used to interact with view //
     $scope.fs = filterService;    
-
     // if search is for context or classification, add url parameters //
     displayURLParameters = function() {
         $scope.$watch('contextSearchFinished',function() {
@@ -1554,6 +1553,7 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $scope.publicId = $location;
         var searchObject = $location.search();
         if (($location.search().hasOwnProperty('publicId')) && ($location.search().hasOwnProperty('version'))) {
+
             var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
                 + "/cdebrowserServer/rest/CDELink?publicId=" + searchObject.publicId+"&version=" + searchObject.version;
 
@@ -1562,6 +1562,13 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
             $scope.more = false;
             $scope.getCdeDetailRestCall(dataElementServerLink);
         }
+        if ($location.search().hasOwnProperty('deIdseq')) {
+            let deIdseq = $location.search()['deIdseq'];
+            var dataElementServerLink = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port 
+                + "/cdebrowserServer/rest/CDEData?deIdseq=" + deIdseq;      
+            $scope.getCdeDetailRestCall(dataElementServerLink);
+        }
+
     };
     
     $scope.advanceSearchShow();
