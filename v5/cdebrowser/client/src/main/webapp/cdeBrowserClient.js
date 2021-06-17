@@ -579,8 +579,10 @@ angular.module("cdeBrowserApp").controller("cdeBrowserController", function ($wi
         $http.get(serverUrl).then(function (response) {
             response=response['data'];
             $scope.tabsDisabled = false;
+
             // Change to "Data Element" tab
             $scope.changeView(1, $scope.tabs[1]);
+            $location.search('deIdseq', null)
             $scope.cdeDetails = response;
 
 
