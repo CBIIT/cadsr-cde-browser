@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngMock/angular-mocks.js?message=docs($interval)%3A%20describe%20your%20change...#L412' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ngMock/angular-mocks.js?message=docs($interval)%3A%20describe%20your%20change...#L566' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ngMock/angular-mocks.js#L412' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ngMock/angular-mocks.js#L566' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -21,7 +21,10 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Mock implementation of the $interval service.</p>
 <p>Use <a href="api/ngMock/service/$interval#flush"><code>$interval.flush(millis)</code></a> to
 move forward by <code>millis</code> milliseconds and trigger any functions scheduled to run in that
@@ -35,7 +38,7 @@ time.</p>
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -46,7 +49,7 @@ time.</p>
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="$interval-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -145,7 +148,8 @@ time.</p>
 
 </section>
     
-    <h3>Returns</h3>
+
+    <h3 id="$interval-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-promise">promise</a></td>
@@ -155,14 +159,16 @@ time.</p>
 </table>
 
   
-<h2>Methods</h2>
+<h2 id="$interval-methods">Methods</h2>
 <ul class="methods">
-  <li id="cancel">
-    <h3><p><code>cancel(promise);</code></p>
+  <li>
+    <h3 id="cancel"><p><code>cancel(promise);</code></p>
 
 </h3>
     <div><p>Cancels a task associated with the <code>promise</code>.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -199,7 +205,7 @@ time.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -209,16 +215,16 @@ time.</p>
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   
-  <li id="flush">
-    <h3><p><code>flush([millis]);</code></p>
+  <li>
+    <h3 id="flush"><p><code>flush(millis);</code></p>
 
 </h3>
     <div><p>Runs interval tasks scheduled to be run in the next <code>millis</code> milliseconds.</p>
 </div>
+
+    
 
     
     <h4>Parameters</h4>
@@ -237,7 +243,7 @@ time.</p>
       <td>
         millis
         
-        <div><em>(optional)</em></div>
+        
       </td>
       <td>
         <a href="" class="label type-hint type-hint-number">number</a>
@@ -255,7 +261,7 @@ time.</p>
     
 
     
-    
+
     
     <h4>Returns</h4>
     <table class="variables-matrix return-arguments">
@@ -265,9 +271,7 @@ time.</p>
 </td>
   </tr>
 </table>
-    
-
-  </li>
+    </li>
   </ul>
   
   

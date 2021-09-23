@@ -1,4 +1,4 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngMessages/messages.js?message=docs(ngMessages)%3A%20describe%20your%20change...#L11' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ngMessages/messages.js?message=docs(ngMessages)%3A%20describe%20your%20change...#L8' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1>
@@ -6,29 +6,39 @@
 </h1>
 
 
-  <h2>Installation</h2>
 
-  <p>First include <code>angular-messages.js</code> in your HTML:</p>
+<h2 id="module-installation">Installation</h2>
 
-  <pre><code>&lt;script src=&quot;angular.js&quot;&gt;&#10;&lt;script src=&quot;angular-messages.js&quot;&gt;</code></pre>
 
-  <p>You can download this file from the following places:</p>
+  <p>First, get the file:</p>
   <ul>
     <li>
-      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
-      e.g. <code>//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-messages.js</code>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a> e.g.
+      <pre><code>&quot;//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-messages.js&quot;</code></pre>
     </li>
     <li>
-      <a href="http://bower.io">Bower</a><br>
-      e.g. <pre><code>bower install angular-messages@X.Y.Z</code></pre>
+      <a href="https://www.npmjs.com/">NPM</a> e.g.
+      <pre><code>npm install --save angular-messages@X.Y.Z</code></pre>
+      or
+      <pre><code>yarn add angular-messages@X.Y.Z</code></pre>
     </li>
     <li>
-      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
-      e.g. <pre><code>&quot;//code.angularjs.org/X.Y.Z/angular-messages.js&quot;</code></pre>
+      <a href="http://bower.io">Bower</a> e.g.
+      <pre><code>bower install angular-messages#X.Y.Z</code></pre>
+    </li>
+    <li>
+      <a href="https://code.angularjs.org/">code.angularjs.org</a>
+      (discouraged for production use) e.g.
+      <pre><code>&quot;//code.angularjs.org/X.Y.Z/angular-messages.js&quot;</code></pre>
     </li>
   </ul>
   <p>where X.Y.Z is the AngularJS version you are running.</p>
-  <p>Then load the module in your application by adding it as a dependent module:</p>
+
+  <p>Then, include <code>angular-messages.js</code> in your HTML:</p>
+
+  <pre><code>&lt;script src=&quot;path/to/angular.js&quot;&gt;&lt;/script&gt;&#10;&lt;script src=&quot;path/to/angular-messages.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+  <p>Finally, load the module in your application by adding it as a dependent module:</p>
   <pre><code>angular.module(&#39;app&#39;, [&#39;ngMessages&#39;]);</code></pre>
 
   <p>With that you&apos;re ready to get started!</p>
@@ -41,8 +51,8 @@ show and hide error messages specific to the state of an input field, the <code>
 <code>ngMessage</code> directives are designed to handle the complexity, inheritance and priority
 sequencing based on the order of how the messages are defined in the template.</p>
 <p>Currently, the ngMessages module only contains the code for the <code>ngMessages</code>, <code>ngMessagesInclude</code>
-<code>ngMessage</code> and <code>ngMessageExp</code> directives.</p>
-<h1 id="usage">Usage</h1>
+<code>ngMessage</code>, <code>ngMessageExp</code> and <code>ngMessageDefault</code> directives.</p>
+<h2 id="usage">Usage</h2>
 <p>The <code>ngMessages</code> directive allows keys in a key/value collection to be associated with a child element
 (or &#39;message&#39;) that will show or hide based on the truthiness of that key&#39;s value in the collection. A common use
 case for <code>ngMessages</code> is to display error messages for inputs using the <code>$error</code> object exposed by the
@@ -77,7 +87,7 @@ is no value present for the required field <code>myField</code> (because the key
 <p>By default, <code>ngMessages</code> will only display one message for a particular key/value collection at any time. If more
 than one message (or error) key is currently true, then which message is shown is determined by the order of messages
 in the HTML template code (messages declared first are prioritised). This mechanism means the developer does not have
-to prioritise messages using custom JavaScript code.</p>
+to prioritize messages using custom JavaScript code.</p>
 <p>Given the following error object for our example (which informs us that the field <code>myField</code> currently has both the
 <code>required</code> and <code>email</code> errors):</p>
 <pre><code class="lang-javascript">&lt;!-- keep in mind that ngModel automatically sets these error flags --&gt;
@@ -187,7 +197,7 @@ that multiple errors can be associated with a single error message:</p>
 </code></pre>
 <p>Feel free to use other structural directives such as ng-if and ng-switch to further control
 what messages are active and when. Be careful, if you place ng-message on the same element
-as these structural directives, Angular may not be able to determine if a message is active
+as these structural directives, AngularJS may not be able to determine if a message is active
 or not. Therefore it is best to place the ng-message on a child element of the structural
 directive.</p>
 <pre><code class="lang-html">&lt;div ng-messages=&quot;myForm.myEmail.$error&quot; role=&quot;alert&quot;&gt;
@@ -234,11 +244,29 @@ and leave animation is triggered for each particular element bound to the <code>
 .some-message.ng-leave {}
 .some-message.ng-leave.ng-leave-active {}
 </code></pre>
-<p><a href="api/ngAnimate">Click here</a> to learn how to use JavaScript animations or to learn more about ngAnimate.</p>
+<p><a href="api/ngAnimate">See the ngAnimate docs</a> to learn how to use JavaScript animations or to learn
+more about ngAnimate.</p>
+<h2 id="displaying-a-default-message">Displaying a default message</h2>
+<p>If the ngMessages renders no inner ngMessage directive (i.e. when none of the truthy
+keys are matched by a defined message), then it will render a default message
+using the <a href="api/ngMessages/directive/ngMessageDefault"><code>ngMessageDefault</code></a> directive.
+Note that matched messages will always take precedence over unmatched messages. That means
+the default message will not be displayed when another message is matched. This is also
+true for <code>ng-messages-multiple</code>.</p>
+<pre><code class="lang-html">&lt;div ng-messages=&quot;myForm.myField.$error&quot; role=&quot;alert&quot;&gt;
+  &lt;div ng-message=&quot;required&quot;&gt;This field is required&lt;/div&gt;
+  &lt;div ng-message=&quot;minlength&quot;&gt;This field is too short&lt;/div&gt;
+  &lt;div ng-message-default&gt;This field has an input error&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+
+
+
 
 
 <div class="component-breakdown">
-  <h2>Module Components</h2>
+  <h2 id="module-components">Module Components</h2>
   
   <div>
     <h3 class="component-heading" id="directive">Directive</h3>
@@ -277,10 +305,15 @@ of the provided key/value map that <code>ngMessages</code> listens on.</p>
       
       <tr>
         <td><a href="api/ngMessages/directive/ngMessageExp">ngMessageExp</a></td>
-        <td><p><code>ngMessageExp</code> is a directive with the purpose to show and hide a particular message.
-For <code>ngMessageExp</code> to operate, a parent <code>ngMessages</code> directive on a parent DOM element
-must be situated since it determines which messages are visible based on the state
-of the provided key/value map that <code>ngMessages</code> listens on.</p>
+        <td><p><code>ngMessageExp</code> is the same as <a href="api/ngMessages/directive/ngMessage"><code>ngMessage</code></a>, but instead of a static
+value, it accepts an expression to be evaluated for the message key.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ngMessages/directive/ngMessageDefault">ngMessageDefault</a></td>
+        <td><p><code>ngMessageDefault</code> is a directive with the purpose to show and hide a default message for
+<a href="api/ngMessages/directive/ngMessages"><code>ngMessages</code></a>, when none of provided messages matches.</p>
 </td>
       </tr>
       
@@ -288,6 +321,7 @@ of the provided key/value map that <code>ngMessages</code> listens on.</p>
   </div>
   
 </div>
+
 
 
 

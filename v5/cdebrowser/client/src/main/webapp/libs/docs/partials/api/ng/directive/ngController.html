@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/ngController.js?message=docs(ngController)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ng/directive/ngController.js?message=docs(ngController)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/ngController.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ng/directive/ngController.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,7 +19,10 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>The <code>ngController</code> directive attaches a controller class to the view. This is a key aspect of how angular
 supports the principles behind the Model-View-Controller design pattern.</p>
 <p>MVC components in angular:</p>
@@ -44,7 +47,7 @@ and executed twice.</p>
   
 
   
-  <h2>Directive Info</h2>
+  <h2 id="ngController-info">Directive Info</h2>
   <ul>
     <li>This directive creates new scope.</li>
     <li>This directive executes at priority level 500.</li>
@@ -56,6 +59,13 @@ and executed twice.</p>
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      <pre><code>&lt;ng-controller&#10;  ng-controller=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-controller&gt;</code></pre>
+      </li>
+    
+
+    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-controller=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -63,7 +73,7 @@ and executed twice.</p>
   </div>
   
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="ngController-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -90,9 +100,6 @@ and executed twice.</p>
 that on the current scope evaluates to a constructor function.</p>
 <p>The controller instance can be published into a scope property by specifying
 <code>ng-controller=&quot;as propertyName&quot;</code>.</p>
-<p>If the current <code>$controllerProvider</code> is configured to use globals (via
-<a href="api/ng/provider/$controllerProvider#allowGlobals"><code>$controllerProvider.allowGlobals()</code></a>), this may
-also be the name of a globally accessible constructor function (not recommended).</p>
 
         
       </td>
@@ -104,11 +111,10 @@ also be the name of a globally accessible constructor function (not recommended)
 </section>
   
 
-
   
-  <h2 id="example">Example</h2><p>Here is a simple form for editing user contact information. Adding, removing, clearing, and
+  <h2 id="examples">Example</h2><p>Here is a simple form for editing user contact information. Adding, removing, clearing, and
 greeting are methods declared on the controller (see source tab). These methods can
-easily be called from the angular markup. Any changes to the data are automatically reflected
+easily be called from the AngularJS markup. Any changes to the data are automatically reflected
 in the View without the need for a manual update.</p>
 <p>Two different declaration styles are included below:</p>
 <ul>
@@ -117,7 +123,7 @@ in the View without the need for a manual update.</p>
 <li>one injects <code>$scope</code> into the controller:
 <code>ng-controller=&quot;SettingsController2&quot;</code></li>
 </ul>
-<p>The second option is more common in the Angular community, and is generally used in boilerplates
+<p>The second option is more common in the AngularJS community, and is generally used in boilerplates
 and in this guide. However, there are advantages to binding properties directly to the controller
 and avoiding scope.</p>
 <ul>
@@ -132,9 +138,7 @@ inheritance masking primitives.</li>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-ngControllerAs', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ngControllerAs"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-ngControllerAs"
@@ -153,7 +157,7 @@ inheritance masking primitives.</li>
       name="app.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;controllerAsExample&#39;, [])&#10;  .controller(&#39;SettingsController1&#39;, SettingsController1);&#10;&#10;function SettingsController1() {&#10;  this.name = &quot;John Smith&quot;;&#10;  this.contacts = [&#10;    {type: &#39;phone&#39;, value: &#39;408 555 1212&#39;},&#10;    {type: &#39;email&#39;, value: &#39;john.smith@example.org&#39;} ];&#10;}&#10;&#10;SettingsController1.prototype.greet = function() {&#10;  alert(this.name);&#10;};&#10;&#10;SettingsController1.prototype.addContact = function() {&#10;  this.contacts.push({type: &#39;email&#39;, value: &#39;yourname@example.org&#39;});&#10;};&#10;&#10;SettingsController1.prototype.removeContact = function(contactToRemove) {&#10; var index = this.contacts.indexOf(contactToRemove);&#10;  this.contacts.splice(index, 1);&#10;};&#10;&#10;SettingsController1.prototype.clearContact = function(contact) {&#10;  contact.type = &#39;phone&#39;;&#10;  contact.value = &#39;&#39;;&#10;};</code></pre>
+      <pre><code>angular.module(&#39;controllerAsExample&#39;, [])&#10;  .controller(&#39;SettingsController1&#39;, SettingsController1);&#10;&#10;function SettingsController1() {&#10;  this.name = &#39;John Smith&#39;;&#10;  this.contacts = [&#10;    {type: &#39;phone&#39;, value: &#39;408 555 1212&#39;},&#10;    {type: &#39;email&#39;, value: &#39;john.smith@example.org&#39;}&#10;  ];&#10;}&#10;&#10;SettingsController1.prototype.greet = function() {&#10;  alert(this.name);&#10;};&#10;&#10;SettingsController1.prototype.addContact = function() {&#10;  this.contacts.push({type: &#39;email&#39;, value: &#39;yourname@example.org&#39;});&#10;};&#10;&#10;SettingsController1.prototype.removeContact = function(contactToRemove) {&#10; var index = this.contacts.indexOf(contactToRemove);&#10;  this.contacts.splice(index, 1);&#10;};&#10;&#10;SettingsController1.prototype.clearContact = function(contact) {&#10;  contact.type = &#39;phone&#39;;&#10;  contact.value = &#39;&#39;;&#10;};</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -174,9 +178,7 @@ inheritance masking primitives.</li>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-ngController', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ngController"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-ngController"
@@ -195,7 +197,7 @@ inheritance masking primitives.</li>
       name="app.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;controllerExample&#39;, [])&#10;  .controller(&#39;SettingsController2&#39;, [&#39;$scope&#39;, SettingsController2]);&#10;&#10;function SettingsController2($scope) {&#10;  $scope.name = &quot;John Smith&quot;;&#10;  $scope.contacts = [&#10;    {type:&#39;phone&#39;, value:&#39;408 555 1212&#39;},&#10;    {type:&#39;email&#39;, value:&#39;john.smith@example.org&#39;} ];&#10;&#10;  $scope.greet = function() {&#10;    alert($scope.name);&#10;  };&#10;&#10;  $scope.addContact = function() {&#10;    $scope.contacts.push({type:&#39;email&#39;, value:&#39;yourname@example.org&#39;});&#10;  };&#10;&#10;  $scope.removeContact = function(contactToRemove) {&#10;    var index = $scope.contacts.indexOf(contactToRemove);&#10;    $scope.contacts.splice(index, 1);&#10;  };&#10;&#10;  $scope.clearContact = function(contact) {&#10;    contact.type = &#39;phone&#39;;&#10;    contact.value = &#39;&#39;;&#10;  };&#10;}</code></pre>
+      <pre><code>angular.module(&#39;controllerExample&#39;, [])&#10;  .controller(&#39;SettingsController2&#39;, [&#39;$scope&#39;, SettingsController2]);&#10;&#10;function SettingsController2($scope) {&#10;  $scope.name = &#39;John Smith&#39;;&#10;  $scope.contacts = [&#10;    {type:&#39;phone&#39;, value:&#39;408 555 1212&#39;},&#10;    {type:&#39;email&#39;, value:&#39;john.smith@example.org&#39;}&#10;  ];&#10;&#10;  $scope.greet = function() {&#10;    alert($scope.name);&#10;  };&#10;&#10;  $scope.addContact = function() {&#10;    $scope.contacts.push({type:&#39;email&#39;, value:&#39;yourname@example.org&#39;});&#10;  };&#10;&#10;  $scope.removeContact = function(contactToRemove) {&#10;    var index = $scope.contacts.indexOf(contactToRemove);&#10;    $scope.contacts.splice(index, 1);&#10;  };&#10;&#10;  $scope.clearContact = function(contact) {&#10;    contact.type = &#39;phone&#39;;&#10;    contact.value = &#39;&#39;;&#10;  };&#10;}</code></pre>
     </div>
   
     <div class="runnable-example-file" 

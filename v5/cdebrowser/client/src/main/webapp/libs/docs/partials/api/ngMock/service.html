@@ -12,6 +12,19 @@
       </tr>
       
       <tr>
+        <td><a href="api/ngMock/service/$flushPendingTasks">$flushPendingTasks</a></td>
+        <td><p>Flushes all currently pending tasks and executes the corresponding callbacks.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ngMock/service/$verifyNoPendingTasks">$verifyNoPendingTasks</a></td>
+        <td><p>Verifies that there are no pending tasks that need to be flushed. It throws an error if there are
+still pending tasks.</p>
+</td>
+      </tr>
+      
+      <tr>
         <td><a href="api/ngMock/service/$exceptionHandler">$exceptionHandler</a></td>
         <td><p>Mock implementation of <a href="api/ng/service/$exceptionHandler"><code>$exceptionHandler</code></a> that rethrows or logs errors passed
 to it. See <a href="api/ngMock/provider/$exceptionHandlerProvider">$exceptionHandlerProvider</a> for configuration
@@ -58,6 +71,12 @@ that adds a &quot;flush&quot; and &quot;verifyNoPendingTasks&quot; methods.</p>
         <td><a href="api/ngMock/service/$controller">$controller</a></td>
         <td><p>A decorator for <a href="api/ng/service/$controller"><code>$controller</code></a> with additional <code>bindings</code> parameter, useful when testing
 controllers of directives that use <a href="api/ng/service/$compile#-bindtocontroller-"><code>bindToController</code></a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ngMock/service/$componentController">$componentController</a></td>
+        <td><p>A service that can be used to create instances of component controllers. Useful for unit-testing.</p>
 </td>
       </tr>
       

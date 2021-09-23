@@ -12,18 +12,6 @@
       </tr>
       
       <tr>
-        <td><a href="api/ng/function/angular.lowercase">angular.lowercase</a></td>
-        <td><p>Converts the specified string to lowercase.</p>
-</td>
-      </tr>
-      
-      <tr>
-        <td><a href="api/ng/function/angular.uppercase">angular.uppercase</a></td>
-        <td><p>Converts the specified string to uppercase.</p>
-</td>
-      </tr>
-      
-      <tr>
         <td><a href="api/ng/function/angular.forEach">angular.forEach</a></td>
         <td><p>Invokes the <code>iterator</code> function once for each item in <code>obj</code> collection, which can be either an
 object or an array. The <code>iterator</code> function is invoked with <code>iterator(value, key, obj)</code>, where <code>value</code>
@@ -124,7 +112,9 @@ considered to be objects. Note that JavaScript arrays are objects.</p>
       
       <tr>
         <td><a href="api/ng/function/angular.copy">angular.copy</a></td>
-        <td><p>Creates a deep copy of <code>source</code>, which should be an object or an array.</p>
+        <td><p>Creates a deep copy of <code>source</code>, which should be an object or an array. This functions is used
+internally, mostly in the change-detection code. It is not intended as an all-purpose copy
+function, and has several limitations (see below).</p>
 </td>
       </tr>
       
@@ -147,7 +137,7 @@ distinguished from <a href="http://en.wikipedia.org/wiki/Currying#Contrast_with_
       <tr>
         <td><a href="api/ng/function/angular.toJson">angular.toJson</a></td>
         <td><p>Serializes input into a JSON-formatted string. Properties with leading $$ characters will be
-stripped since angular uses this notation internally.</p>
+stripped since AngularJS uses this notation internally.</p>
 </td>
       </tr>
       
@@ -159,7 +149,7 @@ stripped since angular uses this notation internally.</p>
       
       <tr>
         <td><a href="api/ng/function/angular.bootstrap">angular.bootstrap</a></td>
-        <td><p>Use this function to manually start up angular application.</p>
+        <td><p>Use this function to manually start up AngularJS application.</p>
 </td>
       </tr>
       
@@ -167,6 +157,15 @@ stripped since angular uses this notation internally.</p>
         <td><a href="api/ng/function/angular.reloadWithDebugInfo">angular.reloadWithDebugInfo</a></td>
         <td><p>Use this function to reload the current application with debug information turned on.
 This takes precedence over a call to <code>$compileProvider.debugInfoEnabled(false)</code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ng/function/angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement">angular.UNSAFE_restoreLegacyJqLiteXHTMLReplacement</a></td>
+        <td><p>Restores the pre-1.8 behavior of jqLite that turns XHTML-like strings like
+<code>&lt;div /&gt;&lt;span /&gt;</code> to <code>&lt;div&gt;&lt;/div&gt;&lt;span&gt;&lt;/span&gt;</code> instead of <code>&lt;div&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</code>.
+The new behavior is a security fix. Thus, if you need to call this function, please try to adjust
+your code for this change and remove your use of this function as soon as possible.</p>
 </td>
       </tr>
       
@@ -185,10 +184,17 @@ dependency injection (see <a href="guide/di">dependency injection</a>).</p>
       
       <tr>
         <td><a href="api/ng/function/angular.module">angular.module</a></td>
-        <td><p>The <code>angular.module</code> is a global place for creating, registering and retrieving Angular
+        <td><p>The <code>angular.module</code> is a global place for creating, registering and retrieving AngularJS
 modules.
-All modules (angular core or 3rd party) that should be available to an application must be
+All modules (AngularJS core or 3rd party) that should be available to an application must be
 registered using this mechanism.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="api/ng/function/angular.errorHandlingConfig">angular.errorHandlingConfig</a></td>
+        <td><p>Configure several aspects of error handling in AngularJS if used as a setter or return the
+current configuration if used as a getter. The following options are supported:</p>
 </td>
       </tr>
       

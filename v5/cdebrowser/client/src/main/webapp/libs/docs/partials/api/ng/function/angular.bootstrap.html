@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/Angular.js?message=docs(angular.bootstrap)%3A%20describe%20your%20change...#L1543' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/Angular.js?message=docs(angular.bootstrap)%3A%20describe%20your%20change...#L1734' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/Angular.js#L1543' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/Angular.js#L1734' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,15 +19,28 @@
 
 
 
+
+
 <div class="api-profile-description">
-  <p>Use this function to manually start up angular application.</p>
-<p>See: <a href="guide/bootstrap">Bootstrap</a></p>
-<p>Note that Protractor based end-to-end tests cannot use this function to bootstrap manually.
-They must use <a href="api/ng/directive/ngApp">ngApp</a>.</p>
-<p>Angular will detect if it has been loaded into the browser more than once and only allow the
+  <h2 id="overview">Overview</h2>
+  <p>Use this function to manually start up AngularJS application.</p>
+<p>For more information, see the <a href="guide/bootstrap">Bootstrap guide</a>.</p>
+<p>AngularJS will detect if it has been loaded into the browser more than once and only allow the
 first loaded script to be bootstrapped and will report a warning to the browser console for
 each of the subsequent scripts. This prevents strange results in applications, where otherwise
-multiple instances of Angular try to work on the DOM.</p>
+multiple instances of AngularJS try to work on the DOM.</p>
+<div class="alert alert-warning">
+<strong>Note:</strong> Protractor based end-to-end tests cannot use this function to bootstrap manually.
+They must use <a href="api/ng/directive/ngApp">ngApp</a>.
+</div>
+
+<div class="alert alert-warning">
+<strong>Note:</strong> Do not bootstrap the app on an element with a directive that uses <a href="api/ng/service/$compile#transclusion">transclusion</a>,
+such as <a href="api/ng/directive/ngIf"><code>ngIf</code></a>, <a href="api/ng/directive/ngInclude"><code>ngInclude</code></a> and <a href="api/ngRoute/directive/ngView"><code>ngView</code></a>.
+Doing this misplaces the app <a href="api/ng/service/$rootElement"><code>$rootElement</code></a> and the app&#39;s <a href="api/auto/service/$injector">injector</a>,
+causing animations to stop working and making the injector inaccessible from outside the app.
+</div>
+
 <pre><code class="lang-html">&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;body&gt;
@@ -55,7 +68,7 @@ multiple instances of Angular try to work on the DOM.</p>
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -66,7 +79,7 @@ multiple instances of Angular try to work on the DOM.</p>
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="angular.bootstrap-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -88,7 +101,7 @@ multiple instances of Angular try to work on the DOM.</p>
         <a href="" class="label type-hint type-hint-domelement">DOMElement</a>
       </td>
       <td>
-        <p>DOM element which is the root of angular application.</p>
+        <p>DOM element which is the root of AngularJS application.</p>
 
         
       </td>
@@ -139,7 +152,8 @@ assist in finding bugs which break minified code. Defaults to <code>false</code>
 
 </section>
     
-    <h3>Returns</h3>
+
+    <h3 id="angular.bootstrap-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-auto">auto.$injector</a></td>

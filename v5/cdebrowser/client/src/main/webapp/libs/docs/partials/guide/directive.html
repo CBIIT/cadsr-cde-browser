@@ -1,11 +1,12 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/guide/directive.ngdoc?message=docs(guide%2FDirectives)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/docs/content/guide/directive.ngdoc?message=docs(guide%2FDirectives)%3A%20describe%20your%20change...' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="creating-custom-directives">Creating Custom Directives</h1>
 <div class="alert alert-warning">
 <strong>Note:</strong> this guide is targeted towards developers who are already familiar with AngularJS basics.
 If you&#39;re just getting started, we recommend the <a href="tutorial/">tutorial</a> first.
-If you&#39;re looking for the <strong>directives API</strong>, we recently moved it to <a href="api/ng/service/$compile"><code>$compile</code></a>.
+If you&#39;re looking for the <strong>directives API</strong>, you can find it in the
+<a href="api/ng/service/$compile"><code>$compile</code> API docs</a>.
 </div>
 
 
@@ -16,9 +17,9 @@ how to implement them.</p>
 name, comment or CSS class) that tell AngularJS&#39;s <strong>HTML compiler</strong> (<a href="api/ng/service/$compile"><code>$compile</code></a>)
 to attach a specified behavior to that DOM element (e.g. via event listeners), or even to transform
 the DOM element and its children.</p>
-<p>Angular comes with a set of these directives built-in, like <code>ngBind</code>, <code>ngModel</code>, and <code>ngClass</code>.
-Much like you create controllers and services, you can create your own directives for Angular to use.
-When Angular <a href="guide/bootstrap">bootstraps</a> your application, the
+<p>AngularJS comes with a set of these directives built-in, like <code>ngBind</code>, <code>ngModel</code>, and <code>ngClass</code>.
+Much like you create controllers and services, you can create your own directives for AngularJS to use.
+When AngularJS <a href="guide/bootstrap">bootstraps</a> your application, the
 <a href="guide/compiler">HTML compiler</a> traverses the DOM matching directives against the DOM elements.</p>
 <div class="alert alert-info">
 <strong>What does it mean to &quot;compile&quot; an HTML template?</strong>
@@ -31,7 +32,7 @@ mirrors the process of compiling source code in
 
 
 <h2 id="matching-directives">Matching Directives</h2>
-<p>Before we can write a directive, we need to know how Angular&#39;s <a href="guide/compiler">HTML compiler</a>
+<p>Before we can write a directive, we need to know how AngularJS&#39;s <a href="guide/compiler">HTML compiler</a>
 determines when to use a given directive.</p>
 <p>Similar to the terminology used when an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element.matches">element <strong>matches</strong> a selector</a>, we say an element <strong>matches</strong> a
 directive when the directive is part of its declaration.</p>
@@ -41,15 +42,15 @@ directive when the directive is part of its declaration.</p>
 <p>The following <code>&lt;input&gt;</code> element also <strong>matches</strong> <code>ngModel</code>:</p>
 <pre><code class="lang-html">&lt;input data-ng-model=&quot;foo&quot;&gt;
 </code></pre>
-<p>And the following <person> element <strong>matches</strong> the <code>person</code> directive:</p>
+<p>And the following <code>&lt;person&gt;</code> element <strong>matches</strong> the <code>person</code> directive:</p>
 <pre><code class="lang-html">&lt;person&gt;{{name}}&lt;/person&gt;
 </code></pre>
 <h3 id="normalization">Normalization</h3>
-<p>Angular <strong>normalizes</strong> an element&#39;s tag and attribute name to determine which elements match which
+<p>AngularJS <strong>normalizes</strong> an element&#39;s tag and attribute name to determine which elements match which
 directives. We typically refer to directives by their case-sensitive
 <a href="http://en.wikipedia.org/wiki/CamelCase">camelCase</a> <strong>normalized</strong> name (e.g. <code>ngModel</code>).
 However, since HTML is case-insensitive, we refer to directives in the DOM by lower-case
-forms, typically using <a href="http://en.wikipedia.org/wiki/Letter_case#Computers">dash-delimited</a>
+forms, typically using <a href="https://en.wikipedia.org/wiki/Letter_case#Special_case_styles">dash-delimited</a>
 attributes on DOM elements (e.g. <code>ng-model</code>).</p>
 <p>The <strong>normalization</strong> process is as follows:</p>
 <ol>
@@ -60,13 +61,12 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example10', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-bind"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example10"
-      module="docsBindExample">
+      path="examples/example-directive-bind"
+      module="docsBindExample"
+      name="directive-bind">
 
   
     <div class="runnable-example-file" 
@@ -91,7 +91,7 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example10/index.html" name="example-example10"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-bind/index.html" name="example-directive-bind"></iframe>
   </div>
 </div>
 
@@ -105,15 +105,19 @@ The other forms shown above are accepted for legacy reasons but we advise you to
 </div>
 
 <h3 id="directive-types">Directive types</h3>
-<p><code>$compile</code> can match directives based on element names, attributes, class names, as well as comments.</p>
-<p>All of the Angular-provided directives match attribute name, tag name, comments, or class name.
-The following demonstrates the various ways a directive (<code>myDir</code> in this case) can be referenced
-from within a template:</p>
+<p><code>$compile</code> can match directives based on element names (E), attributes (A), class names (C),
+and comments (M).</p>
+<p>The built-in AngularJS directives show in their documentation page which type of matching they support.</p>
+<p>The following demonstrates the various ways a directive (<code>myDir</code> in this case) that matches all
+4 types can be referenced from within a template.</p>
 <pre><code class="lang-html">&lt;my-dir&gt;&lt;/my-dir&gt;
 &lt;span my-dir=&quot;exp&quot;&gt;&lt;/span&gt;
 &lt;!-- directive: my-dir exp --&gt;
 &lt;span class=&quot;my-dir: exp;&quot;&gt;&lt;/span&gt;
 </code></pre>
+<p>A directive can specify which of the 4 matching types it supports in the
+<a href="api/ng/service/$compile#-restrict-"><code>restrict</code></a> property of the directive definition object.
+The default is <code>EA</code>.</p>
 <div class="alert alert-success">
 <strong>Best Practice:</strong> Prefer using directives via tag name and attributes over comment and class names.
 Doing so generally makes it easier to determine what directives a given element matches.
@@ -140,11 +144,6 @@ options to tell <code>$compile</code> how the directive should behave when match
 initialization work here. The function is invoked using
 <a href="api/auto/service/$injector#invoke">$injector.invoke</a> which makes it injectable just like a
 controller.</p>
-<div class="alert alert-success">
-<strong>Best Practice:</strong> Prefer using the definition object over returning a function.
-</div>
-
-
 <p>We&#39;ll go over a few common examples of directives, then dive deep into the different options
 and compilation process.</p>
 <div class="alert alert-success">
@@ -152,7 +151,7 @@ and compilation process.</p>
 directive names. For instance, if you created a <code>&lt;carousel&gt;</code> directive, it would be problematic if HTML7
 introduced the same element. A two or three letter prefix (e.g. <code>btfCarousel</code>) works well. Similarly, do
 not prefix your own directives with <code>ng</code> or they might conflict with directives included in a future
-version of Angular.
+version of AngularJS.
 </div>
 
 <p>For the following examples, we&#39;ll use the prefix <code>my</code> (e.g. <code>myCustomer</code>).</p>
@@ -164,13 +163,12 @@ several others. This is a good opportunity to use a directive to simplify your t
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example11', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-simple"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example11"
-      module="docsSimpleDirective">
+      path="examples/example-directive-simple"
+      module="docsSimpleDirective"
+      name="directive-simple">
 
   
     <div class="runnable-example-file" 
@@ -188,7 +186,7 @@ several others. This is a good opportunity to use a directive to simplify your t
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example11/index.html" name="example-example11"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-simple/index.html" name="example-directive-simple"></iframe>
   </div>
 </div>
 
@@ -211,13 +209,12 @@ using <code>templateUrl</code> instead:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example12', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-template-url"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example12"
-      module="docsTemplateUrlDirective">
+      path="examples/example-directive-template-url"
+      module="docsTemplateUrlDirective"
+      name="directive-template-url">
 
   
     <div class="runnable-example-file" 
@@ -242,14 +239,14 @@ using <code>templateUrl</code> instead:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example12/index.html" name="example-example12"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-template-url/index.html" name="example-directive-template-url"></iframe>
   </div>
 </div>
 
 
 </p>
 <p><code>templateUrl</code> can also be a function which returns the URL of an HTML template to be loaded and
-used for the directive. Angular will call the <code>templateUrl</code> function with two parameters: the
+used for the directive. AngularJS will call the <code>templateUrl</code> function with two parameters: the
 element that the directive was called on, and an <code>attr</code> object associated with that element.</p>
 <div class="alert alert-warning">
 <strong>Note:</strong> You do not currently have the ability to access scope variables from the <code>templateUrl</code>
@@ -259,20 +256,19 @@ function, since the template is requested before the scope is initialized.
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example13', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-template-url-fn"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example13"
-      module="docsTemplateUrlDirective">
+      path="examples/example-directive-template-url-fn"
+      module="docsTemplateUrlDirective"
+      name="directive-template-url-fn">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsTemplateUrlDirective&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.customer = {&#10;    name: &#39;Naomi&#39;,&#10;    address: &#39;1600 Amphitheatre&#39;&#10;  };&#10;}])&#10;.directive(&#39;myCustomer&#39;, function() {&#10;  return {&#10;    templateUrl: function(elem, attr){&#10;      return &#39;customer-&#39;+attr.type+&#39;.html&#39;;&#10;    }&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsTemplateUrlDirective&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.customer = {&#10;    name: &#39;Naomi&#39;,&#10;    address: &#39;1600 Amphitheatre&#39;&#10;  };&#10;}])&#10;.directive(&#39;myCustomer&#39;, function() {&#10;  return {&#10;    templateUrl: function(elem, attr) {&#10;      return &#39;customer-&#39; + attr.type + &#39;.html&#39;;&#10;    }&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -297,7 +293,7 @@ function, since the template is requested before the scope is initialized.
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example13/index.html" name="example-example13"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-template-url-fn/index.html" name="example-directive-template-url-fn"></iframe>
   </div>
 </div>
 
@@ -323,13 +319,12 @@ create directives that are triggered by class name, you need to use the <code>re
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example14', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-restrict"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example14"
-      module="docsRestrictDirective">
+      path="examples/example-directive-restrict"
+      module="docsRestrictDirective"
+      name="directive-restrict">
 
   
     <div class="runnable-example-file" 
@@ -354,15 +349,13 @@ create directives that are triggered by class name, you need to use the <code>re
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example14/index.html" name="example-example14"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-restrict/index.html" name="example-directive-restrict"></iframe>
   </div>
 </div>
 
 
 </p>
-<p>For more on the
-<a href="api/ng/service/$compile#directive-definition-object"><code>restrict</code></a>
-property, see the
+<p>For more on the <code>restrict</code> property, see the
 <a href="api/ng/service/$compile#directive-definition-object">API docs</a>.</p>
 <div class="alert alert-info">
 <strong>When should I use an attribute versus an element?</strong>
@@ -384,13 +377,12 @@ re-use such a directive:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example15', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-scope-problem"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example15"
-      module="docsScopeProblemExample">
+      path="examples/example-directive-scope-problem"
+      module="docsScopeProblemExample"
+      name="directive-scope-problem">
 
   
     <div class="runnable-example-file" 
@@ -415,7 +407,7 @@ re-use such a directive:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example15/index.html" name="example-example15"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-scope-problem/index.html" name="example-directive-scope-problem"></iframe>
   </div>
 </div>
 
@@ -428,13 +420,12 @@ we call an <strong>isolate scope</strong>. To do this, we can use a <a href="api
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example16', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-isolate"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example16"
-      module="docsIsolateScopeDirective">
+      path="examples/example-directive-isolate"
+      module="docsIsolateScopeDirective"
+      name="directive-isolate">
 
   
     <div class="runnable-example-file" 
@@ -459,7 +450,7 @@ we call an <strong>isolate scope</strong>. To do this, we can use a <a href="api
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example16/index.html" name="example-example16"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-isolate/index.html" name="example-directive-isolate"></iframe>
   </div>
 </div>
 
@@ -477,8 +468,8 @@ scope: {
 <p>The <strong>scope option</strong> is an object that contains a property for each isolate scope binding.  In this
 case it has just one property:</p>
 <ul>
-<li>Its name (<code>customerInfo</code>) corresponds to the
-directive&#39;s <strong>isolate scope</strong> property <code>customerInfo</code>.</li>
+<li>Its name (<code>customerInfo</code>) corresponds to the directive&#39;s <strong>isolate scope</strong> property,
+<code>customerInfo</code>.</li>
 <li>Its value (<code>=info</code>) tells <code>$compile</code> to bind to the <code>info</code> attribute.</li>
 </ul>
 <div class="alert alert-warning">
@@ -503,13 +494,12 @@ within our directive&#39;s template:</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example17', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-isolate-2"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example17"
-      module="docsIsolationExample">
+      path="examples/example-directive-isolate-2"
+      module="docsIsolationExample"
+      name="directive-isolate-2">
 
   
     <div class="runnable-example-file" 
@@ -534,7 +524,7 @@ within our directive&#39;s template:</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example17/index.html" name="example-example17"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-isolate-2/index.html" name="example-directive-isolate-2"></iframe>
   </div>
 </div>
 
@@ -548,7 +538,8 @@ components because it prevents a component from changing your model state except
 that you explicitly pass in.</p>
 <div class="alert alert-warning">
 <strong>Note:</strong> Normally, a scope prototypically inherits from its parent. An isolated scope does not.
-See the <a href="api/ng/service/$compile#directive-definition-object">&quot;Directive Definition Object - scope&quot;</a> section for more information about isolate scopes.
+See the <a href="api/ng/service/$compile#directive-definition-object">&quot;Directive Definition Object - scope&quot;</a> section
+for more information about isolate scopes.
 </div>
 
 <div class="alert alert-success">
@@ -566,7 +557,7 @@ directive logic will be put.</p>
 <p> <code>link</code> takes a function with the following signature,
 <code>function link(scope, element, attrs, controller, transcludeFn) { ... }</code>, where:</p>
 <ul>
-<li><code>scope</code> is an Angular scope object.</li>
+<li><code>scope</code> is an AngularJS scope object.</li>
 <li><code>element</code> is the jqLite-wrapped element that this directive matches.</li>
 <li><code>attrs</code> is a hash object with key-value pairs of normalized attribute names and their
 corresponding attribute values.</li>
@@ -586,13 +577,12 @@ We also want to remove the <code>$interval</code> if the directive is deleted so
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example18', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-link"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example18"
-      module="docsTimeDirective">
+      path="examples/example-directive-link"
+      module="docsTimeDirective"
+      name="directive-link">
 
   
     <div class="runnable-example-file" 
@@ -610,7 +600,7 @@ We also want to remove the <code>$interval</code> if the directive is deleted so
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example18/index.html" name="example-example18"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-link/index.html" name="example-directive-link"></iframe>
   </div>
 </div>
 
@@ -622,7 +612,7 @@ injected. Because of this, we can use <code>$interval</code> and <code>dateFilte
 function.</p>
 <p>We register an event <code>element.on(&#39;$destroy&#39;, ...)</code>. What fires this <code>$destroy</code> event?</p>
 <p>There are a few special events that AngularJS emits. When a DOM node that has been compiled
-with Angular&#39;s compiler is destroyed, it emits a <code>$destroy</code> event. Similarly, when an AngularJS
+with AngularJS&#39;s compiler is destroyed, it emits a <code>$destroy</code> event. Similarly, when an AngularJS
 scope is destroyed, it broadcasts a <code>$destroy</code> event to listening scopes.</p>
 <p>By listening to this event, you can remove event listeners that might cause memory leaks.
 Listeners registered to scopes and elements are automatically cleaned up when they are destroyed,
@@ -644,13 +634,12 @@ wrap any arbitrary content.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example19', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-transclude"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example19"
-      module="docsTransclusionDirective">
+      path="examples/example-directive-transclude"
+      module="docsTransclusionDirective"
+      name="directive-transclude">
 
   
     <div class="runnable-example-file" 
@@ -675,7 +664,7 @@ wrap any arbitrary content.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example19/index.html" name="example-example19"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-transclude/index.html" name="example-directive-transclude"></iframe>
   </div>
 </div>
 
@@ -688,20 +677,19 @@ that redefines <code>name</code> as <code>Jeff</code>. What do you think the <co
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example20', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-transclusion"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example20"
-      module="docsTransclusionExample">
+      path="examples/example-directive-transclusion"
+      module="docsTransclusionExample"
+      name="directive-transclusion">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsTransclusionExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    templateUrl: &#39;my-dialog.html&#39;,&#10;    link: function (scope) {&#10;      scope.name = &#39;Jeff&#39;;&#10;    }&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsTransclusionExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    templateUrl: &#39;my-dialog.html&#39;,&#10;    link: function(scope) {&#10;      scope.name = &#39;Jeff&#39;;&#10;    }&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -719,7 +707,7 @@ that redefines <code>name</code> as <code>Jeff</code>. What do you think the <co
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example20/index.html" name="example-example20"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-transclusion/index.html" name="example-directive-transclusion"></iframe>
   </div>
 </div>
 
@@ -745,20 +733,19 @@ own behavior to it.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example21', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-transclusion-scope"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example21"
-      module="docsIsoFnBindExample">
+      path="examples/example-directive-transclusion-scope"
+      module="docsIsoFnBindExample"
+      name="directive-transclusion-scope">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsIsoFnBindExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, &#39;$timeout&#39;, function($scope, $timeout) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;  $scope.message = &#39;&#39;;&#10;  $scope.hideDialog = function (message) {&#10;    $scope.message = message;&#10;    $scope.dialogIsHidden = true;&#10;    $timeout(function () {&#10;      $scope.message = &#39;&#39;;&#10;      $scope.dialogIsHidden = false;&#10;    }, 2000);&#10;  };&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      &#39;close&#39;: &#39;&amp;onClose&#39;&#10;    },&#10;    templateUrl: &#39;my-dialog-close.html&#39;&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsIsoFnBindExample&#39;, [])&#10;.controller(&#39;Controller&#39;, [&#39;$scope&#39;, &#39;$timeout&#39;, function($scope, $timeout) {&#10;  $scope.name = &#39;Tobias&#39;;&#10;  $scope.message = &#39;&#39;;&#10;  $scope.hideDialog = function(message) {&#10;    $scope.message = message;&#10;    $scope.dialogIsHidden = true;&#10;    $timeout(function() {&#10;      $scope.message = &#39;&#39;;&#10;      $scope.dialogIsHidden = false;&#10;    }, 2000);&#10;  };&#10;}])&#10;.directive(&#39;myDialog&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      &#39;close&#39;: &#39;&amp;onClose&#39;&#10;    },&#10;    templateUrl: &#39;my-dialog-close.html&#39;&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -776,7 +763,7 @@ own behavior to it.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example21/index.html" name="example-example21"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-transclusion-scope/index.html" name="example-directive-transclusion-scope"></iframe>
   </div>
 </div>
 
@@ -813,13 +800,12 @@ element?</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example22', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-drag"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example22"
-      module="dragModule">
+      path="examples/example-directive-drag"
+      module="dragModule"
+      name="directive-drag">
 
   
     <div class="runnable-example-file" 
@@ -837,7 +823,7 @@ element?</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example22/index.html" name="example-example22"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-drag/index.html" name="example-directive-drag"></iframe>
   </div>
 </div>
 
@@ -851,20 +837,19 @@ to which tab is active.</p>
 <p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example23', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-directive-tabs"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example23"
-      module="docsTabsExample">
+      path="examples/example-directive-tabs"
+      module="docsTabsExample"
+      name="directive-tabs">
 
   
     <div class="runnable-example-file" 
       name="script.js"
       language="js"
       type="js">
-      <pre><code>angular.module(&#39;docsTabsExample&#39;, [])&#10;.directive(&#39;myTabs&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    controller: [&#39;$scope&#39;, function($scope) {&#10;      var panes = $scope.panes = [];&#10;&#10;      $scope.select = function(pane) {&#10;        angular.forEach(panes, function(pane) {&#10;          pane.selected = false;&#10;        });&#10;        pane.selected = true;&#10;      };&#10;&#10;      this.addPane = function(pane) {&#10;        if (panes.length === 0) {&#10;          $scope.select(pane);&#10;        }&#10;        panes.push(pane);&#10;      };&#10;    }],&#10;    templateUrl: &#39;my-tabs.html&#39;&#10;  };&#10;})&#10;.directive(&#39;myPane&#39;, function() {&#10;  return {&#10;    require: &#39;^^myTabs&#39;,&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      title: &#39;@&#39;&#10;    },&#10;    link: function(scope, element, attrs, tabsCtrl) {&#10;      tabsCtrl.addPane(scope);&#10;    },&#10;    templateUrl: &#39;my-pane.html&#39;&#10;  };&#10;});</code></pre>
+      <pre><code>angular.module(&#39;docsTabsExample&#39;, [])&#10;.directive(&#39;myTabs&#39;, function() {&#10;  return {&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {},&#10;    controller: [&#39;$scope&#39;, function MyTabsController($scope) {&#10;      var panes = $scope.panes = [];&#10;&#10;      $scope.select = function(pane) {&#10;        angular.forEach(panes, function(pane) {&#10;          pane.selected = false;&#10;        });&#10;        pane.selected = true;&#10;      };&#10;&#10;      this.addPane = function(pane) {&#10;        if (panes.length === 0) {&#10;          $scope.select(pane);&#10;        }&#10;        panes.push(pane);&#10;      };&#10;    }],&#10;    templateUrl: &#39;my-tabs.html&#39;&#10;  };&#10;})&#10;.directive(&#39;myPane&#39;, function() {&#10;  return {&#10;    require: &#39;^^myTabs&#39;,&#10;    restrict: &#39;E&#39;,&#10;    transclude: true,&#10;    scope: {&#10;      title: &#39;@&#39;&#10;    },&#10;    link: function(scope, element, attrs, tabsCtrl) {&#10;      tabsCtrl.addPane(scope);&#10;    },&#10;    templateUrl: &#39;my-pane.html&#39;&#10;  };&#10;});</code></pre>
     </div>
   
     <div class="runnable-example-file" 
@@ -889,7 +874,7 @@ to which tab is active.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example23/index.html" name="example-example23"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-directive-tabs/index.html" name="example-directive-tabs"></iframe>
   </div>
 </div>
 
@@ -939,7 +924,7 @@ controllers using <code>require</code>.</p>
 Otherwise use <code>link</code>.
 </div>
 
-<h3 id="summary">Summary</h3>
+<h2 id="summary">Summary</h2>
 <p>Here we&#39;ve seen the main use cases for directives. Each of these samples acts as a good starting
 point for creating your own directives.</p>
 <p>You might also be interested in an in-depth explanation of the compilation process that&#39;s

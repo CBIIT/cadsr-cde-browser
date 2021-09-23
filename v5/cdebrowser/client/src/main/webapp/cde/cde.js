@@ -31,8 +31,9 @@ angular.module("cde", [
  *
  * The Search tab is no longer loaded as a View, when a View is loaded, it is reloaded, which caused the pager to always return back to page one.
  */
-    .config(["$routeProvider", function ($routeProvider) {
-
+    .config(["$routeProvider","$locationProvider",function ($routeProvider, $locationProvider) {
+      
+    $locationProvider.hashPrefix('');
     $routeProvider
 
  /*

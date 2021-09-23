@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngAnimate/animateCss.js?message=docs($animateCss)%3A%20describe%20your%20change...#L5' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ngAnimate/animateCss.js?message=docs($animateCss)%3A%20describe%20your%20change...#L7' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ngAnimate/animateCss.js#L5' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ngAnimate/animateCss.js#L7' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -21,18 +21,21 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>The <code>$animateCss</code> service is a useful utility to trigger customized CSS-based transitions/keyframes
 from a JavaScript-based animation or directly from a directive. The purpose of <code>$animateCss</code> is NOT
 to side-step how <code>$animate</code> and ngAnimate work, but the goal is to allow pre-existing animations or
 directives to create more complex animations that can be purely driven using CSS code.</p>
 <p>Note that only browsers that support CSS transitions and/or keyframe animations are capable of
 rendering animations triggered via <code>$animateCss</code> (bad news for IE9 and lower).</p>
-<h2 id="usage">Usage</h2>
+<h2 id="general-use">General Use</h2>
 <p>Once again, <code>$animateCss</code> is designed to be used inside of a registered JavaScript animation that
 is powered by ngAnimate. It is possible to use <code>$animateCss</code> directly inside of a directive, however,
 any automatic control over cancelling animations and/or preventing animations from being run on
-child elements will not be handled by Angular. For this to work as expected, please use <code>$animate</code> to
+child elements will not be handled by AngularJS. For this to work as expected, please use <code>$animate</code> to
 trigger the animation and then setup a JavaScript animation that injects <code>$animateCss</code> to trigger
 the CSS animation.</p>
 <p>The example below shows how we can create a folding animation on an element using <code>ng-if</code>:</p>
@@ -148,7 +151,7 @@ added and removed on the element). Once <code>$animateCss</code> is called it wi
 }
 </code></pre>
 <p>To actually start the animation we need to run <code>animation.start()</code> which will then return a promise that we can hook into to detect when the animation ends.
-If we choose not to run the animation then we MUST run <code>animation.end()</code> to perform a cleanup on the element (since some CSS classes and stlyes may have been
+If we choose not to run the animation then we MUST run <code>animation.end()</code> to perform a cleanup on the element (since some CSS classes and styles may have been
 applied to the element during the preparation phase). Note that all other properties such as duration, delay, transitions and keyframes are just properties
 and that changing them will not reconfigure the parameters of the animation.</p>
 <h3 id="runner-done-vs-runner-then-">runner.done() vs runner.then()</h3>
@@ -168,7 +171,7 @@ Check the <a href="api/ngAnimate/service/$animateCss#usage">animation code above
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -179,7 +182,7 @@ Check the <a href="api/ngAnimate/service/$animateCss#usage">animation code above
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="$animateCss-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -238,12 +241,12 @@ of the element will be <code>transition-delay: DETECTED_VALUE</code>). Using <co
 CSS delay value.</li>
 <li><code>stagger</code> - A numeric time value representing the delay between successively animated elements
 (<a href="api/ngAnimate#css-staggering-animations">Click here to learn how CSS-based staggering works in ngAnimate.</a>)</li>
-<li><code>staggerIndex</code> - The numeric index representing the stagger item (e.g. a value of 5 is equal to the sixth item in the stagger; therefore when a</li>
-<li><code>stagger</code> option value of <code>0.1</code> is used then there will be a stagger delay of <code>600ms</code>)</li>
-<li><code>applyClassesEarly</code> - Whether or not the classes being added or removed will be used when detecting the animation. This is set by <code>$animate</code> when enter/leave/move animations are fired to ensure that the CSS classes are resolved in time. (Note that this will prevent any transitions from occuring on the classes being added and removed.)</li>
+<li><code>staggerIndex</code> - The numeric index representing the stagger item (e.g. a value of 5 is equal to the sixth item in the stagger; therefore when a
+<code>stagger</code> option value of <code>0.1</code> is used then there will be a stagger delay of <code>600ms</code>)</li>
+<li><code>applyClassesEarly</code> - Whether or not the classes being added or removed will be used when detecting the animation. This is set by <code>$animate</code> when enter/leave/move animations are fired to ensure that the CSS classes are resolved in time. (Note that this will prevent any transitions from occurring on the classes being added and removed.)</li>
 <li><code>cleanupStyles</code> - Whether or not the provided <code>from</code> and <code>to</code> styles will be removed once
  the animation is closed. This is useful for when the styles are used purely for the sake of
- the animation and do not have a lasting visual effect on the element (e.g. a colapse and open animation).
+ the animation and do not have a lasting visual effect on the element (e.g. a collapse and open animation).
  By default this value is set to <code>false</code>.</li>
 </ul>
 
@@ -256,7 +259,8 @@ CSS delay value.</li>
 
 </section>
     
-    <h3>Returns</h3>
+
+    <h3 id="$animateCss-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-object">object</a></td>

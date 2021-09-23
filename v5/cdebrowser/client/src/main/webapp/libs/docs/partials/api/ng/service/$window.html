@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/window.js?message=docs($window)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ng/window.js?message=docs($window)%3A%20describe%20your%20change...#L3' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/window.js#L3' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ng/window.js#L3' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -21,10 +21,13 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>A reference to the browser&#39;s <code>window</code> object. While <code>window</code>
 is globally available in JavaScript, it causes testability problems, because
-it is a global variable. In angular we always refer to it through the
+it is a global variable. In AngularJS we always refer to it through the
 <code>$window</code> service, so it may be overridden, removed or mocked for testing.</p>
 <p>Expressions, like the one defined for the <code>ngClick</code> directive in the example
 below, are evaluated with respect to the current scope.  Therefore, there is
@@ -39,27 +42,26 @@ expression.</p>
 <div>
   
 
-    
-
   
 
   
+
+  
   
   
 
 
 
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example112', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-window-service"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example112"
-      module="windowExample">
+      path="examples/example-window-service"
+      module="windowExample"
+      name="window-service">
 
   
     <div class="runnable-example-file" 
@@ -77,7 +79,7 @@ expression.</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example112/index.html" name="example-example112"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-window-service/index.html" name="example-window-service"></iframe>
   </div>
 </div>
 

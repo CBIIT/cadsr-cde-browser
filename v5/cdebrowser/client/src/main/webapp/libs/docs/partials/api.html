@@ -1,19 +1,25 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/docs/content/api/index.ngdoc?message=docs(API Reference)%3A%20describe%20your%20change...#L1' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/docs/content/api/index.ngdoc?message=docs(API Reference)%3A%20describe%20your%20change...#L1' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 <h1 id="angularjs-api-docs">AngularJS API Docs</h1>
-<p>Welcome to the AngularJS API docs page. These pages contain the AngularJS reference materials for version <strong ng-bind="version"></strong>.</p>
+<div class="alert alert-warning">
+<strong>On July 1, 2018 AngularJS entered a 3 year Long Term Support period:</strong> <a href="misc/version-support-status">Find out more</a>.
+</div>
+
+<h2 id="welcome-to-the-angularjs-api-docs-page-">Welcome to the AngularJS API docs page.</h2>
+<p>These pages contain the AngularJS reference materials for version <strong ng-bind="version"></strong>.</p>
 <p>The documentation is organized into <strong><a href="guide/module">modules</a></strong> which contain various components of an AngularJS application.
 These components are <a href="guide/directive">directives</a>, <a href="guide/services">services</a>, <a href="guide/filter">filters</a>, <a href="guide/providers">providers</a>, <a href="guide/templates">templates</a>, global APIs, and testing mocks.</p>
+<p>There is also a <a href="guide/index">guide</a> with articles on various topics, and a list of external resources.</p>
 <div class="alert alert-info">
-<strong>Angular Prefixes <code>$</code> and <code>$$</code></strong>:
+<strong>AngularJS Prefixes <code>$</code> and <code>$$</code></strong>:
 
 To prevent accidental name collisions with your code,
-Angular prefixes names of public objects with <code>$</code> and names of private objects with <code>$$</code>.
+AngularJS prefixes names of public objects with <code>$</code> and names of private objects with <code>$$</code>.
 Please do not use the <code>$</code> or <code>$$</code> prefix in your code.
 </div>
 
-<h2 id="angular-modules">Angular Modules</h2>
+<h2 id="angularjs-modules">AngularJS Modules</h2>
 <h2 id="-link-ng-ng-core-module-"><a href="api/ng">ng (core module)</a></h2>
 <p>This module is provided by default and contains the core components of AngularJS.</p>
 <table class="definition-table spaced">
@@ -75,7 +81,7 @@ Please do not use the <code>$</code> or <code>$$</code> prefix in your code.
     </td>
     <td>
       <p>
-        The core global API functions are attached to the angular object. These core functions are useful for low level JavaScript operations within your application.
+        The core global API functions are attached to the <code>angular</code> object. These core functions are useful for low level JavaScript operations within your application.
       </p>
       <p>
         Some examples include:
@@ -119,7 +125,7 @@ Please do not use the <code>$</code> or <code>$$</code> prefix in your code.
 
 
 <h2 id="-link-nganimate-nganimate-"><a href="api/ngAnimate">ngAnimate</a></h2>
-<p>Use ngAnimate to enable animation features within your application. Various core ng directives will provide
+<p>Use ngAnimate to enable animation features within your application. Various core AngularJS directives will provide
 animation hooks into your application when ngAnimate is included. Animations are defined by using CSS transitions/animations
 or JavaScript callbacks.</p>
 <div class="alert alert-info">Include the <strong>angular-animate.js</strong> file and set <strong>ngAnimate</strong> as a dependency for this to work in your application.</div>
@@ -196,11 +202,7 @@ or JavaScript callbacks.</p>
       <a href="api/ngCookies#service">Services / Factories</a>
     </td>
     <td>
-      The following services are used for cookie management:
-      <ul>
-        <li>The <a href="api/ngCookies/service/$cookies">$cookie</a> service is a convenient wrapper to store simple data within browser cookies.</li>
-        <li><a href="api/ngCookies/service/$cookieStore">$cookieStore</a> is used to store more complex data using serialization.</li>
-      </ul>
+      The <a href="api/ngCookies/service/$cookies">$cookies</a> service is a convenient wrapper to store simple data within browser cookies.
     </td>
   </tr>
 </table>

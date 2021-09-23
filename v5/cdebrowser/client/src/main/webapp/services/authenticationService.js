@@ -10,14 +10,15 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 	this.login = function(username, credential, redirect) {
 		var that = this;
 		$http({method: 'POST', url: '/cdebrowserServer/rest/login',headers: { 'Authorization':'Basic ' + btoa(username+':'+credential)}}).
-			success(function(response) {
+			then(function(response) {
+				response=response['data'];
 				that.cameFrom = redirect;
 				that.loggedIn = true;
 				if (redirect!='') { // only redirect if coming from another location //
 					$location.path('/cdeCart').replace();
 				};
 			}).
-			error(function(response) {
+			catch(function(response) {
 				that.errorMessage = 1;
 			});
 	};	
@@ -26,11 +27,12 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 	this.logout = function() {
 		var that = this;
 		$http({method: 'GET', url: '/cdebrowserServer/rest/logout'}).
-			success(function(response) {
+			then(function(response) {
+				response=response['data'];
 				that.loggedIn = false;
 				that.userName = '';
 			})
-			.error(function(response) {
+			.catch(function(response) {
 				that.loggedIn = false;				
 				that.userName = '';
 			});
@@ -40,7 +42,8 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 	this.checkAuth = function() {
 		var that = this;
 		$http({method: 'GET', url: '/cdebrowserServer/rest/user'})
-			.success(function(response) {
+			.then(function(response) {
+				response=response['data'];
 			  if (response.length>0) {
 			  	that.loggedIn = true;
 			  	that.userName = response;
@@ -50,7 +53,7 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 			  	that.userName = '';			  	
 			  };
 			})
-			.error(function(response) {
+			.catch(function(response) {
 			  	that.loggedIn=false;
 			  	that.userName = '';			  	
 			});
@@ -60,10 +63,11 @@ angular.module("cdeBrowserApp").service('authenticationService', function($http,
 	this.getPasswordChangeStationLink = function() {
 		var that = this;
 		$http({method: 'GET', url: '/cdebrowserServer/rest/getPwcsURL'})
-			.success(function(response) {
+			.then(function(response) {
+				response=response['data'];
 				that.passwordChangeStationLink = response;
 			})
-			.error(function(response) {
+			.catch(function(response) {
 		  	
 			})
 	};

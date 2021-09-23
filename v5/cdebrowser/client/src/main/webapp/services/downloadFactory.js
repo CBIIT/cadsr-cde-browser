@@ -10,21 +10,24 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 
 	        if (param) { // download to prior excel
 	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearchPrior',data: items}).
-	            success(function(data, status, headers, config) {
+	            then(function(data, status, headers, config) {
+					data=data['data'];
 	            	that.progressMessage.status=0;
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
 	            }).
-	            error(function(data, status, headers, config) {
+	            catch(function(data, status, headers, config) {
 	            	that.progressMessage = '';
 	            });
 	        }
 	        else { // download to excel
 	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadExcel?src=deSearch',data: items}).
-	            success(function(data, status, headers, config) {
+	            then(function(data, status, headers, config) {
+					data=data['data'];
 	            	that.progressMessage.status=0;
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadExcel/" + data;
 	            }).
-	            error(function(data, status, headers, config) {
+	            catch(function(data, status, headers, config) {
+					data = data['data'];
 	            	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
 	            });
 	        }
@@ -37,11 +40,13 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	     	var that = this;
 
 	            $http({method: 'POST', url: '/cdebrowserServer/rest/downloadCdeCompare',data: items}).
-	            success(function(data, status, headers, config) {
+	            then(function(data, status, headers, config) {
+				data=data['data'];
 	           	that.progressMessage.status=0;
 	                 window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadCdeCompare/" + data;
 	             }).
-	             error(function(data, status, headers, config) {
+	             catch(function(data, status, headers, config) {
+					 data = data['data'];
 	             	that.progressMessage = {"status":1,"message":data,"isErrorMessage":1};
 	             });
 
@@ -52,11 +57,12 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	    	this.progressMessage = {"status":1,"message":"Exporting Data", "isErrorMessage":0};
 	    	var that = this;
 	        $http({method: 'POST', url: '/cdebrowserServer/rest/downloadXml?src=deSearch',data: items}).
-	        success(function(data) {
+	        then(function(data) {
+				data=data['data'];
 	        	that.progressMessage.status=0;
 	            window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadXml/" + data;
 	        }).
-	        error(function(data, status, headers, config) {
+	        catch(function(data, status, headers, config) {
 	        	that.progressMessage = '';
 	        });
 	    };	
@@ -76,12 +82,14 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	    	var that = this;
 
             $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/refdocid/'+protocol.formIdSeq}).
-            success(function(data, status, headers, config) {
+            then(function(data, status, headers, config) {
+				data=data['data'];
             	that.progressMessage.status = 0;
 		    	protocol['rdIdseq'] = data;
             }).
-            error(function(data, status, headers, config) {
+            catch(function(data, status, headers, config) {
             	if (status!=404) {
+					data = data['data'];
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
             	}
             	else {
@@ -96,11 +104,13 @@ angular.module("cdeBrowserApp").factory('downloadFactory', function($http, filte
 	    	var that = this;
 
 	            $http({method: 'GET', url: '/cdebrowserServer/rest/downloadTemplate/doc/'+id}).
-	            success(function(data, status, headers, config) {
+	            then(function(data, status, headers, config) {
+					data=data['data'];
 	            	that.progressMessage.status=0;
 	                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/cdebrowserServer/rest/downloadTemplate/doc/" + id;
 	            }).
-	            error(function(data, status, headers, config) {
+	            catch(function(data, status, headers, config) {
+					data = data['data'];
 			    	that.progressMessage = {"status":1,"message":data, "isErrorMessage":1};
 	            });
 

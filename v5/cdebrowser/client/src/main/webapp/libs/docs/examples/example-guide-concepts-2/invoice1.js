@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 angular.module('invoice1', [])
-  .controller('InvoiceController', function() {
+  .controller('InvoiceController', function InvoiceController() {
     this.qty = 1;
     this.cost = 2;
     this.inCurr = 'EUR';
@@ -19,7 +19,7 @@ angular.module('invoice1', [])
       return amount * this.usdToForeignRates[outCurr] / this.usdToForeignRates[inCurr];
     };
     this.pay = function pay() {
-      window.alert("Thanks!");
+      window.alert('Thanks!');
     };
   });
 })(window.angular);

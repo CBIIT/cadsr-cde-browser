@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/filter.js?message=docs($filter)%3A%20describe%20your%20change...#L71' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ng/filter.js?message=docs($filter)%3A%20describe%20your%20change...#L71' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/filter.js#L71' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ng/filter.js#L71' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -23,10 +23,16 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Filters are used for formatting data displayed to the user.</p>
+<p>They can be used in view templates, controllers or services. AngularJS comes
+with a collection of <a href="api/ng/filter">built-in filters</a>, but it is easy to
+define your own as well.</p>
 <p>The general syntax in templates is as follows:</p>
-<pre><code>{{ expression [| filter_name[:parameter_value] ... ] }}
+<pre><code class="lang-html">{{ expression [| filter_name[:parameter_value] ... ] }}
 </code></pre>
 
 </div>
@@ -37,7 +43,7 @@
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -48,7 +54,7 @@
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="$filter-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -81,7 +87,8 @@
 
 </section>
     
-    <h3>Returns</h3>
+
+    <h3 id="$filter-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-function">Function</a></td>
@@ -97,12 +104,10 @@
 
 
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-$filter', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-$filter"></plnkr-opener>
 
   <div class="runnable-example"
       path="examples/example-$filter"

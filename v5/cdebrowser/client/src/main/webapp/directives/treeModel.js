@@ -208,7 +208,8 @@ cdeBrowserApp.directive('treeModel', ['$compile', '$http', '$timeout', function 
                                         "/" + parameters[0] +
                                         "/?contextId=" + parameters[1] +
                                         "&programArea=" + parameters[2] +
-                                        "&folderType=" + parameters[3]).success(function (response) {
+                                        "&folderType=" + parameters[3]).then(function (response) {
+                                        response=response['data'];
                                         selectedNode['children'] = response[0]['children'];
                                         selectedNode['dataLoaded'] = true;
                                         var children = selectedNode['children'];

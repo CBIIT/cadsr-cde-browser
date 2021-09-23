@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ng/directive/attrs.js?message=docs(ngDisabled)%3A%20describe%20your%20change...#L154' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ng/directive/attrs.js?message=docs(ngDisabled)%3A%20describe%20your%20change...#L154' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ng/directive/attrs.js#L154' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ng/directive/attrs.js#L154' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,8 +19,12 @@
 
 
 
+
+
 <div class="api-profile-description">
-  <p>This directive sets the <code>disabled</code> attribute on the element if the
+  <h2 id="overview">Overview</h2>
+  <p>This directive sets the <code>disabled</code> attribute on the element (typically a form control,
+e.g. <code>input</code>, <code>button</code>, <code>select</code> etc.) if the
 <a href="guide/expression">expression</a> inside <code>ngDisabled</code> evaluates to truthy.</p>
 <p>A special directive is necessary because we cannot use interpolation inside the <code>disabled</code>
 attribute. See the <a href="guide/interpolation">interpolation guide</a> for more info.</p>
@@ -34,7 +38,7 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
   
 
   
-  <h2>Directive Info</h2>
+  <h2 id="ngDisabled-info">Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 100.</li>
@@ -46,14 +50,17 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
   <div class="usage">
   
     <ul>
+    
+
+    
     <li>as attribute:
-        <pre><code>&lt;INPUT&#10;  ng-disabled=&quot;expression&quot;&gt;&#10;...&#10;&lt;/INPUT&gt;</code></pre>
+        <pre><code>&lt;ANY&#10;  ng-disabled=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
     
   </div>
   
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="ngDisabled-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -88,17 +95,15 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
 </section>
   
 
-
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example54', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-disabled"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example54">
+      path="examples/example-ng-disabled"
+      name="ng-disabled">
 
   
     <div class="runnable-example-file" 
@@ -116,7 +121,7 @@ attribute. See the <a href="guide/interpolation">interpolation guide</a> for mor
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example54/index.html" name="example-example54"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-disabled/index.html" name="example-ng-disabled"></iframe>
   </div>
 </div>
 

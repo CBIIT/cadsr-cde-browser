@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/Angular.js?message=docs(angular.equals)%3A%20describe%20your%20change...#L951' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/Angular.js?message=docs(angular.equals)%3A%20describe%20your%20change...#L1021' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/Angular.js#L951' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/Angular.js#L1021' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,7 +19,10 @@
 
 
 
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Determines if two objects or two values are equivalent. Supports value types, regular
 expressions, arrays and objects.</p>
 <p>Two objects or values are considered equivalent if at least one of the following is true:</p>
@@ -44,7 +47,7 @@ that begin with <code>$</code> are ignored.</p>
 <div>
   
 
-    
+  
 
   <h2 id="usage">Usage</h2>
     
@@ -55,7 +58,7 @@ that begin with <code>$</code> are ignored.</p>
 
     
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="angular.equals-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -104,7 +107,8 @@ that begin with <code>$</code> are ignored.</p>
 
 </section>
     
-    <h3>Returns</h3>
+
+    <h3 id="angular.equals-returns">Returns</h3>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
@@ -120,6 +124,39 @@ that begin with <code>$</code> are ignored.</p>
 
 
   
+  <h2 id="examples">Example</h2><p>
+
+<div>
+  <plnkr-opener example-path="examples/example-equalsExample"></plnkr-opener>
+
+  <div class="runnable-example"
+      path="examples/example-equalsExample"
+      module="equalsExample"
+      name="equalsExample">
+
+  
+    <div class="runnable-example-file" 
+      name="index.html"
+      language="html"
+      type="html">
+      <pre><code>&lt;div ng-controller=&quot;ExampleController&quot;&gt;&#10;  &lt;form novalidate&gt;&#10;    &lt;h3&gt;User 1&lt;/h3&gt;&#10;    Name: &lt;input type=&quot;text&quot; ng-model=&quot;user1.name&quot;&gt;&#10;    Age: &lt;input type=&quot;number&quot; ng-model=&quot;user1.age&quot;&gt;&#10;&#10;    &lt;h3&gt;User 2&lt;/h3&gt;&#10;    Name: &lt;input type=&quot;text&quot; ng-model=&quot;user2.name&quot;&gt;&#10;    Age: &lt;input type=&quot;number&quot; ng-model=&quot;user2.age&quot;&gt;&#10;&#10;    &lt;div&gt;&#10;      &lt;br/&gt;&#10;      &lt;input type=&quot;button&quot; value=&quot;Compare&quot; ng-click=&quot;compare()&quot;&gt;&#10;    &lt;/div&gt;&#10;    User 1: &lt;pre&gt;{{user1 | json}}&lt;/pre&gt;&#10;    User 2: &lt;pre&gt;{{user2 | json}}&lt;/pre&gt;&#10;    Equal: &lt;pre&gt;{{result}}&lt;/pre&gt;&#10;  &lt;/form&gt;&#10;&lt;/div&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" 
+      name="script.js"
+      language="js"
+      type="js">
+      <pre><code>angular.module(&#39;equalsExample&#39;, []).controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, function($scope) {&#10;  $scope.user1 = {};&#10;  $scope.user2 = {};&#10;  $scope.compare = function() {&#10;    $scope.result = angular.equals($scope.user1, $scope.user2);&#10;  };&#10;}]);</code></pre>
+    </div>
+  
+
+    <iframe class="runnable-example-frame" src="examples/example-equalsExample/index.html" name="example-equalsExample"></iframe>
+  </div>
+</div>
+
+
+</p>
+
 </div>
 
 

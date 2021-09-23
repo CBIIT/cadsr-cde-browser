@@ -1,8 +1,8 @@
-<a href='https://github.com/angular/angular.js/edit/v1.4.x/src/ngTouch/directive/ngSwipe.js?message=docs(ngSwipeRight)%3A%20describe%20your%20change...#L41' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com/angular/angular.js/edit/v1.8.x/src/ngTouch/directive/ngSwipe.js?message=docs(ngSwipeRight)%3A%20describe%20your%20change...#L46' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 
 
 
-<a href='https://github.com/angular/angular.js/tree/v1.4.14/src/ngTouch/directive/ngSwipe.js#L41' class='view-source pull-right btn btn-primary'>
+<a href='https://github.com/angular/angular.js/tree/v1.8.2/src/ngTouch/directive/ngSwipe.js#L46' class='view-source pull-right btn btn-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -19,7 +19,19 @@
 
 
 
+<div class="alert alert-danger deprecation">
+  <div class="title"><strong>Deprecated:</strong>
+    <span class="since">(since 1.7.0) </span>
+    
+  </div>
+  <p>See the <a href="api/ngTouch">module</a> documentation for more information.</p>
+
+</div>
+
+
+
 <div class="api-profile-description">
+  <h2 id="overview">Overview</h2>
   <p>Specify custom behavior when an element is swiped to the right on a touchscreen device.
 A rightward swipe is a quick, left-to-right slide of the finger.
 Though ngSwipeRight is designed for touch-based devices, it will work with a mouse click and drag
@@ -35,7 +47,7 @@ too.</p>
   
 
   
-  <h2>Directive Info</h2>
+  <h2 id="ngSwipeRight-info">Directive Info</h2>
   <ul>
     
     <li>This directive executes at priority level 0.</li>
@@ -47,6 +59,13 @@ too.</p>
   <div class="usage">
   
     <ul>
+    
+      <li>as element:
+      <pre><code>&lt;ng-swipe-right&#10;  ng-swipe-right=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ng-swipe-right&gt;</code></pre>
+      </li>
+    
+
+    
     <li>as attribute:
         <pre><code>&lt;ANY&#10;  ng-swipe-right=&quot;expression&quot;&gt;&#10;...&#10;&lt;/ANY&gt;</code></pre>
       </li>
@@ -54,7 +73,7 @@ too.</p>
   </div>
   
 <section class="api-section">
-  <h3>Arguments</h3>
+  <h3 id="ngSwipeRight-arguments">Arguments</h3>
 
 <table class="variables-matrix input-arguments">
   <thead>
@@ -89,19 +108,17 @@ upon right swipe. (Event object is available as <code>$event</code>)</p>
 </section>
   
 
-
   
-  <h2 id="example">Example</h2><p>
+  <h2 id="examples">Example</h2><p>
 
 <div>
-  <a ng-click="openPlunkr('examples/example-example117', $event)" class="btn pull-right">
-    <i class="glyphicon glyphicon-edit">&nbsp;</i>
-    Edit in Plunker</a>
+  <plnkr-opener example-path="examples/example-ng-swipe-right"></plnkr-opener>
 
   <div class="runnable-example"
-      path="examples/example-example117"
+      path="examples/example-ng-swipe-right"
       module="ngSwipeRightExample"
-      deps="angular-touch.js">
+      deps="angular-touch.js"
+      name="ng-swipe-right">
 
   
     <div class="runnable-example-file" 
@@ -119,7 +136,7 @@ upon right swipe. (Event object is available as <code>$event</code>)</p>
     </div>
   
 
-    <iframe class="runnable-example-frame" src="examples/example-example117/index.html" name="example-example117"></iframe>
+    <iframe class="runnable-example-frame" src="examples/example-ng-swipe-right/index.html" name="example-ng-swipe-right"></iframe>
   </div>
 </div>
 
