@@ -13,11 +13,13 @@ import javax.sql.DataSource;
 //import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -70,24 +72,24 @@ public class GetExcelDownloadTestHeaders {
 		String fileName = ClassLoader.getSystemResource(strFileName).getFile();
 		FileInputStream fis = new FileInputStream(fileName);
 		HSSFWorkbook wbExpected = new HSSFWorkbook(fis);
-		HSSFSheet sheetExpected = wbExpected.getSheetAt(0);
-		HSSFRow rowExpected = sheetExpected.getRow(0);
+		Sheet sheetExpected = wbExpected.getSheetAt(0);
+		Row rowExpected = sheetExpected.getRow(0);
 		wbExpected.close();
 		
 		DataSource dataSource = Mockito.mock(DataSource.class);
 		GetExcelDownload getExcelDownload = new GetExcelDownload(dataSource);
 		List<ColumnInfo> columnInfo = getExcelDownload.initColumnInfo(exportType);
 		HSSFWorkbook wbhReceived = new HSSFWorkbook();
-		HSSFSheet sheethReceived = wbhReceived.createSheet();
-		HSSFCellStyle boldCellStyle = wbhReceived.createCellStyle();
-		HSSFFont font = wbhReceived.createFont();
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		Sheet sheethReceived = wbhReceived.createSheet();
+		CellStyle boldCellStyle = wbhReceived.createCellStyle();
+		Font font = wbhReceived.createFont();
+		font.setBold(true); // Commented by Vikram S //font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+		boldCellStyle.setAlignment(HorizontalAlignment.GENERAL);// Commented by Vikram S // boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
 		
 		//MUT
 		getExcelDownload.generateExcelHeaders(sheethReceived, boldCellStyle, exportType, columnInfo);
-		HSSFRow rowReceived = sheethReceived.getRow(0);
+		Row rowReceived = sheethReceived.getRow(0);
 		//check
 		
 		//boolean res = CompareExcelTables.compareSheets(sheetExpected, sheethReceived);

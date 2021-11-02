@@ -15,12 +15,14 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -44,12 +46,12 @@ public class GetExcelDownloadTest {
 		List<ColumnInfo> columnInfo = initColumnInfo("deSearch", getExcelDownload);
 		//this test is specific for columnInfo list. If changed this test shall be changed
 		HSSFWorkbook wbh = new HSSFWorkbook();
-		HSSFSheet sheeth = wbh.createSheet();
-		HSSFCellStyle boldCellStyle = wbh.createCellStyle();
-		HSSFFont font = wbh.createFont();
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		Sheet sheeth = wbh.createSheet();
+		CellStyle boldCellStyle = wbh.createCellStyle();
+		Font font = wbh.createFont();
+		font.setBold(true); // Commented by Vikram S //font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+		boldCellStyle.setAlignment(HorizontalAlignment.GENERAL);// Commented by Vikram S // boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
 		
 		//MUT
 		getExcelDownload.generateExcelHeaders(sheeth, boldCellStyle, "deSearch", columnInfo);
@@ -61,9 +63,9 @@ public class GetExcelDownloadTest {
 //		fileOut1.close();
 		
 		//check
-		HSSFRow row = sheeth.getRow(0);
+		Row row = sheeth.getRow(0);
 
-		HSSFCell receivedCell = row.getCell(0);
+		Cell receivedCell = row.getCell(0);
 		assertEquals(columnInfo.get(0).displayName, receivedCell.getStringCellValue());
 		receivedCell = row.getCell(0);
 		assertEquals(boldCellStyle, receivedCell.getCellStyle());
@@ -95,7 +97,7 @@ public class GetExcelDownloadTest {
 		List<ColumnInfo> columnInfo = initColumnInfoStruct("deSearch", getExcelDownload);
 
 		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet();
+		Sheet sheet = wb.createSheet();
 				
 		Mockito.when(rs.getString("LONG_NAME")).thenReturn(dataMatrixStruct[0][0]).thenReturn(dataMatrixStruct[2][0]);
 		//Mock Struct
@@ -124,7 +126,7 @@ public class GetExcelDownloadTest {
 //		fileOut.close();
 		
 		//check
-		HSSFSheet receivedSheet = wb.getSheetAt(0);
+		Sheet receivedSheet = wb.getSheetAt(0);
 		//row # 0
 		checkFullRow(receivedSheet, 0, 3, dataMatrixStruct);
 
@@ -144,7 +146,7 @@ public class GetExcelDownloadTest {
 		List<ColumnInfo> columnInfo = initColumnInfoRsSubIdx("deSearch", getExcelDownload);
 
 		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet();
+		Sheet sheet = wb.createSheet();
 				
 		Mockito.when(rs.getString("OBJ_CLASS")).thenReturn(dataMatrixWithRsSubIdxExpected[0][0]).thenReturn(dataMatrixWithRsSubIdxExpected[2][0]);
 		//Mock Array
@@ -201,7 +203,7 @@ public class GetExcelDownloadTest {
 		fileOut.close();
 		
 		//check
-		HSSFSheet receivedSheet = wb.getSheetAt(0);
+		Sheet receivedSheet = wb.getSheetAt(0);
 		//row # 0
 		checkFullRow(receivedSheet, 0, 4, dataMatrixWithRsSubIdxExpected);
 
@@ -290,7 +292,7 @@ public class GetExcelDownloadTest {
 		List<ColumnInfo> columnInfo = initColumnInfo("deSearch", getExcelDownload);
 		
 		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet();
+		Sheet sheet = wb.createSheet();
 		
 		//MUT
 		getExcelDownload.generateWorkbook(rs, sheet, 0, "deSearch", columnInfo, 2);
@@ -302,14 +304,14 @@ public class GetExcelDownloadTest {
 		fileOut.flush();
 		fileOut.close();	
 		
-		HSSFSheet receivedSheet = wb.getSheetAt(0);
+		Sheet receivedSheet = wb.getSheetAt(0);
 		//row # 0
 		checkFullRow(receivedSheet, 0, 4, dataMatrix);
 		//row # 1
 		checkExtraRow(receivedSheet, 1, 1, 4, dataMatrix);
 
 		//row # 2 empty between groups
-		HSSFRow rowReceived2 = receivedSheet.getRow(2);
+		Row rowReceived2 = receivedSheet.getRow(2);
 		assertNull(rowReceived2);
 		
 		//row # 3
@@ -318,11 +320,11 @@ public class GetExcelDownloadTest {
 		//row # 4
 		checkExtraRow(receivedSheet, 4, 1, 4, dataMatrix);
 	}
-	private void checkFullRow(HSSFSheet receivedSheet, int i, int lastCol, String[][] dataExpected) {
-		HSSFRow rowReceived0 = receivedSheet.getRow(i);
+	private void checkFullRow(Sheet receivedSheet, int i, int lastCol, String[][] dataExpected) {
+		Row rowReceived0 = receivedSheet.getRow(i);
 		assertNotNull(rowReceived0);
 		for (int j = 0; j <= lastCol; j++) {
-			HSSFCell cellReceived00 = rowReceived0.getCell(j);
+			Cell cellReceived00 = rowReceived0.getCell(j);
 			assertNotNull(cellReceived00);
 			String strReceived00 = cellReceived00.getStringCellValue();
 			assertEquals(dataExpected[i][j],  strReceived00);
@@ -330,14 +332,14 @@ public class GetExcelDownloadTest {
 		for (int k = 1; k < 10; k++)
 			assertNull(rowReceived0.getCell(lastCol+k));
 	}
-	private void checkExtraRow(HSSFSheet receivedSheet, int i, int startCol, int lastCol, String[][] dataExpected) {
-		HSSFRow rowReceived0 = receivedSheet.getRow(i);
+	private void checkExtraRow(Sheet receivedSheet, int i, int startCol, int lastCol, String[][] dataExpected) {
+		Row rowReceived0 = receivedSheet.getRow(i);
 		assertNotNull(rowReceived0);
 		for (int j = 0; j < startCol; j++) {
 			assertNull(rowReceived0.getCell(j));
 		}
 		for (int j = startCol; j <= lastCol; j++) {
-			HSSFCell cellReceived00 = rowReceived0.getCell(j);
+			Cell cellReceived00 = rowReceived0.getCell(j);
 			assertNotNull(cellReceived00);
 			String strReceived00 = cellReceived00.getStringCellValue();
 			assertEquals(dataExpected[i][j],  strReceived00);

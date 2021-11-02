@@ -25,12 +25,13 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -347,14 +348,14 @@ public class DownloadCompareExcelController {
 			//source tells what type of download do we do: "deSearch", "deCart", "deSearchPrior"
 			wb = new HSSFWorkbook();
 
-			HSSFSheet sheet = wb.createSheet();
+			Sheet sheet = wb.createSheet();
 			int rowNumber = 0;//NA main row number; we leave one empty row between main rows
 
-			HSSFCellStyle boldCellStyle = wb.createCellStyle();
-			HSSFFont font = wb.createFont();
-			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			CellStyle boldCellStyle = wb.createCellStyle();
+			Font font = wb.createFont();
+			font.setBold(true); // Commented by Vikram S //font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 			boldCellStyle.setFont(font);
-			boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+			boldCellStyle.setAlignment(HorizontalAlignment.GENERAL);// Commented by Vikram S // boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
 
 			rowNumber++; //this is the row where we want to start data
 			rowNumber = generateWorkbookCdeCompare(cdeDetails, sheet, rowNumber, cdeDetails.length, boldCellStyle);
@@ -584,12 +585,12 @@ public class DownloadCompareExcelController {
 	 * @throws Exception
 	 */
 	protected int generateWorkbookCdeCompare(CdeDetails[] cdeDetails,
-		HSSFSheet sheet, int rowNumber,
-		int amountOfIds, HSSFCellStyle boldCellStyle) throws Exception
+		Sheet sheet, int rowNumber,
+		int amountOfIds, CellStyle boldCellStyle) throws Exception
 	{
 		// Create a row and put some cells in it. Rows are 0 based.
-		HSSFRow row = sheet.createRow(rowNumber++);
-		HSSFCell cell = row.createCell(0);
+		Row row = sheet.createRow(rowNumber++);
+		Cell cell = row.createCell(0);
 		cell.setCellValue("Data Element");
 		cell.setCellStyle(boldCellStyle);
 
@@ -938,11 +939,11 @@ public class DownloadCompareExcelController {
 		return rowNumber;
 	}
 
-private void addNewRow(HSSFSheet sheet, int rowNumber, String title, HSSFCellStyle titleStyle, List cdeList) {
-		HSSFRow row = sheet.createRow(rowNumber++);
+private void addNewRow(Sheet sheet, int rowNumber, String title, CellStyle titleStyle, List cdeList) {
+		Row row = sheet.createRow(rowNumber++);
 
 		int colNumber = 0;
-	HSSFCell cell = row.createCell(colNumber++);
+	Cell cell = row.createCell(colNumber++);
 	cell.setCellValue(title);
 	cell.setCellStyle(titleStyle);
 	logger.debug("cdeList size : "+cdeList.size());
@@ -962,14 +963,14 @@ private void addNewRow(HSSFSheet sheet, int rowNumber, String title, HSSFCellSty
 		}
 }
 
-private int exportObjects(HSSFSheet sheet,          int rowNumber, String title,      String propertyName,
-        HSSFCellStyle titleStyle, CdeDetails[] cdeDetails,    List propertyList, List titleList) {
+private int exportObjects(Sheet sheet,          int rowNumber, String title,      String propertyName,
+        CellStyle titleStyle, CdeDetails[] cdeDetails,    List propertyList, List titleList) {
 //this row contains the number of valid values for each data element value domain
-HSSFRow row = sheet.createRow(rowNumber++);
+Row row = sheet.createRow(rowNumber++);
 
 int colNumber = 1;
 int maxValueNumber = 0;
-HSSFCell cell;
+Cell cell;
 
 row = sheet.createRow(rowNumber++);
 row = sheet.createRow(rowNumber++);

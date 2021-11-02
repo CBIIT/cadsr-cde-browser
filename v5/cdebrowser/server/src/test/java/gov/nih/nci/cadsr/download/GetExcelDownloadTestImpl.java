@@ -7,12 +7,13 @@ import java.io.FileOutputStream;
 
 import java.util.Collection;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
 import gov.nih.nci.cadsr.service.restControllers.DownloadExcelController;
 /**
@@ -46,20 +47,20 @@ public class GetExcelDownloadTestImpl implements GetExcelDownloadInterface {
 	@Override
 	public String persist(final Collection<String> itemIds, final String RAI, final String source) throws Exception {
 		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet();
+		Sheet sheet = wb.createSheet();
 		int rowNumber = 0;
 
-		HSSFCellStyle boldCellStyle = wb.createCellStyle();
-		HSSFFont font = wb.createFont();
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		CellStyle boldCellStyle = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setBold(true); // Commented by Vikram S //font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+		boldCellStyle.setAlignment(HorizontalAlignment.GENERAL);// Commented by Vikram S //boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
 
 
 		// Create a row and put the column header in it
-		HSSFRow row = sheet.createRow(rowNumber++);
+		Row row = sheet.createRow(rowNumber++);
 		int col0 = 0;
-		HSSFCell cell= row.createCell(col0);
+		Cell cell= row.createCell(col0);
 		cell.setCellStyle(boldCellStyle);
 		cell.setCellValue("Test Column Number");
 		

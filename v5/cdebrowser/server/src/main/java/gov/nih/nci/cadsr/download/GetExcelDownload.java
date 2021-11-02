@@ -22,12 +22,13 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -143,14 +144,14 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 			//source tells what type of download do we do: "deSearch", "deCart", "deSearchPrior"
 			wb = new HSSFWorkbook();
 
-			HSSFSheet sheet = wb.createSheet();
+			Sheet sheet = wb.createSheet();
 			int rowNumber = 0;//NA main row number; we leave one empty row between main rows
 
-			HSSFCellStyle boldCellStyle = wb.createCellStyle();
-			HSSFFont font = wb.createFont();
-			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			CellStyle boldCellStyle = wb.createCellStyle();
+			Font font = wb.createFont();
+			font.setBold(true); // Commented by Vikram S //font.setBoldweight(Font.BOLDWEIGHT_BOLD); 
 			boldCellStyle.setFont(font);
-			boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+			boldCellStyle.setAlignment(HorizontalAlignment.GENERAL);// Commented by Vikram S //boldCellStyle.setAlignment(CellStyle.ALIGN_GENERAL);
 			//create sheet headers
 			generateExcelHeaders(sheet, boldCellStyle, source, colInfo);
 			
@@ -245,10 +246,10 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	 * @param source
 	 * @param colInfo
 	 */
-	protected void generateExcelHeaders(HSSFSheet sheet, final HSSFCellStyle boldCellStyle, 
+	protected void generateExcelHeaders(Sheet sheet, final CellStyle boldCellStyle, 
 			final String source, final List<ColumnInfo> colInfo) {
 		// Create the first row and put the column header in it
-		HSSFRow row = sheet.createRow(0);
+		Row row = sheet.createRow(0);
 		int col = 0;
 
 		for (int i = 0; i < colInfo.size(); i++) {
@@ -260,13 +261,13 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 					ColumnInfo nestedCol =
 						(ColumnInfo) currCol.nestedColumns.get(nestedI);
 
-					HSSFCell cell = row.createCell(col++);
+					Cell cell = row.createCell(col++);
 					cell.setCellValue(currCol.displayName + nestedCol.displayName);
 					cell.setCellStyle(boldCellStyle);
 				}
 			}
 			else {
-				HSSFCell cell = row.createCell(col++);
+				Cell cell = row.createCell(col++);
 
 				cell.setCellValue(currCol.displayName);
 				cell.setCellStyle(boldCellStyle);
@@ -291,14 +292,14 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 	 * @throws Exception
 	 */
 	protected int generateWorkbook(ResultSet rs, 
-		HSSFSheet sheet, int rowNumber, 
+		Sheet sheet, int rowNumber, 
 		final String source, final List<ColumnInfo> colInfo, int amountOfIds) throws Exception 
 	{
 		int maxRowNumber = 0;
 		
 		while (rs.next()) {
 			checkRowNumber(rowNumber, amountOfIds);
-			HSSFRow row = sheet.createRow(rowNumber);//NA new main row
+			Row row = sheet.createRow(rowNumber);//NA new main row
 			
 			int col = 0;
 			//in ColumnInfo Array type has column name; nested ColumnInfo has a rs index inside the nested rs
@@ -348,7 +349,7 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 									ColumnInfo nestedCol =
 										(ColumnInfo) currCol.nestedColumns.get(nestedI);
 
-									HSSFCell cell = row.createCell((col + nestedI));
+									Cell cell = row.createCell((col + nestedI));
 
 									if (nestedCol.rsSubIndex < 0) {
 										if (valueDatum[nestedCol.rsIndex] != null) {
@@ -401,12 +402,12 @@ public class GetExcelDownload extends JdbcDaoSupport implements GetExcelDownload
 							(Struct)rs.getObject(currCol.rsColumnName);
 					
 					Object[] valueStruct = struct.getAttributes();
-					HSSFCell cell = row.createCell(col++);
+					Cell cell = row.createCell(col++);
 					cell.setCellValue(StringUtilities.updateDataForSpecialCharacters((String) valueStruct[currCol.rsIndex]));
 				}
 				else {
 					row = sheet.getRow(rowNumber);
-					HSSFCell cell = row.createCell(col++);
+					Cell cell = row.createCell(col++);
 					// Changed the way date is displayed in Excel in 4.0
 					String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
 					if(currCol.type.equalsIgnoreCase("Date")){
