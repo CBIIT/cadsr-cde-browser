@@ -14,8 +14,8 @@
         <mockito.version>1.10.19</mockito.version>
         <objectcart.version>1.0.2</objectcart.version>
         <classmate.version>1.4.0</classmate.version>
-        <jackson.version>2.9.7</jackson.version>
-        <jackson.databind.version>2.9.10.8</jackson.databind.version>
+        <jackson.version>2.13.2</jackson.version>
+        <jackson.databind.version>2.13.2.1</jackson.databind.version>
         <junit.version>4.13.1</junit.version>
         <!--<connection-url>jdbc:oracle:thin:@${CADSR_DS_HOST}:${CADSR_DS_PORT}:${CADSR_DS_TNS.ENTRY}}</connection-url>-->
     </properties>
