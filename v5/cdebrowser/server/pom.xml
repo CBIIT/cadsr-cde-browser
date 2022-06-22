@@ -195,11 +195,6 @@
             <version>${objectcart.version}</version>
         </dependency>
         <dependency>
-            <groupId>nih.nci.cadsr</groupId>
-            <artifactId>sdk-client-framework</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
