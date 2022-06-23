@@ -121,8 +121,7 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			}
 			ObjectCartClient ocClient = null;
 
-					if (ocURL != null) {
-						log.debug("Creating OC Client - Object Cart URL:" + ocURL);				
+					if (ocURL != null) {				
 						ocClient = new ObjectCartClient(ocURL); 
 					} else {
 						ocClient = new ObjectCartClient();
