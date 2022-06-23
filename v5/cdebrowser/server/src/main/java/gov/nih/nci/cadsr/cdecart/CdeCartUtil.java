@@ -120,17 +120,17 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 				}
 			}
 			ObjectCartClient ocClient = null;
-				try {
-					if (ocURL != null) {
+				//try {
+					//if (ocURL != null) {
 						log.debug("Creating OC Client - Object Cart URL:" + ocURL);				
-						ocClient = new ObjectCartClient(ocURL); 
-					} else {
-						ocClient = new ObjectCartClient();
-					}
-				} catch (Exception ex) {
+					//	ocClient = new ObjectCartClient(ocURL); 
+					//} else {
+						//ocClient = new ObjectCartClient();
+					//}
+				/*} catch (Exception ex) {
 					ex.printStackTrace();
 					log.debug("Unable to create Object Cart:" + ocURL);
-				}
+				}*/
 			uid = principalName;
 
 			//we shall be after login here, and uid is never null
