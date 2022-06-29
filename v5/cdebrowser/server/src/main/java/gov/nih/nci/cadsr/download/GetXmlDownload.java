@@ -227,6 +227,7 @@ public class GetXmlDownload extends JdbcDaoSupport implements GetXmlDownloadInte
 		String xmlString = "";
 		OracleXMLDataSetExtJdbc dset = null;
 		OracleXMLQuery xmlQuery = null;
+		logger.debug("Sql Stmt before Oracle XML setJDBC: " + sqlQuery);
 		try {
 			if (logger.isTraceEnabled()) {
 				logger.trace("Sql Stmt: " + sqlQuery);
