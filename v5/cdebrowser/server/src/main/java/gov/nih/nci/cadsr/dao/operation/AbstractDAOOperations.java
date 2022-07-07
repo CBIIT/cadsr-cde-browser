@@ -29,6 +29,14 @@ public abstract class AbstractDAOOperations extends JdbcDaoSupport
     
     protected static final int oracleIn1000 = 1000;
     
+    static {
+    	try {
+			Class.forName("oracle.jdbc.OracleDriver").newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+    }
+    
     @Autowired
     AbstractDAOOperations( DataSource dataSource )
     {

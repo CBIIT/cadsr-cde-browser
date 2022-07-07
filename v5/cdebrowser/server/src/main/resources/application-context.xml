@@ -159,10 +159,7 @@
     </bean>
 
     <bean id="permissibleValuesDAO" class="gov.nih.nci.cadsr.dao.PermissibleValuesDAOImpl" parent="abstractDao"/>
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:jboss/datasources/CDEBrowserDS"/>
-    </bean>
-
+    
 	<bean id="csCsiValueMeaningDAO" class="gov.nih.nci.cadsr.dao.CsCsiValueMeaningDAOImpl" parent="abstractDao"/>
 
 	<bean id="csCsiDeDAO" class="gov.nih.nci.cadsr.dao.CsCsiDeDAOImpl" parent="abstractDao"/>
@@ -193,4 +190,10 @@
     </bean>
     <bean id="usageLog" class="gov.nih.nci.cadsr.common.UsageLog">
     </bean>
+    
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/CDEBrowserDS"/>
+  		<property name="lookupOnStartup" value="true"/>
+  		<property name="proxyInterface" value="javax.sql.DataSource"/> 
+    </bean>    
 </beans>

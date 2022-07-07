@@ -121,11 +121,11 @@ public class CdeCartUtil implements CdeCartUtilInterface {
 			}
 			ObjectCartClient ocClient = null;
 
-			if (ocURL != null)
-				ocClient = new ObjectCartClient(ocURL);
-			else
-				ocClient = new ObjectCartClient();
-
+					if (ocURL != null) {				
+						ocClient = new ObjectCartClient(ocURL); 
+					} else {
+						ocClient = new ObjectCartClient();
+					}				
 			uid = principalName;
 
 			//we shall be after login here, and uid is never null

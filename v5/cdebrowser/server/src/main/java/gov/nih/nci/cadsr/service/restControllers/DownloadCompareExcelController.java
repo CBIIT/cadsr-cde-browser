@@ -213,7 +213,6 @@ public class DownloadCompareExcelController {
 /*	public void setLocalDownloadDirectory(String localDownloadDirectory) {
 		this.localDownloadDirectory = localDownloadDirectory;
 	}
-
 	public void setFileNamePrefix(String excelFileNamePrefix) {
 		this.fileNamePrefix = excelFileNamePrefix;
 	}*/
@@ -2252,7 +2251,6 @@ private String getProperty (String propertyName, String property, List cdeObjLis
     }
 
     /*
-
      */
     private PropertyModel buildTestPropertyModel()
     {
