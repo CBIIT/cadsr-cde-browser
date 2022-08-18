@@ -12,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.CellType;
 
 public class CompareExcelTables {
 	//CDEBrowser_SearchResults-30.xls
@@ -115,7 +116,7 @@ public class CompareExcelTables {
 	
 	private static boolean compareCells(Cell cellOld, Cell cellNew, int cellIndex) {
 		if	(cellOld == null) {
-			if ((cellNew != null) && (cellNew.getCellType() == Cell.CELL_TYPE_STRING) && (cellNew.getStringCellValue() != null)){
+			if ((cellNew != null) && (cellNew.getCellType() == CellType.STRING) && (cellNew.getStringCellValue() != null)){
 				System.out.println("old cell is null, new is not null: " + cellNew + ", cellIndex:" +  cellIndex + ", row number: " + cellNew.getRowIndex());
 				return false;
 			}
@@ -124,7 +125,7 @@ public class CompareExcelTables {
 		}
 
 		if ((cellOld != null) && (cellNew == null)) {
-			if ((cellOld.getCellType() == Cell.CELL_TYPE_STRING) && (cellOld.getStringCellValue() != null)) {
+			if ((cellOld.getCellType() == CellType.STRING) && (cellOld.getStringCellValue() != null)) {
 				System.out.println("old cell is not null " + cellOld + ", new is null, celIndex" + cellIndex + ", row number: " + cellOld.getRowIndex());
 				return false;
 			}
@@ -132,13 +133,15 @@ public class CompareExcelTables {
 				return true;//Null cell and cell with Null value we consider the same
 		}
 		
-		int typeOld = cellOld.getCellType();
+		// Vikram S  - Upgrading POI to 5.2.2
+		/*int typeOld = cellOld.getCellType();
 		int typeNew = cellNew.getCellType();
-		if (typeOld != typeNew) {
-			System.out.println("typeOld: " + typeOld + ", typeNew " + typeNew + ", cellIndex: " + cellIndex + ", row number: " + cellNew.getRowIndex());
+		if (typeOld != typeNew) {*/
+		if (cellOld.getCellType() != cellNew.getCellType()) {
+			System.out.println("cellOld.getCellType(): " + cellOld.getCellType() + ", cellNew.getCellType() " + cellNew.getCellType() + ", cellIndex: " + cellIndex + ", row number: " + cellNew.getRowIndex());
 			return false;
 		}
-		if (typeOld == Cell.CELL_TYPE_NUMERIC) {//0
+		if (cellOld.getCellType() == CellType.NUMERIC) {//0
 			double dold = cellOld.getNumericCellValue();
 			double dnew = cellNew.getNumericCellValue();
 			if (dold != dnew) {
@@ -146,7 +149,7 @@ public class CompareExcelTables {
 				return false;
 			}
 		}
-		else if ((typeOld == Cell.CELL_TYPE_STRING) || (typeOld == Cell.CELL_TYPE_BLANK)) {
+		else if ((cellOld.getCellType() == CellType.STRING) || (cellOld.getCellType() == CellType.BLANK)) {
 			String sold = cellOld.getStringCellValue();
 			String snew = cellNew.getStringCellValue();
 			if ((sold == null) && (snew != null)) {
@@ -176,7 +179,7 @@ public class CompareExcelTables {
 				}
 			}
 			catch (Exception e) {
-				System.out.println(" Exception trying to get Date type celType= " + typeOld + ", cellIndex= " + cellIndex + ", " + e);
+				System.out.println(" Exception trying to get Date type celType= " + cellOld.getCellType() + ", cellIndex= " + cellIndex + ", " + e);
 			}
 		}
 		return true;
