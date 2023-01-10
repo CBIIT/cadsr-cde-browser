@@ -1,5 +1,6 @@
 
 .idea/
+./build.sh
 target/
 *.iml
 *.DS_Store
