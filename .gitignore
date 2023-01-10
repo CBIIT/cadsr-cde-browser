@@ -4,7 +4,6 @@ v5/cdebrowser/client/src/main/webapp/dist/
 v5/cdebrowser/client/src/main/webapp/js/
 v5/cdebrowser/client/src/main/webapp/libs/i18n
 package-lock.json
-build.sh
 target/
 *.iml
 *.DS_Store
