@@ -1,5 +1,8 @@
 #!/bin/bash
-
+cd /tmp
+git clone https://github.com/cbiit/cadsr-cde-browser
+cd /tmp/cadsr-cde-browser
+git checkout $TAG
 rm -rf /tmp/cadsr-cde-browser-temp
 cp -R /tmp/cadsr-cde-browser /tmp/cadsr-cde-browser-temp
 cd /tmp/cadsr-cde-browser-temp
@@ -8,3 +11,6 @@ mvn -f v5/cdebrowser/pom.xml -s v5/cdebrowser/settings.xml -DCADSR_DS_PORT=$CADS
 
 cp /tmp/cadsr-cde-browser-temp/v5/cdebrowser/client/target/cdebrowserClient.war /usr/local/tomcat/webapps
 cp /tmp/cadsr-cde-browser-temp/v5/cdebrowser/server/target/cdebrowserServer.war /usr/local/tomcat/webapps
+echo "Done"
+/usr/local/tomcat/bin/catalina.sh run
+tail -f /dev/null
