@@ -125,7 +125,7 @@ public class LookupDataController
 				protocolList = protocolService.getProtocolsWithProgramAreaAndContext(contexIdSeq, protocolOrForm);
 			}
 			else {
-//				throw new RestControllerException("Context id seq unexpected value provided");//CDEBROWSER-968 & CDEBROWSER-969
+				throw new RestControllerException("Context id seq unexpected value provided");//CDEBROWSER-968 & CDEBROWSER-969
 			}
 		}
 		catch (RestControllerException re)
