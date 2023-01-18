@@ -16,3 +16,8 @@ You will find more details about the caDSR CDE Browser in the following links:
  * [NCI Instance] (https://cdebrowser.nci.nih.gov)
 
 Please join us in further developing and improving the caDSR CDE Browser project.
+
+To build new JS files:
+ * Navigate to v5/cdebrowser/client/src/main/webapp
+ * Run buildJSFiles.sh
+ * Check-in new files
