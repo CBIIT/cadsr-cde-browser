@@ -45,7 +45,7 @@
 			    padding-left: 20px;
 			    margin-top: 8px;
 			    list-style-type: circle;
-		}		
+		}
     </style>
 
 </head>
@@ -89,6 +89,12 @@
     </div>
     <!-- Admin Tool, Curation Tool, NCI Metathesaurus, NCI Terminology Server, Sentinel Tool, What's new, Available Downloads -->
     <div class="top2-center-logo">
+    <span>
+        <span style="font-weight:bold;color:red;">CDE Browser RETIREMENT Planned for May 1, 2023</span>
+        <a class="toolLinks" href="http://cadsr.cancer.gov/" target="_blank" rel="noopener noreferrer" style="color:red !important;padding:0px 15px 0px 15px !important;">
+            CADSR II
+        </a>&nbsp;
+    </span>
     <span>
         <a class="toolLinks" href="{{admintoolToolHost}}" target="_blank" rel="noopener noreferrer">
             Admin Tool
@@ -360,7 +366,7 @@
                         </ui-select>
                     </script>
                 </span>
-                
+
                 <span>
                     <ui-tree-select model="model" context-cascade="contextCascade(filterService.searchFilter.protocol)">
                     </ui-tree-select>
@@ -495,7 +501,7 @@
                     <button label="Download Data Elements as XML" data-ng-click="downloadToXML()" ng-disabled="!checkedItemsForDownload.length">
                         Download Data Elements as XML
                     </button>
-                </li>               
+                </li>
                 <li ng-if="fs.searchFilter.protocol && fs.searchFilter.protocol.rdIdseq">
                     <button label="Download Template" data-ng-click="downloadTemplate()">
                         Download Template
@@ -665,7 +671,7 @@
 			<td><a href="https://www.hhs.gov/vulnerability-disclosure-policy/index.html" target="blank">Vulnerability Disclosure</a>
                     </td>
                     <td class="last">Please send comments and suggestions to <a href="mailto:NCIAppSupport@nih.gov">NCIAppSupport@nih.gov</a>
-                    </td>			
+                    </td>
                 </tr>
             </table>
         </div>
