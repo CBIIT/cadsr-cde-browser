@@ -174,7 +174,7 @@ public class CDEDataController
     private static void verifyParameter(String deIdseq) throws RestControllerException {
     	if ((StringUtils.isEmpty(deIdseq)) || (! ParameterValidator.validateIdSeq(deIdseq))) {
     		logger.error("Unexpected parameter value provided, deIdseq: " + deIdseq);
-			throw new RestControllerException("Unexpected parameter deIdseq value provided: " + deIdseq);
+			throw new RestControllerException("Unexpected parameter deIdseq value provided."); //CDEBROWSER-973
 		}
 	}
 	@RequestMapping( value = "/CDELink", produces = "application/json" )
