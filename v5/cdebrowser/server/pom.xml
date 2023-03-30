@@ -4,11 +4,11 @@
     <groupId>gov.nih.nci.cadsr</groupId>
     <artifactId>cdebrowserServer</artifactId>
     <packaging>war</packaging>
-    <version>5.3.5</version>
+    <version>5.4.0</version>
     <name>cdebrowser server</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>5.3.21</spring.version>
+        <spring.version>5.3.26</spring.version>
         <poi.version>5.2.2</poi.version>
         <mockito.version>3.8.0</mockito.version>
         <objectcart.version>1.0.2</objectcart.version>
