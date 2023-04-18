@@ -8,7 +8,7 @@
     <name>cdebrowser server</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>5.3.26</spring.version>
+        <spring.version>5.3.27</spring.version>
         <poi.version>5.2.2</poi.version>
         <mockito.version>3.8.0</mockito.version>
         <objectcart.version>1.0.2</objectcart.version>
